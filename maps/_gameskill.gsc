@@ -2,6 +2,8 @@
 #include animscripts\utility;
 #include common_scripts\utility;
 // this script handles all major global gameskill considerations
+
+//test
 setSkill( reset, skill_override )
 {
 	// CODER_MOD: Bryce (05/08/08): Useful output for debugging replay system
