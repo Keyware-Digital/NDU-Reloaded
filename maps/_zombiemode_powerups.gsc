@@ -1171,19 +1171,20 @@ full_ammo_powerup( drop_item )
 
 	for (i = 0; i < players.size; i++)
 	{
+		maps\_zombiemode_betty::max_ammo(players[i]);
 		primaryWeapons = players[i] GetWeaponsList(); 
 
 		for( x = 0; x < primaryWeapons.size; x++ )
 		{
-			players[i] GiveMaxAmmo( primaryWeapons[x] );
-			players[i] SetWeaponAmmoClip( "stielhandgranate", 4 );
-			
+			players[i] SetWeaponAmmoClip( primaryWeapons[x], WeaponClipSize( primaryWeapons[x] ) );
+			players[i] GiveMaxAmmo( primaryWeapons[x], "stielhandgranate", 4 );
+		
 			if( players[i] hasweapon( "molotov" ) )
 			{
 			
 				players[i] SetWeaponAmmoClip( "molotov", 4 );
 				
-			}
+			}	
 		}
 	}
 	//	array_thread (players, ::full_ammo_on_hud, drop_item);
