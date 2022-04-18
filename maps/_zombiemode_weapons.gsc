@@ -933,7 +933,7 @@ weapon_give( weapon )
 
 }
 
-play_weapon_vo(weapon)
+/*play_weapon_vo(weapon)
 {
 	index = get_player_index(self);
 	if(!IsDefined (level.zombie_weapons[weapon].sound))
@@ -1057,7 +1057,7 @@ play_weapon_vo(weapon)
 		//thread setup_response_line( self, index, "monk" );
 		self maps\_zombiemode_spawner::do_player_playdialog(plr, sound_to_play, 0.05);
 	}
-}
+}	*/
 
 ammo_give( weapon )
 {
