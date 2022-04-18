@@ -561,7 +561,7 @@ powerup_grab()
 						level thread start_carpenter( self.origin );
 						players[i] thread powerup_vo("carpenter");
 						break;						
-					case "jugg":
+					/*case "jugg":
 						level thread jugg( players[i], self );
 						break;
 					case "dtap":
@@ -587,6 +587,12 @@ powerup_grab()
 						break;
 					case "fireworks":
 						level thread fireworks( players[i], self );
+						break;*/
+					case "perk":
+						for(j = 0; j < players.size; j++)
+						{
+							level thread random_perk(players[j]);
+						}
 						break;
 					default:
 						println ("Unrecognized poweup.");
@@ -605,6 +611,36 @@ powerup_grab()
 		}
 		wait 0.1;
 	}	
+}
+
+random_perk(player)
+{
+    perks = [];
+    perks[perks.size] = "specialty_armorvest";
+    perks[perks.size] = "specialty_quickrevive";
+    perks[perks.size] = "specialty_fastreload";
+	perks[perks.size] = "specialty_rof";
+    perks[perks.size] = "specialty_bulletdamage";
+	perks[perks.size] = "specialty_longersprint";
+    perks[perks.size] = "specialty_bulletaccuracy";
+    perks[perks.size] = "specialty_explosivedamage";
+	perks[perks.size] = "specialty_detectexplosive";
+    perks[perks.size] = "specialty_longersprint";
+    perks[perks.size] = "specialty_bulletaccuracy";
+    
+    perks = array_randomize( perks );
+    for (i = 0; i < perks.size; i++)
+    {
+        perk = perks[i];
+    
+        if(player hasperk(perk) == false)
+        {
+            player SetPerk( perk );
+            player maps\_zombiemode_perks::perk_hud_create( perk );
+            player maps\_zombiemode_perks::perk_think( perk );
+            return;
+        }
+    }
 }
 
 jugg( player, drop_item )
@@ -739,7 +775,7 @@ revive( player, drop_item )
 phd( player, drop_item )
 {
 
-	if( player HasPerk( "specialty_quieter" ) )
+	if( player HasPerk( "specialty_detectexplosive" ) )
 	{
 	
 		return;
@@ -760,9 +796,9 @@ phd( player, drop_item )
 	else
 	{
 	
-		player SetPerk( "specialty_quieter" );
+		player SetPerk( "specialty_detectexplosive" );
 		
-		player perk_hud_create( "specialty_quieter" );
+		player perk_hud_create( "specialty_detectexplosive" );
 		
 	}
 	
@@ -1466,7 +1502,7 @@ death_check()
 				players[i] UnsetPerk( "specialty_rof" );
 			
 			
-				players[i] UnsetPerk( "specialty_quieter" );
+				players[i] UnsetPerk( "specialty_detectexplosive" );
 			
 			
 				players[i] UnsetPerk( "specialty_bulletdamage" );
@@ -1493,7 +1529,7 @@ death_check()
 				players[i] perk_hud_destroy( "specialty_rof" );
 			
 			
-				players[i] perk_hud_destroy( "specialty_quieter" );
+				players[i] perk_hud_destroy( "specialty_detectexplosive" );
 			
 			
 				players[i] perk_hud_destroy( "specialty_bulletdamage" );
@@ -1560,7 +1596,7 @@ perk_hud_create( perk )
 			shader = "specialty_doubletap_zombies";
 			break;
 			
-		case "specialty_quieter":
+		case "specialty_detectexplosive":
 			shader = "specialty_phd_zombies";
 			break;
 			
@@ -1653,7 +1689,7 @@ death_death( player )
 	player UnsetPerk( "specialty_rof" );
 			
 			
-	player UnsetPerk( "specialty_quieter" );
+	player UnsetPerk( "specialty_detectexplosive" );
 			
 			
 	player UnsetPerk( "specialty_bulletdamage" );
@@ -1680,7 +1716,7 @@ death_death( player )
 	player perk_hud_destroy( "specialty_rof" );
 			
 			
-	player perk_hud_destroy( "specialty_quieter" );
+	player perk_hud_destroy( "specialty_detectexplosive" );
 			
 			
 	player perk_hud_destroy( "specialty_bulletdamage" );

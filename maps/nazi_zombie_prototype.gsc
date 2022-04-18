@@ -176,6 +176,55 @@ include_weapons()
 	
 }
 
+// Rare Gun Weighting
+add_walther_prototype()
+{
+    while(1)
+    {
+        level waittill( "between_round_over" );
+        if(level.round_number >= 15)
+        {
+            maps\_zombiemode_weapons::add_limited_weapon( "walther_prototype", 1);
+            break;    
+        }
+    }
+}
+
+add_springfield_scoped_zombie_upgraded()
+{
+    while(1)
+    {
+        level waittill( "between_round_over" );
+        if(level.round_number >= 20)
+        {
+            maps\_zombiemode_weapons::add_limited_weapon( "springfield_scoped_zombie_upgraded", 1);
+            break;    
+        }
+    }
+}
+
+prototype_ray_gun_weighting_func()
+{
+	{	
+		num_to_add = 1;
+		// increase the percentage of ray gun
+		if( isDefined( level.pulls_since_last_ray_gun ) )
+		{
+			// after 12 pulls the ray gun percentage increases to 15%
+			if( level.pulls_since_last_ray_gun > 11 )
+			{
+				num_to_add += int(level.zombie_include_weapons.size*0.1);
+			}			
+			// after 8 pulls the Ray Gun percentage increases to 10%
+			else if( level.pulls_since_last_ray_gun > 7 )
+			{
+				num_to_add += int(.05 * level.zombie_include_weapons.size);
+			}		
+		}
+		return num_to_add;	
+	}
+}
+
 include_powerups()
 {
 	include_powerup( "nuke" );

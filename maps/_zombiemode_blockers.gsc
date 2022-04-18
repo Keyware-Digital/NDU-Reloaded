@@ -743,7 +743,11 @@ blocker_trigger_think()
 			chunk Show(); 
 	
 			//TUEY Play the sounds
-			chunk play_sound_on_ent( "rebuild_barrier_piece" );
+			player.rebuild_barrier_reward += cost;
+			if( player.rebuild_barrier_reward < level.zombie_vars["rebuild_barrier_cap_per_round"] )
+            {
+                chunk play_sound_on_ent( "rebuild_barrier_piece" );
+            }
 	
 			self thread replace_chunk( chunk, has_perk );
 	
@@ -762,7 +766,6 @@ blocker_trigger_think()
 			}
 	
 			// set the score
-			player.rebuild_barrier_reward += cost;
 			if( player.rebuild_barrier_reward < level.zombie_vars["rebuild_barrier_cap_per_round"] )
 			{
 				player maps\_zombiemode_score::add_to_player_score( cost );
@@ -906,7 +909,7 @@ remove_chunk( chunk, node, destroy_immediately )
 
 	if( all_chunks_destroyed( node.barrier_chunks ) )
 	{
-		EarthQuake( randomfloatrange( 0.5, 0.8 ), 0.5, chunk.origin, 300 ); 
+		earthquake( RandomFloatRange( 0.125, 0.25 ), 0.2, chunk.origin, 256 );  
 	
 		if( IsDefined( node.clip ) )
 		{
@@ -1005,6 +1008,7 @@ replace_chunk( chunk, has_perk, via_powerup )
 	
 	chunk waittill_notify_or_timeout( "movedone", 1 ); 
 	assert( chunk.origin == chunk.og_origin );
+	earthquake( 0.375, 0.25, self.origin, 256 );
 
 	chunk.target_by_zombie = undefined;
 	chunk.destroyed = false; 
