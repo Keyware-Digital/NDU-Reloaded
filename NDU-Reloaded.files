@@ -45,6 +45,7 @@ materials\specialty_sp_zombies
 mptype\nazi_zombie_heroes.csv
 mptype\nazi_zombie_heroes.gsc
 sound\music_mainmenu\main_menu.wav
+sound\sfx\ui\arcade\arcademode_kill_streak_won.wav
 sound\sfx\weapon\special\bouncing_betty\bb_plant.wav
 sound\sfx\weapon\special\bouncing_betty\bbtrigger.wav
 sound\sfx\weapon\special\bouncing_betty\betty_explode.wav

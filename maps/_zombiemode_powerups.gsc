@@ -395,7 +395,7 @@ get_num_window_destroyed()
 
 	return num;
 }
-}
+
 get_num_window_destroyed()
 {
 	num = 0;
