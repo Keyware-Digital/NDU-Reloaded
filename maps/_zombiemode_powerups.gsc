@@ -4,7 +4,6 @@
 
 init()
 {
-
 	PrecacheShader( "specialty_doublepoints_zombies" );
 	PrecacheShader( "specialty_instakill_zombies" );
 	PrecacheShader( "black" ); 
@@ -41,8 +40,7 @@ init()
 
 	thread watch_for_drop();
 
-	thread death_check();
-	
+//	thread death_check();
 //	thread second_chance_check();
 	
 }
@@ -1590,7 +1588,7 @@ full_ammo_move_hud()
 
 print_powerup_drop( powerup, type )
 {
-	/#
+	/*
 		if( !IsDefined( level.powerup_drop_time ) )
 		{
 			level.powerup_drop_time = 0;
@@ -1618,10 +1616,10 @@ print_powerup_drop( powerup, type )
 		println( "Random Powerup Count: " + level.powerup_random_count );
 		println( "Random Powerup Count: " + level.powerup_score_count );
 		println( "======================================" );
-#/
+*/
 }
 
-death_check()
+/*death_check()
 {
 	while( 1 )
 	{
@@ -1649,8 +1647,8 @@ death_check()
 				players[i] perk_hud_destroy( "specialty_longersprint" );
 				players[i] perk_hud_destroy( "specialty_bulletaccuracy" );
 				players[i] perk_hud_destroy( "specialty_explosivedamage" );
-			//	players[i].health = 100;
-			//	players[i].maxhealth = 100;
+				players[i].health = 100;
+				players[i].maxhealth = 100;
 				
 			}
 			
@@ -1659,7 +1657,7 @@ death_check()
 		wait( 0.01 );
 		
 	}
-}
+}*/
 
 perk_hud_destroy( perk )
 {
