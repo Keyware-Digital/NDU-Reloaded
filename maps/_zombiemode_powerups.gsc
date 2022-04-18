@@ -396,36 +396,6 @@ get_num_window_destroyed()
 	return num;
 }
 
-get_num_window_destroyed()
-{
-	num = 0;
-	for( i = 0; i < level.exterior_goals.size; i++ )
-	{
-		/*targets = getentarray(level.exterior_goals[i].target, "targetname");
-
-		barrier_chunks = []; 
-		for( j = 0; j < targets.size; j++ )
-		{
-			if( IsDefined( targets[j].script_noteworthy ) )
-			{
-				if( targets[j].script_noteworthy == "clip" )
-				{ 
-					continue; 
-				}
-			}
-
-			barrier_chunks[barrier_chunks.size] = targets[j];
-		}*/
-
-
-		if( all_chunks_destroyed( level.exterior_goals[i].barrier_chunks ) )
-		{
-			num += 1;
-		}
-	}
-
-	return num;
-}
 watch_for_drop()
 {
 	players = get_players();
