@@ -689,8 +689,8 @@ random_perk(player, drop_item)
         if(player hasperk(perk) == false)
         {
             player SetPerk( perk );
-            player maps\_zombiemode_perks::perk_hud_create( perk );
-            player maps\_zombiemode_perks::perk_think( perk );
+            player perk_hud_create( perk );
+            player perk_think( perk );
             return;
         }
 	
