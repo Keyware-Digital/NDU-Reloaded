@@ -595,7 +595,7 @@ powerup_grab()
 						}
 						break;
 					default:
-						println ("Unrecognized poweup.");
+						println ("Unrecognized powerup.");
 						break;
 					}
 				}
