@@ -17,7 +17,6 @@ weapon,sp/springfield_scoped_zombie_upgraded
 weapon,sp/zombie_type100_smg
 weapon,sp/zombie_ppsh
 weapon,sp/mine_bouncing_betty
-//menufile,ui/main.menu
 fx,weapon/muzzleflashes/standardflashworld_ug
 sound,mod_ndu,,all_mp
 sound,mod_ndu_powerup,,all_sp
@@ -66,3 +65,4 @@ material,specialty_aim_zombies
 material,specialty_doublepoints_zombies
 material,specialty_instakill_zombies
 material,logo_cod2
+//menufile,ui/main.menu
