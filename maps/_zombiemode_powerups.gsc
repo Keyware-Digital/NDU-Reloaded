@@ -714,7 +714,18 @@ perk_hud_create( perk )
 		self.perk_hud = [];
 	}
 
-	shader = "";
+	/#
+		if ( GetDVarInt( "zombie_cheat" ) >= 5 )
+		{
+			if ( IsDefined( self.perk_hud[ perk ] ) )
+			{
+				return;
+			}
+		}
+	#/
+
+
+		shader = "";
 
 		switch( perk )
 		{
@@ -738,12 +749,20 @@ perk_hud_create( perk )
 			shader = "specialty_phd_zombies";
 			break;
 			
+		case "specialty_bulletdamage":
+			shader = "specialty_sp_zombies";
+			break;
+			
 		case "specialty_longersprint":
 			shader = "specialty_longersprint_zombies";
 			break;
 			
 		case "specialty_bulletaccuracy":
 			shader = "specialty_aim_zombies";
+			break;
+			
+		case "specialty_explosivedamage":
+			shader = "specialty_fireworks_zombies";
 			break;
 
 		default:
@@ -766,6 +785,7 @@ perk_hud_create( perk )
 
 		self.perk_hud[ perk ] = hud;
 }
+
 /*jugg( player, drop_item )
 {
 
@@ -1640,85 +1660,6 @@ death_check()
 		wait( 0.01 );
 		
 	}
-}
-
-perk_hud_create( perk )
-{
-	if ( !IsDefined( self.perk_hud ) )
-	{
-		self.perk_hud = [];
-	}
-
-	/#
-		if ( GetDVarInt( "zombie_cheat" ) >= 5 )
-		{
-			if ( IsDefined( self.perk_hud[ perk ] ) )
-			{
-				return;
-			}
-		}
-	#/
-
-
-		shader = "";
-
-		switch( perk )
-		{
-		case "specialty_armorvest":
-			shader = "specialty_juggernaut_zombies";
-			break;
-
-		case "specialty_quickrevive":
-			shader = "specialty_quickrevive_zombies";
-			break;
-
-		case "specialty_fastreload":
-			shader = "specialty_fastreload_zombies";
-			break;
-
-		case "specialty_rof":
-			shader = "specialty_doubletap_zombies";
-			break;
-			
-		case "specialty_detectexplosive":
-			shader = "specialty_phd_zombies";
-			break;
-			
-		case "specialty_bulletdamage":
-			shader = "specialty_sp_zombies";
-			break;
-			
-		case "specialty_longersprint":
-			shader = "specialty_longersprint_zombies";
-			break;
-			
-		case "specialty_bulletaccuracy":
-			shader = "specialty_aim_zombies";
-			break;
-			
-		case "specialty_explosivedamage":
-			shader = "specialty_fireworks_zombies";
-			break;
-
-		default:
-			shader = "";
-			break;
-		}
-
-		hud = create_simple_hud( self );
-		hud.foreground = true; 
-		hud.sort = 1; 
-		hud.hidewheninmenu = false; 
-		hud.alignX = "left"; 
-		hud.alignY = "bottom";
-		hud.horzAlign = "left"; 
-		hud.vertAlign = "bottom";
-		hud.x = self.perk_hud.size * 30; 
-		hud.y = hud.y - 70; 
-		hud.alpha = 1;
-		hud SetShader( shader, 24, 24 );
-
-		self.perk_hud[ perk ] = hud;
 }
 
 perk_hud_destroy( perk )
