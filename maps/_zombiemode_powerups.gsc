@@ -47,22 +47,22 @@ init()
 
 init_powerups()
 {
-	// Random Drops
-	add_zombie_powerup( "nuke", 		"zombie_bomb",		&"ZOMBIE_POWERUP_NUKE", 			"misc/fx_zombie_mini_nuke" );
-	//	add_zombie_powerup( "nuke", 		"zombie_bomb",		&"ZOMBIE_POWERUP_NUKE", 			"misc/fx_zombie_mini_nuke_hotness" );
-	add_zombie_powerup( "insta_kill", 	"zombie_skull",		&"ZOMBIE_POWERUP_INSTA_KILL" );
-	add_zombie_powerup( "double_points","zombie_x2_icon",	&"ZOMBIE_POWERUP_DOUBLE_POINTS" );
-	add_zombie_powerup( "full_ammo",  	"zombie_ammocan",	&"ZOMBIE_POWERUP_MAX_AMMO");
-	add_zombie_powerup( "carpenter",  	"zombie_carpenter",	&"ZOMBIE_POWERUP_MAX_AMMO");
-	add_zombie_powerup( "jugg",		"zombie_3rd_perk_bottle_jugg",		&"Juggernog" );
-	add_zombie_powerup( "dtap",		"zombie_3rd_perk_bottle_doubletap",		&"Doubletap Root Beer" );
-	add_zombie_powerup( "fastreload",		"zombie_3rd_perk_bottle_sleight",		&"Speed Cola" );
-	add_zombie_powerup( "revive",		"zombie_3rd_perk_bottle_revive",		&"Quick Revive Soda" );
-	add_zombie_powerup( "phd",		"zombie_3rd_perk_bottle_jugg",			&"Flak Jacket" );
-	add_zombie_powerup( "sp",		"zombie_3rd_perk_bottle_doubletap",			&"Stopping Power" );
-	add_zombie_powerup( "longersprint",		"zombie_3rd_perk_bottle_sleight",	&"Extreme Conditioning" );
-	add_zombie_powerup( "aim",		"zombie_3rd_perk_bottle_sleight",		&"Steady Aim" );
-	add_zombie_powerup( "fireworks",		"zombie_3rd_perk_bottle_revive",		&"Fireworks" );
+    // Random Drops
+    add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
+    //    add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke_hotness" );
+    add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
+    add_zombie_powerup( "double_points","zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
+    add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup( "jugg",        "zombie_3rd_perk_bottle_jugg",        &"Juggernog" );
+    add_zombie_powerup( "dtap",        "zombie_3rd_perk_bottle_doubletap",        &"Doubletap Root Beer" );
+    add_zombie_powerup( "fastreload",        "zombie_3rd_perk_bottle_sleight",        &"Speed Cola" );
+    add_zombie_powerup( "revive",        "zombie_3rd_perk_bottle_revive",        &"Quick Revive Soda" );
+    add_zombie_powerup( "phd",        "zombie_3rd_perk_bottle_jugg",            &"Flak Jacket" );
+    add_zombie_powerup( "sp",        "zombie_3rd_perk_bottle_doubletap",            &"Stopping Power" );
+    add_zombie_powerup( "longersprint",        "zombie_3rd_perk_bottle_sleight",    &"Extreme Conditioning" );
+    add_zombie_powerup( "aim",        "zombie_3rd_perk_bottle_sleight",        &"Steady Aim" );
+    add_zombie_powerup( "fireworks",        "zombie_3rd_perk_bottle_revive",        &"Fireworks" );
 
 	// Randomize the order
 	randomize_powerups();
@@ -560,31 +560,40 @@ powerup_grab()
 						players[i] thread powerup_vo("carpenter");
 						break;						
 					case "jugg":
-						level thread jugg( players[i], self );
+						allplayers=get_players();
+						level thread jugg(allplayers,::jugg);
 						break;
 					case "dtap":
-						level thread dtap( players[i], self );
+						allplayers=get_players();
+						level thread dtap(allplayers,::dtap);
 						break;
 					case "fastreload":
-						level thread fastreload( players[i], self );
+						allplayers=get_players();
+						level thread fastreload(allplayers,::fastreload);
 						break;
 					case "revive":
-						level thread revive( players[i], self );
+						allplayers=get_players();
+						level thread revive(allplayers,::revive);
 						break;
 					case "phd":
-						level thread phd( players[i], self );
+						allplayers=get_players();
+						level thread phd(allplayers,::phd);
 						break;
 					case "sp":
-						level thread sp( players[i], self );
+						allplayers=get_players();
+						level thread sp(allplayers,::sp);
 						break;
 					case "longersprint":
-						level thread longersprint( players[i], self );
+						allplayers=get_players();
+						level thread longersprint(allplayers,::longersprint);
 						break;
 					case "aim":
-						level thread aim( players[i], self );
+						allplayers=get_players();
+						level thread aim(allplayers,::aim);
 						break;
 					case "fireworks":
-						level thread fireworks( players[i], self );
+						allplayers=get_players();
+						level thread fireworks(allplayers,::fireworks);
 						break;
 					default:
 						println ("Unrecognized powerup.");

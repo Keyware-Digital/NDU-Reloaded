@@ -1662,7 +1662,7 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 
 	if( sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH" || sMeansOfDeath == "MOD_EXPLOSIVE" || sMeansOfDeath == "MOD_FALLING" )
     {
-        if ( self HasPerk( "specialty_quieter" ) )
+        if ( self HasPerk( "specialty_detectexplosive" ) )
         {
             self.health = self.maxhealth+iDamage;
             return;
