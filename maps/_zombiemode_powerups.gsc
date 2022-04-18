@@ -562,6 +562,22 @@ powerup_setup()
 	self PlayLoopSound("spawn_powerup_loop");
 }
 
+special_drop_setup()
+{
+	//MM test  Change this if you want the same thing to keep spawning
+//	powerup = "dog";
+	switch ( powerup )
+	{
+	// Don't need to do anything special
+	case "nuke":
+	case "insta_kill":
+	case "double_points":
+	case "carpenter":
+	//DUKIP - Added zombie perk.
+	case "perk":
+		break;	
+}
+
 powerup_grab()
 {
 	self endon ("powerup_timedout");
@@ -611,7 +627,8 @@ powerup_grab()
 					case "carpenter":
 						level thread start_carpenter( self.origin );
 						players[i] thread powerup_vo("carpenter");
-						break;						
+						break;
+												
 					/*case "jugg":
 						level thread jugg( players[i], self );
 						break;
@@ -640,10 +657,8 @@ powerup_grab()
 						level thread fireworks( players[i], self );
 						break;*/
 					case "perk":
-						for(j = 0; j < players.size; j++)
-						{
-							level thread random_perk(players[j]);
-						}
+						allplayers=get_players();
+                        array_thread(allplayers,::zombie_perk_powerup);
 						break;
 					default:
 						println ("Unrecognized powerup.");
@@ -1175,6 +1190,8 @@ powerup_vo(type)
 			break;
 		case "carpenter":
 			sound = "plr_0_vox_powerup_carp_" + index + "";
+			break;
+		case "perk":
 			break;
 	}
 	//This keeps multiple voice overs from playing on the same player (both killstreaks and headshots).
@@ -1713,3 +1730,54 @@ perk_hud_destroy( perk )
 	
 }*/
 
+zombie_perk_powerup()
+{
+	self endon("disconnect");
+
+	player = self;
+	perk = getRandomPerk(player);
+	//DUKIP - Make sure player doesn't have the perk and perk is defined.
+	if ( player HasPerk(perk) || !IsDefined(perk) )
+		return;
+
+	player waittill_any( "fake_death", "death", "player_downed", "weapon_change_complete" );
+
+	player SetPerk( perk );
+	player thread perk_vo(perk);
+	player setblur( 4, 0.1 );
+	wait(0.1);
+	player setblur(0, 0.1);
+
+	if(perk == "specialty_armorvest")
+	{
+		player.maxhealth = level.zombie_vars["zombie_perk_juggernaut_health"];
+		player.health = level.zombie_vars["zombie_perk_juggernaut_health"];
+	}
+
+	player perk_hud_create( perk );
+
+	player thread perk_think( perk );
+}
+
+getRandomPerk(player)
+{
+
+	all_perks = [];
+	all_perks[0] = "specialty_armorvest";
+	all_perks[1] = "specialty_quickrevive";
+	all_perks[2] = "specialty_fastreload";
+	all_perks[3] = "specialty_rof";
+	all_perks[4] = "specialty_bulletdamage";
+	all_perks[5] = "specialty_longersprint";
+	all_perks[6] = "specialty_bulletaccuracy";
+	all_perks[7] = "specialty_explosivedamage";
+	all_perks[8] = "specialty_detectexplosive";
+	all_perks[9] = "specialty_longersprint";
+	all_perks[10] = "specialty_bulletaccuracy";
+
+	all_perks = array_randomize(all_perks);
+
+	thePerk = random(all_perks);
+
+	return thePerk;
+}
