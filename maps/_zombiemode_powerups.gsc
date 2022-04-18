@@ -4,6 +4,7 @@
 
 init()
 {
+
 	PrecacheShader( "specialty_doublepoints_zombies" );
 	PrecacheShader( "specialty_instakill_zombies" );
 	PrecacheShader( "black" ); 
@@ -40,8 +41,9 @@ init()
 
 	thread watch_for_drop();
 
-//	thread death_check();
-//	thread second_chance_check();
+	thread death_check();
+	
+	thread second_chance_check();
 	
 }
 
@@ -63,7 +65,6 @@ init_powerups()
 	add_zombie_powerup( "longersprint",		"zombie_3rd_perk_bottle_sleight",	&"Extreme Conditioning" );
 	add_zombie_powerup( "aim",		"zombie_3rd_perk_bottle_sleight",		&"Steady Aim" );
 	add_zombie_powerup( "fireworks",		"zombie_3rd_perk_bottle_revive",		&"Fireworks" );
-	add_zombie_powerup( "perk",		"zombie_3rd_perk_bottle_sleight",			&"Flak Jacket" );
 
 	// Randomize the order
 	randomize_powerups();
@@ -308,60 +309,10 @@ get_next_powerup()
 
 	powerup = level.zombie_powerup_array[level.zombie_powerup_index];
 	
-	/#
-		if( isdefined( level.zombie_devgui_power ) && level.zombie_devgui_power == 1 )
-			return powerup;
-
-	#/
-
-	//level.windows_destroyed = get_num_window_destroyed();
-
-	while( powerup == "carpenter" && get_num_window_destroyed() < 5)
-	{	
-		
-		
-		if( level.zombie_powerup_index >= level.zombie_powerup_array.size )
-		{
-			level.zombie_powerup_index = 0;
-			randomize_powerups();
-		}
-		
-		
-		powerup = level.zombie_powerup_array[level.zombie_powerup_index];
-		level.zombie_powerup_index++;
-			
-		if( powerup != "carpenter" )
-			return powerup;
-		
-		
-		wait(0.05);
-	}
-	
-	while( powerup == "perk" && !level.dog_intermission)
-	{	
-		
-		if( level.zombie_powerup_index >= level.zombie_powerup_array.size )
-		{
-			level.zombie_powerup_index = 0;
-			randomize_powerups();
-		}
-		
-		powerup = level.zombie_powerup_array[level.zombie_powerup_index];
-		level.zombie_powerup_index++;
-			
-		if( powerup != "perk" )
-		{
-			return powerup;
-		}
-		
-		wait(0.05);
-	}
-
 	level.zombie_powerup_index++;
-	
+
 	return powerup;
 }
-
 get_num_window_destroyed()
 {
 	num = 0;
@@ -388,12 +339,10 @@ get_num_window_destroyed()
 		{
 			num += 1;
 		}
-
 	}
 
 	return num;
 }
-
 watch_for_drop()
 {
 	players = get_players();
@@ -562,22 +511,6 @@ powerup_setup()
 	self PlayLoopSound("spawn_powerup_loop");
 }
 
-special_drop_setup()
-{
-	//MM test  Change this if you want the same thing to keep spawning
-//	powerup = "dog";
-	switch ( powerup )
-	{
-	// Don't need to do anything special
-	case "nuke":
-	case "insta_kill":
-	case "double_points":
-	case "carpenter":
-	//DUKIP - Added zombie perk.
-	case "perk":
-		break;	
-}
-
 powerup_grab()
 {
 	self endon ("powerup_timedout");
@@ -627,9 +560,8 @@ powerup_grab()
 					case "carpenter":
 						level thread start_carpenter( self.origin );
 						players[i] thread powerup_vo("carpenter");
-						break;
-												
-					/*case "jugg":
+						break;						
+					case "jugg":
 						level thread jugg( players[i], self );
 						break;
 					case "dtap":
@@ -655,13 +587,9 @@ powerup_grab()
 						break;
 					case "fireworks":
 						level thread fireworks( players[i], self );
-						break;*/
-					case "perk":
-						allplayers=get_players();
-                        array_thread(allplayers,::zombie_perk_powerup);
 						break;
 					default:
-						println ("Unrecognized powerup.");
+						println ("Unrecognized poweup.");
 						break;
 					}
 				}
@@ -679,126 +607,7 @@ powerup_grab()
 	}	
 }
 
-random_perk(player, drop_item)
-{
-    perks = [];
-    perks[perks.size] = "specialty_armorvest";
-    perks[perks.size] = "specialty_quickrevive";
-    perks[perks.size] = "specialty_fastreload";
-	perks[perks.size] = "specialty_rof";
-    perks[perks.size] = "specialty_bulletdamage";
-	perks[perks.size] = "specialty_longersprint";
-    perks[perks.size] = "specialty_bulletaccuracy";
-    perks[perks.size] = "specialty_explosivedamage";
-	perks[perks.size] = "specialty_detectexplosive";
-    perks[perks.size] = "specialty_longersprint";
-    perks[perks.size] = "specialty_bulletaccuracy";
-    
-    perks = array_randomize( perks );
-    for (i = 0; i < perks.size; i++)
-    {
-        perk = perks[i];
-    
-        if(player hasperk(perk) == false)
-        {
-            player SetPerk( perk );
-            player perk_hud_create( perk );
-            player perk_think( perk );
-            return;
-        }
-	
-    }
-}
-
-perk_think( perk )
-{
-	self waittill_any( "fake_death", "death", "player_downed", "second_chance" );
-
-		self UnsetPerk( perk );
-		self.maxhealth = 100;
-		self perk_hud_destroy( perk );
-		//self iprintln( "Perk Lost: " + perk );
-}
-
-perk_hud_create( perk )
-{
-    if ( !IsDefined( self.perk_hud ) )
-    {
-        self.perk_hud = [];
-    }
-
-	/#
-		if ( GetDVarInt( "zombie_cheat" ) >= 5 )
-		{
-			if ( IsDefined( self.perk_hud[ perk ] ) )
-			{
-				return;
-			}
-		}
-	#/
-
-		shader = "";
-
-		switch( perk )
-		{
-		case "specialty_armorvest":
-			shader = "specialty_juggernaut_zombies";
-			break;
-
-		case "specialty_quickrevive":
-			shader = "specialty_quickrevive_zombies";
-			break;
-
-		case "specialty_fastreload":
-			shader = "specialty_fastreload_zombies";
-			break;
-
-		case "specialty_rof":
-			shader = "specialty_doubletap_zombies";
-			break;
-			
-		case "specialty_detectexplosive":
-			shader = "specialty_phd_zombies";
-			break;
-			
-		case "specialty_bulletdamage":
-			shader = "specialty_sp_zombies";
-			break;
-			
-		case "specialty_longersprint":
-			shader = "specialty_longersprint_zombies";
-			break;
-			
-		case "specialty_bulletaccuracy":
-			shader = "specialty_aim_zombies";
-			break;
-			
-		case "specialty_explosivedamage":
-			shader = "specialty_fireworks_zombies";
-			break;
-
-		default:
-			shader = "";
-			break;
-		}
-
-		hud = create_simple_hud( self );
-        hud.foreground = true; 
-        hud.sort = 1; 
-        hud.hidewheninmenu = false; 
-        hud.alignX = "left"; 
-        hud.alignY = "bottom";
-        hud.horzAlign = "left"; 
-        hud.vertAlign = "bottom";
-        hud.x = self.perk_hud.size * 30; 
-        hud.y = hud.y - 70; 
-        hud.alpha = 1;
-        hud SetShader( shader, 24, 24 );
-
-        self.perk_hud[ perk ] = hud;
-}
-
-/*jugg( player, drop_item )
+jugg( player, drop_item )
 {
 
 	if( player HasPerk( "specialty_armorvest" ) )
@@ -930,7 +739,7 @@ revive( player, drop_item )
 phd( player, drop_item )
 {
 
-	if( player HasPerk( "specialty_detectexplosive" ) )
+	if( player HasPerk( "specialty_quieter" ) )
 	{
 	
 		return;
@@ -951,9 +760,9 @@ phd( player, drop_item )
 	else
 	{
 	
-		player SetPerk( "specialty_detectexplosive" );
+		player SetPerk( "specialty_quieter" );
 		
-		player perk_hud_create( "specialty_detectexplosive" );
+		player perk_hud_create( "specialty_quieter" );
 		
 	}
 	
@@ -1081,7 +890,7 @@ fireworks( player, drop_item )
 		
 	}
 	
-}	*/
+}
 
 start_carpenter( origin )
 {
@@ -1121,7 +930,7 @@ start_carpenter( origin )
 			if( !IsDefined( chunk ) )
 				break;
 
-			windows thread maps\_zombiemode_blockers::replace_chunk( chunk, false, true );
+			windows thread maps\_zombiemode_blockers_new::replace_chunk( chunk, false, true );
 			windows.clip enable_trigger(); 
 			windows.clip DisconnectPaths();
 			wait_network_frame();
@@ -1190,8 +999,6 @@ powerup_vo(type)
 			break;
 		case "carpenter":
 			sound = "plr_0_vox_powerup_carp_" + index + "";
-			break;
-		case "perk":
 			break;
 	}
 	//This keeps multiple voice overs from playing on the same player (both killstreaks and headshots).
@@ -1364,20 +1171,19 @@ full_ammo_powerup( drop_item )
 
 	for (i = 0; i < players.size; i++)
 	{
-		maps\_zombiemode_betty::max_ammo(players[i]);
 		primaryWeapons = players[i] GetWeaponsList(); 
 
 		for( x = 0; x < primaryWeapons.size; x++ )
 		{
-			players[i] SetWeaponAmmoClip( primaryWeapons[x], WeaponClipSize( primaryWeapons[x] ) );
-			players[i] GiveMaxAmmo( primaryWeapons[x], "stielhandgranate", 4 );
-		
+			players[i] GiveMaxAmmo( primaryWeapons[x] );
+			players[i] SetWeaponAmmoClip( "stielhandgranate", 4 );
+			
 			if( players[i] hasweapon( "molotov" ) )
 			{
 			
 				players[i] SetWeaponAmmoClip( "molotov", 4 );
 				
-			}	
+			}
 		}
 	}
 	//	array_thread (players, ::full_ammo_on_hud, drop_item);
@@ -1605,7 +1411,7 @@ full_ammo_move_hud()
 
 print_powerup_drop( powerup, type )
 {
-	/*
+	/#
 		if( !IsDefined( level.powerup_drop_time ) )
 		{
 			level.powerup_drop_time = 0;
@@ -1633,10 +1439,10 @@ print_powerup_drop( powerup, type )
 		println( "Random Powerup Count: " + level.powerup_random_count );
 		println( "Random Powerup Count: " + level.powerup_score_count );
 		println( "======================================" );
-*/
+#/
 }
 
-/*death_check()
+death_check()
 {
 	while( 1 )
 	{
@@ -1646,25 +1452,64 @@ print_powerup_drop( powerup, type )
 			
 			if( players[i] maps\_laststand::player_is_in_laststand() )
 			{
+			
 				players[i] UnsetPerk( "specialty_armorvest" );
+			
+			
 				players[i] UnsetPerk( "specialty_quickrevive" );
+			
+			
 				players[i] UnsetPerk( "specialty_fastreload" );
+			
+			
 				players[i] UnsetPerk( "specialty_rof" );
-                players[i] UnsetPerk( "specialty_detectexplosive" );
+			
+			
+				players[i] UnsetPerk( "specialty_quieter" );
+			
+			
 				players[i] UnsetPerk( "specialty_bulletdamage" );
+				
+				
 				players[i] UnsetPerk( "specialty_longersprint" );
+				
+				
 				players[i] UnsetPerk( "specialty_bulletaccuracy" );
+				
+				
 				players[i] UnsetPerk( "specialty_explosivedamage" );
+			
+			
 				players[i] perk_hud_destroy( "specialty_armorvest" );
+			
+			
 				players[i] perk_hud_destroy( "specialty_quickrevive" );
+			
+			
 				players[i] perk_hud_destroy( "specialty_fastreload" );
+			
+			
 				players[i] perk_hud_destroy( "specialty_rof" );
-				players[i] perk_hud_destroy( "specialty_detectexplosive" );
+			
+			
+				players[i] perk_hud_destroy( "specialty_quieter" );
+			
+			
 				players[i] perk_hud_destroy( "specialty_bulletdamage" );
+				
+				
 				players[i] perk_hud_destroy( "specialty_longersprint" );
+				
+				
 				players[i] perk_hud_destroy( "specialty_bulletaccuracy" );
+				
+				
 				players[i] perk_hud_destroy( "specialty_explosivedamage" );
+				
+			
 				players[i].health = 100;
+				
+				
 				players[i].maxhealth = 100;
 				
 			}
@@ -1674,15 +1519,100 @@ print_powerup_drop( powerup, type )
 		wait( 0.01 );
 		
 	}
-}*/
+}
+
+perk_hud_create( perk )
+{
+	if ( !IsDefined( self.perk_hud ) )
+	{
+		self.perk_hud = [];
+	}
+
+	/#
+		if ( GetDVarInt( "zombie_cheat" ) >= 5 )
+		{
+			if ( IsDefined( self.perk_hud[ perk ] ) )
+			{
+				return;
+			}
+		}
+	#/
+
+
+		shader = "";
+
+		switch( perk )
+		{
+		case "specialty_armorvest":
+			shader = "specialty_juggernaut_zombies";
+			break;
+
+		case "specialty_quickrevive":
+			shader = "specialty_quickrevive_zombies";
+			break;
+
+		case "specialty_fastreload":
+			shader = "specialty_fastreload_zombies";
+			break;
+
+		case "specialty_rof":
+			shader = "specialty_doubletap_zombies";
+			break;
+			
+		case "specialty_quieter":
+			shader = "specialty_phd_zombies";
+			break;
+			
+		case "specialty_bulletdamage":
+			shader = "specialty_sp_zombies";
+			break;
+			
+		case "specialty_longersprint":
+			shader = "specialty_longersprint_zombies";
+			break;
+			
+		case "specialty_bulletaccuracy":
+			shader = "specialty_aim_zombies";
+			break;
+			
+		case "specialty_explosivedamage":
+			shader = "specialty_fireworks_zombies";
+			break;
+
+		default:
+			shader = "";
+			break;
+		}
+
+		hud = create_simple_hud( self );
+		hud.foreground = true; 
+		hud.sort = 1; 
+		hud.hidewheninmenu = false; 
+		hud.alignX = "left"; 
+		hud.alignY = "bottom";
+		hud.horzAlign = "left"; 
+		hud.vertAlign = "bottom";
+		hud.x = self.perk_hud.size * 30; 
+		hud.y = hud.y - 70; 
+		hud.alpha = 1;
+		hud SetShader( shader, 24, 24 );
+
+		self.perk_hud[ perk ] = hud;
+}
 
 perk_hud_destroy( perk )
 {
+
+
 	self.perk_hud[ perk ] destroy_hud();
-	self.perk_hud[ perk ] = undefined;	
+	
+	
+	self.perk_hud[ perk ] = undefined;
+	
+	
 }
 
-/*second_chance_check()
+second_chance_check()
 {
 
 	while( 1 )
@@ -1702,82 +1632,72 @@ perk_hud_destroy( perk )
 		
 	}
 	
-}*/
+}
 
-/*death_death( player )
+death_death( player )
 {
+
 	player waittill ( "second_chance" );
-	player UnsetPerk( "specialty_armorvest" );	
-	player UnsetPerk( "specialty_quickrevive" );	
-	player UnsetPerk( "specialty_fastreload" );	
-	player UnsetPerk( "specialty_rof" );	
-	player UnsetPerk( "specialty_detectexplosive" );	
-	player UnsetPerk( "specialty_bulletdamage" );		
-	player UnsetPerk( "specialty_longersprint" );	
+	
+	
+	player UnsetPerk( "specialty_armorvest" );
+			
+			
+	player UnsetPerk( "specialty_quickrevive" );
+			
+			
+	player UnsetPerk( "specialty_fastreload" );
+			
+			
+	player UnsetPerk( "specialty_rof" );
+			
+			
+	player UnsetPerk( "specialty_quieter" );
+			
+			
+	player UnsetPerk( "specialty_bulletdamage" );
+				
+				
+	player UnsetPerk( "specialty_longersprint" );
+				
+				
 	player UnsetPerk( "specialty_bulletaccuracy" );
-	player UnsetPerk( "specialty_explosivedamage" );	
-	player perk_hud_destroy( "specialty_armorvest" );		
-	player perk_hud_destroy( "specialty_quickrevive" );	
-	player perk_hud_destroy( "specialty_fastreload" );		
+				
+				
+	player UnsetPerk( "specialty_explosivedamage" );
+			
+			
+	player perk_hud_destroy( "specialty_armorvest" );
+			
+			
+	player perk_hud_destroy( "specialty_quickrevive" );
+			
+			
+	player perk_hud_destroy( "specialty_fastreload" );
+			
+			
 	player perk_hud_destroy( "specialty_rof" );
-	player perk_hud_destroy( "specialty_detectexplosive" );	
-	player perk_hud_destroy( "specialty_bulletdamage" );		
+			
+			
+	player perk_hud_destroy( "specialty_quieter" );
+			
+			
+	player perk_hud_destroy( "specialty_bulletdamage" );
+				
+				
 	player perk_hud_destroy( "specialty_longersprint" );
-	player perk_hud_destroy( "specialty_bulletaccuracy" );		
-	player perk_hud_destroy( "specialty_explosivedamage" );		
-	player.health = 100;			
+				
+				
+	player perk_hud_destroy( "specialty_bulletaccuracy" );
+				
+				
+	player perk_hud_destroy( "specialty_explosivedamage" );
+				
+			
+	player.health = 100;
+				
+				
 	player.maxhealth = 100;
 	
-}*/
-
-zombie_perk_powerup()
-{
-	self endon("disconnect");
-
-	player = self;
-	perk = getRandomPerk(player);
-	//DUKIP - Make sure player doesn't have the perk and perk is defined.
-	if ( player HasPerk(perk) || !IsDefined(perk) )
-		return;
-
-	player waittill_any( "fake_death", "death", "player_downed", "weapon_change_complete" );
-
-	player SetPerk( perk );
-	player thread perk_vo(perk);
-	player setblur( 4, 0.1 );
-	wait(0.1);
-	player setblur(0, 0.1);
-
-	if(perk == "specialty_armorvest")
-	{
-		player.maxhealth = level.zombie_vars["zombie_perk_juggernaut_health"];
-		player.health = level.zombie_vars["zombie_perk_juggernaut_health"];
-	}
-
-	player perk_hud_create( perk );
-
-	player thread perk_think( perk );
 }
 
-getRandomPerk(player)
-{
-
-	all_perks = [];
-	all_perks[0] = "specialty_armorvest";
-	all_perks[1] = "specialty_quickrevive";
-	all_perks[2] = "specialty_fastreload";
-	all_perks[3] = "specialty_rof";
-	all_perks[4] = "specialty_bulletdamage";
-	all_perks[5] = "specialty_longersprint";
-	all_perks[6] = "specialty_bulletaccuracy";
-	all_perks[7] = "specialty_explosivedamage";
-	all_perks[8] = "specialty_detectexplosive";
-	all_perks[9] = "specialty_longersprint";
-	all_perks[10] = "specialty_bulletaccuracy";
-
-	all_perks = array_randomize(all_perks);
-
-	thePerk = random(all_perks);
-
-	return thePerk;
-}
