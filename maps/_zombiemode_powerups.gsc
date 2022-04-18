@@ -709,10 +709,10 @@ perk_think( perk )
 
 perk_hud_create( perk )
 {
-	if ( !IsDefined( self.perk_hud ) )
-	{
-		self.perk_hud = [];
-	}
+    if ( !IsDefined( self.perk_hud ) )
+    {
+        self.perk_hud = [];
+    }
 
 	/#
 		if ( GetDVarInt( "zombie_cheat" ) >= 5 )
@@ -723,7 +723,6 @@ perk_hud_create( perk )
 			}
 		}
 	#/
-
 
 		shader = "";
 
@@ -771,19 +770,19 @@ perk_hud_create( perk )
 		}
 
 		hud = create_simple_hud( self );
-		hud.foreground = true; 
-		hud.sort = 1; 
-		hud.hidewheninmenu = false; 
-		hud.alignX = "left"; 
-		hud.alignY = "bottom";
-		hud.horzAlign = "left"; 
-		hud.vertAlign = "bottom";
-		hud.x = self.perk_hud.size * 30; 
-		hud.y = hud.y - 70; 
-		hud.alpha = 1;
-		hud SetShader( shader, 24, 24 );
+        hud.foreground = true; 
+        hud.sort = 1; 
+        hud.hidewheninmenu = false; 
+        hud.alignX = "left"; 
+        hud.alignY = "bottom";
+        hud.horzAlign = "left"; 
+        hud.vertAlign = "bottom";
+        hud.x = self.perk_hud.size * 30; 
+        hud.y = hud.y - 70; 
+        hud.alpha = 1;
+        hud SetShader( shader, 24, 24 );
 
-		self.perk_hud[ perk ] = hud;
+        self.perk_hud[ perk ] = hud;
 }
 
 /*jugg( player, drop_item )
