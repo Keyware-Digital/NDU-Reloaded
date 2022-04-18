@@ -627,35 +627,7 @@ powerup_grab()
 					case "carpenter":
 						level thread start_carpenter( self.origin );
 						players[i] thread powerup_vo("carpenter");
-						break;
-												
-					/*case "jugg":
-						level thread jugg( players[i], self );
-						break;
-					case "dtap":
-						level thread dtap( players[i], self );
-						break;
-					case "fastreload":
-						level thread fastreload( players[i], self );
-						break;
-					case "revive":
-						level thread revive( players[i], self );
-						break;
-					case "phd":
-						level thread phd( players[i], self );
-						break;
-					case "sp":
-						level thread sp( players[i], self );
-						break;
-					case "longersprint":
-						level thread longersprint( players[i], self );
-						break;
-					case "aim":
-						level thread aim( players[i], self );
-						break;
-					case "fireworks":
-						level thread fireworks( players[i], self );
-						break;*/
+						break;			
 					case "perk":
 						allplayers=get_players();
                         array_thread(allplayers,::zombie_perk_powerup);
@@ -677,37 +649,6 @@ powerup_grab()
 		}
 		wait 0.1;
 	}	
-}
-
-random_perk(player, drop_item)
-{
-    perks = [];
-    perks[perks.size] = "specialty_armorvest";
-    perks[perks.size] = "specialty_quickrevive";
-    perks[perks.size] = "specialty_fastreload";
-	perks[perks.size] = "specialty_rof";
-    perks[perks.size] = "specialty_bulletdamage";
-	perks[perks.size] = "specialty_longersprint";
-    perks[perks.size] = "specialty_bulletaccuracy";
-    perks[perks.size] = "specialty_explosivedamage";
-	perks[perks.size] = "specialty_detectexplosive";
-    perks[perks.size] = "specialty_longersprint";
-    perks[perks.size] = "specialty_bulletaccuracy";
-    
-    perks = array_randomize( perks );
-    for (i = 0; i < perks.size; i++)
-    {
-        perk = perks[i];
-    
-        if(player hasperk(perk) == false)
-        {
-            player SetPerk( perk );
-            player perk_hud_create( perk );
-            player perk_think( perk );
-            return;
-        }
-	
-    }
 }
 
 perk_think( perk )
@@ -1741,6 +1682,9 @@ zombie_perk_powerup()
 		return;
 
 	player waittill_any( "fake_death", "death", "player_downed", "weapon_change_complete" );
+
+	if ( player maps\_laststand::player_is_in_laststand() )
+		return;
 
 	player SetPerk( perk );
 	player thread perk_vo(perk);
