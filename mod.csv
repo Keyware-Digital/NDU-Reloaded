@@ -1,6 +1,7 @@
+rawfile,maps\_callbackglobal.gsc
 rawfile,maps\_loadout.gsc
 rawfile,maps\_gameskill.gsc
-rawfile,maps\_zombiemode_blockers_new.gsc
+rawfile,maps\_zombiemode_blockers.gsc
 rawfile,maps\_zombiemode_powerups.gsc
 rawfile,maps\_zombiemode.gsc
 rawfile,maps\_zombiemode_weapons.gsc
@@ -16,7 +17,7 @@ weapon,sp/springfield_scoped_zombie_upgraded
 weapon,sp/zombie_type100_smg
 weapon,sp/zombie_ppsh
 weapon,sp/mine_bouncing_betty
-menufile,ui/main.menu
+//menufile,ui/main.menu
 fx,weapon/muzzleflashes/standardflashworld_ug
 sound,mod_ndu,,all_mp
 sound,mod_ndu_powerup,,all_sp
