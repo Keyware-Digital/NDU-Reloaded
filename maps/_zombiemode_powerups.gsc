@@ -40,9 +40,7 @@ init()
 	init_powerups();
 
 	thread watch_for_drop();
-
 	thread death_check();
-	
 	thread second_chance_check();
 	
 }
@@ -589,7 +587,7 @@ powerup_grab()
 						level thread fireworks( players[i], self );
 						break;
 					default:
-						println ("Unrecognized poweup.");
+						println ("Unrecognized powerup.");
 						break;
 					}
 				}
@@ -1265,7 +1263,6 @@ time_remaning_on_insta_kill_powerup()
 	}
 	*/
 
-
 	// time it down!
 	while ( level.zombie_vars["zombie_powerup_insta_kill_time"] >= 0)
 	{
@@ -1332,7 +1329,6 @@ time_remaining_on_point_doubler_powerup()
 	
 	playsoundatposition("dp_vox", (0,0,0));
 
-	
 	
 	// time it down!
 	while ( level.zombie_vars["zombie_powerup_point_doubler_time"] >= 0)
@@ -1454,62 +1450,24 @@ death_check()
 			{
 			
 				players[i] UnsetPerk( "specialty_armorvest" );
-			
-			
 				players[i] UnsetPerk( "specialty_quickrevive" );
-			
-			
 				players[i] UnsetPerk( "specialty_fastreload" );
-			
-			
 				players[i] UnsetPerk( "specialty_rof" );
-			
-			
 				players[i] UnsetPerk( "specialty_quieter" );
-			
-			
 				players[i] UnsetPerk( "specialty_bulletdamage" );
-				
-				
 				players[i] UnsetPerk( "specialty_longersprint" );
-				
-				
 				players[i] UnsetPerk( "specialty_bulletaccuracy" );
-				
-				
 				players[i] UnsetPerk( "specialty_explosivedamage" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_armorvest" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_quickrevive" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_fastreload" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_rof" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_quieter" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_bulletdamage" );
-				
-				
 				players[i] perk_hud_destroy( "specialty_longersprint" );
-				
-				
 				players[i] perk_hud_destroy( "specialty_bulletaccuracy" );
-				
-				
 				players[i] perk_hud_destroy( "specialty_explosivedamage" );
-				
-			
 				players[i].health = 100;
-				
-				
 				players[i].maxhealth = 100;
 				
 			}
@@ -1537,7 +1495,6 @@ perk_hud_create( perk )
 			}
 		}
 	#/
-
 
 		shader = "";
 
@@ -1602,14 +1559,8 @@ perk_hud_create( perk )
 
 perk_hud_destroy( perk )
 {
-
-
 	self.perk_hud[ perk ] destroy_hud();
-	
-	
 	self.perk_hud[ perk ] = undefined;
-	
-	
 }
 
 second_chance_check()
@@ -1638,66 +1589,25 @@ death_death( player )
 {
 
 	player waittill ( "second_chance" );
-	
-	
 	player UnsetPerk( "specialty_armorvest" );
-			
-			
 	player UnsetPerk( "specialty_quickrevive" );
-			
-			
-	player UnsetPerk( "specialty_fastreload" );
-			
-			
-	player UnsetPerk( "specialty_rof" );
-			
-			
+	player UnsetPerk( "specialty_fastreload" );	
+	player UnsetPerk( "specialty_rof" );	
 	player UnsetPerk( "specialty_quieter" );
-			
-			
-	player UnsetPerk( "specialty_bulletdamage" );
-				
-				
-	player UnsetPerk( "specialty_longersprint" );
-				
-				
-	player UnsetPerk( "specialty_bulletaccuracy" );
-				
-				
+	player UnsetPerk( "specialty_bulletdamage" );		
+	player UnsetPerk( "specialty_longersprint" );		
+	player UnsetPerk( "specialty_bulletaccuracy" );		
 	player UnsetPerk( "specialty_explosivedamage" );
-			
-			
-	player perk_hud_destroy( "specialty_armorvest" );
-			
-			
+	player perk_hud_destroy( "specialty_armorvest" );	
 	player perk_hud_destroy( "specialty_quickrevive" );
-			
-			
 	player perk_hud_destroy( "specialty_fastreload" );
-			
-			
-	player perk_hud_destroy( "specialty_rof" );
-			
-			
+	player perk_hud_destroy( "specialty_rof" );	
 	player perk_hud_destroy( "specialty_quieter" );
-			
-			
-	player perk_hud_destroy( "specialty_bulletdamage" );
-				
-				
-	player perk_hud_destroy( "specialty_longersprint" );
-				
-				
-	player perk_hud_destroy( "specialty_bulletaccuracy" );
-				
-				
+	player perk_hud_destroy( "specialty_bulletdamage" );	
+	player perk_hud_destroy( "specialty_longersprint" );	
+	player perk_hud_destroy( "specialty_bulletaccuracy" );	
 	player perk_hud_destroy( "specialty_explosivedamage" );
-				
-			
 	player.health = 100;
-				
-				
 	player.maxhealth = 100;
 	
 }
-
