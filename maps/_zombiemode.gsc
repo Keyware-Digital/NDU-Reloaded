@@ -1661,12 +1661,12 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 	players = get_players();
 
 	if( sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH" || sMeansOfDeath == "MOD_EXPLOSIVE" || sMeansOfDeath == "MOD_FALLING" )
-    {		
-        /*if ( self HasPerk( "specialty_detectexplosive" ) )
+    {
+        if ( self HasPerk( "specialty_quieter" ) )
         {
             self.health = self.maxhealth+iDamage;
             return;
-        }*/
+        }
     }
 	
 	if( self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1 )
