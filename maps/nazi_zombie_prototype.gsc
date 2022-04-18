@@ -36,8 +36,8 @@ init_sounds()
 }
 intro_screen()
 {
-	text_line[0] = "Nacht Der Untoten";
-	text_line[1] = "Unknown Location";
+	text_line[0] = "Abandoned Airfield";
+	text_line[1] = "Morasko, Poland";
 	text_line[2] = "August 30th, 1945";
 
 	flag_wait( "all_players_connected" );
