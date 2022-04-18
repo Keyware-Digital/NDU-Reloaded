@@ -635,9 +635,10 @@ random_perk(player)
     
         if(player hasperk(perk) == false)
         {
-            player SetPerk( perk );
+            /*player SetPerk( perk );
             player maps\_zombiemode_perks::perk_hud_create( perk );
             player maps\_zombiemode_perks::perk_think( perk );
+			*/
             return;
         }
     }
