@@ -65,6 +65,7 @@ init_powerups()
 	add_zombie_powerup( "longersprint",		"zombie_3rd_perk_bottle_sleight",	&"Extreme Conditioning" );
 	add_zombie_powerup( "aim",		"zombie_3rd_perk_bottle_sleight",		&"Steady Aim" );
 	add_zombie_powerup( "fireworks",		"zombie_3rd_perk_bottle_revive",		&"Fireworks" );
+	add_zombie_powerup( "perk",		"zombie_3rd_perk_bottle_sleight",			&"Flak Jacket" );
 
 	// Randomize the order
 	randomize_powerups();
@@ -309,9 +310,91 @@ get_next_powerup()
 
 	powerup = level.zombie_powerup_array[level.zombie_powerup_index];
 	
-	level.zombie_powerup_index++;
+	/#
+		if( isdefined( level.zombie_devgui_power ) && level.zombie_devgui_power == 1 )
+			return powerup;
 
+	#/
+
+	//level.windows_destroyed = get_num_window_destroyed();
+
+	while( powerup == "carpenter" && get_num_window_destroyed() < 5)
+	{	
+		
+		
+		if( level.zombie_powerup_index >= level.zombie_powerup_array.size )
+		{
+			level.zombie_powerup_index = 0;
+			randomize_powerups();
+		}
+		
+		
+		powerup = level.zombie_powerup_array[level.zombie_powerup_index];
+		level.zombie_powerup_index++;
+			
+		if( powerup != "carpenter" )
+			return powerup;
+		
+		
+		wait(0.05);
+	}
+	
+	while( powerup == "perk" && !level.dog_intermission)
+	{	
+		
+		if( level.zombie_powerup_index >= level.zombie_powerup_array.size )
+		{
+			level.zombie_powerup_index = 0;
+			randomize_powerups();
+		}
+		
+		powerup = level.zombie_powerup_array[level.zombie_powerup_index];
+		level.zombie_powerup_index++;
+			
+		if( powerup != "perk" )
+		{
+			return powerup;
+		}
+		
+		wait(0.05);
+	}
+
+	level.zombie_powerup_index++;
+	
 	return powerup;
+}
+
+get_num_window_destroyed()
+{
+	num = 0;
+	for( i = 0; i < level.exterior_goals.size; i++ )
+	{
+		/*targets = getentarray(level.exterior_goals[i].target, "targetname");
+
+		barrier_chunks = []; 
+		for( j = 0; j < targets.size; j++ )
+		{
+			if( IsDefined( targets[j].script_noteworthy ) )
+			{
+				if( targets[j].script_noteworthy == "clip" )
+				{ 
+					continue; 
+				}
+			}
+
+			barrier_chunks[barrier_chunks.size] = targets[j];
+		}*/
+
+
+		if( all_chunks_destroyed( level.exterior_goals[i].barrier_chunks ) )
+		{
+			num += 1;
+		}
+
+	}
+
+	return num;
+}
 }
 get_num_window_destroyed()
 {
@@ -1490,64 +1573,25 @@ death_check()
 			
 			if( players[i] maps\_laststand::player_is_in_laststand() )
 			{
-			
 				players[i] UnsetPerk( "specialty_armorvest" );
-			
-			
 				players[i] UnsetPerk( "specialty_quickrevive" );
-			
-			
 				players[i] UnsetPerk( "specialty_fastreload" );
-			
-			
 				players[i] UnsetPerk( "specialty_rof" );
-			
-			
-				players[i] UnsetPerk( "specialty_detectexplosive" );
-			
-			
+                players[i] UnsetPerk( "specialty_detectexplosive" );
 				players[i] UnsetPerk( "specialty_bulletdamage" );
-				
-				
 				players[i] UnsetPerk( "specialty_longersprint" );
-				
-				
 				players[i] UnsetPerk( "specialty_bulletaccuracy" );
-				
-				
 				players[i] UnsetPerk( "specialty_explosivedamage" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_armorvest" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_quickrevive" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_fastreload" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_rof" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_detectexplosive" );
-			
-			
 				players[i] perk_hud_destroy( "specialty_bulletdamage" );
-				
-				
 				players[i] perk_hud_destroy( "specialty_longersprint" );
-				
-				
 				players[i] perk_hud_destroy( "specialty_bulletaccuracy" );
-				
-				
 				players[i] perk_hud_destroy( "specialty_explosivedamage" );
-				
-			
 				players[i].health = 100;
-				
-				
 				players[i].maxhealth = 100;
 				
 			}
@@ -1640,14 +1684,8 @@ perk_hud_create( perk )
 
 perk_hud_destroy( perk )
 {
-
-
 	self.perk_hud[ perk ] destroy_hud();
-	
-	
-	self.perk_hud[ perk ] = undefined;
-	
-	
+	self.perk_hud[ perk ] = undefined;	
 }
 
 second_chance_check()
@@ -1674,67 +1712,26 @@ second_chance_check()
 
 death_death( player )
 {
-
 	player waittill ( "second_chance" );
-	
-	
-	player UnsetPerk( "specialty_armorvest" );
-			
-			
-	player UnsetPerk( "specialty_quickrevive" );
-			
-			
-	player UnsetPerk( "specialty_fastreload" );
-			
-			
-	player UnsetPerk( "specialty_rof" );
-			
-			
-	player UnsetPerk( "specialty_detectexplosive" );
-			
-			
-	player UnsetPerk( "specialty_bulletdamage" );
-				
-				
-	player UnsetPerk( "specialty_longersprint" );
-				
-				
+	player UnsetPerk( "specialty_armorvest" );	
+	player UnsetPerk( "specialty_quickrevive" );	
+	player UnsetPerk( "specialty_fastreload" );	
+	player UnsetPerk( "specialty_rof" );	
+	player UnsetPerk( "specialty_detectexplosive" );	
+	player UnsetPerk( "specialty_bulletdamage" );		
+	player UnsetPerk( "specialty_longersprint" );	
 	player UnsetPerk( "specialty_bulletaccuracy" );
-				
-				
-	player UnsetPerk( "specialty_explosivedamage" );
-			
-			
-	player perk_hud_destroy( "specialty_armorvest" );
-			
-			
-	player perk_hud_destroy( "specialty_quickrevive" );
-			
-			
-	player perk_hud_destroy( "specialty_fastreload" );
-			
-			
+	player UnsetPerk( "specialty_explosivedamage" );	
+	player perk_hud_destroy( "specialty_armorvest" );		
+	player perk_hud_destroy( "specialty_quickrevive" );	
+	player perk_hud_destroy( "specialty_fastreload" );		
 	player perk_hud_destroy( "specialty_rof" );
-			
-			
-	player perk_hud_destroy( "specialty_detectexplosive" );
-			
-			
-	player perk_hud_destroy( "specialty_bulletdamage" );
-				
-				
+	player perk_hud_destroy( "specialty_detectexplosive" );	
+	player perk_hud_destroy( "specialty_bulletdamage" );		
 	player perk_hud_destroy( "specialty_longersprint" );
-				
-				
-	player perk_hud_destroy( "specialty_bulletaccuracy" );
-				
-				
-	player perk_hud_destroy( "specialty_explosivedamage" );
-				
-			
-	player.health = 100;
-				
-				
+	player perk_hud_destroy( "specialty_bulletaccuracy" );		
+	player perk_hud_destroy( "specialty_explosivedamage" );		
+	player.health = 100;			
 	player.maxhealth = 100;
 	
 }
