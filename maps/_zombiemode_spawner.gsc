@@ -769,7 +769,7 @@ zombie_gib_on_damage()
 		
 		if( isDefined(attacker) && isplayer(attacker) && isAlive(attacker) )
 		{
-			// Paragalor's Stopping Power
+			// Stopping Power test
 			if(attacker HasPerk("specialty_bulletdamage") && ( type == "MOD_PISTOL_BULLET" || type == "MOD_RIFLE_BULLET" ) )
 			{
 				if(self.health > 0)

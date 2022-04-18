@@ -36,8 +36,8 @@ init_sounds()
 }
 intro_screen()
 {
-	text_line[0] = "Nacht Der Untoten";
-	text_line[1] = "Unknown Location";
+	text_line[0] = "Abandoned Airfield";
+	text_line[1] = "Morasko, Poland";
 	text_line[2] = "August 30th, 1945";
 
 	flag_wait( "all_players_connected" );
@@ -176,7 +176,7 @@ include_weapons()
 	
 }
 
-// Rare Gun Weighting
+// Add weapon(s) to mystery box after X rounds.
 add_walther_prototype()
 {
     while(1)
@@ -203,6 +203,7 @@ add_springfield_scoped_zombie_upgraded()
     }
 }
 
+// Rare weapon(s) weighting
 prototype_ray_gun_weighting_func()
 {
 	{	

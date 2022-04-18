@@ -2,14 +2,6 @@
 #include maps\_utility;
 #include maps\_zombiemode_utility;
 
-
-/*---------------------------------------------------------------------------------
-
-Paragalor's Custom Prototype Random Weapon Box Bouncing Betties :3
-(Pretty darn epic if you ask me)
-
----------------------------------------------------------------------------------*/
-
 bouncing_betty_watch()
 {
 	self endon("death");
