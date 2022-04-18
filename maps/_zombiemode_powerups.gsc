@@ -666,7 +666,7 @@ powerup_grab()
 	}	
 }
 
-random_perk(player)
+random_perk(player, drop_item)
 {
     perks = [];
     perks[perks.size] = "specialty_armorvest";
@@ -686,18 +686,87 @@ random_perk(player)
     {
         perk = perks[i];
     
-        /*if(player hasperk(perk) == false)
+        if(player hasperk(perk) == false)
         {
             player SetPerk( perk );
             player maps\_zombiemode_perks::perk_hud_create( perk );
             player maps\_zombiemode_perks::perk_think( perk );
             return;
         }
-	*/
+	
     }
 }
 
-jugg( player, drop_item )
+perk_think( perk )
+{
+	self waittill_any( "fake_death", "death", "player_downed", "second_chance" );
+
+		self UnsetPerk( perk );
+		self.maxhealth = 100;
+		self perk_hud_destroy( perk );
+		//self iprintln( "Perk Lost: " + perk );
+}
+
+perk_hud_create( perk )
+{
+	if ( !IsDefined( self.perk_hud ) )
+	{
+		self.perk_hud = [];
+	}
+
+	shader = "";
+
+		switch( perk )
+		{
+		case "specialty_armorvest":
+			shader = "specialty_juggernaut_zombies";
+			break;
+
+		case "specialty_quickrevive":
+			shader = "specialty_quickrevive_zombies";
+			break;
+
+		case "specialty_fastreload":
+			shader = "specialty_fastreload_zombies";
+			break;
+
+		case "specialty_rof":
+			shader = "specialty_doubletap_zombies";
+			break;
+			
+		case "specialty_detectexplosive":
+			shader = "specialty_phd_zombies";
+			break;
+			
+		case "specialty_longersprint":
+			shader = "specialty_longersprint_zombies";
+			break;
+			
+		case "specialty_bulletaccuracy":
+			shader = "specialty_aim_zombies";
+			break;
+
+		default:
+			shader = "";
+			break;
+		}
+
+		hud = create_simple_hud( self );
+		hud.foreground = true; 
+		hud.sort = 1; 
+		hud.hidewheninmenu = false; 
+		hud.alignX = "left"; 
+		hud.alignY = "bottom";
+		hud.horzAlign = "left"; 
+		hud.vertAlign = "bottom";
+		hud.x = self.perk_hud.size * 30; 
+		hud.y = hud.y - 70; 
+		hud.alpha = 1;
+		hud SetShader( shader, 24, 24 );
+
+		self.perk_hud[ perk ] = hud;
+}
+/*jugg( player, drop_item )
 {
 
 	if( player HasPerk( "specialty_armorvest" ) )
@@ -980,7 +1049,7 @@ fireworks( player, drop_item )
 		
 	}
 	
-}
+}	*/
 
 start_carpenter( origin )
 {
@@ -1561,8 +1630,8 @@ death_check()
 				players[i] perk_hud_destroy( "specialty_longersprint" );
 				players[i] perk_hud_destroy( "specialty_bulletaccuracy" );
 				players[i] perk_hud_destroy( "specialty_explosivedamage" );
-				players[i].health = 100;
-				players[i].maxhealth = 100;
+			//	players[i].health = 100;
+			//	players[i].maxhealth = 100;
 				
 			}
 			
@@ -1658,7 +1727,7 @@ perk_hud_destroy( perk )
 	self.perk_hud[ perk ] = undefined;	
 }
 
-second_chance_check()
+/*second_chance_check()
 {
 
 	while( 1 )
@@ -1678,9 +1747,9 @@ second_chance_check()
 		
 	}
 	
-}
+}*/
 
-death_death( player )
+/*death_death( player )
 {
 	player waittill ( "second_chance" );
 	player UnsetPerk( "specialty_armorvest" );	
@@ -1704,5 +1773,5 @@ death_death( player )
 	player.health = 100;			
 	player.maxhealth = 100;
 	
-}
+}*/
 
