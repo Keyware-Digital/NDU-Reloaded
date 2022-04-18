@@ -43,7 +43,7 @@ init()
 
 	thread death_check();
 	
-	thread second_chance_check();
+//	thread second_chance_check();
 	
 }
 
