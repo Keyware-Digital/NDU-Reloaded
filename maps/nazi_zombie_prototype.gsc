@@ -176,7 +176,7 @@ include_weapons()
 	
 }
 
-// Rare Gun Weighting
+// Add weapon(s) to mystery box after X rounds.
 add_walther_prototype()
 {
     while(1)
@@ -203,6 +203,7 @@ add_springfield_scoped_zombie_upgraded()
     }
 }
 
+// Rare weapon(s) weighting
 prototype_ray_gun_weighting_func()
 {
 	{	
