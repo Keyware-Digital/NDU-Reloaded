@@ -1013,7 +1013,7 @@ play_weapon_vo(weapon)
 				break;
 			case "vox_tesla":
 				if (level.vox_tesla_available.size < 1 )
-				{
+				{/**/
 					level.vox_tesla_available = level.vox_tesla;
 				}
 				sound_to_play = random(level.vox_tesla_available);
