@@ -105,6 +105,16 @@ betty_smoke_trail()
 	self.tag_origin moveto(self.tag_origin.origin + (0,0,100),.15);
 }
 
+max_ammo(player)
+{
+	if(isDefined(player.has_betties))
+	{
+		player giveweapon("mine_bouncing_betty");
+		player setactionslot(4,"weapon","mine_bouncing_betty");
+		player setweaponammoclip("mine_bouncing_betty",2);
+	}
+}
+
 give_betties_after_rounds()
 {
 	while(1)

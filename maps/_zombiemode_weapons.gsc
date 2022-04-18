@@ -1057,7 +1057,7 @@ weapon_give( weapon )
 		//thread setup_response_line( self, index, "monk" );
 		self maps\_zombiemode_spawner::do_player_playdialog(plr, sound_to_play, 0.05);
 	}
-}	*/
+}*/
 
 ammo_give( weapon )
 {
