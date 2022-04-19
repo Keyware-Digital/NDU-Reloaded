@@ -119,8 +119,8 @@ include_weapons()
 	include_weapon( "sw_357" );
 	
 	// Semi Auto
-	include_weapon( "m1carbine", false );
-	//include_weapon( "m1garand", false );	//disabled in favour of mlgarand_gl
+	include_weapon( "m1carbine" );	//disabled in weapon limiter below
+	include_weapon( "m1garand" );	//disabled in weapon limiter below in favour of mlgarand_gl
 	include_weapon( "gewehr43" );
 
 	// Full Auto
@@ -130,12 +130,12 @@ include_weapons()
 	
 	// Bolt Action
 
-	include_weapon( "kar98k", false );
-	//include_weapon( "springfield", false );
+	include_weapon( "kar98k" );		//disabled in weapon limiter below
+	include_weapon( "springfield" );
 
 	// Scoped
 	include_weapon( "ptrs41_zombie" );
-	include_weapon( "kar98k_scoped_zombie", false );
+	include_weapon( "kar98k_scoped_zombie" );	//weapon cabinet only
 		
 	// Grenade
 	include_weapon( "molotov" );
