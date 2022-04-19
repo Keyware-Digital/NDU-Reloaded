@@ -1,11 +1,5 @@
 #include maps\_utility;
 
-init()
-{
-	PrecacheModel("viewmodel_ger_wermacht_arms");
-	PrecacheModel("viewmodel_usa_marine_arms");
-}
-
 init_loadout()
 {
 	// MikeD (7/30/2007): New method of precaching/giving weapons.
@@ -847,7 +841,8 @@ Set_Custom_Arms()
 {
 	arms = "viewmodel_usa_marine_arms"; // default
 
-
+	PrecacheModel("viewmodel_ger_wermacht_arms");
+	PrecacheModel("viewmodel_usa_marine_arms");
 	switch(self.entity_num)
 	{
 		case 0:
