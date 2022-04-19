@@ -62,7 +62,7 @@ init_loadout()
 		{
 			//nothing
 		}
-		else if( level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_asylum" || level.script == "nazi_zombie_factory" || level.script == "nazi_zombie_prototype" )
+		else if( level.script == "zombiemode" ) //zombie map
 		{
 
 			mptype\nazi_zombie_heroes::precache();
@@ -413,21 +413,6 @@ init_models_and_variables_loadout()
 		level.campaign = "american";
 		return;
 	}
-	else if( GetDvar( "zombiemode" ) == "1" || IsSubStr( level.script, "nazi_zombie_" ) || level.script == "zombie_test_map" ) // CODER_MOD (Austin 5/4/08): zombiemode loadout setup
-	{
-		add_weapon( "zombie_colt" );
-		PrecacheItem( "napalmblob" );
-		PrecacheItem( "napalmbloblight" );
-		set_switch_weapon( "zombie_colt" );
-
-		set_laststand_pistol( "zombie_colt" );
-
-		//set_player_viewmodel( "viewmodel_usa_marine_arms");
-		set_player_interactive_hands( "viewmodel_usa_marine_player");
-
-		level.campaign = "american";
-		return;
-	}
 	else if( IsSubStr( level.script, "intro_" ) ) // Support for the intro movies for the campaigns
 	{
 		return;
@@ -440,31 +425,22 @@ init_models_and_variables_loadout()
 		return;
 	}
 
+	//Zombiemode loadout. If you aren't making a zombie map then you can define your level.script and add a check above.
+	add_weapon( "zombie_colt" );
+	PrecacheItem( "napalmblob" );
+	PrecacheItem( "napalmbloblight" );
+	set_switch_weapon( "zombie_colt" );
 
-	//------------------------------------
-	// level.script is not a single player level. give default weapons.
-	println ("loadout.gsc:     No level listing in _loadout.gsc, giving default guns!!!! =======================");		
+	set_laststand_pistol( "zombie_colt" );
+	set_player_specific_viewmodel(0, "viewmodel_ger_wermacht_arms");
+    set_player_specific_viewmodel(1, "viewmodel_usa_marine_arms");
+    set_player_specific_viewmodel(2, "viewmodel_ger_wermacht_arms");
+    set_player_specific_viewmodel(3, "viewmodel_usa_marine_arms");
 
-	// default weapons
-	add_weapon( "colt" );
-	add_weapon( "m1garand" );
-	add_weapon( "fraggrenade" );
-	add_weapon( "m8_white_smoke" );
-	set_secondary_offhand( "smoke" );
+	set_player_interactive_hands( "viewmodel_ger_wermacht_player");
 
-	set_laststand_pistol( "colt" );
-	set_switch_weapon( "m1garand" );
-
-	// SRS 6/29/2008: updated to allow defaulted maps to have different level.campaign default viewarms
-	if( IsDefined( level.campaign ) && level.campaign == "russian" )
-	{
-		set_player_viewmodel( "viewmodel_rus_guard_arms");
-	}
-	else
-	{
-		set_player_viewmodel( "viewmodel_usa_marine_arms");
-		level.campaign = "american";
-	}
+	level.campaign = "american";
+	level.script = "zombiemode";
 }
 
 // This will precache and set the loadout rather than duplicating work.
@@ -666,6 +642,16 @@ give_loadout(wait_for_switch_weapon)
 
 give_model( class )
 {
+	//	switch ( level.campaign )
+	//	{
+	//		case "russian":
+	//			self mptype\player_rus_guard::main();
+	//		break;
+	//		case "american":
+	//		default:
+	//			self mptype\player_usa_marine::main();
+	//		break;
+
 	if (level.campaign == "russian")
 	{
 		if (level.script == "ber2")
@@ -703,7 +689,7 @@ give_model( class )
 		{
 			//nothing
 		}
-		else
+		else if( level.script == "zombiemode" || level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_asylum" || level.script == "nazi_zombie_factory" || level.script == "zombie_test_map" ) 
 		{
 
 			switch( self.entity_num)
@@ -721,29 +707,33 @@ give_model( class )
 				character\char_zomb_player_3::main();
 				break;
 			}
+			self give_player_specific_viewmodel();
+            return;
 		
+		}
+		else
+		{
+			self mptype\player_usa_marine::main();
 		}
 	}
 	else
 	{
-		switch( self.entity_num)
-			{
-			case 0:
-				character\char_zomb_player_0::main();
-				break;
-			case 1:
-				character\char_zomb_player_1::main();
-				break;
-			case 2:
-				character\char_zomb_player_2::main();
-				break;
-			case 3:
-				character\char_zomb_player_3::main();
-				break;
-			}
+		self mptype\player_usa_marine::main();
 	}
 
-	self Set_Custom_Arms();
+
+
+
+
+
+
+	//	}
+
+	// MikeD (3/28/2008): If specified, give the player his hands
+	if( IsDefined( level.player_viewmodel ) )
+	{
+		self SetViewModel( level.player_viewmodel );
+	}
 }
 
 ///////////////////////////////////////////////
@@ -837,26 +827,22 @@ RestorePlayerWeaponStatePersistent( slot )
 	return true;
 }
 
-Set_Custom_Arms()
+set_player_specific_viewmodel(num, name)
 {
-	arms = "viewmodel_usa_marine_arms"; // default
+if(!IsDefined(level.player_specific_viewmodels))
+         level.player_specific_viewmodels = [];
+level.player_specific_viewmodels[num] = name;
+PrecacheModel(name);
+}
 
-	PrecacheModel("viewmodel_ger_wermacht_arms");
-	PrecacheModel("viewmodel_usa_marine_arms");
-	switch(self.entity_num)
-	{
-		case 0:
-			arms ="viewmodel_ger_wermacht_arms";
-			break;
-		case 1:
-			arms ="viewmodel_usa_marine_arms";
-			break;
-		case 2:
-			arms ="viewmodel_ger_wermacht_arms";
-			break;
-		case 3:
-			arms ="viewmodel_usa_marine_arms";
-			break;
-	}
-	self SetViewModel(arms);
+give_player_specific_viewmodel()
+{
+if(IsDefined(level.player_specific_viewmodels) && IsDefined(level.player_specific_viewmodels[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+{
+         self SetViewModel(level.player_specific_viewmodels[ maps\_zombiemode_weapons::get_player_index( self ) ]);
+}
+else if(IsDefined(level.player_viewmodel))
+{
+         self SetViewModel(level.player_viewmodel);
+}
 }

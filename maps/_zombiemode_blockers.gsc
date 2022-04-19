@@ -760,7 +760,7 @@ replace_chunk( chunk )
 
 		chunk MoveTo( chunk.og_origin, 0.15, 0.1 ); 
 		chunk waittill( "movedone" );
-		EarthQuake( randomfloatrange( 0.5, 0.8 ), 0.5, chunk.origin, 300 ); 
+		EarthQuake( RandomFloatRange( 0.1, 0.15 ), 0.3, chunk.origin, 200 ); 
 	}
 
 	chunk.destroyed = false; 
