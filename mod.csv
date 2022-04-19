@@ -4,8 +4,8 @@ rawfile,maps\_gameskill.gsc
 rawfile,maps\_zombiemode_blockers.gsc
 rawfile,maps\_zombiemode_powerups.gsc
 rawfile,maps\_zombiemode.gsc
-rawfile,maps\_zombiemode_weapons.gsc
 rawfile,maps\_zombiemode_spawner.gsc
+rawfile,maps\_zombiemode_weapons.gsc
 rawfile,maps\_zombiemode_betty.gsc
 weapon,sp/walther_prototype
 weapon,sp/mosin_rifle_bayonet
