@@ -8,7 +8,7 @@ main()
 
 	include_weapons();
 	include_powerups();
-    level thread rampage_fx();
+    level thread betty_fx();
 	
 	maps\nazi_zombie_prototype_fx::main();
 	maps\_zombiemode::main();
@@ -25,15 +25,17 @@ main()
 	
 }
 
-rampage_fx()
+betty_fx()
 {
 level._effect["betty_explode"]			= loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
-	level._effect["betty_trail"]			= loadfx("weapon/bouncing_betty/fx_betty_trail");
+level._effect["betty_trail"]			= loadfx("weapon/bouncing_betty/fx_betty_trail");
+
 }
 init_sounds()
 {
 	maps\_zombiemode_utility::add_sound( "break_stone", "break_stone" );
 }
+
 intro_screen()
 {
 	text_line[0] = "Abandoned Airfield";
