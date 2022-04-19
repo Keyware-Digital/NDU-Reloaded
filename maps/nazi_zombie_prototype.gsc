@@ -104,6 +104,7 @@ include_weapons()
 {
 	// NDU Reloaded - Trebor
 	include_weapon( "walther_prototype" );
+	//include_weapon( "mosin_rifle" );
 	include_weapon( "mosin_rifle_bayonet" );
 	include_weapon( "kar98k_bayonet" );
 	include_weapon( "svt40" );
