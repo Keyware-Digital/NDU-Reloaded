@@ -35,6 +35,7 @@ init_sounds()
 {
 	maps\_zombiemode_utility::add_sound( "break_stone", "break_stone" );
 }
+
 intro_screen()
 {
 	text_line[0] = "Abandoned Airfield";
