@@ -1554,3 +1554,37 @@ zombie_history( msg )
 	self.zombie_history[self.zombie_history.size] = msg;
 #/
 }
+
+/*play_raygun_dialog(player_index)
+{
+		
+		waittime = 0.05;
+		if(!IsDefined (self.vox_kill_ray))
+		{
+			num_variants = get_number_variants(player_index + "vox_kill_ray");
+			//iprintlnbold(num_variants);
+			self.vox_kill_ray = [];
+			for(i=0;i<num_variants;i++)
+			{
+				self.vox_kill_ray[self.vox_kill_ray.size] = "vox_kill_ray_" + i;
+				//iprintlnbold("vox_kill_ray_" + i);	
+			}
+			self.vox_kill_ray_available = self.vox_kill_ray;
+		}
+
+		if(!isdefined (level.player_is_speaking))
+		{
+			level.player_is_speaking = 0;
+		}
+
+		sound_to_play = random(self.vox_kill_ray_available);
+	//	iprintlnbold("LINE:" + player_index + sound_to_play);
+		self do_player_playdialog(player_index, sound_to_play, waittime);
+		self.vox_kill_ray_available = array_remove(self.vox_kill_ray_available,sound_to_play);
+	
+		if (self.vox_kill_ray_available.size < 1 )
+		{
+			self.vox_kill_ray_available = self.vox_kill_ray;
+		}
+
+}*/

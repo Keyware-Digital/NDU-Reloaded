@@ -932,132 +932,6 @@ weapon_give( weapon )
 
 }
 
-/*play_weapon_vo(weapon)
-{
-	index = get_player_index(self);
-	if(!IsDefined (level.zombie_weapons[weapon].sound))
-	{
-		return;
-	}	
-	
-	if( level.zombie_weapons[weapon].sound == "vox_monkey" )
-	{
-		plr = "plr_" + index + "_";
-		create_and_play_dialog( plr, "vox_monkey", .25, "resp_monk" );
-		return;
-	}
-	//	iprintlnbold (index);
-	if( level.zombie_weapons[weapon].sound != "" )
-	{
-		weap = level.zombie_weapons[weapon].sound;
-//		iprintlnbold("Play_Weap_VO_" + weap);
-		switch(weap)
-		{
-			case "vox_crappy":
-				if (level.vox_crappy_available.size < 1 )
-				{
-					level.vox_crappy_available = level.vox_crappy;
-				}
-				sound_to_play = random(level.vox_crappy_available);
-				level.vox_crappy_available = array_remove(level.vox_crappy_available,sound_to_play);
-				break;
-
-			case "vox_mg":
-				if (level.vox_mg_available.size < 1 )
-				{
-					level.vox_mg_available = level.vox_mg;
-				}
-				sound_to_play = random(level.vox_mg_available);
-				level.vox_mg_available = array_remove(level.vox_mg_available,sound_to_play);
-				break;
-			case "vox_shotgun":
-				if (level.vox_shotgun_available.size < 1 )
-				{
-					level.vox_shotgun_available = level.vox_shotgun;
-				}
-				sound_to_play = random(level.vox_shotgun_available);
-				level.vox_shotgun_available = array_remove(level.vox_shotgun_available,sound_to_play);
-				break;
-			case "vox_357":
-				if (level.vox_357_available.size < 1 )
-				{
-					level.vox_357_available = level.vox_357;
-				}
-				sound_to_play = random(level.vox_357_available);
-				level.vox_357_available = array_remove(level.vox_357_available,sound_to_play);
-				break;
-			case "vox_bar":
-				if (level.vox_bar_available.size < 1 )
-				{
-					level.vox_bar_available = level.vox_bar;
-				}
-				sound_to_play = random(level.vox_bar_available);
-				level.vox_bar_available = array_remove(level.vox_bar_available,sound_to_play);
-				break;
-			case "vox_flame":
-				if (level.vox_flame_available.size < 1 )
-				{
-					level.vox_flame_available = level.vox_flame;
-				}
-				sound_to_play = random(level.vox_flame_available);
-				level.vox_flame_available = array_remove(level.vox_flame_available,sound_to_play);
-				break;
-			case "vox_raygun":
-				if (level.vox_raygun_available.size < 1 )
-				{
-					level.vox_raygun_available = level.vox_raygun;
-				}
-				sound_to_play = random(level.vox_raygun_available);
-				level.vox_raygun_available = array_remove(level.vox_raygun_available,sound_to_play);
-				break;
-			case "vox_tesla":
-				if (level.vox_tesla_available.size < 1 )
-				{
-					level.vox_tesla_available = level.vox_tesla;
-				}
-				sound_to_play = random(level.vox_tesla_available);
-				level.vox_tesla_available = array_remove(level.vox_tesla_available,sound_to_play);
-				break;
-			case "vox_sticky":
-				if (level.vox_sticky_available.size < 1 )
-				{
-					level.vox_sticky_available = level.vox_sticky;
-				}
-				sound_to_play = random(level.vox_sticky_available);
-				level.vox_sticky_available = array_remove(level.vox_sticky_available,sound_to_play);
-				break;
-			case "vox_ppsh":
-				if (level.vox_ppsh_available.size < 1 )
-				{
-					level.vox_ppsh_available = level.vox_ppsh;
-				}
-				sound_to_play = random(level.vox_ppsh_available);
-				level.vox_ppsh_available = array_remove(level.vox_ppsh_available,sound_to_play);
-				break;
-			case "vox_mp40":
-			if (level.vox_mp40_available.size < 1 )
-				{
-					level.vox_mp40_available = level.vox_mp40;
-				}
-				sound_to_play = random(level.vox_mp40_available);
-				level.vox_mp40_available = array_remove(level.vox_mp40_available,sound_to_play);
-				break;					
-			
-			default: 
-				sound_var = randomintrange(0, level.zombie_weapons[weapon].variation_count);
-				sound_to_play = level.zombie_weapons[weapon].sound + "_" + sound_var;
-				
-		}
-
-		plr = "plr_" + index + "_";
-		//self playsound ("plr_" + index + "_" + sound_to_play);
-		//iprintlnbold (sound_to_play);
-		
-		//thread setup_response_line( self, index, "monk" );
-		self maps\_zombiemode_spawner::do_player_playdialog(plr, sound_to_play, 0.05);
-	}
-}*/
-
 ammo_give( weapon )
 {
 	// We assume before calling this function we already checked to see if the player has this weapon...
@@ -1130,3 +1004,72 @@ get_player_index(player)
 #/
 	return level.random_character_index[player.entity_num];
 }
+
+/*play_weapon_vo(weapon)
+{
+	index = get_player_index(self);
+	if(!IsDefined (level.zombie_weapons[weapon].sound))
+	{
+		return;
+	}	
+	
+	//	iprintlnbold (index);
+	if( level.zombie_weapons[weapon].sound != "" )
+	{
+		weap = level.zombie_weapons[weapon].sound;
+//		iprintlnbold("Play_Weap_VO_" + weap);
+		switch(weap)
+		{
+			case "vox_raygun":
+				if (level.vox_raygun_available.size < 1 )
+				{
+					level.vox_raygun_available = level.vox_raygun;
+				}
+				sound_to_play = random(level.vox_raygun_available);
+				level.vox_raygun_available = array_remove(level.vox_raygun_available,sound_to_play);
+				break;				
+			default: 
+				sound_var = randomintrange(0, level.zombie_weapons[weapon].variation_count);
+				sound_to_play = level.zombie_weapons[weapon].sound + "_" + sound_var;
+				
+		}
+
+		plr = "plr_" + index + "_";
+		//self playsound ("plr_" + index + "_" + sound_to_play);
+		//iprintlnbold (sound_to_play);
+		
+		//thread setup_response_line( self, index, "monk" );
+		self maps\_zombiemode_spawner::do_player_playdialog(plr, sound_to_play, 0.05);
+	}
+}
+
+add_weapon_to_sound_array(vo,num)
+{
+	if(!isDefined(vo))
+	{
+		return;
+	}
+	player = getplayers();
+	for(i=0;i<player.size;i++)
+	{
+		index = maps\_zombiemode_weapons::get_player_index(player);
+		player_index = "plr_" + index + "_";
+		num = maps\_zombiemode_spawner::get_number_variants(player_index + vo);
+	}
+//	iprintlnbold(vo);
+
+	switch(vo)
+	{
+		case "vox_raygun":
+			if(!isDefined(level.vox_raygun))
+			{
+				level.vox_raygun = [];
+				for(i=0;i<num;i++)
+				{
+					level.vox_raygun[level.vox_raygun.size] = "vox_raygun_" + i;						
+				}				
+			}
+			level.vox_raygun_available = level.vox_raygun;
+			break;
+	}
+}*/
