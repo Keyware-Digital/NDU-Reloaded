@@ -28,7 +28,8 @@ main()
 betty_fx()
 {
 level._effect["betty_explode"]			= loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
-	level._effect["betty_trail"]			= loadfx("weapon/bouncing_betty/fx_betty_trail");
+level._effect["betty_trail"]			= loadfx("weapon/bouncing_betty/fx_betty_trail");
+
 }
 init_sounds()
 {
