@@ -560,31 +560,31 @@ powerup_grab()
 						players[i] thread powerup_vo("carpenter");
 						break;						
 					case "jugg":
-						level thread jugg(players[i]);
+						players[i] thread jugg();
 						break;
 					case "dtap":
-						level thread dtap(players[i]);
+						players[i] thread dtap();
 						break;
 					case "fastreload":
-						level thread fastreload(players[i]);
+						players[i] thread fastreload();
 						break;
 					case "revive":
-						level thread revive(players[i]);
+						players[i] thread revive();
 						break;
 					case "phd":
-						level thread phd(players[i]);
+						players[i] thread phd();
 						break;
 					case "sp":
-						level thread sp(players[i]);
+						players[i] thread sp();
 						break;
 					case "longersprint":
-						level thread longersprint(players[i]);
+						players[i] thread longersprint();
 						break;
 					case "aim":
-						level thread aim(players[i]);
+						players[i] thread aim();
 						break;
 					case "fireworks":
-						level thread fireworks(players[i]);
+						players[i] thread fireworks();
 						break;
 					default:
 						println ("Unrecognized powerup.");
@@ -605,289 +605,200 @@ powerup_grab()
 	}	
 }
 
-jugg( player, drop_item )
+jugg()
 {
+    if( self HasPerk( "specialty_armorvest" ) )
+    {
+        return;
+    }
 
-	if( player HasPerk( "specialty_armorvest" ) )
-	{
-	
-		return;
-		
-	}
-	if( player.is_zombie )
-	{
-	
-		return;
-		
-	}
-	if( player maps\_laststand::player_is_in_laststand() )
-	{
-	
-		return;
-		
-	}
-	else
-	{
-	
-		player SetPerk( "specialty_armorvest" );
-		
-		player perk_hud_create( "specialty_armorvest" );
-		
-		player.maxhealth = 200;
-		
-		player.health = 200;
-		
-	}
-	
+    if( self.is_zombie )
+    {
+        return;
+    }
+
+    if( self maps\_laststand::player_is_in_laststand() )
+    {
+        return;
+    }
+
+    else
+    {
+        self SetPerk( "specialty_armorvest" );
+        self perk_hud_create( "specialty_armorvest" );
+        self.maxhealth = 200;
+        self.health = 200;
+    }
 }
 
-dtap( player, drop_item )
+dtap()
 {
-	if( player HasPerk( "specialty_rof" ) )
+	if( self HasPerk( "specialty_rof" ) )
 	{
-	
 		return;
-		
 	}
-	if( player.is_zombie )
+	if( self.is_zombie )
 	{
-	
 		return;
-		
 	}
-	if( player maps\_laststand::player_is_in_laststand() )
+	if( self maps\_laststand::player_is_in_laststand() )
 	{
-	
 		return;
-		
 	}
 	else
 	{
-	
-		player SetPerk( "specialty_rof" );
-		
-		player perk_hud_create( "specialty_rof" );
-		
+		self SetPerk( "specialty_rof" );
+		self perk_hud_create( "specialty_rof" );	
 	}
-	
 }
 
-fastreload( player, drop_item )
+fastreload()
 {
-	if( player HasPerk( "specialty_fastreload" ) )
+	if( self HasPerk( "specialty_fastreload" ) )
 	{
-	
 		return;
-		
 	}
-	if( player.is_zombie )
+	if( self.is_zombie )
 	{
-	
-		return;
-		
+		return;	
 	}
-	if( player maps\_laststand::player_is_in_laststand() )
+	if( self maps\_laststand::player_is_in_laststand() )
 	{
-	
-		return;
-		
+		return;	
 	}
 	else
 	{
-	
-		player SetPerk( "specialty_fastreload" );
-		
-		player perk_hud_create( "specialty_fastreload" );
-		
+		self SetPerk( "specialty_fastreload" );
+		self perk_hud_create( "specialty_fastreload" );
 	}
-	
 }
 
-revive( player, drop_item )
+revive()
 {
-	if( player HasPerk( "specialty_quickrevive" ) )
+	if( self HasPerk( "specialty_quickrevive" ) )
 	{
-	
 		return;
-		
 	}
-	if( player.is_zombie )
+	if( self.is_zombie )
 	{
-	
-		return;
-		
+		return;	
 	}
-	if( player maps\_laststand::player_is_in_laststand() )
+	if( self maps\_laststand::player_is_in_laststand() )
 	{
-	
-		return;
-		
+		return;	
 	}
 	else
 	{
-	
-		player SetPerk( "specialty_quickrevive" );
-		
-		player perk_hud_create( "specialty_quickrevive" );
-		
+		self SetPerk( "specialty_quickrevive" );
+		self perk_hud_create( "specialty_quickrevive" );	
 	}
-	
 }
 
-phd( player, drop_item )
+phd()
 {
-
-	if( player HasPerk( "specialty_quieter" ) )
+	if( self HasPerk( "specialty_quieter" ) )
 	{
-	
-		return;
-		
+		return;	
 	}
-	if( player.is_zombie )
+	if( self.is_zombie )
 	{
-	
 		return;
-		
 	}
-	if( player maps\_laststand::player_is_in_laststand() )
+	if( self maps\_laststand::player_is_in_laststand() )
 	{
-	
 		return;
-		
 	}
 	else
 	{
-	
-		player SetPerk( "specialty_quieter" );
-		
-		player perk_hud_create( "specialty_quieter" );
-		
+		self SetPerk( "specialty_quieter" );	
+		self perk_hud_create( "specialty_quieter" );
 	}
-	
 }
 
-sp( player, drop_item )
+sp()
 {
-	if( player HasPerk( "specialty_bulletdamage" ) )
+	if( self HasPerk( "specialty_bulletdamage" ) )
 	{
-	
 		return;
-		
 	}
-	if( player.is_zombie )
+	if( self.is_zombie )
 	{
-	
 		return;
-		
 	}
-	if( player maps\_laststand::player_is_in_laststand() )
+	if( self maps\_laststand::player_is_in_laststand() )
 	{
-	
 		return;
-		
 	}
 	else
 	{
-	
-		player SetPerk( "specialty_bulletdamage" );
-		
-		player perk_hud_create( "specialty_bulletdamage" );
-		
+		self SetPerk( "specialty_bulletdamage" );
+		self perk_hud_create( "specialty_bulletdamage" );
 	}
-	
 }
 
-longersprint( player, drop_item )
+longersprint()
 {
-	if( player HasPerk( "specialty_longersprint" ) )
+	if( self HasPerk( "specialty_longersprint" ) )
 	{
-	
 		return;
-		
 	}
-	if( player.is_zombie )
+	if( self.is_zombie )
 	{
-	
 		return;
-		
 	}
-	if( player maps\_laststand::player_is_in_laststand() )
+	if( self maps\_laststand::player_is_in_laststand() )
 	{
-	
 		return;
-		
 	}
 	else
 	{
-	
-		player SetPerk( "specialty_longersprint" );
-		
-		player perk_hud_create( "specialty_longersprint" );
-		
+		self SetPerk( "specialty_longersprint" );
+		self perk_hud_create( "specialty_longersprint" );
 	}
-	
 }
 
-aim( player, drop_item )
+aim()
 {
-	if( player HasPerk( "specialty_bulletaccuracy" ) )
+	if( self HasPerk( "specialty_bulletaccuracy" ) )
 	{
-	
 		return;
-		
 	}
-	if( player.is_zombie )
+	if( self.is_zombie )
 	{
-	
 		return;
-		
 	}
-	if( player maps\_laststand::player_is_in_laststand() )
+	if( self maps\_laststand::player_is_in_laststand() )
 	{
-	
-		return;
-		
+		return;	
 	}
 	else
 	{
-	
-		player SetPerk( "specialty_bulletaccuracy" );
-		
-		player perk_hud_create( "specialty_bulletaccuracy" );
-		
-	}
-	
+		self SetPerk( "specialty_bulletaccuracy" );
+		self perk_hud_create( "specialty_bulletaccuracy" );
+	}	
 }
 
-fireworks( player, drop_item )
+fireworks()
 {
-	if( player HasPerk( "specialty_explosivedamage" ) )
+	if( self HasPerk( "specialty_explosivedamage" ) )
 	{
-	
-		return;
-		
+		return;	
 	}
-	if( player.is_zombie )
+	if( self.is_zombie )
 	{
-	
 		return;
-		
 	}
-	if( player maps\_laststand::player_is_in_laststand() )
+
+	if( self maps\_laststand::player_is_in_laststand() )
 	{
-	
 		return;
-		
 	}
+
 	else
 	{
-	
-		player SetPerk( "specialty_explosivedamage" );
-		
-		player perk_hud_create( "specialty_explosivedamage" );
-		
-	}
-	
+		self SetPerk( "specialty_explosivedamage" );
+		self perk_hud_create( "specialty_explosivedamage" );
+	}	
 }
 
 start_carpenter( origin )

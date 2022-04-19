@@ -743,7 +743,12 @@ blocker_trigger_think()
 			chunk Show(); 
 	
 			//TUEY Play the sounds
+			player.rebuild_barrier_reward += cost;
+			if( player.rebuild_barrier_reward < level.zombie_vars["rebuild_barrier_cap_per_round"] )
+			{
 			chunk play_sound_on_ent( "rebuild_barrier_piece" );
+
+			}
 	
 			self thread replace_chunk( chunk, has_perk );
 	
@@ -762,7 +767,7 @@ blocker_trigger_think()
 			}
 	
 			// set the score
-			player.rebuild_barrier_reward += cost;
+			
 			if( player.rebuild_barrier_reward < level.zombie_vars["rebuild_barrier_cap_per_round"] )
 			{
 				player maps\_zombiemode_score::add_to_player_score( cost );
@@ -1005,6 +1010,7 @@ replace_chunk( chunk, has_perk, via_powerup )
 	
 	chunk waittill_notify_or_timeout( "movedone", 1 ); 
 	assert( chunk.origin == chunk.og_origin );
+	EarthQuake( RandomFloatRange( 0.1, 0.15 ), 0.2, chunk.origin, 200 ); 
 
 	chunk.target_by_zombie = undefined;
 	chunk.destroyed = false; 
