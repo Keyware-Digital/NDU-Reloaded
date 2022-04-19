@@ -560,40 +560,31 @@ powerup_grab()
 						players[i] thread powerup_vo("carpenter");
 						break;						
 					case "jugg":
-						allplayers=get_players();
-						level thread jugg(allplayers,::jugg);
+						level thread jugg(players[i]);
 						break;
 					case "dtap":
-						allplayers=get_players();
-						level thread dtap(allplayers,::dtap);
+						level thread dtap(players[i]);
 						break;
 					case "fastreload":
-						allplayers=get_players();
-						level thread fastreload(allplayers,::fastreload);
+						level thread fastreload(players[i]);
 						break;
 					case "revive":
-						allplayers=get_players();
-						level thread revive(allplayers,::revive);
+						level thread revive(players[i]);
 						break;
 					case "phd":
-						allplayers=get_players();
-						level thread phd(allplayers,::phd);
+						level thread phd(players[i]);
 						break;
 					case "sp":
-						allplayers=get_players();
-						level thread sp(allplayers,::sp);
+						level thread sp(players[i]);
 						break;
 					case "longersprint":
-						allplayers=get_players();
-						level thread longersprint(allplayers,::longersprint);
+						level thread longersprint(players[i]);
 						break;
 					case "aim":
-						allplayers=get_players();
-						level thread aim(allplayers,::aim);
+						level thread aim(players[i]);
 						break;
 					case "fireworks":
-						allplayers=get_players();
-						level thread fireworks(allplayers,::fireworks);
+						level thread fireworks(players[i]);
 						break;
 					default:
 						println ("Unrecognized powerup.");

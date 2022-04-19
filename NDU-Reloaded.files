@@ -26,6 +26,7 @@ maps\_laststand.gsc
 maps\_loadout.gsc
 maps\_zombiemode.gsc
 maps\_zombiemode_betty.gsc
+maps\_zombiemode_blockers.gsc
 maps\_zombiemode_powerups.gsc
 maps\_zombiemode_spawner.gsc
 maps\_zombiemode_weapons.gsc
