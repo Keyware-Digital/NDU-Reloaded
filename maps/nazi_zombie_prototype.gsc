@@ -120,8 +120,8 @@ include_weapons()
 	include_weapon( "sw_357" );
 	
 	// Semi Auto
-	include_weapon( "m1carbine" );
-	//include_weapon( "m1garand", false );
+	include_weapon( "m1carbine", false );
+	//include_weapon( "m1garand", false );	//disabled in favour of mlgarand_gl
 	include_weapon( "gewehr43" );
 
 	// Full Auto
@@ -173,9 +173,11 @@ include_weapons()
 	// bouncing betties
 	include_weapon("mine_bouncing_betty");
 
+	// Weapon limiter
 	level.limited_weapons["kar98k"] = 0;
 	level.limited_weapons["kar98k_scoped_zombie"] = 0;
 	level.limited_weapons["m1carbine"] = 0;
+	level.limited_weapons["m1garand"] = 0;
 	
 }
 
