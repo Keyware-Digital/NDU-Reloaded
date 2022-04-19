@@ -692,8 +692,8 @@ give_model( class )
 		else if( level.script == "zombiemode" || level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_asylum" || level.script == "nazi_zombie_factory" || level.script == "zombie_test_map" ) 
 		{
 
-			switch( self.entity_num)
-			{
+			switch( maps\_zombiemode_weapons::get_player_index( self ) )
+		{
 			case 0:
 				character\char_zomb_player_0::main();
 				break;
@@ -706,7 +706,7 @@ give_model( class )
 			case 3:
 				character\char_zomb_player_3::main();
 				break;
-			}
+		}
 			self give_player_specific_viewmodel();
             return;
 		
