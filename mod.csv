@@ -19,7 +19,7 @@ weapon,sp/zombie_type100_smg
 weapon,sp/zombie_ppsh
 weapon,sp/mine_bouncing_betty
 fx,weapon/muzzleflashes/standardflashworld_ug
-sound,mod_ndu,,all_mp
+sound,mod_ndu,,all_sp
 sound,mod_ndu_powerup,,all_sp
 sound,menu_music,,all_sp
 sound,music_mainmenu,main_menu
