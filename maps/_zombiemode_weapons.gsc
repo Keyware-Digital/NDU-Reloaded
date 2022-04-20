@@ -766,7 +766,8 @@ weapon_spawn_think()
 	self.first_time_triggered = false; 
 	for( ;; )
 	{
-		self waittill( "trigger", player ); 		
+		self waittill( "trigger", player );
+
 		// if not first time and they have the weapon give ammo
 		
 		if( !is_player_valid( player ) )
@@ -924,12 +925,10 @@ weapon_give( weapon )
 			}
 		}
 	}
-
-	self play_sound_on_ent( "purchase" );
-	self GiveWeapon( weapon, 0 ); 
-	self GiveMaxAmmo( weapon ); 
-	self SwitchToWeapon( weapon ); 
-
+		self play_sound_on_ent( "purchase" );
+		self GiveWeapon( weapon, 0 ); 
+		self GiveMaxAmmo( weapon );
+		self SwitchToWeapon( weapon );
 }
 
 ammo_give( weapon )
@@ -981,6 +980,7 @@ ammo_give( weapon )
 	{
 		self playsound( "cha_ching" ); 
 		self GivemaxAmmo( weapon ); 
+		self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) ); 
 		return true;
 	}
 
