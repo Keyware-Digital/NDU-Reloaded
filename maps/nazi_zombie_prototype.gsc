@@ -117,9 +117,9 @@ include_weapons()
 	include_weapon( "springfield_scoped_zombie_upgraded" );
 	
 	// Pistols
-	//include_weapon( "colt" );
+	include_weapon( "colt" );
 	//include_weapon( "colt_dirty_harry" );
-	//include_weapon( "walther" );
+	include_weapon( "walther" );
 	include_weapon( "sw_357" );
 	
 	// Semi Auto
@@ -176,6 +176,8 @@ include_weapons()
 	include_weapon("mine_bouncing_betty");
 
 	// Weapon limiter
+	level.limited_weapons["colt"] = 0;
+	level.limited_weapons["walther"] = 0;
 	level.limited_weapons["kar98k"] = 0;
 	level.limited_weapons["kar98k_scoped_zombie"] = 0;
 	level.limited_weapons["m1carbine"] = 0;
