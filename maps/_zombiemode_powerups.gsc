@@ -18,6 +18,11 @@ init()
 	PrecacheShader( "specialty_aim_zombies" );
 	PrecacheShader( "specialty_fireworks_zombies" );
 	PrecacheShader( "specialty_longersprint_zombies" );
+
+	PrecacheModel( "zombie_3rd_perk_bottle_jugg" );
+	PrecacheModel( "zombie_3rd_perk_bottle_doubletap" );
+	PrecacheModel( "zombie_3rd_perk_bottle_sleight" );
+	PrecacheModel( "zombie_3rd_perk_bottle_revive" );
 	
 	// powerup Vars
 	set_zombie_var( "zombie_insta_kill", 				0 );
@@ -47,12 +52,12 @@ init_powerups()
 {
     // Random Drops
     add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
-    add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke_hotness" );
+    //add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke_hotness" );
     add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
     add_zombie_powerup( "double_points","zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
     add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
     add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup( "randomperk",        "zombie_3rd_perk_bottle_jugg",        &"ZOMBIE_POWERUP_RANDOM_PERK" );
+    add_zombie_powerup( "randomperk",        "zombie_3rd_perk_bottle_jugg",        "ZOMBIE_RANDOM_PERK" );	//Random Perk!
 
 	// Randomize the order
 	randomize_powerups();
@@ -484,6 +489,10 @@ powerup_setup()
 
 	struct = level.zombie_powerups[powerup];
 	self SetModel( struct.model_name );
+	if( struct.model_name == "zombie_3rd_perk_bottle_jugg" )
+	{
+		self thread randomperkmodel();
+	}
 
 	//TUEY Spawn Powerup
 	playsoundatposition("spawn_powerup", self.origin);
@@ -495,7 +504,30 @@ powerup_setup()
 	{
 		self.fx = struct.fx;
 	}
+
 	self PlayLoopSound("spawn_powerup_loop");
+}
+
+randomperkmodel()
+{
+
+	self.perkbottlemodels = [];
+	self.perkbottlemodels[0] = "zombie_3rd_perk_bottle_jugg";
+	self.perkbottlemodels[1] = "zombie_3rd_perk_bottle_doubletap";
+	self.perkbottlemodels[2] = "zombie_3rd_perk_bottle_sleight";
+	self.perkbottlemodels[3] = "zombie_3rd_perk_bottle_revive";
+
+	self.loopnum = 0;
+	self.timer = 5;
+	while(isDefined(self))
+	{
+		self.perkbottlenum = RandomInt(3);
+		self SetModel( self.perkbottlemodels[self.perkbottlenum] );
+		//IPrintLn("change model");
+		self.timer = self.timer * 0.85;
+		wait self.timer;
+	}
+
 }
 
 powerup_grab()
@@ -575,24 +607,24 @@ powerup_grab()
 
 give_player_perk()
 {
-	IPrintLn("Give perk has been activated!");
+	//IPrintLn("Give perk has been activated!");
 
 	if(!isdefined(self.perknum) || self.perknum == 0) // if player doesnt have any perks
 	{
-		IPrintLn("defining perks");
+		//IPrintLn("defining perks");
 		self thread resetperkdefs();
 		self thread death_check();
 	}
 
 	if( self maps\_laststand::player_is_in_laststand() || self.perknum == 9 )
 	{
-		IPrintLn("max perks! or downed... :(");
+		//IPrintLn("max perks! or downed... :(");
 		return;
 	}
 
 	if(self.perkarray[self.perknum] == "specialty_armorvest")
 	{
-		IPrintLn("perk is jugg");
+		//IPrintLn("perk is jugg");
 		self.maxhealth = 200;
 	}
 
@@ -600,12 +632,12 @@ give_player_perk()
 	self perk_hud_create( self.perkarray[self.perknum] );
 
 	self.perknum++; // add 1 perk to counter
-	IPrintLn("player has " + self.perknum + " perks");
+	//IPrintLn("player has " + self.perknum + " perks");
 }
 
 resetperkdefs()
 {	
-	/*
+	
 	self.perkarray = [];
 	self.perkarray[0] = "specialty_armorvest";
 	self.perkarray[1] = "specialty_rof";
@@ -616,21 +648,8 @@ resetperkdefs()
 	self.perkarray[6] = "specialty_longersprint";
 	self.perkarray[7] = "specialty_bulletaccuracy";
 	self.perkarray[8] = "specialty_explosivedamage";
-	//self.perkarray = array_randomize( self.perkarray );
-	*/
-
-	self.perkarray = [];
-	self.perkarray[0] = "specialty_quieter";
-	self.perkarray[1] = "specialty_armorvest";
-	self.perkarray[2] = "specialty_fastreload";
-	self.perkarray[3] = "specialty_quickrevive";
-	self.perkarray[4] = "rof";
-	self.perkarray[5] = "specialty_bulletdamage";
-	self.perkarray[6] = "specialty_longersprint";
-	self.perkarray[7] = "specialty_bulletaccuracy";
-	self.perkarray[8] = "specialty_explosivedamage";
-
-
+	self.perkarray = array_randomize( self.perkarray );
+	
 	self.perknum = 0;
 }
 
@@ -929,7 +948,8 @@ full_ammo_powerup( drop_item )
 			}	
 		}
 	}
-	//	array_thread (players, ::full_ammo_on_hud, drop_item);
+
+//	array_thread (players, ::full_ammo_on_hud, drop_item);
 	level thread full_ammo_on_hud( drop_item );
 }
 
@@ -1185,9 +1205,9 @@ print_powerup_drop( powerup, type )
 
 death_check()
 {
-	IPrintLn("death check init");
+	//IPrintLn("death check init");
 	self waittill_any( "fake_death", "death", "player_downed", "second_chance" );
-	IPrintLn("death check passed");
+	//IPrintLn("death check passed");
 
 	self UnsetPerk( "specialty_armorvest" );
 	self UnsetPerk( "specialty_quickrevive" );

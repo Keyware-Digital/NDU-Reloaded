@@ -485,7 +485,7 @@ onPlayerConnect_clientDvars()
         {
 		self SetClientDvar( "cg_ScoresColor_Gamertag_" + i, level.random_character_color[ level.random_character_index[ i ] ] );
         }
-
+	
 	self SetDepthOfField( 0, 0, 512, 4000, 4, 0 );
 }
 
@@ -1665,26 +1665,40 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 
 	players = get_players();
 
-	if( sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH" || sMeansOfDeath == "MOD_EXPLOSIVE" || sMeansOfDeath == "MOD_FALLING" )
-    {
-        if ( self HasPerk( "specialty_detectexplosive" ) )
-        {
-            self.health = self.maxhealth+iDamage;
-            return;
-        }
-    }
-	
+	if( self HasPerk("specialty_quieter")
+		&& (  sMeansOfDeath == "MOD_GRENADE_SPLASH"
+		|| sMeansOfDeath == "MOD_GRENADE"
+		|| sMeansOfDeath == "MOD_EXPLOSIVE"
+		|| sMeansOfDeath == "MOD_PROJECTILE"
+		|| sMeansOfDeath == "MOD_PROJECTILE_SPLASH"
+		|| sMeansOfDeath == "MOD_BURNED") )
+	{
+
+		IPrintLn("recover_player");
+
+		// Think "IF" is not necessary but just to be sure
+		if( !maps\_laststand::player_is_in_laststand())
+		{
+			//self RevivePlayer();
+			self setBlur( 0, 0 );
+		}	
+
+		return;
+	}
+
 	if( self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1 )
 	{
 		iprintln("Quick Revive has granted you a second chance!");
 		self notify("second_chance");
+
 		self.maxhealth = 100;
 		self.health = self.maxhealth;
 		return;
 	}
-	
+
 	if( iDamage < self.health )
-	{
+	{	
+		self maps\_callbackglobal::finishPlayerDamageWrapper( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
 		return;
 	}
 

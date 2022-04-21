@@ -9,7 +9,7 @@ main()
 
 	include_weapons();
 	include_powerups();
-    level thread betty_fx();
+	level thread betty_fx();
 	
 	maps\nazi_zombie_prototype_fx::main();
 	maps\_zombiemode::main();
@@ -23,6 +23,8 @@ main()
 	level thread intro_screen();
 	
 	level thread maps\_zombiemode_betty::give_betties_after_rounds();
+
+	//level thread health_show();
 	
 }
 
@@ -30,8 +32,8 @@ betty_fx()
 {
 level._effect["betty_explode"]			= loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
 level._effect["betty_trail"]			= loadfx("weapon/bouncing_betty/fx_betty_trail");
-
 }
+
 init_sounds()
 {
 	maps\_zombiemode_utility::add_sound( "break_stone", "break_stone" );
@@ -120,7 +122,7 @@ include_weapons()
 	//include_weapon( "walther" );
 	include_weapon( "sw_357" );
 	
-	// Semi Auto
+// Semi Auto
 	include_weapon( "m1carbine" );	//disabled in weapon limiter below
 	//include_weapon( "m1garand" );	//disabled in weapon limiter below in favour of mlgarand_gl
 	include_weapon( "gewehr43" );
@@ -131,7 +133,6 @@ include_weapons()
 	include_weapon( "mp40" );
 	
 	// Bolt Action
-
 	include_weapon( "kar98k" );		//disabled in weapon limiter below
 	include_weapon( "springfield" );
 
@@ -239,15 +240,7 @@ include_powerups()
 	include_powerup( "double_points" );
 	include_powerup( "full_ammo" );
 	include_powerup( "carpenter" );
-	include_powerup( "jugg" );
-	include_powerup( "dtap" );
-	include_powerup( "fastreload" );
-	include_powerup( "revive" );
-	include_powerup( "phd" );
-	include_powerup( "sp" );
-	include_powerup( "longersprint" );
-	include_powerup( "aim" );
-	include_powerup( "fireworks" );
+	include_powerup( "randomperk" );
 }
 
 include_weapon( weapon_name, in_box )
@@ -260,3 +253,12 @@ include_powerup( powerup_name )
 	maps\_zombiemode_powerups::include_zombie_powerup( powerup_name );
 }
 
+health_show()
+{
+	players = get_players();
+	while(1)
+	{
+		IPrintLn(players[0].health);
+		wait 0.3;
+	}
+}
