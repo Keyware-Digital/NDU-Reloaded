@@ -703,15 +703,14 @@ start_carpenter( origin )
 		
 	}
 
-
 	players = get_players();
+
 	for(i = 0; i < players.size; i++)
 	{
-		players[i].score += 200;
-		players[i].score_total += 200;
+		players[i].score += 200 * level.zombie_vars["zombie_point_scalar"];
+		players[i].score_total += 200 * level.zombie_vars["zombie_point_scalar"];
 		players[i] maps\_zombiemode_score::set_player_score_hud(); 
 	}
-
 
 	carp_ent delete();
 }
@@ -869,15 +868,13 @@ nuke_powerup( drop_item )
 	}
 
 		players = get_players();
-		
 
 		for(i = 0; i < players.size; i++)
 		{
-				players[i].score += 400;
-				players[i].score_total += 400;
-				players[i] maps\_zombiemode_score::set_player_score_hud(); 
+			players[i].score += 400 * level.zombie_vars["zombie_point_scalar"];
+			players[i].score_total += 400 * level.zombie_vars["zombie_point_scalar"];
+			players[i] maps\_zombiemode_score::set_player_score_hud(); 
 		}
-
 
 }
 
