@@ -124,7 +124,7 @@ include_weapons()
 	
 // Semi Auto
 	include_weapon( "m1carbine" );	//disabled in weapon limiter below
-	//include_weapon( "m1garand" );	//disabled in weapon limiter below in favour of mlgarand_gl
+	include_weapon( "m1garand" );	//disabled in weapon limiter below in favour of mlgarand_gl
 	include_weapon( "gewehr43" );
 
 	// Full Auto
