@@ -122,7 +122,7 @@ include_weapons()
 	//include_weapon( "walther" );
 	include_weapon( "sw_357" );
 	
-// Semi Auto
+	// Semi Auto
 	include_weapon( "m1carbine" );	//disabled in weapon limiter below
 	include_weapon( "m1garand" );	//disabled in weapon limiter below in favour of mlgarand_gl
 	include_weapon( "gewehr43" );
@@ -180,6 +180,7 @@ include_weapons()
 	level.limited_weapons["kar98k_scoped_zombie"] = 0;
 	level.limited_weapons["m1carbine"] = 0;
 	level.limited_weapons["m1garand"] = 0;
+	//level.limited_weapons["springfield"] = 0;
 	
 }
 

@@ -1674,7 +1674,7 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 		|| sMeansOfDeath == "MOD_BURNED") )
 	{
 
-		IPrintLn("recover_player");
+		//IPrintLn("recover_player");
 
 		// Think "IF" is not necessary but just to be sure
 		if( !maps\_laststand::player_is_in_laststand())
