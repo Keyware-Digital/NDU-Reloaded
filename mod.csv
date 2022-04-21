@@ -66,5 +66,5 @@ material,specialty_aim_zombies
 material,specialty_doublepoints_zombies
 material,specialty_instakill_zombies
 material,logo_cod2
-menufile,ui/prototype_main.menu
-menufile,ui/prototype_options_game_pc.menu
+menufile,ui/custom_main.menu
+menufile,ui/custom_options_game_pc.menu

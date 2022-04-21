@@ -925,7 +925,7 @@ remove_chunk( chunk, node, destroy_immediately )
 	}
 	else
 	{
-		EarthQuake( RandomFloatRange( 0.1, 0.15 ), 0.2, chunk.origin, 200 );
+		EarthQuake( RandomFloatRange( 0.1, 0.15 ), 0.2, chunk.origin, 200 ); 
 	}
 }
 
