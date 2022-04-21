@@ -519,17 +519,6 @@ Callback_PlayerDisconnect()
 
 Callback_PlayerDamage( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime )
 {
-	if( (self hasperk("specialty_detectexplosive")) && (sMeansOfDeath == "MOD_GRENADE_SPLASH" 
-	|| sMeansOfDeath == "MOD_GRENADE" 
-	|| sMeansOfDeath == "MOD_EXPLOSIVE" 
-	|| sMeansOfDeath == "MOD_PROJECTILE" 
-	|| sMeansOfDeath == "MOD_PROJECTILE_SPLASH" 
-	|| sMeansOfDeath == "MOD_BURNED") )
-	{	
-		Recover_player();		
-		return;
-	}
-
 	//CODER MOD: TOMMY K, this is to prevent a player killing another player
 	if( isdefined( eAttacker ) && isPlayer( eAttacker ) && ( !isDefined( level.friendlyexplosivedamage ) || !level.friendlyexplosivedamage ))
 	{
@@ -557,24 +546,7 @@ Callback_PlayerDamage( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
 		self [[level.overridePlayerDamage]]( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime );
 		return;
 	}		
-
-	self finishPlayerDamageWrapper( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
-}
-
-Recover_player()
-{
-	max_health_before = self.maxhealth;
-	health_before = self.health;	
-	
-	// Think "IF" is not necessary but just to be sure
-	if( !maps\_laststand::player_is_in_laststand())
-	{
-		self RevivePlayer();
-		self setBlur( 0, 0 );
-	}	
-	
-	self.maxhealth = max_health_before;
-	self.health = self.health_before;
+	//self finishPlayerDamageWrapper( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
 }
 
 finishPlayerDamageWrapper( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime )
