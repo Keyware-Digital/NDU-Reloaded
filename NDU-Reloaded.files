@@ -20,6 +20,7 @@ images\specialty_longersprint_zombies.iwi
 images\specialty_phd_zombies.iwi
 images\specialty_quickrevive_zombies.iwi
 images\specialty_sp_zombies.iwi
+maps\_button_print.gsc
 maps\_callbackglobal.gsc
 maps\_character_randomize.gsc
 maps\_gameskill.gsc
