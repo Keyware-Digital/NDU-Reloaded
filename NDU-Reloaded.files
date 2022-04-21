@@ -64,6 +64,8 @@ sound\voiceovers\zombie\sam\tele_nospawn_02.wav
 soundaliases\menu_music.csv
 soundaliases\mod_ndu.csv
 soundaliases\mod_ndu_powerup.csv
+ui\custom_main.menu
+ui\custom_options_game_pc.menu
 weapons\sp\30cal_bipod
 weapons\sp\bar
 weapons\sp\bar_bipod
