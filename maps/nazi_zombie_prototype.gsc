@@ -180,6 +180,7 @@ include_weapons()
 	level.limited_weapons["kar98k_scoped_zombie"] = 0;
 	level.limited_weapons["m1carbine"] = 0;
 	level.limited_weapons["m1garand"] = 0;
+	//level.limited_weapons["springfield"] = 0;
 	
 }
 
