@@ -2141,8 +2141,7 @@ intermission()
 	{
 		setclientsysstate( "levelNotify", "zi", players[i] ); // Tell clientscripts we're in zombie intermission
 
-		players[i] SetClientDvars( "cg_thirdPerson", "0"/*,
-						 		   "cg_fov", "80"*/);
+		players[i] SetClientDvars( "cg_thirdPerson", "0"/*, "cg_fov", "80"*/);
 
 		players[i].health = 100; // This is needed so the player view doesn't get stuck
 		players[i] thread player_intermission();
