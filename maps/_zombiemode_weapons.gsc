@@ -60,19 +60,121 @@ add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost
 	level.zombie_weapons[weapon_name] = struct;
 }
 
-include_zombie_weapon( weapon_name, in_box )
+default_weighting_func()
+{
+	return 1;
+}
+
+default_tesla_weighting_func()
+{
+	num_to_add = 1;
+	if( isDefined( level.pulls_since_last_tesla_gun ) )
+	{
+		// player has dropped the tesla for another weapon, so we set all future polls to 20%
+		if( isDefined(level.player_drops_tesla_gun) && level.player_drops_tesla_gun == true )
+		{						
+			num_to_add += int(.2 * level.zombie_include_weapons.size);		
+		}
+		
+		// player has not seen tesla gun in late rounds
+		if( !isDefined(level.player_seen_tesla_gun) || level.player_seen_tesla_gun == false )
+		{
+			// after round 10 the Tesla gun percentage increases to 20%
+			if( level.round_number > 10 )
+			{
+				num_to_add += int(.2 * level.zombie_include_weapons.size);
+			}		
+			// after round 5 the Tesla gun percentage increases to 15%
+			else if( level.round_number > 5 )
+			{
+				// calculate the number of times we have to add it to the array to get the desired percent
+				num_to_add += int(.15 * level.zombie_include_weapons.size);
+			}						
+		}
+	}
+	return num_to_add;
+}
+
+default_ray_gun_weighting_func()
+{
+	if( level.box_moved == true )
+	{	
+		num_to_add = 1;
+		// increase the percentage of ray gun
+		if( isDefined( level.pulls_since_last_ray_gun ) )
+		{
+			// after 12 pulls the ray gun percentage increases to 15%
+			if( level.pulls_since_last_ray_gun > 11 )
+			{
+				num_to_add += int(level.zombie_include_weapons.size*0.15);			
+			}			
+			// after 8 pulls the Ray Gun percentage increases to 10%
+			else if( level.pulls_since_last_ray_gun > 7 )
+			{
+				num_to_add += int(.1 * level.zombie_include_weapons.size);
+			}		
+		}
+		return num_to_add;	
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
+//
+//	Slightly elevate the chance to get it until someone has it, then make it even
+default_cymbal_monkey_weighting_func()
+{
+	players = get_players();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] has_weapon_or_upgrade( "zombie_cymbal_monkey" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 10 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}
+
+
+include_zombie_weapon( weapon_name, in_box, weighting_func )
 {
 	if( !IsDefined( level.zombie_include_weapons ) )
 	{
 		level.zombie_include_weapons = [];
 	}
-
 	if( !isDefined( in_box ) )
 	{
 		in_box = true;
 	}
-	
+
 	level.zombie_include_weapons[weapon_name] = in_box;
+	
+	if( !isDefined( weighting_func ) )
+	{
+		level.weapon_weighting_funcs[weapon_name] = maps\_zombiemode_weapons::default_weighting_func;
+	}
+	else
+	{
+		level.weapon_weighting_funcs[weapon_name] = weighting_func;
+	}
 }
 
 init_weapons()
@@ -182,7 +284,27 @@ init_weapons()
 
 	// ONLY 1 OF THE BELOW SHOULD BE ALLOWED
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
-}             
+}
+
+add_limited_tesla_gun()
+{
+
+	weapon_spawns = GetEntArray( "weapon_upgrade", "targetname" ); 
+
+	for( i = 0; i < weapon_spawns.size; i++ )
+	{
+		hint_string = weapon_spawns[i].zombie_weapon_upgrade; 
+		if(hint_string == "tesla_gun")
+		{
+			weapon_spawns[i] waittill("trigger");
+			weapon_spawns[i] trigger_off();
+			break;
+
+		}
+		
+	}
+
+}
 
 add_limited_weapon( weapon_name, amount )
 {
@@ -258,6 +380,47 @@ get_is_in_box( weapon_name )
 	
 	return level.zombie_weapons[weapon_name].is_in_box;
 }
+
+has_upgrade( weaponname )
+{
+	has_upgrade = false;
+	if( IsDefined( level.zombie_include_weapons[weaponname+"_upgraded"] ) )
+	{
+		has_upgrade = self HasWeapon( weaponname+"_upgraded" );
+	}
+	return has_upgrade;
+}
+
+has_weapon_or_upgrade( weaponname )
+{
+	has_weapon = false;
+	if (self maps\_laststand::player_is_in_laststand())
+	{
+		for( m = 0; m < self.weaponInventory.size; m++ )
+		{
+			if (self.weaponInventory[m] == weaponname || self.weaponInventory[m] == weaponname+"_upgraded" )
+			{
+				has_weapon = true;
+			}
+		}
+	}
+	else
+	{
+		// If the weapon you're checking doesn't exist, it will return undefined
+		if( IsDefined( level.zombie_include_weapons[weaponname] ) )
+		{
+			has_weapon = self HasWeapon( weaponname );
+		}
+	
+		if( !has_weapon && isdefined( level.zombie_include_weapons[weaponname+"_upgraded"] ) )
+		{
+			has_weapon = self HasWeapon( weaponname+"_upgraded" );
+		}
+	}
+
+	return has_weapon;
+}
+
 
 // for the random weapon chest
 treasure_chest_init()
@@ -378,6 +541,76 @@ treasure_chest_think()
 	self thread treasure_chest_think(); 
 }
 
+decide_hide_show_chest_hint( endon_notify )
+{
+	if( isDefined( endon_notify ) )
+	{
+		self endon( endon_notify );
+	}
+
+	while( true )
+	{
+		players = get_players();
+		for( i = 0; i < players.size; i++ )
+		{
+			// chest_user defined if someone bought a weapon spin, false when chest closed
+			if ( (IsDefined(self.chest_user) && players[i] != self.chest_user ) ||
+				 !players[i] can_buy_weapon() )
+			{
+				self SetInvisibleToPlayer( players[i], true );
+			}
+			else
+			{
+				self SetInvisibleToPlayer( players[i], false );
+			}
+		}
+		wait( 0.1 );
+	}
+}
+
+decide_hide_show_hint( endon_notify )
+{
+	if( isDefined( endon_notify ) )
+	{
+		self endon( endon_notify );
+	}
+
+	while( true )
+	{
+		players = get_players();
+		for( i = 0; i < players.size; i++ )
+		{
+			if( players[i] can_buy_weapon() )
+			{
+				self SetInvisibleToPlayer( players[i], false );
+			}
+			else
+			{
+				self SetInvisibleToPlayer( players[i], true );
+			}
+		}
+		wait( 0.1 );
+	}
+}
+
+can_buy_weapon()
+{
+	if( isDefined( self.is_drinking ) && self.is_drinking )
+	{
+		return false;
+	}
+	if( self GetCurrentWeapon() == "mine_bouncing_betty" )
+	{
+		return false;
+	}
+	if( self in_revive_trigger() )
+	{
+		return false;
+	}
+	
+	return true;
+}
+
 treasure_chest_user_hint( trigger, user )
 {
 	dist = 128 * 128;
@@ -441,37 +674,58 @@ treasure_chest_lid_close( timedOut )
 
 treasure_chest_ChooseRandomWeapon( player )
 {
+
 	keys = GetArrayKeys( level.zombie_weapons );
 
 	// Filter out any weapons the player already has
 	filtered = [];
 	for( i = 0; i < keys.size; i++ )
 	{
-		if( player HasWeapon( keys[i] ) )
+		if( !get_is_in_box( keys[i] ) )
+		{
+			continue;
+		}
+		
+		if( player has_weapon_or_upgrade( keys[i] ) )
+		{
+			continue;
+		}
+
+		if( !IsDefined( keys[i] ) )
 		{
 			continue;
 		}
 
 		filtered[filtered.size] = keys[i];
 	}
-
+	
 	// Filter out the limited weapons
 	if( IsDefined( level.limited_weapons ) )
 	{
 		keys2 = GetArrayKeys( level.limited_weapons );
 		players = get_players();
+		pap_triggers = GetEntArray("zombie_vending_upgrade", "targetname");
 		for( q = 0; q < keys2.size; q++ )
 		{
 			count = 0;
 			for( i = 0; i < players.size; i++ )
 			{
-				if( players[i] HasWeapon( keys2[q] ) )
+				if( players[i] has_weapon_or_upgrade( keys2[q] ) )
 				{
 					count++;
 				}
 			}
-	
-			if( count == level.limited_weapons[keys2[q]] )
+
+			// Check the pack a punch machines to see if they are holding what we're looking for
+			for ( k=0; k<pap_triggers.size; k++ )
+			{
+				if ( IsDefined(pap_triggers[k].current_weapon) && pap_triggers[k].current_weapon == keys2[q] )
+				{
+					count++;
+				}
+			}
+
+			if( count >= level.limited_weapons[keys2[q]] )
 			{
 				filtered = array_remove( filtered, keys2[q] );
 			}
@@ -481,15 +735,83 @@ treasure_chest_ChooseRandomWeapon( player )
 	return filtered[RandomInt( filtered.size )];
 }
 
+treasure_chest_ChooseWeightedRandomWeapon( player )
+{
+
+	keys = GetArrayKeys( level.zombie_weapons );
+
+	// Filter out any weapons the player already has
+	filtered = [];
+	for( i = 0; i < keys.size; i++ )
+	{
+		if( !get_is_in_box( keys[i] ) )
+		{
+			continue;
+		}
+		
+		if( player has_weapon_or_upgrade( keys[i] ) )
+		{
+			continue;
+		}
+
+		if( !IsDefined( keys[i] ) )
+		{
+			continue;
+		}
+
+		num_entries = [[ level.weapon_weighting_funcs[keys[i]] ]]();
+		
+		for( j = 0; j < num_entries; j++ )
+		{
+			filtered[filtered.size] = keys[i];
+		}
+	}
+	
+	// Filter out the limited weapons
+	if( IsDefined( level.limited_weapons ) )
+	{
+		keys2 = GetArrayKeys( level.limited_weapons );
+		players = get_players();
+		pap_triggers = GetEntArray("zombie_vending_upgrade", "targetname");
+		for( q = 0; q < keys2.size; q++ )
+		{
+			count = 0;
+			for( i = 0; i < players.size; i++ )
+			{
+				if( players[i] has_weapon_or_upgrade( keys2[q] ) )
+				{
+					count++;
+				}
+			}
+
+			// Check the pack a punch machines to see if they are holding what we're looking for
+			for ( k=0; k<pap_triggers.size; k++ )
+			{
+				if ( IsDefined(pap_triggers[k].current_weapon) && pap_triggers[k].current_weapon == keys2[q] )
+				{
+					count++;
+				}
+			}
+
+			if( count >= level.limited_weapons[keys2[q]] )
+			{
+				filtered = array_remove( filtered, keys2[q] );
+			}
+		}
+	}
+	
+	return filtered[RandomInt( filtered.size )];
+}
+
 treasure_chest_weapon_spawn( chest, player )
 {
 	assert(IsDefined(player));
 	// spawn the model
 	model = spawn( "script_model", self.origin ); 
 	model.angles = self.angles +( 0, 90, 0 );
-	
+
 	floatHeight = 40;
-	
+
 	//move it up
 	model moveto( model.origin +( 0, 0, floatHeight ), 3, 2, 0.9 ); 
 
@@ -498,12 +820,10 @@ treasure_chest_weapon_spawn( chest, player )
 	// make with the mario kart
 	modelname = undefined; 
 	rand = undefined; 
-	for( i = 0; i < 40; i++ )
+	number_cycles = 40;
+	for( i = 0; i < number_cycles; i++ )
 	{
-		rand = treasure_chest_ChooseRandomWeapon( player );
-		modelname = GetWeaponModel( rand );
-		model setmodel( modelname ); 
-		
+
 		if( i < 20 )
 		{
 			wait( 0.05 ); 
@@ -520,26 +840,175 @@ treasure_chest_weapon_spawn( chest, player )
 		{
 			wait( 0.3 ); 
 		}
+
+		if( i+1 < number_cycles )
+		{
+			rand = treasure_chest_ChooseRandomWeapon( player );
+		}
+		else
+		{
+			rand = treasure_chest_ChooseWeightedRandomWeapon( player );
+		}
+
+		/#
+		if( maps\_zombiemode_tesla::tesla_gun_exists() )	
+		{
+			if ( i == 39 && GetDvar( "scr_spawn_tesla" ) != "" )
+			{
+				SetDvar( "scr_spawn_tesla", "" );
+				rand = "tesla_gun";
+			}
+		}
+		#/
+
+		modelname = GetWeaponModel( rand );
+		model setmodel( modelname ); 
+
+
 	}
 
-	self notify( "randomization_done" ); 
 	self.weapon_string = rand; // here's where the org get it's weapon type for the give function
-	
-	self waittill( "weapon_grabbed" );
-	
+
+	// random change of getting the joker that moves the box
+	random = Randomint(100);
+
+	if( !isdefined( level.chest_min_move_usage ) )
+	{
+		level.chest_min_move_usage = 4;
+	}
+
+	//increase the chance of joker appearing from 0-100 based on amount of the time chest has been opened.
+	if(level.script != "nazi_zombie_prototype" && getdvar("magic_chest_movable") == "1")
+	{
+
+		if(level.chest_accessed < level.chest_min_move_usage)
+		{		
+			// PI_CHANGE_BEGIN - JMA - RandomInt(100) can return a number between 0-99.  If it's zero and chance_of_joker is zero
+			//									we can possibly have a teddy bear one after another.
+			chance_of_joker = -1;
+			// PI_CHANGE_END
+		}
+		else
+		{
+			chance_of_joker = level.chest_accessed + 20;
+			
+			// make sure teddy bear appears on the 8th pull if it hasn't moved from the initial spot
+			if( (!isDefined(level.magic_box_first_move) || level.magic_box_first_move == false ) && level.chest_accessed >= 8)
+			{
+				chance_of_joker = 100;
+			}
+			
+			// pulls 4 thru 8, there is a 15% chance of getting the teddy bear
+			// NOTE:  this happens in all cases
+			if( level.chest_accessed >= 4 && level.chest_accessed < 8 )
+			{
+				if( random < 15 )
+				{
+					chance_of_joker = 100;
+				}
+				else
+				{
+					chance_of_joker = -1;
+				}
+			}
+			
+			// after the first magic box move the teddy bear percentages changes
+			if( isDefined(level.magic_box_first_move) && level.magic_box_first_move == true )
+			{
+				// between pulls 8 thru 12, the teddy bear percent is 30%
+				if( level.chest_accessed >= 8 && level.chest_accessed < 13 )
+				{
+					if( random < 30 )
+					{
+						chance_of_joker = 100;
+					}
+					else
+					{
+						chance_of_joker = -1;
+					}
+				}
+				
+				// after 12th pull, the teddy bear percent is 50%
+				if( level.chest_accessed >= 13 )
+				{
+					if( random < 50 )
+					{
+						chance_of_joker = 100;
+					}
+					else
+					{
+						chance_of_joker = -1;
+					}
+				}
+			}
+		}
+
+		if (random <= chance_of_joker)
+		{
+			model SetModel("zombie_teddybear");
+		//	model rotateto(level.chests[level.chest_index].angles, 0.01);
+			//wait(1);
+			model.angles = self.angles;		
+			wait 1;
+			flag_set("moving_chest_now");
+			self notify( "move_imminent" );
+			level.chest_accessed = 0;
+
+			player maps\_zombiemode_score::add_to_player_score( 950 );
+
+			//allow power weapon to be accessed.
+			level.box_moved = true;
+		}
+	}
+
+	self notify( "randomization_done" );
+
+
+	//turn off power weapon, since player just got one
+	if( rand == "tesla_gun" || rand == "ray_gun" )
+	{
+		// PI_CHANGE_BEGIN - JMA - reset the counters for tesla gun and ray gun pulls
+		if( isDefined( level.script ) && (level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_factory") )
+		{
+			if( rand == "ray_gun" )
+			{
+				level.box_moved = false;
+				level.pulls_since_last_ray_gun = 0;
+			}
+				
+			if( rand == "tesla_gun" )
+			{
+				level.pulls_since_last_tesla_gun = 0;
+				level.player_seen_tesla_gun = true;
+			}			
+		}
+		else
+		{
+			level.box_moved = false;
+		}
+		// PI_CHANGE_END			
+	}
+
+		model thread timer_til_despawn(floatHeight);
+		self waittill( "weapon_grabbed" );
+
 	if( !chest.timedOut )
 	{
 		model Delete();
 	}
-	// SRS 9/3/2008: if we timed out, move the weapon back into the box instead of deleting it
-	else
-	{
-		putBackTime = 0.3;
+}
+timer_til_despawn(floatHeight)
+{
 
-		model MoveTo( model.origin - ( 0, 0, floatHeight ), putBackTime, ( putBackTime * 0.5 ) );
-		wait( putBackTime );
-		
-		model Delete();
+
+	// SRS 9/3/2008: if we timed out, move the weapon back into the box instead of deleting it
+	putBackTime = 12;
+	self MoveTo( self.origin - ( 0, 0, floatHeight ), putBackTime, ( putBackTime * 0.5 ) );
+	wait( putBackTime );
+
+	if(isdefined(self))
+	{	
+		self Delete();
 	}
 }
 
@@ -617,14 +1086,16 @@ weapon_cabinet_think()
 	{
 		doors[i] NotSolid();
 	}
-		
+
 	self.has_been_used_once = false; 
-	
+
+	self decide_hide_show_hint();
+
 	while( 1 )
 	{
 		self waittill( "trigger", player );
 
-		if( player in_revive_trigger() )
+		if( !player can_buy_weapon() )
 		{
 			wait( 0.1 );
 			continue;
@@ -644,16 +1115,18 @@ weapon_cabinet_think()
 		}
 
 		ammo_cost = get_ammo_cost( self.zombie_weapon_upgrade );
-			
+
 		if( !is_player_valid( player ) )
 		{
 			player thread ignore_triggers( 0.5 );
 			continue;
 		}
-	
+
 		if( self.has_been_used_once )
 		{
-			player_has_weapon = false; 
+			player_has_weapon = player has_weapon_or_upgrade( self.zombie_weapon_upgrade );
+			/*
+			player_has_weapon = false;
 			weapons = player GetWeaponsList(); 
 			if( IsDefined( weapons ) )
 			{
@@ -665,6 +1138,7 @@ weapon_cabinet_think()
 					}
 				}
 			}
+			*/
 
 			if( !player_has_weapon )
 			{
@@ -677,6 +1151,7 @@ weapon_cabinet_think()
 				else // not enough money
 				{
 					play_sound_on_ent( "no_purchase" );
+					player thread maps\_zombiemode_powerups::play_no_money_perk_dialog();
 				}			
 			}
 			else if ( player.score >= ammo_cost )
@@ -691,6 +1166,7 @@ weapon_cabinet_think()
 			else // not enough money
 			{
 				play_sound_on_ent( "no_purchase" );
+				player thread maps\_zombiemode_powerups::play_no_money_perk_dialog();
 			}
 		}
 		else if( player.score >= cost ) // First time the player opens the cabinet
@@ -698,14 +1174,14 @@ weapon_cabinet_think()
 			self.has_been_used_once = true;
 
 			self play_sound_on_ent( "purchase" ); 
-			
+
 			self SetHintString( &"ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
-	//		self SetHintString( get_weapon_hint( self.zombie_weapon_upgrade ) );
+			//		self SetHintString( get_weapon_hint( self.zombie_weapon_upgrade ) );
 			self setCursorHint( "HINT_NOICON" ); 
 			player maps\_zombiemode_score::minus_to_player_score( self.zombie_cost ); 
-			
+
 			doors = getentarray( self.target, "targetname" ); 
-		
+
 			for( i = 0; i < doors.size; i++ )
 			{
 				if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
@@ -718,7 +1194,9 @@ weapon_cabinet_think()
 				}
 			}
 
-			player_has_weapon = false; 
+			player_has_weapon = player has_weapon_or_upgrade( self.zombie_weapon_upgrade ); 
+			/*
+			player_has_weapon = false;
 			weapons = player GetWeaponsList(); 
 			if( IsDefined( weapons ) )
 			{
@@ -730,6 +1208,7 @@ weapon_cabinet_think()
 					}
 				}
 			}
+			*/
 
 			if( !player_has_weapon )
 			{
@@ -737,12 +1216,20 @@ weapon_cabinet_think()
 			}
 			else
 			{
-				player ammo_give( self.zombie_weapon_upgrade ); 
+				if( player has_upgrade( self.zombie_weapon_upgrade ) )
+				{
+					player ammo_give( self.zombie_weapon_upgrade+"_upgraded" ); 
+				}
+				else
+				{
+					player ammo_give( self.zombie_weapon_upgrade ); 
+				}
 			}	
 		}
 		else // not enough money
 		{
-			 play_sound_on_ent( "no_purchase" );
+			play_sound_on_ent( "no_purchase" );
+			player thread maps\_zombiemode_powerups::play_no_money_perk_dialog();
 		}		
 	}
 }
@@ -764,28 +1251,35 @@ weapon_spawn_think()
 	cost = get_weapon_cost( self.zombie_weapon_upgrade );
 	ammo_cost = get_ammo_cost( self.zombie_weapon_upgrade );
 	is_grenade = (WeaponType( self.zombie_weapon_upgrade ) == "grenade");
+	if(is_grenade)
+	{
+		ammo_cost = cost;
+	}
 
+	self thread decide_hide_show_hint();
 
 	self.first_time_triggered = false; 
 	for( ;; )
 	{
-		self waittill( "trigger", player );
-
+		self waittill( "trigger", player ); 		
 		// if not first time and they have the weapon give ammo
-		
+
 		if( !is_player_valid( player ) )
 		{
 			player thread ignore_triggers( 0.5 );
 			continue;
 		}
 
-		if( player in_revive_trigger() )
+		if( !player can_buy_weapon() )
 		{
 			wait( 0.1 );
 			continue;
 		}
-		
-		player_has_weapon = false; 
+
+		// Allow people to get ammo off the wall for upgraded weapons
+		player_has_weapon = player has_weapon_or_upgrade( self.zombie_weapon_upgrade ); 
+		/*
+		player_has_weapon = false;
 		weapons = player GetWeaponsList(); 
 		if( IsDefined( weapons ) )
 		{
@@ -797,7 +1291,8 @@ weapon_spawn_think()
 				}
 			}
 		}		
-		
+		*/
+
 		if( !player_has_weapon )
 		{
 			// else make the weapon show and give it
@@ -806,53 +1301,76 @@ weapon_spawn_think()
 				if( self.first_time_triggered == false )
 				{
 					model = getent( self.target, "targetname" ); 
-//					model show(); 
+					//					model show(); 
 					model thread weapon_show( player ); 
 					self.first_time_triggered = true; 
-					
+
 					if(!is_grenade)
 					{
 						self SetHintString( &"ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
 					}
 				}
-			
+
 				player maps\_zombiemode_score::minus_to_player_score( cost ); 
+
+				bbPrint( "zombie_uses: playername %s playerscore %d round %d cost %d name %s x %f y %f z %f type weapon",
+						player.playername, player.score, level.round_number, cost, self.zombie_weapon_upgrade, self.origin );
 
 				player weapon_give( self.zombie_weapon_upgrade ); 
 			}
 			else
 			{
 				play_sound_on_ent( "no_purchase" );
+				player thread maps\_zombiemode_powerups::play_no_money_purchase_dialog();
+				
 			}
 		}
 		else
 		{
+			// MM - need to check and see if the player has an upgraded weapon.  If so, the ammo cost is much higher
+			if ( player has_upgrade( self.zombie_weapon_upgrade ) )
+			{
+				ammo_cost = 4500;
+			}
+			else
+			{
+				ammo_cost = get_ammo_cost( self.zombie_weapon_upgrade );
+			}
+
 			// if the player does have this then give him ammo.
 			if( player.score >= ammo_cost )
 			{
 				if( self.first_time_triggered == false )
 				{
 					model = getent( self.target, "targetname" ); 
-//					model show(); 
+					//					model show(); 
 					model thread weapon_show( player ); 
 					self.first_time_triggered = true;
 					if(!is_grenade)
 					{ 
-						self SetHintString( &"ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
+						self SetHintString( &"ZOMBIE_WEAPONCOSTAMMO", cost, get_ammo_cost( self.zombie_weapon_upgrade ) ); 
 					}
 				}
+
+				if( player HasWeapon( self.zombie_weapon_upgrade ) && player has_upgrade( self.zombie_weapon_upgrade ) )
+				{
+					ammo_given = player ammo_give( self.zombie_weapon_upgrade, true ); 
+				}
+				else if( player has_upgrade( self.zombie_weapon_upgrade ) )
+				{
+					ammo_given = player ammo_give( self.zombie_weapon_upgrade+"_upgraded" ); 
+				}
+				else
+				{
+					ammo_given = player ammo_give( self.zombie_weapon_upgrade ); 
+				}
 				
-				ammo_given = player ammo_give( self.zombie_weapon_upgrade ); 
 				if( ammo_given )
 				{
-					if(is_grenade)
-					{
-						player maps\_zombiemode_score::minus_to_player_score( cost ); // this give him ammo to early
-					}
-					else
-					{
 						player maps\_zombiemode_score::minus_to_player_score( ammo_cost ); // this give him ammo to early
-					}
+
+					bbPrint( "zombie_uses: playername %s playerscore %d round %d cost %d name %s x %f y %f z %f type ammo",
+						player.playername, player.score, level.round_number, ammo_cost, self.zombie_weapon_upgrade, self.origin );
 				}
 			}
 			else
@@ -934,9 +1452,14 @@ weapon_give( weapon )
 		self SwitchToWeapon( weapon );
 }
 
-ammo_give( weapon )
+ammo_give( weapon, also_has_upgrade )
 {
 	// We assume before calling this function we already checked to see if the player has this weapon...
+
+	if( !isDefined( also_has_upgrade ) )
+	{
+		also_has_upgrade = false;
+	}
 
 	// Should we give ammo to the player
 	give_ammo = false; 
@@ -948,12 +1471,18 @@ ammo_give( weapon )
 		{
 			// get the max allowed ammo on the current weapon
 			stockMax = WeaponMaxAmmo( weapon ); 
-	
+			if( also_has_upgrade ) 
+			{
+				stockMax += WeaponMaxAmmo( weapon+"_upgraded" );
+			}
+
 			// Get the current weapon clip count
 			clipCount = self GetWeaponAmmoClip( weapon ); 
-	
+
+			currStock = self GetAmmoCount( weapon );
+
 			// compare it with the ammo player actually has, if more or equal just dont give the ammo, else do
-			if( ( self getammocount( weapon ) - clipcount ) >= stockMax )	
+			if( ( currStock - clipcount ) >= stockMax )	
 			{
 				give_ammo = false; 
 			}
@@ -962,12 +1491,11 @@ ammo_give( weapon )
 				give_ammo = true; // give the ammo to the player
 			}
 		}
-				
 	}
 	else
 	{
 		// Ammo belongs to secondary weapon
-		if( self hasweapon( weapon ) )
+		if( self has_weapon_or_upgrade( weapon ) )
 		{
 			// Check if the player has less than max stock, if no give ammo
 			if( self getammocount( weapon ) < WeaponMaxAmmo( weapon ) )
@@ -978,12 +1506,16 @@ ammo_give( weapon )
 		}		
 	}	
 
-
 	if( give_ammo )
 	{
 		self playsound( "cha_ching" ); 
 		self GivemaxAmmo( weapon ); 
 		self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) ); 
+		if( also_has_upgrade )
+		{
+			self GiveMaxAmmo( weapon+"_upgraded" );
+			self SetWeaponAmmoClip( weapon+"_upgraded", WeaponClipSize( weapon+"_upgraded" ) ); 
+		}
 		return true;
 	}
 

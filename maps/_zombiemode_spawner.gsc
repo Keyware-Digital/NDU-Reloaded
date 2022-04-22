@@ -1103,7 +1103,28 @@ zombie_death_points( origin, mod, hit_location, player )
 
 	player maps\_zombiemode_score::player_add_points( "death", mod, hit_location ); 
 }
-
+do_player_playdialog(player_index, sound_to_play, waittime, response)
+{
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	
+	if(!IsDefined(level.player_is_speaking))
+	{
+		level.player_is_speaking = 0;	
+	}
+	if(level.player_is_speaking != 1)
+	{
+		level.player_is_speaking = 1;
+		//iprintlnbold(sound_to_play);
+		self playsound(player_index + sound_to_play, "sound_done" + sound_to_play);			
+		self waittill("sound_done" + sound_to_play);
+		wait(waittime);		
+		level.player_is_speaking = 0;
+		/*if( isdefined( response ) )
+		{
+			level thread setup_response_line( self, index, response ); 
+		}*/
+	}
+}
 // Called from animscripts\death.gsc
 zombie_death_animscript()
 {
@@ -1588,3 +1609,15 @@ zombie_history( msg )
 		}
 
 }*/
+
+get_number_variants(aliasPrefix)
+{
+		for(i=0; i<100; i++)
+		{
+			if( !SoundExists( aliasPrefix + "_" + i) )
+			{
+				//iprintlnbold(aliasPrefix +"_" + i);
+				return i;
+			}
+		}
+}

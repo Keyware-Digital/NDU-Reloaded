@@ -1315,3 +1315,68 @@ perk_hud_destroy( perk )
 	self.perk_hud[ perk ] destroy_hud();
 	self.perk_hud[ perk ] = undefined;
 }
+
+play_no_money_perk_dialog()
+{
+	
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	
+	player_index = "plr_" + index + "_";
+	if(!IsDefined (self.vox_nomoney_perk))
+	{
+		num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_nomoney_perk");
+		self.vox_nomoney_perk = [];
+		for(i=0;i<num_variants;i++)
+		{
+			self.vox_nomoney_perk[self.vox_nomoney_perk.size] = "vox_nomoney_perk_" + i;	
+		}
+		self.vox_nomoney_perk_available = self.vox_nomoney_perk;		
+	}	
+	sound_to_play = random(self.vox_nomoney_perk_available);
+	
+	self.vox_nomoney_perk_available = array_remove(self.vox_nomoney_perk_available,sound_to_play);
+	
+	if (self.vox_nomoney_perk_available.size < 1 )
+	{
+		self.vox_nomoney_perk_available = self.vox_nomoney_perk;
+	}
+			
+	self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
+	
+	
+		
+	
+}
+
+play_no_money_purchase_dialog()
+{
+	
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	
+	player_index = "plr_" + index + "_";
+	if(!IsDefined (self.vox_gen_sigh))
+	{
+		num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_gen_sigh");
+		self.vox_gen_sigh = [];
+		for(i=0;i<num_variants;i++)
+		{
+			self.vox_gen_sigh[self.vox_gen_sigh.size] = "vox_gen_sigh_" + i;	
+		}
+		self.vox_gen_sigh_available = self.vox_gen_sigh;		
+	}
+	rand = randomintrange(0,6);
+	if(rand < 3)
+	{
+		sound_to_play = random(self.vox_gen_sigh_available);		
+		self.vox_gen_sigh_available = array_remove(self.vox_gen_sigh_available,sound_to_play);
+		if (self.vox_gen_sigh_available.size < 1 )
+		{
+			self.vox_gen_sigh_available = self.vox_gen_sigh;
+		}
+		wait(0.25);
+		self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
+	}
+	
+		
+	
+}
