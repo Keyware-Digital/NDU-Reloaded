@@ -103,6 +103,7 @@ weapons\sp\svt40
 weapons\sp\sw_357
 weapons\sp\tesla_gun
 weapons\sp\thompson
+weapons\sp\tokarev
 weapons\sp\type99_lmg
 weapons\sp\walther
 weapons\sp\walther_prototype
@@ -112,11 +113,16 @@ xmodel\char_ger_hnrgd_player_body_cqb
 xmodel\char_ger_hnrgd_player_body_hmg
 xmodel\char_ger_hnrgd_player_head_cqb
 xmodel\char_ger_hnrgd_player_head_hmg
+xmodel\char_rus_guard_player_body_smg
+xmodel\char_rus_guard_player_head_smg
+xmodel\char_usa_marine_gear3
 xmodel\char_usa_marine_head4_2
+xmodel\char_usa_marine_head4_4
 xmodel\char_usa_marine_helm1
 xmodel\char_usa_marine_player_body2_1
 xmodel\char_usa_raider_gear4
 xmodel\viewmodel_ger_wermacht_arms
+xmodel\viewmodel_rus_guard_arms
 xmodel\viewmodel_usa_marine_arms
 xmodel\zombie_3rd_perk_bottle_doubletap
 xmodel\zombie_3rd_perk_bottle_jugg
