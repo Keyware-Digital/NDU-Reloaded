@@ -34,7 +34,7 @@ init()
 	set_zombie_var( "zombie_powerup_point_doubler_on", 	false );
 	set_zombie_var( "zombie_powerup_point_doubler_time", 30 );	// length of point doubler
 	set_zombie_var( "zombie_powerup_insta_kill_time", 	30 );	// length of insta kill
-	set_zombie_var( "zombie_powerup_drop_increment", 	400 );	// lower this to make drop happen more often 400
+	set_zombie_var( "zombie_powerup_drop_increment", 	2000 );	// lower this to make drop happen more often 400
 	set_zombie_var( "zombie_powerup_drop_max_per_round", 4 );	// lower this to make drop happen more often
 
 	// powerups
@@ -57,7 +57,7 @@ init_powerups()
     add_zombie_powerup( "double_points","zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
     add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
     add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup( "randomperk",        "zombie_3rd_perk_bottle_jugg",        "ZOMBIE_RANDOM_PERK" );	//Random Perk!
+    add_zombie_powerup( "randomperk",        "zombie_3rd_perk_bottle_jugg",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
 
 	// Randomize the order
 	randomize_powerups();
