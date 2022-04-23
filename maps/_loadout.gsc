@@ -413,6 +413,39 @@ init_models_and_variables_loadout()
 		level.campaign = "american";
 		return;
 	}
+	else if( GetDvar( "zombiemode" ) == "1" || IsSubStr( level.script, "nazi_zombie_" ) || level.script == "zombie_test_map" ) // CODER_MOD (Austin 5/4/08): zombiemode loadout setup
+	{
+		//Zombiemode loadout. If you aren't making a zombie map then you can define your level.script and add a check above.
+		set_player_specific_add_weapon(0, "walther" );
+		set_player_specific_add_weapon(1, "zombie_colt");
+		set_player_specific_add_weapon(2, "walther" );
+		set_player_specific_add_weapon(3, "zombie_colt");
+		PrecacheItem( "napalmblob" );
+		PrecacheItem( "napalmbloblight" );
+		set_player_specific_switch_weapon(0, "walther" );
+		set_player_specific_switch_weapon(1, "zombie_colt");
+		set_player_specific_switch_weapon(2, "walther" );
+		set_player_specific_switch_weapon(3, "zombie_colt");
+
+		set_player_specific_laststand_pistol(0, "walther" );
+		set_player_specific_laststand_pistol(1, "zombie_colt");
+		set_player_specific_laststand_pistol(2, "walther" );
+		set_player_specific_laststand_pistol(3, "zombie_colt");
+
+		set_player_specific_viewmodel(0, "viewmodel_ger_wermacht_arms");
+    	set_player_specific_viewmodel(1, "viewmodel_usa_marine_arms");
+    	set_player_specific_viewmodel(2, "viewmodel_ger_wermacht_arms");
+    	set_player_specific_viewmodel(3, "viewmodel_usa_marine_arms");
+
+		set_player_specific_interactive_hands(0, "viewmodel_ger_wermacht_player");
+		set_player_specific_interactive_hands(1, "viewmodel_usa_marine_player");
+		set_player_specific_interactive_hands(2, "viewmodel_ger_wermacht_player");
+		set_player_specific_interactive_hands(3, "viewmodel_usa_marine_player");
+
+		level.campaign = "american";
+		level.script = "zombiemode";
+		return;
+	}
 	else if( IsSubStr( level.script, "intro_" ) ) // Support for the intro movies for the campaigns
 	{
 		return;
@@ -424,36 +457,6 @@ init_models_and_variables_loadout()
 		level.campaign = "american";
 		return;
 	}
-
-	//Zombiemode loadout. If you aren't making a zombie map then you can define your level.script and add a check above.
-	set_player_specific_add_weapon(0, "walther" );
-	set_player_specific_add_weapon(1, "zombie_colt");
-	set_player_specific_add_weapon(2, "walther" );
-	set_player_specific_add_weapon(3, "zombie_colt");
-	PrecacheItem( "napalmblob" );
-	PrecacheItem( "napalmbloblight" );
-	set_player_specific_switch_weapon(0, "walther" );
-	set_player_specific_switch_weapon(1, "zombie_colt");
-	set_player_specific_switch_weapon(2, "walther" );
-	set_player_specific_switch_weapon(3, "zombie_colt");
-
-	set_player_specific_laststand_pistol(0, "walther" );
-	set_player_specific_laststand_pistol(1, "zombie_colt");
-	set_player_specific_laststand_pistol(2, "walther" );
-	set_player_specific_laststand_pistol(3, "zombie_colt");
-
-	set_player_specific_viewmodel(0, "viewmodel_ger_wermacht_arms");
-    set_player_specific_viewmodel(1, "viewmodel_usa_marine_arms");
-    set_player_specific_viewmodel(2, "viewmodel_ger_wermacht_arms");
-    set_player_specific_viewmodel(3, "viewmodel_usa_marine_arms");
-
-	set_player_specific_interactive_hands(0, "viewmodel_ger_wermacht_player");
-	set_player_specific_interactive_hands(1, "viewmodel_usa_marine_player");
-	set_player_specific_interactive_hands(2, "viewmodel_ger_wermacht_player");
-	set_player_specific_interactive_hands(3, "viewmodel_usa_marine_player");
-
-	level.campaign = "american";
-	level.script = "zombiemode";
 }
 
 // This will precache and set the loadout rather than duplicating work.
