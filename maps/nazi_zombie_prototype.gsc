@@ -117,10 +117,11 @@ include_weapons()
 	include_weapon( "springfield_scoped_zombie_upgraded" );
 	
 	// Pistols
-	include_weapon( "colt" );
+	include_weapon( "colt" );		//for Americans
 	//include_weapon( "colt_dirty_harry" );
-	include_weapon( "walther" );
+	include_weapon( "walther" );	//for German
 	include_weapon( "sw_357" );
+	include_weapon( "tokarev" );	//for Russian
 	
 	// Semi Auto
 	include_weapon( "m1carbine" );	//disabled in weapon limiter below
@@ -178,6 +179,7 @@ include_weapons()
 	// Weapon limiter
 	level.limited_weapons["colt"] = 0;
 	level.limited_weapons["walther"] = 0;
+	level.limited_weapons["tokarev"] = 0;
 	level.limited_weapons["kar98k"] = 0;
 	level.limited_weapons["kar98k_scoped_zombie"] = 0;
 	level.limited_weapons["m1carbine"] = 0;

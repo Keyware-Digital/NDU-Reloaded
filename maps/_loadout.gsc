@@ -432,15 +432,15 @@ init_models_and_variables_loadout()
 		set_player_specific_laststand_pistol(2, "walther" );
 		set_player_specific_laststand_pistol(3, "zombie_colt");
 
-		set_player_specific_viewmodel(0, "viewmodel_ger_wermacht_arms");
-    	set_player_specific_viewmodel(1, "viewmodel_usa_marine_arms");
-    	set_player_specific_viewmodel(2, "viewmodel_ger_wermacht_arms");
-    	set_player_specific_viewmodel(3, "viewmodel_usa_marine_arms");
+		set_player_specific_viewmodel(0, "viewmodel_usa_marine_arms");
+    	set_player_specific_viewmodel(1, "viewmodel_ger_wermacht_arms");
+    	set_player_specific_viewmodel(2, "viewmodel_usa_marine_arms");
+    	set_player_specific_viewmodel(3, "viewmodel_rus_guard_arms");
 
-		set_player_specific_interactive_hands(0, "viewmodel_ger_wermacht_player");
-		set_player_specific_interactive_hands(1, "viewmodel_usa_marine_player");
-		set_player_specific_interactive_hands(2, "viewmodel_ger_wermacht_player");
-		set_player_specific_interactive_hands(3, "viewmodel_usa_marine_player");
+		set_player_specific_interactive_hands(0, "viewmodel_usa_marine_arms");
+		set_player_specific_interactive_hands(1, "viewmodel_ger_wermacht_arms");
+		set_player_specific_interactive_hands(2, "viewmodel_usa_marine_arms");
+		set_player_specific_interactive_hands(3, "viewmodel_rus_guard_arms");
 
 		level.campaign = "american";
 		level.script = "zombiemode";

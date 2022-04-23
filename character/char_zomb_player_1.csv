@@ -1,5 +1,7 @@
 //rawfile,character/char_zomb_player_1.gsc
-xmodel,char_usa_marine_player_body2_1
-xmodel,char_usa_marine_head4_2
-xmodel,char_usa_marine_helm1
-xmodel,char_usa_raider_gear4
+xmodel,char_ger_hnrgd_player_body_hmg
+xmodel,char_ger_hnrgd_player_head_hmg
+
+//rawfile,character/char_zomb_player_2.gsc	//Replaced with a Russian model (player 3)
+//xmodel,char_ger_hnrgd_player_body_cqb
+//xmodel,char_ger_hnrgd_player_head_cqb
