@@ -1673,7 +1673,7 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 		|| sMeansOfDeath == "MOD_BURNED") )
 	{
 
-		//IPrintLn("recover_player");
+		IPrintLn("recover_player");
 
 		// Think "IF" is not necessary but just to be sure
 		if( !maps\_laststand::player_is_in_laststand())
@@ -1695,6 +1695,16 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 		return;
 	}
 
+	if( sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH" )
+	{
+		if( self.health > 75 )
+		{
+			finalDamage = 75;
+			self maps\_callbackglobal::finishPlayerDamageWrapper( eInflictor, eAttacker, finalDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
+			return;
+		}
+	}
+
 	if( iDamage < self.health )
 	{	
 		self maps\_callbackglobal::finishPlayerDamageWrapper( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
@@ -1705,9 +1715,8 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 	{
 		level waittill( "forever" );
 	}
-
-	players = get_players();
 	count = 0;
+	players = get_players();
 	for( i = 0; i < players.size; i++ )
 	{
 		if( players[i] == self || players[i].is_zombie || players[i] maps\_laststand::player_is_in_laststand() || players[i].sessionstate == "spectator" )
@@ -1724,10 +1733,10 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 	self.intermission = true;
 
 	self thread maps\_laststand::PlayerLastStand( eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime );
-	self player_fake_death();
 
 	if( count == players.size )
 	{
+		self player_fake_death();
 		end_game();
 	}
 }
