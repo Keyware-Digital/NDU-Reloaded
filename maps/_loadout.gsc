@@ -724,7 +724,7 @@ give_model( class )
 			self give_player_specific_switch_weapon();
 			self give_player_specific_laststand_pistol();
 			self give_player_specific_viewmodel();
-			self give_player_specific_interactive_hands();
+		//	self give_player_specific_interactive_hands();
             return;
 		
 		}
