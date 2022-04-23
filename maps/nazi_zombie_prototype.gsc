@@ -41,14 +41,11 @@ init_sounds()
 
 intro_screen()
 {
-	text_line[0] = "Abandoned Airfield";
-	text_line[1] = "Morasko, Poland";
-	text_line[2] = "August 30th, 1945";
 
 	flag_wait( "all_players_connected" );
 	wait(2);
 	level.intro_hud = [];
-	for(i = 0;  i < 3; i++)
+	for(i = 0;  i < 4; i++)
 	{
 		level.intro_hud[i] = newHudElem();
 		level.intro_hud[i].x = 0;
@@ -71,30 +68,33 @@ intro_screen()
 		level.intro_hud[i].color = (1, 1, 1);
 		level.intro_hud[i].inuse = false;
 	}
-	level.intro_hud[0].y = -110;
-	level.intro_hud[1].y = -90;
-	level.intro_hud[2].y = -70;
+	level.intro_hud[0].y = -130;
+	level.intro_hud[1].y = -110;
+	level.intro_hud[2].y = -90;
+	level.intro_hud[3].y = -70;
 
+	level.intro_hud[0] settext("Abandoned Airfield");
+	level.intro_hud[1] settext("Morasko, Poland");
+	level.intro_hud[2] settext("August 30th, 1945");
+//	level.intro_hud[3] settext("placeholder_text");
+//	level.intro_hud[1] settext(&"ZOMBIE_INTRO_FACTORY_LEVEL_TIME");
+//	level.intro_hud[2] settext(&"ZOMBIE_INTRO_FACTORY_LEVEL_DATE");
 
-	level.intro_hud[0] settext(text_line[0]);
-	level.intro_hud[1] settext(text_line[1]);
-	level.intro_hud[2] settext(text_line[2]);
-
-	for(i = 0 ; i < 3; i++)
+	for(i = 0 ; i < 4; i++)
 	{
 		level.intro_hud[i] FadeOverTime( 3.5 ); 
 		level.intro_hud[i].alpha = 1;
 		wait(1.5);
 	}
 	wait(1.5);
-	for(i = 0 ; i < 3; i++)
+	for(i = 0 ; i < 4; i++)
 	{
 		level.intro_hud[i] FadeOverTime( 3.5 ); 
 		level.intro_hud[i].alpha = 0;
 		wait(1.5);
 	}	
 	wait(2);
-	for(i = 0 ; i < 3; i++)
+	for(i = 0 ; i < 4; i++)
 	{
 		level.intro_hud[i] destroy();
 	}
