@@ -105,7 +105,7 @@ intro_screen()
 include_weapons()
 {
 	// NDU: Reloaded
-	include_weapon( "walther_prototype" );	//Will be disabled as we're giving the Germans standard Walthers.
+	//include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
 	//include_weapon( "mosin_rifle" );
 	include_weapon( "mosin_rifle_bayonet" );
 	include_weapon( "kar98k_bayonet" );
