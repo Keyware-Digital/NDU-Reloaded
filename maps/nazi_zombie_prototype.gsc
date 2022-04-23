@@ -4,10 +4,10 @@
 
 main()
 {
-	maps\_character_randomise::init();
 	maps\_destructible_opel_blitz::init();
 
 	include_weapons();
+	maps\_character_randomise::init();
 	include_powerups();
 	level thread betty_fx();
 	
