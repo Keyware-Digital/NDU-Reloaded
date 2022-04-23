@@ -683,6 +683,7 @@ give_loadout(wait_for_switch_weapon)
 
 give_model( class )
 {
+
 	if (level.campaign == "russian")
 	{
 		if (level.script == "ber2")
@@ -722,20 +723,21 @@ give_model( class )
 		}
 		else
 		{
-			switch( maps\_zombiemode_weapons::get_player_index( self ) )
+
+			switch( self.entity_num)
 			{
-				case 0:
-					character\char_zomb_player_0::main();
-					break;
-				case 1:
-					character\char_zomb_player_1::main();
-					break;
-				case 2:
-					character\char_zomb_player_2::main();
-					break;
-				case 3:
-					character\char_zomb_player_3::main();
-					break;
+			case 0:
+				character\char_zomb_player_0::main();
+				break;
+			case 1:
+				character\char_zomb_player_1::main();
+				break;
+			case 2:
+				character\char_zomb_player_2::main();
+				break;
+			case 3:
+				character\char_zomb_player_3::main();
+				break;
 			}
 
 		}
@@ -745,31 +747,26 @@ give_model( class )
 			self give_player_specific_viewmodel();
 		//	self give_player_specific_interactive_hands();
             return;
-		
-		}
-		else
-		{
-			self mptype\player_usa_marine::main();
-		}
 	}
 	else
 	{
-		self mptype\player_usa_marine::main();
+		switch( self.entity_num)
+			{
+			case 0:
+				character\char_zomb_player_0::main();
+				break;
+			case 1:
+				character\char_zomb_player_1::main();
+				break;
+			case 2:
+				character\char_zomb_player_2::main();
+				break;
+			case 3:
+				character\char_zomb_player_3::main();
+				break;
+			}
 	}
 
-
-
-
-
-
-
-	//	}
-
-	// MikeD (3/28/2008): If specified, give the player his hands
-	if( IsDefined( level.player_viewmodel ) )
-	{
-		self SetViewModel( level.player_viewmodel );
-	}
 }
 ///////////////////////////////////////////////
 // SavePlayerWeaponStatePersistent
