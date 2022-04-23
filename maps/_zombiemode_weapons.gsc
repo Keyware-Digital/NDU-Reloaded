@@ -873,7 +873,7 @@ treasure_chest_give_weapon( weapon_string )
 	{
 		for( i = 0; i < primaryWeapons.size; i++ )
 		{
-			if( primaryWeapons[i] == "zombie_colt" )
+			if( primaryWeapons[i] == "zombie_colt" || primaryWeapons[i] == "walther" )
 			{
 				continue; 
 			}
@@ -1256,7 +1256,7 @@ weapon_give( weapon )
 	{
 		for( i = 0; i < primaryWeapons.size; i++ )
 		{
-			if( primaryWeapons[i] == "zombie_colt" )
+			if( primaryWeapons[i] == "zombie_colt" || primaryWeapons[i] == "walther" )
 			{
 				continue; 
 			}
