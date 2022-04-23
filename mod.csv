@@ -37,17 +37,6 @@ xmodel,zombie_carpenter
 xmodel,zombie_ammocan
 xmodel,zombie_skull
 xmodel,zombie_x2_icon
-xmodel,char_usa_marine_player_body2_1
-xmodel,char_usa_marine_head4_4
-xmodel,char_usa_raider_helm1
-xmodel,char_usa_raider_gear3
-xmodel,char_usa_marine_head4_2
-xmodel,char_usa_marine_helm1
-xmodel,char_usa_raider_gear4
-xmodel,char_ger_hnrgd_player_body_hmg
-xmodel,char_ger_hnrgd_player_head_hmg
-xmodel,char_ger_hnrgd_player_body_cqb
-xmodel,char_ger_hnrgd_player_head_cqb
 xmodel,viewmodel_ger_wermacht_arms
 xmodel,viewmodel_usa_marine_arms
 xmodel,viewmodel_ger_wermacht_player
