@@ -33,6 +33,7 @@ maps\_zombiemode_powerups.gsc
 maps\_zombiemode_spawner.gsc
 maps\_zombiemode_weapons.gsc
 maps\nazi_zombie_prototype.gsc
+maps\zombiemode.gsc
 materials\logo_cod2
 materials\specialty_aim_zombies
 materials\specialty_doublepoints_zombies
