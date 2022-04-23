@@ -9,5 +9,4 @@ precache()
 {
 precacheModel("char_rus_guard_player_body_smg");
 precacheModel("char_rus_guard_player_head_smg");
-
 }

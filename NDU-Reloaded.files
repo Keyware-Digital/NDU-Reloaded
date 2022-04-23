@@ -1,10 +1,6 @@
-character\char_zomb_player_0.csv
 character\char_zomb_player_0.gsc
-character\char_zomb_player_1.csv
 character\char_zomb_player_1.gsc
-character\char_zomb_player_2.csv
 character\char_zomb_player_2.gsc
-character\char_zomb_player_3.csv
 character\char_zomb_player_3.gsc
 fx\fx_betty_trail.efx
 fx\fx_explosion_betty_generic.efx
@@ -46,7 +42,6 @@ materials\specialty_longersprint_zombies
 materials\specialty_phd_zombies
 materials\specialty_quickrevive_zombies
 materials\specialty_sp_zombies
-mptype\nazi_zombie_heroes.csv
 mptype\nazi_zombie_heroes.gsc
 sound\music_mainmenu\main_menu.wav
 sound\sfx\ui\arcade\arcademode_kill_streak_won.wav
@@ -116,9 +111,7 @@ xmodel\char_ger_hnrgd_player_head_cqb
 xmodel\char_ger_hnrgd_player_head_hmg
 xmodel\char_rus_guard_player_body_smg
 xmodel\char_rus_guard_player_head_smg
-xmodel\char_usa_marine_gear3
 xmodel\char_usa_marine_head4_2
-xmodel\char_usa_marine_head4_4
 xmodel\char_usa_marine_helm1
 xmodel\char_usa_marine_player_body2_1
 xmodel\char_usa_raider_gear4

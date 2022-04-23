@@ -1,7 +1,0 @@
-//rawfile,character/char_zomb_player_1.gsc
-xmodel,char_ger_hnrgd_player_body_hmg
-xmodel,char_ger_hnrgd_player_head_hmg
-
-//rawfile,character/char_zomb_player_2.gsc	//Replaced with a Russian model (player 3)
-//xmodel,char_ger_hnrgd_player_body_cqb
-//xmodel,char_ger_hnrgd_player_head_cqb
