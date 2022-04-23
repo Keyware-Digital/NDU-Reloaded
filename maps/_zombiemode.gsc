@@ -480,7 +480,6 @@ onPlayerConnect_clientDvars()
 						   "ammoCounterHide", "0",
 						   "miniscoreboardhide", "0",
 						   "ui_hud_hardcore", "0" );
-
 	for( i = 0; i < 4; i++ )
         {
 		self SetClientDvar( "cg_ScoresColor_Gamertag_" + i, level.random_character_color[ level.random_character_index[ i ] ] );

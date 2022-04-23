@@ -21,7 +21,7 @@ images\specialty_quickrevive_zombies.iwi
 images\specialty_sp_zombies.iwi
 maps\_button_print.gsc
 maps\_callbackglobal.gsc
-maps\_character_randomize.gsc
+maps\_character_randomise.gsc
 maps\_gameskill.gsc
 maps\_laststand.gsc
 maps\_loadout.gsc
@@ -116,6 +116,7 @@ xmodel\char_usa_marine_helm1
 xmodel\char_usa_marine_player_body2_1
 xmodel\char_usa_raider_gear4
 xmodel\viewmodel_ger_wermacht_arms
+xmodel\viewmodel_usa_marine_arms
 xmodel\zombie_3rd_perk_bottle_doubletap
 xmodel\zombie_3rd_perk_bottle_jugg
 xmodel\zombie_3rd_perk_bottle_revive

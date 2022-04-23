@@ -1,5 +1,5 @@
 rawfile,maps\_callbackglobal.gsc
-rawfile,maps\_character_randomize.gsc
+rawfile,maps\_character_randomise.gsc
 rawfile,maps\_loadout.gsc
 rawfile,maps\_gameskill.gsc
 rawfile,maps\_zombiemode_blockers.gsc
@@ -19,8 +19,7 @@ weapon,sp/zombie_type100_smg
 weapon,sp/zombie_ppsh
 weapon,sp/mine_bouncing_betty
 fx,weapon/muzzleflashes/standardflashworld_ug
-sound,weapons,,all_sp
-sound,mod_ndu,,all_mp
+sound,mod_ndu,,all_sp
 sound,mod_ndu_powerup,,all_sp
 sound,menu_music,,all_sp
 sound,music_mainmenu,main_menu
@@ -48,6 +47,8 @@ xmodel,char_ger_hnrgd_player_body_cqb
 xmodel,char_ger_hnrgd_player_head_cqb
 xmodel,viewmodel_ger_wermacht_arms
 xmodel,viewmodel_usa_marine_arms
+xmodel,viewmodel_ger_wermacht_player
+xmodel,viewmodel_usa_marine_player
 xmodel,zombie_3rd_perk_bottle_jugg
 xmodel,zombie_3rd_perk_bottle_doubletap
 xmodel,zombie_3rd_perk_bottle_sleight

@@ -426,18 +426,31 @@ init_models_and_variables_loadout()
 	}
 
 	//Zombiemode loadout. If you aren't making a zombie map then you can define your level.script and add a check above.
-	add_weapon( "zombie_colt" );
+	set_player_specific_add_weapon(0, "walther" );
+	set_player_specific_add_weapon(1, "zombie_colt");
+	set_player_specific_add_weapon(2, "walther" );
+	set_player_specific_add_weapon(3, "zombie_colt");
 	PrecacheItem( "napalmblob" );
 	PrecacheItem( "napalmbloblight" );
-	set_switch_weapon( "zombie_colt" );
+	set_player_specific_switch_weapon(0, "walther" );
+	set_player_specific_switch_weapon(1, "zombie_colt");
+	set_player_specific_switch_weapon(2, "walther" );
+	set_player_specific_switch_weapon(3, "zombie_colt");
 
-	set_laststand_pistol( "zombie_colt" );
+	set_player_specific_laststand_pistol(0, "walther" );
+	set_player_specific_laststand_pistol(1, "zombie_colt");
+	set_player_specific_laststand_pistol(2, "walther" );
+	set_player_specific_laststand_pistol(3, "zombie_colt");
+
 	set_player_specific_viewmodel(0, "viewmodel_ger_wermacht_arms");
     set_player_specific_viewmodel(1, "viewmodel_usa_marine_arms");
     set_player_specific_viewmodel(2, "viewmodel_ger_wermacht_arms");
     set_player_specific_viewmodel(3, "viewmodel_usa_marine_arms");
 
-	set_player_interactive_hands( "viewmodel_ger_wermacht_player");
+	set_player_specific_interactive_hands(0, "viewmodel_ger_wermacht_player");
+	set_player_specific_interactive_hands(1, "viewmodel_usa_marine_player");
+	set_player_specific_interactive_hands(2, "viewmodel_ger_wermacht_player");
+	set_player_specific_interactive_hands(3, "viewmodel_usa_marine_player");
 
 	level.campaign = "american";
 	level.script = "zombiemode";
@@ -707,7 +720,11 @@ give_model( class )
 				character\char_zomb_player_3::main();
 				break;
 		}
+			self give_player_specific_add_weapon();
+			self give_player_specific_switch_weapon();
+			self give_player_specific_laststand_pistol();
 			self give_player_specific_viewmodel();
+			self give_player_specific_interactive_hands();
             return;
 		
 		}
@@ -827,6 +844,66 @@ RestorePlayerWeaponStatePersistent( slot )
 	return true;
 }
 
+set_player_specific_add_weapon(num, name)
+{
+if(!IsDefined(level.player_specific_add_weapon))
+         level.player_specific_add_weapon = [];
+level.player_specific_add_weapon[num] = name;
+PrecacheItem(name);
+}
+
+give_player_specific_add_weapon()
+{
+if(IsDefined(level.player_specific_add_weapon) && IsDefined(level.player_specific_add_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+{
+         self giveWeapon(level.player_specific_add_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]);
+}
+else if(IsDefined(level.player_loadout))
+{
+         self giveWeapon(level.player_loadout);
+}
+}
+
+set_player_specific_switch_weapon(num, name)
+{
+if(!IsDefined(level.player_specific_switch_weapon))
+         level.player_specific_switch_weapon = [];
+level.player_specific_switch_weapon[num] = name;
+PrecacheItem(name);
+}
+
+give_player_specific_switch_weapon()
+{
+if(IsDefined(level.player_specific_switch_weapon) && IsDefined(level.player_specific_switch_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+{
+         self switchToWeapon(level.player_specific_switch_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]);
+}
+else if(IsDefined(level.player_switchweapon))
+{
+         self switchToWeapon(level.player_switchweapon);
+}
+}
+
+set_player_specific_laststand_pistol(num, name)
+{
+if(!IsDefined(level.player_specific_laststand_pistol))
+         level.player_specific_laststand_pistol = [];
+level.player_specific_laststand_pistol[num] = name;
+PrecacheItem(name);
+}
+
+give_player_specific_laststand_pistol()
+{
+if(IsDefined(level.player_specific_laststand_pistol) && IsDefined(level.player_specific_laststand_pistol[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+{
+         self switchToWeapon(level.player_specific_laststand_pistol[ maps\_zombiemode_weapons::get_player_index( self ) ]);
+}
+else if(IsDefined(level.laststandpistol))
+{
+         self switchToWeapon(level.laststandpistol);
+}
+}
+
 set_player_specific_viewmodel(num, name)
 {
 if(!IsDefined(level.player_specific_viewmodels))
@@ -844,5 +921,25 @@ if(IsDefined(level.player_specific_viewmodels) && IsDefined(level.player_specifi
 else if(IsDefined(level.player_viewmodel))
 {
          self SetViewModel(level.player_viewmodel);
+}
+}
+
+set_player_specific_interactive_hands(num, name)
+{
+if(!IsDefined(level.player_specific_interactive_hands))
+         level.player_specific_interactive_hands = [];
+level.player_specific_interactive_hands[num] = name;
+PrecacheModel(name);
+}
+
+give_player_specific_interactive_hands()
+{
+if(IsDefined(level.player_specific_interactive_hands) && IsDefined(level.player_specific_interactive_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+{
+         self SetModel(level.player_specific_interactive_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
+}
+else if(IsDefined(level.player_interactive_hands))
+{
+         self SetModel(level.player_interactive_hands);
 }
 }

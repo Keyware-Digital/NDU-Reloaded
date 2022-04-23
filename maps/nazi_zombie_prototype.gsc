@@ -4,7 +4,7 @@
 
 main()
 {
-	maps\_character_randomize::init();
+	maps\_character_randomise::init();
 	maps\_destructible_opel_blitz::init();
 
 	include_weapons();
