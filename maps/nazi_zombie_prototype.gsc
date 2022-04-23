@@ -170,7 +170,7 @@ include_weapons()
 	include_weapon( "panzerschrek" );
 
 	// Special
-	include_weapon( "ray_gun" );
+	include_weapon( "ray_gun", ::prototype_ray_gun_weighting_func );	//testing raygun weighting func.
 
 	// bouncing betties
 	include_weapon( "mine_bouncing_betty" );
@@ -184,33 +184,6 @@ include_weapons()
 	level.limited_weapons["m1garand"] = 0;
 	//level.limited_weapons["springfield"] = 0;
 	
-}
-
-// Add weapon(s) to mystery box after X rounds.
-/*add_walther_prototype()
-{
-    while(1)
-    {
-        level waittill( "between_round_over" );
-        if(level.round_number >= 15)
-        {
-            maps\_zombiemode_weapons::add_limited_weapon( "walther_prototype", 1);
-            break;    
-        }
-    }
-}*/
-
-add_springfield_scoped_zombie_upgraded()
-{
-    while(1)
-    {
-        level waittill( "between_round_over" );
-        if(level.round_number >= 20)
-        {
-            maps\_zombiemode_weapons::add_limited_weapon( "springfield_scoped_zombie_upgraded", 1);
-            break;    
-        }
-    }
 }
 
 // Rare weapon(s) weighting
@@ -234,6 +207,19 @@ prototype_ray_gun_weighting_func()
 		}
 		return num_to_add;	
 	}
+}
+
+add_springfield_scoped_zombie_upgraded()
+{
+    while(1)
+    {
+        level waittill( "between_round_over" );
+        if(level.round_number >= 15)
+        {
+            maps\_zombiemode_weapons::add_limited_weapon( "springfield_scoped_zombie_upgraded", 1);
+            break;    
+        }
+    }
 }
 
 include_powerups()

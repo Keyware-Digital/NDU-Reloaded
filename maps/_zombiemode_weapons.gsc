@@ -8,6 +8,7 @@ init()
 	init_weapon_upgrade();
 	init_weapon_cabinet();
 	treasure_chest_init();
+	level thread add_limited_springfield_scoped_zombie_upgraded();
 }
 
 add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost  )
@@ -92,7 +93,6 @@ default_ray_gun_weighting_func()
 	}
 }
 
-
 //
 //	Slightly elevate the chance to get it until someone has it, then make it even
 default_cymbal_monkey_weighting_func()
@@ -122,7 +122,6 @@ default_cymbal_monkey_weighting_func()
 		}
 	}
 }
-
 
 include_zombie_weapon( weapon_name, in_box, weighting_func )
 {
@@ -265,6 +264,26 @@ add_limited_weapon( weapon_name, amount )
 
 	level.limited_weapons[weapon_name] = amount;
 }                                          	
+
+add_limited_springfield_scoped_zombie_upgraded()
+{
+
+	weapon_spawns = GetEntArray( "weapon_upgrade", "targetname" ); 
+
+	for( i = 0; i < weapon_spawns.size; i++ )
+	{
+		hint_string = weapon_spawns[i].zombie_weapon_upgrade; 
+		if(hint_string == "springfield_scoped_zombie_upgraded")
+		{
+			weapon_spawns[i] waittill("trigger");
+			weapon_spawns[i] trigger_off();
+			break;
+
+		}
+		
+	}
+
+}
 
 // For buying weapon upgrades in the environment
 init_weapon_upgrade()
