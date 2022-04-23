@@ -1715,6 +1715,7 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 	{
 		level waittill( "forever" );
 	}
+
 	count = 0;
 	players = get_players();
 	for( i = 0; i < players.size; i++ )
@@ -1727,12 +1728,11 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
 
 	if( count < players.size )
 	{
+		self thread maps\_laststand::PlayerLastStand( eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime );
 		return;
 	}
 
 	self.intermission = true;
-
-	self thread maps\_laststand::PlayerLastStand( eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime );
 
 	if( count == players.size )
 	{
