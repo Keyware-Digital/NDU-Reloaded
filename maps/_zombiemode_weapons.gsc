@@ -65,36 +65,6 @@ default_weighting_func()
 	return 1;
 }
 
-default_tesla_weighting_func()
-{
-	num_to_add = 1;
-	if( isDefined( level.pulls_since_last_tesla_gun ) )
-	{
-		// player has dropped the tesla for another weapon, so we set all future polls to 20%
-		if( isDefined(level.player_drops_tesla_gun) && level.player_drops_tesla_gun == true )
-		{						
-			num_to_add += int(.2 * level.zombie_include_weapons.size);		
-		}
-		
-		// player has not seen tesla gun in late rounds
-		if( !isDefined(level.player_seen_tesla_gun) || level.player_seen_tesla_gun == false )
-		{
-			// after round 10 the Tesla gun percentage increases to 20%
-			if( level.round_number > 10 )
-			{
-				num_to_add += int(.2 * level.zombie_include_weapons.size);
-			}		
-			// after round 5 the Tesla gun percentage increases to 15%
-			else if( level.round_number > 5 )
-			{
-				// calculate the number of times we have to add it to the array to get the desired percent
-				num_to_add += int(.15 * level.zombie_include_weapons.size);
-			}						
-		}
-	}
-	return num_to_add;
-}
-
 default_ray_gun_weighting_func()
 {
 	if( level.box_moved == true )
@@ -284,26 +254,6 @@ init_weapons()
 
 	// ONLY 1 OF THE BELOW SHOULD BE ALLOWED
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
-}
-
-add_limited_tesla_gun()
-{
-
-	weapon_spawns = GetEntArray( "weapon_upgrade", "targetname" ); 
-
-	for( i = 0; i < weapon_spawns.size; i++ )
-	{
-		hint_string = weapon_spawns[i].zombie_weapon_upgrade; 
-		if(hint_string == "tesla_gun")
-		{
-			weapon_spawns[i] waittill("trigger");
-			weapon_spawns[i] trigger_off();
-			break;
-
-		}
-		
-	}
-
 }
 
 add_limited_weapon( weapon_name, amount )
@@ -850,17 +800,6 @@ treasure_chest_weapon_spawn( chest, player )
 			rand = treasure_chest_ChooseWeightedRandomWeapon( player );
 		}
 
-		/#
-		if( maps\_zombiemode_tesla::tesla_gun_exists() )	
-		{
-			if ( i == 39 && GetDvar( "scr_spawn_tesla" ) != "" )
-			{
-				SetDvar( "scr_spawn_tesla", "" );
-				rand = "tesla_gun";
-			}
-		}
-		#/
-
 		modelname = GetWeaponModel( rand );
 		model setmodel( modelname ); 
 
@@ -870,32 +809,6 @@ treasure_chest_weapon_spawn( chest, player )
 	self.weapon_string = rand; // here's where the org get it's weapon type for the give function
 
 	self notify( "randomization_done" );
-
-
-	//turn off power weapon, since player just got one
-	if( rand == "tesla_gun" || rand == "ray_gun" )
-	{
-		// PI_CHANGE_BEGIN - JMA - reset the counters for tesla gun and ray gun pulls
-		if( isDefined( level.script ) && (level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_factory") )
-		{
-			if( rand == "ray_gun" )
-			{
-				level.box_moved = false;
-				level.pulls_since_last_ray_gun = 0;
-			}
-				
-			if( rand == "tesla_gun" )
-			{
-				level.pulls_since_last_tesla_gun = 0;
-				level.player_seen_tesla_gun = true;
-			}			
-		}
-		else
-		{
-			level.box_moved = false;
-		}
-		// PI_CHANGE_END			
-	}
 
 		model thread timer_til_despawn(floatHeight);
 		self waittill( "weapon_grabbed" );
