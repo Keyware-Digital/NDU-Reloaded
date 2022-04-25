@@ -1471,9 +1471,9 @@ zombie_gib_on_damage()
 			// Double Tap 2.0 (formerly Stopping Power)
 			if(attacker HasPerk("specialty_rof") && ( type == "MOD_PISTOL_BULLET" || type == "MOD_RIFLE_BULLET" ) )		//change specialty to "bulletdamage" for stopping power
 			{
-				if(self.health > 0)
+				if(self.health > amount)
 				{
-					self DoDamage( int( amount  * 0.25 ), point, attacker, self.damageWeapon );	//was 0.40, so nerfed it
+					self DoDamage( int( amount* 1 ), point, attacker, self.damageWeapon, type );	//was 0.25, so buffed it
 					amount = amount * 1.25;	//was 1.40, so nerfed it
 				}
 				else
