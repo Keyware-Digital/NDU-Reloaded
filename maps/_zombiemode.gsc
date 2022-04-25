@@ -1860,7 +1860,7 @@ player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, 
         iprintln("Quick Revive has granted you a second chance!");
         self notify("second_chance");
 
-        self.maxhealth = 150;	//was 100, //changed to 150 to match bo3.
+        self.maxhealth = 100;
         self.health = self.maxhealth;
         return;
     }
