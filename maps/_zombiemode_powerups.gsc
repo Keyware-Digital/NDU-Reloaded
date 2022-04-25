@@ -7,8 +7,6 @@ init()
 
 	PrecacheShader( "specialty_doublepoints_zombies" );
 	PrecacheShader( "specialty_instakill_zombies" );
-	PrecacheShader( "black" ); 
-	
 	PrecacheShader( "specialty_juggernaut_zombies" );
 	PrecacheShader( "specialty_fastreload_zombies" );
 	PrecacheShader( "specialty_doubletap_zombies" );
@@ -18,6 +16,7 @@ init()
 	PrecacheShader( "specialty_aim_zombies" );
 	PrecacheShader( "specialty_fireworks_zombies" );
 	PrecacheShader( "specialty_longersprint_zombies" );
+	PrecacheShader( "black" ); 
 
 	PrecacheModel( "zombie_pickup_perkbottle" );
 	
