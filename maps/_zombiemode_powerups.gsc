@@ -7,8 +7,6 @@ init()
 
 	PrecacheShader( "specialty_doublepoints_zombies" );
 	PrecacheShader( "specialty_instakill_zombies" );
-	PrecacheShader( "black" ); 
-	
 	PrecacheShader( "specialty_juggernaut_zombies" );
 	PrecacheShader( "specialty_fastreload_zombies" );
 	PrecacheShader( "specialty_doubletap_zombies" );
@@ -18,11 +16,9 @@ init()
 	PrecacheShader( "specialty_aim_zombies" );
 	PrecacheShader( "specialty_fireworks_zombies" );
 	PrecacheShader( "specialty_longersprint_zombies" );
+	PrecacheShader( "black" ); 
 
-	PrecacheModel( "zombie_3rd_perk_bottle_jugg" );
-	PrecacheModel( "zombie_3rd_perk_bottle_doubletap" );
-	PrecacheModel( "zombie_3rd_perk_bottle_sleight" );
-	PrecacheModel( "zombie_3rd_perk_bottle_revive" );
+	PrecacheModel( "zombie_pickup_perkbottle" );
 	
 	// powerup Vars
 	set_zombie_var( "zombie_insta_kill", 				0 );
@@ -57,7 +53,7 @@ init_powerups()
     add_zombie_powerup( "double_points","zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
     add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
     add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup( "randomperk",        "zombie_3rd_perk_bottle_jugg",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
+    add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
 
 	// Randomize the order
 	randomize_powerups();
@@ -489,10 +485,6 @@ powerup_setup()
 
 	struct = level.zombie_powerups[powerup];
 	self SetModel( struct.model_name );
-	if( struct.model_name == "zombie_3rd_perk_bottle_jugg" )
-	{
-		self thread randomperkmodel();
-	}
 
 	//TUEY Spawn Powerup
 	playsoundatposition("spawn_powerup", self.origin);
@@ -506,28 +498,6 @@ powerup_setup()
 	}
 
 	self PlayLoopSound("spawn_powerup_loop");
-}
-
-randomperkmodel()
-{
-
-	self.perkbottlemodels = [];
-	self.perkbottlemodels[0] = "zombie_3rd_perk_bottle_jugg";
-	self.perkbottlemodels[1] = "zombie_3rd_perk_bottle_doubletap";
-	self.perkbottlemodels[2] = "zombie_3rd_perk_bottle_sleight";
-	self.perkbottlemodels[3] = "zombie_3rd_perk_bottle_revive";
-
-	self.loopnum = 0;
-	self.timer = 5;
-	while(isDefined(self))
-	{
-		self.perkbottlenum = RandomInt(3);
-		self SetModel( self.perkbottlemodels[self.perkbottlenum] );
-		//IPrintLn("change model");
-		self.timer = self.timer * 0.85;
-		wait self.timer;
-	}
-
 }
 
 powerup_grab()
@@ -625,7 +595,7 @@ give_player_perk()
 	if(self.perkarray[self.perknum] == "specialty_armorvest")
 	{
 		//IPrintLn("perk is jugg");
-		self.maxhealth = 250;	//was 200, changed to 250 match bo3.
+		self.maxhealth = 200;
 	}
 
 	if(self.perkarray[self.perknum] == "specialty_longersprint")
@@ -1230,7 +1200,7 @@ death_check()
 	self perk_hud_destroy( "specialty_bulletaccuracy" );
 	self perk_hud_destroy( "specialty_explosivedamage" );
 	self perk_hud_destroy( "specialty_bulletdamage" );
-	self.maxhealth = 150;	//was 100, //changed to 150 to match bo3.
+	self.maxhealth = 100;
 	self SetMoveSpeedScale(1);
 	self setClientDvar( "perk_sprintMultiplier", "1" ); 
 		
