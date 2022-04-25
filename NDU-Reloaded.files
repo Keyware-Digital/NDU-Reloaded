@@ -4,6 +4,8 @@ animscripts\traverse\shared.gsc
 animscripts\traverse\wall_hop.gsc
 animscripts\traverse\wall_hop_zombie.gsc
 animtrees\generic_human.atr
+character\char_ger_honorguard_zombies.gsc
+character\char_ger_honorguard2_zombies.gsc
 character\char_zomb_player_0.gsc
 character\char_zomb_player_1.gsc
 character\char_zomb_player_2.gsc
@@ -25,6 +27,7 @@ images\specialty_sp_zombies.iwi
 maps\_button_print.gsc
 maps\_callbackglobal.gsc
 maps\_character_randomise.gsc
+maps\_destructible_opel_blitz.gsc
 maps\_gameskill.gsc
 maps\_laststand.gsc
 maps\_loadout.gsc
@@ -33,9 +36,15 @@ maps\_zombiemode_betty.gsc
 maps\_zombiemode_blockers.gsc
 maps\_zombiemode_bowie.gsc
 maps\_zombiemode_powerups.gsc
+maps\_zombiemode_radio.gsc
+maps\_zombiemode_score.gsc
 maps\_zombiemode_spawner.gsc
+maps\_zombiemode_utility.gsc
 maps\_zombiemode_weapons.gsc
+maps\createart\nazi_zombie_prototype_art.gsc
+maps\createfx\nazi_zombie_prototype_fx.gsc
 maps\nazi_zombie_prototype.gsc
+maps\nazi_zombie_prototype_fx.gsc
 materials\logo_cod2
 materials\specialty_aim_zombies
 materials\specialty_doublepoints_zombies
@@ -50,6 +59,9 @@ materials\specialty_quickrevive_zombies
 materials\specialty_sp_zombies
 mod.csv
 mptype\nazi_zombie_heroes.gsc
+rumble\flamethrower
+rumble\flamethrower_h.rmb
+rumble\flamethrower_l.rmb
 sound\music_mainmenu\main_menu.wav
 sound\sfx\ui\arcade\arcademode_kill_streak_won.wav
 sound\sfx\weapon\bowie\sound_sfx_weapon_bowie_bowie_catch.wav
