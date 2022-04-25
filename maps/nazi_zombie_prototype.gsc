@@ -114,14 +114,14 @@ include_weapons()
 	// NDU: Reloaded
 	//include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
 	//include_weapon( "mosin_rifle" );
-	include_weapon( "mosin_rifle_bayonet" );
-	include_weapon( "kar98k_bayonet" );
-	include_weapon( "svt40" );
 	include_weapon( "dp28" );
+	include_weapon( "kar98k_bayonet" );
+	include_weapon( "mosin_rifle_bayonet" );
+	include_weapon( "springfield_scoped_zombie_upgraded" );		//weapon cabinet only
+	include_weapon( "svt40" );
 	include_weapon( "type99_lmg" );
-	include_weapon( "zombie_type100_smg" );
 	include_weapon( "zombie_ppsh" );
-	include_weapon( "springfield_scoped_zombie_upgraded" );
+	include_weapon( "zombie_type100_smg" );
 	
 	// Pistols
 	include_weapon( "colt" );		//for Americans
