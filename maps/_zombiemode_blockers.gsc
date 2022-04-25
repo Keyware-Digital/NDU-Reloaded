@@ -335,9 +335,11 @@ debris_think()
 debris_move( struct )
 {
 	self script_delay();
-
+	//chrisp - prevent playerse from getting stuck on the stuff
+	self notsolid();
+	
 	self play_sound_on_ent( "debris_move" );
-
+	playsoundatposition ("lightning_l", self.origin);
 	if( IsDefined( self.script_firefx ) )
 	{
 		PlayFX( level._effect[self.script_firefx], self.origin );
@@ -370,18 +372,20 @@ debris_move( struct )
 	self RotateTo( struct.angles, time * 0.75 );
 
 	self waittill( "movedone" );
-	self play_sound_on_entity ("couch_slam");
-	self play_loopsound_on_ent( "debris_hover_loop" );
 
+	self play_sound_on_entity ("couch_slam");
+//	self playloopsound ("couch_loop");
+//	self delete();
 	if( IsDefined( self.script_fxid ) )
 	{
 		PlayFX( level._effect[self.script_fxid], self.origin );
+		playsoundatposition("zombie_spawn", self.origin); //just playing the zombie_spawn sound when it deletes the blocker because it matches the particle.
 	}
 
-	if( IsDefined( self.script_delete ) )
-	{
+//	if( IsDefined( self.script_delete ) )
+//	{
 		self Delete();
-	}
+//	}
 }
 
 //

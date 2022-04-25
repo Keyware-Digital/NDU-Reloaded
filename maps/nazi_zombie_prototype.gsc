@@ -192,6 +192,7 @@ include_weapons()
 	level.limited_weapons["m1carbine"] = 0;
 	level.limited_weapons["m1garand"] = 0;
 	level.limited_weapons["springfield"] = 0;
+	level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;
 	
 }
 
@@ -216,19 +217,6 @@ prototype_ray_gun_weighting_func()
 		}
 		return num_to_add;	
 	}
-}
-
-add_springfield_scoped_zombie_upgraded()
-{
-    while(1)
-    {
-        level waittill( "between_round_over" );
-        if(level.round_number >= 15)
-        {
-            maps\_zombiemode_weapons::add_limited_weapon( "springfield_scoped_zombie_upgraded", 1);
-            break;    
-        }
-    }
 }
 
 include_powerups()

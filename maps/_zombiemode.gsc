@@ -593,7 +593,7 @@ watchGrenadeThrow()
 		{
 			if(self maps\_laststand::player_is_in_laststand())
 			{
-				wait(0.05);
+				//wait(0.05);
 				grenade delete();
 			}
 		}
