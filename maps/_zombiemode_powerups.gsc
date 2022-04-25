@@ -625,7 +625,7 @@ give_player_perk()
 	if(self.perkarray[self.perknum] == "specialty_armorvest")
 	{
 		//IPrintLn("perk is jugg");
-		self.maxhealth = 200;
+		self.maxhealth = 250;	//was 200, changed to 250 match bo3.
 	}
 
 	if(self.perkarray[self.perknum] == "specialty_longersprint")
@@ -1230,7 +1230,7 @@ death_check()
 	self perk_hud_destroy( "specialty_bulletaccuracy" );
 	self perk_hud_destroy( "specialty_explosivedamage" );
 	self perk_hud_destroy( "specialty_bulletdamage" );
-	self.maxhealth = 100;
+	self.maxhealth = 150;	//was 100, //changed to 150 to match bo3.
 	self SetMoveSpeedScale(1);
 	self setClientDvar( "perk_sprintMultiplier", "1" ); 
 		
