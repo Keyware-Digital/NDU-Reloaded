@@ -155,7 +155,7 @@ init_weapons()
 	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       750,	"vox_raygun",	6 ); 
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-	//add_zombie_weapon( "walther_prototype",                     &"ZOMBIE_WEAPON_WALTHER_50",                50,		"vox_raygun",	6 ); 
+	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",                50,		"vox_raygun",	6 ); 
 	
 	// Pistols
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
