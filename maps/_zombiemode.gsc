@@ -33,12 +33,9 @@ main()
 	// load map defaults
 	maps\_load::main();
 
-	PrecacheModel("viewmodel_ger_wermacht_arms");
-	PrecacheModel("viewmodel_usa_marine_arms");
-	PrecacheModel( "zombie_3rd_perk_bottle_jugg" );
-	PrecacheModel( "zombie_3rd_perk_bottle_doubletap" );
-	PrecacheModel( "zombie_3rd_perk_bottle_sleight" );
-	PrecacheModel( "zombie_3rd_perk_bottle_revive" );
+	//may not need these as precached in loadout, perhaps?
+	//PrecacheModel("viewmodel_ger_wermacht_arms");
+	//PrecacheModel("viewmodel_usa_marine_arms");	
 
 	level.hudelem_count = 0;
 	// Call the other zombiemode scripts
