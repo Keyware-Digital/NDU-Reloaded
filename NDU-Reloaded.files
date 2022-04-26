@@ -137,5 +137,6 @@ weapons\sp\zombie_ppsh
 weapons\sp\zombie_type100_smg
 xmodel\zombie_ammocan
 xmodel\zombie_bomb
+xmodel\zombie_pickup_perkbottle
 xmodel\zombie_skull
 xmodel\zombie_x2_icon

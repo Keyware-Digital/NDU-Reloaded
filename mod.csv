@@ -256,7 +256,10 @@ xmodel,zombie_ammocan
 xmodel,zombie_carpenter
 xmodel,zombie_skull
 xmodel,zombie_x2_icon
-xmodel,zombie_pickup_perkbottle
+xmodel,zombie_3rd_perk_bottle_jugg
+xmodel,zombie_3rd_perk_bottle_doubletap
+xmodel,zombie_3rd_perk_bottle_sleight
+xmodel,zombie_3rd_perk_bottle_revive
 weapon,sp/dp28
 weapon,sp/kar98k_bayonet
 weapon,sp/mine_bouncing_betty
