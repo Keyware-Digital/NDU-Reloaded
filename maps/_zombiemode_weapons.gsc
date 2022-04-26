@@ -817,18 +817,6 @@ weapon_cabinet_door_close( left_or_right )
 	}	
 }
 
-weapon_cabinet_door_open( left_or_right )
-{
-	if( left_or_right == "left" )
-	{
-		self rotateyaw( 120, 0.3, 0.2, 0.1 ); 	
-	}
-	else if( left_or_right == "right" )
-	{
-		self rotateyaw( -120, 0.3, 0.2, 0.1 ); 	
-	}	
-}
-
 weapon_spawn_think()
 {
 	cost = get_weapon_cost( self.zombie_weapon_upgrade );
