@@ -88,8 +88,8 @@ sound\sfx\weapon\uber\uber_shot_st.wav
 sound\voiceovers\zombie\sam\tele_nospawn_00.wav
 sound\voiceovers\zombie\sam\tele_nospawn_01.wav
 sound\voiceovers\zombie\sam\tele_nospawn_02.wav
-soundaliases\menu_music.csv
 soundaliases\mod_ndu.csv
+soundaliases\mod_ndu_menu_music.csv
 soundaliases\mod_ndu_powerup.csv
 ui\prototype_main.menu
 ui\prototype_options_game_pc.menu

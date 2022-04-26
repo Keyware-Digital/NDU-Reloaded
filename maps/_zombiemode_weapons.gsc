@@ -216,18 +216,16 @@ init_weapon_upgrade()
 // weapon cabinets which open on use
 init_weapon_cabinet()
 {
-	// the triggers which are targeted at doors
-	weapon_cabs = GetEntArray( "weapon_cabinet_use", "targetname" ); 
-	
-	for( i = 0; i < weapon_cabs.size; i++ )
-	{
-	
-		weapon_cabs[i] SetHintString( "Press &&1 for a Random Weapon [Cost: 1500]" ); 
-		weapon_cabs[i] setCursorHint( "HINT_NOICON" ); 
-		weapon_cabs[i] UseTriggerRequireLookAt();
-	}
+    // the triggers which are targeted at doors
+    weapon_cabs = GetEntArray( "weapon_cabinet_use", "targetname" ); 
+    
+    for( i = 0; i < weapon_cabs.size; i++ )
+    {
+        weapon_cabs[i] setCursorHint( "HINT_NOICON" ); 
+        weapon_cabs[i] UseTriggerRequireLookAt();
+    }
 
-	array_thread( weapon_cabs, ::weapon_cabinet_think ); 
+    array_thread( weapon_cabs, ::weapon_cabinet_think ); 
 }
 
 // returns the trigger hint string for the given weapon
@@ -615,149 +613,208 @@ treasure_chest_give_weapon( weapon_string )
 
 weapon_cabinet_think()
 {
-    weapons = getentarray( "cabinet_weapon", "targetname" ); 
-
+	cost = 500;
+    self SetHintString( "Press &&1 for a Random Weapon [Cost: "+cost+"]" );
 
 	cabinetguns = [];
 	cabinetguns[0] = "kar98k_scoped_zombie";
 	cabinetguns[1] = "springfield_scoped_zombie_upgraded";
-	//cabinetguns[2] = "new gun here";
-	gun_chosen = cabinetguns[randomint(cabinetguns.size)];
+	cabinetguns[2] = "doublebarrel";
+	cabinetguns[3] = "bar";
+	cabinetguns[4] = "mg42_bipod";
+	cabinetguns[5] = "mp40";
+	cabinetguns[6] = "kar98k";
+	cabinetguns[7] = "m1carbine";
+	//cabinetguns[8] = "new gun here";
+	randomnumb = undefined;
 	
-
     doors = getentarray( self.target, "targetname" );
     for( i = 0; i < doors.size; i++ )
     {
         doors[i] NotSolid();
     }
-		
-	self.has_been_used_once = false; 
-	
-	while( 1 )
+
+	self waittill("trigger",player);
+
+	if(player.score < cost)
+    {
+    	play_sound_on_ent( "no_purchase" );
+    	wait 1;
+    	self thread weapon_cabinet_think();
+    	return;
+    }
+    else
+    {
+		player maps\_zombiemode_score::minus_to_player_score(cost);
+	}
+
+	plyweapons = player GetWeaponsListPrimaries();
+	cabinetguns = array_exclude(cabinetguns, plyweapons);
+
+	self SetHintString( "" ); 
+
+	weaponmodelstruct = Spawn("script_model",(self.origin - (20,0,6.5)));
+	weaponmodelstruct RotateTo((-90,90,0),0.1);
+	weaponmodelstruct Hide();
+
+	wait 0.1;
+
+	weaponmodel = GetWeaponModel( cabinetguns[randomint(cabinetguns.size)] );
+	weaponmodelstruct SetModel(weaponmodel);
+
+	weaponmodelstruct Show();
+
+	for( i = 0; i < doors.size; i++ )
 	{
-		self waittill( "trigger", player );
-
-		if( player in_revive_trigger() )
+		if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
 		{
-			wait( 0.1 );
-			continue;
+			doors[i] thread weapon_cabinet_door_open( "left" ); 
 		}
-
-		cost = 1500;
-		if( self.has_been_used_once )
+		else if( doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
 		{
-			cost = get_weapon_cost(gun_chosen);
+			doors[i] thread weapon_cabinet_door_open( "right" ); 
+		}
+	}
+
+	weaponmodelstruct MoveTo(self.origin - (0,0,6.5),4,0,4);
+
+	play_sound_at_pos( "open_chest", self.origin );
+	play_sound_at_pos( "music_chest", self.origin );
+
+	self thread cabinet_glowfx();
+	
+	for( i = 0; i < 40; i++ )
+	{
+
+		weaponmodel = GetWeaponModel( cabinetguns[randomint(cabinetguns.size)] );
+		weaponmodelstruct SetModel(weaponmodel);
+		
+		if( i < 20 )
+		{
+			wait( 0.05 ); 
+		}
+		else if( i < 30 )
+		{
+			wait( 0.1 ); 
+		}
+		else if( i < 35 )
+		{
+			wait( 0.2 ); 
+		}
+		else if( i < 38 )
+		{
+			wait( 0.3 ); 
+		}
+		randomnumb = cabinetguns[randomint(cabinetguns.size)];
+		weaponmodel = GetWeaponModel( randomnumb );
+		weaponmodelstruct SetModel(weaponmodel);
+	}
+
+	chosenweapon = randomnumb;
+	IPrintLn(chosenweapon);
+
+	self SetHintString("Press and Hold &&1 to take weapon");
+
+	weaponmodelstruct MoveTo(self.origin - (20,0,6.5),10);
+
+	self thread takenweapon(chosenweapon);
+	self thread waitforexpire();
+
+	self waittill_any("weapontaken","weaponexpired");
+
+	self SetHintString( "" ); 
+
+	weaponmodelstruct Hide();
+
+	play_sound_at_pos( "close_chest", self.origin );
+	for( i = 0; i < doors.size; i++ )
+	{
+		if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
+		{
+			doors[i] thread weapon_cabinet_door_close( "left" ); 
+		}
+		else if( doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
+		{
+			doors[i] thread weapon_cabinet_door_close( "right" ); 
+		}
+	}
+
+	self SetHintString("");
+
+	wait 3;
+	self thread weapon_cabinet_think();
+
+	chosenweapon = undefined;
+	weaponmodel = undefined;
+	weaponmodelstruct Delete();
+}
+
+cabinet_glowfx()
+{
+	fxObj = spawn( "script_model", self.origin -( 0, 0, 30 ) ); 
+	fxobj setmodel( "tag_origin" ); 
+	fxobj.angles = self.angles +( 90, 0, 0 ); 
+	
+	playfxontag( level._effect["chest_light"], fxObj, "tag_origin"  ); 
+
+	self waittill_any("weapontaken","weaponexpired");
+	
+	fxobj delete(); 
+}
+
+waitforexpire()
+{
+	self endon("weapontaken");
+	wait 8;
+	self notify("weaponexpired");
+}
+
+takenweapon(chosenweapon)
+{
+	self endon("weaponexpired");
+
+	self waittill("trigger",player);
+	self play_sound_on_ent( "purchase" ); 
+	self notify("weapontaken");
+
+	plyweapons = player GetWeaponsListPrimaries();
+	if(plyweapons.size >= 2)
+	{
+		if(player GetCurrentWeapon() == "mine_bouncing_betty")
+		{
+			player TakeWeapon(plyweapons[0]);
 		}
 		else
 		{
-			if( IsDefined( self.zombie_cost ) )
-			{
-				cost = self.zombie_cost;
-			}
+			player TakeWeapon(player GetCurrentWeapon());
 		}
-
-		ammo_cost = get_ammo_cost(gun_chosen);
-			
-		if( !is_player_valid( player ) )
-		{
-			player thread ignore_triggers( 0.5 );
-			continue;
-		}
-	
-		if( self.has_been_used_once )
-		{
-			player_has_weapon = false; 
-			weapons = player GetWeaponsList(); 
-			if( IsDefined( weapons ) )
-			{
-				for( i = 0; i < weapons.size; i++ )
-				{
-					if( weapons[i] == gun_chosen )
-					{
-						player_has_weapon = true; 
-					}
-				}
-			}
-
-			if( !player_has_weapon )
-			{
-				if( player.score >= cost )
-				{
-					self play_sound_on_ent( "purchase" );
-					player maps\_zombiemode_score::minus_to_player_score( cost ); 
-					player weapon_give(gun_chosen); 
-				}
-				else // not enough money
-				{
-					play_sound_on_ent( "no_purchase" );
-				}			
-			}
-			else if ( player.score >= ammo_cost )
-			{
-				ammo_given = player ammo_give(gun_chosen); 
-				if( ammo_given )
-				{
-					self play_sound_on_ent( "purchase" );
-					player maps\_zombiemode_score::minus_to_player_score( ammo_cost ); // this give him ammo to early
-				}
-			}
-			else // not enough money
-			{
-				play_sound_on_ent( "no_purchase" );
-			}
-		}
-		else if( player.score >= cost ) // First time the player opens the cabinet
-		{
-			self.has_been_used_once = true;
-
-			self play_sound_on_ent( "purchase" ); 
-			
-			self SetHintString( &"ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
-	//		self SetHintString( get_weapon_hint( self.zombie_weapon_upgrade ) );
-			self setCursorHint( "HINT_NOICON" ); 
-			player maps\_zombiemode_score::minus_to_player_score( 500 ); 
-			
-			doors = getentarray( self.target, "targetname" ); 
-		
-			for( i = 0; i < doors.size; i++ )
-			{
-				if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
-				{
-					doors[i] thread weapon_cabinet_door_open( "left" ); 
-				}
-				else if( doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
-				{
-					doors[i] thread weapon_cabinet_door_open( "right" ); 
-				}
-			}
-
-			player_has_weapon = false; 
-			weapons = player GetWeaponsList(); 
-			if( IsDefined( weapons ) )
-			{
-				for( i = 0; i < weapons.size; i++ )
-				{
-					if( weapons[i] == gun_chosen )
-					{
-						player_has_weapon = true; 
-					}
-				}
-			}
-
-			if( !player_has_weapon )
-			{
-				player weapon_give( gun_chosen ); 
-			}
-			else
-			{
-				player ammo_give(gun_chosen); 
-			}	
-		}
-		else // not enough money
-		{
-			 play_sound_on_ent( "no_purchase" );
-		}		
 	}
+	player GiveWeapon(chosenweapon);
+	player SwitchToWeapon(chosenweapon);
+}
+
+weapon_cabinet_door_open( left_or_right )
+{
+	if( left_or_right == "left" )
+	{
+		self rotateyaw( 120, 0.3, 0.2, 0.1 ); 	
+	}
+	else if( left_or_right == "right" )
+	{
+		self rotateyaw( -120, 0.3, 0.2, 0.1 ); 	
+	}	
+}
+
+weapon_cabinet_door_close( left_or_right )
+{
+	if( left_or_right == "left" )
+	{
+		self rotateyaw( -120, 0.3, 0.2, 0.1 ); 	
+	}
+	else if( left_or_right == "right" )
+	{
+		self rotateyaw( 120, 0.3, 0.2, 0.1 ); 	
+	}	
 }
 
 weapon_cabinet_door_open( left_or_right )
