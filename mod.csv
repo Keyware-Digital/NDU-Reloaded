@@ -137,7 +137,7 @@ xanim,ai_zombie_taunts_5e
 xanim,ai_zombie_taunts_5f
 xanim,ai_zombie_taunts_7
 xanim,ai_zombie_taunts_9
-xanim,o_monkey_bomb
+//xanim,o_monkey_bomb
 xanim,ai_zombie_window_attack_arm_L_out
 xanim,ai_zombie_window_attack_arm_R_out
 xanim,ai_zombie_boardtear_l_1
