@@ -1787,84 +1787,204 @@ playerzombie_waitfor_buttonrelease( inputType )
 player_damage_override( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime )
 {
 
-    players = get_players();
-	
-	if( self HasPerk("specialty_detectexplosive")
-        && (  sMeansOfDeath == "MOD_GRENADE_SPLASH"
-        || sMeansOfDeath == "MOD_GRENADE"
-        || sMeansOfDeath == "MOD_EXPLOSIVE"
-        || sMeansOfDeath == "MOD_PROJECTILE"
-        || sMeansOfDeath == "MOD_PROJECTILE_SPLASH"
-        || sMeansOfDeath == "MOD_BURNED") )
-    {
+	players = get_players();
 
-		//IPrintLn("recover_player");
+	if( isdefined( self.inSoloRevive) )
+	{
+		return;
+	}
 
-        // Think "IF" is not necessary but just to be sure
-        if( !maps\_laststand::player_is_in_laststand())
-        {
-            //self RevivePlayer();
-            self setBlur( 0, 0 );
-        }    
+	if( self HasPerk("specialty_detectexplosive" )
+		&& (  sMeansOfDeath == "MOD_GRENADE_SPLASH"
+		|| sMeansOfDeath == "MOD_GRENADE"
+		|| sMeansOfDeath == "MOD_EXPLOSIVE"
+		|| sMeansOfDeath == "MOD_PROJECTILE"
+		|| sMeansOfDeath == "MOD_PROJECTILE_SPLASH"
+		|| sMeansOfDeath == "MOD_BURNED") )
+	{
 
-        return;
-    }
+		// Think "IF" is not necessary but just to be sure
+		if( !maps\_laststand::player_is_in_laststand())
+		{
+			//self RevivePlayer();
+			self setBlur( 0, 0 );
+		}	
 
-    if( self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1 )
-    {
-        iprintln("Quick Revive has granted you a second chance!");
-        self notify("second_chance");
+		return;
+	}
 
-        self.maxhealth = 100;
-        self.health = self.maxhealth;
-        return;
-    }
+	if( sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH" )
+	{
+		if( self.health > 75 )
+		{
+			finalDamage = 75;
+			self maps\_callbackglobal::finishPlayerDamageWrapper( eInflictor, eAttacker, finalDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
+			return;
+		}
+	}
 
-    if( sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH" )
-    {
-        if( self.health > 75 )
-        {
-            finalDamage = 75;
-            self maps\_callbackglobal::finishPlayerDamageWrapper( eInflictor, eAttacker, finalDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
-            return;
-        }
-    }
+	if( self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1 )
+	{
+		self notify("second_chance");
+		self thread solo_quickrevive(); // custom function just below this one
+		return;
+	}
 
-    if( iDamage < self.health )
-    {    
-        self maps\_callbackglobal::finishPlayerDamageWrapper( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
-        return;
-    }
+	if( iDamage < self.health )
+	{	
+		self maps\_callbackglobal::finishPlayerDamageWrapper( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
+		return;
+	}
 
-    if( level.intermission )
-    {
-        level waittill( "forever" );
-    }
+	if( level.intermission )
+	{
+		level waittill( "forever" );
+	}
 
-    players = get_players();
-    count = 0;
-    for( i = 0; i < players.size; i++ )
-    {
-        if( players[i] == self || players[i].is_zombie || players[i] maps\_laststand::player_is_in_laststand() || players[i].sessionstate == "spectator" )
-        {
-            count++;
-        }
-    }
+	players = get_players();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] == self || players[i].is_zombie || players[i] maps\_laststand::player_is_in_laststand() || players[i].sessionstate == "spectator" )
+		{
+			count++;
+		}
+	}
 
-    if( count < players.size )
-    {
-        self maps\_callbackglobal::finishPlayerDamageWrapper( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
-        self thread maps\_laststand::PlayerLastStand( eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime );
-        return;
-    }
+	if( count < players.size )
+	{
+		self maps\_callbackglobal::finishPlayerDamageWrapper( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime ); 
+		self thread maps\_laststand::PlayerLastStand( eInflictor, eAttacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHitLoc, psOffsetTime );
+		return;
+	}
 
-    self.intermission = true;
-    self player_fake_death();
+	self.intermission = true;
+	self player_fake_death();
 
-    if( count == players.size )
-    {
-        end_game();
-    }
+	if( count == players.size )
+	{
+		end_game();
+	}
+}
+
+solo_quickrevive() // numan solo revive function
+{
+	// gather some info
+
+	self.inSoloRevive = true;
+	self.downedpistol = level.player_specific_add_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ];
+	self.currentweapon = self GetCurrentWeapon();
+	self.currentstance = self GetStance();
+	lstandammo = undefined;
+	lstandgun = undefined;
+	lstandclip = undefined;
+	clipammo = undefined;
+	weaponammo = undefined;
+
+	playerweapons = self GetWeaponsList(); // returns an array of weapons and also weapons ammo
+	for(i=0;i<playerweapons.size;i++)
+	{
+		clipammo[i] = self GetWeaponAmmoClip(playerweapons[i]);
+		weaponammo[i] = self GetWeaponAmmoStock(playerweapons[i]);
+		wait 0.05;
+	}
+
+	if(self IsThrowingGrenade())
+	{
+		self FreezeControls(true); // literally just to throw player's current grenade if they're stupid enough to play hot potato
+		wait 0.05;
+		self FreezeControls(false);
+	}
+
+	// start zombies targeting spawn struct instead. Rest is changed in zombiemode_spawner find_flesh() because we have to overwrite regular targeting.
+
+	self.ignoreme = true;
+
+	// put player in prone for now
+
+	self AllowSprint(false);
+	self AllowStand(false);
+	self AllowCrouch(false);
+	self SetStance("prone");
+
+	self VisionSetNaked("laststand" , 1);
+
+	// if player has better downed gun, give it and check for ammo, then return it later
+
+	self DisableWeaponCycling();
+	if(self HasWeapon("ray_gun"))
+	{
+		lstandammo = 20;
+		lstandclip = 20;
+		lstandgun = "ray_gun";
+	}
+	else if(self HasWeapon("sw_357"))
+	{
+		lstandammo = 18;
+		lstandclip = 6;
+		lstandgun = "sw_357";
+	}
+	else
+	{
+		lstandammo = 24;
+		lstandclip = 8;
+		lstandgun = "walther";
+	}
+
+	self TakeAllWeapons();
+
+	self GiveWeapon(lstandgun);
+	self SwitchToWeapon(lstandgun);
+	self SetWeaponAmmoClip(lstandgun,lstandclip);
+	self SetWeaponAmmoStock(lstandgun,lstandammo);
+
+	// wait for revive and play text
+
+	self.revive_hud setText( &"GAME_PLAYER_IS_REVIVING_YOU", self );
+	self maps\_laststand::revive_hud_show_n_fade( 3.0 );
+
+	wait 8; 
+
+	// revert everything
+
+	if(self.currentweapon != lstandgun)
+	{
+		self TakeAllWeapons();
+	}
+
+	for(i=0;i<playerweapons.size;i++)
+	{
+		if(weaponType(playerweapons[i]) == "grenade")
+		{
+			self GiveWeapon(playerweapons[i]);
+			self SetWeaponAmmoClip(playerweapons[i],clipammo[i]);
+		}
+		else
+		{
+			IPrintLn(playerweapons[i]);
+			self GiveWeapon(playerweapons[i]);
+			self SetWeaponAmmoClip(playerweapons[i],clipammo[i]);
+			self SetWeaponAmmoStock(playerweapons[i],weaponammo[i]);
+		}
+		wait 0.05;
+	}
+
+	self SwitchToWeapon(self.currentweapon);
+	self EnableWeaponCycling();
+
+	self.inSoloRevive = undefined;
+
+	self VisionSetNaked("zombie" , 1);
+
+	self AllowSprint(true);
+	self AllowStand(true);
+	self AllowCrouch(true);
+	self SetStance("stand");
+
+	self SetStance(self.currentstance);
+
+
+	self.ignoreme = false;
 }
 
 end_game()
