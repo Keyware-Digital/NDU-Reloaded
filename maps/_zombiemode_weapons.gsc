@@ -613,19 +613,18 @@ treasure_chest_give_weapon( weapon_string )
 
 weapon_cabinet_think()
 {
-	cost = 500;
+	cost = 1500;
     self SetHintString( "Press &&1 for a Random Weapon [Cost: "+cost+"]" );
 
 	cabinetguns = [];
-	cabinetguns[0] = "kar98k_scoped_zombie";
+	cabinetguns[0] = "kar98k_scoped_zombie";	//default
 	cabinetguns[1] = "springfield_scoped_zombie_upgraded";
-	cabinetguns[2] = "doublebarrel";
-	cabinetguns[3] = "bar";
-	cabinetguns[4] = "mg42_bipod";
-	cabinetguns[5] = "mp40";
-	cabinetguns[6] = "kar98k";
-	cabinetguns[7] = "m1carbine";
-	//cabinetguns[8] = "new gun here";
+	cabinetguns[2] = "ptrs41_zombie";
+	cabinetguns[3] = "springfield";
+	//cabinetguns[4] = "placeholdergun";
+	//cabinetguns[5] = "placeholdergun";
+	//cabinetguns[6] = "placeholdergun";
+	//cabinetguns[7] = "placeholdergun";
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
