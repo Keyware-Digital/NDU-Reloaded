@@ -64,6 +64,16 @@ rumble\flamethrower_h.rmb
 rumble\flamethrower_l.rmb
 sound\music_mainmenu\main_menu.wav
 sound\sfx\ui\arcade\arcademode_kill_streak_won.wav
+sound\sfx\weapon\bowie\bowie_catch.wav
+sound\sfx\weapon\bowie\bowie_stab\bowie_stab_00.wav
+sound\sfx\weapon\bowie\bowie_stab\bowie_stab_01.wav
+sound\sfx\weapon\bowie\bowie_stab\bowie_stab_02.wav
+sound\sfx\weapon\bowie\bowie_start.wav
+sound\sfx\weapon\bowie\bowie_swing\bowie_swing_00.wav
+sound\sfx\weapon\bowie\bowie_swing\bowie_swing_01.wav
+sound\sfx\weapon\bowie\bowie_swing\bowie_swing_02.wav
+sound\sfx\weapon\bowie\bowie_toss.wav
+sound\sfx\weapon\bowie\bowie_turn.wav
 sound\sfx\weapon\special\bouncing_betty\bb_plant.wav
 sound\sfx\weapon\special\bouncing_betty\bbtrigger.wav
 sound\sfx\weapon\special\bouncing_betty\betty_explode.wav
@@ -79,7 +89,6 @@ sound\voiceovers\zombie\sam\tele_nospawn_00.wav
 sound\voiceovers\zombie\sam\tele_nospawn_01.wav
 sound\voiceovers\zombie\sam\tele_nospawn_02.wav
 soundaliases\mod_ndu.csv
-soundaliases\mod_ndu_menu_music.csv
 soundaliases\mod_ndu_powerup.csv
 ui\prototype_main.menu
 ui\prototype_options_game_pc.menu
