@@ -1,0 +1,61 @@
+VERSION             "1"
+CONFIG              "C:\cod5\cod\cod5\bin\StringEd.cfg"
+FILENOTES           "Strings used in the prototype map go in this file, the other languages work, just need translations."
+
+REFERENCE           PLACE
+LANG_ENGLISH        "Abandoned Airfield"
+LANG_FRENCH        "Abandoned Airfield"
+LANG_GERMAN        "Abandoned Airfield"
+LANG_SPANISH        "Abandoned Airfield"
+LANG_ITALIAN        "Abandoned Airfield"
+
+REFERENCE           REGION
+LANG_ENGLISH        "Morasko, Poland"
+LANG_FRENCH        "Morasko, Poland"
+LANG_GERMAN        "Morasko, Poland"
+LANG_SPANISH        "Morasko, Poland"
+LANG_ITALIAN        "Morasko, Poland"
+
+REFERENCE           DATE
+LANG_ENGLISH        "August 30th, 1945"
+LANG_FRENCH        "August 30th, 1945"
+LANG_GERMAN        "August 30th, 1945"
+LANG_SPANISH        "August 30th, 1945"
+LANG_ITALIAN        "August 30th, 1945"
+
+REFERENCE           ZOMBIE_RANDOM_WEAPON_950
+LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
+LANG_FRENCH        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
+LANG_GERMAN        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
+LANG_SPANISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
+LANG_ITALIAN        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
+
+REFERENCE           ZOMBIE_BUTTON_BUY_CLEAR_DEBRIS_1000
+LANG_ENGLISH        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
+LANG_FRENCH        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
+LANG_GERMAN        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
+LANG_SPANISH        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
+LANG_ITALIAN        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
+
+REFERENCE           ZOMBIE_BUTTON_REWARD_BARRIER
+LANG_ENGLISH        "Hold ^3&&1 ^7to Rebuild Barrier"
+LANG_FRENCH        "Hold ^3&&1 ^7to Rebuild Barrier"
+LANG_GERMAN        "Hold ^3&&1 ^7to Rebuild Barrier"
+LANG_SPANISH        "Hold ^3&&1 ^7to Rebuild Barrier"
+LANG_ITALIAN        "Hold ^3&&1 ^7to Rebuild Barrier"
+
+REFERENCE           ZOMBIE_BUTTON_BUY_OPEN_DOOR_1000
+LANG_ENGLISH        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
+LANG_FRENCH        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
+LANG_GERMAN        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
+LANG_SPANISH        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
+LANG_ITALIAN        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
+
+REFERENCE           ZOMBIE_CABINET_OPEN_1500
+LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1000]"
+LANG_FRENCH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1000]"
+LANG_GERMAN        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1000]"
+LANG_SPANISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1000]"
+LANG_ITALIAN        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1000]"
+
+ENDMARKER

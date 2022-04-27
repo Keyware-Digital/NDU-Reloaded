@@ -1,9 +1,16 @@
 #include common_scripts\utility; 
 #include maps\_utility;
+#include maps\_zombiemode_utility;
 
+init()
+{
+	init_strings();
+	init_sounds();
+}
 
 main()
 {
+
 	maps\_destructible_opel_blitz::init();
 
 	include_weapons();
@@ -19,9 +26,8 @@ main()
 	for( i = 0; i < players.size; i++ )
 	{
 		players[i] SetClientDvar("sv_cheats", 1);
+		players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
 	}
-	
-	init_sounds();
 
 	// If you want to modify/add to the weapons table, please copy over the _zombiemode_weapons init_weapons() and paste it here.
 	// I recommend putting it in it's own function...
@@ -39,6 +45,13 @@ betty_fx()
 {
 level._effect["betty_explode"]			= loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
 level._effect["betty_trail"]			= loadfx("weapon/bouncing_betty/fx_betty_trail");
+}
+
+init_strings()
+{
+	PrecacheString(&"PROTOTYPE_PLACE");
+	PrecacheString(&"PROTOTYPE_REGION");
+	PrecacheString(&"PROTOTYPE_DATE");
 }
 
 init_sounds()
@@ -80,9 +93,9 @@ intro_screen()
 	level.intro_hud[2].y = -90;
 	level.intro_hud[3].y = -70;
 
-	level.intro_hud[0] settext("Abandoned Airfield");
-	level.intro_hud[1] settext("Morasko, Poland");
-	level.intro_hud[2] settext("August 30th, 1945");
+	level.intro_hud[0] settext(&"PROTOTYPE_PLACE");
+	level.intro_hud[1] settext(&"PROTOTYPE_REGION");
+	level.intro_hud[2] settext(&"PROTOTYPE_DATE");
 //	level.intro_hud[3] settext("placeholder_text");
 //	level.intro_hud[1] settext(&"ZOMBIE_INTRO_FACTORY_LEVEL_TIME");
 //	level.intro_hud[2] settext(&"ZOMBIE_INTRO_FACTORY_LEVEL_DATE");

@@ -4,6 +4,7 @@
 
 init()
 {
+	init_strings();
 	init_weapons();
 	init_weapon_upgrade();
 	init_weapon_cabinet();
@@ -73,6 +74,11 @@ include_zombie_weapon( weapon_name, in_box )
 	}
 	
 	level.zombie_include_weapons[weapon_name] = in_box;
+}
+
+init_strings()
+{
+	PrecacheString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN_1500");
 }
 
 init_weapons()
@@ -614,7 +620,7 @@ treasure_chest_give_weapon( weapon_string )
 weapon_cabinet_think()
 {
 	cost = 1500;
-    self SetHintString( "Press &&1 for a Random Weapon [Cost: "+cost+"]" );
+	self SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1500" );
 
 	cabinetguns = [];
 	cabinetguns[0] = "kar98k_scoped_zombie";	//default

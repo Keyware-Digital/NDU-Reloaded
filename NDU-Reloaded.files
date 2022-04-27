@@ -12,6 +12,7 @@ character\char_zomb_player_2.gsc
 character\char_zomb_player_3.gsc
 fx\fx_betty_trail.efx
 fx\fx_explosion_betty_generic.efx
+images\hud_grenade_german.iwi
 images\logo_cod2.iwi
 images\specialty_aim_zombies.iwi
 images\specialty_doublepoints_zombies.iwi
@@ -24,6 +25,7 @@ images\specialty_longersprint_zombies.iwi
 images\specialty_phd_zombies.iwi
 images\specialty_quickrevive_zombies.iwi
 images\specialty_sp_zombies.iwi
+localizedstrings\prototype.str
 maps\_button_print.gsc
 maps\_callbackglobal.gsc
 maps\_character_randomise.gsc
@@ -45,6 +47,8 @@ maps\createart\nazi_zombie_prototype_art.gsc
 maps\createfx\nazi_zombie_prototype_fx.gsc
 maps\nazi_zombie_prototype.gsc
 maps\nazi_zombie_prototype_fx.gsc
+material_properties\hud_grenade_german
+materials\hud_grenade_german
 materials\logo_cod2
 materials\specialty_aim_zombies
 materials\specialty_doublepoints_zombies
@@ -89,7 +93,10 @@ sound\voiceovers\zombie\sam\tele_nospawn_00.wav
 sound\voiceovers\zombie\sam\tele_nospawn_01.wav
 sound\voiceovers\zombie\sam\tele_nospawn_02.wav
 soundaliases\mod_ndu.csv
+soundaliases\mod_ndu_menu_music.csv
 soundaliases\mod_ndu_powerup.csv
+ui\hud.txt
+ui\prototype_hud.menu
 ui\prototype_main.menu
 ui\prototype_options_game_pc.menu
 weapons\sp\30cal_bipod

@@ -805,7 +805,7 @@ replace_chunk( chunk, has_perk, via_powerup )
 	assert( chunk.mid_repair == true );
 	chunk.mid_repair = undefined;
 
-	Earthquake( RandomFloatRange( 0.1, 0.15 ), 0.4, chunk.origin, 200 );
+	Earthquake( RandomFloatRange( 0.1, 0.15 ), 0.5, chunk.origin, 200 );
 	sound = "barrier_rebuild_slam";
 	if( IsDefined( self.script_ender ) )
 	{

@@ -60,8 +60,8 @@
 		CHOICE_DVARYESNO_VIS( 23, "@MENU_DRAW_HUD", hud_enable, ;, when( dvarint( ui_multiplayer ) ) )
 		CHOICE_DVARYESNO_VIS( 24, "@MENU_ENABLE_CROSSHAIR", cg_drawCrosshair, ;, when( !dvarBool(ui_multiplayer) ); )
 
-		CHOICE_DVARSLIDER( 25, "FOV", cg_fov, 80, 65, 90, setLocalVarBool ui_hideBack 1 )
-		//CHOICE_DVARYESNO_VIS( 26, "Enable Controller", setdvar "exec default_controller.cfg", ui_hideBack 1 )
+		CHOICE_DVARSLIDER( 25, "Field of View", cg_fov, 80, 65, 90, setLocalVarBool ui_hideBack 1 )
+		CHOICE_BUTTON_VIS( 26, "Enable Controller", exec "default_controller.cfg";, when( !localvarBool( ui_hideBack ) ); )
 
    		CHOICE_DVARFLOATLIST_VIS( 27, "@MENU_MATURE", ;, { "@MENU_MATURE_UNRESTRICTED" 0 "@MENU_MATURE_UNRESTRICTED" 1 }, open mature_content_pc_disable_warning, when( dvarString( "cg_mature" ) == "1" && dvarBool(cg_allow_mature) && !INGAME && !dvarBool(ui_multiplayer) ) )
    		CHOICE_DVARFLOATLIST_VIS( 27, "@MENU_MATURE", cg_mature, { "@MENU_MATURE_REDUCED" 1 "@MENU_MATURE_REDUCED" 0 }, setdvar "cg_mature" 1; setdvar cg_blood "1", when( dvarString( "cg_mature" ) == "0" && dvarBool(cg_allow_mature) && !INGAME && !dvarBool(ui_multiplayer) ) )   		

@@ -1,4 +1,5 @@
 fx,weapon/muzzleflashes/standardflashworld_ug
+material,hud_grenade_german
 material,specialty_juggernaut_zombies
 material,specialty_fastreload_zombies
 material,specialty_doubletap_zombies
@@ -11,8 +12,10 @@ material,specialty_aim_zombies
 material,specialty_doublepoints_zombies
 material,specialty_instakill_zombies
 material,logo_cod2
+localize,prototype
 menufile,ui/prototype_main.menu
 menufile,ui/prototype_options_game_pc.menu
+menufile,ui/prototype_hud.menu
 rawfile,maps\_callbackglobal.gsc
 rawfile,maps\_character_randomise.gsc
 rawfile,maps\_gameskill.gsc
@@ -25,6 +28,7 @@ rawfile,maps\_zombiemode_powerups.gsc
 rawfile,maps\_zombiemode_spawner.gsc
 rawfile,maps\_zombiemode_weapons.gsc
 rawfile,animtrees/generic_human.atr
+rawfile,ui\hud.txt
 sound,mod_ndu,,all_sp
 sound,mod_ndu_powerup,,all_sp
 sound,mod_ndu_menu_music,,all_sp
