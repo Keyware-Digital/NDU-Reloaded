@@ -640,7 +640,7 @@ weapon_cabinet_think()
 	level.cabinetguns[5] = "type100smg_bigammo_mp";	
 	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";		//dont move this or it will break things, make sure this is at the very end -- also change some values below
 	level.cabinetguns[7] = "thompson_bigammo_mp";
-	level.cabinetguns[7] = "colt";
+	level.cabinetguns[8] = "colt";
 	//level.cabinetguns[8] = "placeholdergun";
 	//level.cabinetguns[9] = "type100smg_bigammo_mp";					//removed because glitched!
 	randomnumb = undefined;
