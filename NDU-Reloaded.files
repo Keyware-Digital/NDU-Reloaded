@@ -27,7 +27,6 @@ images\specialty_phd_zombies.iwi
 images\specialty_quickrevive_zombies.iwi
 images\specialty_sp_zombies.iwi
 localizedstrings\prototype.str
-main\video\nazi_zombie_prototype_load.bik
 maps\_button_print.gsc
 maps\_callbackglobal.gsc
 maps\_character_randomise.gsc
@@ -169,3 +168,5 @@ xmodel\zombie_pickup_perkbottle
 xmodel\zombie_pickup_perkbottle_viewmodel
 xmodel\zombie_skull
 xmodel\zombie_x2_icon
+xmodelparts\zombie_pickup_perk_cabinet1
+xmodelsurfs\zombie_pickup_perk_cabinet1
