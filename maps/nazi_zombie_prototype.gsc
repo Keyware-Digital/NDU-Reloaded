@@ -134,6 +134,7 @@ include_weapons()
 	include_weapon( "svt40" );
 	include_weapon( "type99_lmg" );
 	include_weapon( "zombie_ppsh" );
+	include_weapon( "zombie_type99_rifle" );	//weapon cabinet only
 	include_weapon( "zombie_type100_smg" );
 	
 	// Pistols
@@ -157,8 +158,7 @@ include_weapons()
 	// Bolt Action
 	include_weapon( "kar98k" );			//disabled in weapon limiter below
 	include_weapon( "springfield" );	//disabled in weapon limiter below in favour of Mosin.
-	include_weapon( "zombie_type99_rifle" );	//weapon cabinet only
-
+	
 	// Scoped
 	include_weapon( "ptrs41_zombie" );
 	include_weapon( "kar98k_scoped_zombie" );	//weapon cabinet only
