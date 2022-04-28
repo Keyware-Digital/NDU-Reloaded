@@ -78,7 +78,7 @@ include_zombie_weapon( weapon_name, in_box )
 
 init_strings()
 {
-	PrecacheString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN_1500");
+	PrecacheString( &"PROTOTYPE_ZOMBIE_WEAPON_KAR98K_200" );
 }
 
 init_weapons()
@@ -102,7 +102,7 @@ init_weapons()
 	add_zombie_weapon( "zombie_colt", 							&"ZOMBIE_WEAPON_ZOMBIECOLT_25", 			25 );
                                                         		
 	// Bolt Action                                      		
-	add_zombie_weapon( "kar98k", 								&"ZOMBIE_WEAPON_KAR98K_200", 				200 );
+	add_zombie_weapon( "kar98k", 								&"PROTOTYPE_ZOMBIE_WEAPON_KAR98K_200", 				200 );
 	add_zombie_weapon( "kar98k_bayonet", 						&"ZOMBIE_WEAPON_KAR98K_B_200", 				200 );
 	add_zombie_weapon( "mosin_rifle", 							&"ZOMBIE_WEAPON_MOSIN_200", 				200 );
 	add_zombie_weapon( "mosin_rifle_bayonet", 					&"ZOMBIE_WEAPON_MOSIN_B_200", 				200 );
@@ -113,7 +113,7 @@ init_weapons()
                                                         		
 	// Semi Auto                                        		
 	add_zombie_weapon( "gewehr43", 								&"ZOMBIE_WEAPON_GEWEHR43_600", 				600 );
-	add_zombie_weapon( "m1carbine", 							&"ZOMBIE_WEAPON_M1CARBINE_600",				600 );
+	add_zombie_weapon( "m1carbine", 							&"PROTOTYPE_ZOMBIE_WEAPON_M1CARBINE_600",				600 );
 	add_zombie_weapon( "m1carbine_bayonet", 					&"ZOMBIE_WEAPON_M1CARBINE_B_600", 			600 );
 	add_zombie_weapon( "m1garand", 								&"ZOMBIE_WEAPON_M1GARAND_600", 				600 );
 	add_zombie_weapon( "m1garand_bayonet", 						&"ZOMBIE_WEAPON_M1GARAND_B_600", 			600 );
@@ -123,7 +123,7 @@ init_weapons()
 	add_zombie_weapon( "fraggrenade", 							&"ZOMBIE_WEAPON_FRAGGRENADE_250", 			250 );
 	add_zombie_weapon( "molotov", 								&"ZOMBIE_WEAPON_MOLOTOV_200", 				200 );
 	add_zombie_weapon( "stick_grenade", 						&"ZOMBIE_WEAPON_STICKGRENADE_250", 			250 );
-	add_zombie_weapon( "stielhandgranate", 						&"ZOMBIE_WEAPON_STIELHANDGRANATE_250", 		250 );
+	add_zombie_weapon( "stielhandgranate", 						&"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE_250", 		250 );
 	add_zombie_weapon( "type97_frag", 							&"ZOMBIE_WEAPON_TYPE97FRAG_250", 			250 );
 
 	// Scoped
@@ -141,17 +141,17 @@ init_weapons()
 	add_zombie_weapon( "mp40", 								&"ZOMBIE_WEAPON_MP40_1000", 				1000 );
 	add_zombie_weapon( "ppsh", 								&"ZOMBIE_WEAPON_PPSH_2000", 				2000 );
 	add_zombie_weapon( "stg44", 							&"ZOMBIE_WEAPON_STG44_1200", 				1200 );
-	add_zombie_weapon( "thompson", 							&"ZOMBIE_WEAPON_THOMPSON_1500", 			1500 );
+	add_zombie_weapon( "thompson", 							&"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 			1500 );
 	add_zombie_weapon( "type100_smg", 						&"ZOMBIE_WEAPON_TYPE100_1000", 				1000 );
                                                         	
 	// Shotguns                                         	
-	add_zombie_weapon( "doublebarrel", 						&"ZOMBIE_WEAPON_DOUBLEBARREL_1200", 		1200 );
-	add_zombie_weapon( "doublebarrel_sawed_grip", 			&"ZOMBIE_WEAPON_DOUBLEBARREL_SAWED_1200", 	1200 );
-	add_zombie_weapon( "shotgun", 							&"ZOMBIE_WEAPON_SHOTGUN_1500", 				1500 );
+	add_zombie_weapon( "doublebarrel", 						&"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_1200", 		1200 );
+	add_zombie_weapon( "doublebarrel_sawed_grip", 			&"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_SAWED_1200", 	1200 );
+	add_zombie_weapon( "shotgun", 							&"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_1500", 				1500 );
                                                         	
 	// Heavy Machineguns                                	
 	add_zombie_weapon( "30cal", 							&"ZOMBIE_WEAPON_30CAL_3000", 				3000 );
-	add_zombie_weapon( "bar", 								&"ZOMBIE_WEAPON_BAR_1800", 					1800 );
+	add_zombie_weapon( "bar", 								&"PROTOTYPE_ZOMBIE_WEAPON_BAR_1800", 					1800 );
 	add_zombie_weapon( "dp28", 								&"ZOMBIE_WEAPON_DP28_2250", 				2250 );
 	add_zombie_weapon( "fg42", 								&"ZOMBIE_WEAPON_FG42_1200", 				1500 );
 	add_zombie_weapon( "fg42_scoped", 						&"ZOMBIE_WEAPON_FG42_S_1200", 				1500 );
@@ -333,7 +333,7 @@ treasure_chest_think()
 
 	self.grab_weapon_hint = true;
 	level thread treasure_chest_user_hint( self, user );
-	self sethintstring( &"ZOMBIE_TRADE_WEAPONS" ); 
+	self sethintstring( &"PROTOTYPE_ZOMBIE_TRADE_WEAPONS" ); 
 	self setCursorHint( "HINT_NOICON" ); 
 	
 	self enable_trigger(); 
@@ -651,6 +651,7 @@ weapon_cabinet_think()
     else
     {
 		player maps\_zombiemode_score::minus_to_player_score(cost);
+		play_sound_on_ent( "purchase" );
 	}
 
 	plyweapons = player GetWeaponsListPrimaries();
@@ -718,7 +719,7 @@ weapon_cabinet_think()
 	chosenweapon = randomnumb;
 	IPrintLn(chosenweapon);
 
-	self SetHintString("Press and Hold &&1 to take weapon");
+	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS");
 
 	weaponmodelstruct MoveTo(self.origin - (20,0,6.5),10);
 
@@ -874,7 +875,7 @@ weapon_spawn_think()
 					
 					if(!is_grenade)
 					{
-						self SetHintString( &"ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
+						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
 					}
 				}
 			
@@ -900,7 +901,7 @@ weapon_spawn_think()
 					self.first_time_triggered = true;
 					if(!is_grenade)
 					{ 
-						self SetHintString( &"ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
+						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
 					}
 				}
 				

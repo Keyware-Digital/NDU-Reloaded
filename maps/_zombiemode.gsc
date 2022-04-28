@@ -139,7 +139,6 @@ init_shellshocks()
 
 init_strings()
 {
-	PrecacheString( &"ZOMBIE_WEAPONCOSTAMMO" );
 	PrecacheString( &"ZOMBIE_ROUND" );
 	PrecacheString( &"SCRIPT_PLUS" );
 	PrecacheString( &"ZOMBIE_GAME_OVER" );

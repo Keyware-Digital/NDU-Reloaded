@@ -580,6 +580,7 @@ blocker_trigger_think()
 			if( player.rebuild_barrier_reward < level.zombie_vars["rebuild_barrier_cap_per_round"] )
 			{
 			chunk play_sound_on_ent( "rebuild_barrier_piece" );
+			play_sound_at_pos("purchase", self.origin);
 			}
 	
 			self thread replace_chunk( chunk ); 
