@@ -628,7 +628,7 @@ treasure_chest_give_weapon( weapon_string )
 
 weapon_cabinet_think()
 {
-	cost = 10;
+	cost = 1900;
     self SetHintString( "Press &&1 for a Random Weapon [Cost: "+cost+"]" );
 
 	level.cabinetguns = [];
