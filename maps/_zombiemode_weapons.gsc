@@ -87,10 +87,12 @@ init_weapons()
 	PrecacheItem( "zombie_melee" );
 
 	//NDU: Reloaded
-	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,	"vox_raygun",	6 ); 
+	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
+	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		"vox_raygun",	6 ); 
+	add_zombie_weapon( "thompson_bigammo_mp", 					&"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 	1500 );
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",                50,		"vox_raygun",	6 );
+	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",                50,			"vox_raygun",	6 );
 	
 	// Pistols
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
@@ -102,7 +104,7 @@ init_weapons()
 	add_zombie_weapon( "zombie_colt", 							&"ZOMBIE_WEAPON_ZOMBIECOLT_25", 			25 );
                                                         		
 	// Bolt Action                                      		
-	add_zombie_weapon( "kar98k", 								&"PROTOTYPE_ZOMBIE_WEAPON_KAR98K_200", 				200 );
+	add_zombie_weapon( "kar98k", 								&"PROTOTYPE_ZOMBIE_WEAPON_KAR98K_200", 		200 );
 	add_zombie_weapon( "kar98k_bayonet", 						&"ZOMBIE_WEAPON_KAR98K_B_200", 				200 );
 	add_zombie_weapon( "mosin_rifle", 							&"ZOMBIE_WEAPON_MOSIN_200", 				200 );
 	add_zombie_weapon( "mosin_rifle_bayonet", 					&"ZOMBIE_WEAPON_MOSIN_B_200", 				200 );
@@ -113,7 +115,7 @@ init_weapons()
                                                         		
 	// Semi Auto                                        		
 	add_zombie_weapon( "gewehr43", 								&"ZOMBIE_WEAPON_GEWEHR43_600", 				600 );
-	add_zombie_weapon( "m1carbine", 							&"PROTOTYPE_ZOMBIE_WEAPON_M1CARBINE_600",				600 );
+	add_zombie_weapon( "m1carbine", 							&"PROTOTYPE_ZOMBIE_WEAPON_M1CARBINE_600",	600 );
 	add_zombie_weapon( "m1carbine_bayonet", 					&"ZOMBIE_WEAPON_M1CARBINE_B_600", 			600 );
 	add_zombie_weapon( "m1garand", 								&"ZOMBIE_WEAPON_M1GARAND_600", 				600 );
 	add_zombie_weapon( "m1garand_bayonet", 						&"ZOMBIE_WEAPON_M1GARAND_B_600", 			600 );
@@ -141,17 +143,17 @@ init_weapons()
 	add_zombie_weapon( "mp40", 								&"ZOMBIE_WEAPON_MP40_1000", 				1000 );
 	add_zombie_weapon( "ppsh", 								&"ZOMBIE_WEAPON_PPSH_2000", 				2000 );
 	add_zombie_weapon( "stg44", 							&"ZOMBIE_WEAPON_STG44_1200", 				1200 );
-	add_zombie_weapon( "thompson", 							&"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 			1500 );
+	add_zombie_weapon( "thompson", 							&"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 	1500 );
 	add_zombie_weapon( "type100_smg", 						&"ZOMBIE_WEAPON_TYPE100_1000", 				1000 );
                                                         	
 	// Shotguns                                         	
-	add_zombie_weapon( "doublebarrel", 						&"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_1200", 		1200 );
+	add_zombie_weapon( "doublebarrel", 						&"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_1200", 			1200 );
 	add_zombie_weapon( "doublebarrel_sawed_grip", 			&"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_SAWED_1200", 	1200 );
 	add_zombie_weapon( "shotgun", 							&"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_1500", 				1500 );
                                                         	
 	// Heavy Machineguns                                	
 	add_zombie_weapon( "30cal", 							&"ZOMBIE_WEAPON_30CAL_3000", 				3000 );
-	add_zombie_weapon( "bar", 								&"PROTOTYPE_ZOMBIE_WEAPON_BAR_1800", 					1800 );
+	add_zombie_weapon( "bar", 								&"PROTOTYPE_ZOMBIE_WEAPON_BAR_1800", 		1800 );
 	add_zombie_weapon( "dp28", 								&"ZOMBIE_WEAPON_DP28_2250", 				2250 );
 	add_zombie_weapon( "fg42", 								&"ZOMBIE_WEAPON_FG42_1200", 				1500 );
 	add_zombie_weapon( "fg42_scoped", 						&"ZOMBIE_WEAPON_FG42_S_1200", 				1500 );
@@ -182,6 +184,7 @@ init_weapons()
 	add_zombie_weapon( "satchel_charge", 					&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000 );
 	add_zombie_weapon( "ray_gun", 							&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,	"vox_raygun",	6 );                                   	
 	add_zombie_weapon( "mine_bouncing_betty",				&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
+	add_zombie_weapon( "zombie_perk_bottle",                &"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",        	10000 );
 	
 	// Bowie
 	add_zombie_weapon( "zombie_bowie_flourish",							"", 						10,		"", 5 );
@@ -219,7 +222,8 @@ init_weapon_upgrade()
 	}
 }
 
-// weapon cabinets which open on use
+// weapon cabinets which open on use 
+// V2
 init_weapon_cabinet()
 {
     // the triggers which are targeted at doors
@@ -230,7 +234,7 @@ init_weapon_cabinet()
         weapon_cabs[i] setCursorHint( "HINT_NOICON" ); 
         weapon_cabs[i] UseTriggerRequireLookAt();
     }
-
+    level.keep_ents = [];
     array_thread( weapon_cabs, ::weapon_cabinet_think ); 
 }
 
@@ -588,6 +592,11 @@ treasure_chest_give_weapon( weapon_string )
 		} 
 	} 
 
+	if(( weapon_string ==  "ray_gun" ))
+	{
+		thread play_raygun_stinger();
+	}
+
 	if( IsDefined( primaryWeapons ) && !isDefined( current_weapon ) )
 	{
 		for( i = 0; i < primaryWeapons.size; i++ )
@@ -619,18 +628,21 @@ treasure_chest_give_weapon( weapon_string )
 
 weapon_cabinet_think()
 {
-	cost = 1500;
-	self SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1500" );
+	cost = 1900;
+    self SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900" );
 
-	cabinetguns = [];
-	cabinetguns[0] = "kar98k_scoped_zombie";	//default
-	cabinetguns[1] = "springfield_scoped_zombie_upgraded";
-	cabinetguns[2] = "ptrs41_zombie";
-	cabinetguns[3] = "springfield";
-	//cabinetguns[4] = "placeholdergun";
-	//cabinetguns[5] = "placeholdergun";
-	//cabinetguns[6] = "placeholdergun";
-	//cabinetguns[7] = "placeholdergun";
+	level.cabinetguns = [];
+	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
+	level.cabinetguns[1] = "m1garand";		
+	level.cabinetguns[2] = "mosin_rifle_scoped_zombie";						
+	level.cabinetguns[3] = "mp40_bigammo_mp";
+	level.cabinetguns[4] = "springfield";						
+	level.cabinetguns[5] = "type100smg_bigammo_mp";	
+	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";		//dont move this or it will break things, make sure this is at the very end -- also change some values below
+	level.cabinetguns[7] = "thompson_bigammo_mp";
+	level.cabinetguns[7] = "colt";
+	//level.cabinetguns[8] = "placeholdergun";
+	//level.cabinetguns[9] = "type100smg_bigammo_mp";					//removed because glitched!
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
@@ -639,12 +651,48 @@ weapon_cabinet_think()
         doors[i] NotSolid();
     }
 
+    //////////////////////// Horrible Script ////////////////////////
+    /////////////////////////////////////////////////////////////////
+
+
+    flag_wait("all_players_connected");
+    if(!isdefined(level.cabinetthinkdone) || level.cabinetthinkdone == 0) // please for the love of god only do this once
+	{
+		all_ents = GetEntArray("script_model","classname"); // i really hate this way of doing it but im not good enough to see another way currently
+		for(i=0;i<all_ents.size;i++)
+		{
+			if(all_ents[i].model == "weapon_mp_kar98_scoped_rifle")
+			{
+				level.keep_ents = array_insert(level.keep_ents,all_ents[i],level.keep_ents.size);
+			}
+			wait 0.05;
+		}
+		level.cabinetthinkdone = 1;
+	}
+
+	/////////////////// Horrible Script Over ////////////////////////
+	/////////////////// You're safe for now /////////////////////////
+
 	self waittill("trigger",player);
+
+	for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
+	{
+		if(i == 0)
+		{
+			coord = -10;
+			self thread movecabinetguns(level.keep_ents[i],coord);
+		}
+		if(i == 1)
+		{
+			coord = 10;
+			self thread movecabinetguns(level.keep_ents[i],coord);
+		}
+	}
 
 	if(player.score < cost)
     {
-    	play_sound_on_ent( "no_purchase" );
-    	wait 1;
+    	self play_sound_on_ent( "no_purchase" );
+    	wait 0.5;
     	self thread weapon_cabinet_think();
     	return;
     }
@@ -655,7 +703,7 @@ weapon_cabinet_think()
 	}
 
 	plyweapons = player GetWeaponsListPrimaries();
-	cabinetguns = array_exclude(cabinetguns, plyweapons);
+	level.cabinetguns = array_exclude(level.cabinetguns, plyweapons);
 
 	self SetHintString( "" ); 
 
@@ -665,7 +713,7 @@ weapon_cabinet_think()
 
 	wait 0.1;
 
-	weaponmodel = GetWeaponModel( cabinetguns[randomint(cabinetguns.size)] );
+	weaponmodel = GetWeaponModel( level.cabinetguns[randomint(level.cabinetguns.size)] );
 	weaponmodelstruct SetModel(weaponmodel);
 
 	weaponmodelstruct Show();
@@ -684,15 +732,18 @@ weapon_cabinet_think()
 
 	weaponmodelstruct MoveTo(self.origin - (0,0,6.5),4,0,4);
 
+	cabinetsong = "cabinetbox_sting_" + RandomInt(2);
+
 	play_sound_at_pos( "open_chest", self.origin );
-	play_sound_at_pos( "music_chest", self.origin );
+	PlaySoundAtPosition(cabinetsong,self.origin);
+	PlaySoundAtPosition("lottery_laugh",self.origin);
 
 	self thread cabinet_glowfx();
 	
 	for( i = 0; i < 40; i++ )
 	{
 
-		weaponmodel = GetWeaponModel( cabinetguns[randomint(cabinetguns.size)] );
+		weaponmodel = GetWeaponModel( level.cabinetguns[randomint(level.cabinetguns.size)] );
 		weaponmodelstruct SetModel(weaponmodel);
 		
 		if( i < 20 )
@@ -711,15 +762,24 @@ weapon_cabinet_think()
 		{
 			wait( 0.3 ); 
 		}
-		randomnumb = cabinetguns[randomint(cabinetguns.size)];
+		randomnumb = level.cabinetguns[randomint(level.cabinetguns.size)];
 		weaponmodel = GetWeaponModel( randomnumb );
 		weaponmodelstruct SetModel(weaponmodel);
 	}
 
 	chosenweapon = randomnumb;
-	IPrintLn(chosenweapon);
-
 	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS");
+
+	if(player.perknum < 8)	//check if player has max perks
+	{
+		magicnum = RandomInt(100);
+		if(magicnum <= 10)	//10 out of 100 chance to get a perk
+		{
+			weaponmodelstruct SetModel(GetWeaponModel( "zombie_perk_bottle" ));
+			chosenweapon = "zombie_perk_bottle";
+			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000");
+		}
+	}
 
 	weaponmodelstruct MoveTo(self.origin - (20,0,6.5),10);
 
@@ -755,6 +815,59 @@ weapon_cabinet_think()
 	weaponmodelstruct Delete();
 }
 
+movecabinetguns( cabinetmodel, coord)
+{
+	self endon("weapontaken");
+	self endon("weaponexpired");
+
+	cabinetmodel MoveTo(self.origin - (20,coord,5.5),0.05);
+
+	for( i = 0; i < 40; i++ )
+	{
+
+		cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(6)]));
+		
+		if( i < 20 )
+		{
+			wait( 0.05 ); 
+		}
+		else if( i < 30 )
+		{
+			wait( 0.1 ); 
+		}
+		else if( i < 35 )
+		{
+			wait( 0.2 ); 
+		}
+		else if( i < 38 )
+		{
+			wait( 0.3 ); 
+		}
+		cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(6)]));
+	}
+
+	self play_sound_on_ent("no_purchase");
+
+	count = 0;
+	while(count <= 4)
+	{
+		cabinetmodel MoveTo(self.origin - (20,coord,RandomFloatRange(6,7)),2,1,1);
+		wait 2;
+		cabinetmodel MoveTo(self.origin - (20,coord,RandomFloatRange(4,5)),2,1,1);
+		wait 2;
+		count++;
+	}
+}
+
+play_raygun_stinger()
+{
+	players = get_players();
+	for(i=0;i<players.size;i++)
+	{
+		players[i] PlaySound("raygun_stinger");
+	}
+}
+
 cabinet_glowfx()
 {
 	fxObj = spawn( "script_model", self.origin -( 0, 0, 30 ) ); 
@@ -782,6 +895,28 @@ takenweapon(chosenweapon)
 	self waittill("trigger",player);
 	self play_sound_on_ent( "purchase" ); 
 	self notify("weapontaken");
+
+	if(chosenweapon == "zombie_perk_bottle")
+	{
+		//thread play_raygun_stinger();		//We don't want the stinger sound for a perk bottle.
+		current_weapon = player GetCurrentWeapon();
+		player DisableOffhandWeapons();
+		player DisableWeaponCycling();
+		player GiveWeapon(chosenweapon);
+		player SwitchToWeapon(chosenweapon);
+		wait 2.5;
+		player TakeWeapon(chosenweapon);
+		player EnableWeaponCycling();
+		player SwitchToWeapon(current_weapon);
+		player EnableOffhandWeapons();
+		player thread maps\_zombiemode_powerups::give_player_perk();
+		return;
+	}
+
+	if(chosenweapon == "springfield_scoped_zombie_upgraded" )
+	{
+		thread play_raygun_stinger();
+	}
 
 	plyweapons = player GetWeaponsListPrimaries();
 	if(plyweapons.size >= 2)
@@ -1059,15 +1194,15 @@ ammo_give( weapon )
 
 get_player_index(player)
 {
-	players = get_players();
-	for(i=0; i<players.size; i++)
+	assert( IsPlayer( player ) );
+	assert( IsDefined( player.entity_num ) );
+/#
+	// used for testing to switch player's VO in-game from devgui
+	if( player.entity_num == 0 && GetDVar( "zombie_player_vo_overwrite" ) != "" )
 	{
-		if (players[i] == player)
-		{
-			return i;
-		}
-
+		new_vo_index = GetDVarInt( "zombie_player_vo_overwrite" );
+		return new_vo_index;
 	}
-
-	return 1;
+#/
+	return level.random_character_index[player.entity_num];
 }
