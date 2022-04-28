@@ -627,19 +627,19 @@ treasure_chest_give_weapon( weapon_string )
 weapon_cabinet_think()
 {
 	cost = 10;
-    self SetHintString( "Press &&1 for a Random Weapon [Cost: "+cost+"]" );
+   	self SetHintString( "Press &&1 for a Random Weapon [Cost: "+cost+"]" );
 
 	level.cabinetguns = [];
 	level.cabinetguns[0] = "kar98k_scoped_zombie";				//default
-	level.cabinetguns[1] = "nambu";						//to be replaced with type100 w/ box mag.
-	level.cabinetguns[2] = "m1garand";
-	level.cabinetguns[3] = "mp40";						//to be replaced with mp40 w/ dual magazines.
-	level.cabinetguns[4] = "springfield";					//to be replaced with thompson w/ drum mag.
+	level.cabinetguns[1] = "m1garand";						
+	level.cabinetguns[2] = "mp40";						//to be replaced with mp40 w/ dual magazines.
+	level.cabinetguns[3] = "springfield";						
+	level.cabinetguns[4] = "zombie_type100_smg";				//to be replaced with type100 w/ box mag.
 	level.cabinetguns[5] = "zombie_type99_rifle";
-	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";	//dont move this or it will break things, make sure this is at the very end -- also change some values below
-	//cabinetguns[5] = "placeholdergun";
-	//cabinetguns[6] = "placeholdergun";
-	//cabinetguns[7] = "placeholdergun";
+	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";		//dont move this or it will break things, make sure this is at the very end -- also change some values below
+	level.cabinetguns[5] = "thompson";					//to be replaced with thompson w/ drum mag.
+	//level.cabinetguns[6] = "placeholdergun";
+	//level.cabinetguns[7] = "placeholdergun";
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
