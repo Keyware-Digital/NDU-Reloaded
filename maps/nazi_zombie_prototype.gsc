@@ -158,7 +158,7 @@ include_weapons()
 	include_weapon( "springfield" );	//disabled in weapon limiter below in favour of Mosin.
 
 	// Scoped
-	include_weapon( "ptrs41_zombie" );			//weapon cabinet only
+	include_weapon( "ptrs41_zombie" );
 	include_weapon( "kar98k_scoped_zombie" );	//weapon cabinet only
 		
 	// Grenade
@@ -206,7 +206,6 @@ include_weapons()
 	level.limited_weapons["m1garand"] = 0;
 	level.limited_weapons["springfield"] = 0;
 	level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;
-	level.limited_weapons["ptrs41_zombie"] = 0;
 	
 }
 
