@@ -15,7 +15,7 @@ localize,prototype
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_main.menu
 menufile,ui/prototype_options_game_pc.menu
-rawfile,bik/nazi_zombie_prototype_load.bik
+rawfile,bik/main_menu.bik
 rawfile,maps/_callbackglobal.gsc
 rawfile,maps/_character_randomise.gsc
 rawfile,maps/_gameskill.gsc

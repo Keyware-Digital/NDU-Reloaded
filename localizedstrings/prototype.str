@@ -121,11 +121,18 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
 //LANG_SPANISH        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
 //LANG_ITALIAN        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
 
-REFERENCE           ZOMBIE_CABINET_OPEN_1500
-LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1500]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1500]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1500]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1500]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1500]"
+REFERENCE           ZOMBIE_CABINET_OPEN_1900
+LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
+//LANG_FRENCH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
+//LANG_GERMAN        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
+//LANG_SPANISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
+
+REFERENCE            ZOMBIE_WEAPON_PERKBOTTLE_10000
+LANG_ENGLISH        "Hold ^3&&1 ^7to take Perk Bottle"
+//LANG_FRENCH        "Hold ^3&&1 ^7to take Perk Bottle"
+//LANG_GERMAN        "Hold ^3&&1 ^7to take Perk Bottle"
+//LANG_SPANISH        "Hold ^3&&1 ^7to take Perk Bottle"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to take Perk Bottle"
 
 ENDMARKER

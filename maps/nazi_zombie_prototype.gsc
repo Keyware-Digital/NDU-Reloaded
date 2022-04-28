@@ -21,7 +21,7 @@ main()
 	maps\nazi_zombie_prototype_fx::main();
 	maps\_zombiemode::main();
 
-	players = get_players();
+	players = GetPlayers();
 
 	for( i = 0; i < players.size; i++ )
 	{

@@ -4,6 +4,7 @@ animscripts\traverse\shared.gsc
 animscripts\traverse\wall_hop.gsc
 animscripts\traverse\wall_hop_zombie.gsc
 animtrees\generic_human.atr
+bik\main_menu.bik
 character\char_ger_honorguard_zombies.gsc
 character\char_ger_honorguard2_zombies.gsc
 character\char_zomb_player_0.gsc
@@ -26,6 +27,7 @@ images\specialty_phd_zombies.iwi
 images\specialty_quickrevive_zombies.iwi
 images\specialty_sp_zombies.iwi
 localizedstrings\prototype.str
+main\video\nazi_zombie_prototype_load.bik
 maps\_button_print.gsc
 maps\_callbackglobal.gsc
 maps\_character_randomise.gsc
