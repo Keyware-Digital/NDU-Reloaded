@@ -11,6 +11,7 @@ main()
 	precache_shaders();
 	precache_models();
 
+	PrecacheItem( "fraggrenade" );
 	PrecacheItem( "colt" );
 
 	init_strings();

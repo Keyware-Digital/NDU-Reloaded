@@ -95,7 +95,6 @@ sound\voiceovers\zombie\sam\tele_nospawn_02.wav
 soundaliases\mod_ndu.csv
 soundaliases\mod_ndu_menu_music.csv
 soundaliases\mod_ndu_powerup.csv
-ui\hud.txt
 ui\prototype_hud.menu
 ui\prototype_main.menu
 ui\prototype_options_game_pc.menu
