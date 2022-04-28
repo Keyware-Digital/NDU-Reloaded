@@ -126,16 +126,17 @@ include_weapons()
 {
 	// NDU: Reloaded
 	//include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
-	//include_weapon( "mosin_rifle" );
+	include_weapon( "mosin_rifle" );
 	include_weapon( "dp28" );
-	include_weapon( "kar98k_bayonet" );
-	include_weapon( "mosin_rifle_bayonet" );
+	//include_weapon( "kar98k_bayonet" );		//disabled in favour of Bowie.
+	//include_weapon( "mosin_rifle_bayonet" );	//disabled in favour of Bowie.
 	include_weapon( "springfield_scoped_zombie_upgraded" );		//weapon cabinet only
 	include_weapon( "svt40" );
 	include_weapon( "type99_lmg" );
 	include_weapon( "zombie_ppsh" );
 	include_weapon( "zombie_type99_rifle" );	//weapon cabinet only
 	include_weapon( "zombie_type100_smg" );
+	include_weapon( "zombie_perk_bottle" );		//weapon cabinet only
 	
 	// Pistols
 	include_weapon( "colt" );		//for Americans
@@ -143,7 +144,7 @@ include_weapons()
 	include_weapon( "walther" );	//for German
 	include_weapon( "sw_357" );
 	include_weapon( "tokarev" );	//for Russian
-	include_weapon( "nambu" );	//weapon cabinet only
+	//include_weapon( "nambu" );	//disabled, no Jap characters.
 	
 	// Semi Auto
 	include_weapon( "m1carbine" );	//disabled in weapon limiter below
@@ -156,8 +157,8 @@ include_weapons()
 	include_weapon( "mp40" );
 	
 	// Bolt Action
-	include_weapon( "kar98k" );			//disabled in weapon limiter below
-	include_weapon( "springfield" );	//disabled in weapon limiter below in favour of Mosin.
+	include_weapon( "kar98k" );		//disabled in weapon limiter below in favour of Mosin.
+	include_weapon( "springfield" );
 	
 	// Scoped
 	include_weapon( "ptrs41_zombie" );
@@ -207,7 +208,7 @@ include_weapons()
 	level.limited_weapons["kar98k_scoped_zombie"] = 0;
 	level.limited_weapons["m1carbine"] = 0;
 	level.limited_weapons["m1garand"] = 0;
-	level.limited_weapons["springfield"] = 0;
+	//level.limited_weapons["springfield"] = 0;
 	level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;
 	level.limited_weapons["zombie_perk_bottle"] = 0;
 }
