@@ -87,7 +87,7 @@ init_weapons()
 	PrecacheItem( "zombie_melee" );
 
 	//NDU: Reloaded
-	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,	"vox_raygun",	6 ); 
+	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		"vox_raygun",	6 ); 
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
 	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",                50,		"vox_raygun",	6 );
@@ -867,7 +867,7 @@ takenweapon(chosenweapon)
 	self play_sound_on_ent( "purchase" ); 
 	self notify("weapontaken");
 
-	if(chosenweapon == "zombie_perk_bottle")
+	if(chosenweapon == "walther_prototype")
 	{
 		thread play_raygun_stinger();
 		current_weapon = player GetCurrentWeapon();
