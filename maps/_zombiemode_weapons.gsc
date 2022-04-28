@@ -182,6 +182,7 @@ init_weapons()
 	add_zombie_weapon( "satchel_charge", 					&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000 );
 	add_zombie_weapon( "ray_gun", 							&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,	"vox_raygun",	6 );                                   	
 	add_zombie_weapon( "mine_bouncing_betty",				&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
+	add_zombie_weapon( "zombie_perk_bottle",                  		&"ZOMBIE_WEAPON_PERKBOTTLE_10000",        		10000 );
 	
 	// Bowie
 	add_zombie_weapon( "zombie_bowie_flourish",							"", 						10,		"", 5 );
