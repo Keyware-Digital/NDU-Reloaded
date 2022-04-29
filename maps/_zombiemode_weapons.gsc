@@ -624,18 +624,19 @@ weapon_cabinet_think()
 {
 	cost = 1900;
     self SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900" );
-
 	level.cabinetguns = [];
-	level.cabinetguns[0] = "kar98k_scoped_zombie";
-	level.cabinetguns[1] = "m1garand";
-	level.cabinetguns[2] = "mp40";
-	level.cabinetguns[3] = "springfield";
-	level.cabinetguns[4] = "zombie_type100_smg";
-	level.cabinetguns[5] = "zombie_type99_rifle";
+	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
+	level.cabinetguns[1] = "m1garand";		
+	level.cabinetguns[2] = "mosin_rifle_scoped_zombie";						
+	level.cabinetguns[3] = "mp40_bigammo_mp";
+	level.cabinetguns[4] = "springfield";						
+	level.cabinetguns[5] = "type100smg_bigammo_mp";	
 	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
-	level.cabinetguns[7] = "thompson";
-	//level.cabinetguns[8] = "placeholdergun";
+	level.cabinetguns[7] = "thompson_bigammo_mp";
+	level.cabinetguns[8] = "colt";
 	//level.cabinetguns[9] = "placeholdergun";
+	//level.cabinetguns[10] = "placeholdergun";
+	//level.cabinetguns[11] = "type100smg_bigammo_mp";					//removed because glitched!
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
