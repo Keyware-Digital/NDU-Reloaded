@@ -669,18 +669,19 @@ weapon_cabinet_think()
 	self waittill("trigger",player);
 
 	for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
-	{
-		if(i == 0)
-		{
-			coord = -10;
-			self thread movecabinetguns(level.keep_ents[i],coord);
-		}
-		if(i == 1)
-		{
-			coord = 10;
-			self thread movecabinetguns(level.keep_ents[i],coord);
-		}
-	}
+    {
+        level.keep_ents[i] Show();
+        if(i == 0)
+        {
+            coord = -10;
+            self thread movecabinetguns(level.keep_ents[i],coord);
+        }
+        if(i == 1)
+        {
+            coord = 10;
+            self thread movecabinetguns(level.keep_ents[i],coord);
+        }
+    }
 
 	if(player.score < cost)
     {
@@ -764,6 +765,11 @@ weapon_cabinet_think()
 
 	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", ""+chosenweapon+"");
 
+	for(i=0;i<level.keep_ents.size;i++)
+    {
+        level.keep_ents[i] Hide();
+    }
+
 	if(player.perknum < 8)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
@@ -811,46 +817,34 @@ weapon_cabinet_think()
 
 movecabinetguns( cabinetmodel, coord)
 {
-	self endon("weapontaken");
-	self endon("weaponexpired");
+    self endon("weapontaken");
+    self endon("weaponexpired");
 
-	cabinetmodel MoveTo(self.origin - (20,coord,5.5),0.05);
+    cabinetmodel MoveTo(self.origin - (20,coord,5.5),0.05);
 
-	for( i = 0; i < 40; i++ )
-	{
+    for( i = 0; i < 35; i++ )
+    {
 
-		cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(6)]));
-		
-		if( i < 20 )
-		{
-			wait( 0.05 ); 
-		}
-		else if( i < 30 )
-		{
-			wait( 0.1 ); 
-		}
-		else if( i < 35 )
-		{
-			wait( 0.2 ); 
-		}
-		else if( i < 38 )
-		{
-			wait( 0.3 ); 
-		}
-		cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(6)]));
-	}
-
-	self play_sound_on_ent("no_purchase");
-
-	count = 0;
-	while(count <= 4)
-	{
-		cabinetmodel MoveTo(self.origin - (20,coord,RandomFloatRange(6,7)),2,1,1);
-		wait 2;
-		cabinetmodel MoveTo(self.origin - (20,coord,RandomFloatRange(4,5)),2,1,1);
-		wait 2;
-		count++;
-	}
+        cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(level.cabinetguns.size)]));
+        
+        if( i < 20 )
+        {
+            wait( 0.05 ); 
+        }
+        else if( i < 30 )
+        {
+            wait( 0.1 ); 
+        }
+        else if( i < 35 )
+        {
+            wait( 0.2 ); 
+        }
+        else if( i < 38 )
+        {
+            wait( 0.3 ); 
+        }
+        cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(level.cabinetguns.size)]));
+    }
 }
 
 play_raygun_stinger()
