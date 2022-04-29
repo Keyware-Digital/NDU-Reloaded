@@ -877,7 +877,7 @@ crash_into_building()
 			PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 20 ), randomint( 20 ), randomint( 10 ) ) );
 			PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 40 ), randomint( 40 ), randomint( 20 ) ) );
 	
-			level thread maps\_zombiemode_blockers::remove_chunk( chunk, self.first_node, true );
+			level thread maps\_zombiemode_blockers_new::remove_chunk( chunk, self.first_node, true );
 			
 			if( all_chunks_destroyed( self.first_node.barrier_chunks ) )
 			{
@@ -980,7 +980,7 @@ zombie_tear_notetracks( msg, chunk, node )
 				PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 20 ), randomint( 20 ), randomint( 10 ) ) );
 				PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 40 ), randomint( 40 ), randomint( 20 ) ) );
 	
-				level thread maps\_zombiemode_blockers::remove_chunk( chunk, node );
+				level thread maps\_zombiemode_blockers_new::remove_chunk( chunk, node );
 			}
 		}
 	}

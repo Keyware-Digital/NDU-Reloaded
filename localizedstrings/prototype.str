@@ -1,6 +1,6 @@
 VERSION             "1"
 CONFIG              "C:\cod5\cod\cod5\bin\StringEd.cfg"
-FILENOTES           "Strings used in the prototype map go in this file, the other languages work, just needS translation."
+FILENOTES           "Strings used in the prototype map go in this file, the other languages work, just needs translation."
 
 REFERENCE           PLACE
 LANG_ENGLISH        "Abandoned Airfield"

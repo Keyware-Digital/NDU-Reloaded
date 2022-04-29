@@ -25,8 +25,9 @@ main()
 
 	for( i = 0; i < players.size; i++ )
 	{
-		players[i] SetClientDvar("sv_cheats", 1);
+		players[i] SetClientDvar("sv_cheats", 1); //enable cheats for testing purposes
 		players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
+		players[i] maps\_zombiemode_score::add_to_player_score(99999); //add points for testing purposes
 	}
 
 	// If you want to modify/add to the weapons table, please copy over the _zombiemode_weapons init_weapons() and paste it here.
@@ -134,7 +135,7 @@ include_weapons()
 	include_weapon( "mp40_bigammo_mp" );		//weapon cabinet only
 	include_weapon( "springfield_scoped_zombie_upgraded" );		//weapon cabinet only
 	include_weapon( "svt40" );
-	include_Weapon( "thompson_bigammo_mp")		//weapon cabinet only
+	include_Weapon( "thompson_bigammo_mp");		//weapon cabinet only
 	include_weapon( "type99_lmg" );
 	include_weapon( "zombie_ppsh" );
 	include_weapon( "zombie_type100_smg" );

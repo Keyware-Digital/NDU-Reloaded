@@ -4,7 +4,6 @@
 
 init()
 {
-	init_strings();
 	init_weapons();
 	init_weapon_upgrade();
 	init_weapon_cabinet();
@@ -74,11 +73,6 @@ include_zombie_weapon( weapon_name, in_box )
 	}
 	
 	level.zombie_include_weapons[weapon_name] = in_box;
-}
-
-init_strings()
-{
-	PrecacheString( &"PROTOTYPE_ZOMBIE_WEAPON_KAR98K_200" );
 }
 
 init_weapons()
@@ -632,17 +626,16 @@ weapon_cabinet_think()
     self SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900" );
 
 	level.cabinetguns = [];
-	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
-	level.cabinetguns[1] = "m1garand";		
-	level.cabinetguns[2] = "mosin_rifle_scoped_zombie";						
-	level.cabinetguns[3] = "mp40_bigammo_mp";
-	level.cabinetguns[4] = "springfield";						
-	level.cabinetguns[5] = "type100smg_bigammo_mp";	
-	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";		//dont move this or it will break things, make sure this is at the very end -- also change some values below
-	level.cabinetguns[7] = "thompson_bigammo_mp";
-	level.cabinetguns[8] = "colt";
+	level.cabinetguns[0] = "kar98k_scoped_zombie";
+	level.cabinetguns[1] = "m1garand";
+	level.cabinetguns[2] = "mp40";
+	level.cabinetguns[3] = "springfield";
+	level.cabinetguns[4] = "zombie_type100_smg";
+	level.cabinetguns[5] = "zombie_type99_rifle";
+	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
+	level.cabinetguns[7] = "thompson";
 	//level.cabinetguns[8] = "placeholdergun";
-	//level.cabinetguns[9] = "type100smg_bigammo_mp";					//removed because glitched!
+	//level.cabinetguns[9] = "placeholdergun";
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
@@ -699,7 +692,7 @@ weapon_cabinet_think()
     else
     {
 		player maps\_zombiemode_score::minus_to_player_score(cost);
-		play_sound_on_ent( "purchase" );
+		//play_sound_on_ent( "purchase" );
 	}
 
 	plyweapons = player GetWeaponsListPrimaries();
@@ -768,7 +761,8 @@ weapon_cabinet_think()
 	}
 
 	chosenweapon = randomnumb;
-	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS");
+
+	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", ""+chosenweapon+"");
 
 	if(player.perknum < 8)	//check if player has max perks
 	{
