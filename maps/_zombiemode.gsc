@@ -40,7 +40,7 @@ main()
 	level.hudelem_count = 0;
 	// Call the other zombiemode scripts
 	maps\_zombiemode_weapons::init();
-	maps\_zombiemode_blockers::init();
+	maps\_zombiemode_blockers_new::init();
 	maps\_zombiemode_spawner::init();
 	maps\_zombiemode_powerups::init();
 	maps\_zombiemode_radio::init();	
@@ -1316,7 +1316,7 @@ round_think()
 		maps\_zombiemode_powerups::powerup_round_start();
 
 		players = get_players();
-		array_thread( players, maps\_zombiemode_blockers::rebuild_barrier_reward_reset );
+		array_thread( players, maps\_zombiemode_blockers_new::rebuild_barrier_reward_reset );
 
 		level thread award_grenades_for_survivors();
 		level thread round_spawning(); 

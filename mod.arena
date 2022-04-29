@@ -1,0 +1,10 @@
+{
+	map			"mak"
+	longname	"MENU_LEVEL_MAK"
+	gametype	"cmp arc"
+}
+{
+	map			"nazi_zombie_prototype"
+	longname	"NDU_NAZI_ZOMBIE_PROTOTYPE"
+	gametype	"zom"
+}

@@ -1,4 +1,5 @@
 fx,weapon/muzzleflashes/standardflashworld_ug
+material,loadscreen_nazi_zombie_prototype
 material,hud_grenade_german
 material,specialty_juggernaut_zombies
 material,specialty_fastreload_zombies
@@ -16,6 +17,8 @@ localize,prototype
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_main.menu
 menufile,ui/prototype_options_game_pc.menu
+rawfile,bik/prototype_main_menu.bik
+rawfile,mptype/nazi_zombie_heroes.gsc
 rawfile,maps/_callbackglobal.gsc
 rawfile,maps/_character_randomise.gsc
 rawfile,maps/_gameskill.gsc

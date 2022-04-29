@@ -4,7 +4,6 @@
 
 init()
 {
-	init_strings();
 	init_weapons();
 	init_weapon_upgrade();
 	init_weapon_cabinet();
@@ -74,11 +73,6 @@ include_zombie_weapon( weapon_name, in_box )
 	}
 	
 	level.zombie_include_weapons[weapon_name] = in_box;
-}
-
-init_strings()
-{
-	PrecacheString( &"PROTOTYPE_ZOMBIE_WEAPON_KAR98K_200" );
 }
 
 init_weapons()
@@ -630,7 +624,6 @@ weapon_cabinet_think()
 {
 	cost = 1900;
     self SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900" );
-
 	level.cabinetguns = [];
 	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
 	level.cabinetguns[1] = "m1garand";		
@@ -638,11 +631,12 @@ weapon_cabinet_think()
 	level.cabinetguns[3] = "mp40_bigammo_mp";
 	level.cabinetguns[4] = "springfield";						
 	level.cabinetguns[5] = "type100smg_bigammo_mp";	
-	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";		//dont move this or it will break things, make sure this is at the very end -- also change some values below
+	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
 	level.cabinetguns[7] = "thompson_bigammo_mp";
 	level.cabinetguns[8] = "colt";
-	//level.cabinetguns[8] = "placeholdergun";
-	//level.cabinetguns[9] = "type100smg_bigammo_mp";					//removed because glitched!
+	//level.cabinetguns[9] = "placeholdergun";
+	//level.cabinetguns[10] = "placeholdergun";
+	//level.cabinetguns[11] = "type100smg_bigammo_mp";					//removed because glitched!
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
@@ -676,18 +670,19 @@ weapon_cabinet_think()
 	self waittill("trigger",player);
 
 	for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
-	{
-		if(i == 0)
-		{
-			coord = -10;
-			self thread movecabinetguns(level.keep_ents[i],coord);
-		}
-		if(i == 1)
-		{
-			coord = 10;
-			self thread movecabinetguns(level.keep_ents[i],coord);
-		}
-	}
+    {
+        level.keep_ents[i] Show();
+        if(i == 0)
+        {
+            coord = -10;
+            self thread movecabinetguns(level.keep_ents[i],coord);
+        }
+        if(i == 1)
+        {
+            coord = 10;
+            self thread movecabinetguns(level.keep_ents[i],coord);
+        }
+    }
 
 	if(player.score < cost)
     {
@@ -699,7 +694,7 @@ weapon_cabinet_think()
     else
     {
 		player maps\_zombiemode_score::minus_to_player_score(cost);
-		play_sound_on_ent( "purchase" );
+		//play_sound_on_ent( "purchase" );
 	}
 
 	plyweapons = player GetWeaponsListPrimaries();
@@ -768,7 +763,13 @@ weapon_cabinet_think()
 	}
 
 	chosenweapon = randomnumb;
-	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS");
+
+	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", ""+chosenweapon+"");
+
+	for(i=0;i<level.keep_ents.size;i++)
+    {
+        level.keep_ents[i] Hide();
+    }
 
 	if(player.perknum < 8)	//check if player has max perks
 	{
@@ -817,46 +818,34 @@ weapon_cabinet_think()
 
 movecabinetguns( cabinetmodel, coord)
 {
-	self endon("weapontaken");
-	self endon("weaponexpired");
+    self endon("weapontaken");
+    self endon("weaponexpired");
 
-	cabinetmodel MoveTo(self.origin - (20,coord,5.5),0.05);
+    cabinetmodel MoveTo(self.origin - (20,coord,5.5),0.05);
 
-	for( i = 0; i < 40; i++ )
-	{
+    for( i = 0; i < 35; i++ )
+    {
 
-		cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(6)]));
-		
-		if( i < 20 )
-		{
-			wait( 0.05 ); 
-		}
-		else if( i < 30 )
-		{
-			wait( 0.1 ); 
-		}
-		else if( i < 35 )
-		{
-			wait( 0.2 ); 
-		}
-		else if( i < 38 )
-		{
-			wait( 0.3 ); 
-		}
-		cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(6)]));
-	}
-
-	self play_sound_on_ent("no_purchase");
-
-	count = 0;
-	while(count <= 4)
-	{
-		cabinetmodel MoveTo(self.origin - (20,coord,RandomFloatRange(6,7)),2,1,1);
-		wait 2;
-		cabinetmodel MoveTo(self.origin - (20,coord,RandomFloatRange(4,5)),2,1,1);
-		wait 2;
-		count++;
-	}
+        cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(level.cabinetguns.size)]));
+        
+        if( i < 20 )
+        {
+            wait( 0.05 ); 
+        }
+        else if( i < 30 )
+        {
+            wait( 0.1 ); 
+        }
+        else if( i < 35 )
+        {
+            wait( 0.2 ); 
+        }
+        else if( i < 38 )
+        {
+            wait( 0.3 ); 
+        }
+        cabinetmodel SetModel(GetWeaponModel(level.cabinetguns[RandomInt(level.cabinetguns.size)]));
+    }
 }
 
 play_raygun_stinger()

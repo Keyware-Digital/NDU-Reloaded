@@ -58,7 +58,7 @@
 #define CLEARUIHINT	exec "set ui_hint_text @NULL_EMPTY"; hide "desc_arrow"
 
 #define ACTION_LOCKOUT_CLOSE \
-	execnow "ui_cinematic main_menu 3" \
+	execnow "ui_cinematic prototype_main_menu 3" \
 	play "mouse_click"; \
 	close main_lockout; \
 	setdvar ui_skipMainLockout "0" \
@@ -195,7 +195,7 @@
 			action 
 			{
 #if !COOP_EPD
-				execnow "ui_cinematic main_menu 3"
+				execnow "ui_cinematic prototype_main_menu 3"
 #endif // #if !COOP_EPD
 				play "mouse_click";
 				close main_lockout;
@@ -291,7 +291,7 @@
 #ifdef CONSOLE
 			setdvar ui_version_show "0";
 			setdvar ui_skipMainLockout "0";
-			execnow "ui_cinematic main_menu 3"
+			execnow "ui_cinematic prototype_main_menu 3"
 			execnow "Updatedvarsfromprofile";
 			exec "set cg_gameMessageWidth 455";
 #if !COOP_EPD
@@ -309,7 +309,7 @@
 
 			focusfirst;
 #else // #ifdef CONSOLE
-			execnow "ui_cinematic main_menu 3"
+			execnow "ui_cinematic prototype_main_menu 3"
 			setdvar ui_showOnlineOfflineButton "1";
 
 			//savegameshow resume;
@@ -333,7 +333,7 @@
 			execnow "AcceptInputFromActiveControl"
 			execnow "EnableSpecialInput";
 #endif // #ifdef CONSOLE
-			execnow "ui_cinematic main_menu 3"
+			execnow "ui_cinematic prototype_main_menu 3"
 			setdvar ui_showOnlineOfflineButton "1";
 		}
 		onEsc
