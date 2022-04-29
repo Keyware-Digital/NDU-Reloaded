@@ -207,76 +207,38 @@ delayed_zombie_eye_glow()
 
 set_zombie_run_cycle()
 {
-	self set_run_speed(); 
-		
-	walkcycle = randomint( 4 ); 
+	self set_run_speed();
 
-	if( self.zombie_move_speed == "walk" )
+	death_anims = [];
+	death_anims[death_anims.size] = %ch_dazed_a_death;
+	death_anims[death_anims.size] = %ch_dazed_b_death;
+	death_anims[death_anims.size] = %ch_dazed_c_death;
+	death_anims[death_anims.size] = %ch_dazed_d_death;self.deathanim = random(death_anims);
+
+	self.deathanim = random(death_anims);
+
+	if(level.round_number < 3)
 	{
-		if( walkcycle == 0 )
-		{
-			self.deathanim = %ch_dazed_a_death; 
-			self set_run_anim( "walk1" ); 		
-			self.run_combatanim = level.scr_anim["zombie"]["walk1"]; 
-		}
-		else if( walkcycle == 1 )
-		{
-			self.deathanim = %ch_dazed_b_death; 
-			self set_run_anim( "walk2" ); 		
-			self.run_combatanim = level.scr_anim["zombie"]["walk2"]; 
-		}
-		else if( walkcycle == 2 )
-		{
-			self.deathanim = %ch_dazed_c_death; 
-			self set_run_anim( "walk3" ); 		
-			self.run_combatanim = level.scr_anim["zombie"]["walk3"]; 
-		}
-		else if( walkcycle == 3 )
-		{
-			self.deathanim = %ch_dazed_d_death; 
-			self set_run_anim( "walk4" ); 		
-			self.run_combatanim = level.scr_anim["zombie"]["walk4"]; 
-		}			
+		self.zombie_move_speed = "walk";
 	}
-	
-	walkcycle = randomint( 3 ); 
-	if( self.zombie_move_speed == "run" )
+
+	switch(self.zombie_move_speed)
 	{
-		if( walkcycle == 0 )
-		{
-			self.deathanim = %ch_dazed_a_death; 
-			self set_run_anim( "run1" ); 		
-			self.run_combatanim = level.scr_anim["zombie"]["run1"]; 
-		}
-		else if( walkcycle == 1 )
-		{
-			self.deathanim = %ch_dazed_b_death; 
-			self set_run_anim( "run2" ); 		
-			self.run_combatanim = level.scr_anim["zombie"]["run2"]; 
-		}
-		else if( walkcycle == 2 )
-		{
-			self.deathanim = %ch_dazed_c_death; 
-			self set_run_anim( "run3" ); 		
-			self.run_combatanim = level.scr_anim["zombie"]["run3"]; 
-		}		
-	}
-	
-	walkcycle = randomint( 2 ); 
-	if( self.zombie_move_speed == "sprint" )
-	{
-		if( walkcycle == 0 )
-		{
-			self.deathanim = %ch_dazed_c_death; 
-			self set_run_anim( "sprint1" ); 		
-			self.run_combatanim = level.scr_anim["zombie"]["sprint1"]; 
-		}
-		else if( walkcycle == 1 )
-		{
-			self.deathanim = %ch_dazed_d_death; 
-			self set_run_anim( "sprint2" ); 		
-			self.run_combatanim = level.scr_anim["zombie"]["sprint2"]; 
-		}
+	case "walk":
+		var = randomintrange(1, 8);         
+		self set_run_anim( "walk" + var );                         
+		self.run_combatanim = level.scr_anim["zombie"]["walk" + var];
+		break;
+	case "run":                                
+		var = randomintrange(1, 4);
+		self set_run_anim( "run" + var );               
+		self.run_combatanim = level.scr_anim["zombie"]["run" + var];
+		break;
+	case "sprint":                             
+		var = randomintrange(1, 8);
+		self set_run_anim( "sprint" + var );                       
+		self.run_combatanim = level.scr_anim["zombie"]["sprint" + var];
+		break;
 	}
 }
 
@@ -547,9 +509,32 @@ zombie_assure_node()
 			return;
 		}
 	}
+		if(level.script == "nazi_zombie_asylum")
+	{
+		wait(2);
+		// Get more nodes and try again
+		nodes = get_array_of_closest( self.origin, level.exterior_goals, undefined, 20 );
+		self.entrance_nodes = nodes;
+		for( i = 0; i < self.entrance_nodes.size; i++ )
+		{
+			if( self zombie_bad_path() )
+			{
+				self zombie_history( "zombie_assure_node -> assigned assured node = " + self.entrance_nodes[i].origin );
+
+				println( "^1Zombie @ " + self.origin + " did not move for 1 second. Going to next closest node @ " + self.entrance_nodes[i].origin );
+				level thread draw_line_ent_to_pos( self, self.entrance_nodes[i].origin, "goal" );
+				self.first_node = self.entrance_nodes[i];
+				self SetGoalPos( self.entrance_nodes[i].origin );
+			}
+			else
+			{
+				return;
+			}
+		}
+	}
 
 	self zombie_history( "zombie_assure_node -> failed to find a good entrance point" );
-	assertmsg( "^1Zombie @ " + self.origin + " did not find a good entrance point... Please fix pathing or Entity setup" );
+	//assertmsg( "^1Zombie @ " + self.origin + " did not find a good entrance point... Please fix pathing or Entity setup" );
 
 	wait( 3 );
 	self DoDamage( self.health + 10, self.origin );
@@ -980,7 +965,7 @@ zombie_tear_notetracks( msg, chunk, node )
 				PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 20 ), randomint( 20 ), randomint( 10 ) ) );
 				PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 40 ), randomint( 40 ), randomint( 20 ) ) );
 	
-				level thread maps\_zombiemode_blockers_new::remove_chunk( chunk, node );
+				level thread maps\_zombiemode_blockers_new::remove_chunk( chunk, node, true );
 			}
 		}
 	}

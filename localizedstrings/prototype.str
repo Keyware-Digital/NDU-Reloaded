@@ -80,11 +80,11 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to buy Stielhandgranate [Cost: 250]"
 //LANG_ITALIAN        "Hold ^3&&1 ^7to buy Stielhandgranate [Cost: 250]"
 
 REFERENCE           ZOMBIE_WEAPONCOSTAMMO
-LANG_ENGLISH        "For Weapon [Cost: &&1], Ammo [&&2], Upgraded Ammo [Cost: 4500]"
-//LANG_FRENCH        "For Weapon [Cost: &&1], Ammo [&&2], Upgraded Ammo [Cost: 4500]"
-//LANG_GERMAN        "For Weapon [Cost: &&1], Ammo [&&2], Upgraded Ammo [Cost: 4500]"
-//LANG_SPANISH        "For Weapon [Cost: &&1], Ammo [&&2], Upgraded Ammo [Cost: 4500]"
-//LANG_ITALIAN        "For Weapon [Cost: &&1], Ammo [&&2], Upgraded Ammo [Cost: 4500]"
+LANG_ENGLISH        "For Weapon [Cost: &&1], Ammo [&&2]"
+//LANG_FRENCH        "For Weapon [Cost: &&1], Ammo [&&2]"
+//LANG_GERMAN        "For Weapon [Cost: &&1], Ammo [&&2]"
+//LANG_SPANISH        "For Weapon [Cost: &&1], Ammo [&&2]"
+//LANG_ITALIAN        "For Weapon [Cost: &&1], Ammo [&&2]"
 
 REFERENCE           ZOMBIE_RANDOM_WEAPON_950
 LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"

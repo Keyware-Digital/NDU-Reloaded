@@ -16,8 +16,11 @@ material,logo_cod2
 localize,prototype
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_main.menu
+menufile,ui/prototype_briefing.menu
 menufile,ui/prototype_options_game_pc.menu
+menufile,ui/prototype_gamesetup_coop.menu
 rawfile,bik/prototype_main_menu.bik
+rawfile,bik/prototype_load.bik
 rawfile,mptype/nazi_zombie_heroes.gsc
 rawfile,maps/_callbackglobal.gsc
 rawfile,maps/_character_randomise.gsc
