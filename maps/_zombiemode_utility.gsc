@@ -5,16 +5,22 @@ init_utility()
 {
 //	level thread edge_fog_start(); 
 
-	level thread cheat_score(); 
-
 //	level thread hudelem_count(); 
 }
 
 get_enemy_count()
 {
 	enemies = [];
-	enemies = GetAiArray( "axis" );
-	return enemies.size;
+	valid_enemies = [];
+	enemies = GetAiSpeciesArray( "axis", "all" );
+	for( i = 0; i < enemies.size; i++ )
+	{
+		if( enemies[i].animname != "boss_zombie" )
+		{
+			valid_enemies = array_add( valid_enemies, enemies[i] );
+		}
+	}
+	return valid_enemies.size;
 }
 
 spawn_zombie( spawner, target_name ) 
@@ -82,7 +88,7 @@ all_chunks_intact( barrier_chunks )
 {
 	for( i = 0; i < barrier_chunks.size; i++ )
 	{
-		if( barrier_chunks[i].destroyed )
+		if( barrier_chunks[i].destroyed && !IsDefined( barrier_chunks[i].mid_repair ))
 		{
 			return false; 
 		}
@@ -99,9 +105,58 @@ all_chunks_destroyed( barrier_chunks )
 		{
 			return false; 
 		}
+		if ( IsDefined( barrier_chunks[i].target_by_zombie ) )
+		{
+			return false;
+		}
 	}
 
 	return true; 
+}
+
+check_point_in_playable_area( origin )
+{
+	playable_area = getentarray("playable_area","targetname");
+
+	check_model = spawn ("script_model", origin + (0,0,40));
+	
+	valid_point = false;
+	for (i = 0; i < playable_area.size; i++)
+	{
+		if (check_model istouching(playable_area[i]))
+		{
+			valid_point = true;
+		}
+	}
+	
+	check_model delete();
+	return valid_point;
+}
+
+check_point_in_active_zone( origin )
+{
+	player_zones = GetEntArray( "player_zone", "script_noteworthy" );
+	if( !isDefined( level.zones ) || !isDefined( player_zones ) )
+	{
+		return true;
+	}
+	
+	scr_org = spawn( "script_origin", origin+(0, 0, 40) );
+	
+	one_valid_zone = false;
+	for( i = 0; i < player_zones.size; i++ )
+	{
+		if( scr_org isTouching( player_zones[i] ) )
+		{
+			if( isDefined( level.zones[player_zones[i].targetname] ) && 
+				isDefined( level.zones[player_zones[i].targetname].is_enabled ) )
+			{
+				one_valid_zone = true;
+			}
+		}
+	}
+	
+	return one_valid_zone;
 }
 
 round_up_to_ten( score )
@@ -118,10 +173,21 @@ random_tan()
 {
 	rand = randomint( 100 ); 
 	
-	if( rand > 65 )
+	// PI_CHANGE_BEGIN - JMA - only 15% chance that we are going to spawn charred zombies in sumpf
+	if(isDefined(level.script) && level.script == "nazi_zombie_sumpf")
+	{
+		percentNotCharred = 85;
+	}
+	else
+	{
+		percentNotCharred = 65;
+	}
+	
+	if( rand > percentNotCharred )
 	{
 		self StartTanning(); 
 	}
+	// PI_CHANGE_END
 }
 
 // Returns the amount of places before the decimal, ie 1000 = 4, 100 = 3...
@@ -139,6 +205,481 @@ places_before_decimal( num )
 			return count; 
 		}
 	}
+}
+
+create_zombie_point_of_interest( attract_dist, num_attractors, added_poi_value, start_turned_on )
+{
+	if( !isDefined( added_poi_value ) )
+	{
+		self.added_poi_value = 0;
+	}
+	else
+	{
+		self.added_poi_value = added_poi_value;
+	}
+	
+	if( !isDefined( start_turned_on ) )
+	{
+		start_turned_on = true;
+	}
+	
+	self.script_noteworthy = "zombie_poi";
+	self.poi_active = start_turned_on;
+
+	if( isDefined( attract_dist ) )
+	{
+		self.poi_radius = attract_dist * attract_dist;
+	}
+	else // This poi has no maximum attract distance, it will attract all zombies
+	{
+		self.poi_radius = undefined;
+	}
+	self.num_poi_attracts = num_attractors;
+	self.attract_to_origin = true;
+}
+
+create_zombie_point_of_interest_attractor_positions( num_attract_dists, diff_per_dist, attractor_width )
+{
+	forward = ( 0, 1, 0 );
+	
+	if( !isDefined( self.num_poi_attracts ) || self.script_noteworthy != "zombie_poi" )
+	{
+		return;
+	}
+	
+	if( !isDefined( num_attract_dists ) )
+	{
+		num_attract_dists = 4;
+	}
+	
+	if( !isDefined( diff_per_dist ) )
+	{
+		diff_per_dist = 45;
+	}
+	
+	if( !isDefined( attractor_width ) )
+	{
+		attractor_width = 45;
+	}
+	
+	self.attract_to_origin = false;
+	
+	self.num_attract_dists = num_attract_dists;
+	
+	// The last index in the attractor_position arrays for each of the four distances
+	self.last_index = [];
+	for( i = 0; i < num_attract_dists; i++ )
+	{
+		self.last_index[i] = -1;
+	}
+	
+	self.attract_dists = [];
+	for( i = 0; i < self.num_attract_dists; i++ )
+	{
+		self.attract_dists[i] = diff_per_dist * (i+1);
+	}
+	
+	// Array of max positions per distance
+	// 0 = close, 1 = med, 2 = far, 3 = very far
+	max_positions = [];
+	for( i = 0; i < self.num_attract_dists; i++ )
+	{
+		max_positions[i] = int(3.14*2*self.attract_dists[i]/attractor_width);
+	}
+	
+	num_attracts_per_dist = self.num_poi_attracts/self.num_attract_dists;
+	
+	self.max_attractor_dist = self.attract_dists[ self.attract_dists.size - 1 ] * 1.1; // Give some wiggle room for assigning nodes
+	
+	diff = 0;
+	
+	self thread debug_draw_attractor_positions();
+	
+	// Determine the ideal number of attracts based on what a distance can actually hold after any bleed from closer
+	// distances is added to the calculated
+	actual_num_positions = [];
+	for( i = 0; i < self.num_attract_dists; i++ )
+	{
+		if( num_attracts_per_dist > (max_positions[i]+diff) )
+		{
+			actual_num_positions[i] = max_positions[i];
+			diff += num_attracts_per_dist - max_positions[i];
+		}
+		else
+		{
+			actual_num_positions[i] = num_attracts_per_dist + diff;
+			diff = 0;
+		}	
+	}
+	
+	// Determine the actual positions that will be used, including failed nodes from closer distances, index zero is always the origin
+	self.attractor_positions = [];
+	failed = 0;
+	angle_offset = 0; // Angle offset, used to make nodes not all perfectly radial
+	prev_last_index = -1;
+	for( j = 0; j < 4; j++ )
+	{
+		if( (actual_num_positions[j]+failed) < max_positions[j] )
+		{
+			actual_num_positions[j] += failed;
+			failed = 0;
+		}
+		else if( actual_num_positions[j] < max_positions[j] ) 
+		{
+			actual_num_positions[j] = max_positions[j];
+			failed = max_positions[j] - actual_num_positions[j];
+		}
+		failed += self generated_radius_attract_positions( forward, angle_offset, actual_num_positions[j], self.attract_dists[j] );
+		angle_offset += 15;
+		self.last_index[j] = int(actual_num_positions[j] - failed + prev_last_index);
+		prev_last_index = self.last_index[j];
+	}
+	
+	self notify( "attractor_positions_generated" );
+}
+
+generated_radius_attract_positions( forward, offset, num_positions, attract_radius )
+{
+	failed = 0;
+	degs_per_pos = 360 / num_positions;
+	for( i = offset; i < 360+offset; i += degs_per_pos )
+	{
+		altforward = forward * attract_radius;
+		rotated_forward = ( (cos(i)*altforward[0] - sin(i)*altforward[1]), (sin(i)*altforward[0] + cos(i)*altforward[1]), altforward[2] );
+		pos = maps\_zombiemode_server_throttle::server_safe_ground_trace( "poi_trace", 10, self.origin + rotated_forward + ( 0, 0, 100 ) );
+		if( abs( pos[2] - self.origin[2] ) < 60 )
+		{
+			pos_array = [];
+			pos_array[0] = pos;
+			pos_array[1] = self;
+			self.attractor_positions = array_add( self.attractor_positions , pos_array );
+		}
+		else
+		{
+			failed++;
+		}
+	}
+	return failed;
+}
+
+debug_draw_attractor_positions()
+{
+	/#
+	while( true )
+	{
+		while( !isDefined( self.attractor_positions ) )
+		{
+			wait( 0.05 );
+			continue;
+		}
+		for( i = 0; i < self.attractor_positions.size; i++ )
+		{
+			Line( self.origin, self.attractor_positions[i][0], (1, 0, 0), true, 1 );
+		}
+		wait( 0.05 );
+		if( !IsDefined( self ) )
+		{
+			return;
+		}
+	}
+	#/
+}
+
+
+get_zombie_point_of_interest( origin )
+{
+	curr_radius = undefined;
+	
+	ent_array = getEntArray( "zombie_poi", "script_noteworthy" );
+	
+	best_poi = undefined;
+	position = undefined;
+	best_dist = 10000 * 10000;
+	
+	for( i = 0; i < ent_array.size; i++ )
+	{
+		if( !isDefined( ent_array[i].poi_active ) || !ent_array[i].poi_active  )
+		{
+			continue;
+		}
+		
+		dist = distanceSquared( origin, ent_array[i].origin );
+		
+		dist -= ent_array[i].added_poi_value;
+		
+		if( isDefined( ent_array[i].poi_radius ) )
+		{
+			curr_radius = ent_array[i].poi_radius;
+		}
+		
+		if( (!isDefined( curr_radius ) || dist < curr_radius) && dist < best_dist && ent_array[i] can_attract(self) )
+		{
+			best_poi = ent_array[i];
+		}
+	}
+	
+	if( isDefined( best_poi ) )
+	{
+		// Override, currently only used for monkeys in the air.
+		if( isDefined( best_poi.attract_to_origin ) && best_poi.attract_to_origin ) 
+		{
+			position = [];
+			position[0] = groundpos( best_poi.origin + (0, 0, 100) );
+			position[1] = self;
+		}
+		else
+		{
+			position = self add_poi_attractor( best_poi );
+		}
+	}
+	
+	return position;
+}
+
+activate_zombie_point_of_interest()
+{
+	if( self.script_noteworthy != "zombie_poi" )
+	{
+		return;
+	}
+	
+	self.poi_active = true;
+}
+
+deactivate_zombie_point_of_interest()
+{
+	if( self.script_noteworthy != "zombie_poi" )
+	{
+		return;
+	}
+	
+	self.poi_active = false;
+}
+
+//PI_CHANGE_BEGIN - 6/18/09 JV This works to help set "wait" points near the stage if all players are in the process teleportation.  
+//It is unlike the previous function in that you dictate the poi.
+assign_zombie_point_of_interest (origin, poi)
+{
+	position = undefined;
+	doremovalthread = false;
+
+	if (IsDefined(poi) && poi can_attract(self))
+	{
+		//don't want to touch add poi attractor, but yeah, this is kind of weird
+		if (!IsDefined(poi.attractor_array) || ( IsDefined(poi.attractor_array) && array_check_for_dupes( poi.attractor_array, self ) ))
+			doremovalthread = true;
+		
+		position = self add_poi_attractor( poi );
+		
+		//now that I know this is the first time they've been added, set up the thread to remove them from the array
+		if (IsDefined(position) && doremovalthread && !array_check_for_dupes( poi.attractor_array, self  ))
+			self thread update_on_poi_removal( poi );		
+	}
+	
+	return position;
+}
+//PI_CHANGE_END
+
+remove_poi_attractor( zombie_poi )
+{
+	if( !isDefined( zombie_poi.attractor_array ) )
+	{
+		return;
+	}
+	
+	for( i = 0; i < zombie_poi.attractor_array.size; i++ )
+	{
+		if( zombie_poi.attractor_array[i] == self )
+		{
+			self notify( "kill_poi" );
+			
+			zombie_poi.attractor_array = array_remove( zombie_poi.attractor_array, zombie_poi.attractor_array[i] );
+			zombie_poi.claimed_attractor_positions = array_remove( zombie_poi.claimed_attractor_positions, zombie_poi.claimed_attractor_positions[i] );
+		}
+	}
+}
+
+add_poi_attractor( zombie_poi )
+{
+	if( !isDefined( zombie_poi ) )
+	{
+		return;
+	}
+	if( !isDefined( zombie_poi.attractor_array ) )
+	{
+		zombie_poi.attractor_array = [];
+	}
+	
+	// If we are not yet an attractor to this poi, claim an attractor position and start attracting to it
+	if( array_check_for_dupes( zombie_poi.attractor_array, self ) )
+	{
+		if( !isDefined( zombie_poi.claimed_attractor_positions ) )
+		{
+			zombie_poi.claimed_attractor_positions = [];
+		}
+		
+		if( !isDefined( zombie_poi.attractor_positions ) || zombie_poi.attractor_positions.size <= 0 )
+		{
+			return undefined;
+		}
+		
+		start = -1;
+		end = -1;
+		last_index = -1;
+		for( i = 0; i < 4; i++ )
+		{
+			if( zombie_poi.claimed_attractor_positions.size < zombie_poi.last_index[i] ) 
+			{
+				start = last_index+1;
+				end = zombie_poi.last_index[i];
+				break;
+			}
+			last_index = zombie_poi.last_index[i];
+		}
+		
+		
+		best_dist = 10000*10000;
+		best_pos = undefined;
+		if( start < 0 )
+		{
+			start = 0;
+		}
+		if( end < 0 )
+		{
+			return undefined;
+		}
+		for( i = int(start); i <= int(end); i++ )
+		{
+			if( array_check_for_dupes( zombie_poi.claimed_attractor_positions, zombie_poi.attractor_positions[i] ) )
+			{
+				dist = distancesquared( zombie_poi.attractor_positions[i][0], self.origin );
+				if( dist < best_dist || !isDefined( best_pos ) )
+				{
+					best_dist = dist;
+					best_pos = zombie_poi.attractor_positions[i];
+				}
+			}
+		}
+		
+		if( !isDefined( best_pos ) )
+		{
+			return undefined;
+		}
+		
+		zombie_poi.attractor_array = array_add( zombie_poi.attractor_array, self );
+		self thread update_poi_on_death( zombie_poi );		
+		
+		zombie_poi.claimed_attractor_positions = array_add( zombie_poi.claimed_attractor_positions, best_pos );
+		
+		return best_pos;
+	}
+	else
+	{
+		for( i = 0; i < zombie_poi.attractor_array.size; i++ )
+		{
+			if( zombie_poi.attractor_array[i] == self )
+			{
+				if( isDefined( zombie_poi.claimed_attractor_positions ) && isDefined( zombie_poi.claimed_attractor_positions[i] ) )
+				{
+					return zombie_poi.claimed_attractor_positions[i];
+				}
+			}
+		}
+	}
+	
+	return undefined;
+}
+
+can_attract( attractor )
+{
+	if( !isDefined( self.attractor_array ) )
+	{
+		self.attractor_array = [];
+	}
+	if( !array_check_for_dupes( self.attractor_array, attractor ) )
+	{
+		return true;
+	}
+	if( isDefined(self.num_poi_attracts) && self.attractor_array.size >= self.num_poi_attracts )
+	{
+		return false;
+	}
+	return true;
+}
+
+update_poi_on_death( zombie_poi )
+{
+	self endon( "kill_poi" );
+	
+	self waittill( "death" );
+	self remove_poi_attractor( zombie_poi );
+}
+
+//PI_CHANGE_BEGIN - 6/18/09 JV This was set up to work with assign_zombie_point_of_interest (which works with the teleportation in theater).
+//The poi attractor array needs to be emptied when a player is teleported out of projection room (if they were all in there).  
+//As a result, we wait for the poi's death (I'm sending that notify via the level script)
+update_on_poi_removal (zombie_poi )
+{	
+	zombie_poi waittill( "death" );
+	
+	if( !isDefined( zombie_poi.attractor_array ) )
+		return;
+	
+	for( i = 0; i < zombie_poi.attractor_array.size; i++ )
+	{
+		if( zombie_poi.attractor_array[i] == self )
+		{	
+			zombie_poi.attractor_array = array_remove_index( zombie_poi.attractor_array, i );
+			zombie_poi.claimed_attractor_positions = array_remove_index( zombie_poi.claimed_attractor_positions, i );
+		}
+	}
+	
+}
+//PI_CHANGE_END
+
+invalidate_attractor_pos( attractor_pos, zombie )
+{
+	if( !isDefined( self ) || !isDefined( attractor_pos ) )
+	{
+		wait( 0.1 );
+		return undefined;
+	}
+	
+	if( isDefined( self.attractor_positions) && !array_check_for_dupes( self.attractor_positions, attractor_pos ) )
+	{
+		index = 0;
+		for( i = 0; i < self.attractor_positions.size; i++ )
+		{
+			if( self.attractor_positions[i] == attractor_pos )
+			{
+				index = i;
+			}
+		}
+		
+		for( i = 0; i < self.last_index.size; i++ )
+		{
+			if( index <= self.last_index[i] )
+			{
+				self.last_index[i]--;
+			}
+		}
+		
+		self.attractor_array = array_remove( self.attractor_array, zombie );
+		self.attractor_positions = array_remove( self.attractor_positions, attractor_pos );
+		for( i = 0; i < self.claimed_attractor_positions.size; i++ )
+		{
+			if( self.claimed_attractor_positions[i][0] == attractor_pos[0] )
+			{
+				self.claimed_attractor_positions = array_remove( self.claimed_attractor_positions, self.claimed_attractor_positions[i] );
+			}
+		}
+	}
+	else
+	{
+		wait( 0.1 );
+	}
+	
+	return get_zombie_point_of_interest( zombie.origin );
 }
 
 get_closest_valid_player( origin, ignore_player )
@@ -209,6 +750,11 @@ is_player_valid( player )
 		return false; 
 	}
 
+	if ( player isnotarget() )
+	{
+		return false;
+	}
+	
 	return true; 
 }
 
@@ -303,19 +849,25 @@ enable_trigger()
 //	}
 //}
 
+
+//chris_p - fix bug with this not being an ent array!
 in_playable_area()
 {
-	trigger = GetEnt( "playable_area", "targetname" );
+	trigger = GetEntarray( "playable_area", "targetname" );
 
 	if( !IsDefined( trigger ) )
 	{
 		println( "No playable area trigger found! Assume EVERYWHERE is PLAYABLE" );
 		return true;
 	}
-
-	if( self IsTouching( trigger ) )
+	
+	for(i=0;i<trigger.size;i++)
 	{
-		return true;
+
+		if( self IsTouching( trigger[i] ) )
+		{
+			return true;
+		}
 	}
 
 	return false;
@@ -368,9 +920,12 @@ get_non_destroyed_chunks( barrier_chunks )
 	array = []; 
 	for( i = 0; i < barrier_chunks.size; i++ )
 	{
-		if( !barrier_chunks[i].destroyed )
+		if( !barrier_chunks[i].destroyed && !IsDefined(barrier_chunks[i].target_by_zombie) && !IsDefined(barrier_chunks[i].mid_repair) )
 		{
-			array[array.size] = barrier_chunks[i]; 
+			if ( barrier_chunks[i].origin == barrier_chunks[i].og_origin )
+			{
+				array[array.size] = barrier_chunks[i]; 
+			}
 		}
 	}
 
@@ -387,7 +942,7 @@ get_destroyed_chunks( barrier_chunks )
 	array = []; 
 	for( i = 0; i < barrier_chunks.size; i++ )
 	{
-		if( barrier_chunks[i].destroyed )
+		if( barrier_chunks[i].destroyed  && !isdefined( barrier_chunks[i].mid_repair ) )
 		{
 			array[array.size] = barrier_chunks[i]; 
 		}
@@ -680,19 +1235,49 @@ play_loopsound_on_ent( ref )
 	self PlaySound( level.zombie_sounds[ref] ); 
 }
 
+
+string_to_float( string )
+{
+	floatParts = strTok( string, "." );
+	if ( floatParts.size == 1 )
+		return int(floatParts[0]);
+
+	whole = int(floatParts[0]);
+	decimal = int(floatParts[1]);
+	while ( decimal > 1 )
+		decimal *= 0.1;
+
+	if ( whole >= 0 )
+		return (whole + decimal);
+	else
+		return (whole - decimal);
+}
+
 //
 // TABLE LOOK SECTION ============================================================
 // 
 
-set_zombie_var( var, value, div )
+set_zombie_var( var, value, div, is_float )
 {
 	// First look it up in the table
 	table = "mp/zombiemode.csv";
 	table_value = TableLookUp( table, 0, var, 1 );
 
+	if ( !IsDefined( is_float ) )
+	{
+		is_float = false;
+	}
+
 	if( IsDefined( table_value ) && table_value != "" )
 	{
-		value = int( table_value );
+		if( is_float )
+		{
+			value = string_to_float( table_value );
+		}
+		else
+		{
+			value = int( table_value );
+		}
 	}
 
 	if( IsDefined( div ) )
@@ -785,30 +1370,6 @@ debug_round_advancer()
 			wait 0.5; 
 		}
 	}	
-#/
-}
-
-cheat_score()
-{
-/#
-//	level waittill( "introscreen_done" );
-	flag_wait( "all_players_connected" );
-
-	while( 1 )
-	{
-		if( GetDvar( "zombie_cheat" ) == "1" )
-		{
-			SetDvar( "zombie_cheat", "0" ); 
-
-			// players spend their cash
-			get_players()[0].score = 100000; 
-
-			// also set the score onscreen
-			get_players()[0] maps\_zombiemode_score::set_player_score_hud(); 	
-		}
-			
-		wait 0.05; 
-	}
 #/
 }
 
@@ -954,16 +1515,9 @@ debug_breadcrumbs()
 			continue; 
 		}
 
-		if( self.zombie_breadcrumbs.size < 2 )
+		for( i = 0; i < self.zombie_breadcrumbs.size; i++ )
 		{
-			wait( 1 ); 
-			continue; 
-		}
-
-		line( self.origin, self.zombie_breadcrumbs[0] ); 
-		for( i = 0; i < self.zombie_breadcrumbs.size - 1; i++ )
-		{
-			line( self.zombie_breadcrumbs[i], self.zombie_breadcrumbs[i + 1] ); 
+			drawcylinder( self.zombie_breadcrumbs[i], 5, 5 );
 		}
 
 		wait( 0.05 ); 
@@ -1012,4 +1566,354 @@ float_print3d( msg, time )
 		wait( 0.05 );
 	}
 #/
+}
+do_player_vo(snd, variation_count)
+{
+
+	
+	index = maps\_zombiemode_weapons::get_player_index(self);	
+	sound = "plr_" + index + "_" + snd; 
+	if(IsDefined (variation_count))
+	{
+		sound = sound + "_" + randomintrange(0, variation_count);
+	}
+	if(!isDefined(level.player_is_speaking))
+	{
+		level.player_is_speaking = 0;
+	}
+	
+	if (level.player_is_speaking == 0)
+	{	
+		level.player_is_speaking = 1;
+		self playsound(sound, "sound_done");			
+		self waittill("sound_done");
+		//This ensures that there is at least 3 seconds waittime before playing another VO.
+		wait(2);
+		level.player_is_speaking = 0;
+	}	
+}
+player_killstreak_timer()
+{
+	if(getdvar ("zombie_kills") == "") 
+	{
+		setdvar ("zombie_kills", "7");
+	}	
+	if(getdvar ("zombie_kill_timer") == "") 
+	{
+		setdvar ("zombie_kill_timer", "5");
+	}
+
+	kills = getdvarint("zombie_kills");
+	time = getdvarint("zombie_kill_timer");
+
+	if (!isdefined (self.timerIsrunning))	
+	{
+		self.timerIsrunning = 0;
+	}
+
+	while(1)
+	{
+		self waittill("zom_kill");	
+		self.killcounter ++;
+
+		if (self.timerIsrunning != 1)	
+		{
+			self.timerIsrunning = 1;
+			self thread timer_actual(kills, time);			
+//			iprintlnbold ("killstreak counter started");
+		}
+	}	
+
+}
+timer_actual(kills, time)
+{
+
+	timer = gettime() + (time * 1000);
+	while(getTime() < timer)
+	{
+		
+//		iprintlnbold ("timer:" + (getTime() + timer * .0001));
+//		iprintlnbold ("kills: " + self.killcounter);
+
+		if (self.killcounter > kills)
+		{
+			//playsoundatposition ("ann_vox_killstreak", (0,0,0));
+			//wait(3);
+
+			self play_killstreak_dialog();
+
+//			self thread do_player_vo("vox_killstreak", 9);
+			wait(1);
+		
+			//resets the killcounter and the timer 
+			//self.killcounter = 0;
+
+			 timer = -1;
+		}
+		wait(0.1);
+	}
+
+//	iprintlnbold ("Timer Is Out, Resetting Kills and Time");
+	self.killcounter = 0;
+	self.timerIsrunning = 0;
+}
+play_killstreak_dialog()
+{
+		index = maps\_zombiemode_weapons::get_player_index(self);
+		player_index = "plr_" + index + "_";	
+
+		//num_variants = 12;
+		waittime = 0.25;
+		if(!IsDefined (self.vox_killstreak))
+		{
+			num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_killstreak");
+			self.vox_killstreak = [];
+			for(i=0;i<num_variants;i++)
+			{
+				self.vox_killstreak[self.vox_killstreak.size] = "vox_killstreak_" + i;	
+			}
+			self.vox_killstreak_available = self.vox_killstreak;
+		}
+		sound_to_play = random(self.vox_killstreak_available);
+		self.vox_killstreak_available = array_remove(self.vox_killstreak_available,sound_to_play);
+
+	//	iprintlnbold("LINE:" + player_index + sound_to_play);
+
+		self do_player_killstreak_dialog(player_index, sound_to_play, waittime);
+
+		//self playsound(player_index + sound_to_play, "sound_done" + sound_to_play);			
+		//self waittill("sound_done" + sound_to_play);
+
+		wait(waittime);
+		if (self.vox_killstreak_available.size < 1 )
+		{
+			self.vox_killstreak_available = self.vox_killstreak;
+		}
+		//This ensures that there is at least 3 seconds waittime before playing another VO.
+
+}
+do_player_killstreak_dialog(player_index, sound_to_play, waittime)
+{
+	if(!IsDefined(level.player_is_speaking))
+	{
+		level.player_is_speaking = 0;
+	}
+	if(level.player_is_speaking != 1)
+	{
+		level.player_is_speaking = 1;
+		self playsound(player_index + sound_to_play, "sound_done" + sound_to_play);			
+		self waittill("sound_done" + sound_to_play);
+		wait(waittime);		
+		level.player_is_speaking = 0;
+	}
+}
+
+is_magic_bullet_shield_enabled( ent )
+{
+	if( !IsDefined( ent ) )
+		return false;
+
+	return ( IsDefined( ent.magic_bullet_shield ) && ent.magic_bullet_shield == true );
+}
+
+enemy_is_dog()
+{
+	return ( self.type == "dog" );
+}
+
+
+really_play_2D_sound(sound)
+{
+	temp_ent = spawn("script_origin", (0,0,0));
+	temp_ent playsound (sound, sound + "wait");
+	temp_ent waittill (sound + "wait");
+	wait(0.05);
+	temp_ent delete();	
+
+}
+
+
+play_sound_2D(sound)
+{
+	level thread really_play_2D_sound(sound);
+	
+	/*
+	if(!isdefined(level.playsound2dent))
+	{
+		level.playsound2dent = spawn("script_origin",(0,0,0));
+	}
+	
+	//players=getplayers();
+	level.playsound2dent playsound ( sound );
+	*/
+	/*
+	temp_ent = spawn("script_origin", (0,0,0));
+	temp_ent playsound (sound, sound + "wait");
+	temp_ent waittill (sound + "wait");
+	wait(0.05);
+	temp_ent delete();	
+	*/
+	
+	
+}
+
+create_and_play_dialog( player_index, dialog_category, waittime, response )
+{              
+	if( !IsDefined ( self.sound_dialog ) )
+	{
+		self.sound_dialog = [];
+		self.sound_dialog_available = [];
+	}
+				
+	if ( !IsDefined ( self.sound_dialog[ dialog_category ] ) )
+	{
+		num_variants = maps\_zombiemode_spawner::get_number_variants( player_index + dialog_category );                  
+		assertex( num_variants > 0, "No dialog variants found for category: " + dialog_category );
+		
+		for( i = 0; i < num_variants; i++ )
+		{
+			self.sound_dialog[ dialog_category ][ i ] = i;     
+		}	
+		
+		self.sound_dialog_available[ dialog_category ] = [];
+	}
+	
+	if ( self.sound_dialog_available[ dialog_category ].size <= 0 )
+	{
+		self.sound_dialog_available[ dialog_category ] = self.sound_dialog[ dialog_category ];
+	}
+  
+	variation = random( self.sound_dialog_available[ dialog_category ] );
+	self.sound_dialog_available[ dialog_category ] = array_remove( self.sound_dialog_available[ dialog_category ], variation );
+
+	sound_to_play = dialog_category + "_" + variation;
+	self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, waittime, response);
+}
+
+/*
+setup_response_waittime( sound_to_play )
+{
+	level waittill( "player_vox_done" );
+	level notify( "play_response_line" );
+}
+*/
+
+setup_response_line( player, index, response )
+{
+	if(index == 0) //DEMPSEY: Hero Nikolai, Rival Richtofen
+	{
+		setup_rival_hero( player, 1, 3, response );	
+	}
+	if(index == 1) //NICKOLAI: Hero Richtofen, Rival Takeo
+	{		
+		setup_rival_hero( player, 3, 2, response );
+	}		
+	if(index == 2) //TAKEO: Hero Dempsey, Rival Nickolai
+	{
+		setup_rival_hero( player, 0, 1, response );	
+	}
+	if(index == 3) //RICHTOFEN: Hero Nickolai, Rival Dempsey
+	{
+		setup_rival_hero( player, 2, 0, response );
+	}
+	return;
+}
+
+setup_rival_hero( player, hero, rival, response )
+{
+	players = getplayers();
+
+	playHero = isdefined(players[hero]);
+	playRival = isdefined(players[rival]);
+	
+	if(playHero && playRival)
+	{
+		if(randomfloatrange(0,1) < .5)
+		{
+			playRival = false;
+		}
+		else
+		{
+			playHero = false;
+		}
+	}	
+	if( playHero )
+	{		
+		if( distancesquared (player.origin, players[hero].origin) < 500*500)
+		{
+			plr = "plr_" + hero + "_";
+			players[hero] create_and_play_responses( plr, "vox_hr_" + response, 0.25 );
+		}
+		else
+		{
+			if(isdefined( players[rival] ) )
+			{
+				playRival = true;
+			}
+		}
+	}		
+	if( playRival )
+	{
+		if( distancesquared (player.origin, players[rival].origin) < 500*500)
+		{
+			plr = "plr_" + rival + "_";
+			players[rival] create_and_play_responses( plr, "vox_riv_" + response, 0.25 );
+		}
+	}
+}
+
+create_and_play_responses( player_index, dialog_category, waittime )
+{              	
+	if( !IsDefined ( self.sound_dialog ) )
+	{
+		self.sound_dialog = [];
+		self.sound_dialog_available = [];
+	}
+				
+	if ( !IsDefined ( self.sound_dialog[ dialog_category ] ) )
+	{
+		num_variants = maps\_zombiemode_spawner::get_number_variants( player_index + dialog_category );                  
+		assertex( num_variants > 0, "No dialog variants found for category: " + dialog_category );
+		
+		for( i = 0; i < num_variants; i++ )
+		{
+			self.sound_dialog[ dialog_category ][ i ] = i;     
+		}	
+		
+		self.sound_dialog_available[ dialog_category ] = [];
+	}
+	
+	if ( self.sound_dialog_available[ dialog_category ].size <= 0 )
+	{
+		self.sound_dialog_available[ dialog_category ] = self.sound_dialog[ dialog_category ];
+	}
+  
+	variation = random( self.sound_dialog_available[ dialog_category ] );
+	self.sound_dialog_available[ dialog_category ] = array_remove( self.sound_dialog_available[ dialog_category ], variation );
+
+	sound_to_play = dialog_category + "_" + variation;
+	self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, waittime);
+}
+
+include_weapon( weapon_name, in_box, weighting_func )
+{
+	if( !isDefined( in_box ) )
+	{
+		in_box = true;
+	}
+	maps\_zombiemode_weapons::include_zombie_weapon( weapon_name, in_box, weighting_func );
+}
+
+include_powerup( powerup_name )
+{
+	maps\_zombiemode_powerups::include_zombie_powerup( powerup_name );
+}
+
+include_achievement( achievement, var1, var2, var3, var4 )
+{
+	maps\_zombiemode_achievement::init( achievement, var1, var2, var3, var4 );
+}
+achievement_notify( notify_name )
+{
+	self notify( notify_name );
 }

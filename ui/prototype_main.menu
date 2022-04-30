@@ -363,7 +363,7 @@
 #endif // #ifdef CONSOLE
 
 		// background
-		#include "ui/bg.inc"
+		#include "ui/prototype_bg.inc"
 
 #ifdef CONSOLE
 		// --------------------- MOTD -----------------------		

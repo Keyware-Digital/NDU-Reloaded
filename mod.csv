@@ -31,6 +31,9 @@ rawfile,maps/_zombiemode_betty.gsc
 //rawfile,maps/_zombiemode_bowie.gsc
 rawfile,maps/_zombiemode_blockers.gsc
 rawfile,maps/_zombiemode_powerups.gsc
+rawfile,maps/_zombiemode_utility.gsc
+rawfile,maps/_zombiemode_achievement.gsc
+rawfile,maps/_zombiemode_server_throttle.gsc
 rawfile,maps/_zombiemode_spawner.gsc
 rawfile,maps/_zombiemode_weapons.gsc
 rawfile,animtrees/generic_human.atr
@@ -300,6 +303,7 @@ weapon,sp/tokarev
 weapon,sp/type99_lmg
 weapon,sp/springfield_scoped_zombie_upgraded
 //weapon,sp/walther_prototype
+weapon,sp/mosin_rifle
 weapon,sp/zombie_ppsh
 weapon,sp/zombie_perk_bottle
 weapon,sp/zombie_type100_smg

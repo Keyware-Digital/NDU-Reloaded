@@ -47,13 +47,13 @@ init()
 init_powerups()
 {
     // Random Drops
-    add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
+    //add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
     //add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke_hotness" );
     add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
-    add_zombie_powerup( "double_points","zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
-    add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
+    //add_zombie_powerup( "double_points","zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
+    //add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
 
 	// Randomize the order
 	randomize_powerups();
@@ -813,17 +813,19 @@ powerup_timeout()
 	self delete();
 }
 
-// kill them all!
 nuke_powerup( drop_item )
 {
-	zombies = getaiarray("axis");
+	zombies = getaispeciesarray("axis");
 
 	PlayFx( drop_item.fx, drop_item.origin );
 	//	players = get_players();
 	//	array_thread (players, ::nuke_flash);
 	level thread nuke_flash();
 
+	
+
 	zombies = get_array_of_closest( drop_item.origin, zombies );
+
 	for (i = 0; i < zombies.size; i++)
 	{
 		wait (randomfloatrange(0.1, 0.7));
@@ -831,26 +833,39 @@ nuke_powerup( drop_item )
 		{
 			continue;
 		}
+		
+		if( zombies[i].animname == "boss_zombie" )
+		{
+			continue;
+		}
 
-		if( i < 5 )
+		if( is_magic_bullet_shield_enabled( zombies[i] ) )
+		{
+			continue;
+		}
+
+		if( i < 5 && !( zombies[i] enemy_is_dog() ) )
 		{
 			zombies[i] thread animscripts\death::flame_death_fx();
+
 		}
 
-		zombies[i] maps\_zombiemode_spawner::zombie_head_gib();
+		if( !( zombies[i] enemy_is_dog() ) )
+		{
+			zombies[i] maps\_zombiemode_spawner::zombie_head_gib();
+		}
 
-		zombies[i] dodamage(zombies[i].health + 666, zombies[i].origin);
-		playsoundatposition("nuked", zombies[i].origin);
+		zombies[i] dodamage( zombies[i].health + 666, zombies[i].origin );
+		playsoundatposition( "nuked", zombies[i].origin );
 	}
 
-		players = get_players();
-
-		for(i = 0; i < players.size; i++)
-		{
-			players[i].score += 400 * level.zombie_vars["zombie_point_scalar"];
-			players[i].score_total += 400 * level.zombie_vars["zombie_point_scalar"];
-			players[i] maps\_zombiemode_score::set_player_score_hud(); 
-		}
+	players = get_players();
+	for(i = 0; i < players.size; i++)
+	{
+		players[i].score += 400 * level.zombie_vars["zombie_point_scalar"];
+		players[i].score_total += 400 * level.zombie_vars["zombie_point_scalar"];
+		players[i] maps\_zombiemode_score::set_player_score_hud(); 
+	}
 
 }
 
@@ -950,8 +965,38 @@ check_for_instakill( player )
 {
 	if( IsDefined( player ) && IsAlive( player ) && level.zombie_vars["zombie_insta_kill"])
 	{
-		self maps\_zombiemode_spawner::zombie_head_gib();
-		self DoDamage( self.health + 666, self.origin, player );
+		if( is_magic_bullet_shield_enabled( self ) )
+		{
+			return;
+		}
+
+		if( self.animname == "boss_zombie" )
+		{
+			return;
+		}
+
+		if(player.use_weapon_type == "MOD_MELEE")
+		{
+			player.last_kill_method = "MOD_MELEE";
+		}
+		else
+		{
+			player.last_kill_method = "MOD_UNKNOWN";
+
+		}
+
+		if( flag( "dog_round" ) )
+		{
+			self DoDamage( self.health + 666, self.origin, player );
+			player notify("zombie_killed");
+		}
+		else
+		{
+			self maps\_zombiemode_spawner::zombie_head_gib();
+			self DoDamage( self.health + 666, self.origin, player );
+			player notify("zombie_killed");
+			
+		}
 	}
 }
 
