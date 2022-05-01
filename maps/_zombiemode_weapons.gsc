@@ -1195,3 +1195,34 @@ get_player_index(player)
 #/
 	return level.random_character_index[player.entity_num];
 }
+
+//test
+has_weapon_or_upgrade( weaponname )
+{
+	has_weapon = false;
+	if (self maps\_laststand::player_is_in_laststand())
+	{
+		for( m = 0; m < self.weaponInventory.size; m++ )
+		{
+			if (self.weaponInventory[m] == weaponname || self.weaponInventory[m] == weaponname+"_upgraded" )
+			{
+				has_weapon = true;
+			}
+		}
+	}
+	else
+	{
+		// If the weapon you're checking doesn't exist, it will return undefined
+		if( IsDefined( level.zombie_include_weapons[weaponname] ) )
+		{
+			has_weapon = self HasWeapon( weaponname );
+		}
+	
+		if( !has_weapon && isdefined( level.zombie_include_weapons[weaponname+"_upgraded"] ) )
+		{
+			has_weapon = self HasWeapon( weaponname+"_upgraded" );
+		}
+	}
+
+	return has_weapon;
+}
