@@ -371,46 +371,6 @@ treasure_chest_think()
 	weapon_spawn_org notify( "weapon_grabbed" ); 
 	
 	self disable_trigger(); 
-
-		//Lazy Bowie Rip from SNN: Reloaded (test)
-		/*if( grabber == user && is_player_valid( user ) && user GetCurrentWeapon() != "mine_bouncing_betty" )
-				{
-					self notify( "user_grabbed_weapon" );
-					if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
-					{
-						if(!(user hasperk("specialty_altmelee") || user.has_altmelee))
-						{
-							weapon_spawn_org notify("weapon_grabbed");
-							lid thread treasure_chest_lid_close( self.timedOut );
-							self.grab_weapon_hint = false;
-							self disable_trigger();
-							user maps\_zombiemode_bowie::give_bowie();
-							break;
-						}
-						break;
-					}
-					else
-					{
-						user thread treasure_chest_give_weapon( weapon_spawn_org.weapon_string );
-						break;
-					}
-				}
-				else if( grabber == level )
-				{
-					// it timed out
-					self.timedOut = true;
-					break;
-				}
-			}
-
-			wait 0.05; 
-		}*/
-		
-		if(weapon_spawn_org.weapon_string != "zombie_bowie_flourish")
-		{
-			self.grab_weapon_hint = false;
-			weapon_spawn_org notify( "weapon_grabbed" );
-		}
 		
 	// spend cash here...
 	// give weapon here...

@@ -127,20 +127,21 @@ give_bowie()
 
 	self thread bowie_bay();
 }
-bowie_bay()
+bowie_bay()	//revised for NDU: Reloaded
 {
-	for(;;)
-	{
-	current = self getCurrentWeapon();
-		if(current == "mosin_rifle_bayonet")
-		{
-			self unSetPerk("specialty_altmelee");
-		while(current == "mosin_rifle_bayonet")
-				wait .1;
-		self SetPerk( "specialty_altmelee" );
-		}
-	wait .1;
-	}
+    for(;;)
+    {
+        current = self getCurrentWeapon();
+        if( current == "mosin_rifle_bayonet" || current == "kar98k_bayonet" || current == "bayonet_bayonet")
+        {
+            self unSetPerk("specialty_altmelee");
+        }
+        else
+        {
+            self SetPerk("specialty_altmelee");
+        }
+        wait .1;
+    }
 }
 do_bowie_flourish_begin()
 {
