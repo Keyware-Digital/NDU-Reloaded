@@ -126,7 +126,6 @@ intro_screen()
 include_weapons()
 {
 	// NDU: Reloaded
-	//include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
 	include_weapon( "mosin_rifle" );
 	include_weapon( "dp28" );
 	//include_weapon( "kar98k_bayonet" );		//disabled in favour of Bowie.
@@ -137,6 +136,7 @@ include_weapons()
 	include_weapon( "svt40" );
 	include_Weapon( "thompson_bigammo_mp");		//weapon cabinet only
 	include_weapon( "type99_lmg" );
+	//include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
 	include_weapon( "zombie_ppsh" );
 	include_weapon( "zombie_type100_smg" );
 	include_weapon( "zombie_perk_bottle" );		//weapon cabinet only
