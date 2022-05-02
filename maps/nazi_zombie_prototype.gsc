@@ -201,8 +201,9 @@ include_weapons()
 	// Special
 	include_weapon( "ray_gun", true, ::prototype_ray_gun_weighting_func );	//testing raygun weighting func.
 
-	// bouncing betties
+	// bouncing betties & bowie
 	include_weapon( "mine_bouncing_betty" );
+	//include_weapon("zombie_bowie_flourish");
 
 	// Weapon limiter
 	level.limited_weapons["colt"] = 0;
