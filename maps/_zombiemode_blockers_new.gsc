@@ -978,7 +978,7 @@ replace_chunk( chunk, has_perk, via_powerup )
 	}
 	else
 	{
-		if(via_powerup)
+		if(isDefined(via_powerup) && via_powerup)
 		{
 			chunk RotateTo( ( 0, 0, 0 ),  0.05 ); 
 			chunk waittill_notify_or_timeout( "rotatedone", 1 ); 
@@ -1000,7 +1000,7 @@ replace_chunk( chunk, has_perk, via_powerup )
 	}
 	else
 	{
-		if(via_powerup)
+		if(isDefined(via_powerup) && via_powerup)
 		{
 			chunk MoveTo( chunk.og_origin, 0.1 ); 
 		}

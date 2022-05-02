@@ -307,7 +307,7 @@ zombie_think()
 
 		self zombie_history( "zombie_think -> #1 entrance (script_forcegoal) origin = " + self.entrance_nodes[0].origin );
 	}
-	else if( rise_struct_string == "riser_door" )
+	else if( IsDefined(rise_struct_string) && rise_struct_string == "riser_door" )
 	{
 		origin = self.origin;
 

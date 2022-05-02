@@ -60,7 +60,7 @@ add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost
 	level.zombie_weapons[weapon_name] = struct;
 }
 
-include_zombie_weapon( weapon_name, in_box )
+include_zombie_weapon( weapon_name, in_box, weighting_func )
 {
 	if( !IsDefined( level.zombie_include_weapons ) )
 	{
@@ -630,10 +630,9 @@ weapon_cabinet_think()
 	level.cabinetguns[2] = "mosin_rifle_scoped_zombie";						
 	level.cabinetguns[3] = "mp40_bigammo_mp";
 	level.cabinetguns[4] = "springfield";						
-	level.cabinetguns[5] = "type100smg_bigammo_mp";	
-	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
-	level.cabinetguns[7] = "thompson_bigammo_mp";
-	level.cabinetguns[8] = "colt";
+	level.cabinetguns[5] = "springfield_scoped_zombie_upgraded";
+	level.cabinetguns[6] = "thompson_bigammo_mp";
+	level.cabinetguns[7] = "colt";
 	//level.cabinetguns[9] = "placeholdergun";
 	//level.cabinetguns[10] = "placeholdergun";
 	//level.cabinetguns[11] = "type100smg_bigammo_mp";					//removed because glitched!
@@ -740,6 +739,7 @@ weapon_cabinet_think()
 
 		weaponmodel = GetWeaponModel( level.cabinetguns[randomint(level.cabinetguns.size)] );
 		weaponmodelstruct SetModel(weaponmodel);
+
 		
 		if( i < 20 )
 		{
@@ -757,9 +757,11 @@ weapon_cabinet_think()
 		{
 			wait( 0.3 ); 
 		}
+
 		randomnumb = level.cabinetguns[randomint(level.cabinetguns.size)];
 		weaponmodel = GetWeaponModel( randomnumb );
 		weaponmodelstruct SetModel(weaponmodel);
+
 	}
 
 	chosenweapon = randomnumb;
@@ -771,7 +773,7 @@ weapon_cabinet_think()
         level.keep_ents[i] Hide();
     }
 
-	if(player.perknum < 8)	//check if player has max perks
+	if(!isdefined(player.perknum) || player.perknum < 8)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
 		if(magicnum <= 10)	//10 out of 100 chance to get a perk

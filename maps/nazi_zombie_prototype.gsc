@@ -196,7 +196,7 @@ include_weapons()
 	include_weapon( "panzerschrek" );
 
 	// Special
-	include_weapon( "ray_gun", ::prototype_ray_gun_weighting_func );	//testing raygun weighting func.
+	include_weapon( "ray_gun", true, ::prototype_ray_gun_weighting_func );	//testing raygun weighting func.
 
 	// bouncing betties
 	include_weapon( "mine_bouncing_betty" );
@@ -248,16 +248,6 @@ include_powerups()
 	include_powerup( "full_ammo" );
 	include_powerup( "carpenter" );
 	include_powerup( "randomperk" );
-}
-
-include_weapon( weapon_name, in_box )
-{
-	maps\_zombiemode_weapons::include_zombie_weapon( weapon_name, in_box );
-}
-
-include_powerup( powerup_name )
-{
-	maps\_zombiemode_powerups::include_zombie_powerup( powerup_name );
 }
 
 health_show()
