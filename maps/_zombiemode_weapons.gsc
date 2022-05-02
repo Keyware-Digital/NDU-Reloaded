@@ -632,10 +632,10 @@ weapon_cabinet_think()
 	level.cabinetguns[4] = "springfield";						
 	level.cabinetguns[5] = "springfield_scoped_zombie_upgraded";
 	level.cabinetguns[6] = "thompson_bigammo_mp";
-	level.cabinetguns[7] = "colt";
+	level.cabinetguns[7] = "walther";
+	//level.cabinetguns[8] = "placeholdergun";
 	//level.cabinetguns[9] = "placeholdergun";
-	//level.cabinetguns[10] = "placeholdergun";
-	//level.cabinetguns[11] = "type100smg_bigammo_mp";					//removed because glitched!
+	//level.cabinetguns[10] = "type100smg_bigammo_mp";					//removed because glitched!
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );

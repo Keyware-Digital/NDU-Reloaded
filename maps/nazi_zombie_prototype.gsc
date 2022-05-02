@@ -125,21 +125,24 @@ intro_screen()
 // Also adds these weapons to the random treasure chest.
 include_weapons()
 {
-	// NDU: Reloaded
+	// NDU: Reloaded (main box additions)
+
 	include_weapon( "mosin_rifle" );
 	include_weapon( "dp28" );
 	//include_weapon( "kar98k_bayonet" );		//disabled in favour of Bowie.
 	//include_weapon( "mosin_rifle_bayonet" );	//disabled in favour of Bowie.
-	include_weapon( "mosin_rifle_scoped_zombie" );		//weapon cabinet only
-	include_weapon( "mp40_bigammo_mp" );		//weapon cabinet only
-	include_weapon( "springfield_scoped_zombie_upgraded" );		//weapon cabinet only
 	include_weapon( "svt40" );
-	include_Weapon( "thompson_bigammo_mp");		//weapon cabinet only
 	include_weapon( "type99_lmg" );
 	//include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
 	include_weapon( "zombie_ppsh" );
 	include_weapon( "zombie_type100_smg" );
-	include_weapon( "zombie_perk_bottle" );		//weapon cabinet only
+
+	// Weapon cabinet only additions		
+	include_weapon( "mosin_rifle_scoped_zombie" );		
+	include_weapon( "mp40_bigammo_mp" );		
+	include_weapon( "springfield_scoped_zombie_upgraded" );		
+	include_Weapon( "thompson_bigammo_mp");		
+	include_weapon( "zombie_perk_bottle" );		
 	
 	// Pistols
 	include_weapon( "colt" );		//for Americans
