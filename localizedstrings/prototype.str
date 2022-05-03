@@ -100,6 +100,62 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to trade Weapons"
 //LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
 //LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
+REFERENCE           ZOMBIE_TRADE_KAR98K_SCOPED
+LANG_ENGLISH        "Hold ^3&&1 ^7for Scoped Kar98k"
+//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+
+REFERENCE           ZOMBIE_TRADE_M1GARAND
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1 Garand"
+//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+
+REFERENCE           ZOMBIE_TRADE_MOSIN_SCOPED
+LANG_ENGLISH        "Hold ^3&&1 ^7for Scoped Mosin"
+//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+
+REFERENCE           ZOMBIE_TRADE_MP40_MAG
+LANG_ENGLISH        "Hold ^3&&1 ^7for MP40 /w Dual Mags"
+//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+
+REFERENCE           ZOMBIE_TRADE_SPRINGFIELD
+LANG_ENGLISH        "Hold ^3&&1 ^7for Springfield"
+//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+
+REFERENCE           ZOMBIE_TRADE_SPRINGFIELD_SCOPED
+LANG_ENGLISH        "Hold ^3&&1 ^7for The Judicator"
+//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+
+REFERENCE           ZOMBIE_TRADE_THOMPSON_MAG
+LANG_ENGLISH        "Hold ^3&&1 ^7for Thompson w/ Drum Mag"
+//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+
+REFERENCE           ZOMBIE_TRADE_WALTHER
+LANG_ENGLISH        "Hold ^3&&1 ^7for Walther"
+//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
+//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+
 REFERENCE           ZOMBIE_BUTTON_BUY_CLEAR_DEBRIS_1000
 LANG_ENGLISH        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
 //LANG_FRENCH        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"

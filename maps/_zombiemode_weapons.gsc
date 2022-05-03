@@ -767,7 +767,35 @@ weapon_cabinet_think()
 
 	chosenweapon = randomnumb;
 
-	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", ""+chosenweapon+"");
+	//self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", ""+chosenweapon+"");
+
+	switch( chosenweapon )
+		{
+		case "kar98k_scoped_zombie":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_KAR98K_SCOPED");
+			break; 
+		case "m1garand":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1GARAND");
+			break; 
+		case "mosin_rifle_scoped_zombie":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_SCOPED");
+			break;
+		case "mp40_bigammo_mp":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP40_MAG");
+			break;
+		case "springfield":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
+			break;
+		case "springfield_scoped_zombie_upgraded":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED");
+			break; 
+		case "thompson_bigammo_mp":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_MAG");
+			break;     
+		case "walther":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
+			break;  
+			}
 
 	for(i=0;i<level.keep_ents.size;i++)
     {
