@@ -115,7 +115,7 @@ LANG_ENGLISH        "Hold ^3&&1 ^7for M1 Garand"
 //LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_MOSIN_SCOPED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Scoped Mosin"
+LANG_ENGLISH        "Hold ^3&&1 ^7for Scoped Mosin-Nagant"
 //LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
 //LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
 //LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"

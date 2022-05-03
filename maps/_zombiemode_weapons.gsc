@@ -767,7 +767,7 @@ weapon_cabinet_think()
 
 	chosenweapon = randomnumb;
 
-	//self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", ""+chosenweapon+"");
+	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS");
 
 	switch( chosenweapon )
 		{
@@ -795,7 +795,7 @@ weapon_cabinet_think()
 		case "walther":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
 			break;  
-			}
+		}
 
 	for(i=0;i<level.keep_ents.size;i++)
     {
