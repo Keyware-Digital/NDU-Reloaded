@@ -24,10 +24,10 @@ REFERENCE           WEAPON_COLT_45
 LANG_ENGLISH        "M1911A1 Colt 'Government'"
 
 REFERENCE           WEAPON_SHOTGUN_DOUBLE_BARRELED
-LANG_ENGLISH        "Double-barreled shotgun"
+LANG_ENGLISH        "Double-Barreled Shotgun"
 
 REFERENCE           WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP
-LANG_ENGLISH        "Sawn-Off Double-Barreled Shotgun w/ Grip"
+LANG_ENGLISH        "Sawn-Off DBS w/ Grip"
 
 REFERENCE           WEAPON_DP_27
 LANG_ENGLISH        "DP-27"
@@ -36,7 +36,7 @@ REFERENCE           WEAPON_FG_42_BIPOD
 LANG_ENGLISH        "FG 42 w/ Bipod"
 
 REFERENCE           WEAPON_GEWEHR_43
-LANG_ENGLISH        "Gewehr 43"
+LANG_ENGLISH        "G43"
 
 REFERENCE           WEAPON_KAR98K
 LANG_ENGLISH        "Kar98k"
@@ -66,25 +66,25 @@ REFERENCE           WEAPON_MG42_BIPOD
 LANG_ENGLISH        "MG 42 /w Bipod"
 
 REFERENCE           WEAPON_S_MINE
-LANG_ENGLISH        "S-mine 'Bouncing Betty'"
+LANG_ENGLISH        "S-Mine 'Bouncing Betty'"
 
 REFERENCE           WEAPON_MOLOTOV
 LANG_ENGLISH        "Molotov Cocktail"
 
 REFERENCE           WEAPON_MOSIN_RIFLE
-LANG_ENGLISH        "3-line rifle M1891"
+LANG_ENGLISH        "3-Line 'Mosin' Rifle M1891"
 
 REFERENCE           WEAPON_MOSIN_RIFLE_BAYONET
-LANG_ENGLISH        "3-line rifle M1891 w/ Bayonet"
+LANG_ENGLISH        "3-Line Rifle 'Mosin' M1891 w/ Bayonet"
 
 REFERENCE           WEAPON_MOSIN_RIFLE_SCOPED
-LANG_ENGLISH        "3-line rifle M1891 w/ Scope"
+LANG_ENGLISH        "3-Line Rifle 'Mosin' M1891 w/ Scope"
 
 REFERENCE           WEAPON_MP_40
 LANG_ENGLISH        "MP 40"
 
 REFERENCE           WEAPON_MP_40_MAG
-LANG_ENGLISH        "MP 40 w/ Dual Mags"
+LANG_ENGLISH        "MP40/I"
 
 REFERENCE           WEAPON_PANZERSCHREK
 LANG_ENGLISH        "RPzB 54 'Panzerschreck'"
@@ -96,7 +96,7 @@ REFERENCE           WEAPON_RAY_GUN
 LANG_ENGLISH        "Ray Gun"
 
 REFERENCE           WEAPON_SHOTGUN
-LANG_ENGLISH        "M1897 Trench Gun"
+LANG_ENGLISH        "M1897 'Trench Gun'"
 
 REFERENCE           WEAPON_SPRINGFIELD
 LANG_ENGLISH        "M1903 Springfield"
@@ -150,7 +150,7 @@ REFERENCE           ZOMBIE_WEAPON_DOUBLEBARREL_1200
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy Double-Barreled Shotgun [Cost: 1200]"
 
 REFERENCE           ZOMBIE_WEAPON_DOUBLEBARREL_SAWED_1200
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Sawed-Off Shotgun w/ Grip [Cost: 1200]"
+LANG_ENGLISH        "Hold ^3&&1 ^7to buy Sawn-Off Shotgun w/ Grip [Cost: 1200]"
 
 REFERENCE           ZOMBIE_WEAPON_THOMPSON_1500
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1A1 Thompson [Cost: 1200]"
@@ -180,10 +180,10 @@ REFERENCE           ZOMBIE_TRADE_M1_GARAND
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1 Garand"
 
 REFERENCE           ZOMBIE_TRADE_MOSIN_SCOPED
-LANG_ENGLISH        "Hold ^3&&1 ^7for 3-line rifle M1891 w/ Scope
+LANG_ENGLISH        "Hold ^3&&1 ^7for 3-Line 'Mosin' Rifle M1891 w/ Scope"
 
 REFERENCE           ZOMBIE_TRADE_MP40_MAG
-LANG_ENGLISH        "Hold ^3&&1 ^7for MP 40 /w Dual Mags"
+LANG_ENGLISH        "Hold ^3&&1 ^7for MP40/I"
 
 REFERENCE           ZOMBIE_TRADE_SPRINGFIELD
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1903 Springfield"
@@ -195,13 +195,13 @@ REFERENCE           ZOMBIE_TRADE_SPRINGFIELD_SCOPED
 LANG_ENGLISH        "Hold ^3&&1 ^7for The Judicator"
 
 REFERENCE           ZOMBIE_TRADE_THOMPSON_MAG
-LANG_ENGLISH        "Hold ^3&&1 ^7for Thompson w/ Drum Mag"
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1A1 Thompson w/ Drum Mag"
 
 REFERENCE           ZOMBIE_TRADE_WALTHER
 LANG_ENGLISH        "Hold ^3&&1 ^7for P38"
 
 REFERENCE           ZOMBIE_TRADE_MOSIN
-LANG_ENGLISH        "Hold ^3&&1 ^7for 3-line rifle M1891"
+LANG_ENGLISH        "Hold ^3&&1 ^7for 3-Line 'Mosin' Rifle M1891"
 
 REFERENCE           ZOMBIE_TRADE_DP_27
 LANG_ENGLISH        "Hold ^3&&1 ^7for DP-27"
@@ -228,7 +228,7 @@ REFERENCE           ZOMBIE_TRADE_TOKAREV
 LANG_ENGLISH        "Hold ^3&&1 ^7for TT-33"
 
 REFERENCE           ZOMBIE_TRADE_GEWEHR_43
-LANG_ENGLISH        "Hold ^3&&1 ^7for Gewehr 43"
+LANG_ENGLISH        "Hold ^3&&1 ^7for G43"
 
 REFERENCE          ZOMBIE_TRADE_STG_44
 LANG_ENGLISH        "Hold ^3&&1 ^7for StG-44"
@@ -255,10 +255,10 @@ REFERENCE           ZOMBIE_TRADE_DOUBLEBARREL
 LANG_ENGLISH        "Hold ^3&&1 ^7for Double-Barreled Shotgun"
 
 REFERENCE           ZOMBIE_TRADE_DOUBLEBARRELSAWED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Sawn-Off Double-Barreled Shotgun w/ Grip"
+LANG_ENGLISH        "Hold ^3&&1 ^7for Sawn-Off Shotgun w/ Grip"
 
 REFERENCE           ZOMBIE_TRADE_SHOTGUN
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1897 Trench Gun"
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1897 'Trench Gun'"
 
 REFERENCE           ZOMBIE_TRADE_BAR
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1919 BAR"
@@ -279,7 +279,7 @@ REFERENCE           ZOMBIE_TRADE_RAY_GUN
 LANG_ENGLISH        "Hold ^3&&1 ^7for Ray Gun"
 
 REFERENCE           ZOMBIE_TRADE_MINE
-LANG_ENGLISH        "Hold ^3&&1 ^7for S-mine 'Bouncing Betty'"
+LANG_ENGLISH        "Hold ^3&&1 ^7for S-Mine 'Bouncing Betty'"
 
 REFERENCE           ZOMBIE_BUTTON_BUY_CLEAR_DEBRIS_1000
 LANG_ENGLISH        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
