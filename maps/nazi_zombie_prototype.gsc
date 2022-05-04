@@ -126,7 +126,6 @@ intro_screen()
 include_weapons()
 {
 	// NDU: Reloaded (main box additions)
-
 	include_weapon( "mosin_rifle" );
 	include_weapon( "dp28" );
 	//include_weapon( "kar98k_bayonet" );		//disabled in favour of Bowie.
@@ -150,6 +149,7 @@ include_weapons()
 	include_weapon( "walther" );	//for German
 	include_weapon( "sw_357" );
 	include_weapon( "tokarev" );	//for Russian
+	include_weapon( "zombie_colt" );
 	
 	// Semi Auto
 	include_weapon( "m1carbine" );	//disabled in weapon limiter below
@@ -218,6 +218,7 @@ include_weapons()
 	//level.limited_weapons["springfield"] = 0;
 	level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;
 	level.limited_weapons["thompson_bigammo_mp"] = 0;
+	level.limited_weapons["zombie_colt"] = 0;
 	level.limited_weapons["zombie_perk_bottle"] = 0;
 }
 
