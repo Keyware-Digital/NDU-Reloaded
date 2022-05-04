@@ -27,7 +27,7 @@ REFERENCE           WEAPON_SHOTGUN_DOUBLE_BARRELED
 LANG_ENGLISH        "Double-Barreled Shotgun"
 
 REFERENCE           WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP
-LANG_ENGLISH        "Sawn-Off DBS w/ Grip"
+LANG_ENGLISH        "Sawn-Off Shotgun w/ Grip"
 
 REFERENCE           WEAPON_DP_27
 LANG_ENGLISH        "DP-27"
@@ -38,7 +38,7 @@ LANG_ENGLISH        "FG 42 w/ Bipod"
 REFERENCE           WEAPON_GEWEHR_43
 LANG_ENGLISH        "G43"
 
-REFERENCE           WEAPON_KAR98K
+REFERENCE           WEAPON_KAR_98K
 LANG_ENGLISH        "Kar98k"
 
 REFERENCE           WEAPON_KAR_98K_BAYONET
@@ -75,10 +75,10 @@ REFERENCE           WEAPON_MOSIN_RIFLE
 LANG_ENGLISH        "3-Line 'Mosin' Rifle M1891"
 
 REFERENCE           WEAPON_MOSIN_RIFLE_BAYONET
-LANG_ENGLISH        "3-Line Rifle 'Mosin' M1891 w/ Bayonet"
+LANG_ENGLISH        "3-Line 'Mosin' Rifle M1891 w/ Bayonet"
 
 REFERENCE           WEAPON_MOSIN_RIFLE_SCOPED
-LANG_ENGLISH        "3-Line Rifle 'Mosin' M1891 w/ Scope"
+LANG_ENGLISH        "3-Line 'Mosin' Rifle M1891 w/ Scope"
 
 REFERENCE           WEAPON_MP_40
 LANG_ENGLISH        "MP 40"
