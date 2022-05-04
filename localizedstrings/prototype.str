@@ -1,390 +1,299 @@
 VERSION             "1"
 CONFIG              "C:\cod5\cod\cod5\bin\StringEd.cfg"
-FILENOTES           "Strings used in the prototype map go in this file, the other languages work, just needs translation."
+FILENOTES           "Strings used in the prototype map go in this file."
 
 REFERENCE           PLACE
 LANG_ENGLISH        "Abandoned Airfield"
-//LANG_FRENCH        "Abandoned Airfield"
-//LANG_GERMAN        "Abandoned Airfield"
-//LANG_SPANISH        "Abandoned Airfield"
-//LANG_ITALIAN        "Abandoned Airfield"
 
 REFERENCE           REGION
 LANG_ENGLISH        "Morasko, Poland"
-//LANG_FRENCH        "Morasko, Poland"
-//LANG_GERMAN        "Morasko, Poland"
-//LANG_SPANISH        "Morasko, Poland"
-//LANG_ITALIAN        "Morasko, Poland"
 
 REFERENCE           DATE
 LANG_ENGLISH        "August 30th, 1945"
-//LANG_FRENCH        "August 30th, 1945"
-//LANG_GERMAN        "August 30th, 1945"
-//LANG_SPANISH        "August 30th, 1945"
-//LANG_ITALIAN        "August 30th, 1945"
 
-REFERENCE           ZOMBIE_WEAPON_KAR98K_200
+REFERENCE           WEAPON_30_CAL_BIPOD
+LANG_ENGLISH        "M1919 Browning MG w/ Bipod"
+
+REFERENCE           WEAPON_BAR
+LANG_ENGLISH        "M1919 BAR"
+
+REFERENCE           WEAPON_BAR_BIPOD
+LANG_ENGLISH        "M1919 BAR w/ Bipod"
+
+REFERENCE           WEAPON_COLT_45
+LANG_ENGLISH        "M1911A1 Colt 'Government'"
+
+REFERENCE           WEAPON_SHOTGUN_DOUBLE_BARRELED
+LANG_ENGLISH        "Double-barreled shotgun"
+
+REFERENCE           WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP
+LANG_ENGLISH        "Sawn-Off Double-Barreled Shotgun w/ Grip"
+
+REFERENCE           WEAPON_DP_27
+LANG_ENGLISH        "DP-27"
+
+REFERENCE           WEAPON_FG_42_BIPOD
+LANG_ENGLISH        "FG 42 w/ Bipod"
+
+REFERENCE           WEAPON_GEWEHR_43
+LANG_ENGLISH        "Gewehr 43"
+
+REFERENCE           WEAPON_KAR98K
+LANG_ENGLISH        "Kar98k"
+
+REFERENCE           WEAPON_KAR_98K_BAYONET
+LANG_ENGLISH        "Kar98k w/ Bayonet"
+
+REFERENCE           WEAPON_KAR_98K_SCOPED
+LANG_ENGLISH        "Kar98k w/ Scope"
+
+REFERENCE           WEAPON_M1_CARBINE
+LANG_ENGLISH        "M1 Carbine"
+
+REFERENCE           WEAPON_M1_GARAND
+LANG_ENGLISH        "M1 Garand"
+
+REFERENCE           WEAPON_M1_GARAND_GL
+LANG_ENGLISH        "M1 Garand w/ Grenade Launcher"
+
+REFERENCE           WEAPON_M2_FLAMETHROWER
+LANG_ENGLISH        "M2 Flamethrower"
+
+REFERENCE           WEAPON_M7_LAUNCHER
+LANG_ENGLISH        "M7 Grenade Launcher"
+
+REFERENCE           WEAPON_MG42_BIPOD
+LANG_ENGLISH        "MG 42 /w Bipod"
+
+REFERENCE           WEAPON_S_MINE
+LANG_ENGLISH        "S-mine 'Bouncing Betty'"
+
+REFERENCE           WEAPON_MOLOTOV
+LANG_ENGLISH        "Molotov Cocktail"
+
+REFERENCE           WEAPON_MOSIN_RIFLE
+LANG_ENGLISH        "3-line rifle M1891"
+
+REFERENCE           WEAPON_MOSIN_RIFLE_BAYONET
+LANG_ENGLISH        "3-line rifle M1891 w/ Bayonet"
+
+REFERENCE           WEAPON_MOSIN_RIFLE_SCOPED
+LANG_ENGLISH        "3-line rifle M1891 w/ Scope"
+
+REFERENCE           WEAPON_MP_40
+LANG_ENGLISH        "MP 40"
+
+REFERENCE           WEAPON_MP_40_MAG
+LANG_ENGLISH        "MP 40 w/ Dual Mags"
+
+REFERENCE           WEAPON_PANZERSCHREK
+LANG_ENGLISH        "RPzB 54 'Panzerschreck'"
+
+REFERENCE           WEAPON_PTRS_41
+LANG_ENGLISH        "PTRS-41"
+
+REFERENCE           WEAPON_RAY_GUN
+LANG_ENGLISH        "Ray Gun"
+
+REFERENCE           WEAPON_SHOTGUN
+LANG_ENGLISH        "M1897 Trench Gun"
+
+REFERENCE           WEAPON_SPRINGFIELD
+LANG_ENGLISH        "M1903 Springfield"
+
+REFERENCE           WEAPON_SPRINGFIELD_SCOPED_UPGRADED
+LANG_ENGLISH        "The Judicator"
+
+REFERENCE           WEAPON_STG_44
+LANG_ENGLISH        "StG 44"
+
+REFERENCE           WEAPON_STIELHANDGRANATE
+LANG_ENGLISH        "M43 Stielhandgranate"
+
+REFERENCE           "WEAPON_SVT_40
+LANG_ENGLISH        "SVT-40"
+
+REFERENCE           WEAPON_357_MAGNUM
+LANG_ENGLISH        ".357 Magnum"
+
+REFERENCE           WEAPON_TESLA_GUN
+LANG_ENGLISH        "Wunderwaffe DG-2"
+
+REFERENCE           WEAPON_THOMPSON
+LANG_ENGLISH        "M1A1 Thompson"
+
+REFERENCE           WEAPON_THOMPSON_MAG
+LANG_ENGLISH        "M1A1 Thompson w/ Drum Mag"
+
+REFERENCE           WEAPON_TOKAREV
+LANG_ENGLISH        "TT-33"
+
+REFERENCE           WEAPON_TYPE_99
+LANG_ENGLISH        "Type 99 LMG"
+
+REFERENCE           WEAPON_WALTHER
+LANG_ENGLISH        "P38"
+
+REFERENCE           WEAPON_TYPE_100
+LANG_ENGLISH        "Type 100"
+
+REFERENCE           WEAPON_PPSH_41
+LANG_ENGLISH        "PPSh-41"
+
+REFERENCE           ZOMBIE_WEAPON_KAR_98K_200
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k [Cost: 200]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to buy Kar98k [Cost: 200]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to buy Kar98k [Cost: 200]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to buy Kar98k [Cost: 200]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to buy Kar98k [Cost: 200]"
 
-REFERENCE           ZOMBIE_WEAPON_M1CARBINE_600
+REFERENCE           ZOMBIE_WEAPON_M1_CARBINE_600
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1 Carbine [Cost: 600]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to buy M1 Carbine [Cost: 600]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to buy M1 Carbine [Cost: 600]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to buy M1 Carbine [Cost: 600]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to buy M1 Carbine [Cost: 600]"
 
 REFERENCE           ZOMBIE_WEAPON_DOUBLEBARREL_1200
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy Double-Barreled Shotgun [Cost: 1200]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to buy Double-Barreled Shotgun [Cost: 1200]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to buy Double-Barreled Shotgun [Cost: 1200]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to buy Double-Barreled Shotgun [Cost: 1200]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to buy Double-Barreled Shotgun [Cost: 1200]"
 
 REFERENCE           ZOMBIE_WEAPON_DOUBLEBARREL_SAWED_1200
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Sawed-Off Shotgun [Cost: 1200]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to buy Sawed-Off Shotgun [Cost: 1200]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to buy Sawed-Off Shotgun [Cost: 1200]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to buy Sawed-Off Shotgun [Cost: 1200]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to buy Sawed-Off Shotgun [Cost: 1200]"
+LANG_ENGLISH        "Hold ^3&&1 ^7to buy Sawed-Off Shotgun w/ Grip [Cost: 1200]"
 
 REFERENCE           ZOMBIE_WEAPON_THOMPSON_1500
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Thompson [Cost: 1200]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to buy Thompson [Cost: 1200]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to buy Thompson [Cost: 1200]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to buy Thompson [Cost: 1200]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to buy Thompson [Cost: 1200]"
+LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1A1 Thompson [Cost: 1200]"
 
 REFERENCE           ZOMBIE_WEAPON_BAR_1800
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy BAR [Cost: 1800]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to buy BAR [Cost: 1800]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to buy BAR [Cost: 1800]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to buy BAR [Cost: 1800]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to buy BAR [Cost: 1800]"
+LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1919 BAR [Cost: 1800]"
 
 REFERENCE           ZOMBIE_WEAPON_SHOTGUN_1500
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1897 Trench Gun [Cost: 1500]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to buy M1897 Trench Gun [Cost: 1500]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to buy M1897 Trench Gun [Cost: 1500]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to buy M1897 Trench Gun [Cost: 1500]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to buy M1897 Trench Gun [Cost: 1500]"
 
 REFERENCE           ZOMBIE_WEAPON_STIELHANDGRANATE_250
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Stielhandgranate [Cost: 250]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to buy Stielhandgranate [Cost: 250]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to buy Stielhandgranate [Cost: 250]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to buy Stielhandgranate [Cost: 250]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to buy Stielhandgranate [Cost: 250]"
+LANG_ENGLISH        "Hold ^3&&1 ^7to buy M43 Stielhandgranate [Cost: 250]"
 
 REFERENCE           ZOMBIE_WEAPONCOSTAMMO
 LANG_ENGLISH        "For Weapon [Cost: &&1], Ammo [&&2]"
-//LANG_FRENCH        "For Weapon [Cost: &&1], Ammo [&&2]"
-//LANG_GERMAN        "For Weapon [Cost: &&1], Ammo [&&2]"
-//LANG_SPANISH        "For Weapon [Cost: &&1], Ammo [&&2]"
-//LANG_ITALIAN        "For Weapon [Cost: &&1], Ammo [&&2]"
 
 REFERENCE           ZOMBIE_RANDOM_WEAPON_950
 LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
-//LANG_FRENCH        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
-//LANG_GERMAN        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
-//LANG_SPANISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
 
 REFERENCE           ZOMBIE_TRADE_WEAPONS
 LANG_ENGLISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
-REFERENCE           ZOMBIE_TRADE_KAR98K_SCOPED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Scoped Kar98k"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+REFERENCE           ZOMBIE_TRADE_KAR_98K_SCOPED
+LANG_ENGLISH        "Hold ^3&&1 ^7for Kar98k w/ Scope"
 
-REFERENCE           ZOMBIE_TRADE_M1GARAND
+REFERENCE           ZOMBIE_TRADE_M1_GARAND
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1 Garand"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_MOSIN_SCOPED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Scoped Mosin-Nagant"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for 3-line rifle M1891 w/ Scope
 
 REFERENCE           ZOMBIE_TRADE_MP40_MAG
 LANG_ENGLISH        "Hold ^3&&1 ^7for MP 40 /w Dual Mags"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_SPRINGFIELD
-LANG_ENGLISH        "Hold ^3&&1 ^7for Springfield"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1903 Springfield"
+
+REFERENCE           ZOMBIE_TRADE_PTRS_41
+LANG_ENGLISH        "Hold ^3&&1 ^7for PTRS-41"
 
 REFERENCE           ZOMBIE_TRADE_SPRINGFIELD_SCOPED
 LANG_ENGLISH        "Hold ^3&&1 ^7for The Judicator"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_THOMPSON_MAG
 LANG_ENGLISH        "Hold ^3&&1 ^7for Thompson w/ Drum Mag"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_WALTHER
-LANG_ENGLISH        "Hold ^3&&1 ^7for Walther"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for P38"
 
 REFERENCE           ZOMBIE_TRADE_MOSIN
-LANG_ENGLISH        "Hold ^3&&1 ^7for Mosin-Nagant"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for 3-line rifle M1891"
 
-REFERENCE           ZOMBIE_TRADE_DP28
-LANG_ENGLISH        "Hold ^3&&1 ^7for Walther"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+REFERENCE           ZOMBIE_TRADE_DP_27
+LANG_ENGLISH        "Hold ^3&&1 ^7for DP-27"
 
-REFERENCE           ZOMBIE_TRADE_SVT40
-LANG_ENGLISH        "Hold ^3&&1 ^7for SVT 40"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+REFERENCE           ZOMBIE_TRADE_SVT_40
+LANG_ENGLISH        "Hold ^3&&1 ^7for SVT-40"
 
 REFERENCE           ZOMBIE_TRADE_TYPE99
-LANG_ENGLISH        "Hold ^3&&1 ^7for TYPE 99"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for Type 99 LMG"
 
-REFERENCE           ZOMBIE_TRADE_PPSH
-LANG_ENGLISH        "Hold ^3&&1 ^7for PPSH 41"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+REFERENCE           ZOMBIE_TRADE_PPSH_41
+LANG_ENGLISH        "Hold ^3&&1 ^7for PPSh-41"
 
-REFERENCE           ZOMBIE_TRADE_TYPE100
-LANG_ENGLISH        "Hold ^3&&1 ^7for TYPE 100"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+REFERENCE           ZOMBIE_TRADE_TYPE_100
+LANG_ENGLISH        "Hold ^3&&1 ^7for Type 100"
 
 REFERENCE           ZOMBIE_TRADE_COLT
-LANG_ENGLISH        "Hold ^3&&1 ^7for Colt"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1911A1 Colt 'Government'"
 
 REFERENCE           ZOMBIE_TRADE_SW357
 LANG_ENGLISH        "Hold ^3&&1 ^7for .357 Magnum"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_TOKAREV
-LANG_ENGLISH        "Hold ^3&&1 ^7for Tokarev"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for TT-33"
 
-REFERENCE           ZOMBIE_TRADE_GEWEHR43
+REFERENCE           ZOMBIE_TRADE_GEWEHR_43
 LANG_ENGLISH        "Hold ^3&&1 ^7for Gewehr 43"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
-REFERENCE          ZOMBIE_TRADE_STG44
-LANG_ENGLISH        "Hold ^3&&1 ^7for STG 44"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+REFERENCE          ZOMBIE_TRADE_STG_44
+LANG_ENGLISH        "Hold ^3&&1 ^7for StG-44"
 
 REFERENCE           ZOMBIE_TRADE_THOMPSON
-LANG_ENGLISH        "Hold ^3&&1 ^7for Thompson"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1A1 Thompson"
 
-REFERENCE           ZOMBIE_TRADE_MP40
+REFERENCE           ZOMBIE_TRADE_MP_40
 LANG_ENGLISH        "Hold ^3&&1 ^7for MP 40"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_SPRINGFIELD
-LANG_ENGLISH        "Hold ^3&&1 ^7for Springfield"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1903 Springfield"
 
 REFERENCE           ZOMBIE_TRADE_MOLOTOV
-LANG_ENGLISH        "Hold ^3&&1 ^7for Molotov"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for Molotov Cocktail"
 
-REFERENCE           ZOMBIE_TRADE_M1GARANDGL
+REFERENCE           ZOMBIE_TRADE_M1_GARAND_GL
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1 Garand w/ Grenade Launcher"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
-REFERENCE           ZOMBIE_TRADE_M7LAUNCHER
-LANG_ENGLISH        "Hold ^3&&1 ^7for M7 Launcher"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
-
-REFERENCE           ZOMBIE_TRADE_M2FLAMETHROWER
+REFERENCE           ZOMBIE_TRADE_M2_FLAMETHROWER
 LANG_ENGLISH        "Hold ^3&&1 ^7for M2 Flamethrower"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_DOUBLEBARREL
 LANG_ENGLISH        "Hold ^3&&1 ^7for Double-Barreled Shotgun"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_DOUBLEBARRELSAWED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Sawed-Off Shotgun"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for Sawn-Off Double-Barreled Shotgun w/ Grip"
 
 REFERENCE           ZOMBIE_TRADE_SHOTGUN
-LANG_ENGLISH        "Hold ^3&&1 ^7for Trench Gun"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1897 Trench Gun"
 
-REFERENCE           ZOMBIE_TRADE_FG42
+REFERENCE           ZOMBIE_TRADE_BAR
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1919 BAR"
+
+REFERENCE           ZOMBIE_TRADE_FG_42
 LANG_ENGLISH        "Hold ^3&&1 ^7for FG 42"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
-REFERENCE           ZOMBIE_TRADE_MG42
+REFERENCE           ZOMBIE_TRADE_MG_42
 LANG_ENGLISH        "Hold ^3&&1 ^7for MG 42"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
-REFERENCE           ZOMBIE_TRADE_30CAL
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1919 Browning"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
-
-REFERENCE           ZOMBIE_TRADE_MOLOTOV
-LANG_ENGLISH        "Hold ^3&&1 ^7for Molotov"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+REFERENCE           ZOMBIE_TRADE_30_CAL_BIPOD
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1919 Browning MG"
 
 REFERENCE           ZOMBIE_TRADE_PANZERSCHREK
-LANG_ENGLISH        "Hold ^3&&1 ^7for Panzerschrek"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for RPzB 54 'Panzerschreck'"
 
-REFERENCE           ZOMBIE_TRADE_RAYGUN
+REFERENCE           ZOMBIE_TRADE_RAY_GUN
 LANG_ENGLISH        "Hold ^3&&1 ^7for Ray Gun"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
 
 REFERENCE           ZOMBIE_TRADE_MINE
-LANG_ENGLISH        "Hold ^3&&1 ^7for Bouncing Betty"
-//LANG_FRENCH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_GERMAN        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_SPANISH        "Hold ^3&&1 ^7to trade Weapons"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to trade Weapons"
+LANG_ENGLISH        "Hold ^3&&1 ^7for S-mine 'Bouncing Betty'"
 
 REFERENCE           ZOMBIE_BUTTON_BUY_CLEAR_DEBRIS_1000
 LANG_ENGLISH        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to Clear Debris [Cost: 1000]"
 
 REFERENCE           ZOMBIE_BUTTON_REWARD_BARRIER
 LANG_ENGLISH        "Hold ^3&&1 ^7to Rebuild Barrier"
-//LANG_FRENCH        "Hold ^3&&1 ^7to Rebuild Barrier"
-//LANG_GERMAN        "Hold ^3&&1 ^7to Rebuild Barrier"
-//LANG_SPANISH        "Hold ^3&&1 ^7to Rebuild Barrier"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to Rebuild Barrier"
 
 REFERENCE           ZOMBIE_BUTTON_BUY_OPEN_DOOR_1000
 LANG_ENGLISH        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
 
 REFERENCE           ZOMBIE_CABINET_OPEN_1900
 LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
-//LANG_FRENCH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
-//LANG_GERMAN        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
-//LANG_SPANISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
 
 REFERENCE            ZOMBIE_WEAPON_PERKBOTTLE_10000
 LANG_ENGLISH        "Hold ^3&&1 ^7to take Perk Bottle"
-//LANG_FRENCH        "Hold ^3&&1 ^7to take Perk Bottle"
-//LANG_GERMAN        "Hold ^3&&1 ^7to take Perk Bottle"
-//LANG_SPANISH        "Hold ^3&&1 ^7to take Perk Bottle"
-//LANG_ITALIAN        "Hold ^3&&1 ^7to take Perk Bottle"
 
 ENDMARKER

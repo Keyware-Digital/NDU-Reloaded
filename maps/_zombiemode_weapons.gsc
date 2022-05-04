@@ -98,7 +98,7 @@ init_weapons()
 	add_zombie_weapon( "zombie_colt", 							&"ZOMBIE_WEAPON_ZOMBIECOLT_25", 			25 );
                                                         		
 	// Bolt Action                                      		
-	add_zombie_weapon( "kar98k", 								&"PROTOTYPE_ZOMBIE_WEAPON_KAR98K_200", 		200 );
+	add_zombie_weapon( "kar98k", 								&"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_200", 		200 );
 	add_zombie_weapon( "kar98k_bayonet", 						&"ZOMBIE_WEAPON_KAR98K_B_200", 				200 );
 	add_zombie_weapon( "mosin_rifle", 							&"ZOMBIE_WEAPON_MOSIN_200", 				200 );
 	add_zombie_weapon( "mosin_rifle_bayonet", 					&"ZOMBIE_WEAPON_MOSIN_B_200", 				200 );
@@ -109,7 +109,7 @@ init_weapons()
                                                         		
 	// Semi Auto                                        		
 	add_zombie_weapon( "gewehr43", 								&"ZOMBIE_WEAPON_GEWEHR43_600", 				600 );
-	add_zombie_weapon( "m1carbine", 							&"PROTOTYPE_ZOMBIE_WEAPON_M1CARBINE_600",	600 );
+	add_zombie_weapon( "m1carbine", 							&"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE_600",	600 );
 	add_zombie_weapon( "m1carbine_bayonet", 					&"ZOMBIE_WEAPON_M1CARBINE_B_600", 			600 );
 	add_zombie_weapon( "m1garand", 								&"ZOMBIE_WEAPON_M1GARAND_600", 				600 );
 	add_zombie_weapon( "m1garand_bayonet", 						&"ZOMBIE_WEAPON_M1GARAND_B_600", 			600 );
@@ -275,39 +275,9 @@ set_treasure_chest_cost( cost )
 	level.zombie_treasure_chest_cost = cost;
 }
 
-treasure_chest_think()
+treasure_chest_think(rand)
 {
 	cost = 950;
-	level.boxguns = [];
-	level.boxguns[0] = "mosin_rifle";			
-	level.boxguns[1] = "dp28";		
-	level.boxguns[2] = "svt40";						
-	level.boxguns[3] = "type99_lmg";
-	level.boxguns[4] = "zombie_ppsh";						
-	level.boxguns[5] = "zombie_type100_smg";
-	level.boxguns[6] = "colt";
-	level.boxguns[7] = "sw_357";
-	level.boxguns[8] = "tokarev";					
-	level.boxguns[9] = "gewehr43";		
-	level.boxguns[10] = "stg44";						
-	level.boxguns[11] = "thompson";
-	level.boxguns[12] = "mp40";						
-	level.boxguns[13] = "springfield";
-	level.boxguns[14] = "molotov";				
-	level.boxguns[15] = "m1garand_gl";
-	level.boxguns[16] = "m7_launcher";
-	level.boxguns[17] = "m2_flamethrower_zombie";						
-	level.boxguns[18] = "doublebarrel";
-	level.boxguns[19] = "doublebarrel_sawed_grip";						
-	level.boxguns[20] = "shotgun";
-	level.boxguns[21] = "fg42_bipod";
-	level.boxguns[22] = "mg42_bipod";
-	level.boxguns[23] = "30cal_bipod";						
-	level.boxguns[24] = "panzerschrek";
-	level.boxguns[25] = "ray_gun";
-	level.boxguns[26] = "mine_bouncing_betty";
-
-	randomboxnumb = undefined;
 
 	if( IsDefined( level.zombie_treasure_chest_cost ) )
 	{
@@ -362,34 +332,30 @@ treasure_chest_think()
 
 	self.grab_weapon_hint = true;
 
-	randomboxnumb = level.boxguns[randomint(level.boxguns.size)];
-
-	chosenboxweapon = randomboxnumb;
-
 	level thread treasure_chest_user_hint( self, user );
-	self sethintstring( &"PROTOTYPE_ZOMBIE_TRADE_WEAPONS" );
+	//self sethintstring( &"PROTOTYPE_ZOMBIE_TRADE_WEAPONS" );
 
 	//Commence hintstring switch for each weapon in the mystery box
 
-	switch(chosenboxweapon)
+	switch(weapon_spawn_org.weapon_string)
 		{
 		case "mosin_rifle":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN");
 			break; 
 		case "dp28":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DP28");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DP_27");
 			break; 
 		case "svt40":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SVT40");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SVT_40");
 			break;
 		case "type99_lmg":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE99");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_99");
 			break;
 		case "zombie_ppsh":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41");
 			break;
 		case "zombie_type100_smg":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE100");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_100");
 			break; 
 		case "colt":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_COLT");
@@ -401,31 +367,31 @@ treasure_chest_think()
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TOKAREV");
 			break;  
 		case "gewehr43":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_GEWEHR43");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_GEWEHR_43");
 			break;  
 		case "stg44":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG44");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44");
 			break;  
 		case "thompson":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON");
 			break;  
 		case "mp40":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP40");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40");
 			break;  
 		case "springfield":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
+			break;  
+		case "ptrs41_zombie":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PTRS_41");
 			break;  
 		case "molotov":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOLOTOV");
 			break;
 		case "m1garand_gl":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1GARANDGL");
-			break;  
-		case "m7_launcher":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M7LAUNCHER");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1_GARAND_GL");
 			break;  
 		case "m2_flamethrower_zombie":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M2FLAMETHROWER");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M2_FLAMETHROWER");
 			break;  
 		case "doublebarrel":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DOUBLEBARREL");
@@ -436,20 +402,23 @@ treasure_chest_think()
 		case "shotgun":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SHOTGUN");
 			break; 
+		case "bar":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_BAR");
+			break; 
 		case "fg42_bipod":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_FG42");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_FG_42");
 			break; 
 		case "mg42_bipod":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MG42");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MG_42");
 			break; 
 		case "30cal_bipod":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_30CAL");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_30_CAL_BIPOD");
 			break; 
 		case "panzerschrek":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PANZERSCHREK");
 			break; 
 		case "ray_gun":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAYGUN");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAY_GUN");
 			break; 
 		case "mine_bouncing_betty":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MINE");
@@ -661,6 +630,8 @@ treasure_chest_weapon_spawn( chest, player )
 	{
 		model Delete();
 	}
+
+	return rand;
 }
 	// SRS 9/3/2008: if we timed out, move the weapon back into the box instead of deleting it
 timer_til_despawn(floatHeight)
@@ -898,16 +869,16 @@ weapon_cabinet_think()
 	switch( chosenweapon )
 		{
 		case "kar98k_scoped_zombie":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_KAR98K_SCOPED");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_KAR_98K_SCOPED");
 			break; 
 		case "m1garand":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1GARAND");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1_GARAND");
 			break; 
 		case "mosin_rifle_scoped_zombie":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_SCOPED");
 			break;
 		case "mp40_bigammo_mp":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP40_MAG");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40_MAG");
 			break;
 		case "springfield":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
