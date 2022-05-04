@@ -187,9 +187,9 @@ include_weapons()
 	include_weapon( "shotgun" );
 	
 	// Bipod
+	include_weapon( "30cal_bipod" );
 	include_weapon( "fg42_bipod" );
 	include_weapon( "mg42_bipod" );
-	include_weapon( "30cal_bipod" );
 
 	// Heavy MG
 	include_weapon( "bar" );

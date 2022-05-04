@@ -14,11 +14,11 @@ LANG_ENGLISH        "August 30th, 1945"
 REFERENCE           WEAPON_30_CAL_BIPOD
 LANG_ENGLISH        "M1919 Browning MG w/ Bipod"
 
-REFERENCE           WEAPON_BAR
-LANG_ENGLISH        "M1919 BAR"
-
 REFERENCE           WEAPON_BAR_BIPOD
 LANG_ENGLISH        "M1919 BAR w/ Bipod"
+
+REFERENCE           WEAPON_BAR
+LANG_ENGLISH        "M1919 BAR"
 
 REFERENCE           WEAPON_COLT_45
 LANG_ENGLISH        "Colt M1911A1 'Government'"
@@ -156,7 +156,7 @@ REFERENCE           ZOMBIE_WEAPON_THOMPSON_1500
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1A1 Thompson [Cost: 1200]"
 
 REFERENCE           ZOMBIE_WEAPON_BAR_1800
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1919 BAR [Cost: 1800]"
+LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1919 BAR w/ Bipod [Cost: 1800]"
 
 REFERENCE           ZOMBIE_WEAPON_SHOTGUN_1500
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1897 Trench Gun [Cost: 1500]"
@@ -261,7 +261,7 @@ REFERENCE           ZOMBIE_TRADE_SHOTGUN
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1897 'Trench Gun'"
 
 REFERENCE           ZOMBIE_TRADE_BAR
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1919 BAR"
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1919 BAR w/ Bipod"
 
 REFERENCE           ZOMBIE_TRADE_FG_42
 LANG_ENGLISH        "Hold ^3&&1 ^7for FG 42"
