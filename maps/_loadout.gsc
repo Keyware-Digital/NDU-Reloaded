@@ -416,20 +416,20 @@ init_models_and_variables_loadout()
 	else if( GetDvar( "zombiemode" ) == "1" || IsSubStr( level.script, "nazi_zombie_" ) || level.script == "zombie_test_map" ) // CODER_MOD (Austin 5/4/08): zombiemode loadout setup
 	{
 		//Zombiemode loadout. If you aren't making a zombie map then you can define your level.script and add a check above.
-		set_player_specific_add_weapon(0, "zombie_colt" );
+		set_player_specific_add_weapon(0, "colt" );
 		set_player_specific_add_weapon(1, "walther");
-		set_player_specific_add_weapon(2, "zombie_colt" );
+		set_player_specific_add_weapon(2, "colt" );
 		set_player_specific_add_weapon(3, "tokarev");
 		PrecacheItem( "napalmblob" );
 		PrecacheItem( "napalmbloblight" );
-		set_player_specific_switch_weapon(0, "zombie_colt" );
+		set_player_specific_switch_weapon(0, "colt" );
 		set_player_specific_switch_weapon(1, "walther");
-		set_player_specific_switch_weapon(2, "zombie_colt" );
+		set_player_specific_switch_weapon(2, "colt" );
 		set_player_specific_switch_weapon(3, "tokarev");
 
-		set_player_specific_laststand_pistol(0, "zombie_colt" );
+		set_player_specific_laststand_pistol(0, "colt" );
 		set_player_specific_laststand_pistol(1, "walther");
-		set_player_specific_laststand_pistol(2, "zombie_colt" );
+		set_player_specific_laststand_pistol(2, "colt" );
 		set_player_specific_laststand_pistol(3, "tokarev");
 
 		set_player_specific_viewmodel(0, "viewmodel_usa_marine_arms");

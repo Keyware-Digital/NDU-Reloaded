@@ -985,12 +985,12 @@ check_for_instakill( player )
 
 		}
 
-		if( flag( "dog_round" ) )
+		/*if( flag( "dog_round" ) )
 		{
 			self DoDamage( self.health + 666, self.origin, player );
 			player notify("zombie_killed");
 		}
-		else
+		else*/
 		{
 			self maps\_zombiemode_spawner::zombie_head_gib();
 			self DoDamage( self.health + 666, self.origin, player );
