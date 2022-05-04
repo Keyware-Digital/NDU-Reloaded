@@ -278,6 +278,37 @@ set_treasure_chest_cost( cost )
 treasure_chest_think()
 {
 	cost = 950;
+	level.boxguns = [];
+	level.boxguns[0] = "mosin_rifle";			
+	level.boxguns[1] = "dp28";		
+	level.boxguns[2] = "svt40";						
+	level.boxguns[3] = "type99_lmg";
+	level.boxguns[4] = "zombie_ppsh";						
+	level.boxguns[5] = "zombie_type100_smg";
+	level.boxguns[6] = "colt";
+	level.boxguns[7] = "sw_357";
+	level.boxguns[8] = "tokarev";					
+	level.boxguns[9] = "gewehr43";		
+	level.boxguns[10] = "stg44";						
+	level.boxguns[11] = "thompson";
+	level.boxguns[12] = "mp40";						
+	level.boxguns[13] = "springfield";
+	level.boxguns[14] = "molotov";				
+	level.boxguns[15] = "m1garand_gl";
+	level.boxguns[16] = "m7_launcher";
+	level.boxguns[17] = "m2_flamethrower_zombie";						
+	level.boxguns[18] = "doublebarrel";
+	level.boxguns[19] = "doublebarrel_sawed_grip";						
+	level.boxguns[20] = "shotgun";
+	level.boxguns[21] = "fg42_bipod";
+	level.boxguns[22] = "mg42_bipod";
+	level.boxguns[23] = "30cal_bipod";						
+	level.boxguns[24] = "panzerschrek";
+	level.boxguns[25] = "ray_gun";
+	level.boxguns[26] = "mine_bouncing_betty";
+
+	randomboxnumb = undefined;
+
 	if( IsDefined( level.zombie_treasure_chest_cost ) )
 	{
 		cost = level.zombie_treasure_chest_cost;
@@ -330,8 +361,101 @@ treasure_chest_think()
 	weapon_spawn_org waittill( "randomization_done" ); 
 
 	self.grab_weapon_hint = true;
+
+	randomboxnumb = level.boxguns[randomint(level.boxguns.size)];
+
+	chosenboxweapon = randomboxnumb;
+
 	level thread treasure_chest_user_hint( self, user );
-	self sethintstring( &"PROTOTYPE_ZOMBIE_TRADE_WEAPONS" ); 
+	self sethintstring( &"PROTOTYPE_ZOMBIE_TRADE_WEAPONS" );
+
+	//Commence hintstring switch for each weapon in the mystery box
+
+	switch(chosenboxweapon)
+		{
+		case "mosin_rifle":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN");
+			break; 
+		case "dp28":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DP28");
+			break; 
+		case "svt40":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SVT40");
+			break;
+		case "type99_lmg":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE99");
+			break;
+		case "zombie_ppsh":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH");
+			break;
+		case "zombie_type100_smg":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE100");
+			break; 
+		case "colt":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_COLT");
+			break;     
+		case "sw_357":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SW357");
+			break;  
+		case "tokarev":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TOKAREV");
+			break;  
+		case "gewehr43":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_GEWEHR43");
+			break;  
+		case "stg44":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG44");
+			break;  
+		case "thompson":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON");
+			break;  
+		case "mp40":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP40");
+			break;  
+		case "springfield":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
+			break;  
+		case "molotov":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOLOTOV");
+			break;
+		case "m1garand_gl":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1GARANDGL");
+			break;  
+		case "m7_launcher":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M7LAUNCHER");
+			break;  
+		case "m2_flamethrower_zombie":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M2FLAMETHROWER");
+			break;  
+		case "doublebarrel":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DOUBLEBARREL");
+			break;  
+		case "doublebarrel_sawed_grip":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DOUBLEBARRELSAWED");
+			break; 
+		case "shotgun":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SHOTGUN");
+			break; 
+		case "fg42_bipod":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_FG42");
+			break; 
+		case "mg42_bipod":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MG42");
+			break; 
+		case "30cal_bipod":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_30CAL");
+			break; 
+		case "panzerschrek":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PANZERSCHREK");
+			break; 
+		case "ray_gun":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAYGUN");
+			break; 
+		case "mine_bouncing_betty":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MINE");
+			break; 
+		}
+	
 	self setCursorHint( "HINT_NOICON" ); 
 	
 	self enable_trigger(); 
@@ -768,6 +892,8 @@ weapon_cabinet_think()
 	chosenweapon = randomnumb;
 
 	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS");
+
+	//Commence hintstring switch for each weapon in the cabinet
 
 	switch( chosenweapon )
 		{
