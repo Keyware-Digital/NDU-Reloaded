@@ -21,7 +21,7 @@ REFERENCE           WEAPON_BAR_BIPOD
 LANG_ENGLISH        "M1919 BAR w/ Bipod"
 
 REFERENCE           WEAPON_COLT_45
-LANG_ENGLISH        "M1911A1 Colt 'Government'"
+LANG_ENGLISH        "Colt M1911A1 'Government'"
 
 REFERENCE           WEAPON_SHOTGUN_DOUBLE_BARRELED
 LANG_ENGLISH        "Double-Barreled Shotgun"
@@ -219,7 +219,7 @@ REFERENCE           ZOMBIE_TRADE_TYPE_100
 LANG_ENGLISH        "Hold ^3&&1 ^7for Type 100"
 
 REFERENCE           ZOMBIE_TRADE_COLT
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1911A1 Colt 'Government'"
+LANG_ENGLISH        "Hold ^3&&1 ^7for Colt M1911A1 'Government'"
 
 REFERENCE           ZOMBIE_TRADE_SW357
 LANG_ENGLISH        "Hold ^3&&1 ^7for .357 Magnum"
