@@ -191,9 +191,16 @@ laststand_take_player_weapons()
 	{
 		weapon = self.weaponInventory[i];
 
-		if ( WeaponClass( weapon ) == "pistol" && !IsDefined( self.laststandpistol ) ) 
+		if(WeaponClass(weapon) == "pistol")
 		{
-			self.laststandpistol = weapon;
+			if(weapon == "ray_gun")
+			{
+				self.laststandpistol = "ray_gun";
+			}
+			else if(weapon == "sw_357")
+			{
+				self.laststandpistol = "sw_357";
+			}
 		}
 		
 		switch( weapon )
