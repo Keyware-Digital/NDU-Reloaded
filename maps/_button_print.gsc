@@ -47,7 +47,7 @@ self endon("disconnect");
 	switch( response )
 	{
 		case "print_text":
-		self iprintlnbold( "^2Button Pressed" );
+		//self iprintlnbold( "^2Button Pressed" );
 		break;
 
 		default:	

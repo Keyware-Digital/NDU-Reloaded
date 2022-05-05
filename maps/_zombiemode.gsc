@@ -1961,7 +1961,7 @@ solo_quickrevive() // numan solo revive function
 		}
 		else
 		{
-			IPrintLn(playerweapons[i]);
+			//IPrintLn(playerweapons[i]);
 			self GiveWeapon(playerweapons[i]);
 			self SetWeaponAmmoClip(playerweapons[i],clipammo[i]);
 			self SetWeaponAmmoStock(playerweapons[i],weaponammo[i]);

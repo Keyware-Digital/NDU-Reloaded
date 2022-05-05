@@ -333,7 +333,6 @@ treasure_chest_think(rand)
 	self.grab_weapon_hint = true;
 
 	level thread treasure_chest_user_hint( self, user );
-	//self sethintstring( &"PROTOTYPE_ZOMBIE_TRADE_WEAPONS" );
 
 	//Commence hintstring switch for each weapon in the mystery box
 
@@ -861,8 +860,6 @@ weapon_cabinet_think()
 	}
 
 	chosenweapon = randomnumb;
-
-	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS");
 
 	//Commence hintstring switch for each weapon in the cabinet
 

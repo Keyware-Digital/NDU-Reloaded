@@ -447,7 +447,7 @@ revive_trigger_spawn()
 	//self.revivetrigger thread revive_debug();
 }
 
-revive_debug()
+/*revive_debug()
 {
 	for ( ;; )
 	{
@@ -458,7 +458,7 @@ revive_debug()
 
 		wait( 0.05 );
 	}
-}
+}*/
 
 // logic for the revive trigger
 revive_trigger_think()

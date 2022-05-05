@@ -258,7 +258,7 @@ health_show()
 	players = get_players();
 	while(1)
 	{
-		IPrintLn(players[0].health);
+		//IPrintLn(players[0].health);
 		wait 0.3;
 	}
 }
