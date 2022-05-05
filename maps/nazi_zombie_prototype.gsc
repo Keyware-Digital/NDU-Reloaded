@@ -27,6 +27,8 @@ main()
 	{
 		players[i] SetClientDvar("sv_cheats", 1); //enable cheats for testing purposes
 		players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
+		players[i] setPerk( "specialty_armorvest" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_armorvest" );
 		players[i] maps\_zombiemode_score::add_to_player_score(99999); //add points for testing purposes
 	}
 

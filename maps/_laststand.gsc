@@ -201,13 +201,17 @@ laststand_take_player_weapons()
 			{
 				self.laststandpistol = "sw_357";
 			}
+			else if(weapon == "walther")
+			{
+				self.laststandpistol = "walther";
+			}
 			else if(weapon == "tokarev")
 			{
 				self.laststandpistol = "tokarev";
 			}
-			else if(weapon == "walther")
+			else if(weapon == "colt")
 			{
-				self.laststandpistol = "walther";
+				self.laststandpistol = "colt";
 			}
 		}
 		
