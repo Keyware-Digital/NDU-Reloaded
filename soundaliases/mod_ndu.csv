@@ -147,7 +147,8 @@ bowie_toss,,sfx\weapon\bowie\bowie_toss.wav,,1,1,,,,,,,full_vol,,,0.8,,,,1,1,,2d
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Bouncing Betty,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Betty_activated,,SFX\Weapon\Special\Bouncing_Betty\BBTrigger.wav,,0.9,1,10,1300,,,,,hvy_wpn,,curve3,,2000,,,0.9,1,,3d,,,,0.7,all_sp,,,mortar_dirt_zombie,,,,,,,,,,,,,,,75,90,0.25,0.8,,
+Betty_activated,,SFX\Weapon\Special\Bouncing_Betty\BBTrigger.wav,,0.9,1,10,1300,,,,,hvy_wpn,,curve3,,2000,,,0.9,1,,3d,,,,0.7,all_sp,,,,,,,,,,,,,,,,,,75,90,0.25,0.8,,
+mortar_dirt_zombie,,SFX/Destruction/Explosion_Spc_##,,0.9,1,350,12000,,,,,full_vol,,,,,,,0.9,1.1,,3d,,,,,all_sp,,,,,,,0.5,0.25,,,,0.1,,,,,,80,90,0.25,1,,yes
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 bbetty_plant_wood,,SFX\Weapon\Special\Bouncing_Betty\bb_plant.wav,,0.9,1,50,1300,,,,,character,,curve2,,,,,0.9,1.05,,3d,,,,,all_sp,,,,,,,,,,,,,,,,,,80,95,0.25,1,,
 bbetty_plant_rock,,SFX\Weapon\Special\Bouncing_Betty\bb_plant.wav,,0.9,1,50,1300,,,,,character,,curve2,,,,,0.9,1.05,,3d,,,,,all_sp,,,,,,,,,,,,,,,,,,80,95,0.25,1,,
