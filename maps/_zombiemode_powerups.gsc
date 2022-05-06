@@ -586,7 +586,7 @@ give_player_perk()
 		self thread death_check();
 	}
 
-	if( self maps\_laststand::player_is_in_laststand() || self.perknum == 8 ) //max perks
+	if( self maps\_laststand::player_is_in_laststand() || self.perknum == 7 ) //max perks
 	{
 		//IPrintLn("max perks! or downed... :(");
 		return;
@@ -622,7 +622,7 @@ resetperkdefs()
 	self.perkarray[4] = "specialty_detectexplosive";
 	self.perkarray[5] = "specialty_longersprint";
 	self.perkarray[6] = "specialty_bulletaccuracy";
-	self.perkarray[7] = "specialty_explosivedamage";
+	//self.perkarray[7] = "specialty_explosivedamage";
 	//self.perkarray[8] = "specialty_bulletdamage";		//merged into rof for Double Tap 2.0
 	self.perkarray = array_randomize( self.perkarray );
 	
@@ -1233,7 +1233,7 @@ death_check()
 	self UnsetPerk( "specialty_detectexplosive" );
 	self UnsetPerk( "specialty_longersprint" );
 	self UnsetPerk( "specialty_bulletaccuracy" );
-	self UnsetPerk( "specialty_explosivedamage" );
+	//self UnsetPerk( "specialty_explosivedamage" );
 	self UnsetPerk( "specialty_bulletdamage" );
 	self perk_hud_destroy( "specialty_armorvest" );
 	self perk_hud_destroy( "specialty_quickrevive" );
@@ -1242,7 +1242,7 @@ death_check()
 	self perk_hud_destroy( "specialty_detectexplosive" );
 	self perk_hud_destroy( "specialty_longersprint" );
 	self perk_hud_destroy( "specialty_bulletaccuracy" );
-	self perk_hud_destroy( "specialty_explosivedamage" );
+	//self perk_hud_destroy( "specialty_explosivedamage" );
 	self perk_hud_destroy( "specialty_bulletdamage" );
 	self.maxhealth = 100;
 	self SetMoveSpeedScale(1);
@@ -1302,9 +1302,9 @@ perk_hud_create( perk )
 			shader = "specialty_aim_zombies";
 			break;
 			
-		case "specialty_explosivedamage":
+		/*case "specialty_explosivedamage":
 			shader = "specialty_fireworks_zombies";
-			break;
+			break;*/
 
 		case "specialty_bulletdamage":
 			shader = "specialty_sp_zombies";

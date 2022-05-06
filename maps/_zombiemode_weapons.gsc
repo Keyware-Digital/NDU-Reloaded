@@ -537,6 +537,7 @@ treasure_chest_lid_close( timedOut )
 treasure_chest_ChooseRandomWeapon( player )
 {
     keys = GetArrayKeys( level.zombie_weapons );
+ 
     // Filter out any weapons the player already has
     filtered = [];
     for( i = 0; i < keys.size; i++ )
@@ -545,10 +546,10 @@ treasure_chest_ChooseRandomWeapon( player )
         {
             continue;
         }
-
+ 
         filtered[filtered.size] = keys[i];
     }
-
+ 
     // Filter out the limited weapons
     if( IsDefined( level.limited_weapons ) )
     {
@@ -564,34 +565,36 @@ treasure_chest_ChooseRandomWeapon( player )
                     count++;
                 }
             }
-    
+ 
             if( count == level.limited_weapons[keys2[q]] )
             {
                 filtered = array_remove( filtered, keys2[q] );
             }
         }
     }
+ 
     if(isDefined(player.has_betties) && player.has_betties)
     {
         filtered = array_remove(filtered, "mine_bouncing_betty");
     }
+ 
     return filtered[RandomInt( filtered.size )];
 }
-
+ 
 treasure_chest_weapon_spawn( chest, player )
 {
     assert(IsDefined(player));
     // spawn the model
     model = spawn( "script_model", self.origin ); 
     model.angles = self.angles +( 0, 90, 0 );
-    
+ 
     floatHeight = 40;
-    
+ 
     //move it up
     model moveto( model.origin +( 0, 0, floatHeight ), 3, 2, 0.9 ); 
-
+ 
     // rotation would go here
-
+ 
     // make with the mario kart
     modelname = undefined; 
     rand = undefined; 
@@ -600,7 +603,7 @@ treasure_chest_weapon_spawn( chest, player )
         rand = treasure_chest_ChooseRandomWeapon( player );
         modelname = GetWeaponModel( rand );
         model setmodel( modelname ); 
-        
+ 
         if( i < 20 )
         {
             wait( 0.05 ); 
@@ -620,38 +623,43 @@ treasure_chest_weapon_spawn( chest, player )
         modelname = GetWeaponModel( rand );
         model setmodel( modelname ); 
     }
+ 
     if(rand == "mine_bouncing_betty")
     {
         player thread weapons_death_check();
     }
-
+ 
     self notify( "randomization_done" ); 
     self.weapon_string = rand; // here's where the org get it's weapon type for the give function
-    
+ 
     model thread timer_til_despawn(floatHeight);
     self waittill( "weapon_grabbed" );
-    
+ 
     if( !chest.timedOut )
     {
         model Delete();
     }
-
+ 
     return rand;
 }
-
+ 
 weapons_death_check() // numan - reset the betties var on death ( may be used for other offhand vars if needed )
-{
-    self waittill_any( "fake_death", "death" );
-
-    self.has_betties = undefined;
-}
-
-	// SRS 9/3/2008: if we timed out, move the weapon back into the box instead of deleting it
-timer_til_despawn(floatHeight)
 {
     self waittill_any( "fake_death", "death" );
  
     self.has_betties = undefined;
+}
+	// SRS 9/3/2008: if we timed out, move the weapon back into the box instead of deleting it
+timer_til_despawn(floatHeight)
+{
+	putBackTime = 12;
+	self MoveTo( self.origin - ( 0, 0, floatHeight ), putBackTime, ( putBackTime * 0.5 ) );
+	wait( putBackTime );
+
+	if(isdefined(self))
+	{	
+		self Delete();
+	}
 }
 
 treasure_chest_glowfx()
