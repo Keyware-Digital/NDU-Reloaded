@@ -375,7 +375,7 @@ treasure_chest_think(rand)
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON");
 			break;  
 		case "mp40":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40_MAG");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40");
 			break;  
 		case "springfield":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
