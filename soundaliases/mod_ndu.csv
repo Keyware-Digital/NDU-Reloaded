@@ -93,6 +93,7 @@ weap_svt40_fire_plr_r_sil,,SFX/Weapon/Rifle/SVT40/fire/wpn_svt40_st_r.wav,,0.2,0
 weap_svt40_fire_plr_act_sil,,SFX/Weapon/Rifle/SVT40/fire/wpn_svt40_st_act.wav,,0.9,1,,,2,oldest,,,rfl_1st,,,,,,,0.97,1.03,,2d,,,,0.7,all_mp,,,shell_eject_rifle,,,wpn_all,,,,,,,,,,,,90,90,0.25,1,,
 weap_svt40_fire_act_sil,,SFX/Weapon/Rifle/Gewehr43/Fire/wpn_G43_mn_act.wav,,0.9,1,100,600,10,priority,2,oldest,rfl_3rd,,curve1,,1000,,,0.95,1.05,pitch,3d,,,,0.7,see1 ber1 ber3 oki3 firing_range ber3b hol1 living_battlefield all_mp,,,,,,,,,,,,,,,,,,70,20,0.35,1,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 gr_svt40_charge_plr,,SFX/Weapon/Rifle/BAR/Foley/bar_charge.wav,,0.85,0.95,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,ber1 ber3 see1 oki3 firing_range hol1 hol2 hol3 ber3b living_battlefield all_mp sniper,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
 gr_svt40_mag_in_plr,,SFX/Weapon/Rifle/BAR/Foley/bar_mag_in.wav,,0.85,0.95,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,ber1 ber3 see1 oki3 firing_range hol1 hol2 hol3 ber3b living_battlefield all_mp sniper,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
 gr_svt40_mag_out_plr,,SFX/Weapon/Rifle/BAR/Foley/bar_mag_out.wav,,0.85,0.95,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,ber1 ber3 see1 oki3 firing_range hol1 hol2 hol3 ber3b living_battlefield all_mp sniper,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
@@ -144,10 +145,12 @@ bowie_pull,,SFX\Weapon\knife\knife_pull_##,,0.9,1,100,100,,,,,full_vol,,,,,,,0.9
 bowie_start,,sfx\weapon\bowie\bowie_start.wav,,1,1,,,,,,,full_vol,,,0.8,,,,1,1,,2d,,,,,,,,,,,wpn_all,0.2,,,,,,,,,,,90,90,0.25,1,,
 bowie_turn,,sfx\weapon\bowie\bowie_turn.wav,,0.75,0.75,,,,,,,full_vol,,,0.8,,,,1,1,,2d,,,,,,,,,,,wpn_all,0.2,,,,,,,,,,,90,90,0.25,1,,
 bowie_toss,,sfx\weapon\bowie\bowie_toss.wav,,1,1,,,,,,,full_vol,,,0.8,,,,1,1,,2d,,,,,,,,,,,wpn_all,0.2,,,,,,,,,,,90,90,0.25,1,,
+bowie_catch,,sfx\weapon\bowie\bowie_catch.wav,,1,1,,,,,,,full_vol,,,0.8,,,,1,1,,2d,,,,,,,,,,,wpn_all,0.2,,,,,,,,,,,90,90,0.25,1,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+raygun_stinger,,SFX\UI\arcade\arcademode_kill_streak_won.wav,1,1,1,50,1500,2,reject,1,reject,voice,,curve2,,,,,1,1,,2d,,,,master,,,,,,,wpn_all,,,,,,0.5,,,,,,10,25,0.25,1
 #Bouncing Betty,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Betty_activated,,SFX\Weapon\Special\Bouncing_Betty\BBTrigger.wav,,0.9,1,10,1300,,,,,hvy_wpn,,curve3,,2000,,,0.9,1,,3d,,,,0.7,all_sp,,,mortar_dirt_zombie,,,,,,,,,,,,,,,75,90,0.25,0.8,,
+Betty_activated,,SFX\Weapon\Special\Bouncing_Betty\BBTrigger.wav,,0.9,1,10,1300,,,,,hvy_wpn,,curve3,,2000,,,0.9,1,,3d,,,,0.7,all_sp,,,,,,,,,,,,,,,,,,75,90,0.25,0.8,,
+mortar_dirt_zombie,,SFX/Destruction/Explosion_Spc_##,,0.9,1,350,12000,,,,,full_vol,,,,,,,0.9,1.1,,3d,,,,,all_sp,,,,,,,0.5,0.25,,,,0.1,,,,,,80,90,0.25,1,,yes
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 bbetty_plant_wood,,SFX\Weapon\Special\Bouncing_Betty\bb_plant.wav,,0.9,1,50,1300,,,,,character,,curve2,,,,,0.9,1.05,,3d,,,,,all_sp,,,,,,,,,,,,,,,,,,80,95,0.25,1,,
 bbetty_plant_rock,,SFX\Weapon\Special\Bouncing_Betty\bb_plant.wav,,0.9,1,50,1300,,,,,character,,curve2,,,,,0.9,1.05,,3d,,,,,all_sp,,,,,,,,,,,,,,,,,,80,95,0.25,1,,

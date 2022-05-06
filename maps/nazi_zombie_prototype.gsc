@@ -42,6 +42,7 @@ main()
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_quickrevive" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_detectexplosive" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_longersprint" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_bulletaccuracy" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_explosivedamage" );
 		players[i] maps\_zombiemode_score::add_to_player_score(99999); //add points for testing purposes
 	}

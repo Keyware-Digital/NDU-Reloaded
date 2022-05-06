@@ -537,7 +537,6 @@ treasure_chest_lid_close( timedOut )
 treasure_chest_ChooseRandomWeapon( player )
 {
     keys = GetArrayKeys( level.zombie_weapons );
-
     // Filter out any weapons the player already has
     filtered = [];
     for( i = 0; i < keys.size; i++ )
@@ -572,12 +571,10 @@ treasure_chest_ChooseRandomWeapon( player )
             }
         }
     }
-
     if(isDefined(player.has_betties) && player.has_betties)
     {
         filtered = array_remove(filtered, "mine_bouncing_betty");
     }
-
     return filtered[RandomInt( filtered.size )];
 }
 
@@ -623,7 +620,6 @@ treasure_chest_weapon_spawn( chest, player )
         modelname = GetWeaponModel( rand );
         model setmodel( modelname ); 
     }
-
     if(rand == "mine_bouncing_betty")
     {
         player thread weapons_death_check();
@@ -653,14 +649,9 @@ weapons_death_check() // numan - reset the betties var on death ( may be used fo
 	// SRS 9/3/2008: if we timed out, move the weapon back into the box instead of deleting it
 timer_til_despawn(floatHeight)
 {
-	putBackTime = 12;
-	self MoveTo( self.origin - ( 0, 0, floatHeight ), putBackTime, ( putBackTime * 0.5 ) );
-	wait( putBackTime );
-
-	if(isdefined(self))
-	{	
-		self Delete();
-	}
+    self waittill_any( "fake_death", "death" );
+ 
+    self.has_betties = undefined;
 }
 
 treasure_chest_glowfx()
