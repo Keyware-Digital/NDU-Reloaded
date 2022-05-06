@@ -1149,7 +1149,7 @@ full_ammo_on_hud( drop_item )
 	hudelem.alpha = 0;
 	hudelem fadeovertime(0.5);
 	hudelem.alpha = 1;
-	hudelem.label = drop_item.hint;
+	//hudelem.label = drop_item.hint;
 
 	// set time remaining for insta kill
 	hudelem thread full_ammo_move_hud();		
