@@ -1127,10 +1127,12 @@ weapon_spawn_think()
 			}
 		}		
 
-		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= 4)		//TestNadeBuyFix
+		grenadeMax = WeaponMaxAmmo( "stielhandgranate" );
+
+		if(player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		//TestNadeBuyFix
         {
             continue;
-        }
+		}
 		
 		if( !player_has_weapon )
 		{
@@ -1289,7 +1291,7 @@ ammo_give( weapon )
 			clipCount = self GetWeaponAmmoClip( weapon ); 
 	
 			// compare it with the ammo player actually has, if more or equal just dont give the ammo, else do
-			if( ( self getammocount( weapon ) - clipcount ) >= stockMax )	
+			if( ( self getammocount( weapon ) + clipcount ) >= stockMax )	
 			{
 				give_ammo = false; 
 			}
