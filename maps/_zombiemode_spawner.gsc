@@ -2041,57 +2041,68 @@ zombie_setup_attack_properties()
 // the seeker logic for zombies
 find_flesh()
 {
-	self endon( "death" ); 
-	level endon( "intermission" );
+    self endon( "death" ); 
+    level endon( "intermission" );
 
-	if( level.intermission )
-	{
-		return;
-	}
+    if( level.intermission )
+    {
+        return;
+    }
 
-	self.ignore_player = undefined;
+    self.ignore_player = undefined;
 
-	self zombie_history( "find flesh -> start" );
+    self zombie_history( "find flesh -> start" );
 
-	self.goalradius = 32;
-	while( 1 )
-	{
-		players = get_players();
-		// If playing single player, never ignore the player
-		if( players.size == 1 )
-		{
-			self.ignore_player = undefined;
-		}
+    self.goalradius = 32;
+    while( 1 )
+    {
+        players = get_players();
+        // If playing single player, never ignore the player
+        
+        if( players.size == 1 )
+        {
+            self.ignore_player = undefined;
+        }
+        
+        // solo revive functionality
+        structs = getstructarray( "initial_spawn_points", "targetname" ); 
+        while(isdefined(players[0].inSoloRevive) && players[0].inSoloRevive)
+        {
+            self SetGoalPos(structs[0].origin);
+            wait 0.5;
+        }
+        
 
-		player = get_closest_valid_player( self.origin, self.ignore_player ); 
-		
-		if( !IsDefined( player ) )
-		{
-			self zombie_history( "find flesh -> can't find player, continue" );
-			if( IsDefined( self.ignore_player ) )
-			{
-				self.ignore_player = undefined;
-			}
+        player = get_closest_valid_player( self.origin, self.ignore_player ); 
 
-			wait( 1 ); 
-			continue; 
-		}
+        
+        if( !IsDefined( player ) )
+        {
+            self zombie_history( "find flesh -> can't find player, continue" );
+            if( IsDefined( self.ignore_player ) )
+            {
+                self.ignore_player = undefined;
+            }
 
-		self.ignore_player = undefined;
+            wait( 1 ); 
+            continue; 
+        }
 
-		self.favoriteenemy = player;
-		self thread zombie_pathing();
+        self.ignore_player = undefined;
 
-		self.zombie_path_timer = GetTime() + ( RandomFloatRange( 1, 3 ) * 1000 );
-		while( GetTime() < self.zombie_path_timer )
-		{
-			wait( 0.1 );
-		}
+        self.favoriteenemy = player;
+        self thread zombie_pathing();
 
-		self zombie_history( "find flesh -> bottom of loop" );
+        self.zombie_path_timer = GetTime() + ( RandomFloatRange( 1, 3 ) * 1000 );
+        while( GetTime() < self.zombie_path_timer )
+        {
+            wait( 0.1 );
+        }
 
-		self notify( "zombie_acquire_enemy" );
-	}
+        self zombie_history( "find flesh -> bottom of loop" );
+
+        self notify( "zombie_acquire_enemy" );
+    }
 }
 
 zombie_testing()
