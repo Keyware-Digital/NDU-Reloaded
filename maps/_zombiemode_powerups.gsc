@@ -1182,7 +1182,7 @@ full_ammo_fade_hud()
     
 	fade_time = 1.5;
 
-	self FadeOverTime( move_fade_time ); 
+	self FadeOverTime( fade_time ); 
 	self.alpha = 0;
 
 	wait fade_time;
