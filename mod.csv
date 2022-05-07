@@ -1,6 +1,7 @@
 fx,weapon/muzzleflashes/standardflashworld_ug
 material,loadscreen_nazi_zombie_prototype
 material,hud_grenade_german
+material,specialty_instakill_zombies
 material,specialty_juggernaut_zombies
 material,specialty_fastreload_zombies
 material,specialty_doubletap_zombies
