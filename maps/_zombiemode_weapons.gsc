@@ -1314,6 +1314,7 @@ ammo_give( weapon )
 	{
 		self playsound( "cha_ching" ); 
 		self GivemaxAmmo( weapon ); 
+		self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) );	//does this fix nades?
 		return true;
 	}
 
