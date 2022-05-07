@@ -136,6 +136,7 @@ gr_type100_charge_plr,,SFX/Weapon/SMG/type100/foley/type100_charge.wav,,0.75,0.8
 gr_type100_mag_in_plr,,SFX/Weapon/SMG/type100/foley/type100_mag_in.wav,,0.75,0.8,,,,,,,reload,,,,,,,0.95,1.05,,2d,,,,,pel1 pel2 oki2 oki3 pel1a pel1b mak audio_test_tuey firing_range living_battlefield all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
 gr_type100_mag_out_plr,,SFX/Weapon/SMG/type100/foley/type100_mag_out.wav,,0.75,0.8,,,,,,,reload,,,,,,,0.95,1.05,,2d,,,,,pel1 pel2 oki2 oki3 pel1a pel1b mak audio_test_tuey firing_range living_battlefield all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
 gr_type100_tap_plr,,SFX/Weapon/SMG/type100/foley/type100_tap.wav,,0.75,0.8,,,,,,,reload,,,,,,,0.95,1.05,,2d,,,,,pel1 pel2 oki2 oki3 pel1a pel1b mak audio_test_tuey firing_range living_battlefield all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 # Bowie Knife,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 bowie_swing,,sfx\weapon\bowie\bowie_swing_##,,0.9,1,100,100,,,,,full_vol,,,,,,,0.9,1.1,,3d,,,,,,,,,,,wpn_all,0.3,1,,,,,,,,,,90,90,0.25,1,,
 bowie_stab,,sfx\weapon\bowie\bowie_stab_##,,0.9,1,100,100,,,,,full_vol,,,,,,,0.9,1.1,,3d,,,,,,,,,,,wpn_all,0.3,1,,,,,,,,,,90,90,0.25,1,,
