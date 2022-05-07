@@ -1155,9 +1155,10 @@ full_ammo_on_hud( drop_item )
 	hudelem maps\_hud_util::setPoint( "TOP", undefined, 0, level.zombie_vars["zombie_timer_offset"] - (level.zombie_vars["zombie_timer_offset_interval"] * 2));
 	hudelem.sort = 0.5;
 	hudelem.x = 0;
+	hudelem.y = 0;
 	hudelem SetShader(shader_ammo, 32, 32);
 	hudelem.alpha = 1;
-	hudelem fadeovertime(3);
+	hudelem fadeovertime(10);
 	//hudelem.label = drop_item.hint;
 
 	// set time remaining for insta kill
