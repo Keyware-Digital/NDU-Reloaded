@@ -36,6 +36,9 @@ main()
 		players[i] setPerk( "specialty_longersprint" );
 		players[i] setPerk( "specialty_bulletaccuracy" );
 		players[i] setPerk( "specialty_explosivedamage" );
+		players[i] setPerk( "specialty_electriccherry" );
+		players[i] setPerk( "specialty_mulekick" );
+		players[i] setPerk( "specialty_widowswine" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_armorvest" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_rof" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_fastreload" );
@@ -44,6 +47,9 @@ main()
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_longersprint" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_bulletaccuracy" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_explosivedamage" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_electriccherry" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_mulekick" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_widowswine" );
 		players[i] maps\_zombiemode_score::add_to_player_score(99999); //add points for testing purposes
 	}
 

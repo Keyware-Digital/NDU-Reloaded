@@ -5,7 +5,7 @@
 init()
 {
 
-	PrecacheShader( "specialty_doublepoints_zombies" );
+	PrecacheShader( "specialty_2x_zombies" );
 	PrecacheShader( "specialty_instakill_zombies" );
 	PrecacheShader( "specialty_juggernaut_zombies" );
 	PrecacheShader( "specialty_fastreload_zombies" );
@@ -16,6 +16,9 @@ init()
 	PrecacheShader( "specialty_aim_zombies" );
 	PrecacheShader( "specialty_fireworks_zombies" );
 	PrecacheShader( "specialty_longersprint_zombies" );
+	PrecacheShader( "specialty_electric_cherry_zombies" );
+	PrecacheShader( "specialty_mulekick_zombies" );
+	PrecacheShader( "specialty_widows_wine_zombies" );
 	PrecacheShader( "black" ); 
 
 	PrecacheModel( "zombie_pickup_perkbottle" );
@@ -47,12 +50,12 @@ init()
 init_powerups()
 {
     // Random Drops
-    add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
-    add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
-    add_zombie_powerup( "double_points","zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
-    add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
+    //add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
+    //add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
+    add_zombie_powerup( "double_points",	"zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
+    //add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
 
 	// Randomize the order
 	randomize_powerups();
@@ -91,7 +94,7 @@ powerup_hud_overlay()
 		//hud SetShader( shader_inst, 24, 24 );
 	}
 
-	shader_2x = "specialty_doublepoints_zombies";
+	shader_2x = "specialty_2x_zombies";
 	shader_insta = "specialty_instakill_zombies";
 //	shader_white = "black";
 	
@@ -622,6 +625,9 @@ resetperkdefs()
 	self.perkarray[5] = "specialty_longersprint";
 	self.perkarray[6] = "specialty_bulletaccuracy";
 	self.perkarray[7] = "specialty_explosivedamage";
+	self.perkarray[8] = "specialty_electriccherry";
+	self.perkarray[9] = "specialty_mulekick";
+	self.perkarray[10] = "specialty_widowswine";
 	//self.perkarray[8] = "specialty_bulletdamage";		//merged into rof for Double Tap 2.0
 	self.perkarray = array_randomize( self.perkarray );
 	
@@ -1234,6 +1240,9 @@ death_check()
 	self UnsetPerk( "specialty_bulletaccuracy" );
 	self UnsetPerk( "specialty_explosivedamage" );
 	self UnsetPerk( "specialty_bulletdamage" );
+	self UnsetPerk( "specialty_electriccherry" );
+	self UnsetPerk( "specialty_mulekick" );
+	self UnsetPerk( "specialty_widowswine" );
 	self perk_hud_destroy( "specialty_armorvest" );
 	self perk_hud_destroy( "specialty_quickrevive" );
 	self perk_hud_destroy( "specialty_fastreload" );
@@ -1243,6 +1252,9 @@ death_check()
 	self perk_hud_destroy( "specialty_bulletaccuracy" );
 	self perk_hud_destroy( "specialty_explosivedamage" );
 	self perk_hud_destroy( "specialty_bulletdamage" );
+	self perk_hud_destroy( "specialty_electriccherry" );
+	self perk_hud_destroy( "specialty_mulekick" );
+	self perk_hud_destroy( "specialty_widowswine" );
 	self.maxhealth = 100;
 	self SetMoveSpeedScale(1);
 	self setClientDvar( "perk_sprintMultiplier", "1" ); 
@@ -1307,6 +1319,18 @@ perk_hud_create( perk )
 
 		case "specialty_bulletdamage":
 			shader = "specialty_sp_zombies";
+			break;
+
+		case "specialty_electriccherry":
+			shader = "specialty_electric_cherry_zombies";
+			break;
+
+		case "specialty_mulekick":
+			shader = "specialty_mulekick_zombies";
+			break;
+
+		case "specialty_widowswine":
+			shader = "specialty_widows_wine_zombies";
 			break;
 
 		default:
