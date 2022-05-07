@@ -7,6 +7,7 @@ init()
 
 	PrecacheShader( "specialty_2x_zombies" );
 	PrecacheShader( "specialty_instakill_zombies" );
+	PrecacheShader( "specialty_maxammo_zombies" );
 	PrecacheShader( "specialty_juggernaut_zombies" );
 	PrecacheShader( "specialty_fastreload_zombies" );
 	PrecacheShader( "specialty_doubletap_zombies" );
@@ -96,6 +97,7 @@ powerup_hud_overlay()
 
 	shader_2x = "specialty_2x_zombies";
 	shader_insta = "specialty_instakill_zombies";
+	shader_ammo = "specialty_maxammo_zombies";
 //	shader_white = "black";
 	
 

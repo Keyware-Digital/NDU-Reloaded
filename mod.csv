@@ -15,6 +15,7 @@ material,specialty_widowswine_zombies
 material,specialty_aim_zombies
 material,specialty_2x_zombies
 material,specialty_instakill_zombies
+material,specialty_maxammo_zombies
 material,logo_cod2
 localize,prototype
 menufile,ui/prototype_hud.menu
