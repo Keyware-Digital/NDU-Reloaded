@@ -16,9 +16,9 @@ init()
 	PrecacheShader( "specialty_aim_zombies" );
 	PrecacheShader( "specialty_fireworks_zombies" );
 	PrecacheShader( "specialty_longersprint_zombies" );
-	PrecacheShader( "specialty_electric_cherry_zombies" );
+	PrecacheShader( "specialty_electriccherry_zombies" );
 	PrecacheShader( "specialty_mulekick_zombies" );
-	PrecacheShader( "specialty_widows_wine_zombies" );
+	PrecacheShader( "specialty_widowswine_zombies" );
 	PrecacheShader( "black" ); 
 
 	PrecacheModel( "zombie_pickup_perkbottle" );
@@ -1322,7 +1322,7 @@ perk_hud_create( perk )
 			break;
 
 		case "specialty_electriccherry":
-			shader = "specialty_electric_cherry_zombies";
+			shader = "specialty_electriccherry_zombies";
 			break;
 
 		case "specialty_mulekick":
@@ -1330,7 +1330,7 @@ perk_hud_create( perk )
 			break;
 
 		case "specialty_widowswine":
-			shader = "specialty_widows_wine_zombies";
+			shader = "specialty_widowswine_zombies";
 			break;
 
 		default:
