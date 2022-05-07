@@ -53,8 +53,8 @@ init_powerups()
     // Random Drops
     //add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
     //add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
-    add_zombie_powerup( "double_points",	"zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
-    //add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup( "double_points",	"zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
+    add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
     //add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
     //add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
 
@@ -97,7 +97,6 @@ powerup_hud_overlay()
 
 	shader_2x = "specialty_2x_zombies";
 	shader_insta = "specialty_instakill_zombies";
-	shader_ammo = "specialty_maxammo_zombies";
 //	shader_white = "black";
 	
 
@@ -1149,23 +1148,26 @@ full_ammo_on_hud( drop_item )
 {
 	self endon ("disconnect");
 
+	shader_ammo = "specialty_maxammo_zombies";
+
 	// set up the hudelem
 	hudelem = maps\_hud_util::createFontString( "objective", 2 );
 	hudelem maps\_hud_util::setPoint( "TOP", undefined, 0, level.zombie_vars["zombie_timer_offset"] - (level.zombie_vars["zombie_timer_offset_interval"] * 2));
 	hudelem.sort = 0.5;
-	hudelem.alpha = 0;
-	hudelem fadeovertime(0.5);
+	hudelem.x = 0;
+	hudelem SetShader(shader_ammo, 32, 32);
 	hudelem.alpha = 1;
+	hudelem fadeovertime(3);
 	//hudelem.label = drop_item.hint;
 
 	// set time remaining for insta kill
-	hudelem thread full_ammo_move_hud();		
+	hudelem thread full_ammo_fade_hud();		
 
 	// offset in case we get another powerup
 	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
 }
 
-full_ammo_move_hud()
+full_ammo_fade_hud()
 {
 
 	players = get_players();
@@ -1178,14 +1180,12 @@ full_ammo_move_hud()
     
     wait 0.5;
     
-	move_fade_time = 1.5;
+	fade_time = 1.5;
 
 	self FadeOverTime( move_fade_time ); 
-	self MoveOverTime( move_fade_time );
-	self.y = 270;
 	self.alpha = 0;
 
-	wait move_fade_time;
+	wait fade_time;
 
 	self destroy();
 }
