@@ -47,13 +47,12 @@ init()
 init_powerups()
 {
     // Random Drops
-    //add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
-    //add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke_hotness" );
-    //add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
-    //add_zombie_powerup( "double_points","zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
+    add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
+    add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
+    add_zombie_powerup( "double_points","zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
     add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
+    add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
 
 	// Randomize the order
 	randomize_powerups();
@@ -1149,7 +1148,7 @@ full_ammo_on_hud( drop_item )
 	hudelem.alpha = 0;
 	hudelem fadeovertime(0.5);
 	hudelem.alpha = 1;
-	hudelem.label = drop_item.hint;
+	//hudelem.label = drop_item.hint;
 
 	// set time remaining for insta kill
 	hudelem thread full_ammo_move_hud();		

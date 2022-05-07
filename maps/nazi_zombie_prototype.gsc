@@ -27,8 +27,23 @@ main()
 	{
 		players[i] SetClientDvar("sv_cheats", 1); //enable cheats for testing purposes
 		players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
+		//add perks for testing purposes
 		players[i] setPerk( "specialty_armorvest" );
+		players[i] setPerk( "specialty_rof" );
+		players[i] setPerk( "specialty_fastreload" );
+		players[i] setPerk( "specialty_quickrevive" );
+		players[i] setPerk( "specialty_detectexplosive" );
+		players[i] setPerk( "specialty_longersprint" );
+		players[i] setPerk( "specialty_bulletaccuracy" );
+		players[i] setPerk( "specialty_explosivedamage" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_armorvest" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_rof" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_fastreload" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_quickrevive" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_detectexplosive" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_longersprint" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_bulletaccuracy" );
+		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_explosivedamage" );
 		players[i] maps\_zombiemode_score::add_to_player_score(99999); //add points for testing purposes
 	}
 
