@@ -1126,11 +1126,6 @@ weapon_spawn_think()
 				}
 			}
 		}		
-
-		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= 4)		//TestNadeBuyFix
-        {
-            continue;
-        }
 		
 		if( !player_has_weapon )
 		{
@@ -1319,7 +1314,7 @@ ammo_give( weapon )
 	{
 		self playsound( "cha_ching" ); 
 		self GivemaxAmmo( weapon ); 
-		//self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) );
+		//self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) );	//does this fix nades?
 		return true;
 	}
 
