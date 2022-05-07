@@ -1126,6 +1126,11 @@ weapon_spawn_think()
 				}
 			}
 		}		
+
+		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= 4)		//TestNadeBuyFix
+        {
+            continue;
+        }
 		
 		if( !player_has_weapon )
 		{
