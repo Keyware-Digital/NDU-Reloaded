@@ -665,7 +665,7 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	//CODER_MOD: TOMMYK 07/13/2008
 	playerBeingRevived.revivetrigger.beingRevived = 1;
 	playerBeingRevived.revive_hud setText( &"GAME_PLAYER_IS_REVIVING_YOU", self );
-	playerBeingRevived revive_hud_show_n_fade( 3.0 );
+	playerBeingRevived revive_hud_show();
 	
 	playerBeingRevived.revivetrigger setHintString( "" );
 	

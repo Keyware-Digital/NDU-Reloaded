@@ -1984,8 +1984,8 @@ solo_quickrevive() // numan solo revive function
 
 	if( isdefined( self.revive_hud ) )
 	{
-		self maps\_laststand::revive_hud_hide();
-	}  
+		self.revive_hud destroy();
+	}	
 
 	// revert everything
 
