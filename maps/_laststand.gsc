@@ -904,11 +904,11 @@ revive_hud_show()
 }
 
 //CODER_MOD: TOMMYK 07/13/2008
-revive_hud_show_n_fade(time)
+revive_hud_show_n_fade()
 {
 	revive_hud_show();
 
-	self.revive_hud fadeOverTime( time );
+	//self.revive_hud fadeOverTime( time );
 	self.revive_hud.alpha = 0;
 }
 
