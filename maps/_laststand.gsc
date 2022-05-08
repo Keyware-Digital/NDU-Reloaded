@@ -665,14 +665,37 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	//CODER_MOD: TOMMYK 07/13/2008
 	playerBeingRevived.revivetrigger.beingRevived = 1;
 	playerBeingRevived.revive_hud setText( &"GAME_PLAYER_IS_REVIVING_YOU", self );
-	playerBeingRevived revive_hud_show_n_fade( 3.0 );
+	playerBeingRevived revive_hud_show();
+
+	playerBeingRevived.revive_hud.alignX = "center";
+	playerBeingRevived.revive_hud.alignY = "middle";
+	playerBeingRevived.revive_hud.horzAlign = "center";
+	playerBeingRevived.revive_hud.vertAlign = "bottom";
+	playerBeingRevived.revive_hud.y = -210;
 	
 	playerBeingRevived.revivetrigger setHintString( "" );
 	
 	playerBeingRevived startrevive( self );
 
-	if( !isdefined(self.reviveProgressBar) )
-		self.reviveProgressBar = self createPrimaryProgressBar();
+	if( !isdefined(playerBeingRevived.reviveProgressBar) )
+		playerBeingRevived.reviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
+
+	playerBeingRevived.reviveProgressBar.alignX = "center";
+	playerBeingRevived.reviveProgressBar.alignY = "middle";
+	playerBeingRevived.reviveProgressBar.horzAlign = "center";
+	playerBeingRevived.reviveProgressBar.vertAlign = "bottom";
+	playerBeingRevived.reviveProgressBar.y = -190;
+	
+	playerBeingRevived.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
+
+	if( !isdefined(playerBeingRevived.reviveProgressBar) )
+		playerBeingRevived.reviveProgressBar = playerBeingRevived createPrimaryProgressBar();
+
+	playerBeingRevived.reviveProgressBar.alignX = "center";
+	playerBeingRevived.reviveProgressBar.alignY = "middle";
+	playerBeingRevived.reviveProgressBar.horzAlign = "center";
+	playerBeingRevived.reviveProgressBar.vertAlign = "bottom";
+	playerBeingRevived.reviveProgressBar.y = -190;
 
 	if( !isdefined(self.reviveTextHud) )
 		self.reviveTextHud = newclientHudElem( self );	
@@ -685,9 +708,9 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	self.reviveTextHud.alignY = "middle";
 	self.reviveTextHud.horzAlign = "center";
 	self.reviveTextHud.vertAlign = "bottom";
-	self.reviveTextHud.y = -148;
+	self.reviveTextHud.y = -210;
 	if ( IsSplitScreen() )
-		self.reviveTextHud.y = -107;
+	self.reviveTextHud.y = -107;
 	self.reviveTextHud.foreground = true;
 	self.reviveTextHud.font = "default";
 	self.reviveTextHud.fontScale = 1.8;
@@ -718,11 +741,21 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	{
 		self.reviveProgressBar destroyElem();
 	}
+
+	if( isdefined( playerBeingRevived.reviveProgressBar ) )
+	{
+		playerBeingRevived.reviveProgressBar maps\_hud_util::destroyElem();
+	}
 	
 	if( isdefined( self.reviveTextHud ) )
 	{
 		self.reviveTextHud destroy();
-	}		
+	}
+
+	if( isdefined( self.revive_hud ) )
+	{
+		self revive_hud_hide();
+	}				
 	
 	if ( !revived )
 	{
@@ -904,11 +937,11 @@ revive_hud_show()
 }
 
 //CODER_MOD: TOMMYK 07/13/2008
-revive_hud_show_n_fade(time)
+revive_hud_show_n_fade()
 {
 	revive_hud_show();
 
-	self.revive_hud fadeOverTime( time );
+	//self.revive_hud fadeOverTime( time );
 	self.revive_hud.alpha = 0;
 }
 

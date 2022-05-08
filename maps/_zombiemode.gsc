@@ -1952,29 +1952,40 @@ solo_quickrevive() // numan solo revive function
 	self SetWeaponAmmoClip(lstandgun,lstandclip);
 	self SetWeaponAmmoStock(lstandgun,lstandammo);
 
-	soloReviveTime = 8;
+	soloReviveTime = 10;
 
-	if( !isdefined(self.reviveProgressBar) )
+	if( !isdefined(self.soloReviveProgressBar) )
 		self.soloReviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
+
+	self.soloReviveProgressBar.alignX = "center";
+	self.soloReviveProgressBar.alignY = "middle";
+	self.soloReviveProgressBar.horzAlign = "center";
+	self.soloReviveProgressBar.vertAlign = "bottom";
+	self.soloReviveProgressBar.y = -190;
 	
 	self.soloReviveProgressBar maps\_hud_util::updateBar( 0.01, 1 / soloReviveTime );
-
+	
 	// wait for revive and play text
 
 	self.revive_hud setText( &"GAME_REVIVING", " ", self );
-	self maps\_laststand::revive_hud_show_n_fade( 3.0 );
+	self maps\_laststand::revive_hud_show();
 	self.revive_hud.alignX = "center";
 	self.revive_hud.alignY = "middle";
 	self.revive_hud.horzAlign = "center";
 	self.revive_hud.vertAlign = "bottom";
-	self.revive_hud.y = -168;
+	self.revive_hud.y = -210;
 
-	wait 8;
+	wait 10;
 
 	if( isdefined( self.soloReviveProgressBar ) )
 	{
 		self.soloReviveProgressBar maps\_hud_util::destroyElem();
-	} 
+	}
+
+	if( isdefined( self.revive_hud ) )
+	{
+		self maps\_laststand::revive_hud_hide();
+	}	
 
 	// revert everything
 
