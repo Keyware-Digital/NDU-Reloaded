@@ -1961,7 +1961,7 @@ solo_quickrevive() // numan solo revive function
 	self.soloReviveProgressBar.alignY = "middle";
 	self.soloReviveProgressBar.horzAlign = "center";
 	self.soloReviveProgressBar.vertAlign = "bottom";
-	self.soloReviveProgressBar.y = -180;
+	self.soloReviveProgressBar.y = -190;
 	
 	self.soloReviveProgressBar maps\_hud_util::updateBar( 0.01, 1 / soloReviveTime );
 	
@@ -1973,7 +1973,7 @@ solo_quickrevive() // numan solo revive function
 	self.revive_hud.alignY = "middle";
 	self.revive_hud.horzAlign = "center";
 	self.revive_hud.vertAlign = "bottom";
-	self.revive_hud.y = -200;
+	self.revive_hud.y = -210;
 
 	wait 10;
 
@@ -1984,7 +1984,7 @@ solo_quickrevive() // numan solo revive function
 
 	if( isdefined( self.revive_hud ) )
 	{
-		self.revive_hud destroy();
+		self maps\_laststand::revive_hud_hide();
 	}	
 
 	// revert everything
