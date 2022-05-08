@@ -1159,7 +1159,7 @@ full_ammo_on_hud( drop_item )
 	hudelem SetShader(shader_ammo, 32, 32);
 	hudelem.alpha = 1;
 	hudelem fadeovertime(10);
-	//hudelem.label = drop_item.hint;
+	//hudelem.label = drop_item.hint;		//disables "max ammo" text.
 
 	// set time remaining for insta kill
 	hudelem thread full_ammo_fade_hud();		
