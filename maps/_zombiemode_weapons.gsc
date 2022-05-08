@@ -1126,6 +1126,16 @@ weapon_spawn_think()
 				}
 			}
 		}		
+<<<<<<< HEAD
+=======
+
+		grenadeMax = WeaponMaxAmmo( "stielhandgranate" );
+
+		if(player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		//TestNadeBuyFix
+        {
+            continue;
+		}
+>>>>>>> 2f9731f152886c55d98f7b48a22673b2ef9f2e63
 		
 		if( !player_has_weapon )
 		{
@@ -1284,7 +1294,7 @@ ammo_give( weapon )
 			clipCount = self GetWeaponAmmoClip( weapon ); 
 	
 			// compare it with the ammo player actually has, if more or equal just dont give the ammo, else do
-			if( ( self getammocount( weapon ) - clipcount ) >= stockMax )	
+			if( ( self getammocount( weapon ) + clipcount ) >= stockMax )	
 			{
 				give_ammo = false; 
 			}
@@ -1314,7 +1324,11 @@ ammo_give( weapon )
 	{
 		self playsound( "cha_ching" ); 
 		self GivemaxAmmo( weapon ); 
+<<<<<<< HEAD
 		//self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) );	//does this fix nades?
+=======
+		self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) );
+>>>>>>> 2f9731f152886c55d98f7b48a22673b2ef9f2e63
 		return true;
 	}
 
