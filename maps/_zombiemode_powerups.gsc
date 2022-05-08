@@ -1153,9 +1153,12 @@ full_ammo_on_hud( drop_item )
 	// set up the hudelem
 	hudelem = maps\_hud_util::createFontString( "objective", 2 );
 	hudelem maps\_hud_util::setPoint( "TOP", undefined, 0, level.zombie_vars["zombie_timer_offset"] - (level.zombie_vars["zombie_timer_offset_interval"] * 2));
-	hudelem.sort = 0.5;
-	hudelem.x = 0;
-	hudelem.y = 0;
+	hudelem.sort = 1;
+	hudelem.alignX = "center";
+	hudelem.alignY = "middle";
+	hudelem.horzAlign = "center";
+	hudelem.vertAlign = "bottom";
+	hudelem.y = -168;
 	hudelem SetShader(shader_ammo, 32, 32);
 	hudelem.alpha = 1;
 	hudelem fadeovertime(10);

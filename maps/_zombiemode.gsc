@@ -1875,11 +1875,12 @@ solo_quickrevive() // numan solo revive function
 	self.downedpistol = level.player_specific_add_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ];
 	self.currentweapon = self GetCurrentWeapon();
 	self.currentstance = self GetStance();
+	clipammo = undefined;
+	weaponammo = undefined;
 	lstandammo = undefined;
 	lstandgun = undefined;
 	lstandclip = undefined;
-	clipammo = undefined;
-	weaponammo = undefined;
+
 
 	playerweapons = self GetWeaponsList(); // returns an array of weapons and also weapons ammo
 	for(i=0;i<playerweapons.size;i++)
@@ -1912,6 +1913,7 @@ solo_quickrevive() // numan solo revive function
 	// if player has better downed gun, give it and check for ammo, then return it later
 
 	self DisableWeaponCycling();
+
 	if(self HasWeapon("ray_gun"))
 	{
 		lstandammo = 20;
@@ -1924,11 +1926,23 @@ solo_quickrevive() // numan solo revive function
 		lstandclip = 6;
 		lstandgun = "sw_357";
 	}
-	else
+	else if(self HasWeapon("walther"))
 	{
 		lstandammo = 24;
 		lstandclip = 8;
 		lstandgun = "walther";
+	}
+	else if(self HasWeapon("tokarev"))
+	{
+		lstandammo = 24;
+		lstandclip = 8;
+		lstandgun = "tokarev";
+	}
+	else
+	{
+		lstandammo = 24;
+		lstandclip = 8;
+		lstandgun = "colt";
 	}
 
 	self TakeAllWeapons();
@@ -1938,12 +1952,29 @@ solo_quickrevive() // numan solo revive function
 	self SetWeaponAmmoClip(lstandgun,lstandclip);
 	self SetWeaponAmmoStock(lstandgun,lstandammo);
 
+	soloReviveTime = 8;
+
+	if( !isdefined(self.reviveProgressBar) )
+		self.soloReviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
+	
+	self.soloReviveProgressBar maps\_hud_util::updateBar( 0.01, 1 / soloReviveTime );
+
 	// wait for revive and play text
 
-	self.revive_hud setText( &"GAME_PLAYER_IS_REVIVING_YOU", self );
+	self.revive_hud setText( &"GAME_REVIVING", " ", self );
 	self maps\_laststand::revive_hud_show_n_fade( 3.0 );
+	self.revive_hud.alignX = "center";
+	self.revive_hud.alignY = "middle";
+	self.revive_hud.horzAlign = "center";
+	self.revive_hud.vertAlign = "bottom";
+	self.revive_hud.y = -168;
 
-	wait 8; 
+	wait 8;
+
+	if( isdefined( self.soloReviveProgressBar ) )
+	{
+		self.soloReviveProgressBar maps\_hud_util::destroyElem();
+	} 
 
 	// revert everything
 

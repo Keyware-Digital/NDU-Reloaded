@@ -1126,8 +1126,6 @@ weapon_spawn_think()
 				}
 			}
 		}		
-<<<<<<< HEAD
-=======
 
 		grenadeMax = WeaponMaxAmmo( "stielhandgranate" );
 
@@ -1135,7 +1133,6 @@ weapon_spawn_think()
         {
             continue;
 		}
->>>>>>> 2f9731f152886c55d98f7b48a22673b2ef9f2e63
 		
 		if( !player_has_weapon )
 		{
@@ -1324,11 +1321,7 @@ ammo_give( weapon )
 	{
 		self playsound( "cha_ching" ); 
 		self GivemaxAmmo( weapon ); 
-<<<<<<< HEAD
-		//self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) );	//does this fix nades?
-=======
 		self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) );
->>>>>>> 2f9731f152886c55d98f7b48a22673b2ef9f2e63
 		return true;
 	}
 
