@@ -587,7 +587,7 @@ powerup_grab()
 	}	
 }
 
-give_player_perk()
+give_player_perk(drop_item)
 {
 	//IPrintLn("Give perk has been activated!");
 
@@ -646,7 +646,7 @@ resetperkdefs()
 	self.perknum = 0;
 }
 
-start_carpenter( origin )
+start_carpenter( origin, drop_item )
 {
 	playsoundatposition("carp_vox", (0,0,0));
 	window_boards = getstructarray( "exterior_goal", "targetname" ); 
