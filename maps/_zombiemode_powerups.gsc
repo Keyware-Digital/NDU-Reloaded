@@ -11,6 +11,8 @@ init()
 	PrecacheShader( "specialty_repair_zombies" );
 	PrecacheShader( "specialty_deathmachine_zombies" );
 	PrecacheShader( "specialty_nuke_zombies" );
+	PrecacheShader( "specialty_randomperk_zombies" );
+	PrecacheShader( "specialty_bonuspoints_zombies" );
 	PrecacheShader( "specialty_juggernaut_zombies" );
 	PrecacheShader( "specialty_fastreload_zombies" );
 	PrecacheShader( "specialty_doubletap_zombies" );
@@ -57,9 +59,10 @@ init_powerups()
     //add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
     //add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
     //add_zombie_powerup( "double_points",	"zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
-    add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
     //add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        "ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
+    //add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        &"ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
+	add_zombie_powerup( "bonus_points",        "zombie_z_money_icon",        &"ZOMBIE_POWERUP_BONUS_POINTS" );	//Bonus Points
 
 	// Randomize the order
 	randomize_powerups();
@@ -562,6 +565,9 @@ powerup_grab()
 								players[i] thread give_player_perk();
 							}
 						break;
+					case "bonus_points":
+						level thread bonus_points_powerup( self );
+						break;
 					default:
 						println ("Unrecognized powerup.");
 						break;
@@ -615,6 +621,8 @@ give_player_perk()
 
 	self.perknum++; // add 1 perk to counter
 	//IPrintLn("player has " + self.perknum + " perks");
+
+	level thread random_perk_on_hud( drop_item );
 }
 
 resetperkdefs()
@@ -698,6 +706,8 @@ start_carpenter( origin )
 	}
 
 	carp_ent delete();
+
+	level thread carpenter_on_hud( drop_item );
 }
 get_closest_window_repair( windows )
 {
@@ -876,6 +886,7 @@ nuke_powerup( drop_item )
 		players[i] maps\_zombiemode_score::set_player_score_hud(); 
 	}
 
+	level thread nuke_on_hud( drop_item );
 }
 
 nuke_flash()
@@ -947,6 +958,17 @@ full_ammo_powerup( drop_item )
 
 //	array_thread (players, ::full_ammo_on_hud, drop_item);
 	level thread full_ammo_on_hud( drop_item );
+}
+
+bonus_points_powerup(drop_item)
+{
+	players = GetPlayers();
+
+	for (i = 0; i < players.size; i++)
+	{
+		players[i] maps\_zombiemode_score::add_to_player_score(500);
+	}
+	level thread bonus_points_on_hud( drop_item );
 }
 
 insta_kill_powerup( drop_item )
@@ -1164,7 +1186,7 @@ full_ammo_on_hud( drop_item )
 	hudelem.y = -108;
 	hudelem SetShader(shader_ammo, 32, 32);
 	hudelem.alpha = 1;
-	hudelem fadeovertime(10);
+	hudelem fadeovertime(0.5);
 	//hudelem.label = drop_item.hint;		//disables "max ammo" text.
 
 	// set time remaining for insta kill
@@ -1187,7 +1209,175 @@ full_ammo_fade_hud()
     
     wait 0.5;
     
-	fade_time = 1.5;
+	fade_time = 3.0;
+
+	self FadeOverTime( fade_time ); 
+	self.alpha = 0;
+
+	wait fade_time;
+
+	self destroy();
+}
+
+bonus_points_on_hud( drop_item )
+{
+	self endon ("disconnect");
+
+	shader_bonus = "specialty_bonuspoints_zombies";
+
+	// set up the hudelem
+	hudelem = maps\_hud_util::createFontString( "objective", 2 );
+	hudelem maps\_hud_util::setPoint( "TOP", undefined, 0, level.zombie_vars["zombie_timer_offset"] - (level.zombie_vars["zombie_timer_offset_interval"] * 2));
+	hudelem.sort = 1;
+	hudelem.alignX = "center";
+	hudelem.alignY = "middle";
+	hudelem.horzAlign = "center";
+	hudelem.vertAlign = "bottom";
+	hudelem.y = -108;
+	hudelem SetShader(shader_bonus, 32, 32);
+	hudelem.alpha = 1;
+	hudelem fadeovertime(0.5);
+
+	// set time remaining for insta kill
+	hudelem thread bonus_points_fade_hud();		
+
+	// offset in case we get another powerup
+	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
+}
+
+bonus_points_fade_hud()
+{
+
+	players = get_players();
+
+	for (i = 0; i < players.size; i++)
+	{
+		players[i] playsound ("bp_vox");
+	}	
+    
+    wait 0.5;
+    
+	fade_time = 3.0;
+
+	self FadeOverTime( fade_time ); 
+	self.alpha = 0;
+
+	wait fade_time;
+
+	self destroy();
+}
+
+nuke_on_hud( drop_item )
+{
+	self endon ("disconnect");
+
+	shader_nuke = "specialty_nuke_zombies";
+
+	// set up the hudelem
+	hudelem = maps\_hud_util::createFontString( "objective", 2 );
+	hudelem maps\_hud_util::setPoint( "TOP", undefined, 0, level.zombie_vars["zombie_timer_offset"] - (level.zombie_vars["zombie_timer_offset_interval"] * 2));
+	hudelem.sort = 1;
+	hudelem.alignX = "center";
+	hudelem.alignY = "middle";
+	hudelem.horzAlign = "center";
+	hudelem.vertAlign = "bottom";
+	hudelem.y = -108;
+	hudelem SetShader(shader_nuke, 32, 32);
+	hudelem.alpha = 1;
+	hudelem fadeovertime(0.5);
+
+	// set time remaining for insta kill
+	hudelem thread nuke_fade_hud();		
+
+	// offset in case we get another powerup
+	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
+}
+
+nuke_fade_hud()
+{    
+    wait 0.5;
+    
+	fade_time = 3.0;
+
+	self FadeOverTime( fade_time ); 
+	self.alpha = 0;
+
+	wait fade_time;
+
+	self destroy();
+}
+
+carpenter_on_hud( drop_item )
+{
+	self endon ("disconnect");
+
+	shader_carp = "specialty_repair_zombies";
+
+	// set up the hudelem
+	hudelem = maps\_hud_util::createFontString( "objective", 2 );
+	hudelem maps\_hud_util::setPoint( "TOP", undefined, 0, level.zombie_vars["zombie_timer_offset"] - (level.zombie_vars["zombie_timer_offset_interval"] * 2));
+	hudelem.sort = 1;
+	hudelem.alignX = "center";
+	hudelem.alignY = "middle";
+	hudelem.horzAlign = "center";
+	hudelem.vertAlign = "bottom";
+	hudelem.y = -108;
+	hudelem SetShader(shader_carp, 32, 32);
+	hudelem.alpha = 1;
+	hudelem fadeovertime(0.5);
+
+	// set time remaining for insta kill
+	hudelem thread carpenter_fade_hud();		
+
+	// offset in case we get another powerup
+	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
+}
+
+carpenter_fade_hud()
+{    
+    wait 0.5;
+    
+	fade_time = 3.0;
+
+	self FadeOverTime( fade_time ); 
+	self.alpha = 0;
+
+	wait fade_time;
+
+	self destroy();
+}
+
+random_perk_on_hud( drop_item )
+{
+	self endon ("disconnect");
+
+	shader_rand = "specialty_randomperk_zombies";
+
+	// set up the hudelem
+	hudelem = maps\_hud_util::createFontString( "objective", 2 );
+	hudelem maps\_hud_util::setPoint( "TOP", undefined, 0, level.zombie_vars["zombie_timer_offset"] - (level.zombie_vars["zombie_timer_offset_interval"] * 2));
+	hudelem.sort = 1;
+	hudelem.alignX = "center";
+	hudelem.alignY = "middle";
+	hudelem.horzAlign = "center";
+	hudelem.vertAlign = "bottom";
+	hudelem.y = -108;
+	hudelem SetShader(shader_rand, 32, 32);
+	hudelem.alpha = 1;
+	hudelem fadeovertime(0.5);
+
+	// set time remaining for insta kill
+	hudelem thread random_perk_fade_hud();		
+
+	// offset in case we get another powerup
+	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
+}
+
+random_perk_fade_hud()
+{    
+    wait 0.5;
+    
+	fade_time = 3.0;
 
 	self FadeOverTime( fade_time ); 
 	self.alpha = 0;

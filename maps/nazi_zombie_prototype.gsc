@@ -274,6 +274,7 @@ include_powerups()
 	include_powerup( "full_ammo" );
 	include_powerup( "carpenter" );
 	include_powerup( "randomperk" );
+	include_powerup("bonus_points");
 }
 
 health_show()
