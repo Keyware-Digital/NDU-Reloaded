@@ -8,6 +8,9 @@ init()
 	PrecacheShader( "specialty_2x_zombies" );
 	PrecacheShader( "specialty_instakill_zombies" );
 	PrecacheShader( "specialty_maxammo_zombies" );
+	PrecacheShader( "specialty_repair_zombies" );
+	PrecacheShader( "specialty_deathmachine_zombies" );
+	PrecacheShader( "specialty_nuke_zombies" );
 	PrecacheShader( "specialty_juggernaut_zombies" );
 	PrecacheShader( "specialty_fastreload_zombies" );
 	PrecacheShader( "specialty_doubletap_zombies" );
@@ -1158,7 +1161,7 @@ full_ammo_on_hud( drop_item )
 	hudelem.alignY = "middle";
 	hudelem.horzAlign = "center";
 	hudelem.vertAlign = "bottom";
-	hudelem.y = -168;
+	hudelem.y = -108;
 	hudelem SetShader(shader_ammo, 32, 32);
 	hudelem.alpha = 1;
 	hudelem fadeovertime(10);
