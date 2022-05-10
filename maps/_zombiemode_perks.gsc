@@ -23,6 +23,7 @@ init_precache() {
 }
 
 randomperk_powerup_think() {
+
     if (!isdefined(self.perknum) || self.perknum == 0) // if player doesnt have any perks
     {
         self thread resetperkdefs();
