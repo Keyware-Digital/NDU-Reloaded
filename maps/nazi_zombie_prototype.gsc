@@ -25,7 +25,8 @@ main() {
 
     for (i = 0; i < players.size; i++) {
         players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
-        players[i] SetClientDvar("sv_cheats", 0);
+        //dev
+        players[i] SetClientDvar("sv_cheats", 1);
     }
 
     // If you want to modify/add to the weapons table, please copy over the _zombiemode_weapons init_weapons() and paste it here.

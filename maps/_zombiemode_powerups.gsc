@@ -61,7 +61,7 @@ init_powerups() {
     add_zombie_powerup("double_points", "zombie_x2_icon", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
     add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
     add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup("randomperk", "zombie_pickup_perkbottle", &"ZOMBIE_POWERUP_MAX_AMMO"); //Random Perk!
+    add_zombie_powerup("randomperk", "zombie_pickup_perkbottle", &"ZOMBIE_POWERUP_MAX_AMMO"); //Random Perk
     add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS"); //Bonus Points
 
     // Randomize the order
