@@ -940,6 +940,9 @@ full_ammo_powerup( drop_item )
 
 	for (i = 0; i < players.size; i++)
 	{
+		players[i] playsound ("full_ammo");
+		players[i] playsound ("ma_vox");
+
 		primaryWeapons = players[i] GetWeaponsList(); 
 
 		for( x = 0; x < primaryWeapons.size; x++ )
@@ -966,6 +969,7 @@ bonus_points_powerup(drop_item)
 
 	for (i = 0; i < players.size; i++)
 	{
+		players[i] playsound ("bp_vox");
 		players[i] maps\_zombiemode_score::add_to_player_score(500);
 	}
 	level thread bonus_points_on_hud( drop_item );
@@ -1190,33 +1194,10 @@ full_ammo_on_hud( drop_item )
 	//hudelem.label = drop_item.hint;		//disables "max ammo" text.
 
 	// set time remaining for insta kill
-	hudelem thread full_ammo_fade_hud();		
+	hudelem thread powerup_fade_hud();		
 
 	// offset in case we get another powerup
 	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
-}
-
-full_ammo_fade_hud()
-{
-
-	players = get_players();
-
-	for (i = 0; i < players.size; i++)
-	{
-		players[i] playsound ("full_ammo");
-		players[i] playsound ("ma_vox");
-	}	
-    
-    wait 0.5;
-    
-	fade_time = 3.0;
-
-	self FadeOverTime( fade_time ); 
-	self.alpha = 0;
-
-	wait fade_time;
-
-	self destroy();
 }
 
 bonus_points_on_hud( drop_item )
@@ -1239,32 +1220,10 @@ bonus_points_on_hud( drop_item )
 	hudelem fadeovertime(0.5);
 
 	// set time remaining for insta kill
-	hudelem thread bonus_points_fade_hud();		
+	hudelem thread powerup_fade_hud();		
 
 	// offset in case we get another powerup
 	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
-}
-
-bonus_points_fade_hud()
-{
-
-	players = get_players();
-
-	for (i = 0; i < players.size; i++)
-	{
-		players[i] playsound ("bp_vox");
-	}	
-    
-    wait 0.5;
-    
-	fade_time = 3.0;
-
-	self FadeOverTime( fade_time ); 
-	self.alpha = 0;
-
-	wait fade_time;
-
-	self destroy();
 }
 
 nuke_on_hud( drop_item )
@@ -1287,24 +1246,10 @@ nuke_on_hud( drop_item )
 	hudelem fadeovertime(0.5);
 
 	// set time remaining for insta kill
-	hudelem thread nuke_fade_hud();		
+	hudelem thread powerup_fade_hud();		
 
 	// offset in case we get another powerup
 	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
-}
-
-nuke_fade_hud()
-{    
-    wait 0.5;
-    
-	fade_time = 3.0;
-
-	self FadeOverTime( fade_time ); 
-	self.alpha = 0;
-
-	wait fade_time;
-
-	self destroy();
 }
 
 carpenter_on_hud( drop_item )
@@ -1327,31 +1272,17 @@ carpenter_on_hud( drop_item )
 	hudelem fadeovertime(0.5);
 
 	// set time remaining for insta kill
-	hudelem thread carpenter_fade_hud();		
+	hudelem thread powerup_fade_hud();		
 
 	// offset in case we get another powerup
 	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
-}
-
-carpenter_fade_hud()
-{    
-    wait 0.5;
-    
-	fade_time = 3.0;
-
-	self FadeOverTime( fade_time ); 
-	self.alpha = 0;
-
-	wait fade_time;
-
-	self destroy();
 }
 
 random_perk_on_hud( drop_item )
 {
 	self endon ("disconnect");
 
-	shader_rand = "specialty_randomperk_zombies";
+	//shader_rand = "specialty_randomperk_zombies";
 
 	// set up the hudelem
 	hudelem = maps\_hud_util::createFontString( "objective", 2 );
@@ -1362,22 +1293,22 @@ random_perk_on_hud( drop_item )
 	hudelem.horzAlign = "center";
 	hudelem.vertAlign = "bottom";
 	hudelem.y = -108;
-	hudelem SetShader(shader_rand, 32, 32);
+	//hudelem SetShader(shader_rand, 32, 32);
 	hudelem.alpha = 1;
 	hudelem fadeovertime(0.5);
 
 	// set time remaining for insta kill
-	hudelem thread random_perk_fade_hud();		
+	hudelem thread powerup_fade_hud();		
 
 	// offset in case we get another powerup
 	//level.zombie_timer_offset -= level.zombie_timer_offset_interval;
 }
 
-random_perk_fade_hud()
+powerup_fade_hud()
 {    
     wait 0.5;
     
-	fade_time = 3.0;
+	fade_time = 5.0;
 
 	self FadeOverTime( fade_time ); 
 	self.alpha = 0;
