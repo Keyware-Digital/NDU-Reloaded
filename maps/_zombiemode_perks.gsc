@@ -5,13 +5,10 @@
 #include maps\_zombiemode_utility;
 
 init() {
-
     init_precache();
-
 }
 
 init_precache() {
-
     PrecacheShader("specialty_juggernaut_zombies");
     PrecacheShader("specialty_fastreload_zombies");
     PrecacheShader("specialty_doubletap_zombies");
@@ -26,7 +23,6 @@ init_precache() {
 }
 
 randomperk_powerup_think() {
-
     if (!isdefined(self.perknum) || self.perknum == 0) // if player doesnt have any perks
     {
         self thread resetperkdefs();
@@ -54,7 +50,6 @@ randomperk_powerup_think() {
 }
 
 resetperkdefs() {
-
     self.perkarray = [];
     self.perkarray[0] = "specialty_armorvest";
     self.perkarray[1] = "specialty_rof";
@@ -73,6 +68,7 @@ resetperkdefs() {
 }
 
 death_check() {
+
     self waittill_any("fake_death", "death", "player_downed", "second_chance");
 
     self UnsetPerk("specialty_armorvest");
@@ -109,6 +105,7 @@ death_check() {
 }
 
 perk_hud_create(perk) {
+
     if (!IsDefined(self.perk_hud)) {
         self.perk_hud = [];
     }
@@ -186,6 +183,32 @@ perk_hud_create(perk) {
 }
 
 perk_hud_destroy(perk) {
+
     self.perk_hud[perk] destroy_hud();
     self.perk_hud[perk] = undefined;
+}
+
+play_no_money_perk_dialog() {
+
+    index = maps\_zombiemode_weapons::get_player_index(self);
+
+    player_index = "plr_" + index + "_";
+    if (!IsDefined(self.vox_nomoney_perk)) {
+        num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_nomoney_perk");
+        self.vox_nomoney_perk = [];
+        for (i = 0; i < num_variants; i++) {
+            self.vox_nomoney_perk[self.vox_nomoney_perk.size] = "vox_nomoney_perk_" + i;
+        }
+        self.vox_nomoney_perk_available = self.vox_nomoney_perk;
+    }
+    sound_to_play = random(self.vox_nomoney_perk_available);
+
+    self.vox_nomoney_perk_available = array_remove(self.vox_nomoney_perk_available, sound_to_play);
+
+    if (self.vox_nomoney_perk_available.size < 1) {
+        self.vox_nomoney_perk_available = self.vox_nomoney_perk;
+    }
+
+    self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
+
 }

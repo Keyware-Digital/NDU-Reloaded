@@ -6,7 +6,7 @@
 
 init() {
 
-	init_powerup_vars();
+    init_powerup_vars();
 
     init_powerup_effects();
 
@@ -15,7 +15,6 @@ init() {
     init_powerups();
 
     thread watch_for_drop();
-
 }
 
 init_powerup_vars() {
@@ -55,6 +54,7 @@ init_precache() {
 }
 
 init_powerups() {
+
     // Random Drops
     add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
     add_zombie_powerup("insta_kill", "zombie_skull", &"ZOMBIE_POWERUP_INSTA_KILL");
@@ -159,10 +159,12 @@ powerup_hud_overlay() {
 }
 
 randomize_powerups() {
+
     level.zombie_powerup_array = array_randomize(level.zombie_powerup_array);
 }
 
 get_next_powerup() {
+
     if (level.zombie_powerup_index >= level.zombie_powerup_array.size) {
         level.zombie_powerup_index = 0;
         randomize_powerups();
@@ -174,7 +176,9 @@ get_next_powerup() {
 
     return powerup;
 }
+
 get_num_window_destroyed() {
+
     num = 0;
     for (i = 0; i < level.exterior_goals.size; i++) {
 
@@ -185,7 +189,9 @@ get_num_window_destroyed() {
 
     return num;
 }
+
 watch_for_drop() {
+
     players = GetPlayers();
     score_to_drop = (players.size * level.zombie_vars["zombie_score_start"]) + level.zombie_vars["zombie_powerup_drop_increment"];
     while (1) {
@@ -208,6 +214,7 @@ watch_for_drop() {
 }
 
 add_zombie_powerup(powerup_name, model_name, hint, fx) {
+
     if (IsDefined(level.zombie_include_powerups) && !IsDefined(level.zombie_include_powerups[powerup_name])) {
         return;
     }
@@ -239,6 +246,7 @@ add_zombie_powerup(powerup_name, model_name, hint, fx) {
 }
 
 include_zombie_powerup(powerup_name) {
+
     if (!IsDefined(level.zombie_include_powerups)) {
         level.zombie_include_powerups = [];
     }
@@ -247,10 +255,12 @@ include_zombie_powerup(powerup_name) {
 }
 
 powerup_round_start() {
+
     level.powerup_drop_count = 0;
 }
 
 powerup_drop(drop_point) {
+
     rand_drop = randomint(100);
 
     if (level.powerup_drop_count == level.zombie_vars["zombie_powerup_drop_max_per_round"]) {
@@ -306,6 +316,7 @@ powerup_drop(drop_point) {
 }
 
 powerup_setup() {
+
     powerup = get_next_powerup();
 
     struct = level.zombie_powerups[powerup];
@@ -325,6 +336,7 @@ powerup_setup() {
 }
 
 powerup_grab() {
+
     self endon("powerup_timedout");
     self endon("powerup_grabbed");
 
@@ -401,6 +413,7 @@ randomperk_powerup(drop_item) {
 }
 
 carpenter_powerup(origin, drop_item) {
+
     level thread carpenter_on_hud(drop_item);
     playsoundatposition("carp_vox", (0, 0, 0));
     window_boards = getstructarray("exterior_goal", "targetname");
@@ -452,7 +465,9 @@ carpenter_powerup(origin, drop_item) {
 
     carp_ent delete();
 }
+
 get_closest_window_repair(windows) {
+
     current_window = undefined;
     for (i = 0; i < windows.size; i++) {
         if (all_chunks_intact(windows[i].barrier_chunks))
@@ -465,6 +480,7 @@ get_closest_window_repair(windows) {
 }
 
 powerup_vo(type) {
+
     self endon("death");
     self endon("disconnect");
 
@@ -505,6 +521,7 @@ powerup_vo(type) {
 }
 
 powerup_wobble() {
+
     self endon("powerup_grabbed");
     self endon("powerup_timedout");
 
@@ -527,6 +544,7 @@ powerup_wobble() {
 }
 
 powerup_timeout() {
+
     self endon("powerup_grabbed");
 
     wait 15;
@@ -553,6 +571,7 @@ powerup_timeout() {
 }
 
 nuke_powerup(drop_item) {
+
     level thread nuke_on_hud(drop_item);
     zombies = getaispeciesarray("axis");
 
@@ -597,6 +616,7 @@ nuke_powerup(drop_item) {
 }
 
 nuke_flash() {
+
     playsoundatposition("nuke_flash", (0, 0, 0));
     playsoundatposition("nuke_vox", (0, 0, 0));
 
@@ -625,6 +645,7 @@ nuke_flash() {
 
 // double the points
 double_points_powerup(drop_item) {
+
     level notify("powerup points scaled");
     level endon("powerup points scaled");
 
@@ -638,6 +659,7 @@ double_points_powerup(drop_item) {
 }
 
 max_ammo_powerup(drop_item) {
+
     players = GetPlayers();
 
     for (i = 0; i < players.size; i++) {
@@ -662,6 +684,7 @@ max_ammo_powerup(drop_item) {
 }
 
 bonus_points_powerup(drop_item) {
+
     players = GetPlayers();
 
     for (i = 0; i < players.size; i++) {
@@ -674,6 +697,7 @@ bonus_points_powerup(drop_item) {
 }
 
 insta_kill_powerup(drop_item) {
+
     level notify("powerup instakill");
     level endon("powerup instakill");
 
@@ -691,6 +715,7 @@ insta_kill_powerup(drop_item) {
 }
 
 check_for_instakill(player) {
+
     if (IsDefined(player) && IsAlive(player) && level.zombie_vars["zombie_insta_kill"]) {
         if (is_magic_bullet_shield_enabled(self)) {
             return;
@@ -723,6 +748,7 @@ check_for_instakill(player) {
 }
 
 insta_kill_on_hud(drop_item) {
+
     self endon("disconnect");
 
     // check to see if this is on or not
@@ -739,6 +765,7 @@ insta_kill_on_hud(drop_item) {
 }
 
 time_remaning_on_insta_kill_powerup() {
+
     playsoundatposition("insta_vox", (0, 0, 0));
     temp_enta = spawn("script_origin", (0, 0, 0));
     temp_enta playloopsound("insta_kill_loop");
@@ -766,6 +793,7 @@ time_remaning_on_insta_kill_powerup() {
 }
 
 point_doubler_on_hud(drop_item) {
+
     self endon("disconnect");
 
     // check to see if this is on or not
@@ -808,6 +836,7 @@ time_remaining_on_point_doubler_powerup() {
 }
 
 max_ammo_on_hud(drop_item) {
+
     self endon("disconnect");
 
     shader_maxammo = "specialty_maxammo_zombies";
@@ -830,6 +859,7 @@ max_ammo_on_hud(drop_item) {
 }
 
 bonus_points_on_hud(drop_item) {
+
     self endon("disconnect");
 
     shader_bonuspoints = "specialty_bonuspoints_zombies";
@@ -852,6 +882,7 @@ bonus_points_on_hud(drop_item) {
 }
 
 nuke_on_hud(drop_item) {
+
     self endon("disconnect");
 
     shader_nuke = "specialty_nuke_zombies";
@@ -874,6 +905,7 @@ nuke_on_hud(drop_item) {
 }
 
 carpenter_on_hud(drop_item) {
+
     self endon("disconnect");
 
     shader_carpenter = "specialty_repair_zombies";
@@ -896,6 +928,7 @@ carpenter_on_hud(drop_item) {
 }
 
 random_perk_on_hud(drop_item) {
+
     self endon("disconnect");
 
     shader_randomperk = "specialty_randomperk_zombies";
@@ -918,6 +951,7 @@ random_perk_on_hud(drop_item) {
 }
 
 powerup_fade_hud() {
+
     wait 0.5;
 
     fade_time = 5.0;
@@ -928,55 +962,4 @@ powerup_fade_hud() {
     wait fade_time;
 
     self destroy();
-}
-
-play_no_money_perk_dialog() {
-
-    index = maps\_zombiemode_weapons::get_player_index(self);
-
-    player_index = "plr_" + index + "_";
-    if (!IsDefined(self.vox_nomoney_perk)) {
-        num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_nomoney_perk");
-        self.vox_nomoney_perk = [];
-        for (i = 0; i < num_variants; i++) {
-            self.vox_nomoney_perk[self.vox_nomoney_perk.size] = "vox_nomoney_perk_" + i;
-        }
-        self.vox_nomoney_perk_available = self.vox_nomoney_perk;
-    }
-    sound_to_play = random(self.vox_nomoney_perk_available);
-
-    self.vox_nomoney_perk_available = array_remove(self.vox_nomoney_perk_available, sound_to_play);
-
-    if (self.vox_nomoney_perk_available.size < 1) {
-        self.vox_nomoney_perk_available = self.vox_nomoney_perk;
-    }
-
-    self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
-
-}
-
-play_no_money_purchase_dialog() {
-
-    index = maps\_zombiemode_weapons::get_player_index(self);
-
-    player_index = "plr_" + index + "_";
-    if (!IsDefined(self.vox_gen_sigh)) {
-        num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_gen_sigh");
-        self.vox_gen_sigh = [];
-        for (i = 0; i < num_variants; i++) {
-            self.vox_gen_sigh[self.vox_gen_sigh.size] = "vox_gen_sigh_" + i;
-        }
-        self.vox_gen_sigh_available = self.vox_gen_sigh;
-    }
-    rand = randomintrange(0, 6);
-    if (rand < 3) {
-        sound_to_play = random(self.vox_gen_sigh_available);
-        self.vox_gen_sigh_available = array_remove(self.vox_gen_sigh_available, sound_to_play);
-        if (self.vox_gen_sigh_available.size < 1) {
-            self.vox_gen_sigh_available = self.vox_gen_sigh;
-        }
-        wait(0.25);
-        self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
-    }
-
 }
