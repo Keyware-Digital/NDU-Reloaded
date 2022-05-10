@@ -16,7 +16,11 @@ material,specialty_aim_zombies
 material,specialty_2x_zombies
 material,specialty_instakill_zombies
 material,specialty_maxammo_zombies
+material,specialty_nuke_zombies
+material,specialty_repair_zombies
 material,specialty_bonuspoints_zombies
+material,specialty_deathmachine_zombies
+material,specialty_randomperk_zombies
 material,mtl_x2icon_gold
 material,logo_cod2
 localize,prototype

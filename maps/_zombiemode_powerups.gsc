@@ -56,12 +56,12 @@ init()
 init_powerups()
 {
     // Random Drops
-    //add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
-    //add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
-    //add_zombie_powerup( "double_points",	"zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
-    //add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        &"ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
+    add_zombie_powerup( "nuke",         "zombie_bomb",        &"ZOMBIE_POWERUP_NUKE",             "misc/fx_zombie_mini_nuke" );
+    add_zombie_powerup( "insta_kill",     "zombie_skull",        &"ZOMBIE_POWERUP_INSTA_KILL" );
+    add_zombie_powerup( "double_points",	"zombie_x2_icon",    &"ZOMBIE_POWERUP_DOUBLE_POINTS" );
+    add_zombie_powerup( "full_ammo",      "zombie_ammocan",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup( "carpenter",      "zombie_carpenter",    &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup( "randomperk",        "zombie_pickup_perkbottle",        &"ZOMBIE_POWERUP_MAX_AMMO" );	//Random Perk!
 	add_zombie_powerup( "bonus_points",        "zombie_z_money_icon",        &"ZOMBIE_POWERUP_BONUS_POINTS" );	//Bonus Points
 
 	// Randomize the order
@@ -98,7 +98,7 @@ powerup_hud_overlay()
 		level.powerup_hud[i].x = -32 + (i * 15); 
 		level.powerup_hud[i].y = level.powerup_hud[i].y - 35; 
 		level.powerup_hud[i].alpha = 0.8;
-		//hud SetShader( shader_inst, 24, 24 );
+		//hud SetShader( shader_inst, 32, 32 );
 	}
 
 	shader_2x = "specialty_2x_zombies";
@@ -121,7 +121,7 @@ powerup_hud_overlay()
 	//	level.powerup_hud_cover[i].x = -32 + (i * 34); 
 	//	level.powerup_hud_cover[i].y = level.powerup_hud_cover[i].y - 30; 
 	//	level.powerup_hud_cover[i].alpha = 1;
-	//	//hud SetShader( shader_inst, 24, 24 );
+	//	//hud SetShader( shader_inst, 32, 32 );
 	//}
 
 
@@ -179,8 +179,8 @@ powerup_hud_overlay()
 			level.powerup_hud[1].x = 24;
 			level.powerup_hud[0].alpha = 1;
 			level.powerup_hud[1].alpha = 1;
-			level.powerup_hud[0] setshader(shader_2x, 24, 24);
-			level.powerup_hud[1] setshader(shader_insta, 24, 24);
+			level.powerup_hud[0] setshader(shader_2x, 32, 32);
+			level.powerup_hud[1] setshader(shader_insta, 32, 32);
 			/*level.powerup_hud_cover[0].x = -36;
 			level.powerup_hud_cover[1].x = 36;
 			level.powerup_hud_cover[0] setshader(shader_white, 32, i);
@@ -193,7 +193,7 @@ powerup_hud_overlay()
 		{
 			level.powerup_hud[0].x = 0; 
 			//level.powerup_hud[0].y = level.powerup_hud[0].y - 70; 
-			level.powerup_hud[0] setshader(shader_2x, 24, 24);
+			level.powerup_hud[0] setshader(shader_2x, 32, 32);
 			level.powerup_hud[1].alpha = 0;
 			level.powerup_hud[0].alpha = 1;
 
@@ -203,7 +203,7 @@ powerup_hud_overlay()
 
 			level.powerup_hud[1].x = 0; 
 			//level.powerup_hud[1].y = level.powerup_hud[1].y - 70; 
-			level.powerup_hud[1] setshader(shader_insta, 24, 24);
+			level.powerup_hud[1] setshader(shader_insta, 32, 32);
 			level.powerup_hud[0].alpha = 0;
 			level.powerup_hud[1].alpha = 1;
 		}
@@ -272,7 +272,7 @@ powerup_hud_overlay()
 	//	level.powerup_hud_cover[i].x = -32 + (i * 34); 
 	//	level.powerup_hud_cover[i].y = level.powerup_hud_cover[i].y - 79; 
 	//	level.powerup_hud_cover[i].alpha = 0.5;
-	//	//hud SetShader( shader_inst, 24, 24 );
+	//	//hud SetShader( shader_inst, 32, 32 );
 	//}
 
 
@@ -648,6 +648,7 @@ resetperkdefs()
 
 start_carpenter( origin, drop_item )
 {
+	level thread carpenter_on_hud( drop_item );
 	playsoundatposition("carp_vox", (0,0,0));
 	window_boards = getstructarray( "exterior_goal", "targetname" ); 
 	total = level.exterior_goals.size;
@@ -706,8 +707,6 @@ start_carpenter( origin, drop_item )
 	}
 
 	carp_ent delete();
-
-	level thread carpenter_on_hud( drop_item );
 }
 get_closest_window_repair( windows )
 {
@@ -834,6 +833,7 @@ powerup_timeout()
 
 nuke_powerup( drop_item )
 {
+	level thread nuke_on_hud( drop_item );
 	zombies = getaispeciesarray("axis");
 
 	PlayFx( drop_item.fx, drop_item.origin );
@@ -885,8 +885,6 @@ nuke_powerup( drop_item )
 		players[i].score_total += 400 * level.zombie_vars["zombie_point_scalar"];
 		players[i] maps\_zombiemode_score::set_player_score_hud(); 
 	}
-
-	level thread nuke_on_hud( drop_item );
 }
 
 nuke_flash()
@@ -1190,7 +1188,7 @@ full_ammo_on_hud( drop_item )
 	hudelem.horzAlign = "center";
 	hudelem.vertAlign = "bottom";
 	hudelem.y = -108;
-	hudelem SetShader(shader_ammo, 24, 24);
+	hudelem SetShader(shader_ammo, 32, 32);
 	hudelem.alpha = 1;
 	hudelem fadeovertime(0.5);
 	//hudelem.label = drop_item.hint;		//disables "max ammo" text.
@@ -1217,7 +1215,7 @@ bonus_points_on_hud( drop_item )
 	hudelem.horzAlign = "center";
 	hudelem.vertAlign = "bottom";
 	hudelem.y = -108;
-	hudelem SetShader(shader_bonus, 24, 24);
+	hudelem SetShader(shader_bonus, 32, 32);
 	hudelem.alpha = 1;
 	hudelem fadeovertime(0.5);
 
@@ -1243,7 +1241,7 @@ nuke_on_hud( drop_item )
 	hudelem.horzAlign = "center";
 	hudelem.vertAlign = "bottom";
 	hudelem.y = -108;
-	hudelem SetShader(shader_nuke, 24, 24);
+	hudelem SetShader(shader_nuke, 32, 32);
 	hudelem.alpha = 1;
 	hudelem fadeovertime(0.5);
 
@@ -1269,9 +1267,10 @@ carpenter_on_hud( drop_item )
 	hudelem.horzAlign = "center";
 	hudelem.vertAlign = "bottom";
 	hudelem.y = -108;
-	hudelem SetShader(shader_carp, 24, 24);
+	hudelem SetShader(shader_carp, 32, 32);
 	hudelem.alpha = 1;
 	hudelem fadeovertime(0.5);
+	//hudelem.label = drop_item.hint;		//disables "max ammo" text.
 
 	// set time remaining for insta kill
 	hudelem thread powerup_fade_hud();		
@@ -1295,7 +1294,7 @@ random_perk_on_hud( drop_item )
 	hudelem.horzAlign = "center";
 	hudelem.vertAlign = "bottom";
 	hudelem.y = -108;
-	//hudelem SetShader(shader_rand, 24, 24);
+	//hudelem SetShader(shader_rand, 32, 32);
 	hudelem.alpha = 1;
 	hudelem fadeovertime(0.5);
 
