@@ -25,8 +25,8 @@ main()
 
 	for( i = 0; i < players.size; i++ )
 	{
-		players[i] SetClientDvar("sv_cheats", 1); //enable cheats for testing purposes
 		players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
+		/*players[i] SetClientDvar("sv_cheats", 1); //enable cheats for testing purposes
 		//add perks for testing purposes
 		players[i] setPerk( "specialty_armorvest" );
 		players[i] setPerk( "specialty_rof" );
@@ -50,7 +50,7 @@ main()
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_electriccherry" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_mulekick" );
 		players[i] maps\_zombiemode_powerups::perk_hud_create( "specialty_widowswine" );
-		players[i] maps\_zombiemode_score::add_to_player_score(99999); //add points for testing purposes
+		players[i] maps\_zombiemode_score::add_to_player_score(99999); //add points for testing purposes*/
 	}
 
 	// If you want to modify/add to the weapons table, please copy over the _zombiemode_weapons init_weapons() and paste it here.
