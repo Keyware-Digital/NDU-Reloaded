@@ -5,7 +5,6 @@ material,specialty_juggernaut_zombies
 material,specialty_fastreload_zombies
 material,specialty_doubletap_zombies
 material,specialty_quickrevive_zombies
-material,specialty_sp_zombies
 material,specialty_phd_zombies
 material,specialty_longersprint_zombies
 material,specialty_fireworks_zombies
@@ -46,6 +45,7 @@ rawfile,maps/_zombiemode_achievement.gsc
 rawfile,maps/_zombiemode_server_throttle.gsc
 rawfile,maps/_zombiemode_spawner.gsc
 rawfile,maps/_zombiemode_weapons.gsc
+rawfile,maps/_zombiemode_perks.gsc
 rawfile,animtrees/generic_human.atr
 rawfile,xmodelparts/zombie_pickup_perk_cabinet1
 rawfile,xmodelparts/zombie_z_money_icon_LOD01
