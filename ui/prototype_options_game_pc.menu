@@ -66,7 +66,7 @@
    		CHOICE_DVARFLOATLIST_VIS( 27, "@MENU_MATURE", cg_mature, { "@MENU_MATURE_REDUCED" 1 "@MENU_MATURE_REDUCED" 0 }, setdvar "cg_mature" 1; setdvar cg_blood "1", when( dvarString( "cg_mature" ) == "0" && dvarBool(cg_allow_mature) && !INGAME && !dvarBool(ui_multiplayer) ) )   		
 		CHOICE_DDVARALTTEXT_VIS( 27, "@MENU_MATURE", "@MENU_MATURE_UNRESTRICTED", when( ( !dvarBool(cg_allow_mature) || INGAME ) && dvarString( "cg_mature" ) == "1" && !dvarBool(ui_multiplayer) ) )
 		CHOICE_DDVARALTTEXT_VIS( 27, "@MENU_MATURE", "@MENU_MATURE_REDUCED", when( ( !dvarBool(cg_allow_mature) || INGAME ) && dvarString( "cg_mature" ) == "0" && !dvarBool(ui_multiplayer) ) )
-		CHOICE_DVARFLOATLIST( 28, "Max FPS", com_maxfps, { "@MENU_YES" 0 "@MENU_NO" 90 }, ; )
+		CHOICE_DVARSLIDER( 28, "Frame Rate", com_maxfps, 120, 90, 165, setLocalVarBool ui_hideBack 1 )
 		//CHOICE_DVARFLOATLIST( 29, "Enable Controller", com_maxfps, { "@MENU_YES" 0 "@MENU_NO" 90 }, ; )
 		//CHOICE_DVARYESNO_VIS( 29, "Enable Controller", default_controller.cfg, ;, when( !localvarBool(ui_hideBack) ); )
 
