@@ -66,9 +66,9 @@ init_powerups() {
     //add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
     //Additional
     //add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup("randomperk", "zombie_pickup_perkbottle", &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup("randomperk", "zombie_pickup_perkbottle", &"ZOMBIE_POWERUP_MAX_AMMO");
     //add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
-    add_zombie_powerup("firesale", "zombie_firesale", &"ZOMBIE_POWERUP_FIRESALE");
+    //add_zombie_powerup("firesale", "zombie_firesale", &"ZOMBIE_POWERUP_FIRESALE");
 
     // Randomize the order
     randomize_powerups();
@@ -412,9 +412,7 @@ powerup_grab() {
                         players[i] thread powerup_vo("carpenter");
                         break;
                     case "randomperk":
-                        for (i = 0; i < players.size; i++) {
-                            players[i] thread randomperk_powerup();
-                        }
+                        level thread randomperk_powerup(self);
                         break;
                     case "bonus_points":
                         level thread bonus_points_powerup(self);
@@ -701,7 +699,11 @@ randomperk_powerup(drop_item) {
 
     level thread randomperk_on_hud(drop_item);
 
-    level thread maps\_zombiemode_perks::randomperk_powerup_think();
+    players = GetPlayers();
+
+    for (i = 0; i < players.size; i++) {
+        players[i] thread maps\_zombiemode_perks::randomperk_powerup_think();
+    }
 
     PlaySoundAtPosition("rp_vox", (0, 0, 0));
 
@@ -948,7 +950,7 @@ time_remaining_on_firesale_powerup() {
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("points_loop_off");
     }
-    firesale_ent StopLoopSound(2); // doesn't work
+    firesale_ent StopLoopSound(2);
 
     // remove the offset to make room for new powerups, reset timer for next time
     level.zombie_vars["zombie_powerup_firesale_time"] = 30;
