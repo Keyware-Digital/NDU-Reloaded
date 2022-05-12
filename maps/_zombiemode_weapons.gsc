@@ -265,9 +265,9 @@ get_is_in_box( weapon_name )
 treasure_chest_init()
 {
 	// the triggers which are targeted at chests
-	chests = GetEntArray( "treasure_chest_use", "targetname" ); 
+	level.chests = GetEntArray( "treasure_chest_use", "targetname" ); 
 
-	array_thread( chests, ::treasure_chest_think ); 
+	array_thread( level.chests, ::treasure_chest_think ); 
 }
 
 set_treasure_chest_cost( cost )
@@ -284,9 +284,14 @@ treasure_chest_think(rand)
 		cost = level.zombie_treasure_chest_cost;
 	}
 
-	self set_hint_string( self, "default_treasure_chest_" + cost );
+	self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950");
 	self setCursorHint( "HINT_NOICON" );
-	
+
+	if(isDefined(level.zombie_vars["zombie_firesale"]) && level.zombie_vars["zombie_firesale"])
+	{
+		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_10");
+	}
+
 	// waittill someuses uses this
 	user = undefined;
 	while( 1 )
@@ -300,9 +305,9 @@ treasure_chest_think(rand)
 		}
 		
 		// make sure the user is a player, and that they can afford it
-		if( is_player_valid( user ) && user.score >= self.zombie_cost )
+		if( is_player_valid( user ) && user.score >= level.zombie_treasure_chest_cost )
 		{
-			user maps\_zombiemode_score::minus_to_player_score( self.zombie_cost ); 
+			user maps\_zombiemode_score::minus_to_player_score( level.zombie_treasure_chest_cost ); 
 			break; 
 		}
 		

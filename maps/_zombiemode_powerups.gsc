@@ -14,6 +14,8 @@ init() {
 
     init_powerups();
 
+    level.zombie_treasure_chest_cost = 950;
+
     thread watch_for_drop();
 }
 
@@ -66,9 +68,9 @@ init_powerups() {
     //add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
     //Additional
     //add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup("randomperk", "zombie_pickup_perkbottle", &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup("randomperk", "zombie_pickup_perkbottle", &"ZOMBIE_POWERUP_MAX_AMMO");
     //add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
-    //add_zombie_powerup("firesale", "zombie_firesale", &"ZOMBIE_POWERUP_FIRESALE");
+    add_zombie_powerup("firesale", "zombie_firesale", &"ZOMBIE_POWERUP_FIRESALE");
 
     // Randomize the order
     randomize_powerups();
@@ -661,20 +663,24 @@ bonus_points_powerup(drop_item) {
 
 firesale_powerup(drop_item) {
 
-    //level notify("powerup firesale");
-    //level endon("powerup firesale");
-
     level thread firesale_on_hud(drop_item);
 
     level.zombie_vars["zombie_firesale"] = 1;
+
+    for(i=0;i<level.chests.size;i++) {
+    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_10" );
+    level.zombie_treasure_chest_cost = 10;
+    wait 0.05;
+    }
+
     wait(30);
     level.zombie_vars["zombie_firesale"] = 0;
-    /*players = GetPlayers();
-    for (i = 0; i < players.size; i++) {
-        players[i] notify("firesale_over");
 
-    }*/
-
+    for(i=0;i<level.chests.size;i++) {
+    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950" );
+    level.zombie_treasure_chest_cost = 950;
+    wait 0.05;
+    }
 }
 
 insta_kill_powerup(drop_item) {
@@ -699,13 +705,13 @@ randomperk_powerup(drop_item) {
 
     level thread randomperk_on_hud(drop_item);
 
+    PlaySoundAtPosition("rp_vox", (0, 0, 0));
+
     players = GetPlayers();
 
     for (i = 0; i < players.size; i++) {
         players[i] thread maps\_zombiemode_perks::randomperk_powerup_think();
     }
-
-    PlaySoundAtPosition("rp_vox", (0, 0, 0));
 
 }
 
@@ -777,14 +783,6 @@ get_closest_window_repair(windows) {
     }
     return current_window;
 }
-
-check_for_firesale(player) {
-
-    if (IsDefined(player) && IsAlive(player) && level.zombie_vars["zombie_firesale"]) {
-        return;
-    }
-}
-
 
 check_for_instakill(player) {
 
