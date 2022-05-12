@@ -441,92 +441,6 @@ powerup_grab() {
     }
 }
 
-randomperk_powerup(drop_item) {
-
-    level thread maps\_zombiemode_perks::randomperk_powerup_think();
-
-    level thread random_perk_on_hud(drop_item);
-
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("rp_vox");
-    }
-}
-
-carpenter_powerup(origin, drop_item) {
-
-    level thread carpenter_on_hud(drop_item);
-
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("carp_vox");
-    }
-
-    window_boards = getstructarray("exterior_goal", "targetname");
-    total = level.exterior_goals.size;
-
-    //COLLIN
-    carp_ent = spawn("script_origin", (0, 0, 0));
-    carp_ent PlayLoopSound("carp_loop");
-
-    while (true) {
-        windows = get_closest_window_repair(window_boards);
-        if (!IsDefined(windows)) {
-            carp_ent StopLoopSound(1);
-            carp_ent PlaySound("carp_end", "sound_done");
-            carp_ent waittill("sound_done");
-            break;
-        } else {
-            window_boards = array_remove(window_boards, windows);
-        }
-
-        while (1) {
-            if (all_chunks_intact(windows.barrier_chunks)) {
-                break;
-            }
-
-            chunk = get_random_destroyed_chunk(windows.barrier_chunks);
-
-            if (!IsDefined(chunk))
-                break;
-
-            windows thread maps\_zombiemode_blockers_new::replace_chunk(chunk, false, true);
-            windows.clip enable_trigger();
-            windows.clip DisconnectPaths();
-            wait_network_frame();
-            wait(0.05);
-        }
-
-        wait_network_frame();
-
-    }
-
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i].score += 200 * level.zombie_vars["zombie_point_scalar"];
-        players[i].score_total += 200 * level.zombie_vars["zombie_point_scalar"];
-        players[i] maps\_zombiemode_score::set_player_score_hud();
-    }
-
-    carp_ent delete();
-}
-
-get_closest_window_repair(windows) {
-
-    current_window = undefined;
-    for (i = 0; i < windows.size; i++) {
-        if (all_chunks_intact(windows[i].barrier_chunks))
-            continue;
-
-        current_window = windows[i];
-
-    }
-    return current_window;
-}
-
 powerup_vo(type) {
 
     self endon("death");
@@ -666,12 +580,7 @@ nuke_powerup(drop_item) {
 nuke_flash() {
 
     PlaySoundatposition("nuke_flash", (0, 0, 0));
-
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("nuke_vox");
-    }
+    PlaySoundAtPosition("nuke_vox", (0, 0, 0));
 
     fadetowhite = newhudelem();
 
@@ -713,11 +622,14 @@ double_points_powerup(drop_item) {
 
 max_ammo_powerup(drop_item) {
 
+    level thread max_ammo_on_hud(drop_item);
+
+    PlaySoundAtPosition("ma_vox", (0, 0, 0));
+
     players = GetPlayers();
 
     for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("max_ammo");
-        players[i] PlaySound("ma_vox");
+        //players[i] PlaySound("max_ammo");
 
         primaryWeapons = players[i] GetWeaponsList();
 
@@ -732,21 +644,21 @@ max_ammo_powerup(drop_item) {
             }
         }
     }
-
-    level thread max_ammo_on_hud(drop_item);
 }
 
 bonus_points_powerup(drop_item) {
 
+    level thread bonus_points_on_hud(drop_item);
+
+    PlaySoundAtPosition("bp_vox", (0, 0, 0));
+
     players = GetPlayers();
 
     for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("bp_vox");
         players[i].score += 500 * level.zombie_vars["zombie_point_scalar"];
         players[i].score_total += 500 * level.zombie_vars["zombie_point_scalar"];
         players[i] maps\_zombiemode_score::set_player_score_hud();
     }
-    level thread bonus_points_on_hud(drop_item);
 }
 
 firesale_powerup(drop_item) {
@@ -783,6 +695,85 @@ insta_kill_powerup(drop_item) {
 
     }
 
+}
+
+randomperk_powerup(drop_item) {
+
+    level thread randomperk_on_hud(drop_item);
+
+    level thread maps\_zombiemode_perks::randomperk_powerup_think();
+
+    PlaySoundAtPosition("rp_vox", (0, 0, 0));
+
+}
+
+carpenter_powerup(origin, drop_item) {
+
+    level thread carpenter_on_hud(drop_item);
+
+    PlaySoundAtPosition("carp_vox", (0, 0, 0));
+
+    window_boards = getstructarray("exterior_goal", "targetname");
+    total = level.exterior_goals.size;
+
+    //COLLIN
+    carp_ent = spawn("script_origin", (0, 0, 0));
+    carp_ent PlayLoopSound("carp_loop");
+
+    while (true) {
+        windows = get_closest_window_repair(window_boards);
+        if (!IsDefined(windows)) {
+            carp_ent StopLoopSound(1);
+            carp_ent PlaySound("carp_end", "sound_done");
+            carp_ent waittill("sound_done");
+            break;
+        } else {
+            window_boards = array_remove(window_boards, windows);
+        }
+
+        while (1) {
+            if (all_chunks_intact(windows.barrier_chunks)) {
+                break;
+            }
+
+            chunk = get_random_destroyed_chunk(windows.barrier_chunks);
+
+            if (!IsDefined(chunk))
+                break;
+
+            windows thread maps\_zombiemode_blockers_new::replace_chunk(chunk, false, true);
+            windows.clip enable_trigger();
+            windows.clip DisconnectPaths();
+            wait_network_frame();
+            wait(0.05);
+        }
+
+        wait_network_frame();
+
+    }
+
+    players = GetPlayers();
+
+    for (i = 0; i < players.size; i++) {
+        players[i].score += 200 * level.zombie_vars["zombie_point_scalar"];
+        players[i].score_total += 200 * level.zombie_vars["zombie_point_scalar"];
+        players[i] maps\_zombiemode_score::set_player_score_hud();
+    }
+
+    carp_ent delete();
+}
+
+get_closest_window_repair(windows) {
+
+    current_window = undefined;
+    for (i = 0; i < windows.size; i++) {
+        if (all_chunks_intact(windows[i].barrier_chunks))
+            continue;
+
+        current_window = windows[i];
+
+    }
+    return current_window;
 }
 
 check_for_firesale(player) {
@@ -849,13 +840,10 @@ insta_kill_on_hud(drop_item) {
 
 time_remaining_on_insta_kill_powerup() {
 
-    players = GetPlayers();
+    PlaySoundAtPosition("insta_vox", (0, 0, 0));
 
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("insta_vox");
-    }
-    temp_enta = spawn("script_origin", (0, 0, 0));
-    temp_enta PlayLoopSound("insta_kill_loop");
+    instakill_ent = spawn("script_origin", (0, 0, 0));
+    instakill_ent PlayLoopSound("insta_kill_loop");
 
     // time it down!
     while (level.zombie_vars["zombie_powerup_insta_kill_time"] >= 0) {
@@ -870,13 +858,13 @@ time_remaining_on_insta_kill_powerup() {
 
     }
 
-    temp_enta StopLoopSound(2);
+    instakill_ent StopLoopSound(2);
     // turn off the timer
     level.zombie_vars["zombie_powerup_insta_kill_on"] = false;
 
     // remove the offset to make room for new powerups, reset timer for next time
     level.zombie_vars["zombie_powerup_insta_kill_time"] = 30;
-    temp_enta delete();
+    instakill_ent delete();
 }
 
 point_doubler_on_hud(drop_item) {
@@ -896,16 +884,13 @@ point_doubler_on_hud(drop_item) {
     level thread time_remaining_on_point_doubler_powerup();
 
 }
+
 time_remaining_on_point_doubler_powerup() {
 
-    temp_ent = spawn("script_origin", (0, 0, 0));
-    temp_ent PlayLoopSound("double_point_loop");
+    PlaySoundAtPosition("dp_vox", (0, 0, 0));
 
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("dp_vox");
-    }
+    x2_ent = spawn("script_origin", (0, 0, 0));
+    x2_ent PlayLoopSound("double_point_loop");
 
     // time it down!
     while (level.zombie_vars["zombie_powerup_point_doubler_time"] >= 0) {
@@ -919,11 +904,11 @@ time_remaining_on_point_doubler_powerup() {
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("points_loop_off");
     }
-    temp_ent StopLoopSound(2);
+    x2_ent StopLoopSound(2);
 
     // remove the offset to make room for new powerups, reset timer for next time
     level.zombie_vars["zombie_powerup_point_doubler_time"] = 30;
-    temp_ent delete();
+    x2_ent delete();
 }
 
 firesale_on_hud(drop_item) {
@@ -946,14 +931,10 @@ firesale_on_hud(drop_item) {
 
 time_remaining_on_firesale_powerup() {
 
-    temp_ent = spawn("script_origin", (0, 0, 0));
-    temp_ent PlayLoopSound("firesale_loop");
+    PlaySoundAtPosition("fs_vox", (0, 0, 0));
 
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("fs_vox");
-    }
+    firesale_ent = spawn("script_origin", (0, 0, 0));
+    firesale_ent PlayLoopSound("firesale_loop");
 
     // time it down!
     while (level.zombie_vars["zombie_powerup_firesale_time"] >= 0) {
@@ -967,11 +948,11 @@ time_remaining_on_firesale_powerup() {
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("points_loop_off");
     }
-    temp_ent StopLoopSound(2);
+    firesale_ent StopLoopSound(2); // doesn't work
 
     // remove the offset to make room for new powerups, reset timer for next time
     level.zombie_vars["zombie_powerup_firesale_time"] = 30;
-    temp_ent delete();
+    firesale_ent delete();
 }
 
 max_ammo_on_hud(drop_item) {
@@ -1066,7 +1047,7 @@ carpenter_on_hud(drop_item) {
     hudelem thread powerup_destroy_hud();
 }
 
-random_perk_on_hud(drop_item) {
+randomperk_on_hud(drop_item) {
 
     self endon("disconnect");
 
