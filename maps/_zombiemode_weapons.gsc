@@ -839,10 +839,11 @@ weapon_cabinet_think()
 	weaponmodelstruct MoveTo(self.origin - (0,0,6.5),4,0,4);
 
 	cabinetsong = "cabinetbox_sting_" + RandomInt(2);
+	cabinetlaugh = "cabinetbox_lottery_laugh";
 
 	play_sound_at_pos( "open_chest", self.origin );
 	PlaySoundAtPosition(cabinetsong,self.origin);
-	PlaySoundAtPosition("lottery_laugh",self.origin);
+	PlaySoundAtPosition(cabinetlaugh,self.origin);
 
 	self thread cabinet_glowfx();
 	
@@ -915,7 +916,7 @@ weapon_cabinet_think()
 
 	if(!isdefined(player.perknum) || player.perknum < 8)	//check if player has max perks
 	{
-		magicnum = RandomInt(100);
+		magicnum = RandomInt(10);
 		if(magicnum <= 10)	//10 out of 100 chance to get a perk
 		{
 			weaponmodelstruct SetModel(GetWeaponModel( "zombie_perk_bottle" ));

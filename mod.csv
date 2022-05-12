@@ -20,6 +20,7 @@ material,specialty_repair_zombies
 material,specialty_bonuspoints_zombies
 material,specialty_deathmachine_zombies
 material,specialty_randomperk_zombies
+material,specialty_firesale_zombies
 material,mtl_x2icon_gold
 material,logo_cod2
 localize,prototype
@@ -264,6 +265,7 @@ xmodel,zombie_carpenter
 xmodel,zombie_skull
 xmodel,zombie_x2_icon
 xmodel,zombie_z_money_icon
+xmodel,zombie_firesale
 xmodel,zombie_pickup_perkbottle
 xmodel,zombie_pickup_perkbottle_viewmodel
 xanim,viewmodel_zombie_perksacola_drink

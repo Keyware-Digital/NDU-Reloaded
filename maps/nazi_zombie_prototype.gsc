@@ -231,6 +231,7 @@ include_powerups() {
     include_powerup("carpenter");
     include_powerup("randomperk");
     include_powerup("bonus_points");
+    include_powerup("firesale");
 }
 
 health_show() {
