@@ -945,11 +945,9 @@ firesale_on_hud(drop_item) {
 }
 
 time_remaining_on_firesale_powerup() {
-    
-    fs_loop = "firesale_loop";
 
     temp_ent = spawn("script_origin", (0, 0, 0));
-    temp_ent PlayLoopSound(fs_loop);
+    temp_ent PlayLoopSound("firesale_loop");
 
     players = GetPlayers();
 
