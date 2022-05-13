@@ -235,7 +235,8 @@ include_powerups() {
     include_powerup("double_points");
     include_powerup("full_ammo");
     include_powerup("carpenter");
-    include_powerup("randomperk");
+    include_powerup("death_machine");
+    include_powerup("random_perk");
     include_powerup("bonus_points");
     include_powerup("fire_sale");
 }

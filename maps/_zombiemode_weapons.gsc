@@ -1060,7 +1060,7 @@ takenweapon(chosenweapon)
 		player EnableWeaponCycling();
 		player SwitchToWeapon(current_weapon);
 		player EnableOffhandWeapons();
-		player thread maps\_zombiemode_powerups::randomperk_powerup();
+		player thread maps\_zombiemode_powerups::random_perk_powerup();
 		return;
 	}
 

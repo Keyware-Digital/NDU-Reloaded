@@ -40,7 +40,7 @@ player_add_points( event, mod, hit_location )
 			break; 
 	}
 
-	points = round_up_to_ten( points ) * level.zombie_vars["zombie_point_scalar"];
+	points = round_up_to_ten( points ) * level.zombie_vars["zombie_double_points"];
 	
 	self.score += points; 
 	self.score_total += points;

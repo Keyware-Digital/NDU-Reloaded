@@ -22,7 +22,7 @@ init_precache() {
     PrecacheShader("specialty_widowswine_zombies");
 }
 
-randomperk_powerup_think() {
+random_perk_powerup_think() {
 
     if (!isdefined(self.perknum) || self.perknum == 0) // if player doesnt have any perks
     {
