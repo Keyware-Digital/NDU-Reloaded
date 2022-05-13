@@ -14,7 +14,7 @@ init() {
 
     init_powerups();
 
-    level.zombie_treasure_chest_cost = 950;
+    init_mystery_weapon_costs();
 
     thread watch_for_drop();
 }
@@ -62,14 +62,14 @@ init_precache() {
 init_powerups() {
 
     // Random Drops
-    //add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
-    //add_zombie_powerup("insta_kill", "zombie_skull", &"ZOMBIE_POWERUP_INSTA_KILL");
-    //add_zombie_powerup("double_points", "zombie_x2_icon", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
-    //add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
+    add_zombie_powerup("insta_kill", "zombie_skull", &"ZOMBIE_POWERUP_INSTA_KILL");
+    add_zombie_powerup("double_points", "zombie_x2_icon", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
+    add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
     //Additional
-    //add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup("randomperk", "zombie_pickup_perkbottle", &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
+    add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup("randomperk", "zombie_pickup_perkbottle", &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
     add_zombie_powerup("firesale", "zombie_firesale", &"ZOMBIE_POWERUP_FIRESALE");
 
     // Randomize the order
@@ -79,6 +79,11 @@ init_powerups() {
     randomize_powerups();
 
     level thread powerup_hud_overlay();
+}
+
+init_mystery_weapon_costs() {
+    level.zombie_treasure_chest_cost = 950;
+    //level.zombie_weapon_cabinet_cost = 1900;
 }
 
 powerup_hud_overlay() {
@@ -673,6 +678,12 @@ firesale_powerup(drop_item) {
     wait 0.05;
     }
 
+    /*for(i=0;i<level.doors.size;i++) {
+    level.doors[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_20" );
+    level.zombie_weapon_cabinet_cost = 20;
+    wait 0.05;
+    }*/
+
     wait(30);
     level.zombie_vars["zombie_firesale"] = 0;
 
@@ -681,6 +692,12 @@ firesale_powerup(drop_item) {
     level.zombie_treasure_chest_cost = 950;
     wait 0.05;
     }
+
+    /*for(i=0;i<level.doors.size;i++) {
+    level.doors[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900" );
+    level.zombie_weapon_cabinet_cost = 1900;
+    wait 0.05;
+    }*/
 }
 
 insta_kill_powerup(drop_item) {

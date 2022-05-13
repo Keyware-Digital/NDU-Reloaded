@@ -122,8 +122,8 @@ LANG_ENGLISH        "Wunderwaffe DG-2"
 REFERENCE           WEAPON_THOMPSON
 LANG_ENGLISH        "M1A1 Thompson"
 
-REFERENCE           WEAPON_THOMPSON_MAG
-LANG_ENGLISH        "M1A1 Thompson w/ Drum Mag"
+REFERENCE           WEAPON_THOMPSON_DRUM
+LANG_ENGLISH        "M1928A1 Thompson"
 
 REFERENCE           WEAPON_TOKAREV
 LANG_ENGLISH        "TT-33"
@@ -295,6 +295,9 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to Open Door [Cost: 1000]"
 
 REFERENCE           ZOMBIE_CABINET_OPEN_1900
 LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
+
+REFERENCE           ZOMBIE_CABINET_OPEN_20
+LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 20]"
 
 REFERENCE            ZOMBIE_WEAPON_PERKBOTTLE_10000
 LANG_ENGLISH        "Hold ^3&&1 ^7to take Perk Bottle"

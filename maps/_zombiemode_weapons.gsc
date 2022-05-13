@@ -739,8 +739,22 @@ treasure_chest_give_weapon( weapon_string )
 
 weapon_cabinet_think()
 {
+
 	cost = 1900;
-    self SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900" );
+
+	if( IsDefined( level.zombie_weapon_cabinet_cost ) )
+	{
+		cost = level.zombie_weapon_cabinet_cost;
+	}
+
+	self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900");
+	self setCursorHint( "HINT_NOICON" );
+
+	if(isDefined(level.zombie_vars["zombie_firesale"]) && level.zombie_vars["zombie_firesale"])
+	{
+		self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN_20");
+	}
+
 	level.cabinetguns = [];
 	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
 	level.cabinetguns[1] = "m1garand";		
@@ -755,10 +769,10 @@ weapon_cabinet_think()
 	//level.cabinetguns[10] = "type100smg_bigammo_mp";					//removed because glitched!
 	randomnumb = undefined;
 	
-    doors = getentarray( self.target, "targetname" );
-    for( i = 0; i < doors.size; i++ )
+    level.doors = getentarray( self.target, "targetname" );
+    for( i = 0; i < level.doors.size; i++ )
     {
-        doors[i] NotSolid();
+        level.doors[i] NotSolid();
     }
 
     //////////////////////// Horrible Script ////////////////////////
@@ -829,15 +843,15 @@ weapon_cabinet_think()
 
 	weaponmodelstruct Show();
 
-	for( i = 0; i < doors.size; i++ )
+	for( i = 0; i < level.doors.size; i++ )
 	{
-		if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
+		if( level.doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
 		{
-			doors[i] thread weapon_cabinet_door_open( "left" ); 
+			level.doors[i] thread weapon_cabinet_door_open( "left" ); 
 		}
-		else if( doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
+		else if( level.doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
 		{
-			doors[i] thread weapon_cabinet_door_open( "right" ); 
+			level.doors[i] thread weapon_cabinet_door_open( "right" ); 
 		}
 	}
 
@@ -907,7 +921,7 @@ weapon_cabinet_think()
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED");
 			break; 
 		case "thompson_bigammo_mp":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_MAG");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_DRUM");
 			break;     
 		case "walther":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
@@ -921,7 +935,7 @@ weapon_cabinet_think()
 
 	if(!isdefined(player.perknum) || player.perknum < 8)	//check if player has max perks
 	{
-		magicnum = RandomInt(10);
+		magicnum = RandomInt(100);
 		if(magicnum <= 10)	//10 out of 100 chance to get a perk
 		{
 			weaponmodelstruct SetModel(GetWeaponModel( "zombie_perk_bottle" ));
@@ -942,15 +956,15 @@ weapon_cabinet_think()
 	weaponmodelstruct Hide();
 
 	play_sound_at_pos( "close_chest", self.origin );
-	for( i = 0; i < doors.size; i++ )
+	for( i = 0; i < level.doors.size; i++ )
 	{
-		if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
+		if( level.doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
 		{
-			doors[i] thread weapon_cabinet_door_close( "left" ); 
+			level.doors[i] thread weapon_cabinet_door_close( "left" ); 
 		}
-		else if( doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
+		else if( level.doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
 		{
-			doors[i] thread weapon_cabinet_door_close( "right" ); 
+			level.doors[i] thread weapon_cabinet_door_close( "right" ); 
 		}
 	}
 
@@ -1135,7 +1149,7 @@ weapon_spawn_think()
 
 		grenadeMax = WeaponMaxAmmo( "stielhandgranate" );
 
-		if(player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		//TestNadeBuyFix
+		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		//TestNadeBuyFix
         {
             continue;
 		}
