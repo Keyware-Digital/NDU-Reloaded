@@ -287,7 +287,7 @@ treasure_chest_think(rand)
 	self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950");
 	self setCursorHint( "HINT_NOICON" );
 
-	if(isDefined(level.zombie_vars["zombie_firesale"]) && level.zombie_vars["zombie_firesale"])
+	if(isDefined(level.zombie_vars["zombie_fire_sale"]) && level.zombie_vars["zombie_fire_sale"])
 	{
 		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_10");
 	}
@@ -750,7 +750,7 @@ weapon_cabinet_think()
 	self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900");
 	self setCursorHint( "HINT_NOICON" );
 
-	if(isDefined(level.zombie_vars["zombie_firesale"]) && level.zombie_vars["zombie_firesale"])
+	if(isDefined(level.zombie_vars["zombie_fire_sale"]) && level.zombie_vars["zombie_fire_sale"])
 	{
 		self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN_20");
 	}
