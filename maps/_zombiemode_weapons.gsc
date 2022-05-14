@@ -221,15 +221,15 @@ init_weapon_upgrade()
 init_weapon_cabinet()
 {
     // the triggers which are targeted at doors
-    weapon_cabs = GetEntArray( "weapon_cabinet_use", "targetname" ); 
+    level.weapon_cabs = GetEntArray( "weapon_cabinet_use", "targetname" ); 
     
-    for( i = 0; i < weapon_cabs.size; i++ )
+    for( i = 0; i < level.weapon_cabs.size; i++ )
     {
-        weapon_cabs[i] setCursorHint( "HINT_NOICON" ); 
-        weapon_cabs[i] UseTriggerRequireLookAt();
+        level.weapon_cabs[i] setCursorHint( "HINT_NOICON" ); 
+        level.weapon_cabs[i] UseTriggerRequireLookAt();
     }
     level.keep_ents = [];
-    array_thread( weapon_cabs, ::weapon_cabinet_think ); 
+    array_thread( level.weapon_cabs, ::weapon_cabinet_think ); 
 }
 
 // returns the trigger hint string for the given weapon
@@ -769,10 +769,10 @@ weapon_cabinet_think()
 	//level.cabinetguns[10] = "type100smg_bigammo_mp";					//removed because glitched!
 	randomnumb = undefined;
 	
-    level.doors = getentarray( self.target, "targetname" );
-    for( i = 0; i < level.doors.size; i++ )
+    doors = getentarray( self.target, "targetname" );
+    for( i = 0; i < doors.size; i++ )
     {
-        level.doors[i] NotSolid();
+        doors[i] NotSolid();
     }
 
     //////////////////////// Horrible Script ////////////////////////
@@ -814,7 +814,7 @@ weapon_cabinet_think()
         }
     }
 
-	if(player.score < cost)
+	if(player.score < level.zombie_weapon_cabinet_cost)
     {
     	self play_sound_on_ent( "no_purchase" );
     	wait 0.5;
@@ -823,7 +823,7 @@ weapon_cabinet_think()
     }
     else
     {
-		player maps\_zombiemode_score::minus_to_player_score(cost);
+		player maps\_zombiemode_score::minus_to_player_score(level.zombie_weapon_cabinet_cost);
 		//play_sound_on_ent( "purchase" );
 	}
 
@@ -843,15 +843,15 @@ weapon_cabinet_think()
 
 	weaponmodelstruct Show();
 
-	for( i = 0; i < level.doors.size; i++ )
+	for( i = 0; i < doors.size; i++ )
 	{
-		if( level.doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
+		if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
 		{
-			level.doors[i] thread weapon_cabinet_door_open( "left" ); 
+			doors[i] thread weapon_cabinet_door_open( "left" ); 
 		}
-		else if( level.doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
+		else if( doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
 		{
-			level.doors[i] thread weapon_cabinet_door_open( "right" ); 
+			doors[i] thread weapon_cabinet_door_open( "right" ); 
 		}
 	}
 
@@ -921,7 +921,7 @@ weapon_cabinet_think()
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED");
 			break; 
 		case "thompson_bigammo_mp":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_DRUM");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_MAG");
 			break;     
 		case "walther":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
@@ -956,15 +956,15 @@ weapon_cabinet_think()
 	weaponmodelstruct Hide();
 
 	play_sound_at_pos( "close_chest", self.origin );
-	for( i = 0; i < level.doors.size; i++ )
+	for( i = 0; i < doors.size; i++ )
 	{
-		if( level.doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
+		if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
 		{
-			level.doors[i] thread weapon_cabinet_door_close( "left" ); 
+			doors[i] thread weapon_cabinet_door_close( "left" ); 
 		}
-		else if( level.doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
+		else if( doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
 		{
-			level.doors[i] thread weapon_cabinet_door_close( "right" ); 
+			doors[i] thread weapon_cabinet_door_close( "right" ); 
 		}
 	}
 
