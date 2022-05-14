@@ -84,10 +84,10 @@ init_powerups() {
     //add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
     //add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
     //add_zombie_powerup("death_machine", "zombie_pickup_minigun", &"ZOMBIE_POWERUP_DEATH_MACHINE");
-    add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
+    //add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
     //add_zombie_powerup("random_perk", "zombie_pickup_perk_bottle", &"ZOMBIE_POWERUP_MAX_AMMO");
     //add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
-    //add_zombie_powerup("fire_sale", "zombie_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
+    add_zombie_powerup("fire_sale", "zombie_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
 
     // Randomize the order
     randomize_powerups();
@@ -1400,6 +1400,12 @@ fire_sale_on_hud(drop_item) {
 
 time_remaining_on_double_points_powerup() {
 
+    players = GetPlayers();
+    
+    for (i = 0; i < players.size; i++) {
+        players[i] PlaySound("dp_vox");
+    }
+
     x2_ent = spawn("script_origin", (0, 0, 0));
     x2_ent PlayLoopSound("double_point_loop");
 
@@ -1411,10 +1417,8 @@ time_remaining_on_double_points_powerup() {
 
     // turn off the timer
     level.zombie_vars["zombie_powerup_double_points_on"] = false;
-    players = GetPlayers();
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("points_loop_off");
-        players[i] PlaySound("dp_vox");
     }
     x2_ent StopLoopSound(2);
 
@@ -1425,6 +1429,12 @@ time_remaining_on_double_points_powerup() {
 
 time_remaining_on_insta_kill_powerup() {
 
+    players = GetPlayers();
+    for (i = 0; i < players.size; i++) {
+        //players[i] PlaySound("insta_kill");
+        players[i] PlaySound("insta_vox");
+    }
+
     insta_kill_ent = spawn("script_origin", (0, 0, 0));
     insta_kill_ent PlayLoopSound("insta_kill_loop");
 
@@ -1432,14 +1442,6 @@ time_remaining_on_insta_kill_powerup() {
     while (level.zombie_vars["zombie_powerup_insta_kill_time"] >= 0) {
         wait 0.1;
         level.zombie_vars["zombie_powerup_insta_kill_time"] = level.zombie_vars["zombie_powerup_insta_kill_time"] - 0.1;
-    }
-
-    players = GetPlayers();
-    for (i = 0; i < players.size; i++) {
-
-        //players[i] PlaySound("insta_kill");
-        players[i] PlaySound("insta_vox");
-
     }
 
     insta_kill_ent StopLoopSound(2);
@@ -1453,15 +1455,15 @@ time_remaining_on_insta_kill_powerup() {
 
 time_remaining_on_max_ammo_powerup() {
 
+    players = GetPlayers();
+    for (i = 0; i < players.size; i++) {
+        players[i] PlaySound("ma_vox");
+    }
+
     // time it down!
     while (level.zombie_vars["zombie_powerup_max_ammo_time"] >= 0) {
         wait 0.1;
         level.zombie_vars["zombie_powerup_max_ammo_time"] = level.zombie_vars["zombie_powerup_max_ammo_time"] - 0.1;
-    }
-
-    players = GetPlayers();
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("ma_vox");
     }
 
     // turn off the timer
@@ -1473,15 +1475,15 @@ time_remaining_on_max_ammo_powerup() {
 
 time_remaining_on_carpenter_powerup() {
 
+    players = GetPlayers();
+    for (i = 0; i < players.size; i++) {
+        players[i] PlaySound("carp_vox");
+    }
+
     // time it down!
     while (level.zombie_vars["zombie_powerup_carpenter_time"] >= 0) {
         wait 0.1;
         level.zombie_vars["zombie_powerup_carpenter_time"] = level.zombie_vars["zombie_powerup_carpenter_time"] - 0.1;
-    }
-
-    players = GetPlayers();
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("carp_vox");
     }
 
     // turn off the timer
@@ -1493,15 +1495,15 @@ time_remaining_on_carpenter_powerup() {
 
 time_remaining_on_death_machine_powerup() {
 
+    players = GetPlayers();
+    for (i = 0; i < players.size; i++) {
+        players[i] PlaySound("dm_vox");
+    }
+
     // time it down!
     while (level.zombie_vars["zombie_powerup_death_machine_time"] >= 0) {
         wait 0.1;
         level.zombie_vars["zombie_powerup_death_machine_time"] = level.zombie_vars["zombie_powerup_death_machine_time"] - 0.1;
-    }
-
-    players = GetPlayers();
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("dm_vox");
     }
 
     // turn off the timer
@@ -1513,16 +1515,16 @@ time_remaining_on_death_machine_powerup() {
 
 time_remaining_on_nuke_powerup() {
 
-    // time it down!
-    while (level.zombie_vars["zombie_powerup_nuke_time"] >= 0) {
-        wait 0.1;
-        level.zombie_vars["zombie_powerup_nuke_time"] = level.zombie_vars["zombie_powerup_nuke_time"] - 0.1;
-    }
-
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("nuke_flash");
         players[i] PlaySound("nuke_vox");
+    }
+
+    // time it down!
+    while (level.zombie_vars["zombie_powerup_nuke_time"] >= 0) {
+        wait 0.1;
+        level.zombie_vars["zombie_powerup_nuke_time"] = level.zombie_vars["zombie_powerup_nuke_time"] - 0.1;
     }
 
     // turn off the timer
@@ -1534,15 +1536,15 @@ time_remaining_on_nuke_powerup() {
 
 time_remaining_on_bonus_points_powerup() {
 
+    players = GetPlayers();
+    for (i = 0; i < players.size; i++) {
+        players[i] PlaySound("bp_vox");
+    }
+
     // time it down!
     while (level.zombie_vars["zombie_powerup_bonus_points_time"] >= 0) {
         wait 0.1;
         level.zombie_vars["zombie_powerup_bonus_points_time"] = level.zombie_vars["zombie_powerup_bonus_points_time"] - 0.1;
-    }
-
-    players = GetPlayers();
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("bp_vox");
     }
 
     // turn off the timer
@@ -1554,15 +1556,15 @@ time_remaining_on_bonus_points_powerup() {
 
 time_remaining_on_random_perk_powerup() {
 
+    players = GetPlayers();
+    for (i = 0; i < players.size; i++) {
+        players[i] PlaySound("rp_vox");
+    }
+
     // time it down!
     while (level.zombie_vars["zombie_powerup_random_perk_time"] >= 0) {
         wait 0.1;
         level.zombie_vars["zombie_powerup_random_perk_time"] = level.zombie_vars["zombie_powerup_random_perk_time"] - 0.1;
-    }
-
-    players = GetPlayers();
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("rp_vox");
     }
 
     // turn off the timer
@@ -1574,6 +1576,11 @@ time_remaining_on_random_perk_powerup() {
 
 time_remaining_on_fire_sale_powerup() {
 
+    players = GetPlayers();
+    for (i = 0; i < players.size; i++) {
+        players[i] PlaySound("fs_vox");
+    }
+
     fire_sale_ent = spawn("script_origin", (0, 0, 0));
     fire_sale_ent PlayLoopSound("fire_sale_loop");
 
@@ -1581,11 +1588,6 @@ time_remaining_on_fire_sale_powerup() {
     while (level.zombie_vars["zombie_powerup_fire_sale_time"] >= 0) {
         wait 0.1;
         level.zombie_vars["zombie_powerup_fire_sale_time"] = level.zombie_vars["zombie_powerup_fire_sale_time"] - 0.1;
-    }
-
-    players = GetPlayers();
-    for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("fs_vox");
     }
 
     // turn off the timer
