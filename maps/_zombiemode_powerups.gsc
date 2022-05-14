@@ -52,8 +52,8 @@ init_powerup_vars() {
     set_zombie_var("zombie_powerup_random_perk_time", 5);
     set_zombie_var("zombie_powerup_bonus_points_time", 5);
     set_zombie_var("zombie_powerup_fire_sale_time", 30);
-    set_zombie_var("zombie_powerup_drop_increment", 2000); // lower this to make drop happen more often 400
-    set_zombie_var("zombie_powerup_drop_max_per_round", 4); // lower this to make drop happen more often
+    set_zombie_var("zombie_powerup_drop_increment", 2000); // lower this to make drop happen more often
+    set_zombie_var("zombie_powerup_drop_max_per_round", 4); // increase this to make drop happen more often
 }
 
 init_powerup_effects() {
@@ -79,15 +79,15 @@ init_precache() {
 init_powerups() {
 
     // Random Drops
-    //add_zombie_powerup("double_points", "zombie_x2_icon", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
-    //add_zombie_powerup("insta_kill", "zombie_skull", &"ZOMBIE_POWERUP_INSTA_KILL");
+    add_zombie_powerup("double_points", "zombie_x2_icon", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
+    add_zombie_powerup("insta_kill", "zombie_skull", &"ZOMBIE_POWERUP_INSTA_KILL");
     add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup("death_machine", "zombie_pickup_minigun", &"ZOMBIE_POWERUP_DEATH_MACHINE");
-    //add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
-    //add_zombie_powerup("random_perk", "zombie_pickup_perk_bottle", &"ZOMBIE_POWERUP_MAX_AMMO");
-    //add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
-    //add_zombie_powerup("fire_sale", "zombie_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
+    add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup("death_machine", "zombie_pickup_minigun", &"ZOMBIE_POWERUP_DEATH_MACHINE");
+    add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
+    add_zombie_powerup("random_perk", "zombie_pickup_perk_bottle", &"ZOMBIE_POWERUP_MAX_AMMO");
+    add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
+    add_zombie_powerup("fire_sale", "zombie_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
 
     // Randomize the order
     randomize_powerups();
@@ -108,9 +108,8 @@ powerup_hud_overlay()
 	level endon ("disconnect");
 
 	level.powerup_hud = [];
-    powerup_count = level.zombie_powerup_array.size;
 
-	for(i = 0; i < powerup_count; i++)
+	for(i = 0; i < 9; i++)
 	{
 		level.powerup_hud[i] = create_simple_hud();
 		level.powerup_hud[i].foreground = true; 
@@ -141,12 +140,12 @@ powerup_hud_overlay()
 	
 	level.powerup_hud[0] thread powerup_shader_timer("zombie_powerup_double_points_time", "zombie_powerup_double_points_on");
 	level.powerup_hud[1] thread powerup_shader_timer("zombie_powerup_insta_kill_time", "zombie_powerup_insta_kill_on");
-	level.powerup_hud[2] thread powerup_shader_destroy("zombie_powerup_max_ammo_time", "zombie_powerup_max_ammo_on");
-	level.powerup_hud[3] thread powerup_shader_destroy("zombie_powerup_carpenter_time", "zombie_powerup_carpenter_on");
+	level.powerup_hud[2] thread powerup_shader_hide("zombie_powerup_max_ammo_time", "zombie_powerup_max_ammo_on");
+	level.powerup_hud[3] thread powerup_shader_hide("zombie_powerup_carpenter_time", "zombie_powerup_carpenter_on");
 	level.powerup_hud[4] thread powerup_shader_timer("zombie_powerup_death_machine_time", "zombie_powerup_death_machine_on");
-    level.powerup_hud[5] thread powerup_shader_destroy("zombie_powerup_nuke_time", "zombie_powerup_nuke_on");
-	level.powerup_hud[6] thread powerup_shader_destroy("zombie_powerup_random_perk_time", "zombie_powerup_random_perk_on");
-	level.powerup_hud[7] thread powerup_shader_destroy("zombie_powerup_bonus_points_time", "zombie_powerup_bonus_points_on");
+    level.powerup_hud[5] thread powerup_shader_hide("zombie_powerup_nuke_time", "zombie_powerup_nuke_on");
+	level.powerup_hud[6] thread powerup_shader_hide("zombie_powerup_random_perk_time", "zombie_powerup_random_perk_on");
+	level.powerup_hud[7] thread powerup_shader_hide("zombie_powerup_bonus_points_time", "zombie_powerup_bonus_points_on");
 	level.powerup_hud[8] thread powerup_shader_timer("zombie_powerup_fire_sale_time", "zombie_powerup_fire_sale_on");
 	
 	while(true)
@@ -322,7 +321,7 @@ powerup_shader_timer(timerName, booleanName)
 	}
 }
 
-powerup_shader_destroy(timerName, booleanName) {
+powerup_shader_hide(timerName, booleanName) {
 	while(1)
 	{
 		if (!level.zombie_vars[booleanName] || level.zombie_vars[timerName] <= 0.5)
@@ -998,7 +997,7 @@ double_points_on_hud(drop_item) {
 
     level.zombie_vars["zombie_powerup_double_points_on"] = true;
 
-    // set time remaining for point doubler
+    // set time remaining for double points
     level thread time_remaining_on_double_points_powerup();
 
 }
@@ -1033,7 +1032,7 @@ max_ammo_on_hud(drop_item) {
 
     level.zombie_vars["zombie_powerup_max_ammo_on"] = true;
 
-    // set time remaining for fire_sale
+    // set time remaining for max ammo
     level thread time_remaining_on_max_ammo_powerup();
 }
 
@@ -1050,7 +1049,7 @@ carpenter_on_hud(drop_item) {
 
     level.zombie_vars["zombie_powerup_carpenter_on"] = true;
 
-    // set time remaining for fire_sale
+    // set time remaining for carpenter
     level thread time_remaining_on_carpenter_powerup();
 }
 
@@ -1061,13 +1060,13 @@ death_machine_on_hud(drop_item) {
     // check to see if this is on or not
     if (level.zombie_vars["zombie_powerup_death_machine_on"]) {
         // reset the time and keep going
-        level.zombie_vars["zombie_powerup_death_machine_time"] = 5;
+        level.zombie_vars["zombie_powerup_death_machine_time"] = 30;
         return;
     }
 
     level.zombie_vars["zombie_powerup_death_machine_on"] = true;
 
-    // set time remaining for fire_sale
+    // set time remaining for death machine
     level thread time_remaining_on_death_machine_powerup();
 }
 
@@ -1084,7 +1083,7 @@ nuke_on_hud(drop_item) {
 
     level.zombie_vars["zombie_powerup_nuke_on"] = true;
 
-    // set time remaining for fire_sale
+    // set time remaining for nuke
     level thread time_remaining_on_nuke_powerup();
 }
 
@@ -1101,7 +1100,7 @@ random_perk_on_hud(drop_item) {
 
     level.zombie_vars["zombie_powerup_random_perk_on"] = true;
 
-    // set time remaining for fire_sale
+    // set time remaining for random perk
     level thread time_remaining_on_random_perk_powerup();
 }
 
@@ -1118,7 +1117,7 @@ bonus_points_on_hud(drop_item) {
 
     level.zombie_vars["zombie_powerup_bonus_points_on"] = true;
 
-    // set time remaining for fire_sale
+    // set time remaining for bonus points
     level thread time_remaining_on_bonus_points_powerup();
 }
 
@@ -1135,7 +1134,7 @@ fire_sale_on_hud(drop_item) {
 
     level.zombie_vars["zombie_powerup_fire_sale_on"] = true;
 
-    // set time remaining for fire_sale
+    // set time remaining for fire sale
     level thread time_remaining_on_fire_sale_powerup();
 
 }
@@ -1163,9 +1162,11 @@ time_remaining_on_double_points_powerup() {
 
     // turn off the timer
     level.zombie_vars["zombie_powerup_double_points_on"] = false;
+
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("points_loop_off");
     }
+
     x2_ent StopLoopSound(2);
 
     // remove the offset to make room for new powerups, reset timer for next time
@@ -1175,7 +1176,7 @@ time_remaining_on_double_points_powerup() {
 
 time_remaining_on_insta_kill_powerup() {
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
@@ -1198,6 +1199,10 @@ time_remaining_on_insta_kill_powerup() {
     // turn off the timer
     level.zombie_vars["zombie_powerup_insta_kill_on"] = false;
 
+    for (i = 0; i < players.size; i++) {
+        players[i] PlaySound("points_loop_off");
+    }
+
     // remove the offset to make room for new powerups, reset timer for next time
     level.zombie_vars["zombie_powerup_insta_kill_time"] = 30;
     insta_kill_ent delete();
@@ -1205,7 +1210,7 @@ time_remaining_on_insta_kill_powerup() {
 
 time_remaining_on_max_ammo_powerup() {
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
@@ -1218,7 +1223,7 @@ time_remaining_on_max_ammo_powerup() {
         level.zombie_vars["zombie_powerup_max_ammo_time"] = level.zombie_vars["zombie_powerup_max_ammo_time"] - 0.1;
     }
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     // turn off the timer
     level.zombie_vars["zombie_powerup_max_ammo_on"] = false;
@@ -1229,7 +1234,7 @@ time_remaining_on_max_ammo_powerup() {
 
 time_remaining_on_carpenter_powerup() {
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
@@ -1242,7 +1247,7 @@ time_remaining_on_carpenter_powerup() {
         level.zombie_vars["zombie_powerup_carpenter_time"] = level.zombie_vars["zombie_powerup_carpenter_time"] - 0.1;
     }
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     // turn off the timer
     level.zombie_vars["zombie_powerup_carpenter_on"] = false;
@@ -1253,7 +1258,7 @@ time_remaining_on_carpenter_powerup() {
 
 time_remaining_on_death_machine_powerup() {
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
@@ -1266,18 +1271,22 @@ time_remaining_on_death_machine_powerup() {
         level.zombie_vars["zombie_powerup_death_machine_time"] = level.zombie_vars["zombie_powerup_death_machine_time"] - 0.1;
     }
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     // turn off the timer
     level.zombie_vars["zombie_powerup_death_machine_on"] = false;
 
+    for (i = 0; i < players.size; i++) {
+        players[i] PlaySound("points_loop_off");
+    }
+
     // remove the offset to make room for new powerups, reset timer for next time
-    level.zombie_vars["zombie_powerup_death_machine_time"] = 5;
+    level.zombie_vars["zombie_powerup_death_machine_time"] = 30;
 }
 
 time_remaining_on_nuke_powerup() {
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
@@ -1291,7 +1300,7 @@ time_remaining_on_nuke_powerup() {
         level.zombie_vars["zombie_powerup_nuke_time"] = level.zombie_vars["zombie_powerup_nuke_time"] - 0.1;
     }
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     // turn off the timer
     level.zombie_vars["zombie_powerup_nuke_on"] = false;
@@ -1302,7 +1311,7 @@ time_remaining_on_nuke_powerup() {
 
 time_remaining_on_bonus_points_powerup() {
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
@@ -1315,7 +1324,7 @@ time_remaining_on_bonus_points_powerup() {
         level.zombie_vars["zombie_powerup_bonus_points_time"] = level.zombie_vars["zombie_powerup_bonus_points_time"] - 0.1;
     }
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     // turn off the timer
     level.zombie_vars["zombie_powerup_bonus_points_on"] = false;
@@ -1326,7 +1335,7 @@ time_remaining_on_bonus_points_powerup() {
 
 time_remaining_on_random_perk_powerup() {
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
@@ -1339,7 +1348,7 @@ time_remaining_on_random_perk_powerup() {
         level.zombie_vars["zombie_powerup_random_perk_time"] = level.zombie_vars["zombie_powerup_random_perk_time"] - 0.1;
     }
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     // turn off the timer
     level.zombie_vars["zombie_powerup_random_perk_on"] = false;
@@ -1350,7 +1359,7 @@ time_remaining_on_random_perk_powerup() {
 
 time_remaining_on_fire_sale_powerup() {
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
@@ -1366,14 +1375,15 @@ time_remaining_on_fire_sale_powerup() {
         level.zombie_vars["zombie_powerup_fire_sale_time"] = level.zombie_vars["zombie_powerup_fire_sale_time"] - 0.1;
     }
 
-	level notify("zombie_powerup_timer");
+    level notify("zombie_powerup_timer");
 
     // turn off the timer
     level.zombie_vars["zombie_powerup_fire_sale_on"] = false;
-    players = GetPlayers();
+
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("points_loop_off");
     }
+
     fire_sale_ent StopLoopSound(2);
 
     // remove the offset to make room for new powerups, reset timer for next time
