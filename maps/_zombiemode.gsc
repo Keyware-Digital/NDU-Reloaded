@@ -2277,3 +2277,16 @@ player_intermission() {
         }
     }
 }
+
+get_players_alive() {
+	players = get_players(); // We Get An Array With All Players Currently Ingame (Alive or Dead) 
+	playersAlive = []; // A New Array To Hold Players Which Are Alive
+
+	for(i = 0; i < players.size; i++) { // Running Through The Players Array
+		if( isPlayer(players[i]) && isAlive(players[i]) ) { // Checking If A Single Player Is A Player & is Alive
+			playersAlive[playersAlive.size] = players[i]; // If The Above Evaluates To True We'll Add This Player To The playersAlive Array
+		}
+	}
+
+	return playersAlive; // Return The playersAlive Array
+}

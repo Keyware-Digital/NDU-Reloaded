@@ -10,16 +10,16 @@ init() {
 
 init_precache() {
     PrecacheShader("specialty_juggernaut_zombies");
-    PrecacheShader("specialty_fastreload_zombies");
-    PrecacheShader("specialty_doubletap_zombies");
-    PrecacheShader("specialty_quickrevive_zombies");
+    PrecacheShader("specialty_fast_reload_zombies");
+    PrecacheShader("specialty_double_tap_zombies");
+    PrecacheShader("specialty_quick_revive_zombies");
     PrecacheShader("specialty_phd_zombies");
     PrecacheShader("specialty_aim_zombies");
     PrecacheShader("specialty_fireworks_zombies");
-    PrecacheShader("specialty_longersprint_zombies");
-    PrecacheShader("specialty_electriccherry_zombies");
-    PrecacheShader("specialty_mulekick_zombies");
-    PrecacheShader("specialty_widowswine_zombies");
+    PrecacheShader("specialty_longer_sprint_zombies");
+    PrecacheShader("specialty_electric_cherry_zombies");
+    PrecacheShader("specialty_mule_kick_zombies");
+    PrecacheShader("specialty_widows_wine_zombies");
 }
 
 random_perk_powerup_think() {
@@ -119,15 +119,15 @@ perk_hud_create(perk) {
         break;
 
     case "specialty_quickrevive":
-        shader = "specialty_quickrevive_zombies";
+        shader = "specialty_quick_revive_zombies";
         break;
 
     case "specialty_fastreload":
-        shader = "specialty_fastreload_zombies";
+        shader = "specialty_fast_reload_zombies";
         break;
 
     case "specialty_rof":
-        shader = "specialty_doubletap_zombies";
+        shader = "specialty_double_tap_zombies";
         break;
 
     case "specialty_detectexplosive":
@@ -135,7 +135,7 @@ perk_hud_create(perk) {
         break;
 
     case "specialty_longersprint":
-        shader = "specialty_longersprint_zombies";
+        shader = "specialty_longer_sprint_zombies";
         break;
 
     case "specialty_bulletaccuracy":
@@ -146,20 +146,16 @@ perk_hud_create(perk) {
         shader = "specialty_fireworks_zombies";
         break;
 
-    case "specialty_bulletdamage":
-        shader = "specialty_sp_zombies";
-        break;
-
     case "specialty_electriccherry":
-        shader = "specialty_electriccherry_zombies";
+        shader = "specialty_electric_cherry_zombies";
         break;
 
     case "specialty_mulekick":
-        shader = "specialty_mulekick_zombies";
+        shader = "specialty_mule_kick_zombies";
         break;
 
     case "specialty_widowswine":
-        shader = "specialty_widowswine_zombies";
+        shader = "specialty_widows_wine_zombies";
         break;
 
     default:
