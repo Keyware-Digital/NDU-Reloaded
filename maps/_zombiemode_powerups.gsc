@@ -321,15 +321,21 @@ powerup_shader_timer(timerName, booleanName)
 	}
 }
 
-powerup_shader_destroy() {
-
-    wait 5.0;
-
-    self.alpha = 0;
-
-    wait 0.5;
-
-    self destroy();
+powerup_shader_destroy(timerName, booleanName) {
+	while(1)
+	{
+		if (!level.zombie_vars[booleanName] || level.zombie_vars[timerName] <= 0.5)
+		{
+			self.alpha = 0;
+		}	
+		else if (level.zombie_vars[timerName] < 5)
+		{	
+			self.alpha = 1;
+			wait(5.0);
+			self.alpha = 0;
+		}
+		wait 0.01;
+	}
 }
 
 /*powerup_hud_overlay() {
