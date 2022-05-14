@@ -79,15 +79,15 @@ init_precache() {
 init_powerups() {
 
     // Random Drops
-    add_zombie_powerup("double_points", "zombie_x2_icon", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
-    add_zombie_powerup("insta_kill", "zombie_skull", &"ZOMBIE_POWERUP_INSTA_KILL");
+    //add_zombie_powerup("double_points", "zombie_x2_icon", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
+    //add_zombie_powerup("insta_kill", "zombie_skull", &"ZOMBIE_POWERUP_INSTA_KILL");
     add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup("death_machine", "zombie_pickup_minigun", &"ZOMBIE_POWERUP_DEATH_MACHINE");
-    add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
-    add_zombie_powerup("random_perk", "zombie_pickup_perk_bottle", &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
-    add_zombie_powerup("fire_sale", "zombie_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
+    //add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup("death_machine", "zombie_pickup_minigun", &"ZOMBIE_POWERUP_DEATH_MACHINE");
+    //add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
+    //add_zombie_powerup("random_perk", "zombie_pickup_perk_bottle", &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
+    //add_zombie_powerup("fire_sale", "zombie_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
 
     // Randomize the order
     randomize_powerups();
@@ -140,12 +140,12 @@ powerup_hud_overlay()
 	
 	level.powerup_hud[0] thread powerup_shader_timer("zombie_powerup_double_points_time", "zombie_powerup_double_points_on");
 	level.powerup_hud[1] thread powerup_shader_timer("zombie_powerup_insta_kill_time", "zombie_powerup_insta_kill_on");
-	level.powerup_hud[2] thread powerup_shader_timer("zombie_powerup_max_ammo_time", "zombie_powerup_max_ammo_on");
-	level.powerup_hud[3] thread powerup_shader_timer("zombie_powerup_carpenter_time", "zombie_powerup_carpenter_on");
+	level.powerup_hud[2] thread powerup_shader_destroy("zombie_powerup_max_ammo_time", "zombie_powerup_max_ammo_on");
+	level.powerup_hud[3] thread powerup_shader_destroy("zombie_powerup_carpenter_time", "zombie_powerup_carpenter_on");
 	level.powerup_hud[4] thread powerup_shader_timer("zombie_powerup_death_machine_time", "zombie_powerup_death_machine_on");
-    level.powerup_hud[5] thread powerup_shader_timer("zombie_powerup_nuke_time", "zombie_powerup_nuke_on");
-	level.powerup_hud[6] thread powerup_shader_timer("zombie_powerup_random_perk_time", "zombie_powerup_random_perk_on");
-	level.powerup_hud[7] thread powerup_shader_timer("zombie_powerup_bonus_points_time", "zombie_powerup_bonus_points_on");
+    level.powerup_hud[5] thread powerup_shader_destroy("zombie_powerup_nuke_time", "zombie_powerup_nuke_on");
+	level.powerup_hud[6] thread powerup_shader_destroy("zombie_powerup_random_perk_time", "zombie_powerup_random_perk_on");
+	level.powerup_hud[7] thread powerup_shader_destroy("zombie_powerup_bonus_points_time", "zombie_powerup_bonus_points_on");
 	level.powerup_hud[8] thread powerup_shader_timer("zombie_powerup_fire_sale_time", "zombie_powerup_fire_sale_on");
 	
 	while(true)
@@ -319,6 +319,17 @@ powerup_shader_timer(timerName, booleanName)
 		
 		wait 0.01;
 	}
+}
+
+powerup_shader_destroy() {
+
+    wait 5.0;
+
+    self.alpha = 0;
+
+    wait 0.5;
+
+    self destroy();
 }
 
 /*powerup_hud_overlay() {
@@ -1187,7 +1198,7 @@ max_ammo_on_hud(drop_item) {
     // set time remaining for fire_sale
     level thread time_remaining_on_max_ammo_powerup();
 
-    /*shader_max_ammo = "specialty_max_ammo_zombies";
+    /*shader_carpenter = "specialty_carpenter_zombies";
 
     // set up the hudelem
     hudelem = maps\_hud_util::createFontString("objective", 2);
@@ -1198,7 +1209,7 @@ max_ammo_on_hud(drop_item) {
     hudelem.horzAlign = "center";
     hudelem.vertAlign = "bottom";
     hudelem.y = -108;
-    hudelem SetShader(shader_max_ammo, 32, 32);
+    hudelem SetShader(shader_carpenter, 32, 32);
     hudelem.alpha = 1;
     hudelem fadeovertime(0.5);
 
@@ -1603,14 +1614,3 @@ time_remaining_on_fire_sale_powerup() {
     level.zombie_vars["zombie_powerup_fire_sale_time"] = 30;
     fire_sale_ent delete();
 }
-
-/*powerup_destroy_hud() {
-
-    wait 5.0;
-
-    self.alpha = 0;
-
-    wait 0.5;
-
-    self destroy();
-}*/

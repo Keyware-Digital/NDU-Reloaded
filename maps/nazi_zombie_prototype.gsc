@@ -233,7 +233,7 @@ include_powerups() {
     include_powerup("nuke");
     include_powerup("insta_kill");
     include_powerup("double_points");
-    include_powerup("full_ammo");
+    include_powerup("max_ammo");
     include_powerup("carpenter");
     include_powerup("death_machine");
     include_powerup("random_perk");
