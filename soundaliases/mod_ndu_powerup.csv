@@ -25,7 +25,7 @@ nuked,SFX\Levels\zombie\powerups\nuke\nuke.wav,,,1,1,500,4000,3,reject,,,full_vo
 nuke_flash,SFX\Amb\flare\flare_exp.wav,,,1,1,500,4000,4,reject,,,full_vol,,curve4,1,4500,,curve2,1,1,,2d,,,,,,,,bomb_falloff,,,wpn_all,,,,,,0.25,,,,,,100,100,0.25,1,,
 double_point_loop,SFX\Levels\zombie\powerups\double_point\double_point_loop.wav,,,0.25,0.25,50,800,4,reject,,,full_vol,,curve4,1,1200,,curve2,1,1,,2d,,,looping,0.5,,,,,,,wpn_all,,,,,,0.25,,,,,,100,100,0.25,1,,
 points_loop_off,SFX\Levels\zombie\powerups\double_point\double_point_off.wav,,,0.7,0.7,50,800,4,reject,,,full_vol,,curve4,1,1200,,curve2,1,1,,2d,,,,,,,,,,,wpn_all,,,,,,0.25,,,,,,100,100,0.25,1,,
-fire_sale_loop,mus\zombie\firesale\fire_sale_loop.wav,,,0.8,0.8,50,2500,,,,,music,,curve2,0.8,3200,,curve2,1,1,,2d,,,looping,0.2,,,,,,,wpn_all,,,,,,0.25,,,yes,,,80,80,0.15,0.85,,
+fire_sale_loop,mus\zombie\firesale\fire_sale_loop.wav,,,1,1,2250,6500,20,priority,,,full_vol,,curve4,1,1200,,curve2,1,1,,3d,,,looping,,,,,,,,,,,,,,0.25,,,,,,100,100,0.25,1
 carp_loop,SFX\Levels\zombie\powerups\carp\carp_loop.wav,,,0.75,0.75,,,4,reject,,,full_vol,,,1,,,,1,1,,2d,,,looping,0.5,,,,,,500,wpn_all,,,,,,0.25,,,,,,100,100,0.25,1,,
 carp_end,SFX\Levels\zombie\powerups\carp\carp_end.wav,,,1,1,,,4,reject,,,full_vol,,,1,,,,1,1,,2d,,,,,,,,points_loop_off,,,wpn_all,,,,,,0.25,,,,,,100,100,0.25,1,,
 #sam_nospawn,voiceovers\zombie\sam\tele_nospawn_00.wav,1,,1,1,,,,,,,voice,,curve4,,,,,,,,2d,streamed,,,,,,,,,,wpn_all,,,,,,,,,,,,40,60,0.25,1,,
