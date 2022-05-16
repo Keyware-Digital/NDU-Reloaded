@@ -346,6 +346,9 @@ treasure_chest_think(rand)
 		case "mosin_rifle":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN");
 			break; 
+		case "springfield":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
+			break;
 		case "dp28":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DP_27");
 			break; 
@@ -919,8 +922,14 @@ weapon_cabinet_think()
 		case "kar98k_scoped_zombie":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_KAR_98K_SCOPED");
 			break; 
+		case "kar98k_bayonet":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_KAR_98K_BAYONET");
+			break; 
 		case "m1garand":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1_GARAND");
+			break; 
+		case "mosin_rifle_bayonet":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_KAR_98K_BAYONET");
 			break; 
 		case "mosin_rifle_scoped_zombie":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_SCOPED");
@@ -928,16 +937,13 @@ weapon_cabinet_think()
 		case "mp40_bigammo_mp":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40_MAG");
 			break;
-		case "springfield":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
-			break;
 		case "springfield_scoped_zombie_upgraded":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED");
 			break; 
 		case "thompson_bigammo_mp":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_MAG");
 			break;     
-		case "walther":
+		case "walther_prototype":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
 			break;  
 		}
