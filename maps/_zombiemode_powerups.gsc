@@ -713,13 +713,9 @@ insta_kill_powerup(drop_item) {
 
 }
 
-check_for_instakill() {
+check_for_instakill(player) {
 
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-
-    if (IsDefined(players[i]) && IsAlive(players[i]) && level.zombie_vars["zombie_insta_kill"]) {
+    if (IsDefined(player) && IsAlive(player) && level.zombie_vars["zombie_insta_kill"]) {
         if (is_magic_bullet_shield_enabled(self)) {
             return;
         }
@@ -728,15 +724,14 @@ check_for_instakill() {
             return;
         }
 
-        if (players[i].use_weapon_type == "MOD_MELEE") {
-            players[i].last_kill_method = "MOD_MELEE";
+        if (player.use_weapon_type == "MOD_MELEE") {
+           player.last_kill_method = "MOD_MELEE";
             //BO3 Style melee points during instakill
-            players[i].score += 70 * level.zombie_vars["zombie_double_points"];
-            players[i].score_total += 70 * level.zombie_vars["zombie_double_points"];
+            player.score += 70 * level.zombie_vars["zombie_double_points"];
+            player.score_total += 70 * level.zombie_vars["zombie_double_points"];
 
         } else {
-            players[i].last_kill_method = "MOD_UNKNOWN";
-
+            player.last_kill_method = "MOD_UNKNOWN";
         }
 
         /*if( flag( "dog_round" ) )
@@ -745,15 +740,19 @@ check_for_instakill() {
         	player notify("zombie_killed");
         }
         else*/
-        {
+
+        players = GetPlayers();
+
+        for (i = 0; i < players.size; i++) {
+            {
             self maps\_zombiemode_spawner::zombie_head_gib();
             self DoDamage(self.health + 666, self.origin, players[i]);
             players[i] notify("zombie_killed");
-
+            }
         }
     }
 
-    }
+
 }
 
 max_ammo_powerup(drop_item) {
