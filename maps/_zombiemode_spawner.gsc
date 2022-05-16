@@ -181,7 +181,7 @@ zombie_spawn_init()
 	self set_zombie_run_cycle(); 
 	self thread zombie_think(); 
 	self thread zombie_gib_on_damage(); 
-//	self thread zombie_head_gib(); 
+//	self thread zombie_head_gib();
 	self thread delayed_zombie_eye_glow();	// delayed eye glow for ground crawlers (the eyes floated above the ground before the anim started)
 	self.deathFunction = ::zombie_death_animscript;
 	self.flame_damage_time = 0;
@@ -1458,7 +1458,8 @@ zombie_gib_on_damage()
 			{
 				if(self.health > amount)
 				{
-					self DoDamage( int( amount* 1 ), point, attacker, self.damageWeapon, type );	//was 0.25, so buffed it
+					self DoDamage( int( amount* 0.25 ), point, attacker, self.damageWeapon, type );	//was 0.25, so buffed it
+					IPrintLN("Added " + amount*0.25 + " Damage");
 					amount = amount * 1.25;	//was 1.40, so nerfed it
 				}
 				else
