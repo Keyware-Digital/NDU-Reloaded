@@ -346,9 +346,6 @@ treasure_chest_think(rand)
 		case "mosin_rifle":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN");
 			break; 
-		case "springfield":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
-			break;
 		case "dp28":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DP_27");
 			break; 
