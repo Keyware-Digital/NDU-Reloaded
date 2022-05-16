@@ -283,9 +283,9 @@ xanim,viewmodel_zombie_perksacola_idle
 xanim,viewmodel_zombie_perksacola_lower
 xanim,viewmodel_zombie_perksacola_raise
 weapon,sp/dp28
-//weapon,sp/kar98k_bayonet
+weapon,sp/kar98k_bayonet
 weapon,sp/mine_bouncing_betty
-//weapon,sp/mosin_rifle_bayonet
+weapon,sp/mosin_rifle_bayonet
 weapon,sp/mosin_rifle_scoped_zombie
 weapon,sp/mp40_bigammo_mp
 weapon,sp/svt40
