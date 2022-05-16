@@ -40,8 +40,8 @@ random_perk_powerup_think() {
     }
 
     if (self.perkarray[self.perknum] == "specialty_longersprint") {
-        self SetMoveSpeedScale(1);
-        self setClientDvar("perk_sprintMultiplier", "1");
+        self SetMoveSpeedScale(1.07);   //Lightweight
+        self setClientDvar("perk_sprintMultiplier", "2");   //Marathon
     }
 
     self SetPerk(self.perkarray[self.perknum]);
