@@ -49,6 +49,7 @@ rawfile,maps/_zombiemode_spawner.gsc
 rawfile,maps/_zombiemode_weapons.gsc
 rawfile,maps/_zombiemode_perks.gsc
 rawfile,maps/_dolphin_dive.gsc
+rawfile,maps/walking_anim.gsc
 rawfile,animtrees/generic_human.atr
 rawfile,animtrees/animations.atr
 rawfile,xmodelparts/zombie_pickup_perk_cabinet1

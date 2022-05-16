@@ -20,6 +20,7 @@ main() {
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
+    maps\walking_anim::main();
 
     players = GetPlayers();
 
