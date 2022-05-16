@@ -63,7 +63,7 @@ REFERENCE           WEAPON_M7_LAUNCHER
 LANG_ENGLISH        "M7 Grenade Launcher"
 
 REFERENCE           WEAPON_MG42_BIPOD
-LANG_ENGLISH        "MG 42 /w Bipod"
+LANG_ENGLISH        "MG 42 w/ Bipod"
 
 REFERENCE           WEAPON_S_MINE
 LANG_ENGLISH        "S-Mine 'Bouncing Betty'"
@@ -144,7 +144,7 @@ REFERENCE           ZOMBIE_WEAPON_KAR_98K_200
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k [Cost: 200]"
 
 REFERENCE           ZOMBIE_TRADE_KAR_98K_BAYONET
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k"
+LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k w/ Bayonet"
 
 REFERENCE           ZOMBIE_TRADE_KAR_98K_SCOPED
 LANG_ENGLISH        "Hold ^3&&1 ^7for Kar98k w/ Scope"
@@ -276,7 +276,7 @@ REFERENCE           ZOMBIE_TRADE_FG_42
 LANG_ENGLISH        "Hold ^3&&1 ^7for FG 42"
 
 REFERENCE           ZOMBIE_TRADE_MG_42
-LANG_ENGLISH        "Hold ^3&&1 ^7for MG 42"
+LANG_ENGLISH        "Hold ^3&&1 ^7for MG 42 w/ Bipod"
 
 REFERENCE           ZOMBIE_TRADE_30_CAL_BIPOD
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1919 Browning MG"
