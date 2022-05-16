@@ -2301,7 +2301,7 @@ setup_player_abilities()
 {
 	flag_wait( "all_players_connected" );
 	
-	players = get_players();
+	players = GetPlayers();
 	for(i = 0; i < players.size; i++)
 	{
 		players[i] thread maps\_dolphin_dive::setup_player_dolphin_dive();

@@ -14,8 +14,8 @@ setup_player_dolphin_dive()
 
 	self.is_diving = false;
 	self.can_flop = false;
-	d2p_anim_start = %pb_dw_dive_prone;
-	d2p_anim_land = %pb_dw_dive_prone_land;
+	dolphin_dive_anim_start = %pb_dw_dive_prone;
+	dolphin_dive_anim_land = %pb_dw_dive_prone_land;
 	
 	while(1)
 	{
@@ -33,19 +33,19 @@ setup_player_dolphin_dive()
 			self setClientDvar("hide_reload_hud", 1);
 			self setClientDvar("ammocounterhide", 1);
 			current_weapon = self GetCurrentWeapon();
-			players_d2p = spawn("script_model", self.origin);
-			players_d2p setModel(self.model);
-			players_d2p hide();
-			players_d2p attach(GetWeaponModel(current_weapon), "tag_weapon_right");
-			players_d2p setInVisibleToPlayer(self);
-			self thread update_angles_origin(players_d2p);
-			players_d2p UseAnimTree( #animtree );
-			players_d2p setAnim(d2p_anim_start);
+			players_dolphin_dive = spawn("script_model", self.origin);
+			players_dolphin_dive setModel(self.model);
+			players_dolphin_dive hide();
+			players_dolphin_dive attach(GetWeaponModel(current_weapon), "tag_weapon_right");
+			players_dolphin_dive setInVisibleToPlayer(self);
+			self thread update_angles_origin(players_dolphin_dive);
+			players_dolphin_dive UseAnimTree( #animtree );
+			players_dolphin_dive setAnim(dolphin_dive_anim_start);
 
 			wait .05;
 		
 			self hide();
-			players_d2p show();
+			players_dolphin_dive show();
 			self AllowMelee(false);
 			self AllowLean(false);
 			self AllowADS(false);
@@ -75,8 +75,8 @@ setup_player_dolphin_dive()
 			}
 			self SetVelocity(AnglesToForward(angles) * 450);
 			self setStance("prone");
-			players_d2p UseAnimTree( #animtree );
-			players_d2p setAnim(d2p_anim_land);
+			players_dolphin_dive UseAnimTree( #animtree );
+			players_dolphin_dive setAnim(dolphin_dive_anim_land);
 
 			// self playSound("d2p_fall");
 			// self playSound("d2p_slide");
@@ -102,7 +102,7 @@ setup_player_dolphin_dive()
 			self AllowCrouch(true);
 			self EnableOffhandWeapons();
 			self EnableWeaponCycling();
-			players_d2p delete();
+			players_dolphin_dive delete();
 			self show();
 			self.is_diving = false;
         }
@@ -118,12 +118,12 @@ isSprinting()
 	return false;
 }
 
-update_angles_origin(players_d2p)
+update_angles_origin(players_dolphin_dive)
 {
-	while(isDefined(players_d2p))
+	while(isDefined(players_dolphin_dive))
 	{
-		players_d2p.origin = self.origin;
-		players_d2p.angles = self.angles;
+		players_dolphin_dive.origin = self.origin;
+		players_dolphin_dive.angles = self.angles;
 		wait .01;
 	}
 }
