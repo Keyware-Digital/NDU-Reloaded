@@ -1458,8 +1458,8 @@ zombie_gib_on_damage()
 			{
 				if(self.health > amount)
 				{
-					self DoDamage( int( amount* 0.25 ), point, attacker, self.damageWeapon, type );	//was 0.25, so buffed it
-					IPrintLN("Added " + amount*0.25 + " Damage");
+					self DoDamage( int( amount* 0.25 ), point, attacker, self.damageWeapon, type );	//was 1
+					IPrintLN("Added " + amount*0.25 + " Damage");	//testing
 					amount = amount * 1.25;	//was 1.40, so nerfed it
 				}
 				else
@@ -1473,6 +1473,13 @@ zombie_gib_on_damage()
 		{
 			continue; 
 		}
+
+		// Bowie DMG
+		if(attacker HasPerk("specialty_altmelee") && type == "MOD_MELEE" && !self.damage_done )
+		{
+		self DoDamage( int(amount * 6), point, attacker, type ); 
+		self.damage_done = false;
+   		}
 
 		if( self head_should_gib( attacker, type, point ) && type != "MOD_BURNED" )
 		{

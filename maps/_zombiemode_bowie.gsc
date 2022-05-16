@@ -127,7 +127,8 @@ give_bowie()
 
 	self thread bowie_bay();
 }
-bowie_bay()	//revised for NDU: Reloaded
+
+bowie_bay()    //revised for NDU: Reloaded
 {
     for(;;)
     {
@@ -140,9 +141,15 @@ bowie_bay()	//revised for NDU: Reloaded
         {
             self SetPerk("specialty_altmelee");
         }
+        if(self maps\_laststand::player_is_in_laststand())
+        {
+            self unSetPerk("specialty_altmelee");
+            break;
+        }
         wait .1;
     }
 }
+
 do_bowie_flourish_begin()
 {
 	self DisableOffhandWeapons();

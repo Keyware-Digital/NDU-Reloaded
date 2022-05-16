@@ -119,8 +119,8 @@ include_weapons() {
     // NDU: Reloaded (main box additions)
     include_weapon("mosin_rifle");
     include_weapon("dp28");
-    //include_weapon( "kar98k_bayonet" );		//disabled in favour of Bowie.
-    //include_weapon( "mosin_rifle_bayonet" );	//disabled in favour of Bowie.
+    include_weapon( "kar98k_bayonet" );
+    include_weapon( "mosin_rifle_bayonet" );
     include_weapon("svt40");
     include_weapon("type99_lmg");
     //include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
@@ -193,17 +193,19 @@ include_weapons() {
 
     // bouncing betties & bowie
     include_weapon("mine_bouncing_betty");
-    //include_weapon("zombie_bowie_flourish");
+    include_weapon("zombie_bowie_flourish");
 
     // Weapon limiter
     level.limited_weapons["colt"] = 0;
     level.limited_weapons["walther"] = 0;
     level.limited_weapons["tokarev"] = 0;
     level.limited_weapons["kar98k"] = 0;
+    level.limited_weapons["kar98k_bayonet"] = 0;
     level.limited_weapons["kar98k_scoped_zombie"] = 0;
     level.limited_weapons["m1carbine"] = 0;
     level.limited_weapons["m1garand"] = 0;
     level.limited_weapons["mosin_rifle_scoped_zombie"] = 0;
+    level.limited_weapons["mosin_rifle_bayonet"] = 0;
     level.limited_weapons["mp40_bigammo_mp"] = 0;
     //level.limited_weapons["springfield"] = 0;
     level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;

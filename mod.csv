@@ -39,7 +39,7 @@ rawfile,maps/_gameskill.gsc
 rawfile,maps/_loadout.gsc
 rawfile,maps/_zombiemode.gsc
 rawfile,maps/_zombiemode_betty.gsc
-//rawfile,maps/_zombiemode_bowie.gsc
+rawfile,maps/_zombiemode_bowie.gsc
 rawfile,maps/_zombiemode_blockers.gsc
 rawfile,maps/_zombiemode_powerups.gsc
 rawfile,maps/_zombiemode_utility.gsc
@@ -276,6 +276,7 @@ xmodel,zombie_pickup_minigun
 xmodel,zombie_pickup_perk_bottle
 xmodel,zombie_pickup_perkbottle
 xmodel,zombie_pickup_perkbottle_viewmodel
+xmodel,viewmodel_knife_bowie
 xanim,viewmodel_zombie_perksacola_drink
 xanim,viewmodel_zombie_perksacola_empty_idle
 xanim,viewmodel_zombie_perksacola_idle
@@ -294,7 +295,7 @@ weapon,sp/type99_lmg
 weapon,sp/springfield_scoped_zombie_upgraded
 //weapon,sp/walther_prototype
 weapon,sp/mosin_rifle
-//weapon,sp/zombie_bowie_flourish
+weapon,sp/zombie_bowie_flourish
 weapon,sp/zombie_ppsh
 weapon,sp/zombie_perk_bottle
 weapon,sp/zombie_type100_smg
