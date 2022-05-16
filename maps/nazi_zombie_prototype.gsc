@@ -28,7 +28,7 @@ main() {
         players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
         //dev
         players[i] SetClientDvar("sv_cheats", 1);
-        //players[i] maps\_zombiemode_score::add_to_player_score(100000);
+        players[i] maps\_zombiemode_score::add_to_player_score(100000);
         //these set the level of detail relative to distance (should really be set in the menus as one option like mature content)
         players[i] SetClientDvar("r_lodBiasRigid", -1000);
         players[i] SetClientDvar("r_lodBiasSkinned", -1000);
