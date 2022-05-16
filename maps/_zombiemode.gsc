@@ -18,6 +18,7 @@ main() {
     init_animscripts();
     init_sounds();
     init_shellshocks();
+    init_player_vars();
 
     // the initial spawners
     level.enemy_spawns = getEntArray("zombie_spawner_init", "targetname");
@@ -469,6 +470,11 @@ init_animscripts() {
     anim.idleAnimWeights["crouch"] = [];
     anim.idleAnimArray["crouch"][0][0] = % ai_zombie_idle_crawl_delta;
     anim.idleAnimWeights["crouch"][0][0] = 10;
+}
+
+init_player_vars() {
+    set_zombie_var("dolphin_dive", 1);
+	level thread setup_player_abilities();
 }
 
 // Handles the intro screen
@@ -2289,4 +2295,15 @@ get_players_alive() {
 	}
 
 	return playersAlive; // Return The playersAlive Array
+}
+
+setup_player_abilities()
+{
+	flag_wait( "all_players_connected" );
+	
+	players = get_players();
+	for(i = 0; i < players.size; i++)
+	{
+		players[i] thread maps\_dolphin_dive::setup_player_dolphin_dive();
+	}
 }
