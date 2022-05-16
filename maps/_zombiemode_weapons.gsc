@@ -926,7 +926,7 @@ weapon_cabinet_think()
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1_GARAND");
 			break; 
 		case "mosin_rifle_bayonet":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_KAR_98K_BAYONET");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_RIFLE_BAYONET");
 			break; 
 		case "mosin_rifle_scoped_zombie":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_SCOPED");
