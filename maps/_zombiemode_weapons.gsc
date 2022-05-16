@@ -98,7 +98,7 @@ init_weapons()
 	add_zombie_weapon( "zombie_colt", 							&"ZOMBIE_WEAPON_ZOMBIECOLT_25", 			25 );
                                                         		
 	// Bolt Action                                      		
-	add_zombie_weapon( "kar98k", 								&"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_200", 		200 );
+	add_zombie_weapon( "kar98k", 								&"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_200", 	200 );
 	add_zombie_weapon( "kar98k_bayonet", 						&"ZOMBIE_WEAPON_KAR98K_B_200", 				200 );
 	add_zombie_weapon( "mosin_rifle", 							&"ZOMBIE_WEAPON_MOSIN_200", 				200 );
 	add_zombie_weapon( "mosin_rifle_bayonet", 					&"ZOMBIE_WEAPON_MOSIN_B_200", 				200 );
@@ -427,6 +427,9 @@ treasure_chest_think(rand)
 		case "mine_bouncing_betty":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MINE");
 			break; 
+		case "zombie_bowie_flourish":
+			self SetHintString("Hold ^3&&1 ^7for Bowie Knife");
+			break;
 		}
 	
 	self setCursorHint( "HINT_NOICON" ); 
@@ -439,41 +442,50 @@ treasure_chest_think(rand)
 	while( 1 )
 	{
 		self waittill( "trigger", grabber ); 
-		
+
 		if( grabber == user || grabber == level )
 		{
 			if( grabber == user && is_player_valid( user ) && user GetCurrentWeapon() != "mine_bouncing_betty" )
 			{
-				bbPrint( "zombie_uses: playername %s playerscore %d round %d cost %d name %s x %f y %f z %f type magic_accept",
-					user.playername, user.score, level.round_number, cost, weapon_spawn_org.weapon_string, self.origin );
 				self notify( "user_grabbed_weapon" );
-				user thread treasure_chest_give_weapon( weapon_spawn_org.weapon_string );
-				break; 
+				if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
+				{
+					if(!user hasperk("specialty_altmelee" || user.has_altmelee))
+					{
+						weapon_spawn_org notify("weapon_grabbed");
+						lid thread treasure_chest_lid_close( self.timedOut );
+						self.grab_weapon_hint = false;
+						self disable_trigger();
+						user maps\_zombiemode_bowie::give_bowie();
+						break;
+					}
+					break;
+				}
+				else
+				{
+					user thread treasure_chest_give_weapon( weapon_spawn_org.weapon_string );
+					break;
+				}
 			}
 			else if( grabber == level )
 			{
 				// it timed out
 				self.timedOut = true;
-				bbPrint( "zombie_uses: playername %s playerscore %d round %d cost %d name %s x %f y %f z %f type magic_reject",
-					user.playername, user.score, level.round_number, cost, weapon_spawn_org.weapon_string, self.origin );
 				break;
 			}
 		}
-		
+
 		wait 0.05; 
 	}
-	
-	self.grab_weapon_hint = false;
-	
-	weapon_spawn_org notify( "weapon_grabbed" ); 
-	
-	self disable_trigger(); 
-		
-	// spend cash here...
-	// give weapon here...
-	lid thread treasure_chest_lid_close( self.timedOut ); 
-	
-	wait 3; 
+
+	if(weapon_spawn_org.weapon_string != "zombie_bowie_flourish")
+	{
+		self.grab_weapon_hint = false;
+		weapon_spawn_org notify( "weapon_grabbed" );
+		lid thread treasure_chest_lid_close( self.timedOut );
+		self disable_trigger();
+		wait 3;
+	}
 	self enable_trigger(); 	
 	self thread treasure_chest_think(); 
 }
@@ -737,6 +749,7 @@ treasure_chest_give_weapon( weapon_string )
 	self SwitchToWeapon( weapon_string ); 
 }
 
+// NDU: Reloaded's Mystery Box 2.0
 weapon_cabinet_think()
 {
 
@@ -757,13 +770,14 @@ weapon_cabinet_think()
 
 	level.cabinetguns = [];
 	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
-	level.cabinetguns[1] = "m1garand";		
-	level.cabinetguns[2] = "mosin_rifle_scoped_zombie";						
-	level.cabinetguns[3] = "mp40_bigammo_mp";
-	level.cabinetguns[4] = "springfield";						
-	level.cabinetguns[5] = "springfield_scoped_zombie_upgraded";
-	level.cabinetguns[6] = "thompson_bigammo_mp";
-	level.cabinetguns[7] = "walther";
+	level.cabinetguns[1] = "kar98k_bayonet";	
+	level.cabinetguns[2] = "m1garand";		
+	level.cabinetguns[3] = "mosin_rifle_scoped_zombie";						
+	level.cabinetguns[4] = "mosin_rifle_bayonet";
+	level.cabinetguns[5] = "mp40_bigammo_mp";
+	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
+	level.cabinetguns[7] = "thompson_bigammo_mp";
+	//level.cabinetguns[8] = "walther_prototype";
 	//level.cabinetguns[8] = "placeholdergun";
 	//level.cabinetguns[9] = "placeholdergun";
 	//level.cabinetguns[10] = "type100smg_bigammo_mp";					//removed because glitched!
