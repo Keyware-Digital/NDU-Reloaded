@@ -143,6 +143,12 @@ LANG_ENGLISH        "PPSh-41"
 REFERENCE           ZOMBIE_WEAPON_KAR_98K_200
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k [Cost: 200]"
 
+REFERENCE           ZOMBIE_WEAPON_KAR_98K_BAYONET
+LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k"
+
+REFERENCE           ZOMBIE_TRADE_KAR_98K_SCOPED
+LANG_ENGLISH        "Hold ^3&&1 ^7for Kar98k w/ Scope"
+
 REFERENCE           ZOMBIE_WEAPON_M1_CARBINE_600
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1 Carbine [Cost: 600]"
 
@@ -176,11 +182,14 @@ LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 10]"
 REFERENCE           ZOMBIE_TRADE_WEAPONS
 LANG_ENGLISH        "Hold ^3&&1 ^7to trade Weapons"
 
-REFERENCE           ZOMBIE_TRADE_KAR_98K_SCOPED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Kar98k w/ Scope"
-
 REFERENCE           ZOMBIE_TRADE_M1_GARAND
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1 Garand"
+
+REFERENCE           ZOMBIE_TRADE_MOSIN
+LANG_ENGLISH        "Hold ^3&&1 ^7for 3-Line 'Mosin' Rifle M1891"
+
+REFERENCE           ZOMBIE_TRADE_MOSIN_BAYONET
+LANG_ENGLISH        "Hold ^3&&1 ^7for 3-Line 'Mosin' Rifle M1891 w/ Bayonet"
 
 REFERENCE           ZOMBIE_TRADE_MOSIN_SCOPED
 LANG_ENGLISH        "Hold ^3&&1 ^7for 3-Line 'Mosin' Rifle M1891 w/ Scope"
@@ -203,8 +212,7 @@ LANG_ENGLISH        "Hold ^3&&1 ^7for M1928A1 Thompson"
 REFERENCE           ZOMBIE_TRADE_WALTHER
 LANG_ENGLISH        "Hold ^3&&1 ^7for P38"
 
-REFERENCE           ZOMBIE_TRADE_MOSIN
-LANG_ENGLISH        "Hold ^3&&1 ^7for 3-Line 'Mosin' Rifle M1891"
+
 
 REFERENCE           ZOMBIE_TRADE_DP_27
 LANG_ENGLISH        "Hold ^3&&1 ^7for DP-27"
