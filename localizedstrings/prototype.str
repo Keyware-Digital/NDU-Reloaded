@@ -122,7 +122,7 @@ LANG_ENGLISH        "Wunderwaffe DG-2"
 REFERENCE           WEAPON_THOMPSON
 LANG_ENGLISH        "M1A1 Thompson"
 
-REFERENCE           WEAPON_THOMPSON_DRUM
+REFERENCE           WEAPON_THOMPSON_MAG
 LANG_ENGLISH        "M1928A1 Thompson"
 
 REFERENCE           WEAPON_TOKAREV
@@ -198,7 +198,7 @@ REFERENCE           ZOMBIE_TRADE_SPRINGFIELD_SCOPED
 LANG_ENGLISH        "Hold ^3&&1 ^7for The Judicator"
 
 REFERENCE           ZOMBIE_TRADE_THOMPSON_MAG
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1A1 Thompson w/ Drum Mag"
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1928A1 Thompson"
 
 REFERENCE           ZOMBIE_TRADE_WALTHER
 LANG_ENGLISH        "Hold ^3&&1 ^7for P38"
