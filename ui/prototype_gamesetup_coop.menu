@@ -63,7 +63,7 @@
 	#undef	CHOICE_DVAR_WIDTH_OFFSET
 	#define	CHOICE_DVAR_WIDTH_OFFSET 170
 		// server settings =========================================
-		CHOICE_DVARLIST_VIS( 		1, "@MENU_GAME_TYPE", "", ITEM_TYPE_MULTI, ownerdraw UI_NETGAMETYPE textaligny 20, execOnDvarStringValue "ui_netGametypeName" zom "set ui_hostOptions 0; set ui_hostOptionsEnabled 0;";, 0 )
+		CHOICE_DVARLIST_VIS( 		1, "@MENU_GAME_TYPE", "", ITEM_TYPE_MULTI, ownerdraw UI_NETGAMETYPE textaligny 20, execOnDvarStringValue "ui_netGametypeName" zom "set ui_hostOptions 0; set ui_hostOptionsEnabled 0;";, 1 )
 		CHOICE_DVAREDIT_VIS( 		2, "@MENU_SERVER_NAME", "sv_hostname", 20, 9, ;, 1 )
 		CHOICE_DVAREDIT_VIS( 		3, "@MENU_PASSWORD1", "g_password", 12, 9, ;, 1 )	//CHOICE_DVARYESNO( 10, "@MENU_FRIENDLY_INDICATORS", "scr_drawfriend", ; )
 		

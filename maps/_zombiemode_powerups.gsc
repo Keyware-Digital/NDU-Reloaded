@@ -79,15 +79,15 @@ init_precache() {
 init_powerups() {
 
     // Random Drops
-    add_zombie_powerup("double_points", "zombie_x2_icon", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
+    //add_zombie_powerup("double_points", "zombie_x2_icon", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
     add_zombie_powerup("insta_kill", "zombie_skull", &"ZOMBIE_POWERUP_INSTA_KILL");
-    add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup("death_machine", "zombie_pickup_minigun", &"ZOMBIE_POWERUP_DEATH_MACHINE");
-    add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
-    add_zombie_powerup("random_perk", "zombie_pickup_perk_bottle", &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
-    add_zombie_powerup("fire_sale", "zombie_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
+    //add_zombie_powerup("max_ammo", "zombie_ammocan", &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup("death_machine", "zombie_pickup_minigun", &"ZOMBIE_POWERUP_DEATH_MACHINE");
+    //add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
+    //add_zombie_powerup("random_perk", "zombie_pickup_perk_bottle", &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
+    //add_zombie_powerup("fire_sale", "zombie_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
 
     // Randomize the order
     randomize_powerups();
@@ -713,9 +713,13 @@ insta_kill_powerup(drop_item) {
 
 }
 
-check_for_instakill(player) {
+check_for_instakill() {
 
-    if (IsDefined(player) && IsAlive(player) && level.zombie_vars["zombie_insta_kill"]) {
+    players = GetPlayers();
+
+    for (i = 0; i < players.size; i++) {
+
+    if (IsDefined(players[i]) && IsAlive(players[i]) && level.zombie_vars["zombie_insta_kill"]) {
         if (is_magic_bullet_shield_enabled(self)) {
             return;
         }
@@ -724,14 +728,14 @@ check_for_instakill(player) {
             return;
         }
 
-        if (player.use_weapon_type == "MOD_MELEE") {
-            player.last_kill_method = "MOD_MELEE";
+        if (players[i].use_weapon_type == "MOD_MELEE") {
+            players[i].last_kill_method = "MOD_MELEE";
             //BO3 Style melee points during instakill
-            player.score += 70 * level.zombie_vars["zombie_double_points"];
-            player.score_total += 70 * level.zombie_vars["zombie_double_points"];
+            players[i].score += 70 * level.zombie_vars["zombie_double_points"];
+            players[i].score_total += 70 * level.zombie_vars["zombie_double_points"];
 
         } else {
-            player.last_kill_method = "MOD_UNKNOWN";
+            players[i].last_kill_method = "MOD_UNKNOWN";
 
         }
 
@@ -743,10 +747,12 @@ check_for_instakill(player) {
         else*/
         {
             self maps\_zombiemode_spawner::zombie_head_gib();
-            self DoDamage(self.health + 666, self.origin, player);
-            player notify("zombie_killed");
+            self DoDamage(self.health + 666, self.origin, players[i]);
+            players[i] notify("zombie_killed");
 
         }
+    }
+
     }
 }
 
