@@ -442,6 +442,11 @@ init_models_and_variables_loadout()
 		set_player_specific_interactive_hands(2, "viewmodel_usa_marine_player");
 		set_player_specific_interactive_hands(3, "viewmodel_rus_guard_player");
 
+		set_player_specific_death_hands(0, "bo2_deathhands");
+		set_player_specific_death_hands(1, "bo2_deathhands");
+		set_player_specific_death_hands(2, "bo2_deathhands");
+		set_player_specific_death_hands(3, "bo2_deathhands");
+
 		level.campaign = "american";
 		return;
 	}
@@ -745,6 +750,8 @@ give_model( class )
 			self give_player_specific_switch_weapon();
 			self give_player_specific_laststand_pistol();
 			self give_player_specific_viewmodel();
+			self waittill("intermission");
+			self give_player_specific_death_hands(); 
             return;
 	}
 	else
@@ -944,4 +951,27 @@ if(!IsDefined(level.player_specific_interactive_hands))
          level.player_specific_interactive_hands = [];
 level.player_specific_interactive_hands[num] = name;
 PrecacheModel(name);
+}
+
+set_player_specific_death_hands(num, name)
+{
+if(!IsDefined(level.player_specific_death_hands))
+         level.player_specific_death_hands = [];
+level.player_specific_death_hands[num] = name;
+PrecacheModel(name);
+IPrintLn("death anim");
+}
+
+give_player_specific_death_hands()
+{
+if(IsDefined(level.player_specific_death_hands) && IsDefined(level.player_specific_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+{
+         self SetViewModel(level.player_specific_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
+		 IPrintLn("death anim");
+}
+else if(IsDefined(level.player_deathhands))
+{
+         self SetViewModel(level.player_deathhands);
+		 IPrintLn("death anim");
+}
 }
