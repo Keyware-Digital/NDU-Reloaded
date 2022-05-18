@@ -442,10 +442,10 @@ init_models_and_variables_loadout()
 		set_player_specific_interactive_hands(2, "viewmodel_usa_marine_player");
 		set_player_specific_interactive_hands(3, "viewmodel_rus_guard_player");
 
-		set_player_specific_death_hands(0, "bo2_deathhands");
-		set_player_specific_death_hands(1, "bo2_deathhands");
-		set_player_specific_death_hands(2, "bo2_deathhands");
-		set_player_specific_death_hands(3, "bo2_deathhands");
+		set_player_specific_death_hands(0, "colt");
+		set_player_specific_death_hands(1, "colt");
+		set_player_specific_death_hands(2, "colt");
+		set_player_specific_death_hands(3, "colt");
 
 		level.campaign = "american";
 		return;
@@ -750,7 +750,7 @@ give_model( class )
 			self give_player_specific_switch_weapon();
 			self give_player_specific_laststand_pistol();
 			self give_player_specific_viewmodel();
-			self waittill("intermission");
+			level waittill( "intermission" ); 
 			self give_player_specific_death_hands(); 
             return;
 	}
