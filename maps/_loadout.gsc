@@ -750,7 +750,7 @@ give_model( class )
 			self give_player_specific_switch_weapon();
 			self give_player_specific_laststand_pistol();
 			self give_player_specific_viewmodel();
-			level waittill( "intermission" ); 
+			//level waittill( "intermission" ); 
 			//self give_player_specific_death_hands(); 
             return;
 	}

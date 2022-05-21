@@ -943,14 +943,22 @@ bonus_points_powerup(drop_item) {
 
     level.zombie_vars["zombie_bonus_points"] = 1;
 
-    playersAlive = maps\_zombiemode::get_players_alive();
+    players = GetPlayers();
+
+    for (i = 0; i < players.size; i++) {
+        players[i].score += 500 * level.zombie_vars["zombie_double_points"];
+        players[i].score_total += 500 * level.zombie_vars["zombie_double_points"];
+        players[i] maps\_zombiemode_score::set_player_score_hud();
+    }
+    
+    // Reverted this because it was breaking m1garand_gl and give all for some reason
+    /*playersAlive = maps\_zombiemode::get_players_alive();
 
     for(i = 0; i < playersAlive.size; i++) {
         playersAlive[i].score += 500 * level.zombie_vars["zombie_double_points"];
         playersAlive[i].score_total += 500 * level.zombie_vars["zombie_double_points"];
-        playersAlive[i] maps\_zombiemode_score::set_player_score_hud();
-    }
-
+        playersAlive[i] maps\_zombiemode_score::set_player_score_hud();*/
+    
     wait(5);
 
     level.zombie_vars["zombie_bonus_points"] = 0;
@@ -963,7 +971,8 @@ fire_sale_powerup(drop_item) {
 
     level.zombie_vars["zombie_fire_sale"] = 1;
 
-    //if(level.round_number > 5)
+    // We can turn firesale after x amount of rounds...wip
+//  if(level.round_number > 5)
 
     for(i=0;i<level.chests.size;i++) {
     level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_10" );
