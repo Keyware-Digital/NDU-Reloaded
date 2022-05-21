@@ -589,11 +589,18 @@ treasure_chest_ChooseRandomWeapon( player )
             }
         }
     }
- 
+	
+	// Filter betty's if player has them.
     if(isDefined(player.has_betties) && player.has_betties)
     {
         filtered = array_remove(filtered, "mine_bouncing_betty");
     }
+
+	// Filter bowie if player has it.
+	/*if(isDefined(player.has_bowie) && player.has_bowie)
+    {
+        filtered = array_remove(filtered, "zombie_bowie_flourish");
+    }*/
  
     return filtered[RandomInt( filtered.size )];
 }
@@ -929,13 +936,13 @@ weapon_cabinet_think()
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_RIFLE_BAYONET");
 			break; 
 		case "mosin_rifle_scoped_zombie":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_SCOPED");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_RIFLE_SCOPED");
 			break;
 		case "mp40_bigammo_mp":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40_MAG");
 			break;
 		case "springfield_scoped_zombie_upgraded":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
 			break; 
 		case "thompson_bigammo_mp":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_MAG");
