@@ -729,7 +729,7 @@ set_third_person(value) {
         self setDepthOfField(0, 128, 512, 4000, 6, 1.8);
     } else {
         self SetClientDvars("cg_thirdPerson", "0",
-            //"cg_fov", "80",
+            "cg_fov", "80",     //test fix for dying fov
             "cg_thirdPersonAngle", "0");
 
         self setDepthOfField(0, 0, 512, 4000, 4, 0);
