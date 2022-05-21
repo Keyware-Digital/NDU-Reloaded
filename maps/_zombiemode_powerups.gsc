@@ -833,12 +833,12 @@ carpenter_powerup(origin, drop_item) {
 
     }
 
-    players = GetPlayers();
+    playersAlive = maps\_zombiemode::get_players_alive();
 
-    for (i = 0; i < players.size; i++) {
-        players[i].score += 200 * level.zombie_vars["zombie_double_points"];
-        players[i].score_total += 200 * level.zombie_vars["zombie_double_points"];
-        players[i] maps\_zombiemode_score::set_player_score_hud();
+    for(i = 0; i < playersAlive.size; i++) {
+        playersAlive[i].score += 200 * level.zombie_vars["zombie_double_points"];
+        playersAlive[i].score_total += 200 * level.zombie_vars["zombie_double_points"];
+        playersAlive[i] maps\_zombiemode_score::set_player_score_hud();
     }
 
     carp_ent delete();
@@ -880,6 +880,7 @@ nuke_powerup(drop_item) {
     zombies = getaispeciesarray("axis");
 
     PlayFx(drop_item.fx, drop_item.origin);
+    //level thread nuke_flash();    //disabled to be like bo3/4
 
     zombies = get_array_of_closest(drop_item.origin, zombies);
 
@@ -919,6 +920,34 @@ nuke_powerup(drop_item) {
     }
 }
 
+nuke_flash() {
+
+    playsoundatposition("nuke_flash", (0, 0, 0));
+    playsoundatposition("nuke_vox", (0, 0, 0));
+
+    fadetowhite = newhudelem();
+
+    fadetowhite.x = 0;
+    fadetowhite.y = 0;
+    fadetowhite.alpha = 0;
+
+    fadetowhite.horzAlign = "fullscreen";
+    fadetowhite.vertAlign = "fullscreen";
+    fadetowhite.foreground = true;
+    fadetowhite SetShader("white", 640, 480);
+
+    // Fade into white
+    fadetowhite FadeOverTime(0.2);
+    fadetowhite.alpha = 0.8;
+
+    wait 0.5;
+    fadetowhite FadeOverTime(1.0);
+    fadetowhite.alpha = 0;
+
+    wait 1.1;
+    fadetowhite destroy();
+}
+
 random_perk_powerup(drop_item) {
 
     level thread random_perk_on_hud(drop_item);
@@ -943,22 +972,14 @@ bonus_points_powerup(drop_item) {
 
     level.zombie_vars["zombie_bonus_points"] = 1;
 
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i].score += 500 * level.zombie_vars["zombie_double_points"];
-        players[i].score_total += 500 * level.zombie_vars["zombie_double_points"];
-        players[i] maps\_zombiemode_score::set_player_score_hud();
-    }
-    
-    // Reverted this because it was breaking m1garand_gl and give all for some reason
-    /*playersAlive = maps\_zombiemode::get_players_alive();
+    playersAlive = maps\_zombiemode::get_players_alive();
 
     for(i = 0; i < playersAlive.size; i++) {
         playersAlive[i].score += 500 * level.zombie_vars["zombie_double_points"];
         playersAlive[i].score_total += 500 * level.zombie_vars["zombie_double_points"];
-        playersAlive[i] maps\_zombiemode_score::set_player_score_hud();*/
-    
+        playersAlive[i] maps\_zombiemode_score::set_player_score_hud();
+    }
+
     wait(5);
 
     level.zombie_vars["zombie_bonus_points"] = 0;
