@@ -1,6 +1,6 @@
 #include common_scripts\utility; 
 #include maps\_utility;
-// http://prntscr.com/5p6sln
+
 main()
 {	
 	// standMoveF\0\standMoveR\0\standMoveU\0\standRotP\2\standRotY\0\standRotR\-2
@@ -12,19 +12,20 @@ main()
 	array_thread(players,::prone_checks);
 }
 
-walk_main()
+walk_main()	
 {
 	self.is_sliding = false;			// blst
 
 	self SetClientDvars("bg_bobAmplitudeStanding", "0.012 0.005");
 	self SetClientDvars("cg_bobWeaponMax", "3");
 
+	//Fine-tuned for NDU: Reloaded
 	while(1)
 	{
 		if( self ADSButtonPressed())
-			self setClientDvar("cg_bobweaponamplitude", "0.16");	
+			self setClientDvar("cg_bobweaponamplitude", "0.9");		//was 0.16
 		else
-			self setClientDvar("cg_bobweaponamplitude", "0.9");
+			self setClientDvar("cg_bobweaponamplitude", "0.45");	//was 0.9
 	wait .05;
 	}
 }
