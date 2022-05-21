@@ -941,12 +941,12 @@ bonus_points_powerup(drop_item) {
 
     level.zombie_vars["zombie_bonus_points"] = 1;
 
-    players = GetPlayers();
+    playersAlive = maps\_zombiemode::get_players_alive();
 
-    for (i = 0; i < players.size; i++) {
-        players[i].score += 500 * level.zombie_vars["zombie_double_points"];
-        players[i].score_total += 500 * level.zombie_vars["zombie_double_points"];
-        players[i] maps\_zombiemode_score::set_player_score_hud();
+    for(i = 0; i < playersAlive.size; i++) {
+        playersAlive[i].score += 500 * level.zombie_vars["zombie_double_points"];
+        playersAlive[i].score_total += 500 * level.zombie_vars["zombie_double_points"];
+        playersAlive[i] maps\_zombiemode_score::set_player_score_hud();
     }
 
     wait(5);
