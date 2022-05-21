@@ -675,7 +675,7 @@ blocker_trigger_think()
 	//trigger thread blocker_doubler_hint( "default_reward_barrier_piece_", original_cost );
 	//////////////////////////////////////////
 	
-	doubler_status = level.zombie_vars["zombie_powerup_point_doubler_on"];
+	doubler_status = level.zombie_vars["zombie_powerup_double_points_on"];
 
 	if( doubler_status )
 	{
@@ -727,11 +727,11 @@ blocker_trigger_think()
 				break; 
 			}
 
-			if( doubler_status != level.zombie_vars["zombie_powerup_point_doubler_on"] )
+			if( doubler_status != level.zombie_vars["zombie_powerup_double_points_on"] )
 			{
-				doubler_status = level.zombie_vars["zombie_powerup_point_doubler_on"];
+				doubler_status = level.zombie_vars["zombie_powerup_double_points_on"];
 				cost = original_cost;
-				if( level.zombie_vars["zombie_powerup_point_doubler_on"] )
+				if( level.zombie_vars["zombie_powerup_double_points_on"] )
 				{
 					cost = original_cost * 2;
 				}
@@ -806,16 +806,16 @@ blocker_doubler_hint( hint, original_cost )
 {
 	self endon( "death" );
 
-	doubler_status = level.zombie_vars["zombie_powerup_point_doubler_on"];
+	doubler_status = level.zombie_vars["zombie_powerup_double_points_on"];
 	while( 1 )
 	{
 		wait( 0.5 );
 
-		if( doubler_status != level.zombie_vars["zombie_powerup_point_doubler_on"] )
+		if( doubler_status != level.zombie_vars["zombie_powerup_double_points_on"] )
 		{
-			doubler_status = level.zombie_vars["zombie_powerup_point_doubler_on"];
+			doubler_status = level.zombie_vars["zombie_powerup_double_points_on"];
 			cost = original_cost;
-			if( level.zombie_vars["zombie_powerup_point_doubler_on"] )
+			if( level.zombie_vars["zombie_powerup_double_points_on"] )
 			{
 				cost = original_cost * 2;
 			}
