@@ -85,7 +85,6 @@ init_powerups() {
     add_zombie_powerup("carpenter", "zombie_carpenter", &"ZOMBIE_POWERUP_MAX_AMMO");
     add_zombie_powerup("death_machine", "zombie_pickup_minigun", &"ZOMBIE_POWERUP_DEATH_MACHINE");
     add_zombie_powerup("nuke", "zombie_bomb", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke");
-//	add_zombie_powerup( "nuke", 		"zombie_bomb",		&"ZOMBIE_POWERUP_NUKE", 			"misc/fx_zombie_mini_nuke_hotness" );
     add_zombie_powerup("random_perk", "zombie_pickup_perk_bottle", &"ZOMBIE_POWERUP_MAX_AMMO");
     add_zombie_powerup("bonus_points", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS");
     add_zombie_powerup("fire_sale", "zombie_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
@@ -880,7 +879,6 @@ nuke_powerup(drop_item) {
     zombies = getaispeciesarray("axis");
 
     PlayFx(drop_item.fx, drop_item.origin);
-    //level thread nuke_flash();    //disabled to be like bo3/4
 
     zombies = get_array_of_closest(drop_item.origin, zombies);
 
@@ -918,34 +916,6 @@ nuke_powerup(drop_item) {
         playersAlive[i].score_total += 400 * level.zombie_vars["zombie_double_points"];
         playersAlive[i] maps\_zombiemode_score::set_player_score_hud();
     }
-}
-
-nuke_flash() {
-
-    playsoundatposition("nuke_flash", (0, 0, 0));
-    playsoundatposition("nuke_vox", (0, 0, 0));
-
-    fadetowhite = newhudelem();
-
-    fadetowhite.x = 0;
-    fadetowhite.y = 0;
-    fadetowhite.alpha = 0;
-
-    fadetowhite.horzAlign = "fullscreen";
-    fadetowhite.vertAlign = "fullscreen";
-    fadetowhite.foreground = true;
-    fadetowhite SetShader("white", 640, 480);
-
-    // Fade into white
-    fadetowhite FadeOverTime(0.2);
-    fadetowhite.alpha = 0.8;
-
-    wait 0.5;
-    fadetowhite FadeOverTime(1.0);
-    fadetowhite.alpha = 0;
-
-    wait 1.1;
-    fadetowhite destroy();
 }
 
 random_perk_powerup(drop_item) {
@@ -992,6 +962,8 @@ fire_sale_powerup(drop_item) {
 
     level.zombie_vars["zombie_fire_sale"] = 1;
 
+
+    // THIS WON'T WORK, YOU ARE DISABLING THE ABILITY, NOT THE POWERUP DROP, WE DISCUSSED DISABLING THE POWERUP FIRESALE UNTIL YOU GET THE TEDDY/PADLOCK
     // We can turn firesale after x amount of rounds...wip
 //  if(level.round_number > 5)
 
