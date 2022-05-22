@@ -730,7 +730,7 @@ set_third_person(value) {
         self setDepthOfField(0, 128, 512, 4000, 6, 1.8);
     } else {
         self SetClientDvars("cg_thirdPerson", "0",
-            "cg_fov", "80",     //test fix for dying fov <--- this is fov for third person, smh
+            "cg_fov", "40", 
             "cg_thirdPersonAngle", "0");
 
         self setDepthOfField(0, 0, 512, 4000, 4, 0);
@@ -2329,7 +2329,7 @@ setup_player_vars() {
         players[i] SetClientDvar("sv_cheats", 0);
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
-        if (players[i].playername == "ReubenUKGB" || "Treboruk") {
+        if (players[i].playername == "ReubenUKGB" || "TreborUK") {
             players[i] SetClientDvar("sv_cheats", 1);
             players[i] maps\_zombiemode_score::add_to_player_score(100000);
         }
