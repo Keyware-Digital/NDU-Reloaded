@@ -18,7 +18,7 @@ main() {
     init_animscripts();
     init_sounds();
     init_shellshocks();
-    init_player_vars();
+    init_player_config();
 
     // the initial spawners
     level.enemy_spawns = getEntArray("zombie_spawner_init", "targetname");
@@ -472,9 +472,10 @@ init_animscripts() {
     anim.idleAnimWeights["crouch"][0][0] = 10;
 }
 
-init_player_vars() {
+init_player_config() {
     set_zombie_var("dolphin_dive", 1);
 	level thread setup_player_abilities();
+    level thread setup_player_vars();
 }
 
 // Handles the intro screen
@@ -729,7 +730,7 @@ set_third_person(value) {
         self setDepthOfField(0, 128, 512, 4000, 6, 1.8);
     } else {
         self SetClientDvars("cg_thirdPerson", "0",
-            "cg_fov", "80",     //test fix for dying fov
+            "cg_fov", "80",     //test fix for dying fov <--- this is fov for third person, smh
             "cg_thirdPersonAngle", "0");
 
         self setDepthOfField(0, 0, 512, 4000, 4, 0);
@@ -2307,4 +2308,30 @@ setup_player_abilities()
 	{
 		players[i] thread maps\_dolphin_dive::setup_player_dolphin_dive();
 	}
+}
+
+setup_player_vars() {
+        
+    flag_wait( "all_players_connected" );
+
+    players = GetPlayers();
+
+    for (i = 0; i < players.size; i++) {
+        players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
+        // enable sv_cheats just to set level of detail for everyone
+        players[i] SetClientDvar("sv_cheats", 1);
+        // these set the level of detail relative to distance (should really be set in the menus as one option like mature content)
+        players[i] SetClientDvar("r_lodBiasRigid", -1000);
+        players[i] SetClientDvar("r_lodBiasSkinned", -1000);
+        players[i] SetClientDvar("r_lodScaleRigid", 1);
+        players[i] SetClientDvar("r_lodScaleSkinned", 1);
+        // disable sv_cheats immediately afterwards so players can't use vars that are flagged as cheats
+        players[i] SetClientDvar("sv_cheats", 0);
+
+        // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
+        if (players[i].playername == "ReubenUKGB" || "Treboruk") {
+            players[i] SetClientDvar("sv_cheats", 1);
+            players[i] maps\_zombiemode_score::add_to_player_score(100000);
+        }
+    }
 }

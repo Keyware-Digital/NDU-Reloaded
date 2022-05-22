@@ -22,20 +22,6 @@ main() {
     maps\_zombiemode::main();
     maps\walking_anim::main();
 
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
-        //dev
-        players[i] SetClientDvar("sv_cheats", 1);
-        players[i] maps\_zombiemode_score::add_to_player_score(100000);
-        //these set the level of detail relative to distance (should really be set in the menus as one option like mature content)
-        players[i] SetClientDvar("r_lodBiasRigid", -1000);
-        players[i] SetClientDvar("r_lodBiasSkinned", -1000);
-        players[i] SetClientDvar("r_lodScaleRigid", 1);
-        players[i] SetClientDvar("r_lodScaleSkinned", 1);
-    }
-
     // If you want to modify/add to the weapons table, please copy over the _zombiemode_weapons init_weapons() and paste it here.
     // I recommend putting it in it's own function...
     // If not a MOD, you may need to provide new localized strings to reflect the proper cost.
