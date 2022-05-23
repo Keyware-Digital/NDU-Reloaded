@@ -1,5 +1,6 @@
 fx,weapon/muzzleflashes/standardflashworld_ug
 fx,misc/fx_zombie_mini_nuke
+fx,maps/zombie/fx_zmb_phdflopper_exp
 material,loadscreen_nazi_zombie_prototype
 material,hud_grenade_german
 material,specialty_juggernaut_zombies

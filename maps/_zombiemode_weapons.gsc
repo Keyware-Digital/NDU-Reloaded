@@ -957,7 +957,7 @@ weapon_cabinet_think()
         level.keep_ents[i] Hide();
     }
 
-	if(!isdefined(player.perknum) || player.perknum < 8)	//check if player has max perks
+	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
 		if(magicnum <= 10)	//10 out of 100 chance to get a perk
@@ -1084,7 +1084,7 @@ takenweapon(chosenweapon)
 		player EnableWeaponCycling();
 		player SwitchToWeapon(current_weapon);
 		player EnableOffhandWeapons();
-		player thread maps\_zombiemode_powerups::random_perk_powerup();
+		player thread maps\_zombiemode_perks::random_perk_powerup_think();
 		return;
 	}
 

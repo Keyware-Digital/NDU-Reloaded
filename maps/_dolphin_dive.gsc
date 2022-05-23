@@ -1,6 +1,7 @@
 #include maps\_utility;
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
+#include maps\_anim;
 #using_animtree( "animations" );
 
 setup_player_dolphin_dive()
@@ -83,11 +84,15 @@ setup_player_dolphin_dive()
 
 			wait .05;
 
+			if (self HasPerk("specialty_detectexplosive"))
+			{
+					origin = self.origin;
+					maps\_zombiemode_perks::phd_function_d2p_damage(origin);
+			}
+
 			if( self.can_flop )
 			{
 				self.can_flop = false;
-				origin = self.origin;
-				//maps\_zombiemode_perks_functions::phd_function_d2p_damage(origin);
 			}
 			
 			wait .4;
@@ -126,10 +131,4 @@ update_angles_origin(players_dolphin_dive)
 		players_dolphin_dive.angles = self.angles;
 		wait .01;
 	}
-}
-
-phd_sounds(aliasname, num)
-{
-	rand = randomint(num);
-	self playsound(aliasname + rand);
 }

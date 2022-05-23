@@ -6,6 +6,8 @@
 
 init() {
     init_precache();
+    init_perk_fx();
+    init_perk_vars();
 
 }
 
@@ -23,6 +25,21 @@ init_precache() {
     PrecacheShader("specialty_widows_wine_zombies");
 }
 
+init_perk_fx() {
+	level._effect[ "fx_zombie_mini_nuke" ]	= loadfx ( "misc/fx_zombie_mini_nuke" );
+    level._effect[ "fx_zmb_phdflopper_exp" ]	= loadfx ( "maps/zombie/fx_zmb_phdflopper_exp" );
+
+}
+
+init_perk_vars() {
+	set_zombie_var( "phd_max_range",					185 );		// PHD nuke effects range
+	set_zombie_var( "phd_use_fall_damage",				0 );		// Use my solution that when the player normally receives fall damage it will also creates a d2p explosive (1 = yes, 0 = no)
+	set_zombie_var( "phd_fall_damage",					1500 );		// PHD nuke effects fall damage on zombies
+	set_zombie_var( "phd_fall_damage_multiplier",		2 );		// PHD nuke extra damage if fall damage is bigger than player it's health
+	set_zombie_var( "phd_d2p_damage",					5000 );		// PHD nuke effects fall damage on zombies
+	set_zombie_var( "phd_d2p_points",					50 );		// PHD nuke Points given for a kill
+}
+
 random_perk_powerup_think() {
 
     if (!isdefined(self.perknum) || self.perknum == 0) // if player doesnt have any perks
@@ -31,7 +48,7 @@ random_perk_powerup_think() {
         self thread death_check();
     }
 
-    if (self maps\_laststand::player_is_in_laststand() || self.perknum == 8) //max perks
+    if (self maps\_laststand::player_is_in_laststand() || self.perknum == 11) //max perks
     {
         return;
     }
@@ -209,4 +226,85 @@ play_no_money_perk_dialog() {
 
     self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
 
+}
+
+phd_function_fall_damage(iDamage)
+{
+
+	explosion = "explode_" + RandomInt(2);
+
+	PlaySoundAtPosition(explosion, self.origin);
+	playFx( level._effect["fx_zmb_phdflopper_exp"], self.origin + ( 0, 0, 50 ));
+	self VisionSetNaked("cheat_contrast", 0.2);
+    wait 1;
+    self VisionSetNaked("zombie", 1);
+		
+	phd_damage = level.zombie_vars[ "phd_fall_damage" ] + iDamage;
+	if (iDamage > self.health)
+	{
+		// Extra damage if the fall would actually kill you.
+		phd_damage = phd_damage * level.zombie_vars[ "phd_fall_damage_multiplier" ];
+	}
+	
+	zombies = GetAiSpeciesArray( "axis", "all" );
+	for(i = 0; i < zombies.size; i++)
+	{
+		if ( distance( self.origin, zombies[i].origin ) <= level.zombie_vars[ "phd_max_range" ] )
+		{
+			if ( isDefined( level.zombie_vars["zombie_powerup_insta_kill_on"] ) && level.zombie_vars["zombie_powerup_insta_kill_on"] )
+			phd_damage = zombies[i].health + 666;
+		
+			if (zombies[i].health <= phd_damage)
+			{
+				zombies[i] DoDamage( phd_damage, zombies[i].origin, self);
+			}
+			else
+			{
+				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
+			}			
+		}
+		wait .01;
+	}
+	
+	wait 0.2;
+}
+
+phd_function_d2p_damage(origin)
+{
+
+	explosion = "explode_" + RandomInt(2);
+
+	PlaySoundAtPosition(explosion, self.origin);
+	playFx( level._effect["fx_zmb_phdflopper_exp"], origin + ( 0, 0, 50 ));
+	self VisionSetNaked("cheat_contrast", 0.2);
+    wait 1;
+    self VisionSetNaked("zombie", 1);
+		
+	phd_damage = level.zombie_vars[ "phd_d2p_damage" ];
+	
+	zombies = GetAiSpeciesArray( "axis", "all" );
+	for(i = 0; i < zombies.size; i++)
+	{
+		range = distance( origin, zombies[i].origin );
+		max_range = level.zombie_vars[ "phd_max_range" ];
+		if ( range <= max_range )
+		{			
+			phd_damage = int(phd_damage * (1 - (range / max_range)));
+		
+			if ( isDefined( level.zombie_vars["zombie_powerup_insta_kill_on"] ) && level.zombie_vars["zombie_powerup_insta_kill_on"] )
+			phd_damage = zombies[i].health + 666;
+		
+			if (zombies[i].health <= phd_damage)
+			{
+				zombies[i] DoDamage( phd_damage, zombies[i].origin, self);
+			}
+			else
+			{
+				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
+			}
+		}
+		wait .01;
+	}
+	
+	wait 0.2;
 }
