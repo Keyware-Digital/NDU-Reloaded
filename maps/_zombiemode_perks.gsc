@@ -32,7 +32,7 @@ init_perk_fx() {
 }
 
 init_perk_vars() {
-	set_zombie_var( "phd_max_range",					185 );		// PHD nuke effects range
+	set_zombie_var( "phd_max_range",					300 );		// PHD nuke effects range
 	set_zombie_var( "phd_use_fall_damage",				0 );		// Use my solution that when the player normally receives fall damage it will also creates a d2p explosive (1 = yes, 0 = no)
 	set_zombie_var( "phd_fall_damage",					1500 );		// PHD nuke effects fall damage on zombies
 	set_zombie_var( "phd_fall_damage_multiplier",		2 );		// PHD nuke extra damage if fall damage is bigger than player it's health
