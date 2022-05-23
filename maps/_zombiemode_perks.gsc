@@ -228,8 +228,10 @@ play_no_money_perk_dialog() {
 
 }
 
-phd_function_fall_damage(iDamage)
+phd_fall_damage(iDamage)
 {
+
+    self EnableInvulnerability();
 
 	explosion = "explode_" + RandomInt(2);
 
@@ -265,12 +267,16 @@ phd_function_fall_damage(iDamage)
 		}
 		wait .01;
 	}
+
+    self DisableInvulnerability();
 	
 	wait 0.2;
 }
 
-phd_function_d2p_damage(origin)
+phd_dive_damage(origin)
 {
+
+    self EnableInvulnerability();
 
 	explosion = "explode_" + RandomInt(2);
 
@@ -301,10 +307,13 @@ phd_function_d2p_damage(origin)
 			else
 			{
 				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
+
 			}
 		}
 		wait .01;
 	}
+
+    self DisableInvulnerability();
 	
 	wait 0.2;
 }

@@ -22,6 +22,10 @@ setup_player_dolphin_dive()
 	{
 		angles = self GetPlayerAngles();
 		angles = (0,angles[1],0);
+
+		self.oldSurface = self GetSurface();
+
+		MinFall = 5
                 
 		if( self getStance() == "crouch" && self isSprinting() && self isOnGround() && !self IsMeleeing() && !self maps\_laststand::player_is_in_laststand() && !self.being_revived && !level.intermission && !self.is_melee_galva)
 		{
@@ -84,10 +88,15 @@ setup_player_dolphin_dive()
 
 			wait .05;
 
-			if (self HasPerk("specialty_detectexplosive"))
+			self.newSurface = self GetSurface() + 0.007;
+			ActualFall = self.oldSurface - self.newSurface;
+
+			if (self HasPerk("specialty_detectexplosive") && self.oldSurface > self.newSurface && MinFall < ActualFall)
 			{
 					origin = self.origin;
-					maps\_zombiemode_perks::phd_function_d2p_damage(origin);
+					maps\_zombiemode_perks::phd_dive_damage(origin);
+					self.oldSurface = self GetSurface();
+					wait .2;	
 			}
 
 			if( self.can_flop )
@@ -110,6 +119,13 @@ setup_player_dolphin_dive()
 			players_dolphin_dive delete();
 			self show();
 			self.is_diving = false;
+
+			if( self IsOnGround() )
+			{
+				self.oldSurface = self GetSurface();
+				self.lastStance = self GetDiveStance();
+			}
+
         }
 	    wait .05;
 	}
@@ -131,4 +147,9 @@ update_angles_origin(players_dolphin_dive)
 		players_dolphin_dive.angles = self.angles;
 		wait .01;
 	}
+}
+
+GetSurface()
+{
+	return self.origin[2];
 }
