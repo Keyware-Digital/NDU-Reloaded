@@ -877,6 +877,7 @@ nuke_powerup(drop_item) {
 
     level thread nuke_on_hud(drop_item);
     zombies = getaispeciesarray("axis");
+    level thread nuke_flash();
 
     PlayFx(drop_item.fx, drop_item.origin);
 
@@ -916,6 +917,39 @@ nuke_powerup(drop_item) {
         playersAlive[i].score_total += 400 * level.zombie_vars["zombie_double_points"];
         playersAlive[i] maps\_zombiemode_score::set_player_score_hud();
     }
+}
+
+nuke_flash()
+{
+	players = getplayers();	
+	for(i=0; i<players.size; i ++)
+	{
+		players[i] play_sound_2d("nuke_flash");
+	}
+	level thread devil_dialog_delay();
+	
+	
+	fadetowhite = newhudelem();
+
+	fadetowhite.x = 0; 
+	fadetowhite.y = 0; 
+	fadetowhite.alpha = 0; 
+
+	fadetowhite.horzAlign = "fullscreen"; 
+	fadetowhite.vertAlign = "fullscreen"; 
+	fadetowhite.foreground = true; 
+	fadetowhite SetShader( "white", 640, 480 ); 
+
+	// Fade into white
+	fadetowhite FadeOverTime( 0.1 );    //was 0.2
+	fadetowhite.alpha = 0.8; 
+
+	wait 0.5;
+	fadetowhite FadeOverTime( 0.5 );    //was 1.0
+	fadetowhite.alpha = 0; 
+
+	wait 1.1;
+	fadetowhite destroy();
 }
 
 random_perk_powerup(drop_item) {
