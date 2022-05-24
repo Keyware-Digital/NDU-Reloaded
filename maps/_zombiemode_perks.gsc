@@ -266,11 +266,13 @@ phd_fall_damage(iDamage)
 		
 			if (zombies[i].health <= phd_damage)
 			{
-				zombies[i] DoDamage( phd_damage, zombies[i].origin, self);
+				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
+                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
 			}
 			else
 			{
 				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
+                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
 			}			
 		}
 		wait .01;
@@ -310,12 +312,13 @@ phd_dive_damage(origin)
 		
 			if (zombies[i].health <= phd_damage)
 			{
-				zombies[i] DoDamage( phd_damage, zombies[i].origin, self);
+				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
+                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
 			}
 			else
 			{
 				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
-
+                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
 			}
 		}
 		wait .01;

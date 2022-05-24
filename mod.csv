@@ -275,7 +275,6 @@ xmodel,zombie_z_money_icon
 xmodel,zombie_fire_sale
 xmodel,zombie_pickup_minigun
 xmodel,zombie_pickup_perk_bottle
-xmodel,zombie_pickup_perkbottle
 xmodel,zombie_pickup_perkbottle_viewmodel
 xmodel,viewmodel_knife_bowie
 xanim,viewmodel_zombie_perksacola_drink

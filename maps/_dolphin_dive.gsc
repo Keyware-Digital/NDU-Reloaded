@@ -86,6 +86,10 @@ setup_player_dolphin_dive()
 			// self playSound("d2p_fall");
 			// self playSound("d2p_slide");
 
+			hurt = "hurt_" + RandomInt(3);
+
+			PlaySoundAtPosition(hurt, self.origin);
+
 			wait 0.05;
 
 			self.newSurface = self getSurface() + 0.007;
