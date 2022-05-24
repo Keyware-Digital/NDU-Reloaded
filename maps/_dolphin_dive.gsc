@@ -25,7 +25,7 @@ setup_player_dolphin_dive()
 
 		self.oldSurface = self getSurface();
 
-		minFall = 5;
+		minFall = level.zombie_vars[ "phd_minimum_fall" ];
                 
 		if( self getStance() == "crouch" && self isSprinting() && self isOnGround() && !self IsMeleeing() && !self maps\_laststand::player_is_in_laststand() && !self.being_revived && !level.intermission && !self.is_melee_galva)
 		{

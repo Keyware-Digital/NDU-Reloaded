@@ -32,12 +32,16 @@ init_perk_fx() {
 }
 
 init_perk_vars() {
-	set_zombie_var( "phd_max_range",					300 );		// PHD nuke effects range
-	set_zombie_var( "phd_use_fall_damage",				0 );		// Use my solution that when the player normally receives fall damage it will also creates a d2p explosive (1 = yes, 0 = no)
-	set_zombie_var( "phd_fall_damage",					1500 );		// PHD nuke effects fall damage on zombies
-	set_zombie_var( "phd_fall_damage_multiplier",		2 );		// PHD nuke extra damage if fall damage is bigger than player it's health
-	set_zombie_var( "phd_d2p_damage",					5000 );		// PHD nuke effects fall damage on zombies
-	set_zombie_var( "phd_d2p_points",					50 );		// PHD nuke Points given for a kill
+	set_zombie_var("phd_max_range", 185); // PHD damage range
+	set_zombie_var("phd_fall_damage", 1500); // PHD fall damage on zombies
+	set_zombie_var("phd_fall_damage_multiplier", 2); // PHD extra damage if fall damage is bigger than player health
+	set_zombie_var("phd_dive_damage", 5000); // PHD fall damage on zombies
+    set_zombie_var("phd_minimum_fall", 20); // Minimum fall height required to activate PHD, 20 stops small height inclines from activating PHD
+    set_zombie_var("staminup_sprint_scale", 1.07); // Leightweight
+    set_zombie_var("staminup_sprint_max_duration", 8); // Marathon
+    set_zombie_var("doubletap_fire_rate", 0.75); // Double taps fire multiplier, 0.0 to 1.0
+    set_zombie_var("speed_reload_rate", 0.5); // Speed cola reload multiplier, 0.0 to 1.0
+    set_zombie_var("juggernaut_health", 200); // Juggernaut health of player
 }
 
 random_perk_powerup_think() {
@@ -54,12 +58,16 @@ random_perk_powerup_think() {
     }
 
     if (self.perkarray[self.perknum] == "specialty_armorvest") {
-        self.maxhealth = 200;
+        self.maxhealth = level.zombie_vars[ "juggernaut_health" ];
+    }
+
+    if (self.perkarray[self.perknum] == "specialty_fasreload") {
+        self setClientDvar( "perk_weapReloadMultiplier", level.zombie_vars[ "speed_reload_rate" ] );
     }
 
     if (self.perkarray[self.perknum] == "specialty_longersprint") {
-        self SetMoveSpeedScale(1.07);   //Lightweight
-        self setClientDvar("perk_sprintMultiplier", "2");   //Marathon
+        self setMoveSpeedScale( level.zombie_vars[ "staminup_sprint_scale" ] );
+		self setClientDvar( "player_sprintTime", level.zombie_vars[ "staminup_sprint_max_duration" ] );
     }
 
     self SetPerk(self.perkarray[self.perknum]);
@@ -116,7 +124,7 @@ death_check() {
     self perk_hud_destroy("specialty_widowswine");
     self.maxhealth = 100;
     self SetMoveSpeedScale(1);
-    self setClientDvar("perk_sprintMultiplier", "1");
+    self setClientDvar("player_sprintTime", "4");
 
     wait(0.01);
 
@@ -286,7 +294,7 @@ phd_dive_damage(origin)
     wait 1;
     self VisionSetNaked("zombie", 1);
 		
-	phd_damage = level.zombie_vars[ "phd_d2p_damage" ];
+	phd_damage = level.zombie_vars[ "phd_dive_damage" ];
 	
 	zombies = GetAiSpeciesArray( "axis", "all" );
 	for(i = 0; i < zombies.size; i++)
@@ -316,4 +324,212 @@ phd_dive_damage(origin)
     self DisableInvulnerability();
 	
 	wait 0.2;
+}
+
+perks_zombie_hit_effect(amount, attacker, point, mod)
+{
+	if( !isDefined(attacker) || !isAlive( self ) || !isPlayer( attacker ) )
+	{
+		return;
+	}
+	
+	is_dog = self enemy_is_dog();
+
+	hitLocation = self.damageLocation;
+	health = self.health;
+	
+
+	if( mod != "MOD_PISTOL_BULLET" && mod != "MOD_RIFLE_BULLET")
+	{
+		return;
+	}
+
+    // Double Tap 2.0
+	if( isDefined(attacker) && isplayer(attacker) && isAlive(attacker) )
+	{
+		if(attacker HasPerk("specialty_rof") && ( mod == "MOD_PISTOL_BULLET" || mod == "MOD_RIFLE_BULLET" ) )		//change specialty to "bulletdamage" for stopping power
+		{
+            self setClientDvar( "perk_weapRateMultiplier", level.zombie_vars[ "doubletap_fire_rate" ] );
+		    attacker maps\_zombiemode_score::player_add_points( "damage", mod, hitLocation, is_dog );
+		    health = health - amount;
+		}
+	}
+	
+	perks_zombie_hit_effect_check_health(health, attacker);
+}
+
+perks_zombie_hit_effect_check_health(health, attacker)
+{
+	// If there's no extra damage done
+	if (health == self.health)
+	{
+		return;
+	}
+
+	if (health <= 0)
+	{
+		self doDamage( self.health + 666, self.origin, attacker );
+		return;
+	}
+	
+	// instead of doing damage and being inaccurate about the scoring the health is decreased instead
+	self.health = health;
+}
+
+perks_quick_revive_think(iDamage) {
+
+    players = GetPlayers();
+
+    if (isdefined(self.inSoloRevive)) {
+        return;
+    }    
+
+    if (self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1) {
+        self notify("second_chance");
+        self thread solo_quickrevive(); // custom solo revive function below
+        return;
+    }
+
+}
+
+solo_quickrevive() // numan solo revive function
+{
+    // gather some info
+
+    self.inSoloRevive = true;
+    self.downedpistol = level.player_specific_add_weapon[maps\_zombiemode_weapons::get_player_index(self)];
+    self.currentweapon = self GetCurrentWeapon();
+    self.currentstance = self GetStance();
+    clipammo = undefined;
+    weaponammo = undefined;
+    lstandammo = undefined;
+    lstandgun = undefined;
+    lstandclip = undefined;
+
+    playerweapons = self GetWeaponsList(); // returns an array of weapons and also weapons ammo
+    for (i = 0; i < playerweapons.size; i++) {
+        clipammo[i] = self GetWeaponAmmoClip(playerweapons[i]);
+        weaponammo[i] = self GetWeaponAmmoStock(playerweapons[i]);
+        wait 0.05;
+    }
+
+    if (self IsThrowingGrenade()) {
+        self FreezeControls(true); // literally just to throw player's current grenade if they're stupid enough to play hot potato
+        wait 0.05;
+        self FreezeControls(false);
+    }
+
+    // start zombies targeting spawn struct instead. Rest is changed in zombiemode_spawner find_flesh() because we have to overwrite regular targeting.
+
+    self.ignoreme = true;
+
+    // put player in prone for now
+
+    self AllowSprint(false);
+    self AllowStand(false);
+    self AllowCrouch(false);
+    self SetStance("prone");
+
+    self VisionSetNaked("laststand", 1);
+
+    // if player has better downed gun, give it and check for ammo, then return it later
+
+    self DisableWeaponCycling();
+
+    if (self HasWeapon("ray_gun")) {
+        lstandammo = 20;
+        lstandclip = 20;
+        lstandgun = "ray_gun";
+    } else if (self HasWeapon("sw_357")) {
+        lstandammo = 18;
+        lstandclip = 6;
+        lstandgun = "sw_357";
+    } else if (self HasWeapon("walther")) {
+        lstandammo = 24;
+        lstandclip = 8;
+        lstandgun = "walther";
+    } else if (self HasWeapon("tokarev")) {
+        lstandammo = 24;
+        lstandclip = 8;
+        lstandgun = "tokarev";
+    } else {
+        lstandammo = 24;
+        lstandclip = 8;
+        lstandgun = "colt";
+    }
+
+    self TakeAllWeapons();
+
+    self GiveWeapon(lstandgun);
+    self SwitchToWeapon(lstandgun);
+    self SetWeaponAmmoClip(lstandgun, lstandclip);
+    self SetWeaponAmmoStock(lstandgun, lstandammo);
+
+    soloReviveTime = 10;
+
+    if (!isdefined(self.soloReviveProgressBar))
+        self.soloReviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
+
+    self.soloReviveProgressBar.alignX = "center";
+    self.soloReviveProgressBar.alignY = "middle";
+    self.soloReviveProgressBar.horzAlign = "center";
+    self.soloReviveProgressBar.vertAlign = "bottom";
+    self.soloReviveProgressBar.y = -190;
+
+    self.soloReviveProgressBar maps\_hud_util::updateBar(0.01, 1 / soloReviveTime);
+
+    // wait for revive and play text
+
+    self.revive_hud setText( &"GAME_REVIVING", " ", self);
+    self maps\_laststand::revive_hud_show();
+    self.revive_hud.alignX = "center";
+    self.revive_hud.alignY = "middle";
+    self.revive_hud.horzAlign = "center";
+    self.revive_hud.vertAlign = "bottom";
+    self.revive_hud.y = -210;
+
+    wait 10;
+
+    if (isdefined(self.soloReviveProgressBar)) {
+        self.soloReviveProgressBar maps\_hud_util::destroyElem();
+    }
+
+    if (isdefined(self.revive_hud)) {
+        self maps\_laststand::revive_hud_hide();
+    }
+
+    // revert everything
+
+    if (self.currentweapon != lstandgun) {
+        self TakeAllWeapons();
+    }
+
+    for (i = 0; i < playerweapons.size; i++) {
+        if (weaponType(playerweapons[i]) == "grenade") {
+            self GiveWeapon(playerweapons[i]);
+            self SetWeaponAmmoClip(playerweapons[i], clipammo[i]);
+        } else {
+            //IPrintLn(playerweapons[i]);
+            self GiveWeapon(playerweapons[i]);
+            self SetWeaponAmmoClip(playerweapons[i], clipammo[i]);
+            self SetWeaponAmmoStock(playerweapons[i], weaponammo[i]);
+        }
+        wait 0.05;
+    }
+
+    self SwitchToWeapon(self.currentweapon);
+    self EnableWeaponCycling();
+
+    self.inSoloRevive = undefined;
+
+    self VisionSetNaked("zombie", 1);
+
+    self AllowSprint(true);
+    self AllowStand(true);
+    self AllowCrouch(true);
+    self SetStance("stand");
+
+    self SetStance(self.currentstance);
+
+    self.ignoreme = false;
 }

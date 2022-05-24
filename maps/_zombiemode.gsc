@@ -1576,12 +1576,6 @@ playerzombie_waitfor_buttonrelease(inputType) {
 
 player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime) {
 
-    players = GetPlayers();
-
-    if (isdefined(self.inSoloRevive)) {
-        return;
-    }
-
     if (self HasPerk("specialty_detectexplosive") &&
         (sMeansOfDeath == "MOD_GRENADE_SPLASH" ||
             sMeansOfDeath == "MOD_GRENADE" ||
@@ -1608,11 +1602,7 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
         }
     }
 
-    if (self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1) {
-        self notify("second_chance");
-        self thread solo_quickrevive(); // custom function just below this one
-        return;
-    }
+    self thread maps\_zombiemode_perks::perks_quick_revive_think();
 
     if (iDamage < self.health) {
         self maps\_callbackglobal::finishPlayerDamageWrapper(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime);
@@ -1643,148 +1633,6 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
     if (count == players.size) {
         end_game();
     }
-}
-
-solo_quickrevive() // numan solo revive function
-{
-    // gather some info
-
-    self.inSoloRevive = true;
-    self.downedpistol = level.player_specific_add_weapon[maps\_zombiemode_weapons::get_player_index(self)];
-    self.currentweapon = self GetCurrentWeapon();
-    self.currentstance = self GetStance();
-    clipammo = undefined;
-    weaponammo = undefined;
-    lstandammo = undefined;
-    lstandgun = undefined;
-    lstandclip = undefined;
-
-    playerweapons = self GetWeaponsList(); // returns an array of weapons and also weapons ammo
-    for (i = 0; i < playerweapons.size; i++) {
-        clipammo[i] = self GetWeaponAmmoClip(playerweapons[i]);
-        weaponammo[i] = self GetWeaponAmmoStock(playerweapons[i]);
-        wait 0.05;
-    }
-
-    if (self IsThrowingGrenade()) {
-        self FreezeControls(true); // literally just to throw player's current grenade if they're stupid enough to play hot potato
-        wait 0.05;
-        self FreezeControls(false);
-    }
-
-    // start zombies targeting spawn struct instead. Rest is changed in zombiemode_spawner find_flesh() because we have to overwrite regular targeting.
-
-    self.ignoreme = true;
-
-    // put player in prone for now
-
-    self AllowSprint(false);
-    self AllowStand(false);
-    self AllowCrouch(false);
-    self SetStance("prone");
-
-    self VisionSetNaked("laststand", 1);
-
-    // if player has better downed gun, give it and check for ammo, then return it later
-
-    self DisableWeaponCycling();
-
-    if (self HasWeapon("ray_gun")) {
-        lstandammo = 20;
-        lstandclip = 20;
-        lstandgun = "ray_gun";
-    } else if (self HasWeapon("sw_357")) {
-        lstandammo = 18;
-        lstandclip = 6;
-        lstandgun = "sw_357";
-    } else if (self HasWeapon("walther")) {
-        lstandammo = 24;
-        lstandclip = 8;
-        lstandgun = "walther";
-    } else if (self HasWeapon("tokarev")) {
-        lstandammo = 24;
-        lstandclip = 8;
-        lstandgun = "tokarev";
-    } else {
-        lstandammo = 24;
-        lstandclip = 8;
-        lstandgun = "colt";
-    }
-
-    self TakeAllWeapons();
-
-    self GiveWeapon(lstandgun);
-    self SwitchToWeapon(lstandgun);
-    self SetWeaponAmmoClip(lstandgun, lstandclip);
-    self SetWeaponAmmoStock(lstandgun, lstandammo);
-
-    soloReviveTime = 10;
-
-    if (!isdefined(self.soloReviveProgressBar))
-        self.soloReviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
-
-    self.soloReviveProgressBar.alignX = "center";
-    self.soloReviveProgressBar.alignY = "middle";
-    self.soloReviveProgressBar.horzAlign = "center";
-    self.soloReviveProgressBar.vertAlign = "bottom";
-    self.soloReviveProgressBar.y = -190;
-
-    self.soloReviveProgressBar maps\_hud_util::updateBar(0.01, 1 / soloReviveTime);
-
-    // wait for revive and play text
-
-    self.revive_hud setText( &"GAME_REVIVING", " ", self);
-    self maps\_laststand::revive_hud_show();
-    self.revive_hud.alignX = "center";
-    self.revive_hud.alignY = "middle";
-    self.revive_hud.horzAlign = "center";
-    self.revive_hud.vertAlign = "bottom";
-    self.revive_hud.y = -210;
-
-    wait 10;
-
-    if (isdefined(self.soloReviveProgressBar)) {
-        self.soloReviveProgressBar maps\_hud_util::destroyElem();
-    }
-
-    if (isdefined(self.revive_hud)) {
-        self maps\_laststand::revive_hud_hide();
-    }
-
-    // revert everything
-
-    if (self.currentweapon != lstandgun) {
-        self TakeAllWeapons();
-    }
-
-    for (i = 0; i < playerweapons.size; i++) {
-        if (weaponType(playerweapons[i]) == "grenade") {
-            self GiveWeapon(playerweapons[i]);
-            self SetWeaponAmmoClip(playerweapons[i], clipammo[i]);
-        } else {
-            //IPrintLn(playerweapons[i]);
-            self GiveWeapon(playerweapons[i]);
-            self SetWeaponAmmoClip(playerweapons[i], clipammo[i]);
-            self SetWeaponAmmoStock(playerweapons[i], weaponammo[i]);
-        }
-        wait 0.05;
-    }
-
-    self SwitchToWeapon(self.currentweapon);
-    self EnableWeaponCycling();
-
-    self.inSoloRevive = undefined;
-
-    self VisionSetNaked("zombie", 1);
-
-    self AllowSprint(true);
-    self AllowStand(true);
-    self AllowCrouch(true);
-    self SetStance("stand");
-
-    self SetStance(self.currentstance);
-
-    self.ignoreme = false;
 }
 
 end_game() {
