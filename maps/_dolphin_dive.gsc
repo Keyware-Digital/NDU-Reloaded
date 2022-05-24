@@ -25,7 +25,7 @@ setup_player_dolphin_dive()
 
 		self.oldSurface = self GetSurface();
 
-		MinFall = 5
+		MinFall = 5;
                 
 		if( self getStance() == "crouch" && self isSprinting() && self isOnGround() && !self IsMeleeing() && !self maps\_laststand::player_is_in_laststand() && !self.being_revived && !level.intermission && !self.is_melee_galva)
 		{
@@ -123,7 +123,6 @@ setup_player_dolphin_dive()
 			if( self IsOnGround() )
 			{
 				self.oldSurface = self GetSurface();
-				self.lastStance = self GetDiveStance();
 			}
 
         }
