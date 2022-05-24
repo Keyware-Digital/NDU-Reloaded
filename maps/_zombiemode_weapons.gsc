@@ -960,7 +960,7 @@ weapon_cabinet_think()
 	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
-		if(magicnum <= 10)	//10 out of 100 chance to get a perk
+		if(magicnum <= 100)	//10 out of 100 chance to get a perk
 		{
 			weaponmodelstruct SetModel(GetWeaponModel( "zombie_perk_bottle" ));
 			chosenweapon = "zombie_perk_bottle";

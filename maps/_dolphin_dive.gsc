@@ -23,9 +23,9 @@ setup_player_dolphin_dive()
 		angles = self GetPlayerAngles();
 		angles = (0,angles[1],0);
 
-		self.oldSurface = self GetSurface();
+		self.oldSurface = self getSurface();
 
-		MinFall = 5;
+		minFall = 5;
                 
 		if( self getStance() == "crouch" && self isSprinting() && self isOnGround() && !self IsMeleeing() && !self maps\_laststand::player_is_in_laststand() && !self.being_revived && !level.intermission && !self.is_melee_galva)
 		{
@@ -47,7 +47,7 @@ setup_player_dolphin_dive()
 			players_dolphin_dive UseAnimTree( #animtree );
 			players_dolphin_dive setAnim(dolphin_dive_anim_start);
 
-			wait .05;
+			wait 0.05;
 		
 			self hide();
 			players_dolphin_dive show();
@@ -63,20 +63,20 @@ setup_player_dolphin_dive()
 			for(l = 0; l < 5; l++)
 			{
 				self SetVelocity((run_velocity * 1.3) + AnglesToUp(angles) * 400);
-				wait .05;
+				wait 0.05;
 			}
 			self SetVelocity(AnglesToForward(angles) * 280);
 
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			wait .1;
+			wait 0.1;
 
 			while( !self IsOnGround() )
 			{	
 				if( self HasPerk("specialty_detectexplosive") && self GetVelocity()[2] <= -363)
 					self.can_flop = true;
 
-				wait .05;
+				wait 0.05;
 			}
 			self SetVelocity(AnglesToForward(angles) * 450);
 			self setStance("prone");
@@ -86,17 +86,17 @@ setup_player_dolphin_dive()
 			// self playSound("d2p_fall");
 			// self playSound("d2p_slide");
 
-			wait .05;
+			wait 0.05;
 
-			self.newSurface = self GetSurface() + 0.007;
-			ActualFall = self.oldSurface - self.newSurface;
+			self.newSurface = self getSurface() + 0.007;
+			actualFall = self.oldSurface - self.newSurface;
 
-			if (self HasPerk("specialty_detectexplosive") && self.oldSurface > self.newSurface && MinFall < ActualFall)
+			if (self HasPerk("specialty_detectexplosive") && self.oldSurface > self.newSurface && minFall < actualFall)
 			{
 					origin = self.origin;
 					maps\_zombiemode_perks::phd_dive_damage(origin);
-					self.oldSurface = self GetSurface();
-					wait .2;	
+					self.oldSurface = self getSurface();
+					wait 0.2;	
 			}
 
 			if( self.can_flop )
@@ -104,7 +104,7 @@ setup_player_dolphin_dive()
 				self.can_flop = false;
 			}
 			
-			wait .4;
+			wait 0.4;
 			
 			self setClientDvar("hide_reload_hud", 0);
 			self setClientDvar("ammocounterhide", 0);
@@ -122,11 +122,11 @@ setup_player_dolphin_dive()
 
 			if( self IsOnGround() )
 			{
-				self.oldSurface = self GetSurface();
+				self.oldSurface = self getSurface();
 			}
 
         }
-	    wait .05;
+	    wait 0.05;
 	}
 }
 
@@ -144,11 +144,11 @@ update_angles_origin(players_dolphin_dive)
 	{
 		players_dolphin_dive.origin = self.origin;
 		players_dolphin_dive.angles = self.angles;
-		wait .01;
+		wait 0.01;
 	}
 }
 
-GetSurface()
+getSurface()
 {
 	return self.origin[2];
 }

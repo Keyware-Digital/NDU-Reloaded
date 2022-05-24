@@ -875,9 +875,9 @@ death_machine_powerup(drop_item) {
 
 nuke_powerup(drop_item) {
 
+    level thread nuke_flash();
     level thread nuke_on_hud(drop_item);
     zombies = getaispeciesarray("axis");
-    level thread nuke_flash();
 
     PlayFx(drop_item.fx, drop_item.origin);
 
@@ -920,14 +920,7 @@ nuke_powerup(drop_item) {
 }
 
 nuke_flash()
-{
-	players = getplayers();	
-	for(i=0; i<players.size; i ++)
-	{
-		players[i] play_sound_2d("nuke_flash");
-	}
-	level thread devil_dialog_delay();
-	
+{	
 	
 	fadetowhite = newhudelem();
 
