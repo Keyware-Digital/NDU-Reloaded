@@ -246,7 +246,7 @@ phd_fall_damage(iDamage)
 	PlaySoundAtPosition(explosion, self.origin);
 	playFx( level._effect["fx_zmb_phdflopper_exp"], self.origin + ( 0, 0, 50 ));
 	self VisionSetNaked("cheat_contrast", 0.2);
-    wait 1;
+    wait 0.5;
     self VisionSetNaked("zombie", 1);
 		
 	phd_damage = level.zombie_vars[ "phd_fall_damage" ] + iDamage;
@@ -291,7 +291,7 @@ phd_dive_damage(origin)
 	PlaySoundAtPosition(explosion, self.origin);
 	playFx( level._effect["fx_zmb_phdflopper_exp"], origin + ( 0, 0, 50 ));
 	self VisionSetNaked("cheat_contrast", 0.2);
-    wait 1;
+    wait 0.5;
     self VisionSetNaked("zombie", 1);
 		
 	phd_damage = level.zombie_vars[ "phd_dive_damage" ];

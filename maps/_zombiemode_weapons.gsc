@@ -960,7 +960,7 @@ weapon_cabinet_think()
 	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
-		if(magicnum <= 100)	//10 out of 100 chance to get a perk
+		if(magicnum <= 10)	//10 out of 100 chance to get a perk
 		{
 			weaponmodelstruct SetModel(GetWeaponModel( "zombie_perk_bottle" ));
 			chosenweapon = "zombie_perk_bottle";
@@ -1322,20 +1322,24 @@ ammo_give( weapon )
 
 	// Should we give ammo to the player
 	give_ammo = false; 
+	
+	// get the max allowed ammo on the current weapon
+	stockMax = WeaponMaxAmmo( weapon ); 
+	
+	// Get the current weapon clip/magazine ammo count
+	clipCount = self GetWeaponAmmoClip( weapon ); 
+
+	// Get the current weapon reserve ammo count
+	ammoCount = self getammocount(weapon);
 
 	// Check to see if ammo belongs to a primary weapon
 	if( weapon != "fraggrenade" && weapon != "stielhandgranate" && weapon != "molotov" )
 	{
 		if( isdefined( weapon ) )  
 		{
-			// get the max allowed ammo on the current weapon
-			stockMax = WeaponMaxAmmo( weapon ); 
-	
-			// Get the current weapon clip count
-			clipCount = self GetWeaponAmmoClip( weapon ); 
 	
 			// compare it with the ammo player actually has, if more or equal just dont give the ammo, else do
-			if( ( self getammocount( weapon ) + clipcount ) >= stockMax )	
+			if(ammoCount + clipcount >= stockMax)	
 			{
 				give_ammo = false; 
 			}
@@ -1352,7 +1356,7 @@ ammo_give( weapon )
 		if( self hasweapon( weapon ) )
 		{
 			// Check if the player has less than max stock, if no give ammo
-			if( self getammocount( weapon ) < WeaponMaxAmmo( weapon ) )
+			if(ammoCount < stockMax)
 			{
 				// give the ammo to the player
 				give_ammo = true; 					

@@ -875,11 +875,11 @@ death_machine_powerup(drop_item) {
 
 nuke_powerup(drop_item) {
 
-    level thread nuke_flash();
     level thread nuke_on_hud(drop_item);
     zombies = getaispeciesarray("axis");
 
     PlayFx(drop_item.fx, drop_item.origin);
+    level thread nuke_flash();
 
     zombies = get_array_of_closest(drop_item.origin, zombies);
 
@@ -934,14 +934,14 @@ nuke_flash()
 	fadetowhite SetShader( "white", 640, 480 ); 
 
 	// Fade into white
-	fadetowhite FadeOverTime( 0.1 );    //was 0.2
+	fadetowhite FadeOverTime( 0.2 );
 	fadetowhite.alpha = 0.8; 
 
 	wait 0.5;
-	fadetowhite FadeOverTime( 0.5 );    //was 1.0
+	fadetowhite FadeOverTime( 1.0 );
 	fadetowhite.alpha = 0; 
 
-	wait 1.1;
+	wait 1.0;
 	fadetowhite destroy();
 }
 
