@@ -934,11 +934,11 @@ nuke_flash()
 	fadetowhite SetShader( "white", 640, 480 ); 
 
 	// Fade into white
-	fadetowhite FadeOverTime( 0.2 );
-	fadetowhite.alpha = 0.8; 
+	fadetowhite FadeOverTime( 0.1 );    //0.2
+	fadetowhite.alpha = 0.4;            //0.8
 
 	wait 0.5;
-	fadetowhite FadeOverTime( 1.0 );
+	fadetowhite FadeOverTime( 0.5 );    //1.0
 	fadetowhite.alpha = 0; 
 
 	wait 1.0;
