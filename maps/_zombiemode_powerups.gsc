@@ -935,11 +935,11 @@ nuke_flash()
 
 	// Fade into white
 	fadetowhite FadeOverTime( 0.2 );
-	fadetowhite.alpha = 0.8; 
+	fadetowhite.alpha = 0.5;            //0.8
 
 	wait 0.5;
 	fadetowhite FadeOverTime( 1.0 );
-	fadetowhite.alpha = 0; 
+	fadetowhite.alpha = 0.8;            //was 0
 
 	wait 1.0;
 	fadetowhite destroy();
