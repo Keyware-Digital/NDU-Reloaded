@@ -474,7 +474,7 @@ init_animscripts() {
 
 init_player_config() {
     set_zombie_var("dolphin_dive", 1);
-	level thread setup_player_abilities();
+	level thread setup_player_abilities();  //this breaks developer 1, comment it it out to see for yourself
     level thread setup_player_vars();
 }
 
@@ -2149,7 +2149,7 @@ get_players_alive() {
 
 setup_player_abilities()
 {
-	flag_wait( "all_players_connected" );
+	flag_wait( "all_players_connected" );   //this breaks developer 1, comment it it out to see for yourself
 	
 	players = GetPlayers();
 	for(i = 0; i < players.size; i++)
