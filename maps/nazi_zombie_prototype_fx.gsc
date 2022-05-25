@@ -33,6 +33,8 @@ footsteps()
 	animscripts\utility::setFootstepEffect( "snow",       LoadFx( "bio/player/fx_footstep_snow" ) );
 	animscripts\utility::setFootstepEffect( "water",      LoadFx( "bio/player/fx_footstep_water" ) );
 	animscripts\utility::setFootstepEffect( "wood",       LoadFx( "bio/player/fx_footstep_dust" ) );
+	animscripts\utility::setFootstepEffect( "fire",       LoadFx( "bio/player/fx_footstep_fire" ) );
+
 }
 
 // --- Ambient_Effects ---//

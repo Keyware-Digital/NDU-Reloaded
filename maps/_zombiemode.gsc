@@ -274,9 +274,9 @@ init_fx() {
     level._effect["headshot_nochunks"] = LoadFX("misc/fx_zombie_bloodsplat");
     level._effect["bloodspurt"] = LoadFX("misc/fx_zombie_bloodspurt");
 
-    level._effect["rise_burst"] = LoadFx("maps/mp_maps/fx_mp_zombie_hand_dirt_burst");
-    level._effect["rise_billow"] = LoadFx("maps/mp_maps/fx_mp_zombie_body_dirt_billowing");
-    level._effect["rise_dust"] = LoadFx("maps/mp_maps/fx_mp_zombie_body_dust_falling");
+    level._effect["rise_burst"] = LoadFx("maps/zombie/fx_mp_zombie_hand_dirt_burst");
+    level._effect["rise_billow"] = LoadFx("maps/zombie/fx_mp_zombie_body_dirt_billowing");
+    level._effect["rise_dust"] = LoadFx("maps/zombie/fx_mp_zombie_body_dust_falling");
     // Flamethrower
     level._effect["character_fire_pain_sm"] = loadfx("env/fire/fx_fire_player_sm_1sec");
     level._effect["character_fire_death_sm"] = loadfx("env/fire/fx_fire_player_md");

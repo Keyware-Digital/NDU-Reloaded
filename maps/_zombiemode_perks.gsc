@@ -26,7 +26,6 @@ init_precache() {
 }
 
 init_perk_fx() {
-	level._effect[ "fx_zombie_mini_nuke" ]	= loadfx ( "misc/fx_zombie_mini_nuke" );
     level._effect[ "fx_zmb_phdflopper_exp" ]	= loadfx ( "maps/zombie/fx_zmb_phdflopper_exp" );
 
 }
@@ -236,7 +235,7 @@ play_no_money_perk_dialog() {
 
 }
 
-phd_fall_damage(iDamage)
+phd_fall_damage(iDamage, point, attacker, type)
 {
 
     self EnableInvulnerability();
@@ -245,7 +244,7 @@ phd_fall_damage(iDamage)
 
 	PlaySoundAtPosition(explosion, self.origin);
 	playFx( level._effect["fx_zmb_phdflopper_exp"], self.origin + ( 0, 0, 50 ));
-	self VisionSetNaked("cheat_contrast", 0.2);
+	self VisionSetNaked("zombie_cosmodrome_divetonuke", 1);
     wait 0.5;
     self VisionSetNaked("zombie", 1);
 		
@@ -266,12 +265,14 @@ phd_fall_damage(iDamage)
 		
 			if (zombies[i].health <= phd_damage)
 			{
-				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
+                maps\_zombiemode_spawner::zombie_gib_on_damage(point, attacker, type);
+				zombies[i] DoDamage( phd_damage , zombies[i].origin, point, attacker, type, self);
                 //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
 			}
 			else
 			{
-				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
+                maps\_zombiemode_spawner::zombie_gib_on_damage(point, attacker, type);
+				zombies[i] DoDamage( phd_damage , zombies[i].origin, point, attacker, type, self);
                 //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
 			}			
 		}
@@ -283,7 +284,7 @@ phd_fall_damage(iDamage)
 	wait 0.2;
 }
 
-phd_dive_damage(origin)
+phd_dive_damage(origin, point, attacker, type)
 {
 
     self EnableInvulnerability();
@@ -312,13 +313,15 @@ phd_dive_damage(origin)
 		
 			if (zombies[i].health <= phd_damage)
 			{
-				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
-                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
+                maps\_zombiemode_spawner::zombie_gib_on_damage(point, attacker, type);
+				zombies[i] DoDamage( phd_damage , zombies[i].origin, point, attacker, type, self);
+                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(self, "J_Head"); // this needs to gib zombies like in BO1, currently gibs player
 			}
 			else
 			{
-				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
-                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
+                maps\_zombiemode_spawner::zombie_gib_on_damage(point, attacker, type);
+				zombies[i] DoDamage( phd_damage , zombies[i].origin, point, attacker, type, self);
+                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(self, "J_Head"); // this needs to gib zombies like in BO1, currently gibs player
 			}
 		}
 		wait .01;

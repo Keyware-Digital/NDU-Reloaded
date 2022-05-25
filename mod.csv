@@ -1,5 +1,7 @@
 fx,weapon/muzzleflashes/standardflashworld_ug
-fx,misc/fx_zombie_mini_nuke
+fx,maps/zombie/fx_mp_zombie_body_dirt_billowing
+fx,maps/zombie/fx_mp_zombie_body_dust_falling
+fx,maps/zombie/fx_mp_zombie_hand_dirt_burst
 fx,maps/zombie/fx_zmb_phdflopper_exp
 material,loadscreen_nazi_zombie_prototype
 material,hud_grenade_german
@@ -31,6 +33,7 @@ menufile,ui/prototype_main.menu
 menufile,ui/prototype_briefing.menu
 menufile,ui/prototype_options_game_pc.menu
 menufile,ui/prototype_gamesetup_coop.menu
+rawfile,vision/zombie_cosmodrome_divetonuke.vision
 rawfile,bik/prototype_main_menu.bik
 rawfile,bik/prototype_load.bik
 rawfile,mptype/nazi_zombie_heroes.gsc

@@ -34,6 +34,8 @@ setup_player_dolphin_dive()
 			run_velocity = self GetVelocity();
 			rand = randomintrange(0, 8);
 			self PlaySound("plr_" + index + "_vox_gen_exert_" + rand);
+			launch = "launch_exert_" + RandomInt(6);
+			PlaySoundAtPosition(launch, self.origin);
 			self.is_diving = true;
 			self setClientDvar("hide_reload_hud", 1);
 			self setClientDvar("ammocounterhide", 1);
@@ -86,9 +88,9 @@ setup_player_dolphin_dive()
 			// self playSound("d2p_fall");
 			// self playSound("d2p_slide");
 
-			hurt = "hurt_" + RandomInt(3);
+			land = "land_exert_" + RandomInt(6);
 
-			PlaySoundAtPosition(hurt, self.origin);
+			PlaySoundAtPosition(land, self.origin);
 
 			wait 0.05;
 
@@ -126,6 +128,8 @@ setup_player_dolphin_dive()
 
 			if( self IsOnGround() )
 			{
+				playfxOnTag(level._effect[ "dolphine_dive_land" ], self, "J_Wrist_RI");
+				playfxOnTag(level._effect[ "dolphine_dive_land" ], self, "J_Wrist_LE");
 				self.oldSurface = self getSurface();
 			}
 

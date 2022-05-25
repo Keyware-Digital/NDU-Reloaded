@@ -17,6 +17,7 @@ main() {
     maps\_character_randomise::init();
     include_powerups();
     level thread betty_fx();
+    level thread dolphine_dive_fx();
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
@@ -37,6 +38,10 @@ main() {
 betty_fx() {
     level._effect["betty_explode"] = loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
     level._effect["betty_trail"] = loadfx("weapon/bouncing_betty/fx_betty_trail");
+}
+
+dolphine_dive_fx() {
+    level._effect[ "dolphine_dive_land" ]	= loadfx ( "impacts/fx_small_dirt" );
 }
 
 init_strings() {
