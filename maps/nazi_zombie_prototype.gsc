@@ -41,7 +41,7 @@ betty_fx() {
 }
 
 dolphine_dive_fx() {
-    level._effect[ "dolphine_dive_land" ]	= loadfx ( "impacts/fx_small_dirt" );
+    level._effect[ "dolphine_dive_land" ] = loadfx ( "" );
 }
 
 init_strings() {

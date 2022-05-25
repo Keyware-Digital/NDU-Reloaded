@@ -15,8 +15,8 @@ setup_player_dolphin_dive()
 
 	self.is_diving = false;
 	self.can_flop = false;
-	dolphin_dive_anim_start = %pb_dw_dive_prone;
-	dolphin_dive_anim_land = %pb_dw_dive_prone_land;
+	dolphin_dive_anim_start = %pb_dive_prone;
+	dolphin_dive_anim_land = %pb_dive_prone_land;
 	
 	while(1)
 	{
@@ -88,6 +88,8 @@ setup_player_dolphin_dive()
 			// self playSound("d2p_fall");
 			// self playSound("d2p_slide");
 
+			PlaySoundAtPosition("land_concrete", self.origin);
+
 			land = "land_exert_" + RandomInt(6);
 
 			PlaySoundAtPosition(land, self.origin);
@@ -128,9 +130,9 @@ setup_player_dolphin_dive()
 
 			if( self IsOnGround() )
 			{
-				playfxOnTag(level._effect[ "dolphine_dive_land" ], self, "J_Wrist_RI");
-				playfxOnTag(level._effect[ "dolphine_dive_land" ], self, "J_Wrist_LE");
 				self.oldSurface = self getSurface();
+				wait 1;
+				playfxOnTag(level._effect[ "dolphine_dive_land" ], self.origin + (0, 0, 50));
 			}
 
         }
