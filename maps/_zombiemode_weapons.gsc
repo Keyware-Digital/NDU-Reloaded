@@ -596,7 +596,7 @@ treasure_chest_ChooseRandomWeapon( player )
         filtered = array_remove(filtered, "mine_bouncing_betty");
     }
 
-	// Filter bowie if player has it.	//Trebor
+	// Trebor - Filter bowie if player has it
 	if(isDefined(self.has_altmelee) && self.has_altmelee)
     {
         filtered = array_remove(filtered, "zombie_bowie_flourish");
