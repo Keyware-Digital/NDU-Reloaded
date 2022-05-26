@@ -596,11 +596,11 @@ treasure_chest_ChooseRandomWeapon( player )
         filtered = array_remove(filtered, "mine_bouncing_betty");
     }
 
-	// Filter bowie if player has it.
-	/*if(isDefined(player.has_bowie) && player.has_bowie)
+	// Filter bowie if player has it.	//Trebor
+	if(isDefined(self.has_altmelee) && self.has_altmelee)
     {
         filtered = array_remove(filtered, "zombie_bowie_flourish");
-    }*/
+    }
  
     return filtered[RandomInt( filtered.size )];
 }
@@ -672,6 +672,7 @@ weapons_death_check() // numan - reset the betties var on death ( may be used fo
     self waittill_any( "fake_death", "death" );
  
     self.has_betties = undefined;
+	self.has_altmelee = undefined;
 }
 	// SRS 9/3/2008: if we timed out, move the weapon back into the box instead of deleting it
 timer_til_despawn(floatHeight)
