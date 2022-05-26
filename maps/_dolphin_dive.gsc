@@ -27,7 +27,7 @@ setup_player_dolphin_dive()
 
 		minFall = level.zombie_vars[ "phd_minimum_fall" ];
                 
-		if( self getStance() == "crouch" && self isSprinting() && self isOnGround() && !self IsMeleeing() && !self maps\_laststand::player_is_in_laststand() && !self.being_revived && !level.intermission && !self.is_melee_galva)
+		if( self getStance() == "crouch" && self isSprinting() && self isOnGround() && !self IsMeleeing() && !self maps\_laststand::player_is_in_laststand() /*&& !self.being_revived*/ && !level.intermission /*&& !self.is_melee_galva*/) // commented out variables that don't exist yet (causes undefined errors)
 		{
 			self setStance("prone");
 			
@@ -131,8 +131,7 @@ setup_player_dolphin_dive()
 			if( self IsOnGround() )
 			{
 				self.oldSurface = self getSurface();
-				wait 1;
-				playfxOnTag(level._effect[ "dolphine_dive_land" ], self.origin + (0, 0, 50));
+				//playfxOnTag(level._effect[ "dolphine_dive_land" ], self.origin + (0, 0, 50));
 			}
 
         }

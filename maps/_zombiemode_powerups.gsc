@@ -122,8 +122,8 @@ powerup_hud_overlay()
 		level.powerup_hud[i].x = 0;
 		level.powerup_hud[i].y = level.powerup_hud[i].y - 35; 
 		level.powerup_hud[i].alpha = 0;
-		level.powerup_hud[i] MoveOverTime( 0 );
-		level.powerup_hud[i] FadeOverTime( 0 );
+		level.powerup_hud[i] MoveOverTime( 0.05 );
+		level.powerup_hud[i] FadeOverTime( 0.05 );
 	}
 	
 	icon_size = 32;

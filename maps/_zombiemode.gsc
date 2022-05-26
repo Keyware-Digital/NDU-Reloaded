@@ -85,6 +85,9 @@ main() {
     level thread round_start();
     level thread players_playing();
 
+    level thread setup_player_abilities();
+    level thread setup_player_vars();
+
     DisableGrenadeSuicide();
 
     // Do a SaveGame, so we can restart properly when we die
@@ -474,8 +477,6 @@ init_animscripts() {
 
 init_player_config() {
     set_zombie_var("dolphin_dive", 1);
-	level thread setup_player_abilities();  //this breaks developer 1, comment it it out to see for yourself
-    level thread setup_player_vars();
 }
 
 // Handles the intro screen
@@ -2149,18 +2150,16 @@ get_players_alive() {
 
 setup_player_abilities()
 {
-	flag_wait( "all_players_connected" );   //this breaks developer 1, comment it it out to see for yourself
 	
 	players = GetPlayers();
-	for(i = 0; i < players.size; i++)
-	{
+	for (i = 0; i < players.size; i++)
+    {
 		players[i] thread maps\_dolphin_dive::setup_player_dolphin_dive();
 	}
 }
 
-setup_player_vars() {
-        
-    flag_wait( "all_players_connected" );
+setup_player_vars()
+{
 
     players = GetPlayers();
 

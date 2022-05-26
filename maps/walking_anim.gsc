@@ -7,12 +7,12 @@ main()
 
 	SetDvar("walking_holster",0);
 	players = GetPlayers();
-	array_thread(players,::walk_main);
-	array_thread(players,::rot_main);
-	array_thread(players,::prone_checks);
+	array_thread(players,::walk);
+	array_thread(players,::gun_rotation);
+	array_thread(players,::prone_check);
 }
 
-walk_main()	
+walk()	
 {
 	self.is_sliding = false;			// blst
 
@@ -30,7 +30,7 @@ walk_main()
 	}
 }
 
-rot_main()
+gun_rotation()
 {
 	for(;;)
 	{
@@ -47,14 +47,14 @@ rot_main()
 	}
 }
 
-prone_checks()
+prone_check()
 {
 	while(1)
 	{
 		if( self GetStance() == "prone" || self GetStance() == "crouch" )
 		{
 			self SetClientDvar("cg_gun_move_minspeed", 0);
-			self SetClientDvar("bg_bobAmplitudeProne","10");
+			self SetClientDvar("bg_bobAmplitudeProne","1");
 		}
 		else
 		{
