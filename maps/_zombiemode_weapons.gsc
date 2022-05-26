@@ -709,7 +709,7 @@ treasure_chest_give_weapon( weapon_string )
 	// This should never be true for the first time.
 	if( primaryWeapons.size >= 2 ) // he has two weapons
 	{
-		current_weapon = self getCurrentWeapon(); // get hiss current weapon
+		current_weapon = self getCurrentWeapon(); // get his current weapon
 		
 		if ( current_weapon == "mine_bouncing_betty" )
 		{
@@ -761,7 +761,7 @@ treasure_chest_give_weapon( weapon_string )
 weapon_cabinet_think()
 {
 
-	cost = 1900;
+	cost = 1800;	//costs twice as much as the regular mystery box
 
 	if( IsDefined( level.zombie_weapon_cabinet_cost ) )
 	{
@@ -1174,7 +1174,7 @@ weapon_spawn_think()
 
 		grenadeMax = WeaponMaxAmmo( "stielhandgranate" );
 
-		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		//TestNadeBuyFix
+		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		//Trebor - this should fix the nade wallbuys
         {
             continue;
 		}
