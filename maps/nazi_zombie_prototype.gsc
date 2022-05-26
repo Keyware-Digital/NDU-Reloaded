@@ -21,7 +21,7 @@ main() {
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
-    maps\walking_anim::main();
+    maps\_walking_anim::main();
 
     // If you want to modify/add to the weapons table, please copy over the _zombiemode_weapons init_weapons() and paste it here.
     // I recommend putting it in it's own function...

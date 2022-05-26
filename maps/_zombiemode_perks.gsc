@@ -45,13 +45,22 @@ init_perk_vars() {
 
 random_perk_powerup_think() {
 
-    if (!isdefined(self.perknum) || self.perknum == 0) // if player doesnt have any perks
+    if (!isdefined(self.perknum) || self.perknum == 0) // if player doesn't have any perks
     {
         self thread resetperkdefs();
         self thread death_check();
     }
 
-    if (self maps\_laststand::player_is_in_laststand() || self.perknum == 11) //max perks
+    players = GetPlayers();
+
+    for (i = 0; i < players.size; i++) {
+        if (!isdefined(players[i].perknum) || players[i].perknum == 11) // Disable Random Perk if everyone has max perks
+        {
+            level.zombie_vars[ "enableRandomPerk" ] = 0;     
+        }
+    }
+
+    if (self maps\_laststand::player_is_in_laststand() || self.perknum == 11) // Max perks
     {
         return;
     }

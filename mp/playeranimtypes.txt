@@ -17,3 +17,6 @@ gas
 revivee
 reviver
 radio
+dualwield
+ballisticknife
+grenadeonly
