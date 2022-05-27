@@ -54,7 +54,7 @@ init_powerup_vars() {
     set_zombie_var("zombie_powerup_fire_sale_time", 30);
     set_zombie_var("zombie_powerup_drop_increment", 2000); // lower this to make drop happen more often
     set_zombie_var("zombie_powerup_drop_max_per_round", 4); // increase this to make drop happen more often
-    set_zombie_var("enableFireSale", 1);
+    set_zombie_var("enableFireSale", 0);
     set_zombie_var("enableRandomPerk", 1);  
 }
 

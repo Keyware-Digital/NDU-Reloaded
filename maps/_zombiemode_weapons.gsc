@@ -182,6 +182,8 @@ init_weapons()
 	
 	// Bowie
 	add_zombie_weapon( "zombie_bowie_flourish",							"", 						10,		"", 5 );
+	
+	PrecacheModel("p6_anim_zm_al_magic_box_lock");
 
 	// ONLY 1 (OR MORE) OF THE BELOW SHOULD BE ALLOWED
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
@@ -266,6 +268,8 @@ treasure_chest_init()
 {
 	// the triggers which are targeted at chests
 	level.chests = GetEntArray( "treasure_chest_use", "targetname" ); 
+
+	level.chest_accessed = 0;
 
 	array_thread( level.chests, ::treasure_chest_think ); 
 }
@@ -600,7 +604,7 @@ treasure_chest_ChooseRandomWeapon( player )
 	if(isDefined(self.has_altmelee) && self.has_altmelee)
     {
         filtered = array_remove(filtered, "zombie_bowie_flourish");
-    }
+	}
  
     return filtered[RandomInt( filtered.size )];
 }
@@ -653,9 +657,127 @@ treasure_chest_weapon_spawn( chest, player )
         player thread weapons_death_check();
     }
  
-    self notify( "randomization_done" ); 
-    self.weapon_string = rand; // here's where the org get it's weapon type for the give function
- 
+	self.weapon_string = rand; // here's where the org get it's weapon type for the give function
+
+	random = Randomint(100);
+
+	// random change of getting the joker that moves the box
+
+	//increase the chance of joker appearing from 0-100.
+
+		if(!isDefined(level.zombie_vars["zombie_fire_sale"]) || !level.zombie_vars["zombie_fire_sale"])
+		{
+			if(level.chest_accessed)
+			{		
+				// PI_CHANGE_BEGIN - JMA - RandomInt(100) can return a number between 0-99.  If it's zero and chance_of_joker is zero
+				//									we can possibly have a padlock one after another.
+				chance_of_joker = -1;
+				// PI_CHANGE_END
+			}
+			else
+			{
+				chance_of_joker = level.chest_accessed + 20;
+				
+				// make sure padlock appears on the 8th pull if it hasn't moved from the initial spot
+				if(level.chest_accessed >= 8)
+				{
+					chance_of_joker = 100;
+				}
+				
+				// pulls 4 thru 8, there is a 15% chance of getting the padlock
+				// NOTE:  this happens in all cases
+				if( level.chest_accessed >= 4 && level.chest_accessed < 8 )
+				{
+					if( random < 15 )
+					{
+						chance_of_joker = 100;
+					}
+					else
+					{
+						chance_of_joker = -1;
+					}
+				}
+				
+				// after the first magic box move the padlock percentages changes
+				if(level.zombie_vars[ "enableFireSale" ] == 1)
+				{
+					// between pulls 8 thru 12, the padlock percent is 30%
+					if( level.chest_accessed >= 8 && level.chest_accessed < 13 )
+					{
+						if( random < 30 )
+						{
+							chance_of_joker = 100;
+						}
+						else
+						{
+							chance_of_joker = -1;
+						}
+					}
+					
+					// after 12th pull, the padlock percent is 50%
+					if( level.chest_accessed >= 13 )
+					{
+						if( random < 50 )
+						{
+							chance_of_joker = 100;
+						}
+						else
+						{
+							chance_of_joker = -1;
+						}
+					}
+				}
+			}
+
+
+			if (random <= chance_of_joker) // numan edit
+			{
+				if(!isdefined(level.zombie_vars["zombie_fire_sale"]) || !level.zombie_vars["zombie_fire_sale"])
+				{
+					model SetModel("p6_anim_zm_al_magic_box_lock");
+
+					self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCK_950");
+					self setCursorHint( "HINT_NOICON" );
+
+					PlaySoundAtPosition("mysterybox_lock", self.origin);
+					PlaySoundAtPosition("la_vox", self.origin);
+				//	model rotateto(level.chests[level.chest_index].angles, 0.01);
+					//wait(1);
+					model.angles = self.angles;		
+					wait 1;
+
+					level.chest_accessed = 0;
+
+					// waittill someuses uses this
+					user = undefined;
+					while( 1 )
+					{
+						self waittill( "trigger", user ); 
+
+						if( user in_revive_trigger() )
+						{
+							wait( 0.1 );
+							continue;
+						}
+		
+						// make sure the user is a player, and that they can afford it
+						if( is_player_valid( user ) && user.score >= level.zombie_treasure_chest_cost )
+						{
+							user maps\_zombiemode_score::minus_to_player_score( level.zombie_treasure_chest_cost ); 
+							break; 
+						}
+		
+					wait 0.05; 
+					}
+
+					// Eneable Fire Sale powerup
+					level.zombie_vars[ "enableFireSale" ] = 1;
+				}
+			}
+		}
+
+	self notify( "randomization_done" );
+
     model thread timer_til_despawn(floatHeight);
     self waittill( "weapon_grabbed" );
  
@@ -761,7 +883,7 @@ treasure_chest_give_weapon( weapon_string )
 weapon_cabinet_think()
 {
 
-	cost = 1800;	//costs twice as much as the regular mystery box
+	cost = 1900;
 
 	if( IsDefined( level.zombie_weapon_cabinet_cost ) )
 	{

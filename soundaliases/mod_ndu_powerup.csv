@@ -13,6 +13,7 @@ bp_vox,voiceovers\zombie\ANN\zmb_vox_ann_bonus_points.wav,,,1,1,50,2500,1,reject
 dm_vox,voiceovers\zombie\ANN\zmb_vox_ann_death_machine.wav,,,1,1,50,2500,1,reject,1,reject,voice,,curve2,,,,,1.0,1.0,,2d,,,,master,,,,,,1000,wpn_all,,,,,,,,,,,,100,100,0.25,1,,
 fs_vox,voiceovers\zombie\ANN\zmb_vox_ann_firesale.wav,,,1,1,50,2500,1,reject,1,reject,voice,,curve2,,,,,1.0,1.0,,2d,,,,master,,,,,,1000,wpn_all,,,,,,,,,,,,100,100,0.25,1,,
 rp_vox,voiceovers\zombie\ANN\zmb_vox_ann_random_perk.wav,,,1,1,50,2500,1,reject,1,reject,voice,,curve2,,,,,1.0,1.0,,2d,,,,master,,,,,,1000,wpn_all,,,,,,,,,,,,100,100,0.25,1,,
+la_vox,voiceovers\zombie\ANN\zmb_vox_ann_laugh.wav,,,1,1,50,2500,1,reject,1,reject,voice,,curve2,,,,,1.0,1.0,,2d,,,,master,,,,,,1000,wpn_all,,,,,,,,,,,,100,100,0.25,1,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 # Power Ups,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 spawn_powerup,SFX\Levels\zombie\powerups\powerup\power_up_spawn.wav,,,0.8,0.8,500,4000,3,reject,,,full_vol,,curve4,1,4500,,curve2,1,1,,3d,,,,,,,,,,,,,,,,,0.25,,,,,,100,100,0.25,1,,
@@ -50,3 +51,5 @@ cabinetbox_sting_2,SFX\Levels\zombie\cabinet_box\cabinetbox_sting_2.wav,,,1,1,50
 cabinetbox_lottery_laugh,SFX\Levels\zombie\cabinet_box\cabinetbox_lottery_laugh.wav,,,1,1,500,2500,1,oldest,,,full_vol,,,,4000,,curve2,1,1,,3d,,,,master,,,,,,,,,,,,,,,,,,,40,60,0.25,1,,
 # Mystery Box,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 mysterybox_lottery_laugh,SFX\Levels\zombie\mystery_box\mysterybox_lottery_laugh.wav,,,1,1,500,2500,1,oldest,,,full_vol,,,,4000,,curve2,1,1,,3d,,,,master,,,,,,,,,,,,,,,,,,,40,60,0.25,1,,
+mysterybox_lock,SFX\Levels\zombie\mystery_box\mysterybox_lock.wav,,,1,1,500,2500,1,oldest,,,full_vol,,,,4000,,curve2,1,1,,3d,,,,master,,,,,,,,,,,,,,,,,,,40,60,0.25,1,,
+mysterybox_unlock,SFX\Levels\zombie\mystery_box\mysterybox_unlock.wav,,,1,1,500,2500,1,oldest,,,full_vol,,,,4000,,curve2,1,1,,3d,,,,master,,,,,,,,,,,,,,,,,,,40,60,0.25,1,,

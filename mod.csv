@@ -27,6 +27,7 @@ material,specialty_random_perk_zombies
 material,specialty_fire_sale_zombies
 material,mtl_x2icon_gold
 material,logo_cod2
+material,mtl_p6_zm_al_magic_box_lock
 localize,prototype
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_main.menu
@@ -282,6 +283,7 @@ xmodel,zombie_pickup_minigun
 xmodel,zombie_pickup_perk_bottle
 xmodel,zombie_pickup_perkbottle_viewmodel
 xmodel,viewmodel_knife_bowie
+xmodel,p6_anim_zm_al_magic_box_lock
 xanim,viewmodel_zombie_perksacola_drink
 xanim,viewmodel_zombie_perksacola_empty_idle
 xanim,viewmodel_zombie_perksacola_idle
