@@ -918,7 +918,7 @@ treasure_chest_give_weapon( weapon_string )
 weapon_cabinet_think()
 {
 
-	cost = 1900;
+	cost = 1900;	//costs twice as much as the regular mystery box
 
 	if( IsDefined( level.zombie_weapon_cabinet_cost ) )
 	{
