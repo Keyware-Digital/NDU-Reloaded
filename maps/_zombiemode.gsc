@@ -877,16 +877,38 @@ round_spawning() {
     }
 
     max += int(((GetPlayers().size - 1) * level.zombie_vars["zombie_ai_per_player"]) * multiplier);
+    // Trebor - this should make it so round 1 on solo always spawns 6 zombies, like BO1 onwards
+    if(level.round_number < 3 && level.script == "nazi_zombie_prototype")
+		{
+			if(get_players().size > 1)
+			{
 
-    if (level.first_round) {
-        max = int(max * 0.2);
-    } else if (level.round_number < 3) {
-        max = int(max * 0.4);
-    } else if (level.round_number < 4) {
-        max = int(max * 0.6);
-    } else if (level.round_number < 5) {
-        max = int(max * 0.8);
-    }
+				max = get_players().size * 3 + level.round_number;
+
+			}
+			else
+			{
+
+				max = 6;	
+
+			}
+		}
+		else if ( level.first_round )
+		{
+			max = int( max * 0.2 );	
+		}
+		else if (level.round_number < 3)
+		{
+			max = int( max * 0.4 );
+		}
+		else if (level.round_number < 4)
+		{
+			max = int( max * 0.6 );
+		}
+		else if (level.round_number < 5)
+		{
+			max = int( max * 0.8 );
+		}
 
     level.zombie_total = max;
 
