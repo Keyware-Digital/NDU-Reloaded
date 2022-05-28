@@ -7,7 +7,8 @@ init()
 	init_weapons();
 	init_weapon_upgrade();
 	init_weapon_cabinet();
-	treasure_chest_init();
+	init_treasure_chest();
+	init_mystery_box_vars();
 }
 
 add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost  )
@@ -234,6 +235,11 @@ init_weapon_cabinet()
     array_thread( level.weapon_cabs, ::weapon_cabinet_think ); 
 }
 
+init_mystery_box_vars() {
+	set_zombie_var("zombie_mystery_box_padlock", 0);
+
+}
+
 // returns the trigger hint string for the given weapon
 get_weapon_hint( weapon_name )
 {
@@ -264,7 +270,7 @@ get_is_in_box( weapon_name )
 }
 
 // for the random weapon chest
-treasure_chest_init()
+init_treasure_chest()
 {
 	// the triggers which are targeted at chests
 	level.chests = GetEntArray( "treasure_chest_use", "targetname" ); 
@@ -295,6 +301,12 @@ treasure_chest_think(rand)
 	{
 		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_10");
 	}
+
+	if(isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) && level.zombie_vars["zombie_mystery_box_padlock"])
+	{
+		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_950");
+		IPrintLn("Am I activated?");
+	}	
 
 	// waittill someuses uses this
 	user = undefined;
@@ -432,7 +444,7 @@ treasure_chest_think(rand)
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MINE");
 			break; 
 		case "zombie_bowie_flourish":
-			self SetHintString("Hold ^3&&1 ^7for Bowie Knife");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_BOWIE_KNIFE");
 			break;
 		}
 	
@@ -600,13 +612,38 @@ treasure_chest_ChooseRandomWeapon( player )
         filtered = array_remove(filtered, "mine_bouncing_betty");
     }
 
-	// Trebor - Filter bowie if player has it
+	// Filter bowie if player has it
 	if(isDefined(self.has_altmelee) && self.has_altmelee)
     {
         filtered = array_remove(filtered, "zombie_bowie_flourish");
 	}
  
     return filtered[RandomInt( filtered.size )];
+}
+
+mystery_box_padlock() {
+
+    level.zombie_vars["zombie_mystery_box_padlock"] = 1;
+
+	IPrintLn("padlock activated");
+
+    for(i=0;i<level.chests.size;i++) {
+    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_950" );
+    level.zombie_treasure_chest_cost = 950;
+    wait 0.05;
+    }
+
+    wait(30);
+    level.zombie_vars["zombie_mystery_box_padlock"] = 0;
+
+	IPrintLn("padlock deactivated");
+
+    for(i=0;i<level.chests.size;i++) {
+    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950" );
+    level.zombie_treasure_chest_cost = 950;
+    wait 0.05;
+    }
+
 }
  
 treasure_chest_weapon_spawn( chest, player )
@@ -665,7 +702,7 @@ treasure_chest_weapon_spawn( chest, player )
 
 	//increase the chance of joker appearing from 0-100.
 
-		if(!isDefined(level.zombie_vars["zombie_fire_sale"]) || !level.zombie_vars["zombie_fire_sale"])
+		if(!isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
 		{
 			if(level.chest_accessed)
 			{		
@@ -732,17 +769,15 @@ treasure_chest_weapon_spawn( chest, player )
 
 			if (random <= chance_of_joker) // numan edit
 			{
-				if(!isdefined(level.zombie_vars["zombie_fire_sale"]) || !level.zombie_vars["zombie_fire_sale"])
+				if(!isdefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
 				{
 					model SetModel("p6_anim_zm_al_magic_box_lock");
 
-					self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCK_950");
-					self setCursorHint( "HINT_NOICON" );
+					level thread mystery_box_padlock(self);
 
 					PlaySoundAtPosition("mysterybox_lock", self.origin);
 					PlaySoundAtPosition("la_vox", self.origin);
-				//	model rotateto(level.chests[level.chest_index].angles, 0.01);
-					//wait(1);
+
 					model.angles = self.angles;		
 					wait 1;
 
@@ -1296,7 +1331,7 @@ weapon_spawn_think()
 
 		grenadeMax = WeaponMaxAmmo( "stielhandgranate" );
 
-		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		//Trebor - this should fix the nade wallbuys
+		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)
         {
             continue;
 		}

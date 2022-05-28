@@ -997,11 +997,6 @@ fire_sale_powerup(drop_item) {
 
     level.zombie_vars["zombie_fire_sale"] = 1;
 
-
-    // THIS WON'T WORK, YOU ARE DISABLING THE ABILITY, NOT THE POWERUP DROP, WE DISCUSSED DISABLING THE POWERUP FIRESALE UNTIL YOU GET THE TEDDY/PADLOCK
-    // We can turn firesale after x amount of rounds...wip
-//  if(level.round_number > 5)
-
     for(i=0;i<level.chests.size;i++) {
     level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_10" );
     level.zombie_treasure_chest_cost = 10;
