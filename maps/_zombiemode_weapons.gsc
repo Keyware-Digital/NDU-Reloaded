@@ -184,6 +184,7 @@ init_weapons()
 	// Bowie
 	add_zombie_weapon( "zombie_bowie_flourish",							"", 						10,		"", 5 );
 	
+	// Precache the box padlock
 	PrecacheModel("p6_anim_zm_al_magic_box_lock");
 
 	// ONLY 1 (OR MORE) OF THE BELOW SHOULD BE ALLOWED
