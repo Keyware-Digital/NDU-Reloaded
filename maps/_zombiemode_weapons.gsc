@@ -893,6 +893,11 @@ treasure_chest_give_weapon( weapon_string )
 			current_weapon = undefined;
 		}
 
+		if ( current_weapon == "zombie_bowie_flourish" )
+		{
+			current_weapon = undefined;
+		}
+
 		if( isdefined( current_weapon ) )
 		{
 			if( !( weapon_string == "fraggrenade" || weapon_string == "stielhandgranate" || weapon_string == "molotov" ) )
@@ -924,6 +929,12 @@ treasure_chest_give_weapon( weapon_string )
 	if( weapon_string == "mine_bouncing_betty" )
 	{
 		self maps\_zombiemode_betty::bouncing_betty_setup( self );
+		return;
+	}
+
+	if( weapon_string == "zombie_bowie_flourish" )
+	{
+		self maps\_zombiemode_bowie::bowie_think( self );
 		return;
 	}
 
