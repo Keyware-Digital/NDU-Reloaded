@@ -620,9 +620,9 @@ treasure_chest_ChooseRandomWeapon( player )
     }
 
 	// Filter bowie if player has it
-	if(isDefined(player.has_bowie) && player.has_bowie)
-    {
-        filtered = array_remove(filtered, "zombie_bowie_flourish");
+	if(player HasPerk( "specialty_altmelee" ))
+	{
+    	filtered = array_remove(filtered, "zombie_bowie_flourish");
 	}
  
     return filtered[RandomInt( filtered.size )];
