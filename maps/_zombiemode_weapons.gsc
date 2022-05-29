@@ -607,6 +607,12 @@ treasure_chest_ChooseRandomWeapon( player )
         }
     }
 	
+	// Filter molotov's if player has them.
+    if(isDefined(player.has_molotovs) && player.has_molotovs)
+    {
+        filtered = array_remove(filtered, "molotov");
+    }
+
 	// Filter betty's if player has them.
     if(isDefined(player.has_betties) && player.has_betties)
     {
@@ -614,7 +620,7 @@ treasure_chest_ChooseRandomWeapon( player )
     }
 
 	// Filter bowie if player has it
-	if(isDefined(self.has_altmelee) && self.has_altmelee)
+	if(isDefined(player.has_bowie) && player.has_bowie)
     {
         filtered = array_remove(filtered, "zombie_bowie_flourish");
 	}
@@ -690,6 +696,11 @@ treasure_chest_weapon_spawn( chest, player )
         model setmodel( modelname ); 
     }
  
+	if(rand == "molotov")
+    {
+        player thread weapons_death_check();
+    }
+
     if(rand == "mine_bouncing_betty")
     {
         player thread weapons_death_check();
@@ -836,6 +847,7 @@ weapons_death_check() // numan - reset the betties var on death ( may be used fo
 {
     self waittill_any( "fake_death", "death" );
  
+	self.has_molotovs = undefined;
     self.has_betties = undefined;
 	self.has_altmelee = undefined;
 }

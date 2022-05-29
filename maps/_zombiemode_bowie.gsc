@@ -128,6 +128,12 @@ give_bowie()
 	self thread bowie_bay();
 }
 
+bowie_filter( player )
+{
+	player.has_bowie = player HasPerk( "specialty_altmelee" ); 
+	player.has_bowie = true;
+}
+
 bowie_bay()    //revised for NDU: Reloaded
 {
     for(;;)
