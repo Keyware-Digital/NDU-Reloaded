@@ -186,7 +186,7 @@ init_weapons()
 	
 	// Precache the box padlock
 	PrecacheModel("p6_anim_zm_al_magic_box_lock");
-
+	
 	// ONLY 1 (OR MORE) OF THE BELOW SHOULD BE ALLOWED
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
 }             
@@ -694,10 +694,17 @@ treasure_chest_weapon_spawn( chest, player )
     {
         player thread weapons_death_check();
     }
+
+    if(rand == "zombie_bowie_flourish")
+    {
+        player thread weapons_death_check();
+    }
  
 	self.weapon_string = rand; // here's where the org get it's weapon type for the give function
 
+	// random change of getting the joker that moves the box
 	random = Randomint(100);
+	chance_of_joker = Randomint(100);
 
 	// random change of getting the joker that moves the box
 
@@ -774,7 +781,7 @@ treasure_chest_weapon_spawn( chest, player )
 				{
 					model SetModel("p6_anim_zm_al_magic_box_lock");
 
-					level thread mystery_box_padlock(self);
+					level thread mystery_box_padlock();
 
 					PlaySoundAtPosition("mysterybox_lock", self.origin);
 					PlaySoundAtPosition("la_vox", self.origin);
