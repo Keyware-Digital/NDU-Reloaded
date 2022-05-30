@@ -697,29 +697,25 @@ treasure_chest_ChooseWeightedRandomWeapon( player )
 	}
 }
 
-mystery_box_padlock() {
+mystery_box_padlock_lock() {
 
     level.zombie_vars["zombie_mystery_box_padlock"] = 1;
 
-	IPrintLn("padlock activated");
-
     for(i=0;i<level.chests.size;i++) {
     level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_950" );
-    level.zombie_treasure_chest_cost = 950;
     wait 0.05;
     }
+}
 
-    wait(30);
-    level.zombie_vars["zombie_mystery_box_padlock"] = 0;
-
-	IPrintLn("padlock deactivated");
+mystery_box_padlock_unlock() {
+	level.zombie_vars["zombie_mystery_box_padlock"] = 0;
 
     for(i=0;i<level.chests.size;i++) {
     level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950" );
-    level.zombie_treasure_chest_cost = 950;
     wait 0.05;
     }
 
+	flag_set("padlock_unlocked");
 }
  
 treasure_chest_weapon_spawn( chest, player )
@@ -863,11 +859,18 @@ treasure_chest_weapon_spawn( chest, player )
 
 					level thread mystery_box_padlock();
 
+					for(i=0;i<level.chests.size;i++) {
+    					level.chests[i] enable_trigger();
+    				wait 0.05;
+    				}
+
 					PlaySoundAtPosition("mysterybox_lock", self.origin);
 					PlaySoundAtPosition("la_vox", self.origin);
 
 					model.angles = self.angles;		
 					wait 1;
+
+					flag_wait("padlock_unlocked");
 
 					level.chest_accessed = 0;
 
