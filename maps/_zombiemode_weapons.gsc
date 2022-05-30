@@ -61,12 +61,12 @@ add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost
 	level.zombie_weapons[weapon_name] = struct;
 }
 
-default_weighting_func()
+prototype_weighting_func()
 {
 	return 1;
 }
 
-default_ray_gun_weighting_func()
+prototype_ray_gun_weighting_func()
 {
 	{	
 		num_to_add = 1;
@@ -104,7 +104,7 @@ include_zombie_weapon( weapon_name, in_box, weighting_func )
 
 	if( !isDefined( weighting_func ) )
 	{
-		level.weapon_weighting_funcs[weapon_name] = maps\_zombiemode_weapons::default_weighting_func;
+		level.weapon_weighting_funcs[weapon_name] = maps\_zombiemode_weapons::prototype_weighting_func;
 	}
 	else
 	{
