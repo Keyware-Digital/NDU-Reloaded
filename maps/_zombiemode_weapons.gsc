@@ -342,7 +342,6 @@ treasure_chest_think(rand)
 	if(isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) && level.zombie_vars["zombie_mystery_box_padlock"])
 	{
 		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_950");
-		IPrintLn("Am I activated?");
 	}	
 
 	// waittill someuses uses this
@@ -697,7 +696,7 @@ treasure_chest_ChooseWeightedRandomWeapon( player )
 	}
 }
 
-mystery_box_padlock_lock() {
+mystery_box_padlock() {
 
     level.zombie_vars["zombie_mystery_box_padlock"] = 1;
 
@@ -707,17 +706,6 @@ mystery_box_padlock_lock() {
     }
 }
 
-mystery_box_padlock_unlock() {
-	level.zombie_vars["zombie_mystery_box_padlock"] = 0;
-
-    for(i=0;i<level.chests.size;i++) {
-    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950" );
-    wait 0.05;
-    }
-
-	flag_set("padlock_unlocked");
-}
- 
 treasure_chest_weapon_spawn( chest, player )
 {
     assert(IsDefined(player));
@@ -851,13 +839,43 @@ treasure_chest_weapon_spawn( chest, player )
 			}
 
 
+		/*if( !player_has_weapon )
+		{
+			// else make the weapon show and give it
+			if( player.score >= cost )
+			{
+				if( self.first_time_triggered == false )
+				{
+					model = getent( self.target, "targetname" ); 
+//					model show(); 
+					model thread weapon_show( player ); 
+					self.first_time_triggered = true; 
+					
+					if(!is_grenade)
+					{
+						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
+					}
+				}
+			
+				player maps\_zombiemode_score::minus_to_player_score( cost ); 
+
+				player weapon_give( self.zombie_weapon_upgrade ); 
+			}
+			else
+			{
+				play_sound_on_ent( "no_purchase" );
+			}
+		}*/
+
 			if (random <= chance_of_joker) // numan edit
 			{
 				if(!isdefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
 				{
-					model SetModel("p6_anim_zm_al_magic_box_lock");
 
-					level thread mystery_box_padlock();
+
+					model setmodel( "p6_anim_zm_al_magic_box_lock" );
+
+					self thread mystery_box_padlock();
 
 					for(i=0;i<level.chests.size;i++) {
     					level.chests[i] enable_trigger();
@@ -870,31 +888,29 @@ treasure_chest_weapon_spawn( chest, player )
 					model.angles = self.angles;		
 					wait 1;
 
-					flag_wait("padlock_unlocked");
+					for(i=0;i<level.chests.size;i++) {
+						level.chests[i] waittill( "trigger" , player );
+						if(player.score < level.zombie_weapon_cabinet_cost)
+    					{
+    						self play_sound_on_ent( "no_purchase" );
+    						wait 0.5;
+    						self thread mystery_box_padlock();
+    						return;
+    					}
+    					else
+    					{
+							level.chests[i] disable_trigger();
+							player maps\_zombiemode_score::minus_to_player_score(1500);
+							play_sound_on_ent( "purchase" );
+						}
+    				wait 0.05;
+    				}
+
+					level.zombie_vars["zombie_mystery_box_padlock"] = 0;
+
+					model Delete();
 
 					level.chest_accessed = 0;
-
-					// waittill someuses uses this
-					user = undefined;
-					while( 1 )
-					{
-						self waittill( "trigger", user ); 
-
-						if( user in_revive_trigger() )
-						{
-							wait( 0.1 );
-							continue;
-						}
-		
-						// make sure the user is a player, and that they can afford it
-						if( is_player_valid( user ) && user.score >= level.zombie_treasure_chest_cost )
-						{
-							user maps\_zombiemode_score::minus_to_player_score( level.zombie_treasure_chest_cost ); 
-							break; 
-						}
-		
-					wait 0.05; 
-					}
 
 					// Eneable Fire Sale powerup
 					level.zombie_vars[ "enableFireSale" ] = 1;
