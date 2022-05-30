@@ -117,7 +117,7 @@ give_bowie()
 	plr = "plr_" + index + "_";
 	
 	gun = self do_bowie_flourish_begin();
-	self thread play_bowie_pickup_dialog(plr);
+	//self thread play_bowie_pickup_dialog(plr);
 	self.is_drinking = 1;
 	self waittill_any( "fake_death", "death", "player_downed", "weapon_change_complete" );
 
