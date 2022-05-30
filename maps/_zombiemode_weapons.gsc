@@ -118,13 +118,18 @@ init_weapons()
 	PrecacheItem( "zombie_melee" );
 
 	//NDU: Reloaded
+	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
+	add_zombie_weapon( "mine_bouncing_betty",					&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
 	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
-	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		"vox_raygun",	6 ); 
+	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		/*"vox_raygun",*/	6 ); 
+	//add_zombie_weapon( "tesla_gun",								&"ZOMBIE_BUY_TESLA", 					10,			/*"vox_tesla",*/	5 );
 	add_zombie_weapon( "thompson_bigammo_mp", 					&"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 	1500 );
+	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",              	50,			/*"vox_raygun",*/	6 );
+	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",                50,			"vox_raygun",	6 );
-	
+	add_zombie_weapon( "zombie_perk_bottle",               		&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",			10000 );
+
 	// Pistols
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
 	add_zombie_weapon( "colt_dirty_harry", 						&"ZOMBIE_WEAPON_COLT_DH_100", 				100 );
@@ -213,12 +218,7 @@ init_weapons()
 	// Special                                          	
 	add_zombie_weapon( "mortar_round", 						&"ZOMBIE_WEAPON_MORTARROUND_2000", 			2000 );
 	add_zombie_weapon( "satchel_charge", 					&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000 );
-	add_zombie_weapon( "ray_gun", 							&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,	"vox_raygun",	6 );                                   	
-	add_zombie_weapon( "mine_bouncing_betty",				&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
-	add_zombie_weapon( "zombie_perk_bottle",                &"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",        	10000 );
-	
-	// Bowie
-	add_zombie_weapon( "zombie_bowie_flourish",							"", 						10,		"", 5 );
+	add_zombie_weapon( "ray_gun", 							&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );                                   	
 	
 	// Precache the box padlock
 	PrecacheModel("p6_anim_zm_al_magic_box_lock");
@@ -1682,3 +1682,42 @@ has_weapon_or_upgrade( weaponname )
 
 	return has_weapon;
 }
+
+//fao Danzig, we need to incorporate this into your padlock func for the weighting to work properly
+
+/*{
+	if( isDefined(level.script) && (level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_factory") && level.box_moved == true && isDefined(level.pulls_since_last_ray_gun) )
+			{
+				level.pulls_since_last_ray_gun += 1;
+			}
+			
+			if( isDefined(level.script) && (level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_factory") && isDefined(level.pulls_since_last_tesla_gun) )
+			{				
+				level.pulls_since_last_tesla_gun += 1;
+			}
+}
+
+//turn off power weapon, since player just got one
+		if( rand == "tesla_gun" || rand == "ray_gun" )
+		{
+			// PI_CHANGE_BEGIN - JMA - reset the counters for tesla gun and ray gun pulls
+			if( isDefined( level.script ) && (level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_factory") )
+			{
+				if( rand == "ray_gun" )
+				{
+					level.box_moved = false;
+					level.pulls_since_last_ray_gun = 0;
+				}
+				
+				if( rand == "tesla_gun" )
+				{
+					level.pulls_since_last_tesla_gun = 0;
+					level.player_seen_tesla_gun = true;
+				}			
+			}
+			else
+			{
+				level.box_moved = false;
+			}
+			// PI_CHANGE_END			
+		}*/

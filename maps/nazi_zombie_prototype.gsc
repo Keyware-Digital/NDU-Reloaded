@@ -23,6 +23,11 @@ main() {
     maps\_zombiemode::main();
     maps\_walking_anim::main();
 
+    // used to modify the percentages of pulls of ray gun and tesla gun in magic box
+	level.pulls_since_last_ray_gun = 0;
+	level.pulls_since_last_tesla_gun = 0;
+	level.player_drops_tesla_gun = false;
+
     // If you want to modify/add to the weapons table, please copy over the _zombiemode_weapons init_weapons() and paste it here.
     // I recommend putting it in it's own function...
     // If not a MOD, you may need to provide new localized strings to reflect the proper cost.
@@ -107,17 +112,22 @@ intro_screen() {
 // Include the weapons that are only inr your level so that the cost/hints are accurate
 // Also adds these weapons to the random treasure chest.
 include_weapons() {
+
     // NDU: Reloaded (main box additions)
-    include_weapon("mosin_rifle");
     include_weapon("dp28");
-    include_weapon( "kar98k_bayonet" );
-    include_weapon( "mosin_rifle_bayonet" );
+    include_weapon("kar98k_bayonet");
+    include_weapon("mine_bouncing_betty");
+    include_weapon("mosin_rifle");
+    include_weapon("mosin_rifle_bayonet");
     include_weapon("svt40");
+    //include_weapon( "tesla_gun", /*true,*/ );
     include_weapon("type99_lmg");
     //include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
+    include_weapon("zombie_bowie_flourish");
+    //include_weapon( "zombie_cymbal_monkey", /*true,*/, ::prototype_cymbal_monkey_weighting_func );
     include_weapon("zombie_ppsh");
     include_weapon("zombie_type100_smg");
-
+    
     // Weapon cabinet only additions		
     include_weapon("mosin_rifle_scoped_zombie");
     include_weapon("mp40_bigammo_mp");
@@ -126,15 +136,15 @@ include_weapons() {
     include_weapon("zombie_perk_bottle");
 
     // Pistols
-    include_weapon("colt"); //for Americans
+    include_weapon("colt");     //for Americans
     //include_weapon( "colt_dirty_harry" );
-    include_weapon("walther"); //for German
+    include_weapon("walther");  //for German
     include_weapon("sw_357");
-    include_weapon("tokarev"); //for Russian
+    include_weapon("tokarev");  //for Russian
 
     // Semi Auto
-    include_weapon("m1carbine"); //disabled in weapon limiter below
-    include_weapon("m1garand"); //disabled in weapon limiter below in favour of mlgarand_gl
+    include_weapon("m1carbine");    //disabled in weapon limiter below
+    include_weapon("m1garand");     //disabled in weapon limiter below in favour of mlgarand_gl
     include_weapon("gewehr43");
 
     // Full Auto
@@ -143,7 +153,7 @@ include_weapons() {
     include_weapon("mp40");
 
     // Bolt Action
-    include_weapon("kar98k"); //disabled in weapon limiter below in favour of Mosin.
+    include_weapon("kar98k");   //disabled in weapon limiter below in favour of Mosin.
     include_weapon("springfield");
 
     // Scoped
@@ -180,11 +190,7 @@ include_weapons() {
     include_weapon("panzerschrek");
 
     // Special
-    include_weapon("ray_gun", /*true,*/::prototype_ray_gun_weighting_func); //testing raygun weighting func.
-
-    // bouncing betties & bowie
-    include_weapon("mine_bouncing_betty");
-    include_weapon("zombie_bowie_flourish");
+    include_weapon("ray_gun", /*true,*/::prototype_ray_gun_weighting_func);
 
     // Weapon limiter
     level.limited_weapons["colt"] = 0;

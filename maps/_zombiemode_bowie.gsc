@@ -257,7 +257,8 @@ bowie_show( player )
 	self MoveTo( self.og_origin, time ); 
 }
 
-play_bowie_pickup_dialog(player_index)
+// Disabled because we don't have "vox" in Nacht
+/*play_bowie_pickup_dialog(player_index)
 {
 	waittime = 0.05;
 	if(!IsDefined (self.vox_bowie))
@@ -282,4 +283,4 @@ play_bowie_pickup_dialog(player_index)
 	{
 		self.vox_bowie_available = self.vox_bowie;
 	}
-}
+}*/
