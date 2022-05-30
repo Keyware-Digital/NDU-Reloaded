@@ -180,7 +180,7 @@ include_weapons() {
     include_weapon("panzerschrek");
 
     // Special
-    include_weapon("ray_gun", true, ::prototype_ray_gun_weighting_func); //testing raygun weighting func.
+    include_weapon("ray_gun", /*true,*/::prototype_ray_gun_weighting_func); //testing raygun weighting func.
 
     // bouncing betties & bowie
     include_weapon("mine_bouncing_betty");

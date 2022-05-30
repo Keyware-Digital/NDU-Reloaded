@@ -128,13 +128,13 @@ give_bowie()
 	self thread bowie_bay();
 }
 
-bowie_filter( player )
+bowie_filter( player )	//might not be required
 {
 	player.has_bowie = player HasPerk( "specialty_altmelee" ); 
 	player.has_bowie = true;
 }
 
-bowie_bay()    //revised for NDU: Reloaded
+bowie_bay()    // Trebor - we want the bowie to play nicely with bayonets
 {
     for(;;)
     {

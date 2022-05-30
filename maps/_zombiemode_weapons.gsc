@@ -61,6 +61,33 @@ add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost
 	level.zombie_weapons[weapon_name] = struct;
 }
 
+default_weighting_func()
+{
+	return 1;
+}
+
+default_ray_gun_weighting_func()
+{
+	{	
+		num_to_add = 1;
+		// increase the percentage of ray gun
+		if( isDefined( level.pulls_since_last_ray_gun ) )
+		{
+			// after 12 pulls the ray gun percentage increases to 15%
+			if( level.pulls_since_last_ray_gun > 11 )
+			{
+				num_to_add += int(level.zombie_include_weapons.size*0.15);			
+			}			
+			// after 8 pulls the Ray Gun percentage increases to 10%
+			else if( level.pulls_since_last_ray_gun > 7 )
+			{
+				num_to_add += int(.1 * level.zombie_include_weapons.size);
+            }
+        }
+        return num_to_add;
+    }
+}
+
 include_zombie_weapon( weapon_name, in_box, weighting_func )
 {
 	if( !IsDefined( level.zombie_include_weapons ) )
@@ -74,6 +101,15 @@ include_zombie_weapon( weapon_name, in_box, weighting_func )
 	}
 	
 	level.zombie_include_weapons[weapon_name] = in_box;
+
+	if( !isDefined( weighting_func ) )
+	{
+		level.weapon_weighting_funcs[weapon_name] = maps\_zombiemode_weapons::default_weighting_func;
+	}
+	else
+	{
+		level.weapon_weighting_funcs[weapon_name] = weighting_func;
+	}
 }
 
 init_weapons()
@@ -626,6 +662,39 @@ treasure_chest_ChooseRandomWeapon( player )
 	}
  
     return filtered[RandomInt( filtered.size )];
+}
+
+treasure_chest_ChooseWeightedRandomWeapon( player )
+{
+
+	keys = GetArrayKeys( level.zombie_weapons );
+
+	// Filter out any weapons the player already has
+	filtered = [];
+	for( i = 0; i < keys.size; i++ )
+	{
+		if( !get_is_in_box( keys[i] ) )
+		{
+			continue;
+		}
+		
+		if( player has_weapon_or_upgrade( keys[i] ) )
+		{
+			continue;
+		}
+
+		if( !IsDefined( keys[i] ) )
+		{
+			continue;
+		}
+
+		num_entries = [[ level.weapon_weighting_funcs[keys[i]] ]]();
+		
+		for( j = 0; j < num_entries; j++ )
+		{
+			filtered[filtered.size] = keys[i];
+		}
+	}
 }
 
 mystery_box_padlock() {
