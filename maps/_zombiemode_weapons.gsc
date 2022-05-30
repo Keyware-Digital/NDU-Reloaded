@@ -367,11 +367,11 @@ treasure_chest_think(rand)
 	}
 	
 	// trigger_use->script_brushmodel lid->script_origin in radiant
-	lid = getent( self.target, "targetname" ); 
-	weapon_spawn_org = getent( lid.target, "targetname" ); 
+	level.lid = getent( self.target, "targetname" ); 
+	weapon_spawn_org = getent( level.lid.target, "targetname" ); 
 	
 	//open the lid
-	lid thread treasure_chest_lid_open();
+	level.lid thread treasure_chest_lid_open();
 	
 	// SRS 9/3/2008: added to help other functions know if we timed out on grabbing the item
 	self.timedOut = false;
@@ -505,7 +505,7 @@ treasure_chest_think(rand)
 					if(!user hasperk("specialty_altmelee" || user.has_altmelee))
 					{
 						weapon_spawn_org notify("weapon_grabbed");
-						lid thread treasure_chest_lid_close( self.timedOut );
+						level.lid thread treasure_chest_lid_close( self.timedOut );
 						self.grab_weapon_hint = false;
 						self disable_trigger();
 						user maps\_zombiemode_bowie::give_bowie();
@@ -534,7 +534,7 @@ treasure_chest_think(rand)
 	{
 		self.grab_weapon_hint = false;
 		weapon_spawn_org notify( "weapon_grabbed" );
-		lid thread treasure_chest_lid_close( self.timedOut );
+		level.lid thread treasure_chest_lid_close( self.timedOut );
 		self disable_trigger();
 		wait 3;
 	}
@@ -859,9 +859,11 @@ treasure_chest_weapon_spawn( chest, player )
 					model.angles = self.angles;		
 					wait 1;
 
+					cost = 1500;
+
 					for(i=0;i<level.chests.size;i++) {
 						level.chests[i] waittill( "trigger" , player );
-						if(player.score < level.zombie_weapon_cabinet_cost)
+						if(player.score < cost)
     					{
     						self play_sound_on_ent( "no_purchase" );
     						wait 0.5;
@@ -871,8 +873,9 @@ treasure_chest_weapon_spawn( chest, player )
     					else
     					{
 							level.chests[i] disable_trigger();
-							player maps\_zombiemode_score::minus_to_player_score(1500);
+							player maps\_zombiemode_score::minus_to_player_score(cost);
 							play_sound_on_ent( "purchase" );
+							level.lid thread treasure_chest_lid_close();
 							model Delete();
 							level.zombie_vars["zombie_mystery_box_padlock"] = 0;
 							level.chest_accessed = 0;
