@@ -768,7 +768,7 @@ treasure_chest_weapon_spawn( chest, player )
 
 	// random change of getting the joker that moves the box
 	random = Randomint(100);
-	chance_of_joker = Randomint(100);
+	chance_of_padlock = Randomint(100);
 
 	// random change of getting the joker that moves the box
 
@@ -778,19 +778,19 @@ treasure_chest_weapon_spawn( chest, player )
 		{
 			if(level.chest_accessed)
 			{		
-				// PI_CHANGE_BEGIN - JMA - RandomInt(100) can return a number between 0-99.  If it's zero and chance_of_joker is zero
+				// PI_CHANGE_BEGIN - JMA - RandomInt(100) can return a number between 0-99.  If it's zero and chance_of_padlock is zero
 				//									we can possibly have a padlock one after another.
-				chance_of_joker = -1;
+				chance_of_padlock = -1;
 				// PI_CHANGE_END
 			}
 			else
 			{
-				chance_of_joker = level.chest_accessed + 20;
+				chance_of_padlock = level.chest_accessed + 20;
 				
 				// make sure padlock appears on the 8th pull if it hasn't moved from the initial spot
 				if(level.chest_accessed >= 8)
 				{
-					chance_of_joker = 100;
+					chance_of_padlock = 100;
 				}
 				
 				// pulls 4 thru 8, there is a 15% chance of getting the padlock
@@ -799,11 +799,11 @@ treasure_chest_weapon_spawn( chest, player )
 				{
 					if( random < 15 )
 					{
-						chance_of_joker = 100;
+						chance_of_padlock = 100;
 					}
 					else
 					{
-						chance_of_joker = -1;
+						chance_of_padlock = -1;
 					}
 				}
 				
@@ -815,11 +815,11 @@ treasure_chest_weapon_spawn( chest, player )
 					{
 						if( random < 30 )
 						{
-							chance_of_joker = 100;
+							chance_of_padlock = 100;
 						}
 						else
 						{
-							chance_of_joker = -1;
+							chance_of_padlock = -1;
 						}
 					}
 					
@@ -828,46 +828,17 @@ treasure_chest_weapon_spawn( chest, player )
 					{
 						if( random < 50 )
 						{
-							chance_of_joker = 100;
+							chance_of_padlock = 100;
 						}
 						else
 						{
-							chance_of_joker = -1;
+							chance_of_padlock = -1;
 						}
 					}
 				}
 			}
 
-
-		/*if( !player_has_weapon )
-		{
-			// else make the weapon show and give it
-			if( player.score >= cost )
-			{
-				if( self.first_time_triggered == false )
-				{
-					model = getent( self.target, "targetname" ); 
-//					model show(); 
-					model thread weapon_show( player ); 
-					self.first_time_triggered = true; 
-					
-					if(!is_grenade)
-					{
-						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
-					}
-				}
-			
-				player maps\_zombiemode_score::minus_to_player_score( cost ); 
-
-				player weapon_give( self.zombie_weapon_upgrade ); 
-			}
-			else
-			{
-				play_sound_on_ent( "no_purchase" );
-			}
-		}*/
-
-			if (random <= chance_of_joker) // numan edit
+			if (random <= chance_of_padlock) // numan edit
 			{
 				if(!isdefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
 				{
@@ -902,18 +873,14 @@ treasure_chest_weapon_spawn( chest, player )
 							level.chests[i] disable_trigger();
 							player maps\_zombiemode_score::minus_to_player_score(1500);
 							play_sound_on_ent( "purchase" );
+							model Delete();
+							level.zombie_vars["zombie_mystery_box_padlock"] = 0;
+							level.chest_accessed = 0;
+							level.zombie_vars[ "enableFireSale" ] = 1;
+							return;
 						}
     				wait 0.05;
     				}
-
-					level.zombie_vars["zombie_mystery_box_padlock"] = 0;
-
-					model Delete();
-
-					level.chest_accessed = 0;
-
-					// Eneable Fire Sale powerup
-					level.zombie_vars[ "enableFireSale" ] = 1;
 				}
 			}
 		}
@@ -1701,42 +1668,3 @@ has_weapon_or_upgrade( weaponname )
 
 	return has_weapon;
 }
-
-//fao Danzig, we need to incorporate this into your padlock func for the weighting to work properly
-
-/*{
-	if( isDefined(level.script) && (level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_factory") && level.box_moved == true && isDefined(level.pulls_since_last_ray_gun) )
-			{
-				level.pulls_since_last_ray_gun += 1;
-			}
-			
-			if( isDefined(level.script) && (level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_factory") && isDefined(level.pulls_since_last_tesla_gun) )
-			{				
-				level.pulls_since_last_tesla_gun += 1;
-			}
-}
-
-//turn off power weapon, since player just got one
-		if( rand == "tesla_gun" || rand == "ray_gun" )
-		{
-			// PI_CHANGE_BEGIN - JMA - reset the counters for tesla gun and ray gun pulls
-			if( isDefined( level.script ) && (level.script == "nazi_zombie_sumpf" || level.script == "nazi_zombie_factory") )
-			{
-				if( rand == "ray_gun" )
-				{
-					level.box_moved = false;
-					level.pulls_since_last_ray_gun = 0;
-				}
-				
-				if( rand == "tesla_gun" )
-				{
-					level.pulls_since_last_tesla_gun = 0;
-					level.player_seen_tesla_gun = true;
-				}			
-			}
-			else
-			{
-				level.box_moved = false;
-			}
-			// PI_CHANGE_END			
-		}*/
