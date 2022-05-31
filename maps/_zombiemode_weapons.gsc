@@ -341,7 +341,7 @@ treasure_chest_think(rand)
 
 	if(isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) && level.zombie_vars["zombie_mystery_box_padlock"])
 	{
-		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_950");
+		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1500");
 	}	
 
 	// waittill someuses uses this
@@ -707,7 +707,7 @@ mystery_box_padlock() {
     level.zombie_vars["zombie_mystery_box_padlock"] = 1;
 
     for(i=0;i<level.chests.size;i++) {
-    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_950" );
+    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1500" );
     wait 0.05;
     }
 }
