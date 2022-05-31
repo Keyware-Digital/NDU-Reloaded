@@ -134,7 +134,7 @@ init_weapons()
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
 	add_zombie_weapon( "colt_dirty_harry", 						&"ZOMBIE_WEAPON_COLT_DH_100", 				100 );
 	add_zombie_weapon( "nambu", 								&"ZOMBIE_WEAPON_NAMBU_50", 					50 );
-	add_zombie_weapon( "sw_357", 								&"ZOMBIE_WEAPON_SW357_100", 				100 );
+	/*add_zombie_weapon( "sw_357", 								&"ZOMBIE_WEAPON_SW357_100", 				100 );
 	add_zombie_weapon( "tokarev", 								&"ZOMBIE_WEAPON_TOKAREV_50", 				50 );
 	add_zombie_weapon( "walther", 								&"ZOMBIE_WEAPON_WALTHER_50", 				50 );
 	add_zombie_weapon( "zombie_colt", 							&"ZOMBIE_WEAPON_ZOMBIECOLT_25", 			25 );
@@ -185,40 +185,40 @@ init_weapons()
 	// Shotguns                                         	
 	add_zombie_weapon( "doublebarrel", 						&"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_1200", 			1200 );
 	add_zombie_weapon( "doublebarrel_sawed_grip", 			&"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_SAWED_1200", 	1200 );
-	add_zombie_weapon( "shotgun", 							&"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_1500", 				1500 );
+	add_zombie_weapon( "shotgun", 							&"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_1500", 				1500 );*/
                                                         	
 	// Heavy Machineguns                                	
-	add_zombie_weapon( "30cal", 							&"ZOMBIE_WEAPON_30CAL_3000", 				3000 );
-	add_zombie_weapon( "bar", 								&"PROTOTYPE_ZOMBIE_WEAPON_BAR_1800", 		1800 );
-	add_zombie_weapon( "dp28", 								&"ZOMBIE_WEAPON_DP28_2250", 				2250 );
-	add_zombie_weapon( "fg42", 								&"ZOMBIE_WEAPON_FG42_1200", 				1500 );
-	add_zombie_weapon( "fg42_scoped", 						&"ZOMBIE_WEAPON_FG42_S_1200", 				1500 );
-	add_zombie_weapon( "mg42", 								&"ZOMBIE_WEAPON_MG42_1200", 				3000 );
-	add_zombie_weapon( "type99_lmg", 						&"ZOMBIE_WEAPON_TYPE99_LMG_1750", 			1750 );
+	//add_zombie_weapon( "30cal", 							&"ZOMBIE_WEAPON_30CAL_3000", 				3000 );
+	//add_zombie_weapon( "bar", 								&"PROTOTYPE_ZOMBIE_WEAPON_BAR_1800", 		1800 );
+	//add_zombie_weapon( "dp28", 								&"ZOMBIE_WEAPON_DP28_2250", 				2250 );
+	//add_zombie_weapon( "fg42", 								&"ZOMBIE_WEAPON_FG42_1200", 				1500 );
+	//add_zombie_weapon( "fg42_scoped", 						&"ZOMBIE_WEAPON_FG42_S_1200", 				1500 );
+	//add_zombie_weapon( "mg42", 								&"ZOMBIE_WEAPON_MG42_1200", 				3000 );
+	//add_zombie_weapon( "type99_lmg", 						&"ZOMBIE_WEAPON_TYPE99_LMG_1750", 			1750 );
                                                         	
 	// Grenade Launcher                                 	
-	add_zombie_weapon( "m1garand_gl", 						&"ZOMBIE_WEAPON_M1GARAND_GL_1200", 			1200 );
-	add_zombie_weapon( "mosin_launcher", 					&"ZOMBIE_WEAPON_MOSIN_GL_1200", 			1200 );
+	//add_zombie_weapon( "m1garand_gl", 						&"ZOMBIE_WEAPON_M1GARAND_GL_1200", 			1200 );
+	//add_zombie_weapon( "mosin_launcher", 					&"ZOMBIE_WEAPON_MOSIN_GL_1200", 			1200 );
 	                                        				
 	// Bipods                               				
-	add_zombie_weapon( "30cal_bipod", 						&"ZOMBIE_WEAPON_30CAL_BIPOD_3500", 			3500 );
-	add_zombie_weapon( "bar_bipod", 						&"ZOMBIE_WEAPON_BAR_BIPOD_2500", 			2500 );
-	add_zombie_weapon( "dp28_bipod", 						&"ZOMBIE_WEAPON_DP28_BIPOD_2500", 			2500 );
-	add_zombie_weapon( "fg42_bipod", 						&"ZOMBIE_WEAPON_FG42_BIPOD_2000", 			2000 );
-	add_zombie_weapon( "mg42_bipod", 						&"ZOMBIE_WEAPON_MG42_BIPOD_3250", 			3250 );
-	add_zombie_weapon( "type99_lmg_bipod", 					&"ZOMBIE_WEAPON_TYPE99_LMG_BIPOD_2250", 	2250 );
+	//add_zombie_weapon( "30cal_bipod", 						&"ZOMBIE_WEAPON_30CAL_BIPOD_3500", 			3500 );
+	//add_zombie_weapon( "bar_bipod", 						&"ZOMBIE_WEAPON_BAR_BIPOD_2500", 			2500 );
+	//add_zombie_weapon( "dp28_bipod", 						&"ZOMBIE_WEAPON_DP28_BIPOD_2500", 			2500 );
+	//add_zombie_weapon( "fg42_bipod", 						&"ZOMBIE_WEAPON_FG42_BIPOD_2000", 			2000 );
+	//add_zombie_weapon( "mg42_bipod", 						&"ZOMBIE_WEAPON_MG42_BIPOD_3250", 			3250 );
+	//add_zombie_weapon( "type99_lmg_bipod", 					&"ZOMBIE_WEAPON_TYPE99_LMG_BIPOD_2250", 	2250 );
 	
 	// Rocket Launchers
-	add_zombie_weapon( "bazooka", 							&"ZOMBIE_WEAPON_BAZOOKA_2000", 				2000 );
-	add_zombie_weapon( "panzerschrek", 						&"ZOMBIE_WEAPON_PANZERSCHREK_2000", 		2000 );
+	//add_zombie_weapon( "bazooka", 							&"ZOMBIE_WEAPON_BAZOOKA_2000", 				2000 );
+	//add_zombie_weapon( "panzerschrek", 						&"ZOMBIE_WEAPON_PANZERSCHREK_2000", 		2000 );
 	                                                    	
 	// Flamethrower                                     	
-	add_zombie_weapon( "m2_flamethrower_zombie", 			&"ZOMBIE_WEAPON_M2_FLAMETHROWER_3000", 		3000 );	
+	//add_zombie_weapon( "m2_flamethrower_zombie", 			&"ZOMBIE_WEAPON_M2_FLAMETHROWER_3000", 		3000 );	
                                                         	
 	// Special                                          	
-	add_zombie_weapon( "mortar_round", 						&"ZOMBIE_WEAPON_MORTARROUND_2000", 			2000 );
-	add_zombie_weapon( "satchel_charge", 					&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000 );
-	add_zombie_weapon( "ray_gun", 							&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );                                   	
+	//add_zombie_weapon( "mortar_round", 						&"ZOMBIE_WEAPON_MORTARROUND_2000", 			2000 );
+	//add_zombie_weapon( "satchel_charge", 					&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000 );
+	//add_zombie_weapon( "ray_gun", 							&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );                                   	
 	
 	// Precache the box padlock
 	PrecacheModel("p6_anim_zm_al_magic_box_lock");
@@ -538,6 +538,12 @@ treasure_chest_think(rand)
 		self disable_trigger();
 		wait 3;
 	}
+
+	if(!isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
+	{
+		level.chest_accessed += 1;
+	}
+
 	self enable_trigger(); 	
 	self thread treasure_chest_think(); 
 }
@@ -766,28 +772,29 @@ treasure_chest_weapon_spawn( chest, player )
  
 	self.weapon_string = rand; // here's where the org get it's weapon type for the give function
 
-	// random change of getting the joker that moves the box
+	// random change of getting the padlock that moves the box
 	random = Randomint(100);
 	chance_of_padlock = Randomint(100);
 
-	// random change of getting the joker that moves the box
+	// random change of getting the padlock that moves the box
 
-	//increase the chance of joker appearing from 0-100.
+	//increase the chance of padlock appearing from 0-100.
 
 		if(!isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
 		{
-			if(level.chest_accessed)
-			{		
-				// PI_CHANGE_BEGIN - JMA - RandomInt(100) can return a number between 0-99.  If it's zero and chance_of_padlock is zero
-				//									we can possibly have a padlock one after another.
-				chance_of_padlock = -1;
-				// PI_CHANGE_END
-			}
-			else
-			{
+
 				chance_of_padlock = level.chest_accessed + 20;
 				
-				// make sure padlock appears on the 8th pull if it hasn't moved from the initial spot
+				// make sure padlock doesn't appear on pulls 1 to 3
+
+				if(level.chest_accessed <= 3)
+				{
+					chance_of_padlock = 0;
+				}
+				
+
+				// make sure padlock appears on the 8th pull
+
 				if(level.chest_accessed >= 8)
 				{
 					chance_of_padlock = 100;
@@ -807,7 +814,7 @@ treasure_chest_weapon_spawn( chest, player )
 					}
 				}
 				
-				// after the first magic box move the padlock percentages changes
+				// after the first mystery box move the padlock percentages changes
 				if(level.zombie_vars[ "enableFireSale" ] == 1)
 				{
 					// between pulls 8 thru 12, the padlock percent is 30%
@@ -836,9 +843,9 @@ treasure_chest_weapon_spawn( chest, player )
 						}
 					}
 				}
-			}
+			
 
-			if (random <= chance_of_padlock) // numan edit
+			if (random <= chance_of_padlock)
 			{
 				if(!isdefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
 				{
