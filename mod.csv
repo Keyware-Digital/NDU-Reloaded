@@ -28,6 +28,8 @@ material,specialty_fire_sale_zombies
 material,mtl_x2icon_gold
 material,logo_cod2
 material,mtl_p6_zm_al_magic_box_lock
+material,mtl_zombie_perk_bottle_random_view
+material,mtl_zombie_perk_bottle_random_world
 localize,prototype
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_main.menu
@@ -60,10 +62,12 @@ rawfile,mp/playeranim.script
 rawfile,mp/playeranimtypes.txt
 rawfile,animtrees/generic_human.atr
 rawfile,animtrees/animations.atr
-rawfile,xmodelparts/zombie_pickup_perk_cabinet1
 rawfile,xmodelparts/zombie_z_money_icon_LOD01
-rawfile,xmodelsurfs/zombie_pickup_perk_cabinet1
 rawfile,xmodelsurfs/zombie_z_money_icon_lod01
+rawfile,xmodelparts/zombie_perk_bottle_random_view_LOD01
+rawfile,xmodelparts/zombie_perk_bottle_random_world_LOD01
+rawfile,xmodelsurfs/zombie_perk_bottle_random_view_lod01
+rawfile,xmodelsurfs/zombie_perk_bottle_random_world_lod01
 sound,mod_ndu,,all_sp
 sound,mod_ndu_powerup,,all_sp
 sound,mod_ndu_menu_music,,all_sp
@@ -281,10 +285,10 @@ xmodel,zombie_x2_icon
 xmodel,zombie_z_money_icon
 xmodel,zombie_fire_sale
 xmodel,zombie_pickup_minigun
-xmodel,zombie_pickup_perk_bottle
-xmodel,zombie_pickup_perkbottle_viewmodel
 xmodel,viewmodel_knife_bowie
 xmodel,p6_anim_zm_al_magic_box_lock
+xmodel,zombie_perk_bottle_random_world
+xmodel,zombie_perk_bottle_random_view
 xanim,viewmodel_zombie_perksacola_drink
 xanim,viewmodel_zombie_perksacola_empty_idle
 xanim,viewmodel_zombie_perksacola_idle
