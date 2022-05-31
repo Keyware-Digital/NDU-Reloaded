@@ -880,6 +880,8 @@ treasure_chest_weapon_spawn( chest, player )
 							level.zombie_vars["zombie_mystery_box_padlock"] = 0;
 							level.chest_accessed = 0;
 							level.zombie_vars[ "enableFireSale" ] = 1;
+							level.chests[i] enable_trigger(); 	
+							level.chests[i] thread treasure_chest_think(); 
 							return;
 						}
     				wait 0.05;
