@@ -274,6 +274,7 @@ init_weapon_cabinet()
 
 init_mystery_box_vars() {
 	set_zombie_var("zombie_mystery_box_padlock", 0);
+	set_zombie_var("zombie_mystery_box_padlock_cost", 1500);
 
 }
 
@@ -849,16 +850,9 @@ treasure_chest_weapon_spawn( chest, player )
 			{
 				if(!isdefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
 				{
-
-
 					model setmodel( "p6_anim_zm_al_magic_box_lock" );
 
-					self thread mystery_box_padlock();
-
-					for(i=0;i<level.chests.size;i++) {
-    					level.chests[i] enable_trigger();
-    				wait 0.05;
-    				}
+					self mystery_box_padlock();
 
 					PlaySoundAtPosition("mysterybox_lock", self.origin);
 					PlaySoundAtPosition("la_vox", self.origin);
@@ -866,16 +860,15 @@ treasure_chest_weapon_spawn( chest, player )
 					model.angles = self.angles;		
 					wait 1;
 
-					cost = 1500;
+					cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
 
 					for(i=0;i<level.chests.size;i++) {
+						level.chests[i] enable_trigger();
 						level.chests[i] waittill( "trigger" , player );
 						if(player.score < cost)
     					{
     						self play_sound_on_ent( "no_purchase" );
     						wait 0.5;
-    						self thread mystery_box_padlock();
-    						return;
     					}
     					else
     					{
@@ -890,7 +883,7 @@ treasure_chest_weapon_spawn( chest, player )
 							level.chests[i] enable_trigger(); 	
 							level.chests[i] thread treasure_chest_think(); 
 							return;
-						}
+						}				
     				wait 0.05;
     				}
 				}
@@ -1216,7 +1209,7 @@ weapon_cabinet_think()
 	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
-		if(magicnum <= 100)	//10 out of 100 chance to get a perk
+		if(magicnum <= 10)	//10 out of 100 chance to get a perk
 		{
 			weaponmodelstruct SetModel(GetWeaponModel( "zombie_perk_bottle" ));
 			chosenweapon = "zombie_perk_bottle";
