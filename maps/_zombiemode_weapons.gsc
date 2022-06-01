@@ -718,12 +718,12 @@ treasure_chest_weapon_spawn( chest, player )
     assert(IsDefined(player));
     // spawn the model
     model = spawn( "script_model", self.origin ); 
-    model.angles = self.angles +( 0, 90, 0 );
+    model.angles = self.angles + ( 0, 90, 0 );
  
     floatHeight = 40;
  
     //move it up
-    model moveto( model.origin +( 0, 0, floatHeight ), 3, 2, 0.9 ); 
+    model moveto( model.origin + ( 0, 0, floatHeight ), 3, 2, 0.9 ); 
  
     // rotation would go here
  
@@ -857,7 +857,6 @@ treasure_chest_weapon_spawn( chest, player )
 					PlaySoundAtPosition("mysterybox_lock", self.origin);
 					PlaySoundAtPosition("la_vox", self.origin);
 
-					model.angles = self.angles;		
 					wait 1;
 
 					cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
@@ -1211,6 +1210,11 @@ weapon_cabinet_think()
 		magicnum = RandomInt(100);
 		if(magicnum <= 100)	//10 out of 100 chance to get a perk
 		{
+			// Hide the model so we can reset the angle and show the perk bottle at the correct angle
+			weaponmodelstruct Hide();
+			weaponmodelstruct.angles = self.angles + ( 0, 90, 0 );
+			wait 0.05;
+			weaponmodelstruct Show();
 			weaponmodelstruct SetModel(GetWeaponModel( "zombie_perk_bottle" ));
 			chosenweapon = "zombie_perk_bottle";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000");

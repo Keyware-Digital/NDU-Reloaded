@@ -81,17 +81,17 @@ init_precache() {
 init_powerups() {
 
     // Random Drops
-    add_zombie_powerup("double_points", "zombie_power_up_double_points", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
-    add_zombie_powerup("insta_kill", "zombie_power_up_insta_kill", &"ZOMBIE_POWERUP_INSTA_KILL");
-    add_zombie_powerup("max_ammo", "zombie_power_up_max_ammo", &"ZOMBIE_POWERUP_MAX_AMMO");
-    add_zombie_powerup("carpenter", "zombie_power_up_carpenter", &"ZOMBIE_POWERUP_CARPENTER");
-    add_zombie_powerup("death_machine", "zombie_power_up_death_machine", &"ZOMBIE_POWERUP_DEATH_MACHINE");
-	add_zombie_powerup("nuke", "zombie_power_up_nuke", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
+    //add_zombie_powerup("double_points", "zombie_power_up_double_points", &"ZOMBIE_POWERUP_DOUBLE_POINTS");
+    //add_zombie_powerup("insta_kill", "zombie_power_up_insta_kill", &"ZOMBIE_POWERUP_INSTA_KILL");
+    //add_zombie_powerup("max_ammo", "zombie_power_up_max_ammo", &"ZOMBIE_POWERUP_MAX_AMMO");
+    //add_zombie_powerup("carpenter", "zombie_power_up_carpenter", &"ZOMBIE_POWERUP_CARPENTER");
+    //add_zombie_powerup("death_machine", "zombie_power_up_death_machine", &"ZOMBIE_POWERUP_DEATH_MACHINE");
+	//add_zombie_powerup("nuke", "zombie_power_up_nuke", &"ZOMBIE_POWERUP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
     if(level.zombie_vars[ "enableRandomPerk" ] == 1)
 	{
 		add_zombie_powerup("random_perk", "zombie_power_up_random_perk_bottle_world", &"ZOMBIE_POWERUP_RANDOM_PERK");
 	}
-    add_zombie_powerup("bonus_points", "zombie_power_up_bonus_points", &"ZOMBIE_POWERUP_BONUS_POINTS");
+    //add_zombie_powerup("bonus_points", "zombie_power_up_bonus_points", &"ZOMBIE_POWERUP_BONUS_POINTS");
     if(level.zombie_vars[ "enableFireSale" ] == 1)
 	{
         add_zombie_powerup("fire_sale", "zombie_power_up_fire_sale", &"ZOMBIE_POWERUP_FIRE_SALE");
