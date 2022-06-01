@@ -13,13 +13,13 @@ init() {
 
 init_precache() {
     PrecacheShader("specialty_juggernaut_zombies");
-    PrecacheShader("specialty_fast_reload_zombies");
+    PrecacheShader("specialty_speed_cola_zombies");
     PrecacheShader("specialty_double_tap_zombies");
     PrecacheShader("specialty_quick_revive_zombies");
     PrecacheShader("specialty_phd_zombies");
-    PrecacheShader("specialty_aim_zombies");
-    PrecacheShader("specialty_fireworks_zombies");
-    PrecacheShader("specialty_longer_sprint_zombies");
+    PrecacheShader("specialty_deadshot_daiquiri_zombies");
+    PrecacheShader("specialty_elemental_pop_zombies");
+    PrecacheShader("specialty_stamin_up_zombies");
     PrecacheShader("specialty_electric_cherry_zombies");
     PrecacheShader("specialty_mule_kick_zombies");
     PrecacheShader("specialty_widows_wine_zombies");
@@ -157,7 +157,7 @@ perk_hud_create(perk) {
         break;
 
     case "specialty_fastreload":
-        shader = "specialty_fast_reload_zombies";
+        shader = "specialty_speed_cola_zombies";
         break;
 
     case "specialty_rof":
@@ -169,15 +169,15 @@ perk_hud_create(perk) {
         break;
 
     case "specialty_longersprint":
-        shader = "specialty_longer_sprint_zombies";
+        shader = "specialty_stamin_up_zombies";
         break;
 
     case "specialty_bulletaccuracy":
-        shader = "specialty_aim_zombies";
+        shader = "specialty_deadshot_daiquiri_zombies";
         break;
 
     case "specialty_explosivedamage":
-        shader = "specialty_fireworks_zombies";
+        shader = "specialty_elemental_pop_zombies";
         break;
 
     case "specialty_electriccherry":
