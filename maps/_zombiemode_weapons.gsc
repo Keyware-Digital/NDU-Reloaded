@@ -850,6 +850,11 @@ treasure_chest_weapon_spawn( chest, player )
 			{
 				if(!isdefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
 				{
+					// Hide the mystery box model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
+					model Hide();
+					model.angles = self.angles + ( 0, 90, 0 );
+					wait 0.05;
+					model Show();
 					model setmodel( "p6_anim_zm_al_magic_box_lock" );
 
 					self mystery_box_padlock();
@@ -1208,9 +1213,9 @@ weapon_cabinet_think()
 	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
-		if(magicnum <= 100)	//10 out of 100 chance to get a perk
+		if(magicnum <= 10)	//10 out of 100 chance to get a perk
 		{
-			// Hide the model so we can reset the angle and show the perk bottle at the correct angle
+			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
 			weaponmodelstruct.angles = self.angles + ( 0, 90, 0 );
 			wait 0.05;
