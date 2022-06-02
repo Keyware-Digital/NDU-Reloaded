@@ -285,11 +285,9 @@ xmodel,zombie_power_up_fire_sale
 xmodel,zombie_power_up_insta_kill
 xmodel,zombie_power_up_max_ammo
 xmodel,zombie_power_up_nuke
-xanim,viewmodel_zombie_perksacola_drink
-xanim,viewmodel_zombie_perksacola_empty_idle
-xanim,viewmodel_zombie_perksacola_idle
-xanim,viewmodel_zombie_perksacola_lower
-xanim,viewmodel_zombie_perksacola_raise
+xanim,zombie_perksacola_drink_viewmodel
+xanim,zombie_perksacola_idle_viewmodel
+xanim,zombie_perksacola_lower_viewmodel
 weapon,sp/dp28
 weapon,sp/kar98k_bayonet
 weapon,sp/mine_bouncing_betty
@@ -305,6 +303,6 @@ weapon,sp/springfield_scoped_zombie_upgraded
 weapon,sp/mosin_rifle
 weapon,sp/zombie_bowie_flourish
 weapon,sp/zombie_ppsh
-weapon,sp/zombie_perk_bottle
+weapon,sp/zombie_random_perk_bottle
 weapon,sp/zombie_type100_smg
 weapon,sp/thompson_bigammo_mp

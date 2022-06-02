@@ -128,7 +128,7 @@ init_weapons()
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-	add_zombie_weapon( "zombie_perk_bottle",               		&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",			10000 );
+	add_zombie_weapon( "zombie_random_perk_bottle",               		&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",			10000 );
 
 	// Pistols
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
@@ -1213,15 +1213,15 @@ weapon_cabinet_think()
 	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
-		if(magicnum <= 10)	//10 out of 100 chance to get a perk
+		if(magicnum <= 100)	//10 out of 100 chance to get a perk
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
 			weaponmodelstruct.angles = self.angles + ( 0, 90, 0 );
 			wait 0.05;
 			weaponmodelstruct Show();
-			weaponmodelstruct SetModel(GetWeaponModel( "zombie_perk_bottle" ));
-			chosenweapon = "zombie_perk_bottle";
+			weaponmodelstruct SetModel(GetWeaponModel( "zombie_random_perk_bottle" ));
+			chosenweapon = "zombie_random_perk_bottle";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000");
 		}
 	}
@@ -1329,7 +1329,7 @@ takenweapon(chosenweapon)
 	self play_sound_on_ent( "purchase" ); 
 	self notify("weapontaken");
 
-	if(chosenweapon == "zombie_perk_bottle")
+	if(chosenweapon == "zombie_random_perk_bottle")
 	{
 		//thread play_raygun_stinger();		//We don't want the stinger sound for a perk bottle.
 		current_weapon = player GetCurrentWeapon();
