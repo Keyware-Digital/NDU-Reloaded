@@ -412,7 +412,7 @@ solo_quickrevive() // numan solo revive function
     // gather some info
 
     self.inSoloRevive = true;
-    self.downedpistol = level.player_specific_add_weapon[maps\_zombiemode_weapons::get_player_index(self)];
+    self.defaultPistol = level.player_specific_add_weapon[maps\_zombiemode_weapons::get_player_index(self)];
     self.currentweapon = self GetCurrentWeapon();
     self.currentstance = self GetStance();
     clipammo = undefined;
@@ -449,6 +449,8 @@ solo_quickrevive() // numan solo revive function
 
     // if player has better downed gun, give it and check for ammo, then return it later
 
+    iPrintLn(self.defaultPistol);
+
     self DisableWeaponCycling();
 
     if (self HasWeapon("ray_gun")) {
@@ -459,11 +461,11 @@ solo_quickrevive() // numan solo revive function
         lstandammo = 18;
         lstandclip = 6;
         lstandgun = "sw_357";
-    } else if (self HasWeapon("walther")) {
+    } else if (self HasWeapon("walther") || self.defaultPistol == "walther") {
         lstandammo = 24;
         lstandclip = 8;
         lstandgun = "walther";
-    } else if (self HasWeapon("tokarev")) {
+    } else if (self HasWeapon("tokarev") || self.defaultPistol == "tokarev") {
         lstandammo = 24;
         lstandclip = 8;
         lstandgun = "tokarev";
