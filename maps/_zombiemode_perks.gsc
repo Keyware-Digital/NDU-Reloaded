@@ -448,6 +448,8 @@ solo_quickrevive() // numan solo revive function
     self VisionSetNaked("laststand", 1);
 
     // if player has better downed gun, give it and check for ammo, then return it later
+    // debug
+    // iPrintLn(self.downedpistol);
 
     self DisableWeaponCycling();
 
@@ -459,11 +461,11 @@ solo_quickrevive() // numan solo revive function
         lstandammo = 18;
         lstandclip = 6;
         lstandgun = "sw_357";
-    } else if (self HasWeapon("walther")) {
+    } else if (self HasWeapon("walther") || self.downedpistol == "walther") {
         lstandammo = 24;
         lstandclip = 8;
         lstandgun = "walther";
-    } else if (self HasWeapon("tokarev")) {
+    } else if (self HasWeapon("tokarev") || self.downedpistol == "tokarev") {
         lstandammo = 24;
         lstandclip = 8;
         lstandgun = "tokarev";
