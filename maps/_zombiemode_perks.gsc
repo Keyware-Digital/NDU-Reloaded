@@ -391,22 +391,6 @@ perks_zombie_hit_effect_check_health(health, attacker)
 	self.health = health;
 }
 
-perks_quick_revive_think(iDamage) {
-
-    players = GetPlayers();
-
-    if (isdefined(self.inSoloRevive)) {
-        return;
-    }    
-
-    if (self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1) {
-        self notify("second_chance");
-        self thread solo_quickrevive(); // custom solo revive function below
-        return;
-    }
-
-}
-
 solo_quickrevive() // numan solo revive function
 {
     // gather some info
