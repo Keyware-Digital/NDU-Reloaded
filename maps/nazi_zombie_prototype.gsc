@@ -133,7 +133,7 @@ include_weapons() {
     include_weapon("mp40_bigammo_mp");
     include_weapon("springfield_scoped_zombie_upgraded");
     include_Weapon("thompson_bigammo_mp");
-    include_weapon("zombie_perk_bottle");
+    include_weapon("zombie_random_perk_bottle");
 
     // Pistols
     include_weapon("colt");     //for Americans
@@ -207,7 +207,7 @@ include_weapons() {
     //level.limited_weapons["springfield"] = 0;
     level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;
     level.limited_weapons["thompson_bigammo_mp"] = 0;
-    level.limited_weapons["zombie_perk_bottle"] = 0;
+    level.limited_weapons["zombie_random_perk_bottle"] = 0;
 }
 
 // Rare weapon(s) weighting
