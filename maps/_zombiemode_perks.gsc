@@ -432,10 +432,6 @@ solo_quickrevive() // numan solo revive function
     self VisionSetNaked("laststand", 1);
 
     // if player has better downed gun, give it and check for ammo, then return it later
-    // debug last stand pistols
-    // iPrintLn(self.downedpistol);
-
-    iPrintLn(self.defaultPistol);
 
     self DisableWeaponCycling();
 

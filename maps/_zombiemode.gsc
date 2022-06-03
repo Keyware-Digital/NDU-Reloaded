@@ -879,7 +879,7 @@ round_spawning() {
 
     max += int(((GetPlayers().size - 1) * level.zombie_vars["zombie_ai_per_player"]) * multiplier);
     // Trebor - this should make it so round 1 on solo always spawns 6 zombies, like BO1 onwards
-    if(level.round_number < 3 && level.script == "nazi_zombie_prototype")
+    if(level.round_number < 3)
 		{
 			if(get_players().size > 1)
 			{
@@ -1600,6 +1600,12 @@ playerzombie_waitfor_buttonrelease(inputType) {
 
 player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime) {
 
+    players = GetPlayers();
+
+    if (isdefined(self.inSoloRevive)) {
+        return;
+    }  
+
     if (self HasPerk("specialty_detectexplosive") &&
         (sMeansOfDeath == "MOD_GRENADE_SPLASH" ||
             sMeansOfDeath == "MOD_GRENADE" ||
@@ -1626,7 +1632,11 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
         }
     }
 
-    self thread maps\_zombiemode_perks::perks_quick_revive_think();
+    if (self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1) {
+        self notify("second_chance");
+        self thread maps\_zombiemode_perks::solo_quickrevive(); // custom solo revive function below
+        return;
+    }
 
     if (iDamage < self.health) {
         self maps\_callbackglobal::finishPlayerDamageWrapper(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime);
@@ -1976,7 +1986,6 @@ makeRankNumber(wave, players, time) {
 /*
 =============
 statGet
-
 Returns the value of the named stat
 =============
 */
@@ -1992,7 +2001,6 @@ zombieStatGet(dataName) {
 /*
 =============
 setStat
-
 Sets the value of the named stat
 =============
 */
