@@ -132,7 +132,7 @@ include_weapons() {
     include_weapon("mosin_rifle_scoped_zombie");
     include_weapon("mp40_bigammo_mp");
     include_weapon("springfield_scoped_zombie_upgraded");
-    include_Weapon("thompson_bigammo_mp");
+    include_Weapon("zmb_wpn_m1921");
     include_weapon("zombie_random_perk_bottle");
 
     // Pistols
@@ -206,7 +206,7 @@ include_weapons() {
     level.limited_weapons["mp40_bigammo_mp"] = 0;
     //level.limited_weapons["springfield"] = 0;
     level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;
-    level.limited_weapons["thompson_bigammo_mp"] = 0;
+    level.limited_weapons["zmb_wpn_m1921"] = 0;
     level.limited_weapons["zombie_random_perk_bottle"] = 0;
 }
 

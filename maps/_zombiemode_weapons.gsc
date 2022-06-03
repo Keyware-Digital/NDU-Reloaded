@@ -123,12 +123,12 @@ init_weapons()
 	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
 	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		/*"vox_raygun",*/	6 ); 
 	//add_zombie_weapon( "tesla_gun",								&"ZOMBIE_BUY_TESLA", 					10,			/*"vox_tesla",*/	5 );
-	add_zombie_weapon( "thompson_bigammo_mp", 					&"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 	1500 );
+	add_zombie_weapon( "zmb_wpn_m1921", 					&"PROTOTYPE_ZOMBIE_WEAPON_M1921", 	1500 );
 	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",              	50,			/*"vox_raygun",*/	6 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-	add_zombie_weapon( "zombie_random_perk_bottle",               		&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",			10000 );
+	add_zombie_weapon( "zombie_random_perk_bottle", 10000 );
 
 	// Pistols
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
@@ -703,16 +703,6 @@ treasure_chest_ChooseWeightedRandomWeapon( player )
 	}
 }
 
-mystery_box_padlock() {
-
-    level.zombie_vars["zombie_mystery_box_padlock"] = 1;
-
-    for(i=0;i<level.chests.size;i++) {
-    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900" );
-    wait 0.05;
-    }
-}
-
 treasure_chest_weapon_spawn( chest, player )
 {
     assert(IsDefined(player));
@@ -857,11 +847,11 @@ treasure_chest_weapon_spawn( chest, player )
 					model Show();
 					model setmodel( "p6_anim_zm_al_magic_box_lock" );
 
-					self mystery_box_padlock();
+    				level.zombie_vars["zombie_mystery_box_padlock"] = 1;
 
 					PlaySoundAtPosition("mysterybox_lock", self.origin);
 					PlaySoundAtPosition("la_vox", self.origin);
-					// Refund the player their last spin.
+
 					player maps\_zombiemode_score::add_to_player_score( 950 );
 
 					wait 1;
@@ -870,6 +860,7 @@ treasure_chest_weapon_spawn( chest, player )
 
 					for(i=0;i<level.chests.size;i++) {
 						level.chests[i] enable_trigger();
+						level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900" );
 						level.chests[i] waittill( "trigger" , player );
 						if(player.score < cost)
     					{
@@ -1038,11 +1029,11 @@ weapon_cabinet_think()
 	level.cabinetguns[4] = "mosin_rifle_bayonet";
 	level.cabinetguns[5] = "mp40_bigammo_mp";
 	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
-	level.cabinetguns[7] = "thompson_bigammo_mp";
-	//level.cabinetguns[8] = "walther_prototype";
-	//level.cabinetguns[8] = "placeholdergun";
-	//level.cabinetguns[9] = "placeholdergun";
-	//level.cabinetguns[10] = "type100smg_bigammo_mp";					//removed because glitched!
+	level.cabinetguns[7] = "zmb_wpn_m1921";
+	level.cabinetguns[8] = "walther_prototype";
+	level.cabinetguns[8] = "placeholdergun";
+	level.cabinetguns[9] = "placeholdergun";
+	level.cabinetguns[10] = "type100smg_bigammo_mp";					//removed because glitched!
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
@@ -1199,8 +1190,8 @@ weapon_cabinet_think()
 		case "springfield_scoped_zombie_upgraded":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
 			break; 
-		case "thompson_bigammo_mp":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_MAG");
+		case "zmb_wpn_m1921":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_DRUM");
 			break;     
 		case "walther_prototype":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
@@ -1215,7 +1206,7 @@ weapon_cabinet_think()
 	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
-		if(magicnum <= 100)	//10 out of 100 chance to get a perk
+		if(magicnum <= 10)	//10 out of 100 chance to get a perk
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
@@ -1224,7 +1215,7 @@ weapon_cabinet_think()
 			weaponmodelstruct Show();
 			weaponmodelstruct SetModel(GetWeaponModel( "zombie_random_perk_bottle" ));
 			chosenweapon = "zombie_random_perk_bottle";
-			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RANDOM_PERK_BOTTLE");
 		}
 	}
 

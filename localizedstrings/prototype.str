@@ -122,8 +122,8 @@ LANG_ENGLISH        "Wunderwaffe DG-2"
 REFERENCE           WEAPON_THOMPSON
 LANG_ENGLISH        "M1A1 Thompson"
 
-REFERENCE           WEAPON_THOMPSON_MAG
-LANG_ENGLISH        "M1928A1 Thompson"
+REFERENCE           WEAPON_THOMPSON_DRUM
+LANG_ENGLISH        "M1921 Thompson"
 
 REFERENCE           WEAPON_TOKAREV
 LANG_ENGLISH        "TT-33"
@@ -209,8 +209,8 @@ LANG_ENGLISH        "Hold ^3&&1 ^7for PTRS-41"
 REFERENCE           ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED
 LANG_ENGLISH        "Hold ^3&&1 ^7for The Judicator"
 
-REFERENCE           ZOMBIE_TRADE_THOMPSON_MAG
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1928A1 Thompson"
+REFERENCE           ZOMBIE_TRADE_THOMPSON_DRUM
+LANG_ENGLISH        "Hold ^3&&1 ^7for M1921 Thompson"
 
 REFERENCE           ZOMBIE_TRADE_WALTHER
 LANG_ENGLISH        "Hold ^3&&1 ^7for P38"
@@ -311,7 +311,7 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 1900]"
 REFERENCE           ZOMBIE_CABINET_OPEN_20
 LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 20]"
 
-REFERENCE           ZOMBIE_WEAPON_PERKBOTTLE_10000
-LANG_ENGLISH        "Hold ^3&&1 ^7to take Perk Bottle"
+REFERENCE           ZOMBIE_TRADE_RANDOM_PERK_BOTTLE
+LANG_ENGLISH        "Hold ^3&&1 ^7to for Random Perk Bottle"
 
 ENDMARKER

@@ -878,7 +878,7 @@ round_spawning() {
     }
 
     max += int(((GetPlayers().size - 1) * level.zombie_vars["zombie_ai_per_player"]) * multiplier);
-    // Trebor - this should make it so round 1 on solo always spawns 6 zombies, like BO1 onwards
+    // This makes it so round 1 on solo always spawns 6 zombies, like BO1 onwards
     if(level.round_number < 3)
 		{
 			if(get_players().size > 1)

@@ -295,7 +295,6 @@ weapon,sp/mosin_rifle_bayonet
 weapon,sp/mosin_rifle_scoped_zombie
 weapon,sp/mp40_bigammo_mp
 weapon,sp/svt40
-weapon,sp/thompson_bigammo_mp
 weapon,sp/tokarev
 weapon,sp/type99_lmg
 weapon,sp/springfield_scoped_zombie_upgraded
@@ -305,4 +304,4 @@ weapon,sp/zombie_bowie_flourish
 weapon,sp/zombie_ppsh
 weapon,sp/zombie_random_perk_bottle
 weapon,sp/zombie_type100_smg
-weapon,sp/thompson_bigammo_mp
+weapon,sp/zmb_wpn_m1921
