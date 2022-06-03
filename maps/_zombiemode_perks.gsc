@@ -391,40 +391,24 @@ perks_zombie_hit_effect_check_health(health, attacker)
 	self.health = health;
 }
 
-perks_quick_revive_think(iDamage) {
-
-    players = GetPlayers();
-
-    if (isdefined(self.inSoloRevive)) {
-        return;
-    }    
-
-    if (self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1) {
-        self notify("second_chance");
-        self thread solo_quickrevive(); // custom solo revive function below
-        return;
-    }
-
-}
-
 solo_quickrevive() // numan solo revive function
 {
     // gather some info
 
     self.inSoloRevive = true;
-    self.defaultPistol = level.player_specific_add_weapon[maps\_zombiemode_weapons::get_player_index(self)];
-    self.currentweapon = self GetCurrentWeapon();
-    self.currentstance = self GetStance();
-    clipammo = undefined;
-    weaponammo = undefined;
-    lstandammo = undefined;
-    lstandgun = undefined;
-    lstandclip = undefined;
+    self.firstPistol = level.player_specific_add_weapon[maps\_zombiemode_weapons::get_player_index(self)];
+    self.currentWeapon = self GetCurrentWeapon();
+    self.currentStance = self GetStance();
+    clipAmmo = undefined;
+    weaponAmmo = undefined;
+    lastStandAmmo = undefined;
+    lastStandGun = undefined;
+    lastStandClip = undefined;
 
     playerweapons = self GetWeaponsList(); // returns an array of weapons and also weapons ammo
     for (i = 0; i < playerweapons.size; i++) {
-        clipammo[i] = self GetWeaponAmmoClip(playerweapons[i]);
-        weaponammo[i] = self GetWeaponAmmoStock(playerweapons[i]);
+        clipAmmo[i] = self GetWeaponAmmoClip(playerweapons[i]);
+        weaponAmmo[i] = self GetWeaponAmmoStock(playerweapons[i]);
         wait 0.05;
     }
 
@@ -456,33 +440,33 @@ solo_quickrevive() // numan solo revive function
     self DisableWeaponCycling();
 
     if (self HasWeapon("ray_gun")) {
-        lstandammo = 20;
-        lstandclip = 20;
-        lstandgun = "ray_gun";
+        lastStandAmmo = 20;
+        lastStandClip = 20;
+        lastStandGun = "ray_gun";
     } else if (self HasWeapon("sw_357")) {
-        lstandammo = 18;
-        lstandclip = 6;
-        lstandgun = "sw_357";
-    } else if (self HasWeapon("walther") || self.downedpistol == "walther") {
-        lstandammo = 24;
-        lstandclip = 8;
-        lstandgun = "walther";
-    } else if (self HasWeapon("tokarev") || self.downedpistol == "tokarev") {
-        lstandammo = 24;
-        lstandclip = 8;
-        lstandgun = "tokarev";
+        lastStandAmmo = 18;
+        lastStandClip = 6;
+        lastStandGun = "sw_357";
+    } else if (self HasWeapon("walther") || self.firstPistol == "walther") {
+        lastStandAmmo = 24;
+        lastStandClip = 8;
+        lastStandGun = "walther";
+    } else if (self HasWeapon("tokarev") || self.firstPistol == "tokarev") {
+        lastStandAmmo = 24;
+        lastStandClip = 8;
+        lastStandGun = "tokarev";
     } else {
-        lstandammo = 24;
-        lstandclip = 8;
-        lstandgun = "colt";
+        lastStandAmmo = 24;
+        lastStandClip = 8;
+        lastStandGun = "colt";
     }
 
     self TakeAllWeapons();
 
-    self GiveWeapon(lstandgun);
-    self SwitchToWeapon(lstandgun);
-    self SetWeaponAmmoClip(lstandgun, lstandclip);
-    self SetWeaponAmmoStock(lstandgun, lstandammo);
+    self GiveWeapon(lastStandGun);
+    self SwitchToWeapon(lastStandGun);
+    self SetWeaponAmmoClip(lastStandGun, lastStandClip);
+    self SetWeaponAmmoStock(lastStandGun, lastStandAmmo);
 
     soloReviveTime = 10;
 
@@ -519,24 +503,24 @@ solo_quickrevive() // numan solo revive function
 
     // revert everything
 
-    if (self.currentweapon != lstandgun) {
+    if (self.currentWeapon != lastStandGun) {
         self TakeAllWeapons();
     }
 
     for (i = 0; i < playerweapons.size; i++) {
         if (weaponType(playerweapons[i]) == "grenade") {
             self GiveWeapon(playerweapons[i]);
-            self SetWeaponAmmoClip(playerweapons[i], clipammo[i]);
+            self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
         } else {
             //IPrintLn(playerweapons[i]);
             self GiveWeapon(playerweapons[i]);
-            self SetWeaponAmmoClip(playerweapons[i], clipammo[i]);
-            self SetWeaponAmmoStock(playerweapons[i], weaponammo[i]);
+            self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
+            self SetWeaponAmmoStock(playerweapons[i], weaponAmmo[i]);
         }
         wait 0.05;
     }
 
-    self SwitchToWeapon(self.currentweapon);
+    self SwitchToWeapon(self.currentWeapon);
     self EnableWeaponCycling();
 
     self.inSoloRevive = undefined;
@@ -548,7 +532,7 @@ solo_quickrevive() // numan solo revive function
     self AllowCrouch(true);
     self SetStance("stand");
 
-    self SetStance(self.currentstance);
+    self SetStance(self.currentStance);
 
     self.ignoreme = false;
 }
