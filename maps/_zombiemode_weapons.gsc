@@ -274,7 +274,7 @@ init_weapon_cabinet()
 
 init_mystery_box_vars() {
 	set_zombie_var("zombie_mystery_box_padlock", 0);
-	set_zombie_var("zombie_mystery_box_padlock_cost", 1500);
+	set_zombie_var("zombie_mystery_box_padlock_cost", 1900);
 
 }
 
@@ -342,7 +342,7 @@ treasure_chest_think(rand)
 
 	if(isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) && level.zombie_vars["zombie_mystery_box_padlock"])
 	{
-		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1500");
+		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
 	}	
 
 	// waittill someuses uses this
@@ -708,7 +708,7 @@ mystery_box_padlock() {
     level.zombie_vars["zombie_mystery_box_padlock"] = 1;
 
     for(i=0;i<level.chests.size;i++) {
-    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1500" );
+    level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900" );
     wait 0.05;
     }
 }
@@ -861,6 +861,8 @@ treasure_chest_weapon_spawn( chest, player )
 
 					PlaySoundAtPosition("mysterybox_lock", self.origin);
 					PlaySoundAtPosition("la_vox", self.origin);
+					// Refund the player their last spin.
+					player maps\_zombiemode_score::add_to_player_score( 950 );
 
 					wait 1;
 
