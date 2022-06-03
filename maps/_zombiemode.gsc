@@ -143,7 +143,7 @@ init_strings() {
 
     // Random Treasure Chest
     add_zombie_hint("default_treasure_chest_950", &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950");
-    add_zombie_hint("default_treasure_chest_1500", &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1500");
+    add_zombie_hint("default_treasure_chest_1900", &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
 
     // REWARD Barrier Pieces
     add_zombie_hint("default_reward_barrier_piece", &"PROTOTYPE_ZOMBIE_BUTTON_REWARD_BARRIER");

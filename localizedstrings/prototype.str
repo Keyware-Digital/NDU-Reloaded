@@ -176,8 +176,8 @@ LANG_ENGLISH        "For Weapon [Cost: &&1], Ammo [&&2]"
 REFERENCE           ZOMBIE_RANDOM_WEAPON_950
 LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
 
-REFERENCE           ZOMBIE_RANDOM_WEAPON_LOCKED_1500
-LANG_ENGLISH        "Hold ^3&&1 ^7to unlock Mystery Box [Cost: 1500]"
+REFERENCE           ZOMBIE_RANDOM_WEAPON_LOCKED_1900
+LANG_ENGLISH        "Hold ^3&&1 ^7to unlock Mystery Box [Cost: 1900]"
 
 REFERENCE           ZOMBIE_RANDOM_WEAPON_10
 LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 10]"
