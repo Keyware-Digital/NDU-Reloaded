@@ -132,8 +132,8 @@ include_weapons() {
     include_weapon("mosin_rifle_scoped_zombie");
     include_weapon("mp40_bigammo_mp");
     include_weapon("springfield_scoped_zombie_upgraded");
-    include_Weapon("zmb_wpn_m1921");
     include_weapon("zombie_random_perk_bottle");
+    include_Weapon("zmb_wpn_m1921");
 
     // Pistols
     include_weapon("colt");     //for Americans
