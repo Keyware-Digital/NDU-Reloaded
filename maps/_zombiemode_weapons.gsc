@@ -122,13 +122,14 @@ init_weapons()
 	add_zombie_weapon( "mine_bouncing_betty",					&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
 	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
 	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		/*"vox_raygun",*/	6 ); 
-	//add_zombie_weapon( "tesla_gun",							&"ZOMBIE_BUY_TESLA", 						10,			/*"vox_tesla",*/	5 );
-	add_zombie_weapon( "zmb_wpn_m1921", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921", 			1500 );
+	//add_zombie_weapon( "tesla_gun",								&"ZOMBIE_BUY_TESLA", 					10,			/*"vox_tesla",*/	5 );
+	add_zombie_weapon( "zmb_wpn_m1921", &"PROTOTYPE_ZOMBIE_WEAPON_M1921", 1500 );
 	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",              	50,			/*"vox_raygun",*/	6 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-	add_zombie_weapon( "zombie_random_perk_bottle", 10000 );
+
+	add_zombie_weapon( "zombie_random_perk_bottle", &"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000", 10000 );
 
 	// Pistols
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
@@ -834,7 +835,6 @@ treasure_chest_weapon_spawn( chest, player )
 						}
 					}
 				}
-			
 
 			if (random <= chance_of_padlock)
 			{
@@ -1030,10 +1030,10 @@ weapon_cabinet_think()
 	level.cabinetguns[5] = "mp40_bigammo_mp";
 	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
 	level.cabinetguns[7] = "zmb_wpn_m1921";
-	//level.cabinetguns[8] = "walther_prototype";						//disabled
-	//level.cabinetguns[8] = "placeholdergun";							//disabled
-	//level.cabinetguns[9] = "placeholdergun";							//disabled
-	//level.cabinetguns[10] = "type100smg_bigammo_mp";					//removed because glitched!
+	/*level.cabinetguns[8] = "walther_prototype";
+	level.cabinetguns[8] = "placeholdergun";
+	level.cabinetguns[9] = "placeholdergun";
+	level.cabinetguns[10] = "type100smg_bigammo_mp";*/					//removed because glitched!
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
