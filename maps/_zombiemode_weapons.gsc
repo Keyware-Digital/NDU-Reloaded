@@ -986,6 +986,7 @@ weapon_cabinet_think()
 	/////////////////// You're safe for now /////////////////////////
 
 	self waittill("trigger",player);
+	self.grab_weapon_hint = true;
 
 	for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
     {
@@ -1140,12 +1141,15 @@ weapon_cabinet_think()
 		}
 	}
 
+	level thread treasure_chest_user_hint( self, player );
 	weaponmodelstruct MoveTo(self.origin - (20,0,6.5),10);
 
 	self thread takenweapon(chosenweapon);
 	self thread waitforexpire();
 
 	self waittill_any("weapontaken","weaponexpired");
+
+	self.grab_weapon_hint = false;
 
 	self SetHintString( "" ); 
 
