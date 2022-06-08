@@ -1191,7 +1191,7 @@ weapon_cabinet_think()
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
 			break; 
 		case "zmb_wpn_m1921":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_MAG");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_DRUM");
 			break;     
 		case "walther_prototype":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
