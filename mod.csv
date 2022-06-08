@@ -285,9 +285,6 @@ xmodel,zombie_power_up_fire_sale
 xmodel,zombie_power_up_insta_kill
 xmodel,zombie_power_up_max_ammo
 xmodel,zombie_power_up_nuke
-xanim,zombie_perksacola_drink_viewmodel
-xanim,zombie_perksacola_idle_viewmodel
-xanim,zombie_perksacola_lower_viewmodel
 weapon,sp/dp28
 weapon,sp/kar98k_bayonet
 weapon,sp/mine_bouncing_betty
