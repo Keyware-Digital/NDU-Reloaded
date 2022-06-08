@@ -8,7 +8,6 @@ init()
 	init_weapon_upgrade();
 	init_weapon_cabinet();
 	init_treasure_chest();
-	init_mystery_box_vars();
 }
 
 add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost  )
@@ -118,19 +117,18 @@ init_weapons()
 	PrecacheItem( "zombie_melee" );
 
 	//NDU: Reloaded
-	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
 	add_zombie_weapon( "mine_bouncing_betty",					&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
 	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
 	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		/*"vox_raygun",*/	6 ); 
-	//add_zombie_weapon( "tesla_gun",								&"ZOMBIE_BUY_TESLA", 					10,			/*"vox_tesla",*/	5 );
+	//add_zombie_weapon( "tesla_gun",							&"ZOMBIE_BUY_TESLA", 						10,			/*"vox_tesla",*/	5 );
 	add_zombie_weapon( "zmb_wpn_m1921", &"PROTOTYPE_ZOMBIE_WEAPON_M1921", 1500 );
 	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",              	50,			/*"vox_raygun",*/	6 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
+	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-
-	add_zombie_weapon( "zombie_random_perk_bottle", &"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000", 10000 );
-
+	add_zombie_weapon( "zombie_random_perk_bottle", 			&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",	10000 );
+	
 	// Pistols
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
 	add_zombie_weapon( "colt_dirty_harry", 						&"ZOMBIE_WEAPON_COLT_DH_100", 				100 );
@@ -180,7 +178,7 @@ init_weapons()
 	add_zombie_weapon( "mp40", 								&"ZOMBIE_WEAPON_MP40_1000", 				1000 );
 	add_zombie_weapon( "ppsh", 								&"ZOMBIE_WEAPON_PPSH_2000", 				2000 );
 	add_zombie_weapon( "stg44", 							&"ZOMBIE_WEAPON_STG44_1200", 				1200 );
-	add_zombie_weapon( "thompson", &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 1500 );
+	add_zombie_weapon( "thompson", 							&"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 	1500 );
 	add_zombie_weapon( "type100_smg", 						&"ZOMBIE_WEAPON_TYPE100_1000", 				1000 );
                                                         	
 	// Shotguns                                         	
@@ -219,13 +217,14 @@ init_weapons()
 	// Special                                          	
 	add_zombie_weapon( "mortar_round", 						&"ZOMBIE_WEAPON_MORTARROUND_2000", 			2000 );
 	add_zombie_weapon( "satchel_charge", 					&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000 );
-	add_zombie_weapon( "ray_gun", 							&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );                                   	
-	
-	// Precache the box padlock
-	PrecacheModel("p6_anim_zm_al_magic_box_lock");
+	add_zombie_weapon( "ray_gun", 							&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );
 	
 	// ONLY 1 (OR MORE) OF THE BELOW SHOULD BE ALLOWED
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
+
+	// Precache the padlock
+	PrecacheModel("p6_anim_zm_al_magic_box_lock"); // Numan Added
+    level.chest_accessed = 0;
 }             
 
 add_limited_weapon( weapon_name, amount )
@@ -273,12 +272,6 @@ init_weapon_cabinet()
     array_thread( level.weapon_cabs, ::weapon_cabinet_think ); 
 }
 
-init_mystery_box_vars() {
-	set_zombie_var("zombie_mystery_box_padlock", 0);
-	set_zombie_var("zombie_mystery_box_padlock_cost", 1900);
-
-}
-
 // returns the trigger hint string for the given weapon
 get_weapon_hint( weapon_name )
 {
@@ -314,8 +307,6 @@ init_treasure_chest()
 	// the triggers which are targeted at chests
 	level.chests = GetEntArray( "treasure_chest_use", "targetname" ); 
 
-	level.chest_accessed = 0;
-
 	array_thread( level.chests, ::treasure_chest_think ); 
 }
 
@@ -341,11 +332,6 @@ treasure_chest_think(rand)
 		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_10");
 	}
 
-	if(isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) && level.zombie_vars["zombie_mystery_box_padlock"])
-	{
-		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
-	}	
-
 	// waittill someuses uses this
 	user = undefined;
 	while( 1 )
@@ -369,11 +355,11 @@ treasure_chest_think(rand)
 	}
 	
 	// trigger_use->script_brushmodel lid->script_origin in radiant
-	level.lid = getent( self.target, "targetname" ); 
-	weapon_spawn_org = getent( level.lid.target, "targetname" ); 
+	lid = getent( self.target, "targetname" ); 
+	weapon_spawn_org = getent( lid.target, "targetname" ); 
 	
 	//open the lid
-	level.lid thread treasure_chest_lid_open();
+	lid thread treasure_chest_lid_open();
 	
 	// SRS 9/3/2008: added to help other functions know if we timed out on grabbing the item
 	self.timedOut = false;
@@ -388,6 +374,16 @@ treasure_chest_think(rand)
 	self disable_trigger(); 
 	
 	weapon_spawn_org waittill( "randomization_done" ); 
+
+	if(isdefined(self.boxlocked) && self.boxlocked) // Padlock stuff
+    {
+        self.boxlocked = false;
+        weapon_spawn_org notify("weapon_grabbed");
+        lid thread treasure_chest_lid_close( self.timedOut );
+        wait 3;
+        self thread treasure_chest_think();
+        return;
+    }
 
 	self.grab_weapon_hint = true;
 
@@ -507,7 +503,7 @@ treasure_chest_think(rand)
 					if(!user hasperk("specialty_altmelee" || user.has_altmelee))
 					{
 						weapon_spawn_org notify("weapon_grabbed");
-						level.lid thread treasure_chest_lid_close( self.timedOut );
+						lid thread treasure_chest_lid_close( self.timedOut );
 						self.grab_weapon_hint = false;
 						self disable_trigger();
 						user maps\_zombiemode_bowie::give_bowie();
@@ -536,16 +532,10 @@ treasure_chest_think(rand)
 	{
 		self.grab_weapon_hint = false;
 		weapon_spawn_org notify( "weapon_grabbed" );
-		level.lid thread treasure_chest_lid_close( self.timedOut );
+		lid thread treasure_chest_lid_close( self.timedOut );
 		self disable_trigger();
 		wait 3;
 	}
-
-	if(!isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
-	{
-		level.chest_accessed += 1;
-	}
-
 	self enable_trigger(); 	
 	self thread treasure_chest_think(); 
 }
@@ -664,9 +654,9 @@ treasure_chest_ChooseRandomWeapon( player )
 
 	// Filter bowie if player has it
 	if(player HasPerk( "specialty_altmelee" ))
-	{
-    	filtered = array_remove(filtered, "zombie_bowie_flourish");
-	}
+    {
+        filtered = array_remove(filtered, "zombie_bowie_flourish");
+    }
  
     return filtered[RandomInt( filtered.size )];
 }
@@ -703,7 +693,7 @@ treasure_chest_ChooseWeightedRandomWeapon( player )
 		}
 	}
 }
-
+ 
 treasure_chest_weapon_spawn( chest, player )
 {
     assert(IsDefined(player));
@@ -746,7 +736,7 @@ treasure_chest_weapon_spawn( chest, player )
         modelname = GetWeaponModel( rand );
         model setmodel( modelname ); 
     }
- 
+
 	if(rand == "molotov")
     {
         player thread weapons_death_check();
@@ -762,133 +752,64 @@ treasure_chest_weapon_spawn( chest, player )
         player thread weapons_death_check();
     }
  
-	self.weapon_string = rand; // here's where the org get it's weapon type for the give function
+		// Padlock start
+	
+    luckynum = RandomInt(100);
 
-	// random change of getting the padlock that moves the box
-	random = Randomint(100);
-	chance_of_padlock = Randomint(100);
+    if(level.chest_accessed >= 10) // Adds 30% chance to get lock
+    {
+        luckynum = 100;
+    }
+    else if(level.chest_accessed >= 8) // Adds 30% chance to get lock
+    {
+        luckynum = luckynum + 30;
+    }
+    else if(level.chest_accessed >= 3) // Adds 15% chance to get lock
+    {
+        luckynum = luckynum + 15;
+    }
 
-	// random change of getting the padlock that moves the box
+    if(luckynum >= 100 && level.chest_accessed >= 3 && !level.zombie_vars["zombie_fire_sale"])
+    {
+        chest.boxlocked = true;
+        model SetModel("p6_anim_zm_al_magic_box_lock");
+        player maps\_zombiemode_score::add_to_player_score(950);
+        player PlaySound("mysterybox_lock");
+        PlaySoundAtPosition("la_vox", chest.origin);
+        chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
+        chest enable_trigger();
+        
+        while(1)
+        {
+            chest waittill("trigger", player);
+            if(player.score >= 1900)
+            {
+                player PlaySound( "purchase" ); 
+                player maps\_zombiemode_score::minus_to_player_score(1900);
+                break;
+            }
+            player PlaySound( "no_purchase" );
+            wait 0.05;
+        }
 
-	//increase the chance of padlock appearing from 0-100.
+        level.zombie_vars[ "enableFireSale" ] = 1;
+        chest SetHintString("");
+        PlaySoundAtPosition( "mysterybox_unlock", chest.origin );
+        model Delete();
+        level.chest_accessed = 0;
+        self notify( "randomization_done" ); 
+        return;
+    }
 
-		if(!isDefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
-		{
+    level.chest_accessed++;
 
-				chance_of_padlock = level.chest_accessed + 20;
-				
-				// make sure padlock doesn't appear on pulls 1 to 3
-
-				if(level.chest_accessed <= 3)
-				{
-					chance_of_padlock = 0;
-				}
-				
-
-				// make sure padlock appears on the 8th pull
-
-				if(level.chest_accessed >= 8)
-				{
-					chance_of_padlock = 100;
-				}
-				
-				// pulls 4 thru 8, there is a 15% chance of getting the padlock
-				// NOTE:  this happens in all cases
-				if( level.chest_accessed >= 4 && level.chest_accessed < 8 )
-				{
-					if( random < 15 )
-					{
-						chance_of_padlock = 100;
-					}
-					else
-					{
-						chance_of_padlock = -1;
-					}
-				}
-				
-				// after the first mystery box move the padlock percentages changes
-				if(level.zombie_vars[ "enableFireSale" ] == 1)
-				{
-					// between pulls 8 thru 12, the padlock percent is 30%
-					if( level.chest_accessed >= 8 && level.chest_accessed < 13 )
-					{
-						if( random < 30 )
-						{
-							chance_of_padlock = 100;
-						}
-						else
-						{
-							chance_of_padlock = -1;
-						}
-					}
-					
-					// after 12th pull, the padlock percent is 50%
-					if( level.chest_accessed >= 13 )
-					{
-						if( random < 50 )
-						{
-							chance_of_padlock = 100;
-						}
-						else
-						{
-							chance_of_padlock = -1;
-						}
-					}
-				}
-
-			if (random <= chance_of_padlock)
-			{
-				if(!isdefined(level.zombie_vars["zombie_mystery_box_padlock"]) || !level.zombie_vars["zombie_mystery_box_padlock"])
-				{
-					// Hide the mystery box model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
-					model Hide();
-					model.angles = self.angles + ( 0, 90, 0 );
-					wait 0.05;
-					model Show();
-					model setmodel( "p6_anim_zm_al_magic_box_lock" );
-
-    				level.zombie_vars["zombie_mystery_box_padlock"] = 1;
-
-					PlaySoundAtPosition("mysterybox_lock", self.origin);
-					PlaySoundAtPosition("la_vox", self.origin);
-
-					player maps\_zombiemode_score::add_to_player_score( 950 );
-
-					wait 1;
-
-					cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
-
-					for(i=0;i<level.chests.size;i++) {
-						level.chests[i] enable_trigger();
-						level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900" );
-						level.chests[i] waittill( "trigger" , player );
-						if(player.score < cost)
-    					{
-    						self play_sound_on_ent( "no_purchase" );
-    						wait 0.5;
-    					}
-    					else
-    					{
-							level.chests[i] disable_trigger();
-							player maps\_zombiemode_score::minus_to_player_score(cost);
-							play_sound_on_ent( "purchase" );
-							level.lid thread treasure_chest_lid_close();
-							model Delete();
-							level.zombie_vars["zombie_mystery_box_padlock"] = 0;
-							level.chest_accessed = 0;
-							level.zombie_vars[ "enableFireSale" ] = 1;
-							level.chests[i] enable_trigger(); 	
-							level.chests[i] thread treasure_chest_think(); 
-							return;
-						}				
-    				wait 0.05;
-    				}
-				}
-			}
-		}
+	// Padlock end
 
 	self notify( "randomization_done" );
 
+    self notify( "randomization_done" ); 
+    self.weapon_string = rand; // here's where the org get it's weapon type for the give function
+ 
     model thread timer_til_despawn(floatHeight);
     self waittill( "weapon_grabbed" );
  
@@ -1203,10 +1124,10 @@ weapon_cabinet_think()
         level.keep_ents[i] Hide();
     }
 
-	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
+		if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
-		if(magicnum <= 100)	//10 out of 100 chance to get a perk
+		if(magicnum <= 10)	//10 out of 100 chance to get a perk
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
@@ -1424,7 +1345,7 @@ weapon_spawn_think()
 
 		grenadeMax = WeaponMaxAmmo( "stielhandgranate" );
 
-		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)
+		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		//Trebor's wallbuy nade fix
         {
             continue;
 		}
