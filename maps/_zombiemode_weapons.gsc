@@ -127,7 +127,7 @@ init_weapons()
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
 	add_zombie_weapon( "zombie_random_perk_bottle", 			&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",	10000 );
-	add_zombie_weapon( "zmb_wpn_m1921", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
+	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
 	
 	// Pistols
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
@@ -943,14 +943,14 @@ weapon_cabinet_think()
 	}
 
 	level.cabinetguns = [];
-	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
+	/*level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
 	level.cabinetguns[1] = "kar98k_bayonet";	
 	level.cabinetguns[2] = "m1garand";		
 	level.cabinetguns[3] = "mosin_rifle_scoped_zombie";						
 	level.cabinetguns[4] = "mosin_rifle_bayonet";
 	level.cabinetguns[5] = "mp40_bigammo_mp";
-	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
-	level.cabinetguns[7] = "zmb_wpn_m1921";
+	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";*/
+	level.cabinetguns[7] = "m1921_thompson";
 	/*level.cabinetguns[8] = "walther_prototype";
 	level.cabinetguns[8] = "placeholdergun";
 	level.cabinetguns[9] = "placeholdergun";
@@ -1112,7 +1112,7 @@ weapon_cabinet_think()
 		case "springfield_scoped_zombie_upgraded":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
 			break; 
-		case "zmb_wpn_m1921":
+		case "m1921_thompson":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_DRUM");
 			break;     
 		case "walther_prototype":

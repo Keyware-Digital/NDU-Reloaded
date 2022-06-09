@@ -133,7 +133,7 @@ include_weapons() {
     include_weapon("mp40_bigammo_mp");
     include_weapon("springfield_scoped_zombie_upgraded");
     include_weapon("zombie_random_perk_bottle");
-    include_Weapon("zmb_wpn_m1921");
+    include_Weapon("m1921_thompson");
 
     // Pistols
     include_weapon("colt");     //for Americans
@@ -206,7 +206,7 @@ include_weapons() {
     level.limited_weapons["mp40_bigammo_mp"] = 0;
     //level.limited_weapons["springfield"] = 0;
     level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;
-    level.limited_weapons["zmb_wpn_m1921"] = 0;
+    level.limited_weapons["m1921_thompson"] = 0;
     level.limited_weapons["zombie_random_perk_bottle"] = 0;
 }
 
