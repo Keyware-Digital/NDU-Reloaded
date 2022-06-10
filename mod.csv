@@ -276,7 +276,7 @@ xmodel,viewmodel_ger_wermacht_player
 xmodel,viewmodel_usa_marine_player
 xmodel,viewmodel_rus_guard_player
 xmodel,viewmodel_knife_bowie
-xmodel,p6_anim_zm_al_magic_box_lock
+xmodel,zmb_mdl_padlock
 xmodel,zombie_power_up_bonus_points
 xmodel,zombie_power_up_carpenter
 xmodel,zombie_power_up_death_machine
@@ -299,6 +299,6 @@ weapon,sp/springfield_scoped_zombie_upgraded
 weapon,sp/mosin_rifle
 weapon,sp/zombie_bowie_flourish
 weapon,sp/zombie_ppsh
-weapon,sp/zombie_random_perk_bottle
+weapon,sp/perks_a_cola
 weapon,sp/zombie_type100_smg
 weapon,sp/m1921_thompson

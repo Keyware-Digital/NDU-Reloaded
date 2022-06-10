@@ -126,7 +126,7 @@ init_weapons()
 	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-	add_zombie_weapon( "zombie_random_perk_bottle", 			&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",	10000 );
+	add_zombie_weapon( "perks_a_cola", 			&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",	10000 );
 	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
 	
 	// Pistols
@@ -223,7 +223,7 @@ init_weapons()
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
 
 	// Precache the padlock
-	PrecacheModel("p6_anim_zm_al_magic_box_lock"); // Numan Added
+	PrecacheModel("zmb_mdl_padlock"); // Numan Added
     level.chest_accessed = 0;
 }             
 
@@ -772,7 +772,7 @@ treasure_chest_weapon_spawn( chest, player )
     if(luckynum >= 100 && level.chest_accessed >= 3 && !level.zombie_vars["zombie_fire_sale"])
     {
         chest.boxlocked = true;
-        model SetModel("p6_anim_zm_al_magic_box_lock");
+        model SetModel("zmb_mdl_padlock");
         player maps\_zombiemode_score::add_to_player_score(950);
         player PlaySound("mysterybox_lock");
         PlaySoundAtPosition("la_vox", chest.origin);
@@ -943,13 +943,13 @@ weapon_cabinet_think()
 	}
 
 	level.cabinetguns = [];
-	/*level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
+	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
 	level.cabinetguns[1] = "kar98k_bayonet";	
 	level.cabinetguns[2] = "m1garand";		
 	level.cabinetguns[3] = "mosin_rifle_scoped_zombie";						
 	level.cabinetguns[4] = "mosin_rifle_bayonet";
 	level.cabinetguns[5] = "mp40_bigammo_mp";
-	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";*/
+	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
 	level.cabinetguns[7] = "m1921_thompson";
 	/*level.cabinetguns[8] = "walther_prototype";
 	level.cabinetguns[8] = "placeholdergun";
@@ -1128,15 +1128,15 @@ weapon_cabinet_think()
 		if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
-		if(magicnum <= 10)	//10 out of 100 chance to get a perk
+		if(magicnum <= 100)	//10 out of 100 chance to get a perk
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
 			weaponmodelstruct.angles = self.angles + ( 0, 90, 0 );
 			wait 0.05;
 			weaponmodelstruct Show();
-			weaponmodelstruct SetModel(GetWeaponModel( "zombie_random_perk_bottle" ));
-			chosenweapon = "zombie_random_perk_bottle";
+			weaponmodelstruct SetModel(GetWeaponModel( "perks_a_cola" ));
+			chosenweapon = "perks_a_cola";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RANDOM_PERK_BOTTLE");
 		}
 	}
@@ -1247,7 +1247,7 @@ takenweapon(chosenweapon)
 	self play_sound_on_ent( "purchase" ); 
 	self notify("weapontaken");
 
-	if(chosenweapon == "zombie_random_perk_bottle")
+	if(chosenweapon == "perks_a_cola")
 	{
 		//thread play_raygun_stinger();		//We don't want the stinger sound for a perk bottle.
 		current_weapon = player GetCurrentWeapon();
