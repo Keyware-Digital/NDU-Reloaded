@@ -193,6 +193,7 @@ include_weapons() {
 
     // Special
     include_weapon("ray_gun", /*true,*/::prototype_ray_gun_weighting_func);
+    include_weapon("death_hands");
 
     // Weapon limiter
     level.limited_weapons["colt"] = 0;
