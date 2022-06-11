@@ -119,16 +119,17 @@ init_weapons()
 	//NDU: Reloaded
 	add_zombie_weapon( "mine_bouncing_betty",					&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
 	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
+	add_zombie_weapon( "perks_a_cola", 							&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",	10000 );
+	add_zombie_weapon( "ppsh_mag", 								&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
 	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		/*"vox_raygun",*/	6 ); 
+	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
 	//add_zombie_weapon( "tesla_gun",							&"ZOMBIE_BUY_TESLA", 						10,			/*"vox_tesla",*/	5 );
 	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",              	50,			/*"vox_raygun",*/	6 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
 	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-	add_zombie_weapon( "perks_a_cola", 			&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",	10000 );
-	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
-	
+
 	// Pistols
 	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
 	add_zombie_weapon( "colt_dirty_harry", 						&"ZOMBIE_WEAPON_COLT_DH_100", 				100 );
@@ -405,7 +406,7 @@ treasure_chest_think(rand)
 		case "type99_lmg":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_99");
 			break;
-		case "zombie_ppsh":
+		case "ppsh_mag":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41");
 			break;
 		case "zombie_type100_smg":
@@ -946,13 +947,13 @@ weapon_cabinet_think()
 	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
 	level.cabinetguns[1] = "kar98k_bayonet";	
 	level.cabinetguns[2] = "m1garand";		
-	level.cabinetguns[3] = "mosin_rifle_scoped_zombie";						
+	level.cabinetguns[3] = "m1921_thompson";						
 	level.cabinetguns[4] = "mosin_rifle_bayonet";
-	level.cabinetguns[5] = "mp40_bigammo_mp";
-	level.cabinetguns[6] = "springfield_scoped_zombie_upgraded";
-	level.cabinetguns[7] = "m1921_thompson";
-	/*level.cabinetguns[8] = "walther_prototype";
-	level.cabinetguns[8] = "placeholdergun";
+	level.cabinetguns[5] = "mosin_rifle_scoped_zombie";
+	level.cabinetguns[6] = "mp40_bigammo_mp";
+	level.cabinetguns[7] = "springfield_scoped_zombie_upgraded";
+	level.cabinetguns[8] = "zombie_ppsh";
+	/*level.cabinetguns[8] = "placeholdergun";
 	level.cabinetguns[9] = "placeholdergun";
 	level.cabinetguns[10] = "type100smg_bigammo_mp";*/					//removed because glitched!
 	randomnumb = undefined;
@@ -1100,6 +1101,9 @@ weapon_cabinet_think()
 		case "m1garand":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1_GARAND");
 			break; 
+		case "m1921_thompson":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_DRUM");
+			break;   
 		case "mosin_rifle_bayonet":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_RIFLE_BAYONET");
 			break; 
@@ -1111,13 +1115,13 @@ weapon_cabinet_think()
 			break;
 		case "springfield_scoped_zombie_upgraded":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
-			break; 
-		case "m1921_thompson":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_DRUM");
-			break;     
+			break;   
 		case "walther_prototype":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
 			break;  
+		case "zombie_ppsh":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41_DRUM");
+			break;
 		}
 
 	for(i=0;i<level.keep_ents.size;i++)

@@ -291,14 +291,15 @@ weapon,sp/mine_bouncing_betty
 weapon,sp/mosin_rifle_bayonet
 weapon,sp/mosin_rifle_scoped_zombie
 weapon,sp/mp40_bigammo_mp
+weapon,sp/ppsh_mag
 weapon,sp/svt40
 weapon,sp/tokarev
 weapon,sp/type99_lmg
 weapon,sp/springfield_scoped_zombie_upgraded
 //weapon,sp/walther_prototype
+weapon,sp/m1921_thompson
 weapon,sp/mosin_rifle
 weapon,sp/zombie_bowie_flourish
 weapon,sp/zombie_ppsh
 weapon,sp/perks_a_cola
 weapon,sp/zombie_type100_smg
-weapon,sp/m1921_thompson

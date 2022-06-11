@@ -140,6 +140,9 @@ LANG_ENGLISH        "Type 100"
 REFERENCE           WEAPON_PPSH_41
 LANG_ENGLISH        "PPSh-41"
 
+REFERENCE           WEAPON_PPSH_41_DRUM
+LANG_ENGLISH        "PPSh-41 w/ Drum Mag"
+
 REFERENCE           ZOMBIE_WEAPON_KAR_98K_200
 LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k [Cost: 200]"
 
@@ -226,6 +229,9 @@ LANG_ENGLISH        "Hold ^3&&1 ^7for Type 99 LMG"
 
 REFERENCE           ZOMBIE_TRADE_PPSH_41
 LANG_ENGLISH        "Hold ^3&&1 ^7for PPSh-41"
+
+REFERENCE           ZOMBIE_TRADE_PPSH_41_Drum
+LANG_ENGLISH        "Hold ^3&&1 ^7for PPSh-41 w/ Drum Mag"
 
 REFERENCE           ZOMBIE_TRADE_TYPE_100
 LANG_ENGLISH        "Hold ^3&&1 ^7for Type 100"

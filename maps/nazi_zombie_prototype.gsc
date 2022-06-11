@@ -119,21 +119,23 @@ include_weapons() {
     include_weapon("mine_bouncing_betty");
     include_weapon("mosin_rifle");
     include_weapon("mosin_rifle_bayonet");
+    include_weapon("ppsh_mag");
     include_weapon("svt40");
     //include_weapon( "tesla_gun", /*true,*/ );
     include_weapon("type99_lmg");
     //include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
     include_weapon("zombie_bowie_flourish");
     //include_weapon( "zombie_cymbal_monkey", /*true,*/, ::prototype_cymbal_monkey_weighting_func );
-    include_weapon("zombie_ppsh");
     include_weapon("zombie_type100_smg");
     
     // Weapon cabinet only additions		
+    include_Weapon("m1921_thompson");
     include_weapon("mosin_rifle_scoped_zombie");
     include_weapon("mp40_bigammo_mp");
-    include_weapon("springfield_scoped_zombie_upgraded");
     include_weapon("perks_a_cola");
+    include_weapon("springfield_scoped_zombie_upgraded");
     include_Weapon("m1921_thompson");
+    include_weapon("zombie_ppsh");      //this will become the BO3 PPSH later. this is called a compromise, something you don't seem to know how to do
 
     // Pistols
     include_weapon("colt");     //for Americans
