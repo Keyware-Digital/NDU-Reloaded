@@ -1016,16 +1016,18 @@ fire_sale_powerup(drop_item) {
     wait(30);
     level.zombie_vars["zombie_fire_sale"] = 0;
 
-    for(i=0;i<level.chests.size;i++) {
-        level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950" );
-        level.zombie_treasure_chest_cost = 950;
-        wait 0.05;
-    }
+    if(!isdefined(level.zombie_mystery_box_padlock) || level.zombie_mystery_box_padlock == 0) {
+        for(i=0;i<level.chests.size;i++) {
+            level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950" );
+            level.zombie_treasure_chest_cost = 950;
+            wait 0.05;
+        }
 
-    for(i=0;i<level.weapon_cabs.size;i++) {
-        level.weapon_cabs[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900" );
-        level.zombie_weapon_cabinet_cost = 1900;
-        wait 0.05;
+        for(i=0;i<level.weapon_cabs.size;i++) {
+            level.weapon_cabs[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900" );
+            level.zombie_weapon_cabinet_cost = 1900;
+            wait 0.05;
+        }
     }
 }
 
