@@ -781,6 +781,7 @@ treasure_chest_weapon_spawn( chest, player )
     if(luckynum >= 100 && level.chest_accessed >= 3 && !level.zombie_vars["zombie_fire_sale"])
     {
         chest.boxlocked = true;
+		level.zombie_vars[ "enableFireSale" ] = 0;
         model SetModel("zmb_mdl_padlock");
 		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
