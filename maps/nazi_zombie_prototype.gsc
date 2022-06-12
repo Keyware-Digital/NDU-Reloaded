@@ -194,6 +194,7 @@ include_weapons() {
     // Special
     include_weapon("ray_gun", /*true,*/::prototype_ray_gun_weighting_func);
     //include_weapon("death_hands");
+    include_weapon("zombie_knuckle_crack");
 
     // Weapon limiter
     level.limited_weapons["colt"] = 0;
@@ -209,6 +210,8 @@ include_weapons() {
     level.limited_weapons["mosin_rifle_bayonet"] = 0;
     level.limited_weapons["mp40_bigammo_mp"] = 0;
     level.limited_weapons["perks_a_cola"] = 0;
+    level.limited_weapons["death_hands"] = 0;
+    level.limited_weapons["zombie_knuckle_crack"] = 0;
     //level.limited_weapons["springfield"] = 0;
     level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;
     level.limited_weapons["zombie_ppsh"] = 0;

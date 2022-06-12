@@ -447,6 +447,11 @@ init_models_and_variables_loadout()
 		set_player_specific_death_hands(2, "death_hands");
 		set_player_specific_death_hands(3, "death_hands");
 
+		set_player_specific_knuckle_crack_hands(0, "zombie_knuckle_crack");
+		set_player_specific_knuckle_crack_hands(1, "zombie_knuckle_crack");
+		set_player_specific_knuckle_crack_hands(2, "zombie_knuckle_crack");
+		set_player_specific_knuckle_crack_hands(3, "zombie_knuckle_crack");
+
 		level.campaign = "american";
 		return;
 	}
@@ -566,6 +571,16 @@ set_player_interactive_hands( model )
 set_laststand_pistol( weapon )
 {
 	level.laststandpistol = weapon;
+}
+
+set_death_hands( weapon )
+{
+	level.death_hands = weapon;
+}
+
+set_knuckle_crack_hands( weapon )
+{
+	level.knuckle_crack_hands = weapon;
 }
 
 give_loadout(wait_for_switch_weapon)
@@ -750,8 +765,10 @@ give_model( class )
 			self give_player_specific_switch_weapon();
 			self give_player_specific_laststand_pistol();
 			self give_player_specific_viewmodel();
-			level waittill( "intermission" ); 
-			self give_player_specific_death_hands(); 
+			//level waittill("condition_goes_here");
+			//self give_player_specific_death_hands();
+			//level waittill("condition_goes_here");
+			//self give_player_specific_knuckle_crack_hands();  
             return;
 	}
 	else
@@ -969,9 +986,32 @@ if(IsDefined(level.player_specific_death_hands) && IsDefined(level.player_specif
          self SetViewModel(level.player_specific_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
 		 IPrintLn("death anim");
 }
-else if(IsDefined(level.player_deathhands))
+else if(IsDefined(level.death_hands))
 {
-         self SetViewModel(level.player_deathhands);
+         self SetViewModel(level.death_hands);
+		 IPrintLn("death anim");
+}
+}
+
+set_player_specific_knuckle_crack_hands(num, name)
+{
+if(!IsDefined(level.player_specific_knuckle_crack_hands))
+         level.player_specific_knuckle_crack_hands = [];
+level.player_specific_knuckle_crack_hands[num] = name;
+PrecacheModel(name);
+IPrintLn("death anim");
+}
+
+give_player_specific_knuckle_crack_hands()
+{
+if(IsDefined(level.player_specific_knuckle_crack_hands) && IsDefined(level.player_specific_knuckle_crack_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+{
+         self SetViewModel(level.player_specific_knuckle_crack_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
+		 IPrintLn("death anim");
+}
+else if(IsDefined(level.knuckle_crack_hands))
+{
+         self SetViewModel(level.knuckle_crack_hands);
 		 IPrintLn("death anim");
 }
 }

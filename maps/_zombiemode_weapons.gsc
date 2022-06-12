@@ -8,6 +8,7 @@ init()
 	init_weapon_upgrade();
 	init_weapon_cabinet();
 	init_treasure_chest();
+	init_mystery_box_vars();
 }
 
 add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost  )
@@ -119,8 +120,9 @@ init_weapons()
 	//NDU: Reloaded
 	add_zombie_weapon( "mine_bouncing_betty",					&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
 	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
-	add_zombie_weapon( "perks_a_cola", 							&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",	10000 );
-	add_zombie_weapon( "death_hands", 							&"PROTOTYPE_ZOMBIE_WEAPON_PERKBOTTLE_10000",	10000 );
+	add_zombie_weapon( "perks_a_cola", &"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000",	10000 );
+	add_zombie_weapon( "death_hands", &"PROTOTYPE_ZOMBIE_WEAPON_DEATH_HANDS_10000",	10000 );
+	add_zombie_weapon( "zombie_knuckle_crack", &"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
 	add_zombie_weapon( "ppsh_mag", 								&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
 	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		/*"vox_raygun",*/	6 ); 
 	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
@@ -310,6 +312,11 @@ init_treasure_chest()
 	level.chests = GetEntArray( "treasure_chest_use", "targetname" ); 
 
 	array_thread( level.chests, ::treasure_chest_think ); 
+}
+
+init_mystery_box_vars() {
+	set_zombie_var("zombie_mystery_box_padlock_cost", 1900);
+
 }
 
 set_treasure_chest_cost( cost )
@@ -775,6 +782,7 @@ treasure_chest_weapon_spawn( chest, player )
     {
         chest.boxlocked = true;
         model SetModel("zmb_mdl_padlock");
+		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
         player PlaySound("mysterybox_lock");
         PlaySoundAtPosition("la_vox", chest.origin);
@@ -784,10 +792,10 @@ treasure_chest_weapon_spawn( chest, player )
         while(1)
         {
             chest waittill("trigger", player);
-            if(player.score >= 1900)
+            if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
             {
                 player PlaySound( "purchase" ); 
-                player maps\_zombiemode_score::minus_to_player_score(1900);
+                player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
                 break;
             }
             player PlaySound( "no_purchase" );
@@ -798,6 +806,7 @@ treasure_chest_weapon_spawn( chest, player )
         chest SetHintString("");
         PlaySoundAtPosition( "mysterybox_unlock", chest.origin );
         model Delete();
+		level.zombie_mystery_box_padlock = 0;
         level.chest_accessed = 0;
         self notify( "randomization_done" ); 
         return;
@@ -809,7 +818,6 @@ treasure_chest_weapon_spawn( chest, player )
 
 	self notify( "randomization_done" );
 
-    self notify( "randomization_done" ); 
     self.weapon_string = rand; // here's where the org get it's weapon type for the give function
  
     model thread timer_til_despawn(floatHeight);
