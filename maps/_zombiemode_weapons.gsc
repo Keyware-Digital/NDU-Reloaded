@@ -788,7 +788,7 @@ treasure_chest_weapon_spawn( chest, player )
         PlaySoundAtPosition("mysterybox_lock", chest.origin);
 		wait 1;
         PlaySoundAtPosition("la_vox", chest.origin);
-		wait 2.5;
+		wait 1.5;
         chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
         chest enable_trigger();
         
