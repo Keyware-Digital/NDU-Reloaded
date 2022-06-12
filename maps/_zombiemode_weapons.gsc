@@ -786,6 +786,7 @@ treasure_chest_weapon_spawn( chest, player )
 		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
         player PlaySound("mysterybox_lock");
+		wait 1;
         PlaySoundAtPosition("la_vox", chest.origin);
 		wait 2.5;
         chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
