@@ -121,9 +121,7 @@ include_weapons() {
     include_weapon("mosin_rifle_bayonet");
     include_weapon("ppsh_mp");
     include_weapon("svt40");
-    //include_weapon( "tesla_gun", /*true,*/ );
     include_weapon("type99_lmg");
-    //include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
     include_weapon("zombie_bowie_flourish");
     //include_weapon( "zombie_cymbal_monkey", /*true,*/, ::prototype_cymbal_monkey_weighting_func );
     include_weapon("zombie_type100_smg");
@@ -134,8 +132,13 @@ include_weapons() {
     include_weapon("mp40_bigammo_mp");
     include_weapon("perks_a_cola");
     include_weapon("ppsh41_drum");
-    include_weapon("springfield_scoped_zombie_upgraded");
-    include_Weapon("m1921_thompson");
+    include_weapon("m1921_thompson");
+    include_weapon("zombie_stg44_upgraded");
+
+    // Cut content
+    //include_weapon("springfield_scoped_zombie_upgraded");
+    //include_weapon( "walther_prototype" );	//disabled as we're giving the Germans standard Walthers.
+    //include_weapon( "tesla_gun", /*true,*/ );
 
     // Pistols
     include_weapon("colt");     //for Americans
@@ -211,10 +214,10 @@ include_weapons() {
     level.limited_weapons["mp40_bigammo_mp"] = 0;
     level.limited_weapons["perks_a_cola"] = 0;
     level.limited_weapons["ppsh41_drum"] = 0;
+    //level.limited_weapons["springfield"] = 0;
+    level.limited_weapons["zombie_stg44_upgraded"] = 0;
     level.limited_weapons["death_hands"] = 0;
     level.limited_weapons["zombie_knuckle_crack"] = 0;
-    //level.limited_weapons["springfield"] = 0;
-    level.limited_weapons["springfield_scoped_zombie_upgraded"] = 0;
 }
 
 // Rare weapon(s) weighting
