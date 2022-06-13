@@ -120,17 +120,17 @@ init_weapons()
 	//NDU: Reloaded
 	add_zombie_weapon( "mine_bouncing_betty",					&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
 	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
-	add_zombie_weapon( "perks_a_cola", &"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000",	10000 );
-	add_zombie_weapon( "death_hands", &"PROTOTYPE_ZOMBIE_WEAPON_DEATH_HANDS_10000",	10000 );
-	add_zombie_weapon( "zombie_knuckle_crack", &"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
-	add_zombie_weapon( "ppsh41_drum", 								&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
+	add_zombie_weapon( "perks_a_cola", 							&"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000",	10000 );
+	add_zombie_weapon( "death_hands", 							&"PROTOTYPE_ZOMBIE_WEAPON_DEATH_HANDS_10000",	10000 );
+	add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
+	add_zombie_weapon( "ppsh41_drum", 							&"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
+	add_zombie_weapon( "ppsh_mp",                        		&"ZOMBIE_WEAPON_PPSH_2000",               	2000 );
 	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		/*"vox_raygun",*/	6 ); 
 	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
 	//add_zombie_weapon( "tesla_gun",							&"ZOMBIE_BUY_TESLA", 						10,			/*"vox_tesla",*/	5 );
 	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",              	50,			/*"vox_raygun",*/	6 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
-	add_zombie_weapon( "zombie_ppsh",                           &"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
 
 	// Pistols
@@ -402,92 +402,92 @@ treasure_chest_think(rand)
 
 	switch(weapon_spawn_org.weapon_string)
 		{
-		case "mosin_rifle":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN");
+		case "30cal_bipod":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_30_CAL_BIPOD");
+			break; 
+		case "bar":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_BAR");
+			break; 
+		case "colt":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_COLT");
 			break; 
 		case "dp28":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DP_27");
 			break; 
-		case "svt40":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SVT_40");
-			break;
-		case "type99_lmg":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_99");
-			break;
-		case "ppsh41_drum":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41");
-			break;
-		case "zombie_type100_smg":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_100");
-			break; 
-		case "colt":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_COLT");
-			break;     
-		case "sw_357":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SW357");
-			break;  
-		case "tokarev":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TOKAREV");
-			break;  
-		case "gewehr43":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_GEWEHR_43");
-			break;  
-		case "stg44":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44");
-			break;  
-		case "thompson":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON");
-			break;  
-		case "mp40":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40");
-			break;  
-		case "springfield":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
-			break;  
-		case "ptrs41_zombie":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PTRS_41");
-			break;  
-		case "molotov":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOLOTOV");
-			break;
-		case "m1garand_gl":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1_GARAND_GL");
-			break;  
-		case "m2_flamethrower_zombie":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M2_FLAMETHROWER");
-			break;  
 		case "doublebarrel":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DOUBLEBARREL");
 			break;  
 		case "doublebarrel_sawed_grip":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DOUBLEBARRELSAWED");
 			break; 
-		case "shotgun":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SHOTGUN");
-			break; 
-		case "bar":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_BAR");
-			break; 
 		case "fg42_bipod":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_FG_42");
+			break; 
+		case "gewehr43":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_GEWEHR_43");
+			break; 
+		case "m1garand_gl":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1_GARAND_GL");
+			break;  
+		case "m2_flamethrower_zombie":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M2_FLAMETHROWER");
 			break; 
 		case "mg42_bipod":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MG_42");
 			break; 
-		case "30cal_bipod":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_30_CAL_BIPOD");
+		case "mine_bouncing_betty":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MINE");
+			break; 
+		case "molotov":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOLOTOV");
+			break;
+		case "mosin_rifle":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN");
+			break; 
+		case "mp40":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40");
 			break; 
 		case "panzerschrek":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PANZERSCHREK");
 			break; 
+		case "ppsh_mp":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41");
+			break;
+		case "ptrs41_zombie":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PTRS_41");
+			break;  
 		case "ray_gun":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAY_GUN");
 			break; 
-		case "mine_bouncing_betty":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MINE");
+		case "shotgun":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SHOTGUN");
 			break; 
+		case "springfield":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
+			break;  
+		case "stg44":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44");
+			break;  
+		case "svt40":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SVT_40");
+			break;
+		case "sw_357":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SW357");
+			break;  
+		case "thompson":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON");
+			break;  
+		case "tokarev":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TOKAREV");
+			break;  
+		case "type99_lmg":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_99");
+			break;
 		case "zombie_bowie_flourish":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_BOWIE_KNIFE");
+			break;
+		case "zombie_type100_smg":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_100");
 			break;
 		}
 	
@@ -964,11 +964,11 @@ weapon_cabinet_think()
 	level.cabinetguns[4] = "mosin_rifle_bayonet";
 	level.cabinetguns[5] = "mosin_rifle_scoped_zombie";
 	level.cabinetguns[6] = "mp40_bigammo_mp";
-	level.cabinetguns[7] = "springfield_scoped_zombie_upgraded";
-	level.cabinetguns[8] = "zombie_ppsh";
-	/*level.cabinetguns[8] = "placeholdergun";
-	level.cabinetguns[9] = "placeholdergun";
-	level.cabinetguns[10] = "type100smg_bigammo_mp";*/					//removed because glitched!
+	level.cabinetguns[7] = "ppsh41_drum";
+	level.cabinetguns[8] = "springfield_scoped_zombie_upgraded";
+	/*level.cabinetguns[9] = "placeholdergun";
+	level.cabinetguns[10] = "placeholdergun";
+	level.cabinetguns[11] = "type100smg_bigammo_mp";*/					//removed because glitched!
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
@@ -1126,15 +1126,15 @@ weapon_cabinet_think()
 		case "mp40_bigammo_mp":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40_MAG");
 			break;
+		case "ppsh41_drum":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41_DRUM");
+			break;
 		case "springfield_scoped_zombie_upgraded":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
 			break;   
 		case "walther_prototype":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
 			break;  
-		case "zombie_ppsh":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41_DRUM");
-			break;
 		}
 
 	for(i=0;i<level.keep_ents.size;i++)
