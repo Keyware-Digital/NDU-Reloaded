@@ -1140,7 +1140,7 @@ weapon_cabinet_think()
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
 			break;  
 		case "zombie_stg44_upgraded":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG44_UPGRADED");
 			break;  
 		}
 
@@ -1152,7 +1152,7 @@ weapon_cabinet_think()
 		if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		magicnum = RandomInt(100);
-		if(magicnum <= 100)	//10 out of 100 chance to get a perk
+		if(magicnum <= 10)	//10 out of 100 chance to get a perk
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
