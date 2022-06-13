@@ -114,7 +114,7 @@ REFERENCE           WEAPON_STG_44
 LANG_ENGLISH        "StG 44"
 
 REFERENCE           WEAPON_STG_44_UPGRADED
-LANG_ENGLISH        "Spatz-447 +"
+LANG_ENGLISH        "Spatz-446 b+"
 
 REFERENCE           WEAPON_STIELHANDGRANATE
 LANG_ENGLISH        "M43 Stielhandgranate"
@@ -249,7 +249,7 @@ REFERENCE           ZOMBIE_TRADE_STG_44
 LANG_ENGLISH        "Hold ^3&&1 ^7for StG-44"
 
 REFERENCE           ZOMBIE_TRADE_STG_44_UPGRADED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Spatz-447 +"
+LANG_ENGLISH        "Hold ^3&&1 ^7for Spatz-446 b+"
 
 REFERENCE           ZOMBIE_TRADE_THOMPSON
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1A1 Thompson"
