@@ -119,7 +119,7 @@ include_weapons() {
     include_weapon("mine_bouncing_betty");
     include_weapon("mosin_rifle");
     include_weapon("mosin_rifle_bayonet");
-    include_weapon("ppsh_mag");
+    include_weapon("ppsh41_drum");
     include_weapon("svt40");
     //include_weapon( "tesla_gun", /*true,*/ );
     include_weapon("type99_lmg");
@@ -204,6 +204,7 @@ include_weapons() {
     level.limited_weapons["kar98k_bayonet"] = 0;
     level.limited_weapons["kar98k_scoped_zombie"] = 0;
     level.limited_weapons["m1921_thompson"] = 0;
+    level.limited_weapons["ppsh41_drum"] = 0;
     level.limited_weapons["m1carbine"] = 0;
     level.limited_weapons["m1garand"] = 0;
     level.limited_weapons["mosin_rifle_scoped_zombie"] = 0;

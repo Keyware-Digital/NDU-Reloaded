@@ -123,7 +123,7 @@ init_weapons()
 	add_zombie_weapon( "perks_a_cola", &"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000",	10000 );
 	add_zombie_weapon( "death_hands", &"PROTOTYPE_ZOMBIE_WEAPON_DEATH_HANDS_10000",	10000 );
 	add_zombie_weapon( "zombie_knuckle_crack", &"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
-	add_zombie_weapon( "ppsh_mag", 								&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
+	add_zombie_weapon( "ppsh41_drum", 								&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
 	add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",       1500,		/*"vox_raygun",*/	6 ); 
 	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
 	//add_zombie_weapon( "tesla_gun",							&"ZOMBIE_BUY_TESLA", 						10,			/*"vox_tesla",*/	5 );
@@ -414,7 +414,7 @@ treasure_chest_think(rand)
 		case "type99_lmg":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_99");
 			break;
-		case "ppsh_mag":
+		case "ppsh41_drum":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41");
 			break;
 		case "zombie_type100_smg":
