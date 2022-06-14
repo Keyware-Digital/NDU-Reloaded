@@ -133,7 +133,7 @@ include_weapons() {
     include_weapon("perks_a_cola");
     include_weapon("ppsh41_drum");
     include_weapon("m1921_thompson");
-    include_weapon("zombie_stg44_upgraded");
+    include_weapon("stg44_pap");
 
     // Cut content
     //include_weapon("springfield_scoped_zombie_upgraded");
@@ -215,7 +215,7 @@ include_weapons() {
     level.limited_weapons["perks_a_cola"] = 0;
     level.limited_weapons["ppsh41_drum"] = 0;
     //level.limited_weapons["springfield"] = 0;
-    level.limited_weapons["zombie_stg44_upgraded"] = 0;
+    level.limited_weapons["stg44_pap"] = 0;
     level.limited_weapons["death_hands"] = 0;
     level.limited_weapons["zombie_knuckle_crack"] = 0;
 }

@@ -128,7 +128,7 @@ init_weapons()
 	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
-	add_zombie_weapon( "zombie_stg44_upgraded",    				&"ZOMBIE_WEAPON_STG44_1200", 				1200,		/*"vox_raygun",*/	6 ); 
+	add_zombie_weapon( "stg44_pap",    				&"ZOMBIE_WEAPON_STG44_1200", 				1200,		/*"vox_raygun",*/	6 ); 
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
 	
 
@@ -1162,15 +1162,15 @@ weapon_cabinet_think()
 		}
 	}
 
-    if(!(player hasWeapon("zombie_stg44_upgraded")))	//check if player has the stg
+    if(!(player hasWeapon("stg44_pap")))	//check if player has the stg
     {
 		if(luckyNumCabinet <= 5) //5 out of 100 chance to get a perk
 		{
         weaponmodelstruct Hide();
         wait 0.05;
         weaponmodelstruct Show();
-        weaponmodelstruct SetModel(GetWeaponModel( "zombie_stg44_upgraded" ));
-        chosenweapon = "zombie_stg44_upgraded";
+        weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
+        chosenweapon = "stg44_pap";
 		self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44_UPGRADED");
 		}
     }
@@ -1303,7 +1303,7 @@ takenweapon(chosenweapon)
 		thread play_raygun_stinger();
 	}*/
 
-	if(chosenweapon == "zombie_stg44_upgraded")
+	if(chosenweapon == "stg44_pap")
 	{
 		thread play_raygun_stinger();
 	}
