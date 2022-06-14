@@ -119,7 +119,7 @@ include_weapons() {
     include_weapon("mine_bouncing_betty");
     include_weapon("mosin_rifle");
     include_weapon("mosin_rifle_bayonet");
-    include_weapon("ppsh_mp");
+    include_weapon("ppsh41");
     include_weapon("svt40");
     include_weapon("type99_lmg");
     include_weapon("zombie_bowie_flourish");
