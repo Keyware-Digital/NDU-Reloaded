@@ -133,7 +133,7 @@ init_weapons()
 	
 
 	// Cut content
-	//add_zombie_weapon( "springfield_scoped_zombie_upgraded",    &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",     1500,		/*"vox_raygun",*/	6 ); 
+	//add_zombie_weapon( "springfield_scoped_zombie_upgraded",  &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",     	1500,		/*"vox_raygun",*/	6 ); 
 	//add_zombie_weapon( "tesla_gun",							&"ZOMBIE_BUY_TESLA", 						10,			/*"vox_tesla",*/	5 );
 	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",              	50,			/*"vox_raygun",*/	6 );
 
@@ -961,7 +961,7 @@ weapon_cabinet_think()
 	}
 
 	level.cabinetguns = [];
-	level.cabinetguns[0] = "kar98k_scoped_zombie";						//default
+	level.cabinetguns[0] = "kar98k_scoped_zombie";						// default
 	level.cabinetguns[1] = "kar98k_bayonet";	
 	level.cabinetguns[2] = "m1garand";		
 	level.cabinetguns[3] = "m1921_thompson";						
@@ -969,10 +969,9 @@ weapon_cabinet_think()
 	level.cabinetguns[5] = "mosin_rifle_scoped_zombie";
 	level.cabinetguns[6] = "mp40_bigammo_mp";
 	level.cabinetguns[7] = "ppsh41_drum";
-	level.cabinetguns[8] = "zombie_stg44_upgraded";
-	/*level.cabinetguns[9] = "placeholdergun";
-	level.cabinetguns[10] = "placeholdergun";
-	level.cabinetguns[11] = "type100smg_bigammo_mp";*/					//removed because glitched!
+	/*level.cabinetguns[8] = "bloodhound";
+	level.cabinetguns[9] = "bootlegger_sten";
+	level.cabinetguns[10] = "placeholder;*/
 	randomnumb = undefined;
 	
     doors = getentarray( self.target, "targetname" );
@@ -1139,9 +1138,6 @@ weapon_cabinet_think()
 		case "walther_prototype":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
 			break;  
-		case "zombie_stg44_upgraded":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG44_UPGRADED");
-			break;  
 		}
 
 	for(i=0;i<level.keep_ents.size;i++)
@@ -1151,8 +1147,10 @@ weapon_cabinet_think()
 
 		if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
-		magicnum = RandomInt(100);
-		if(magicnum <= 10)	//10 out of 100 chance to get a perk
+		perknum = RandomInt(100);
+		papnum = RandomInt(100);
+
+		if(perknum <= 10)	//10 out of 100 chance to get a perk
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
@@ -1162,6 +1160,18 @@ weapon_cabinet_think()
 			weaponmodelstruct SetModel(GetWeaponModel( "perks_a_cola" ));
 			chosenweapon = "perks_a_cola";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RANDOM_PERK_BOTTLE");
+		}
+
+		else if(papnum <= 5)
+		{
+			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
+			weaponmodelstruct Hide();
+			//weaponmodelstruct.angles = self.angles + ( 0, 90, 0 );
+			wait 0.05;
+			weaponmodelstruct Show();
+			weaponmodelstruct SetModel(GetWeaponModel( "zombie_stg44_upgraded" ));
+			chosenweapon = "zombie_stg44_upgraded";
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44_UPGRADED");
 		}
 	}
 
@@ -1273,7 +1283,7 @@ takenweapon(chosenweapon)
 
 	if(chosenweapon == "perks_a_cola")
 	{
-		//thread play_raygun_stinger();		//We don't want the stinger sound for a perk bottle.
+		//thread play_raygun_stinger();		// we don't want the stinger sound for a perk bottle.
 		current_weapon = player GetCurrentWeapon();
 		player DisableOffhandWeapons();
 		player DisableWeaponCycling();
@@ -1288,10 +1298,10 @@ takenweapon(chosenweapon)
 		return;
 	}
 
-	if(chosenweapon == "springfield_scoped_zombie_upgraded" )
+	/*if(chosenweapon == "springfield_scoped_zombie_upgraded" )
 	{
 		thread play_raygun_stinger();
-	}
+	}*/
 
 	if(chosenweapon == "zombie_stg44_upgraded" )
 	{
@@ -1378,7 +1388,7 @@ weapon_spawn_think()
 
 		grenadeMax = WeaponMaxAmmo( "stielhandgranate" );
 
-		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		//Trebor's wallbuy nade fix
+		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		// Trebor's wallbuy nade fix
         {
             continue;
 		}

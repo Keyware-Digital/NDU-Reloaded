@@ -2244,9 +2244,9 @@ setup_player_vars()
 		}
 	wait 5; //Cool down time (Change this if you want them to say it less)
 	}
-}*/
+}
 
-/*player_melee()
+player_melee()
 {
 	self endon( "disconnect" );
 	self endon( "death" );
