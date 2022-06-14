@@ -765,24 +765,24 @@ treasure_chest_weapon_spawn( chest, player )
         player thread weapons_death_check();
     }
  
-		// Padlock start
+	// Padlock start
 	
-    luckynum = RandomInt(100);
+    chanceOfPadlock = RandomInt(100);
 
     if(level.chest_accessed >= 10) // Adds 30% chance to get lock
     {
-        luckynum = 100;
+        chanceOfPadlock = 100;
     }
     else if(level.chest_accessed >= 8) // Adds 30% chance to get lock
     {
-        luckynum = luckynum + 30;
+        chanceOfPadlock = chanceOfPadlock + 30;
     }
     else if(level.chest_accessed >= 3) // Adds 15% chance to get lock
     {
-        luckynum = luckynum + 15;
+        chanceOfPadlock = chanceOfPadlock + 15;
     }
 
-    if(luckynum >= 100 && level.chest_accessed >= 3 && !level.zombie_vars["zombie_fire_sale"])
+    if(chanceOfPadlock >= 100 && level.chest_accessed >= 3 && !level.zombie_vars["zombie_fire_sale"])
     {
         chest.boxlocked = true;
 		level.zombie_vars[ "enableFireSale" ] = 0;
@@ -1137,7 +1137,7 @@ weapon_cabinet_think()
 			break;   
 		case "walther_prototype":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
-			break;  
+			break;
 		}
 
 	for(i=0;i<level.keep_ents.size;i++)
@@ -1145,12 +1145,11 @@ weapon_cabinet_think()
         level.keep_ents[i] Hide();
     }
 
-		if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
+	luckyNumCabinet = RandomInt(100);
+	
+	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
-		perknum = RandomInt(100);
-		papnum = RandomInt(100);
-
-		if(perknum <= 10)	//10 out of 100 chance to get a perk
+		if(luckyNumCabinet <= 10)	//10 out of 100 chance to get a perk
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
@@ -1161,19 +1160,20 @@ weapon_cabinet_think()
 			chosenweapon = "perks_a_cola";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RANDOM_PERK_BOTTLE");
 		}
-
-		else if(papnum <= 5)
-		{
-			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
-			weaponmodelstruct Hide();
-			//weaponmodelstruct.angles = self.angles + ( 0, 90, 0 );
-			wait 0.05;
-			weaponmodelstruct Show();
-			weaponmodelstruct SetModel(GetWeaponModel( "zombie_stg44_upgraded" ));
-			chosenweapon = "zombie_stg44_upgraded";
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44_UPGRADED");
-		}
 	}
+
+    if(!(player hasWeapon("zombie_stg44_upgraded")))	//check if player has the stg
+    {
+		if(luckyNumCabinet <= 5) //5 out of 100 chance to get a perk
+		{
+        weaponmodelstruct Hide();
+        wait 0.05;
+        weaponmodelstruct Show();
+        weaponmodelstruct SetModel(GetWeaponModel( "zombie_stg44_upgraded" ));
+        chosenweapon = "zombie_stg44_upgraded";
+		self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44_UPGRADED");
+		}
+    }
 
 	level thread treasure_chest_user_hint( self, player );
 	weaponmodelstruct MoveTo(self.origin - (20,0,6.5),10);
@@ -1303,7 +1303,7 @@ takenweapon(chosenweapon)
 		thread play_raygun_stinger();
 	}*/
 
-	if(chosenweapon == "zombie_stg44_upgraded" )
+	if(chosenweapon == "zombie_stg44_upgraded")
 	{
 		thread play_raygun_stinger();
 	}
@@ -1480,7 +1480,7 @@ weapon_show( player )
 	self.origin = self.origin +( AnglesToForward( ( 0, yaw, 0 ) ) * 8 ); 
 
 	wait( 0.05 ); 
-	self Show(); 
+	self Show();
 
 	play_sound_at_pos( "weapon_show", self.origin, self );
 
