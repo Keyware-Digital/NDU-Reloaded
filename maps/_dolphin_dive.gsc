@@ -15,8 +15,8 @@ setup_player_dolphin_dive()
 
 	self.is_diving = false;
 	self.can_flop = false;
-	dolphin_dive_anim_start = %pb_dive_prone;
-	dolphin_dive_anim_land = %pb_dive_prone_land;
+	dolphin_dive_anim_start = %zmb_player_dolphin_dive_action;
+	dolphin_dive_anim_land = %zmb_player_dolphin_dive_land;
 	
 	while(1)
 	{

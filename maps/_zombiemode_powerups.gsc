@@ -89,7 +89,7 @@ init_powerups() {
 	add_zombie_powerup("nuke", "zmb_pwr_up_nuke", &"ZOMBIE_POWER_UP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
     if(level.zombie_vars[ "enableRandomPerk" ] == 1)
 	{
-		add_zombie_powerup("random_perk", "zmb_pwr_up_random_perk_bottle_world", &"ZOMBIE_POWER_UP_RANDOM_PERK");
+		add_zombie_powerup("random_perk", "zmb_pwr_up_perks_a_cola_world", &"ZOMBIE_POWER_UP_RANDOM_PERK");
 	}
     add_zombie_powerup("bonus_points", "zmb_pwr_up_bonus_points", &"ZOMBIE_POWER_UP_BONUS_POINTS");
     if(level.zombie_vars[ "enableFireSale" ] == 1)
