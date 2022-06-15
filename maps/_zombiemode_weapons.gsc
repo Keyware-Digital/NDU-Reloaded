@@ -124,7 +124,7 @@ init_weapons()
 	add_zombie_weapon( "death_hands", 							&"PROTOTYPE_ZOMBIE_WEAPON_DEATH_HANDS_10000",	10000 );
 	add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
 	add_zombie_weapon( "ppsh41_drum", 							&"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
-	add_zombie_weapon( "ppsh_mp",                        		&"ZOMBIE_WEAPON_PPSH_2000",               	2000 );
+	add_zombie_weapon( "ppsh41",                        		&"ZOMBIE_WEAPON_PPSH_2000",               	2000 );
 	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
@@ -454,7 +454,7 @@ treasure_chest_think(rand)
 		case "panzerschrek":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PANZERSCHREK");
 			break; 
-		case "ppsh_mp":
+		case "ppsh41":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41");
 			break;
 		case "ptrs41_zombie":
