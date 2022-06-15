@@ -1166,12 +1166,13 @@ weapon_cabinet_think()
     {
 		if(luckyNumCabinet <= 5) //5 out of 100 chance to get a perk
 		{
-        weaponmodelstruct Hide();
-        wait 0.05;
-        weaponmodelstruct Show();
-        weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
-        chosenweapon = "stg44_pap";
-		self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44_UPGRADED");
+        	weaponmodelstruct Hide();
+			weaponmodelstruct.angles = self.angles + ( 0, 0, 0 );
+        	wait 0.05;
+        	weaponmodelstruct Show();
+        	weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
+        	chosenweapon = "stg44_pap";
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44_UPGRADED");
 		}
     }
 
