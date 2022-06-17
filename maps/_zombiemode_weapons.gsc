@@ -118,20 +118,23 @@ init_weapons()
 	PrecacheItem( "zombie_melee" );
 
 	// NDU: Reloaded
+	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
 	add_zombie_weapon( "mine_bouncing_betty",					&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
 	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
-	add_zombie_weapon( "perks_a_cola", 							&"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000",	10000 );
-	add_zombie_weapon( "death_hands", 							&"PROTOTYPE_ZOMBIE_WEAPON_DEATH_HANDS_10000",	10000 );
-	add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
-	add_zombie_weapon( "ppsh41_drum", 							&"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "ppsh41",                        		&"ZOMBIE_WEAPON_PPSH_2000",               	2000 );
-	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
+	add_zombie_weapon( "ppsh41_drum", 							&"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
+	add_zombie_weapon( "perks_a_cola", 							&"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000",	10000 );
+	add_zombie_weapon( "stg44_pap",    							&"ZOMBIE_WEAPON_STG44_1200", 				1200,		/*"vox_raygun",*/	6 ); 
+	add_zombie_weapon( "sten_markv",                 			&"ZOMBIE_WEAPON_STEN_MARKV_1000",           1000 );
+	add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
-	add_zombie_weapon( "stg44_pap",    				&"ZOMBIE_WEAPON_STG44_1200", 				1200,		/*"vox_raygun",*/	6 ); 
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
-	
 
+	// NDU: Reloaded Specials
+	add_zombie_weapon( "zombie_death_hands", 					&"PROTOTYPE_ZOMBIE_WEAPON_DEATH_HANDS_10000",	10000 );
+	add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE_WEAPON_KNUCKLE_CRACK_10000",	10000 );
+	
 	// Cut content
 	//add_zombie_weapon( "springfield_scoped_zombie_upgraded",  &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",     	1500,		/*"vox_raygun",*/	6 ); 
 	//add_zombie_weapon( "tesla_gun",							&"ZOMBIE_BUY_TESLA", 						10,			/*"vox_tesla",*/	5 );
@@ -969,8 +972,8 @@ weapon_cabinet_think()
 	level.cabinetguns[5] = "mosin_rifle_scoped_zombie";
 	level.cabinetguns[6] = "mp40_bigammo_mp";
 	level.cabinetguns[7] = "ppsh41_drum";
-	/*level.cabinetguns[8] = "bloodhound";
-	level.cabinetguns[9] = "bootlegger_sten";
+	level.cabinetguns[8] = "sten_markv";
+	/*level.cabinetguns[9] = "bloodhound";
 	level.cabinetguns[10] = "placeholder;*/
 	randomnumb = undefined;
 	
@@ -1132,6 +1135,9 @@ weapon_cabinet_think()
 		case "ppsh41_drum":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41_DRUM");
 			break;
+		case "sten_markv":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STEN");
+			break;   
 		case "springfield_scoped_zombie_upgraded":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
 			break;   
