@@ -1159,6 +1159,7 @@ weapon_cabinet_think()
 			weaponmodelstruct SetModel(GetWeaponModel( "perks_a_cola" ));
 			chosenweapon = "perks_a_cola";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RANDOM_PERK_BOTTLE");
+			level.zombie_vars[ "enableRandomPerk" ] = 1;
 		}
 	}
 

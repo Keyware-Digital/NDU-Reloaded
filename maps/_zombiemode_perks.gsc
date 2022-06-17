@@ -58,6 +58,10 @@ random_perk_powerup_think() {
         {
             level.zombie_vars[ "enableRandomPerk" ] = 0;     
         }
+        else
+        {
+            level.zombie_vars[ "enableRandomPerk" ] = 1;
+        }
     }
 
     if (self maps\_laststand::player_is_in_laststand() || self.perknum == 11) // Max perks
