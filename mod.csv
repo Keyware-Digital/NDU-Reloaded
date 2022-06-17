@@ -66,9 +66,9 @@ rawfile,mp/playeranim.script
 rawfile,mp/playeranimtypes.txt
 rawfile,animtrees/generic_human.atr
 rawfile,animtrees/animations.atr
-sound,mod_ndu,,all_sp
-sound,mod_ndu_powerup,,all_sp
-sound,mod_ndu_menu_music,,all_sp
+sound,mod_ndu
+sound,mod_ndu_powerup
+sound,mod_ndu_menu_music
 sound,music_mainmenu,main_menu
 xanim,ai_zombie_attack_forward_v1
 xanim,ai_zombie_attack_forward_v2
@@ -298,7 +298,6 @@ weapon,sp/svt40
 weapon,sp/tokarev
 weapon,sp/type99_lmg
 weapon,sp/springfield_scoped_zombie_upgraded
-//weapon,sp/walther_prototype
 weapon,sp/m1921_thompson
 weapon,sp/stg44_pap
 weapon,sp/mosin_rifle
@@ -307,3 +306,4 @@ weapon,sp/perks_a_cola
 weapon,sp/zombie_type100_smg
 weapon,sp/death_hands
 weapon,sp/zombie_knuckle_crack
+weapon,sp/sten

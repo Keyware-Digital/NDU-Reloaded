@@ -134,6 +134,9 @@ LANG_ENGLISH        "M1A1 Thompson"
 REFERENCE           WEAPON_THOMPSON_DRUM
 LANG_ENGLISH        "M1921 Thompson"
 
+REFERENCE           WEAPON_STEN
+LANG_ENGLISH        "Sten w/ Extended Mags"
+
 REFERENCE           WEAPON_TOKAREV
 LANG_ENGLISH        "TT-33"
 
@@ -256,6 +259,9 @@ LANG_ENGLISH        "Hold ^3&&1 ^7for M1A1 Thompson"
 
 REFERENCE           ZOMBIE_TRADE_THOMPSON_DRUM
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1921 Thompson"
+
+REFERENCE           ZOMBIE_TRADE_STEN
+LANG_ENGLISH        "Hold ^3&&1 ^7for Sten w/ Extended Mags"
 
 REFERENCE           ZOMBIE_TRADE_TOKAREV
 LANG_ENGLISH        "Hold ^3&&1 ^7for TT-33"
