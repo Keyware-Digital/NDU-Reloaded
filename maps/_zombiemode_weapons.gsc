@@ -1160,6 +1160,8 @@ weapon_cabinet_think()
 			chosenweapon = "perks_a_cola";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RANDOM_PERK_BOTTLE");
 			level.zombie_vars[ "enableRandomPerk" ] = 1;
+			level.randomPerkUnlock = 1;
+
 		}
 	}
 

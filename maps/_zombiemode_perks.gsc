@@ -54,11 +54,11 @@ random_perk_powerup_think() {
     players = GetPlayers();
 
     for (i = 0; i < players.size; i++) {
-        if (!isdefined(players[i].perknum) || players[i].perknum == 11) // Disable Random Perk if everyone has max perks
+        if (players[i].perknum == 11) // Disable Random Perk if everyone has max perks
         {
             level.zombie_vars[ "enableRandomPerk" ] = 0;     
         }
-        else
+        else if (players[i].perknum < 11 && level.randomPerkUnlock == 1)
         {
             level.zombie_vars[ "enableRandomPerk" ] = 1;
         }
