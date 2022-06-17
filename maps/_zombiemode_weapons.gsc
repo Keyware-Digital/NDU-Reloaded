@@ -788,7 +788,7 @@ treasure_chest_weapon_spawn( chest, player )
     if(chanceOfPadlock >= 100 && level.chest_accessed >= 3 && !level.zombie_vars["zombie_fire_sale"])
     {
         chest.boxlocked = true;
-		level.zombie_vars[ "enableFireSale" ] = 0;
+		level.zombie_vars["enableFireSale"] = 0;
         model SetModel("zmb_mdl_padlock");
 		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
@@ -812,7 +812,7 @@ treasure_chest_weapon_spawn( chest, player )
             wait 0.05;
         }
 
-        level.zombie_vars[ "enableFireSale" ] = 1;
+        level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
         PlaySoundAtPosition( "mysterybox_unlock", chest.origin );
 		wait 2.5;
@@ -1166,7 +1166,6 @@ weapon_cabinet_think()
 			chosenweapon = "perks_a_cola";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RANDOM_PERK_BOTTLE");
 			level.zombie_vars[ "enableRandomPerk" ] = 1;
-			level.randomPerkUnlock = 1;
 
 		}
 	}
