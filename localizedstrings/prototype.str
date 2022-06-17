@@ -110,6 +110,9 @@ LANG_ENGLISH        "M1903 Springfield"
 REFERENCE           WEAPON_SPRINGFIELD_SCOPED_UPGRADED
 LANG_ENGLISH        "The Judicator"
 
+REFERENCE           WEAPON_STEN
+LANG_ENGLISH        "Sten w/ Extended Mag"
+
 REFERENCE           WEAPON_STG_44
 LANG_ENGLISH        "StG 44"
 
@@ -133,9 +136,6 @@ LANG_ENGLISH        "M1A1 Thompson"
 
 REFERENCE           WEAPON_THOMPSON_DRUM
 LANG_ENGLISH        "M1921 Thompson"
-
-REFERENCE           WEAPON_STEN
-LANG_ENGLISH        "Sten w/ Extended Mags"
 
 REFERENCE           WEAPON_TOKAREV
 LANG_ENGLISH        "TT-33"
@@ -248,6 +248,9 @@ LANG_ENGLISH        "Hold ^3&&1 ^7for .357 Magnum"
 REFERENCE           ZOMBIE_TRADE_MINE
 LANG_ENGLISH        "Hold ^3&&1 ^7for S-Mine 'Bouncing Betty'"
 
+REFERENCE           ZOMBIE_TRADE_STEN
+LANG_ENGLISH        "Hold ^3&&1 ^7for Sten w/ Extended Mag"
+
 REFERENCE           ZOMBIE_TRADE_STG_44
 LANG_ENGLISH        "Hold ^3&&1 ^7for StG-44"
 
@@ -259,9 +262,6 @@ LANG_ENGLISH        "Hold ^3&&1 ^7for M1A1 Thompson"
 
 REFERENCE           ZOMBIE_TRADE_THOMPSON_DRUM
 LANG_ENGLISH        "Hold ^3&&1 ^7for M1921 Thompson"
-
-REFERENCE           ZOMBIE_TRADE_STEN
-LANG_ENGLISH        "Hold ^3&&1 ^7for Sten w/ Extended Mags"
 
 REFERENCE           ZOMBIE_TRADE_TOKAREV
 LANG_ENGLISH        "Hold ^3&&1 ^7for TT-33"
