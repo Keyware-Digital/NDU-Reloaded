@@ -1135,6 +1135,9 @@ weapon_cabinet_think()
 		case "ppsh41_drum":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41_DRUM");
 			break;
+		case "sten_markv":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STEN");
+			break;   
 		case "springfield_scoped_zombie_upgraded":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
 			break;   
