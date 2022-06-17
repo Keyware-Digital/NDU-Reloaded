@@ -1164,10 +1164,10 @@ weapon_cabinet_think()
 
     if(!(player hasWeapon("stg44_pap")))	//check if player has the stg
     {
-		if(luckyNumCabinet <= 5) //5 out of 100 chance to get a pap'd stg
+		if(luckyNumCabinet <= 5)	//5 out of 100 chance to get a pap'd stg
 		{
         	weaponmodelstruct Hide();
-			//weaponmodelstruct.angles = self.angles + ( 0, 0, 0 );
+			weaponmodelstruct.angles = self.angles + ( -90,90,0 );	//so it gets displayed like the other cabinet weapons.
         	wait 0.05;
         	weaponmodelstruct Show();
         	weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
