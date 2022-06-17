@@ -58,7 +58,7 @@ random_perk_powerup_think() {
         {
             level.zombie_vars[ "enableRandomPerk" ] = 0;     
         }
-        else if (players[i].perknum < 11 && level.randomPerkUnlock == 1)
+        else if (players[i].perknum < 11 && level.zombie_vars["enableRandomPerk"] == 1)
         {
             level.zombie_vars[ "enableRandomPerk" ] = 1;
         }
