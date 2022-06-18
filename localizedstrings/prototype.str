@@ -249,7 +249,7 @@ REFERENCE           ZOMBIE_TRADE_MINE
 LANG_ENGLISH        "Hold ^3&&1 ^7for S-Mine 'Bouncing Betty'"
 
 REFERENCE           ZOMBIE_TRADE_STEN
-LANG_ENGLISH        "Hold ^3&&1 ^7for Sten w/ Extended Mag"
+LANG_ENGLISH        "Hold ^3&&1 ^7for Sten Mk V"
 
 REFERENCE           ZOMBIE_TRADE_STG_44
 LANG_ENGLISH        "Hold ^3&&1 ^7for StG-44"
