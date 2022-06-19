@@ -1624,6 +1624,17 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
 
         return;
     }
+
+    if( level.player_is_speaking != 1 ) {
+    
+        painsound = "plr_pain_" + RandomInt(8);
+        level.player_is_speaking = 1;
+        IPrintLn("Playing pain exert sound!");
+	    self PlaySound(painsound);
+        wait 0.5;
+        IPrintLn("Pain exert sound played");
+        level.player_is_speaking = 0;
+    }
     
     //Nade dmg fix
     if (sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH") {
@@ -2257,7 +2268,7 @@ player_melee()
 		{
 			if( level.player_is_speaking != 1 )
 			{
-                meleesound = "plr_knife_" + RandomInt(2); 
+                meleesound = "plr_knife_" + RandomInt(3); 
 				level.player_is_speaking = 1;
                 //IPrintLn("Playing exert sound!");
                 self PlaySound(meleesound);
