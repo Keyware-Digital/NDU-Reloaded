@@ -125,7 +125,7 @@ init_weapons()
 	add_zombie_weapon( "ppsh41_drum", 							&"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
 	add_zombie_weapon( "perks_a_cola", 							&"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000",	10000 );
 	add_zombie_weapon( "stg44_pap",    							&"ZOMBIE_WEAPON_STG44_1200", 				1200,		/*"vox_raygun",*/	6 ); 
-	add_zombie_weapon( "sten_markv",                 			&"ZOMBIE_WEAPON_STEN_MARKV_1000",           1000 );
+	add_zombie_weapon( "sten_mk5",                 			&"ZOMBIE_WEAPON_STEN_MARKV_1000",           1000 );
 	add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
@@ -228,7 +228,8 @@ init_weapons()
 	// Special                                          	
 	add_zombie_weapon( "mortar_round", 						&"ZOMBIE_WEAPON_MORTARROUND_2000", 			2000 );
 	add_zombie_weapon( "satchel_charge", 					&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000 );
-	add_zombie_weapon( "ray_gun", 							&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );
+	//add_zombie_weapon( "ray_gun", 						&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );
+	add_zombie_weapon( "ray_gun_mk1_v2_bo2", 				&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );
 	
 	// ONLY 1 (OR MORE) OF THE BELOW SHOULD BE ALLOWED
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
@@ -463,7 +464,7 @@ treasure_chest_think(rand)
 		case "ptrs41_zombie":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PTRS_41");
 			break;  
-		case "ray_gun":
+		case "ray_gun_mk1_v2_bo2":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAY_GUN");
 			break; 
 		case "shotgun":
@@ -904,10 +905,11 @@ treasure_chest_give_weapon( weapon_string )
 		} 
 	} 
 
-	if(( weapon_string ==  "ray_gun" ))
+	if(( weapon_string ==  "ray_gun_mk1_v2_bo2" ))
 	{
 		thread play_raygun_stinger();
 	}
+
 
 	if( IsDefined( primaryWeapons ) && !isDefined( current_weapon ) )
 	{
@@ -972,7 +974,7 @@ weapon_cabinet_think()
 	level.cabinetguns[5] = "mosin_rifle_scoped_zombie";
 	level.cabinetguns[6] = "mp40_bigammo_mp";
 	level.cabinetguns[7] = "ppsh41_drum";
-	level.cabinetguns[8] = "sten_markv";
+	level.cabinetguns[8] = "sten_mk5";
 	/*level.cabinetguns[9] = "bloodhound";
 	level.cabinetguns[10] = "placeholder;*/
 	randomnumb = undefined;
@@ -1135,7 +1137,7 @@ weapon_cabinet_think()
 		case "ppsh41_drum":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41_DRUM");
 			break;
-		case "sten_markv":
+		case "sten_mk5":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STEN");
 			break;   
 		case "springfield_scoped_zombie_upgraded":

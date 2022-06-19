@@ -111,7 +111,7 @@ REFERENCE           WEAPON_SPRINGFIELD_SCOPED_UPGRADED
 LANG_ENGLISH        "The Judicator"
 
 REFERENCE           WEAPON_STEN
-LANG_ENGLISH        "Sten Mk.V w/ Extended Mag"
+LANG_ENGLISH        "Sten Mk.5 w/ Extended Mag"
 
 REFERENCE           WEAPON_STG_44
 LANG_ENGLISH        "StG 44"
@@ -249,7 +249,7 @@ REFERENCE           ZOMBIE_TRADE_MINE
 LANG_ENGLISH        "Hold ^3&&1 ^7for S-Mine 'Bouncing Betty'"
 
 REFERENCE           ZOMBIE_TRADE_STEN
-LANG_ENGLISH        "Hold ^3&&1 ^7for Sten Mk. V"
+LANG_ENGLISH        "Hold ^3&&1 ^7for Sten Mk.5"
 
 REFERENCE           ZOMBIE_TRADE_STG_44
 LANG_ENGLISH        "Hold ^3&&1 ^7for StG-44"

@@ -134,7 +134,7 @@ include_weapons() {
     include_weapon("mp40_bigammo_mp");
     include_weapon("perks_a_cola");
     include_weapon("ppsh41_drum");
-    include_weapon("sten_markv");
+    include_weapon("sten_mk5");
     include_weapon("stg44_pap");
 
     // NDU: Reloaded Specials
@@ -199,7 +199,8 @@ include_weapons() {
     include_weapon("panzerschrek");
 
     // Special
-    include_weapon("ray_gun", /*true,*/::prototype_ray_gun_weighting_func);
+    //include_weapon("ray_gun", /*true,*/::prototype_ray_gun_weighting_func);
+    include_weapon("ray_gun_mk1_v2_bo2", /*true,*/::prototype_ray_gun_weighting_func);
 
     // Weapon limiter
     level.limited_weapons["colt"] = 0;
@@ -217,7 +218,7 @@ include_weapons() {
     level.limited_weapons["perks_a_cola"] = 0;
     level.limited_weapons["ppsh41_drum"] = 0;
     //level.limited_weapons["springfield"] = 0;
-    level.limited_weapons["sten_markv"] = 0;
+    level.limited_weapons["sten_mk5"] = 0;
     level.limited_weapons["stg44_pap"] = 0;
     level.limited_weapons["zombie_death_hands"] = 0;
     level.limited_weapons["zombie_knuckle_crack"] = 0;
