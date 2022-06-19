@@ -210,7 +210,7 @@ gr_zmb_wpn_raygun_reload_battery_out_plr,,sfx\wpn\zmb_wpn_raygun\zmb_wpn_raygun_
 gr_zmb_wpn_raygun_reload_battery_in_plr,,sfx\wpn\zmb_wpn_raygun\zmb_wpn_raygun_reload_battery.wav,,0.75,0.8,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,all_sp all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
 gr_zmb_wpn_raygun_reload_close_plr,,sfx\wpn\zmb_wpn_raygun\zmb_wpn_raygun_reload_close.wav,,0.75,0.8,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,all_sp all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
 gr_zmb_wpn_raygun_raise_hit_plr,,sfx\wpn\zmb_wpn_raygun\zmb_wpn_raygun_reload_open.wav,,0.75,0.8,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,all_sp all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
-gr_zmb_wpn_raygun_raise_activate_plr,,sfx\wpn\zmb_wpn_raygun\zmb_wpn_raygun_reload_battery_out.wav,,0.75,0.8,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,all_sp all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
+gr_zmb_wpn_raygun_raise_activate_plr,,sfx\wpn\zmb_wpn_raygun\zmb_wpn_raygun_reload_switch.wav,,0.75,0.8,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,all_sp all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 gr_raygun_reload,,sfx\weapon\ray_gun\wpn_ray_reload_3rd.wav,,0.9,1,50,300,,,,,reload,,curve3,,500,,curve4,0.95,1.05,,3d,,,,,all_sp all_mp,,,,,,,,,,,,,,,,,,40,60,0.55,1,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
