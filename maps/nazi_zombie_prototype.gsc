@@ -243,6 +243,34 @@ prototype_ray_gun_weighting_func() {
     }
 }
 
+/*prototype_cymbal_monkey_weighting_func()
+{
+	players = get_players();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] maps\_zombiemode_weapons::has_weapon_or_upgrade( "zombie_cymbal_monkey" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 10 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}*/
+
 include_powerups() {
     include_powerup("nuke");
     include_powerup("insta_kill");

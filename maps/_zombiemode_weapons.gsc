@@ -88,6 +88,34 @@ prototype_ray_gun_weighting_func()
     }
 }
 
+/*prototype_cymbal_monkey_weighting_func()
+{
+	players = get_players();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] has_weapon_or_upgrade( "zombie_cymbal_monkey" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 10 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}*/
+
 include_zombie_weapon( weapon_name, in_box, weighting_func )
 {
 	if( !IsDefined( level.zombie_include_weapons ) )
@@ -464,6 +492,9 @@ treasure_chest_think(rand)
 		case "ptrs41_zombie":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PTRS_41");
 			break;  
+		/*case "ray_gun":
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAY_GUN");
+			break;*/
 		case "ray_gun_mk1_v2_bo2":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAY_GUN");
 			break; 
@@ -904,6 +935,11 @@ treasure_chest_give_weapon( weapon_string )
 			self TakeWeapon( current_weapon ); 
 		} 
 	} 
+
+	/*if(( weapon_string ==  "ray_gun" ))
+	{
+		thread play_raygun_stinger();
+	}*/
 
 	if(( weapon_string ==  "ray_gun_mk1_v2_bo2" ))
 	{
