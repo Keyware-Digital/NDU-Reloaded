@@ -1629,10 +1629,10 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
     
         painsound = "plr_pain_" + RandomInt(8);
         level.player_is_speaking = 1;
-        IPrintLn("Playing pain exert sound!");
+        //IPrintLn("Playing pain exert sound!");
 	    self PlaySound(painsound);
         wait 0.5;
-        IPrintLn("Pain exert sound played");
+        //IPrintLn("Pain exert sound played");
         level.player_is_speaking = 0;
     }
     
