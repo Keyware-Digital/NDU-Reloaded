@@ -200,7 +200,7 @@ include_weapons() {
 
     // Special
     //include_weapon("ray_gun", /*true,*/::prototype_ray_gun_weighting_func);
-    include_weapon("ray_gun_mk1_v2_bo2", /*true,*/::prototype_ray_gun_weighting_func);
+    include_weapon("ray_gun_mk1_v2", /*true,*/::prototype_ray_gun_weighting_func);
 
     // Weapon limiter
     level.limited_weapons["colt"] = 0;

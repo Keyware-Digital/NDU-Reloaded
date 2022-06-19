@@ -257,7 +257,7 @@ init_weapons()
 	add_zombie_weapon( "mortar_round", 						&"ZOMBIE_WEAPON_MORTARROUND_2000", 			2000 );
 	add_zombie_weapon( "satchel_charge", 					&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000 );
 	//add_zombie_weapon( "ray_gun", 						&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );
-	add_zombie_weapon( "ray_gun_mk1_v2_bo2", 				&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );
+	add_zombie_weapon( "ray_gun_mk1_v2", 				&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );
 	
 	// ONLY 1 (OR MORE) OF THE BELOW SHOULD BE ALLOWED
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
@@ -495,7 +495,7 @@ treasure_chest_think(rand)
 		/*case "ray_gun":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAY_GUN");
 			break;*/
-		case "ray_gun_mk1_v2_bo2":
+		case "ray_gun_mk1_v2":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAY_GUN");
 			break; 
 		case "shotgun":
@@ -941,7 +941,7 @@ treasure_chest_give_weapon( weapon_string )
 		thread play_raygun_stinger();
 	}*/
 
-	if(( weapon_string ==  "ray_gun_mk1_v2_bo2" ))
+	if(( weapon_string ==  "ray_gun_mk1_v2" ))
 	{
 		thread play_raygun_stinger();
 	}
