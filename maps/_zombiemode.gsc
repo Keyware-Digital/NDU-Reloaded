@@ -593,7 +593,7 @@ onPlayerSpawned() {
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
                 //self thread player_reload();
-                //self thread player_melee();
+                self thread player_melee();
             }
         }
 
@@ -2244,7 +2244,7 @@ setup_player_vars()
 		}
 	wait 5; //Cool down time (Change this if you want them to say it less)
 	}
-}
+}*/
 
 player_melee()
 {
@@ -2257,14 +2257,15 @@ player_melee()
 		{
 			if( level.player_is_speaking != 1 )
 			{
-				r = randomIntRange( 1, 7 );
-				sound = maps\_zombiemode_weapons::get_player_index( self );
+                meleesound = "plr_knife_" + RandomInt(2); 
 				level.player_is_speaking = 1;
-				self playsound( "plr_" + sound + "_vox_gen_exert_" + r );
-				wait 1;
+                //IPrintLn("Playing exert sound!");
+                self PlaySound(meleesound);
+				wait 0.5;
+                //IPrintLn("Exert sound played");
 				level.player_is_speaking = 0;
-			}
+            }
 		}
-	wait 1;
+	wait 0.5;
 	}
-}*/
+}
