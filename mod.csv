@@ -1,4 +1,5 @@
-fx,weapon/muzzleflashes/standardflashworld_ug
+fx,weapon/muzzleflashes/fx_raygun_view
+fx,weapon/muzzleflashes/fx_raygun_world
 fx,maps/zombie/fx_mp_zombie_body_dirt_billowing
 fx,maps/zombie/fx_mp_zombie_body_dust_falling
 fx,maps/zombie/fx_mp_zombie_hand_dirt_burst
