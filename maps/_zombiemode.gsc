@@ -1353,8 +1353,8 @@ zombify_player() {
 
     self TakeAllWeapons();
     self starttanning();
-    self GiveWeapon("zombie_melee", 0);
-    self SwitchToWeapon("zombie_melee");
+    self GiveWeapon("knife_melee", 0);
+    self SwitchToWeapon("knife_melee");
     self DisableWeaponCycling();
     self DisableOffhandWeapons();
     self VisionSetNaked("zombie_turned", 1);
@@ -1608,14 +1608,10 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
         return;
     }  
 
-    if( level.player_is_speaking != 1 ) {
-    
+    if(level.player_is_speaking != 1) {
         painsound = "plr_pain_" + RandomInt(8);
         level.player_is_speaking = 1;
-        //IPrintLn("Playing pain exert sound!");
 	    self PlaySound(painsound);
-        //wait 0.5;     // if you uncomment this, it breaks the 'red flash' indicator
-        //IPrintLn("Pain exert sound played");
         level.player_is_speaking = 0;
     }
 
@@ -2262,21 +2258,16 @@ player_melee()
 	self endon( "disconnect" );
 	self endon( "death" );
  
-	for(;;)
+	while(1)
 	{
-		if( self MeleeButtonPressed())
+		if(self isMeleeing() && level.player_is_speaking != 1)
 		{
-			if( level.player_is_speaking != 1 )
-			{
-                meleesound = "plr_knife_" + RandomInt(3); 
-				level.player_is_speaking = 1;
-                //IPrintLn("Playing exert sound!");
-                self PlaySound(meleesound);
-				wait 0.5;
-                //IPrintLn("Exert sound played");
-				level.player_is_speaking = 0;
-            }
+            meleeSound = "plr_knife_" + RandomInt(3); 
+			level.player_is_speaking = 1;
+            self PlaySound(meleeSound);
+            wait 0.5;
+			level.player_is_speaking = 0;
 		}
-	wait 0.5;
+    wait 0.25;   
 	}
 }
