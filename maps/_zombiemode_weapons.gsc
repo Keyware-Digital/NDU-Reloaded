@@ -143,7 +143,7 @@ include_zombie_weapon( weapon_name, in_box, weighting_func )
 init_weapons()
 {
 	// Zombify
-	PrecacheItem( "knife_melee" );
+	PrecacheItem( "zombie_melee" );
 
 	// NDU: Reloaded
 	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );

@@ -526,7 +526,7 @@ watchGrenadeThrow() {
 }
 
 onPlayerConnect() {
-    for (;;) {
+    while (1) {
         level waittill("connecting", player);
 
         player.entity_num = player GetEntityNumber();
@@ -574,7 +574,7 @@ onPlayerDisconnect() {
 onPlayerSpawned() {
     self endon("disconnect");
 
-    for (;;) {
+    while (1) {
         self waittill("spawned_player");
 
         self SetClientDvars("cg_thirdPerson", "0",
@@ -1183,7 +1183,7 @@ round_think() {
     //TUEY Set music state to round 1
     setmusicstate("WAVE_1");
 
-    for (;;) {
+    while (1) {
         //////////////////////////////////////////
         //designed by prod DT#36173
         maxreward = 50 * level.round_number;
@@ -1354,8 +1354,8 @@ zombify_player() {
 
     self TakeAllWeapons();
     self starttanning();
-    self GiveWeapon("knife_melee", 0);
-    self SwitchToWeapon("knife_melee");
+    self GiveWeapon("zombie_melee", 0);
+    self SwitchToWeapon("zombie_melee");
     self DisableWeaponCycling();
     self DisableOffhandWeapons();
     self VisionSetNaked("zombie_turned", 1);
@@ -2261,15 +2261,17 @@ player_melee()
  
 	while(1)
 	{
-		if(self isMeleeing())
+		if(self IsMeleeing()()) //IsMeleeing is used to prevent sound playing repeatedly when holding down the melee key
 		{
+            self AllowMelee(false); //Disables melee when the sound is playing to prevent knife exert sounds from playing when they shouldn't
             if(level.player_is_speaking != 1) {
             meleeSound = "knife_exert_" + RandomInt(3); 
 			level.player_is_speaking = 1;
             PlaySoundAtPosition(meleeSound, self.origin);
-            wait 0.5;
 			level.player_is_speaking = 0;
             }
+            wait 1;
+            self AllowMelee(true);
 		}
     wait 0.25;   
 	}
