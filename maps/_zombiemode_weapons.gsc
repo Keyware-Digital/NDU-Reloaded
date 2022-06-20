@@ -1175,12 +1175,12 @@ weapon_cabinet_think()
 		case "sten_mk5":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STEN");
 			break;   
-		case "springfield_scoped_zombie_upgraded":
+		/*case "springfield_scoped_zombie_upgraded":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
 			break;   
 		case "walther_prototype":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
-			break;
+			break;*/
 		}
 
 	for(i=0;i<level.keep_ents.size;i++)

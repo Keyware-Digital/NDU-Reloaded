@@ -595,6 +595,7 @@ onPlayerSpawned() {
                 self thread player_zombie_breadcrumb();
                 //self thread player_reload();
                 self thread player_melee();
+                self thread player_grenade_throw();
             }
         }
 
@@ -2261,18 +2262,36 @@ player_melee()
  
 	while(1)
 	{
-		if(self IsMeleeing()) //IsMeleeing is used to prevent sound playing repeatedly when holding down the melee key
-		{
-            self AllowMelee(false); //Disables melee when the sound is playing to prevent knife exert sounds from playing when they shouldn't
+		if(self IsMeleeing()) // IsMeleeing is used to prevent sound playing repeatedly when holding down the melee key
+            //self AllowMelee(false); // Disables melee when the sound is playing to prevent knife exert sounds from playing when they shouldn't
             if(level.player_is_speaking != 1) {
             meleeSound = "knife_exert_" + RandomInt(3); 
 			level.player_is_speaking = 1;
             PlaySoundAtPosition(meleeSound, self.origin);
 			level.player_is_speaking = 0;
             }
-            wait 1;
-            self AllowMelee(true);
+            wait 0.75;      //seems more responsive than 1.0
+            //self AllowMelee(true);        // temporarily disabled because it causes melee sound to play perpetually
 		}
     wait 0.25;   
-	}
 }
+
+player_grenade_throw()
+{
+	self endon( "disconnect" );
+	self endon( "death" );
+ 
+	while(1)
+	{
+		if(self IsThrowingGrenade())
+            if(level.player_is_speaking != 1) {
+            grenadeSound = "grenade_throw_" + RandomInt(6); 
+			level.player_is_speaking = 1;
+            PlaySoundAtPosition(grenadeSound, self.origin);
+			level.player_is_speaking = 0;
+            }
+            wait 1;
+		}
+    wait 0.25;   
+}
+
