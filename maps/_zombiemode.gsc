@@ -478,6 +478,7 @@ init_animscripts() {
 
 init_player_config() {
     set_zombie_var("dolphin_dive", 1);
+    level.player_is_speaking = 0;
 }
 
 // Handles the intro screen
@@ -1609,9 +1610,9 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
     }  
 
     if(level.player_is_speaking != 1) {
-        painsound = "plr_pain_" + RandomInt(8);
+        painSound = "pain_" + RandomInt(8);
         level.player_is_speaking = 1;
-	    self PlaySound(painsound);
+	    PlaySoundAtPosition(painSound, self.origin);
         level.player_is_speaking = 0;
     }
 
@@ -2260,13 +2261,15 @@ player_melee()
  
 	while(1)
 	{
-		if(self isMeleeing() && level.player_is_speaking != 1)
+		if(self isMeleeing())
 		{
-            meleeSound = "plr_knife_" + RandomInt(3); 
+            if(level.player_is_speaking != 1) {
+            meleeSound = "knife_exert_" + RandomInt(3); 
 			level.player_is_speaking = 1;
-            self PlaySound(meleeSound);
+            PlaySoundAtPosition(meleeSound, self.origin);
             wait 0.5;
 			level.player_is_speaking = 0;
+            }
 		}
     wait 0.25;   
 	}
