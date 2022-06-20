@@ -2218,7 +2218,7 @@ setup_player_vars()
         players[i] SetClientDvar("sv_cheats", 0);
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
-        if (players[i].playername == "ReubenUKGB" || players[i].playername ==  "TreborUk"){
+        if (players[i].playername == "ReubenUKGB" || players[i].playername ==  "TreborUK"){
             players[i] SetClientDvar("sv_cheats", 1);
             players[i] maps\_zombiemode_score::add_to_player_score(100000);
         }
