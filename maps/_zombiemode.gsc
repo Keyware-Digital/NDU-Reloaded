@@ -2261,7 +2261,7 @@ player_melee()
  
 	while(1)
 	{
-		if(self IsMeleeing()()) //IsMeleeing is used to prevent sound playing repeatedly when holding down the melee key
+		if(self IsMeleeing()) //IsMeleeing is used to prevent sound playing repeatedly when holding down the melee key
 		{
             self AllowMelee(false); //Disables melee when the sound is playing to prevent knife exert sounds from playing when they shouldn't
             if(level.player_is_speaking != 1) {
