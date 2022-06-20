@@ -826,7 +826,7 @@ treasure_chest_weapon_spawn( chest, player )
         PlaySoundAtPosition("mysterybox_lock", chest.origin);
 		wait 1;
         PlaySoundAtPosition("la_vox", chest.origin);
-		wait 1.5;
+		wait 1;
         chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
         chest enable_trigger();
         
@@ -846,7 +846,7 @@ treasure_chest_weapon_spawn( chest, player )
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
         PlaySoundAtPosition( "mysterybox_unlock", chest.origin );
-		wait 2.5;
+		wait 1;
         model Delete();
 		level.zombie_mystery_box_padlock = 0;
         level.chest_accessed = 0;
