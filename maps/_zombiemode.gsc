@@ -1608,6 +1608,17 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
         return;
     }  
 
+    if( level.player_is_speaking != 1 ) {
+    
+        painsound = "plr_pain_" + RandomInt(8);
+        level.player_is_speaking = 1;
+        //IPrintLn("Playing pain exert sound!");
+	    self PlaySound(painsound);
+        //wait 0.5;     // if you uncomment this, it breaks the 'red flash' indicator
+        //IPrintLn("Pain exert sound played");
+        level.player_is_speaking = 0;
+    }
+
     if (self HasPerk("specialty_detectexplosive") &&
         (sMeansOfDeath == "MOD_GRENADE_SPLASH" ||
             sMeansOfDeath == "MOD_GRENADE" ||
@@ -1623,17 +1634,6 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
         }
 
         return;
-    }
-
-    if( level.player_is_speaking != 1 ) {
-    
-        painsound = "plr_pain_" + RandomInt(8);
-        level.player_is_speaking = 1;
-        //IPrintLn("Playing pain exert sound!");
-	    self PlaySound(painsound);
-        wait 0.5;
-        //IPrintLn("Pain exert sound played");
-        level.player_is_speaking = 0;
     }
     
     //Nade dmg fix
