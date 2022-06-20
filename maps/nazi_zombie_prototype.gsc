@@ -123,8 +123,8 @@ include_weapons() {
     include_weapon("zombie_bowie_flourish");
     //include_weapon( "zombie_cymbal_monkey", /*true,*/, ::prototype_cymbal_monkey_weighting_func );
     include_weapon("zombie_type100_smg");
-    //include_weapon("zombie_death_hands");
-    include_weapon("zombie_knuckle_crack");
+    //include_weapon("death_hands");
+    //include_weapon("knuckle_crack_hands");
 
     // Weapon cabinet only additions	
     include_weapon("kar98k_bayonet");	
@@ -220,8 +220,8 @@ include_weapons() {
     //level.limited_weapons["springfield"] = 0;
     level.limited_weapons["sten_mk5"] = 0;
     level.limited_weapons["stg44_pap"] = 0;
-    level.limited_weapons["zombie_death_hands"] = 0;
-    level.limited_weapons["zombie_knuckle_crack"] = 0;
+    //level.limited_weapons["death_hands"] = 0;
+    //level.limited_weapons["knuckle_crack_hands"] = 0;
 }
 
 // Rare weapon(s) weighting

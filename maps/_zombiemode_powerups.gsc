@@ -55,7 +55,7 @@ init_powerup_vars() {
     set_zombie_var("zombie_powerup_drop_increment", 2000); // lower this to make drop happen more often
     set_zombie_var("zombie_powerup_drop_max_per_round", 4); // increase this to make drop happen more often
     set_zombie_var("enableFireSale", 0);
-    set_zombie_var("enableRandomPerk", 1);  
+    set_zombie_var("enableRandomPerk", 0);  
 }
 
 init_powerup_effects() {
@@ -81,7 +81,7 @@ init_precache() {
 init_powerups() {
 
     // Random Drops
-    //add_zombie_powerup("double_points", "zmb_pwr_up_double_points", &"ZOMBIE_POWER_UP_DOUBLE_POINTS");
+    add_zombie_powerup("double_points", "zmb_pwr_up_double_points", &"ZOMBIE_POWER_UP_DOUBLE_POINTS");
     //add_zombie_powerup("insta_kill", "zmb_pwr_up_insta_kill", &"ZOMBIE_POWER_UP_INSTA_KILL");
     //add_zombie_powerup("max_ammo", "zmb_pwr_up_max_ammo", &"ZOMBIE_POWER_UP_MAX_AMMO");
     //add_zombie_powerup("carpenter", "zmb_pwr_up_carpenter", &"ZOMBIE_POWER_UP_CARPENTER");

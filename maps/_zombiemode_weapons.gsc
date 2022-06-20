@@ -154,14 +154,13 @@ init_weapons()
 	add_zombie_weapon( "perks_a_cola", 							&"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000",	10000 );
 	add_zombie_weapon( "stg44_pap",    							&"ZOMBIE_WEAPON_STG44_1200", 				1200,		/*"vox_raygun",*/	6 ); 
 	add_zombie_weapon( "sten_mk5",                 			&"ZOMBIE_WEAPON_STEN_MARKV_1000",           1000 );
-	add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
 	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
 	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
 	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
 
 	// NDU: Reloaded Specials
-	add_zombie_weapon( "zombie_death_hands", 					&"PROTOTYPE_ZOMBIE_WEAPON_DEATH_HANDS_10000",	10000 );
-	add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE_WEAPON_KNUCKLE_CRACK_10000",	10000 );
+	//add_zombie_weapon( "death_hands", 					&"PROTOTYPE_ZOMBIE_DEATH_HANDS_10000",	10000 );
+	//add_zombie_weapon( "knuckle_crack_hands", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
 	
 	// Cut content
 	//add_zombie_weapon( "springfield_scoped_zombie_upgraded",  &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",     	1500,		/*"vox_raygun",*/	6 ); 
@@ -1203,7 +1202,7 @@ weapon_cabinet_think()
 			weaponmodelstruct SetModel(GetWeaponModel( "perks_a_cola" ));
 			chosenweapon = "perks_a_cola";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RANDOM_PERK_BOTTLE");
-			level.zombie_vars[ "enableRandomPerk" ] = 1;
+			level.zombie_vars["enableRandomPerk"] = 1;
 
 		}
 	}
