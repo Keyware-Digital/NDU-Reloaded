@@ -479,7 +479,6 @@ init_animscripts() {
 init_player_config() {
     set_zombie_var("dolphin_dive", 1);
     level.player_is_speaking = 0;
-    level.playerAmmoSoundEnd = 0;
 }
 
 // Handles the intro screen
@@ -594,7 +593,8 @@ onPlayerSpawned() {
                 // set the initial score on the hud		
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
-                self thread player_ammmo_sounds();
+                self thread player_reload_sounds();
+                self thread player_low_ammmo_sounds();
                 self thread player_lunge_knife_exert_sounds();
                 self thread player_throw_grenade_exert_sounds();
             }
@@ -2227,7 +2227,31 @@ setup_player_vars()
     }
 }
 
-player_ammmo_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
+player_reload_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
+{
+	self endon( "disconnect" );
+	self endon( "death" );
+ 
+	while(1)
+
+	{
+		if(self.reloading == true && level.zombie_total >= 18) //Condition set in nazi_zombie_prototype.gsc via reloading_monitor()
+		{
+            if(level.player_is_speaking != 1) {
+                index = maps\_zombiemode_weapons::get_player_index(self);
+                reloadSound = "_vox_reload_" + RandomInt(2);
+                IPrintLn(index);
+			    level.player_is_speaking = 1;
+                PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
+			    level.player_is_speaking = 0;
+                wait 1.5; //Wait 1.5 seconds to prevent sound from playing more than once per reload
+            }
+		}
+    wait 0.25;   
+	}
+}
+
+player_low_ammmo_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
 {
 	self endon( "disconnect" );
 	self endon( "death" );
@@ -2241,12 +2265,12 @@ player_ammmo_sounds() //We should use this for if the player is about to run out
             ammoClip = self getWeaponAmmoClip(self getCurrentWeapon());
             if(ammoCount < 1) {
                 index = maps\_zombiemode_weapons::get_player_index(self);
-                reloadSound = "_low_ammo_" + RandomInt(1);
+                reloadSound = "_low_ammo";
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
 			    level.player_is_speaking = 0;
                 while(ammoCount == self GetAmmoCount(self getCurrentWeapon())) //Wait for the ammo to change to something other than what we caught during low ammo
-			    wait 0.1;
+			        wait 0.1;
             }
         }
     wait 0.25;   

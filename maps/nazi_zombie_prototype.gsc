@@ -21,6 +21,7 @@ main() {
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
+    array_thread(getPlayers(), ::reloading_monitor);
     maps\_walking_anim::main();
 
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box
@@ -289,4 +290,17 @@ health_show() {
         //IPrintLn(players[0].health);
         wait 0.3;
     }
+}
+
+reloading_monitor()
+{
+	while(1)
+	{
+		self.reloading = false;
+		self waittill("reload_start");
+		ammo = self getWeaponAmmoClip(self getCurrentWeapon()); //get their current ammo during the reload, probably 0
+		self.reloading = true;
+		while(ammo == self getWeaponAmmoClip(self getCurrentWeapon())) //wait for the ammo to change to something other than what we caught during the reload
+			wait 0.1;
+	}
 }
