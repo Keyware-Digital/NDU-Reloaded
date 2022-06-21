@@ -594,8 +594,8 @@ onPlayerSpawned() {
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
                 //self thread player_reload();
-                self thread player_melee();
-                self thread player_grenade_throw();
+                self thread player_lunge_knife_exert_sounds();
+                self thread player_throw_grenade_exert_sounds();
             }
         }
 
@@ -2255,28 +2255,31 @@ setup_player_vars()
 	}
 }*/
 
-player_melee()
+player_lunge_knife_exert_sounds()
 {
 	self endon( "disconnect" );
 	self endon( "death" );
  
 	while(1)
+
 	{
-		if(self IsMeleeing()) // IsMeleeing is used to prevent sound playing repeatedly when holding down the melee key
-            //self AllowMelee(false); // Disables melee when the sound is playing to prevent knife exert sounds from playing when they shouldn't
+		if(self IsMeleeing()) //IsMeleeing is used to prevent sound playing repeatedly when holding down the melee key
+		{
             if(level.player_is_speaking != 1) {
-            meleeSound = "knife_exert_" + RandomInt(3); 
-			level.player_is_speaking = 1;
-            PlaySoundAtPosition(meleeSound, self.origin);
-			level.player_is_speaking = 0;
+                self AllowMelee(false); //Disables melee when the sound is playing to prevent the sound from playing if melee is used too quickly
+                meleeSound = "knife_exert_" + RandomInt(3); 
+			    level.player_is_speaking = 1;
+                PlaySoundAtPosition(meleeSound, self.origin);
+			    level.player_is_speaking = 0;
+                self AllowMelee(true); //Can melee again
+                wait 1; //Wait one second to sync sound with meleeing to prevent extra sounds playing
             }
-            wait 0.75;      //seems more responsive than 1.0
-            //self AllowMelee(true);        // temporarily disabled because it causes melee sound to play perpetually
 		}
     wait 0.25;   
+	}
 }
 
-player_grenade_throw()
+player_throw_grenade_exert_sounds()
 {
 	self endon( "disconnect" );
 	self endon( "death" );
@@ -2284,14 +2287,18 @@ player_grenade_throw()
 	while(1)
 	{
 		if(self IsThrowingGrenade())
+        {
             if(level.player_is_speaking != 1) {
-            grenadeSound = "grenade_throw_" + RandomInt(6); 
-			level.player_is_speaking = 1;
-            PlaySoundAtPosition(grenadeSound, self.origin);
-			level.player_is_speaking = 0;
+                self DisableOffhandWeapons(); //Disables throwing grenades when the sound is playing to prevent the sound from playing if grenade throwing is used too quickly
+                grenadeSound = "grenade_exert_" + RandomInt(6); 
+			    level.player_is_speaking = 1;
+                PlaySoundAtPosition(grenadeSound, self.origin);
+			    level.player_is_speaking = 0;
+                self EnableOffhandWeapons(); //Can use grenades again
+                wait 1; //Wait one second to sync sound with grenade throwing to prevent extra sounds playing
             }
-            wait 1;
 		}
     wait 0.25;   
+    }
 }
 

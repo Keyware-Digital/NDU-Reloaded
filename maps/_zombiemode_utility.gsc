@@ -1716,12 +1716,6 @@ is_magic_bullet_shield_enabled( ent )
 	return ( IsDefined( ent.magic_bullet_shield ) && ent.magic_bullet_shield == true );
 }
 
-enemy_is_dog()
-{
-	return ( self.type == "dog" );
-}
-
-
 really_play_2D_sound(sound)
 {
 	temp_ent = spawn("script_origin", (0,0,0));

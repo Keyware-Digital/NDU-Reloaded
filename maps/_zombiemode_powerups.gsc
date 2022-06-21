@@ -742,13 +742,6 @@ check_for_instakill(player) {
             player.last_kill_method = "MOD_UNKNOWN";
         }
 
-        /*if( flag( "dog_round" ) )
-        {
-        	self DoDamage( self.health + 666, self.origin, player );
-        	player notify("zombie_killed");
-        }
-        else*/
-
         // Instakill will always gib heads
         players = GetPlayers();
 
@@ -905,14 +898,12 @@ nuke_powerup(drop_item) {
             continue;
         }
 
-        if (i < 5 && !(zombies[i] enemy_is_dog())) {
+        if (i < 5) {
             zombies[i] thread animscripts\death::flame_death_fx();
 
         }
-
-        if (!(zombies[i] enemy_is_dog())) {
-            zombies[i] maps\_zombiemode_spawner::zombie_head_gib();
-        }
+        
+        zombies[i] maps\_zombiemode_spawner::zombie_head_gib();
 
         zombies[i] dodamage(zombies[i].health + 666, zombies[i].origin);
         PlaySoundatposition("nuked", zombies[i].origin);

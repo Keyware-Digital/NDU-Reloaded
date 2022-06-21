@@ -42,6 +42,7 @@ menufile,ui/prototype_main.menu
 menufile,ui/prototype_briefing.menu
 menufile,ui/prototype_options_game_pc.menu
 menufile,ui/prototype_gamesetup_coop.menu
+rawfile,clientscripts/_callbacks.csc
 rawfile,vision/zombie_cosmodrome_divetonuke.vision
 rawfile,bik/prototype_main_menu.bik
 rawfile,bik/prototype_load.bik
