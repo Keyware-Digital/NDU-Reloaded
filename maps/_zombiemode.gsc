@@ -2231,13 +2231,14 @@ player_reload_sounds() //We should use this for if the player is about to run ou
 {
 	self endon( "disconnect" );
 	self endon( "death" );
- 
+
 	while(1)
 
 	{
-		if(self.reloading == true && level.zombie_total >= 12 && level.zombie_too_far_away == 1) //Conditions to enable specific player reload vox
+		if(self.reloading == true && get_enemy_count() + level.zombie_total > 18) //Conditions to enable specific player reload vox
 		{
             if(level.player_is_speaking != 1) {
+                IPrintLn(level.dist);
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 reloadSound = "_vox_reload_" + RandomInt(2);
 			    level.player_is_speaking = 1;
