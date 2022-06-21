@@ -2235,12 +2235,11 @@ player_reload_sounds() //We should use this for if the player is about to run ou
 	while(1)
 
 	{
-		if(self.reloading == true && level.zombie_total >= 18) //Condition set in nazi_zombie_prototype.gsc via reloading_monitor()
+		if(self.reloading == true && level.zombie_total >= 18 && level.zombie_too_far_away == 1) //Conditions to enable specific player reload vox
 		{
             if(level.player_is_speaking != 1) {
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 reloadSound = "_vox_reload_" + RandomInt(2);
-                IPrintLn(index);
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
 			    level.player_is_speaking = 0;

@@ -6,7 +6,8 @@
 init()
 {
 	level.zombie_move_speed = 1; 
-	level.zombie_health = 150; 
+	level.zombie_health = 150;
+	level.max_zombie_dist_for_reload_vox = 500; //One unit is equal to one inch
 
 	zombies = getEntArray( "zombie_spawner", "script_noteworthy" ); 
 	later_rounds = getentarray("later_round_spawners", "script_noteworthy" );
@@ -180,7 +181,8 @@ zombie_spawn_init()
 	self random_tan(); 
 	self set_zombie_run_cycle(); 
 	self thread zombie_think(); 
-	self thread zombie_gib_on_damage(); 
+	self thread zombie_gib_on_damage();
+	self thread zombie_check_distance();
 //	self thread zombie_head_gib();
 	self thread delayed_zombie_eye_glow();	// delayed eye glow for ground crawlers (the eyes floated above the ground before the anim started)
 	self.deathFunction = ::zombie_death_animscript;
@@ -2672,4 +2674,36 @@ get_number_variants(aliasPrefix)
 				return i;
 			}
 		}
+}
+
+zombie_check_distance()
+{
+while(1)
+{
+players = GetPlayers();
+for(i = 0; i < players.size; i++)
+{
+	zombie_distance = Distance(players[i].origin, self.origin);
+	if( zombie_distance <= level.max_zombie_dist_for_reload_vox) //If zombie distance is less than or equal to the set distance
+		{
+			self.too_far_away = true;
+		}
+		else
+		{
+			self.too_far_away = false;
+				break;
+		}
+}
+ 
+if(self.too_far_away == true)
+	{
+		level.zombie_too_far_away = 1;
+	}
+	if(self.too_far_away == false)
+	{
+		level.zombie_too_far_away = 0;
+	}
+ 
+wait 1;
+}
 }
