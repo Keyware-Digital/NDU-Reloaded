@@ -2239,10 +2239,9 @@ player_ammmo_sounds() //We should use this for if the player is about to run out
         if(level.player_is_speaking != 1) {
             ammoCount = self GetAmmoCount(self getCurrentWeapon());
             ammoClip = self getWeaponAmmoClip(self getCurrentWeapon());
-            if(ammoCount == 1) {
+            if(ammoCount < 1) {
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 reloadSound = "_low_ammo_" + RandomInt(1);
-                IPrintLn("test");
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
 			    level.player_is_speaking = 0;
