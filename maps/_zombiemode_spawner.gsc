@@ -7,7 +7,7 @@ init()
 {
 	level.zombie_move_speed = 1; 
 	level.zombie_health = 150;
-	level.max_zombie_dist_for_reload_vox = 500; //One unit is equal to one inch
+	level.max_zombie_dist_for_reload_vox = 250; //One unit is equal to one inch
 
 	zombies = getEntArray( "zombie_spawner", "script_noteworthy" ); 
 	later_rounds = getentarray("later_round_spawners", "script_noteworthy" );
@@ -2678,6 +2678,10 @@ get_number_variants(aliasPrefix)
 
 zombie_check_distance()
 {
+
+self endon("death");
+too_far_away = false;
+wait(5); //Time for zombies to spawn and move around
 while(1)
 {
 players = GetPlayers();
