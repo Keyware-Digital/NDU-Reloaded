@@ -32,10 +32,8 @@ setup_player_dolphin_dive()
 			self setStance("prone");
 			
 			run_velocity = self GetVelocity();
-			rand = randomintrange(0, 8);
-			self PlaySound("plr_" + index + "_vox_gen_exert_" + rand);
-			launch = "launch_exert_" + RandomInt(6);
-			PlaySoundAtPosition(launch, self.origin);
+			launch = "_launch_exert_" + RandomInt(6);
+			PlaySoundAtPosition("plr_" + index + launch, self.origin);
 			self.is_diving = true;
 			self setClientDvar("hide_reload_hud", 1);
 			self setClientDvar("ammocounterhide", 1);
@@ -90,9 +88,9 @@ setup_player_dolphin_dive()
 
 			PlaySoundAtPosition("land_concrete", self.origin);
 
-			land = "land_exert_" + RandomInt(6);
+			land = "_land_exert_" + RandomInt(6);
 
-			PlaySoundAtPosition(land, self.origin);
+			PlaySoundAtPosition("plr_" + index + land, self.origin);
 
 			wait 0.05;
 

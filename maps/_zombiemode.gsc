@@ -593,7 +593,7 @@ onPlayerSpawned() {
                 // set the initial score on the hud		
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
-                //self thread player_reload();
+                //self thread player_reload_sounds();
                 self thread player_lunge_knife_exert_sounds();
                 self thread player_throw_grenade_exert_sounds();
             }
@@ -1611,9 +1611,10 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
     }  
 
     if(level.player_is_speaking != 1) {
-        painSound = "pain_" + RandomInt(8);
+        index = maps\_zombiemode_weapons::get_player_index(self);
+        painSound = "_pain_exert_" + RandomInt(8);
         level.player_is_speaking = 1;
-	    PlaySoundAtPosition(painSound, self.origin);
+	    PlaySoundAtPosition("plr_" + index + painSound, self.origin);
         level.player_is_speaking = 0;
     }
 
@@ -2218,19 +2219,19 @@ setup_player_vars()
         players[i] SetClientDvar("sv_cheats", 0);
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
-        if (players[i].playername == "ReubenUKGB" || players[i].playername ==  "TreborUK"){
+        if (players[i].playername == "ReubenUKGB" || "TreborUK") {
             players[i] SetClientDvar("sv_cheats", 1);
             players[i] maps\_zombiemode_score::add_to_player_score(100000);
         }
     }
 }
 
-/*player_reload()
+/*player_reload_sounds()
 {
 	self endon( "disconnect" );
 	self endon( "death" );
  
-	for(;;)
+	while(1)
 	{
 		self waittill( "reload_start" );
 		wpn = self getCurrentWeapon();
@@ -2263,16 +2264,18 @@ player_lunge_knife_exert_sounds()
 	while(1)
 
 	{
-		if(self IsMeleeing()) //IsMeleeing is used to prevent sound playing repeatedly when holding down the melee key
+		if(self IsMeleeing())
 		{
             if(level.player_is_speaking != 1) {
-                self AllowMelee(false); //Disables melee when the sound is playing to prevent the sound from playing if melee is used too quickly
-                meleeSound = "knife_exert_" + RandomInt(3); 
+                self AllowMelee(false); //Disables melee before sounds play to prevent more than one sound from playing at a time
+                index = maps\_zombiemode_weapons::get_player_index(self);
+                meleeSound = "_knife_exert_" + RandomInt(3);
+                IPrintLn(index);
 			    level.player_is_speaking = 1;
-                PlaySoundAtPosition(meleeSound, self.origin);
+                PlaySoundAtPosition("plr_" + index + meleeSound, self.origin);
 			    level.player_is_speaking = 0;
-                self AllowMelee(true); //Can melee again
-                wait 1; //Wait one second to sync sound with meleeing to prevent extra sounds playing
+                self AllowMelee(true);
+                wait 1; //Wait 1 second to sync sounds with meleeing
             }
 		}
     wait 0.25;   
@@ -2289,13 +2292,14 @@ player_throw_grenade_exert_sounds()
 		if(self IsThrowingGrenade())
         {
             if(level.player_is_speaking != 1) {
-                self DisableOffhandWeapons(); //Disables throwing grenades when the sound is playing to prevent the sound from playing if grenade throwing is used too quickly
-                grenadeSound = "grenade_exert_" + RandomInt(6); 
+                self DisableOffhandWeapons(); //Disables throwing grenades before sounds play to prevent more than one sound from playing at a time 
+                index = maps\_zombiemode_weapons::get_player_index(self);
+                grenadeSound = "_grenade_exert_" + RandomInt(6);
 			    level.player_is_speaking = 1;
-                PlaySoundAtPosition(grenadeSound, self.origin);
+                PlaySoundAtPosition("plr_" + index + grenadeSound, self.origin);
 			    level.player_is_speaking = 0;
-                self EnableOffhandWeapons(); //Can use grenades again
-                wait 1; //Wait one second to sync sound with grenade throwing to prevent extra sounds playing
+                self EnableOffhandWeapons();
+                wait 1.25; //Wait 1.25 seconds to sync sounds with grenade throwing
             }
 		}
     wait 0.25;   
