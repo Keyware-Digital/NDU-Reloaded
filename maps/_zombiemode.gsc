@@ -479,6 +479,7 @@ init_animscripts() {
 init_player_config() {
     set_zombie_var("dolphin_dive", 1);
     level.player_is_speaking = 0;
+    level.playerAmmoSoundEnd = 0;
 }
 
 // Handles the intro screen
@@ -2230,8 +2231,6 @@ player_ammmo_sounds() //We should use this for if the player is about to run out
 {
 	self endon( "disconnect" );
 	self endon( "death" );
- 
-    level.playerAmmoSoundEnd = 0;
 
 	while(1)
 
@@ -2239,14 +2238,16 @@ player_ammmo_sounds() //We should use this for if the player is about to run out
         wait 1;
         if(level.player_is_speaking != 1) {
             ammoCount = self GetAmmoCount(self getCurrentWeapon());
-            if(ammoCount == 1 && level.playerAmmoSoundEnd == 0) {
+            ammoClip = self getWeaponAmmoClip(self getCurrentWeapon());
+            if(ammoCount == 1) {
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 reloadSound = "_low_ammo_" + RandomInt(1);
                 IPrintLn("test");
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
 			    level.player_is_speaking = 0;
-                level.playerAmmoSoundEnd = 1;
+                while(ammoCount == self GetAmmoCount(self getCurrentWeapon())) //Wait for the ammo to change to something other than what we caught during low ammo
+			    wait 0.1;
             }
         }
     wait 0.25;   
