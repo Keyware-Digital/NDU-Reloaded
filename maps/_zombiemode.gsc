@@ -593,7 +593,7 @@ onPlayerSpawned() {
                 // set the initial score on the hud		
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
-                self thread player_reload_sounds();
+                self thread player_ammmo_sounds();
                 self thread player_lunge_knife_exert_sounds();
                 self thread player_throw_grenade_exert_sounds();
             }
@@ -2226,26 +2226,29 @@ setup_player_vars()
     }
 }
 
-player_reload_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
+player_ammmo_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
 {
 	self endon( "disconnect" );
 	self endon( "death" );
  
+    level.playerAmmoSoundEnd = 0;
+
 	while(1)
 
 	{
-		if(self.reloading == true) //Condition set in nazi_zombie_prototype.gsc via reloading_monitor()
-		{
-            if(level.player_is_speaking != 1) {
+        wait 1;
+        if(level.player_is_speaking != 1) {
+            ammoCount = self GetAmmoCount(self getCurrentWeapon());
+            if(ammoCount == 1 && level.playerAmmoSoundEnd == 0) {
                 index = maps\_zombiemode_weapons::get_player_index(self);
-                reloadSound = "_vox_reload_" + RandomInt(2);
-                IPrintLn(index);
+                reloadSound = "_low_ammo_" + RandomInt(1);
+                IPrintLn("test");
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
 			    level.player_is_speaking = 0;
-                wait 1.5; //Wait 1.5 seconds to prevent sound from playing more than once per reload
+                level.playerAmmoSoundEnd = 1;
             }
-		}
+        }
     wait 0.25;   
 	}
 }
@@ -2267,9 +2270,9 @@ player_lunge_knife_exert_sounds()
                 IPrintLn(index);
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + meleeSound, self.origin);
-			    level.player_is_speaking = 0;
                 self AllowMelee(true); //Reenables melee without any increase in melee delay
                 wait 1; //Wait 1 second to sync sounds with meleeing, anything less or more breaks above code
+                level.player_is_speaking = 0;
             }
 		}
     wait 0.25;   
@@ -2291,9 +2294,9 @@ player_throw_grenade_exert_sounds()
                 grenadeSound = "_grenade_exert_" + RandomInt(6);
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + grenadeSound, self.origin);
-			    level.player_is_speaking = 0;
                 self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
                 wait 1.25; //Wait 1.25 seconds to sync sounds with grenade throwing, anything less or more breaks above code
+			    level.player_is_speaking = 0;
             }
 		}
     wait 0.25;   

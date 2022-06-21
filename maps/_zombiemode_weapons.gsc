@@ -90,7 +90,7 @@ prototype_ray_gun_weighting_func()
 
 /*prototype_cymbal_monkey_weighting_func()
 {
-	players = get_players();
+	players = GetPlayers();
 	count = 0;
 	for( i = 0; i < players.size; i++ )
 	{
@@ -602,7 +602,7 @@ treasure_chest_user_hint( trigger, user )
 			break;
 		}
 
-		players = get_players();
+		players = GetPlayers();
 		for( i = 0; i < players.size; i++ )
 		{
 			if( players[i] == user )
@@ -668,7 +668,7 @@ treasure_chest_ChooseRandomWeapon( player )
     if( IsDefined( level.limited_weapons ) )
     {
         keys2 = GetArrayKeys( level.limited_weapons );
-        players = get_players();
+        players = GetPlayers();
         for( q = 0; q < keys2.size; q++ )
         {
             count = 0;
@@ -1292,7 +1292,7 @@ movecabinetguns( cabinetmodel, coord)
 
 play_raygun_stinger()
 {
-	players = get_players();
+	players = GetPlayers();
 	for(i=0;i<players.size;i++)
 	{
 		players[i] PlaySound("raygun_stinger");
