@@ -593,7 +593,7 @@ onPlayerSpawned() {
                 // set the initial score on the hud		
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
-                //self thread player_reload_sounds();
+                self thread player_reload_sounds();
                 self thread player_lunge_knife_exert_sounds();
                 self thread player_throw_grenade_exert_sounds();
             }
@@ -2226,35 +2226,29 @@ setup_player_vars()
     }
 }
 
-/*player_reload_sounds()
+player_reload_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
 {
 	self endon( "disconnect" );
 	self endon( "death" );
  
 	while(1)
+
 	{
-		self waittill( "reload_start" );
-		wpn = self getCurrentWeapon();
-		if( !isDefined( wpn ) || wpn == "" ) //List the weapons you don't want them to say vox when reloading.
+		if(self.reloading == true) //Condition set in nazi_zombie_prototype.gsc via reloading_monitor()
 		{
-			continue;
+            if(level.player_is_speaking != 1) {
+                index = maps\_zombiemode_weapons::get_player_index(self);
+                reloadSound = "_vox_reload_" + RandomInt(2);
+                IPrintLn(index);
+			    level.player_is_speaking = 1;
+                PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
+			    level.player_is_speaking = 0;
+                wait 1.5; //Wait 1.5 seconds to prevent sound from playing more than once per reload
+            }
 		}
-		if( level.player_is_speaking != 1 )
-		{
-			sound = maps\_zombiemode_weapons::get_player_index( self );
-			level.player_is_speaking = 1;
-			self playsound( "plr_" + sound + "_vox_gen_reload_0" );
-			wait 1.5;
-			level.player_is_speaking = 0;
-		}
-		else
-		{
-			wait 0.3;
-			continue;
-		}
-	wait 5; //Cool down time (Change this if you want them to say it less)
+    wait 0.25;   
 	}
-}*/
+}
 
 player_lunge_knife_exert_sounds()
 {
@@ -2267,15 +2261,15 @@ player_lunge_knife_exert_sounds()
 		if(self IsMeleeing())
 		{
             if(level.player_is_speaking != 1) {
-                self AllowMelee(false); //Disables melee before sounds play to prevent more than one sound from playing at a time
+                self AllowMelee(false); //Disables melee during melee and before sounds play to prevent more than one sound from playing at a time
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 meleeSound = "_knife_exert_" + RandomInt(3);
                 IPrintLn(index);
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + meleeSound, self.origin);
 			    level.player_is_speaking = 0;
-                self AllowMelee(true);
-                wait 1; //Wait 1 second to sync sounds with meleeing
+                self AllowMelee(true); //Reenables melee without any increase in melee delay
+                wait 1; //Wait 1 second to sync sounds with meleeing, anything less or more breaks above code
             }
 		}
     wait 0.25;   
@@ -2292,14 +2286,14 @@ player_throw_grenade_exert_sounds()
 		if(self IsThrowingGrenade())
         {
             if(level.player_is_speaking != 1) {
-                self DisableOffhandWeapons(); //Disables throwing grenades before sounds play to prevent more than one sound from playing at a time 
+                self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 grenadeSound = "_grenade_exert_" + RandomInt(6);
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + grenadeSound, self.origin);
 			    level.player_is_speaking = 0;
-                self EnableOffhandWeapons();
-                wait 1.25; //Wait 1.25 seconds to sync sounds with grenade throwing
+                self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
+                wait 1.25; //Wait 1.25 seconds to sync sounds with grenade throwing, anything less or more breaks above code
             }
 		}
     wait 0.25;   
