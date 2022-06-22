@@ -24,6 +24,8 @@ main() {
     array_thread(getPlayers(), ::reloading_monitor);
     maps\_walking_anim::main();
 
+    SetDvar( "perk_altMeleeDamage", 1000 ); // adjusts how much melee damage a player with the perk will do, needs only be set once
+
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box
 	level.pulls_since_last_ray_gun = 0;
 	level.pulls_since_last_tesla_gun = 0;
