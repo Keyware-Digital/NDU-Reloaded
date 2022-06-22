@@ -1454,7 +1454,7 @@ zombie_gib_on_damage()
 		self thread maps\_zombiemode_perks::perks_zombie_hit_effect(amount, attacker, point, type); // also needed in dogs
 
 		// Bowie DMG
-		if(attacker HasPerk("specialty_altmelee") && type == "MOD_MELEE" && !self.damage_done )
+		if(self HasPerk("specialty_altmelee") && type == "MOD_MELEE" && !self.damage_done )
 		{
 		self DoDamage( int(amount * 6), point, attacker, type ); 
 		self.damage_done = false;
