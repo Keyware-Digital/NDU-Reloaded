@@ -2228,7 +2228,7 @@ setup_player_vars()
     }
 }
 
-player_reload_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
+player_reload_sounds()
 {
 	self endon( "disconnect" );
 	self endon( "death" );
@@ -2271,26 +2271,25 @@ player_low_ammmo_sounds() //We should use this for if the player is about to run
 	self endon( "disconnect" );
 	self endon( "death" );
 
-	while(1)
-
-	{
-        wait 1;
-        current_weapon = self getCurrentWeapon();
-        if(level.player_is_speaking != 1) {
-            ammoCount = self GetAmmoCount(current_weapon);
-            ammoClip = self getWeaponAmmoClip(current_weapon);
-            if(ammoCount < 1) {
-                index = maps\_zombiemode_weapons::get_player_index(self);
-                reloadSound = "_low_ammo";
-			    level.player_is_speaking = 1;
-                PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
-			    level.player_is_speaking = 0;
-                while(ammoCount == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
+	    while(1)
+	    {
+            wait 1;
+            if(level.player_is_speaking != 1) {
+                current_weapon = self getCurrentWeapon();
+                ammoCount = self GetAmmoCount(current_weapon);
+                ammoClip = self getWeaponAmmoClip(current_weapon);
+                if(ammoCount < 1 && current_weapon != "none") {
+                    index = maps\_zombiemode_weapons::get_player_index(self);
+                    reloadSound = "_low_ammo";
+			        level.player_is_speaking = 1;
+                    PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
+			        level.player_is_speaking = 0;
+                    while(ammoCount == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
 			        wait 0.1;
+                }
             }
-        }
-    wait 0.25;   
-	}
+            wait 0.25;   
+	    }
 }
 
 player_lunge_knife_exert_sounds()
@@ -2299,7 +2298,6 @@ player_lunge_knife_exert_sounds()
 	self endon( "death" );
  
 	while(1)
-
 	{
 		if(self IsMeleeing())
 		{
