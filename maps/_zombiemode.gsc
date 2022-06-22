@@ -2278,7 +2278,10 @@ player_low_ammmo_sounds() //We should use this for if the player is about to run
                 current_weapon = self getCurrentWeapon();
                 ammoCount = self GetAmmoCount(current_weapon);
                 ammoClip = self getWeaponAmmoClip(current_weapon);
-                if(ammoCount < 1 && current_weapon != "none") {
+                if (current_weapon != "none") {
+                    break;
+                }
+                if(ammoCount < 1) {
                     index = maps\_zombiemode_weapons::get_player_index(self);
                     reloadSound = "_low_ammo";
 			        level.player_is_speaking = 1;
