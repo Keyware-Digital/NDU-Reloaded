@@ -2251,16 +2251,15 @@ player_reload_sounds() //We should use this for if the player is about to run ou
 		    }
 	    }
 
-	    if(self.reloading == true && get_enemy_count() + level.zombie_total >= 12 && level.zombies_are_close == 1) //Play reload vox if reloading, zombie count on the map is greater than or equal to 12 and at least one zombie is positioned 225 inches (18.75 feet) or less from a player
+	    if(self.reloading == true && get_enemy_count() + level.zombie_total >= 4 && level.zombies_are_close == 1) //Play reload vox if reloading and at least four zombies are positioned 225 inches (18.75 feet) or less from a player
 	    {
             if(level.player_is_speaking != 1) {
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 reloadSound = "_vox_reload_" + RandomInt(2);
-                //IPrintLn("Playing reloading vox...");
 			    level.player_is_speaking = 1;
                 PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
 			    level.player_is_speaking = 0;
-                wait 3; //Wait 3 seconds to prevent sound from playing more than once per reload
+                wait 1.5; //Wait 1.5 seconds to prevent sound from playing more than once per reload
             }
 	    }
         wait 0.25;   
