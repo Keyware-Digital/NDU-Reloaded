@@ -2252,7 +2252,7 @@ player_reload_sounds()
 		    }
 	    }
 
-	    if(self.reloading && get_enemy_count() + level.zombie_total >= 6 && level.zombies_are_close == 1) //Play reload vox if reloading and at least four zombies are positioned 225 inches (18.75 feet) or less from a player
+	    if(self.reloading && get_enemy_count() + level.zombie_total >= 6 && level.zombies_are_close == 1) //Play reload vox if reloading and at least six zombies are positioned 225 inches (18.75 feet) or less from a player
 	    {
             if(level.player_is_speaking != 1) {
                 index = maps\_zombiemode_weapons::get_player_index(self);
@@ -2277,7 +2277,7 @@ player_low_ammmo_sounds() //We should use this for if the player is about to run
             wait 1;
             if(level.player_is_speaking != 1) {
                 current_weapon = self getCurrentWeapon();
-                if (current_weapon == "none") {
+                if (current_weapon == "none" || current_weapon == "mine_bouncing_betty")  {
                     break;
                 }
                 totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
