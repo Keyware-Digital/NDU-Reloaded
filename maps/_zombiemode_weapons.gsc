@@ -312,6 +312,13 @@ init_weapon_cabinet()
 }
 
 // returns the trigger hint string for the given weapon
+get_weapon_name( weapon_name )
+{
+	AssertEx( IsDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
+
+	return level.zombie_weapons[weapon_name].weapon_name;
+}
+
 get_weapon_hint( weapon_name )
 {
 	AssertEx( IsDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
@@ -1396,6 +1403,7 @@ weapon_cabinet_door_close( left_or_right )
 
 weapon_spawn_think()
 {
+	weapon_name = get_weapon_name(self.zombie_weapon_upgrade);
 	cost = get_weapon_cost( self.zombie_weapon_upgrade );
 	ammo_cost = get_ammo_cost( self.zombie_weapon_upgrade );
 	is_grenade = (WeaponType( self.zombie_weapon_upgrade ) == "grenade");
@@ -1453,7 +1461,7 @@ weapon_spawn_think()
 					
 					if(!is_grenade)
 					{
-						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
+						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", weapon_name, ammo_cost ); 
 					}
 				}
 			
@@ -1479,7 +1487,7 @@ weapon_spawn_think()
 					self.first_time_triggered = true;
 					if(!is_grenade)
 					{ 
-						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPONCOSTAMMO", cost, ammo_cost ); 
+						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", weapon_name, ammo_cost ); 
 					}
 				}
 				
@@ -1579,47 +1587,50 @@ weapon_give( weapon )
 
 ammo_give( weapon )
 {
-	// We assume before calling this function we already checked to see if the player has this weapon...
+	//We assume before calling this function we already checked to see if the player has this weapon...
 
-	// Should we give ammo to the player
+	//Should we give ammo to the player
 	give_ammo = false; 
-	
-	// get the max allowed ammo on the current weapon
-	stockMax = WeaponMaxAmmo( weapon ); 
-	
-	// Get the current weapon clip/magazine ammo count
-	clipCount = self GetWeaponAmmoClip( weapon ); 
 
-	// Get the current weapon reserve ammo count
-	ammoCount = self getammocount(weapon);
+	//Get the current weapon's total clip/magazine ammo count
+	weaponAmmoMax = WeaponClipSize( weapon );
+	
+	//Get the max allowed ammo on the current weapon
+	weaponMaxAmmo = WeaponMaxAmmo( weapon ); 
+	
+	//Get the current weapon clip/magazine ammo count
+	weaponAmmoCount = self GetWeaponAmmoClip( weapon ); 
 
-	// Check to see if ammo belongs to a primary weapon
+	//Get the current weapon reserve ammo count
+	ammoReserveCount = self GetAmmoCount(weapon);
+
+	//Check to see if ammo belongs to a primary weapon
 	if( weapon != "fraggrenade" && weapon != "stielhandgranate" && weapon != "molotov" )
 	{
 		if( isdefined( weapon ) )  
 		{
 	
-			// compare it with the ammo player actually has, if more or equal just dont give the ammo, else do
-			if(ammoCount + clipcount >= stockMax)	
+			//Compare it with the ammo player actually has, if more or equal just dont give the ammo, else do
+			if(ammoReserveCount + weaponAmmoCount == weaponMaxAmmo)	
 			{
 				give_ammo = false; 
 			}
-			else
+			else if (!(weaponAmmoCount == weaponAmmoMax))
 			{
-				give_ammo = true; // give the ammo to the player
+				give_ammo = true;
 			}
 		}
 				
 	}
 	else
 	{
-		// Ammo belongs to secondary weapon
+		//Ammo belongs to secondary weapon
 		if( self hasweapon( weapon ) )
 		{
-			// Check if the player has less than max stock, if no give ammo
-			if(ammoCount < stockMax)
+			//Check if the player has less than max stock, if no give ammo
+			if(ammoReserveCount < weaponMaxAmmo)
 			{
-				// give the ammo to the player
+				//Give the ammo to the player
 				give_ammo = true; 					
 			}
 		}		

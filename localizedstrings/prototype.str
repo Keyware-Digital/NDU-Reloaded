@@ -287,8 +287,8 @@ LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 10]"
 REFERENCE           ZOMBIE_TRADE_WEAPONS
 LANG_ENGLISH        "Hold ^3&&1 ^7to trade Weapons"
 
-REFERENCE           ZOMBIE_WEAPONCOSTAMMO
-LANG_ENGLISH        "For Weapon [Cost: &&1], Ammo [&&2]"
+REFERENCE           ZOMBIE_WEAPON_COST_AMMO
+LANG_ENGLISH        "Hold ^3F ^7for &&1 ammo [Cost: &&2]"
 
 REFERENCE           ZOMBIE_BUTTON_REWARD_BARRIER
 LANG_ENGLISH        "Hold ^3&&1 ^7to Rebuild Barrier"
