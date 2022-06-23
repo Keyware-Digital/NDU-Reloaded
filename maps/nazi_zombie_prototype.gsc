@@ -118,13 +118,13 @@ include_weapons() {
 
     // NDU: Reloaded (main box additions)
     include_weapon("dp28");
-    include_weapon("mine_bouncing_betty");
+    include_weapon("mine_bouncing_betty", /*true,*/::prototype_betty_weighting_func );
     include_weapon("mosin_rifle");
     include_weapon("ppsh41");
     include_weapon("svt40");
     include_weapon("type99_lmg");
-    include_weapon("zombie_bowie_flourish");
-    //include_weapon( "zombie_cymbal_monkey", /*true,*/, ::prototype_cymbal_monkey_weighting_func );
+    include_weapon("zombie_bowie_flourish", /*true,*/::prototype_bowie_weighting_func );
+    //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func );
     include_weapon("zombie_type100_smg");
     //include_weapon("death_hands");
     //include_weapon("knuckle_crack_hands");
@@ -140,16 +140,14 @@ include_weapons() {
     include_weapon("sten_mk5");
     include_weapon("stg44_pap");
 
-    // NDU: Reloaded Specials
-
     // Cut content
     //include_weapon("springfield_scoped_zombie_upgraded");
-    //include_weapon( "walther_prototype" );
-    //include_weapon( "tesla_gun", /*true,*/ );
+    //include_weapon("walther_prototype" );
+    //include_weapon("tesla_gun", /*true,*/ );
 
     // Pistols
     include_weapon("colt");     //for Americans
-    //include_weapon( "colt_dirty_harry" );
+    //include_weapon("colt_dirty_harry");
     include_weapon("walther");  //for German
     include_weapon("sw_357");
     include_weapon("tokarev");  //for Russian
@@ -263,7 +261,7 @@ prototype_ray_gun_weighting_func() {
 	}
 	else
 	{
-		if( level.round_number < 10 )
+		if( level.round_number < 11 )
 		{
 			return 3;
 		}
@@ -273,6 +271,62 @@ prototype_ray_gun_weighting_func() {
 		}
 	}
 }*/
+
+prototype_bowie_weighting_func()
+{
+	players = get_players();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] maps\_zombiemode_weapons::has_weapon_or_upgrade( "zombie_bowie_flourish" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 10 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}
+
+prototype_betty_weighting_func()
+{
+	players = get_players();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] maps\_zombiemode_weapons::has_weapon_or_upgrade( "mine_bouncing_betty" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 9 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}
 
 include_powerups() {
     include_powerup("nuke");
