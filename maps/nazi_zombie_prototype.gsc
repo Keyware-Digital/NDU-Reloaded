@@ -118,13 +118,13 @@ include_weapons() {
 
     // NDU: Reloaded (main box additions)
     include_weapon("dp28");
-    include_weapon("mine_bouncing_betty", /*true,*/::prototype_betty_weighting_func );
+    include_weapon("mine_bouncing_betty", /*true,*/::prototype_betty_weighting_func);
     include_weapon("mosin_rifle");
     include_weapon("ppsh41");
     include_weapon("svt40");
     include_weapon("type99_lmg");
-    include_weapon("zombie_bowie_flourish", /*true,*/::prototype_bowie_weighting_func );
-    //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func );
+    include_weapon("zombie_bowie_flourish", /*true,*/::prototype_bowie_weighting_func);
+    //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func);
     include_weapon("zombie_type100_smg");
     //include_weapon("death_hands");
     //include_weapon("knuckle_crack_hands");
