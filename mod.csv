@@ -68,6 +68,7 @@ rawfile,mp/playeranim.script
 rawfile,mp/playeranimtypes.txt
 rawfile,animtrees/generic_human.atr
 rawfile,animtrees/animations.atr
+rawfile,shock/zombie_death.shock
 sound,mod_ndu,,all_sp
 sound,mod_ndu_powerup,,all_sp
 sound,mod_ndu_menu_music,,all_sp

@@ -300,9 +300,13 @@ reloading_monitor()
 	{
 		self.reloading = false;
 		self waittill("reload_start");
-		ammo = self getWeaponAmmoClip(self getCurrentWeapon()); //get their current ammo during the reload, probably 0
+        current_weapon = self getCurrentWeapon();
+        if (current_weapon == "none") {
+            break;
+        }
+		ammoClip = self getWeaponAmmoClip(self getCurrentWeapon()); //get their current ammo during the reload, probably 0
 		self.reloading = true;
-		while(ammo == self getWeaponAmmoClip(self getCurrentWeapon())) //wait for the ammo to change to something other than what we caught during the reload
+        while(ammoClip == self getWeaponAmmoClip(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
 			wait 0.1;
 	}
 }
