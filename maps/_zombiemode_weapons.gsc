@@ -1592,30 +1592,27 @@ ammo_give( weapon )
 	//Should we give ammo to the player
 	give_ammo = false; 
 
-	//Get the current weapon's total clip/magazine ammo count
-	weaponAmmoMax = WeaponClipSize( weapon );
-	
-	//Get the max allowed ammo on the current weapon
-	weaponMaxAmmo = WeaponMaxAmmo( weapon ); 
-	
-	//Get the current weapon clip/magazine ammo count
-	weaponAmmoCount = self GetWeaponAmmoClip( weapon ); 
+	defaultMagAmmo = WeaponClipSize(weapon); //default clip size
 
-	//Get the current weapon reserve ammo count
-	ammoReserveCount = self GetAmmoCount(weapon);
+	currentMagAmmo = self GetWeaponAmmoClip(weapon); //current clip size
+
+	currentWeaponAmmo = self GetWeaponAmmoStock(weapon); //current reserve ammo
+	
+	defaultWeaponAmmo = WeaponMaxAmmo(weapon); //default reserve ammo
+
+	totalCurrentWeaponAmmo = self GetAmmoCount(weapon); //current clip + reserve ammo
 
 	//Check to see if ammo belongs to a primary weapon
-	if( weapon != "fraggrenade" && weapon != "stielhandgranate" && weapon != "molotov" )
+	if(weapon != "fraggrenade" && weapon != "stielhandgranate" && weapon != "molotov")
 	{
 		if( isdefined( weapon ) )  
 		{
-	
 			//Compare it with the ammo player actually has, if more or equal just dont give the ammo, else do
-			if(ammoReserveCount + weaponAmmoCount == weaponMaxAmmo)	
+			if(totalCurrentWeaponAmmo == defaultMagAmmo + defaultWeaponAmmo)	
 			{
 				give_ammo = false; 
 			}
-			else if (!(weaponAmmoCount == weaponAmmoMax))
+			else
 			{
 				give_ammo = true;
 			}
@@ -1628,7 +1625,7 @@ ammo_give( weapon )
 		if( self hasweapon( weapon ) )
 		{
 			//Check if the player has less than max stock, if no give ammo
-			if(ammoReserveCount < weaponMaxAmmo)
+			if(currentWeaponAmmo < defaultWeaponAmmo)
 			{
 				//Give the ammo to the player
 				give_ammo = true; 					
