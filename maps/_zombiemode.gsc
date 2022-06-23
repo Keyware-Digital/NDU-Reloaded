@@ -2280,14 +2280,14 @@ player_low_ammmo_sounds() //We should use this for if the player is about to run
                 if (current_weapon == "none") {
                     break;
                 }
-                ammoReserveCount = self GetAmmoCount(current_weapon);
-                if(ammoReserveCount < 1) {
+                totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
+                if(totalCurrentWeaponAmmo < 1) {
                     index = maps\_zombiemode_weapons::get_player_index(self);
-                    reloadSound = "_low_ammo";
+                    reloadSound = "_no_ammo";
 			        level.player_is_speaking = 1;
                     PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
 			        level.player_is_speaking = 0;
-                    while(ammoReserveCount == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
+                    while(totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
 			            wait 0.1;
                 }
             }

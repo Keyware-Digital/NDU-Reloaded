@@ -263,7 +263,7 @@ init_weapons()
 
 	// Precache the padlock
 	PrecacheModel("zmb_mdl_padlock");
-    level.chest_accessed = 0;
+
 }             
 
 add_limited_weapon( weapon_name, amount )
@@ -358,6 +358,7 @@ init_treasure_chest()
 
 init_mystery_box_vars() {
 	set_zombie_var("zombie_mystery_box_padlock_cost", 1900);
+	level.chest_accessed = 0;
 
 }
 
@@ -443,7 +444,7 @@ treasure_chest_think(rand)
 	//Commence hintstring switch for each weapon in the mystery box
 
 	switch(weapon_spawn_org.weapon_string)
-		{
+	{
 		case "30cal_bipod":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_30_CAL_BIPOD");
 			break; 
@@ -534,7 +535,7 @@ treasure_chest_think(rand)
 		case "zombie_type100_smg":
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_100");
 			break;
-		}
+	}
 	
 	self setCursorHint( "HINT_NOICON" ); 
 	
@@ -1403,14 +1404,13 @@ weapon_cabinet_door_close( left_or_right )
 
 weapon_spawn_think()
 {
-	weapon_name = get_weapon_name(self.zombie_weapon_upgrade);
+	weapon_name_ammo_cost = get_weapon_name(self.zombie_weapon_upgrade);
 	cost = get_weapon_cost( self.zombie_weapon_upgrade );
 	ammo_cost = get_ammo_cost( self.zombie_weapon_upgrade );
 	is_grenade = (WeaponType( self.zombie_weapon_upgrade ) == "grenade");
 
-
 	self.first_time_triggered = false; 
-	for( ;; )
+	while(1)
 	{
 		self waittill( "trigger", player ); 		
 		// if not first time and they have the weapon give ammo
@@ -1456,18 +1456,42 @@ weapon_spawn_think()
 				{
 					model = getent( self.target, "targetname" ); 
 //					model show(); 
-					model thread weapon_show( player ); 
-					self.first_time_triggered = true; 
+					model thread weapon_show( player );
+					self.first_time_triggered = true;
 					
 					if(!is_grenade)
 					{
-						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", weapon_name, ammo_cost ); 
+						self SetHintString(weapon_name_ammo_cost);
+						switch(weapon_name_ammo_cost)
+							{
+							case "kar98k":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_KAR_98K", ammo_cost );
+								break; 
+							case "m1carbine":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_M1_CARBINE", ammo_cost );
+								break;
+							case "thompson":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_THOMPSON", ammo_cost );
+								break;  
+							case "doublebarrel":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED", ammo_cost );
+								break;
+							case "bar":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_BAR", ammo_cost );
+								break;
+							case "shotgun":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN", ammo_cost );
+								break;
+							case "doublebarrel_sawed_grip":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP", ammo_cost );
+								break;
+							}
 					}
 				}
 			
 				player maps\_zombiemode_score::minus_to_player_score( cost ); 
 
-				player weapon_give( self.zombie_weapon_upgrade ); 
+				player weapon_give( self.zombie_weapon_upgrade );
 			}
 			else
 			{
@@ -1483,11 +1507,35 @@ weapon_spawn_think()
 				{
 					model = getent( self.target, "targetname" ); 
 //					model show(); 
-					model thread weapon_show( player ); 
+					model thread weapon_show( player );
 					self.first_time_triggered = true;
 					if(!is_grenade)
 					{ 
-						self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", weapon_name, ammo_cost ); 
+						self SetHintString(weapon_name_ammo_cost);
+						switch(weapon_name_ammo_cost)
+							{
+							case "kar98k":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_KAR_98K", ammo_cost );
+								break; 
+							case "m1carbine":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_M1_CARBINE", ammo_cost );
+								break;
+							case "thompson":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_THOMPSON", ammo_cost );
+								break;  
+							case "doublebarrel":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED", ammo_cost );
+								break;
+							case "bar":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_BAR", ammo_cost );
+								break;
+							case "shotgun":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN", ammo_cost );
+								break;
+							case "doublebarrel_sawed_grip":
+							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP", ammo_cost );
+								break;
+							}
 					}
 				}
 				
@@ -1594,10 +1642,6 @@ ammo_give( weapon )
 
 	defaultMagAmmo = WeaponClipSize(weapon); //default clip size
 
-	currentMagAmmo = self GetWeaponAmmoClip(weapon); //current clip size
-
-	currentWeaponAmmo = self GetWeaponAmmoStock(weapon); //current reserve ammo
-	
 	defaultWeaponAmmo = WeaponMaxAmmo(weapon); //default reserve ammo
 
 	totalCurrentWeaponAmmo = self GetAmmoCount(weapon); //current clip + reserve ammo
@@ -1607,7 +1651,7 @@ ammo_give( weapon )
 	{
 		if( isdefined( weapon ) )  
 		{
-			//Compare it with the ammo player actually has, if more or equal just dont give the ammo, else do
+			//Compare player current weapon ammo, if equal to default weapon ammo then don't give ammo, else do
 			if(totalCurrentWeaponAmmo == defaultMagAmmo + defaultWeaponAmmo)	
 			{
 				give_ammo = false; 
@@ -1625,10 +1669,13 @@ ammo_give( weapon )
 		if( self hasweapon( weapon ) )
 		{
 			//Check if the player has less than max stock, if no give ammo
-			if(currentWeaponAmmo < defaultWeaponAmmo)
+			if(totalCurrentWeaponAmmo == defaultMagAmmo + defaultWeaponAmmo)	
 			{
-				//Give the ammo to the player
-				give_ammo = true; 					
+				give_ammo = false; 
+			}
+			else
+			{
+				give_ammo = true;
 			}
 		}		
 	}	
