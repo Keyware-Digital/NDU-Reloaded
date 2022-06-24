@@ -112,7 +112,7 @@ give_bowie(player)
 {
 	self SetPerk( "specialty_altmelee" );
 	
-	player.has_bowie = 1;
+	self.has_bowie = 1;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	plr = "plr_" + index + "_";
 	

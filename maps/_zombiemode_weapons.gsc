@@ -611,7 +611,7 @@ treasure_chest_think(rand)
 				self notify( "user_grabbed_weapon" );
 				if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
 				{
-					if(!user hasperk("specialty_altmelee" || user.has_bowie))
+					if( !user HasPerk("specialty_altmelee") || user.has_bowie)
 					{
 						weapon_spawn_org notify("weapon_grabbed");
 						lid thread treasure_chest_lid_close( self.timedOut );
