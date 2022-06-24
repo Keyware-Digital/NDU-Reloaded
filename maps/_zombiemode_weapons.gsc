@@ -105,7 +105,7 @@ prototype_ray_gun_weighting_func()
 	}
 	else
 	{
-		if( level.round_number < 10 )
+		if( level.round_number < 11 )
 		{
 			return 3;
 		}
@@ -115,6 +115,62 @@ prototype_ray_gun_weighting_func()
 		}
 	}
 }*/
+
+prototype_bowie_weighting_func()
+{
+	players = GetPlayers();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] has_weapon_or_upgrade( "zombie_bowie_flourish" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 10 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}
+
+prototype_betty_weighting_func()
+{
+	players = GetPlayers();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] has_weapon_or_upgrade( "mine_bouncing_betty" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 9 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}
 
 include_zombie_weapon( weapon_name, in_box, weighting_func )
 {
@@ -832,7 +888,7 @@ treasure_chest_weapon_spawn( chest, player )
 		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
         PlaySoundAtPosition("mysterybox_lock", chest.origin);
-		wait 1;
+		wait 1.5;
         PlaySoundAtPosition("la_vox", chest.origin);
 		wait 1;
         chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
@@ -854,7 +910,7 @@ treasure_chest_weapon_spawn( chest, player )
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
         PlaySoundAtPosition( "mysterybox_unlock", chest.origin );
-		wait 1;
+		wait 2.5;
         model Delete();
 		level.zombie_mystery_box_padlock = 0;
         level.chest_accessed = 0;
