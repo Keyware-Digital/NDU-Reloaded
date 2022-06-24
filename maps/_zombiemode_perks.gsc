@@ -255,7 +255,7 @@ phd_fall_damage(iDamage, point, attacker, type)
 
 	explosion = "explode_" + RandomInt(2);
 
-	PlaySoundAtPosition(explosion, self.origin);
+    self PlaySound(explosion);
 	playFx( level._effect["fx_zmb_phdflopper_exp"], self.origin + ( 0, 0, 50 ));
 	self VisionSetNaked("zombie_cosmodrome_divetonuke", 1);
     wait 0.5;

@@ -911,9 +911,9 @@ treasure_chest_weapon_spawn( chest, player )
         model SetModel("zmb_mdl_padlock");
 		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
-        PlaySoundAtPosition("mysterybox_lock", chest.origin);
+		chest PlaySound("mysterybox_lock");
 		wait 1.5;
-        PlaySoundAtPosition("la_vox", chest.origin);
+		chest PlaySound("la_vox");
 		wait 1;
 
 		cost = level.zombie_treasure_chest_cost;
@@ -936,7 +936,7 @@ treasure_chest_weapon_spawn( chest, player )
 
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
-        PlaySoundAtPosition( "mysterybox_unlock", chest.origin );
+		chest PlaySound("mysterybox_unlock");
 		wait 2.5;
         model Delete();
 		level.zombie_mystery_box_padlock = 0;
@@ -1199,8 +1199,8 @@ weapon_cabinet_think()
 	cabinetlaugh = "cabinetbox_lottery_laugh";
 
 	play_sound_at_pos( "open_chest", self.origin );
-	PlaySoundAtPosition(cabinetsong,self.origin);
-	PlaySoundAtPosition(cabinetlaugh,self.origin);
+	self PlaySound(cabinetsong);
+	self PlaySound(cabinetlaugh);
 
 	self thread cabinet_glowfx();
 	

@@ -511,7 +511,7 @@ powerup_setup() {
     self SetModel(struct.model_name);
 
     //TUEY Spawn Powerup
-    PlaySoundatposition("spawn_powerup", self.origin);
+    self PlaySound("spawn_powerup");
 
     self.powerup_name = struct.powerup_name;
     self.hint = struct.hint;
@@ -586,7 +586,7 @@ powerup_grab() {
 
                 wait(0.1);
 
-                PlaySoundatposition("powerup_grabbed", self.origin);
+                self PlaySound("powerup_grabbed");
                 self StopLoopSound();
 
                 self delete();
@@ -906,7 +906,7 @@ nuke_powerup(drop_item) {
         zombies[i] maps\_zombiemode_spawner::zombie_head_gib();
 
         zombies[i] dodamage(zombies[i].health + 666, zombies[i].origin);
-        PlaySoundatposition("nuked", zombies[i].origin);
+        zombies[i] PlaySound("nuked");
     }
 
     playersAlive = maps\_zombiemode::get_players_alive();

@@ -2559,7 +2559,7 @@ zombie_rise_fx(zombie)
 {
 	self thread zombie_rise_dust_fx(zombie);
 	self thread zombie_rise_burst_fx();
-	playsoundatposition ("zombie_spawn", self.origin);
+	zombie PlaySound("zombie_spawn");
 	zombie endon("death");
 	self endon("stop_zombie_rise_fx");
 	wait 1;

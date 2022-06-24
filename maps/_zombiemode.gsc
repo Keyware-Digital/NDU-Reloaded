@@ -594,7 +594,7 @@ onPlayerSpawned() {
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
                 self thread player_reload_sounds();
-                self thread player_low_ammmo_sounds();
+                self thread player_no_ammmo_sounds();
                 self thread player_lunge_knife_exert_sounds();
                 self thread player_throw_grenade_exert_sounds();
             }
@@ -1615,7 +1615,7 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
         index = maps\_zombiemode_weapons::get_player_index(self);
         painSound = "_pain_exert_" + RandomInt(8);
         level.player_is_speaking = 1;
-	    PlaySoundAtPosition("plr_" + index + painSound, self.origin);
+        self PlaySound("plr_" + index + painSound);
         level.player_is_speaking = 0;
     }
 
@@ -2257,7 +2257,7 @@ player_reload_sounds()
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 reloadSound = "_vox_reload_" + RandomInt(2);
 			    level.player_is_speaking = 1;
-                PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
+                self PlaySound("plr_" + index + reloadSound);
 			    level.player_is_speaking = 0;
                 wait 3; //Wait 3 seconds to prevent sound from playing more than once per reload
             }
@@ -2266,7 +2266,7 @@ player_reload_sounds()
 	}
 }
 
-player_low_ammmo_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
+player_no_ammmo_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
 {
 	self endon( "disconnect" );
 	self endon( "death" );
@@ -2282,9 +2282,9 @@ player_low_ammmo_sounds() //We should use this for if the player is about to run
                 totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
                 if(totalCurrentWeaponAmmo < 1) {
                     index = maps\_zombiemode_weapons::get_player_index(self);
-                    reloadSound = "_no_ammo";
+                    noAmmoSound = "_no_ammo";
 			        level.player_is_speaking = 1;
-                    PlaySoundAtPosition("plr_" + index + reloadSound, self.origin);
+                    self PlaySound("plr_" + index + noAmmoSound);
 			        level.player_is_speaking = 0;
                     while(totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
 			            wait 0.1;
@@ -2308,7 +2308,7 @@ player_lunge_knife_exert_sounds()
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 meleeSound = "_knife_exert_" + RandomInt(3);
 			    level.player_is_speaking = 1;
-                PlaySoundAtPosition("plr_" + index + meleeSound, self.origin);
+                self PlaySound("plr_" + index + meleeSound);
                 self AllowMelee(true); //Reenables melee without any increase in melee delay
                 wait 1; //Wait 1 second to sync sounds with meleeing, anything less or more breaks above code
                 level.player_is_speaking = 0;
@@ -2332,7 +2332,7 @@ player_throw_grenade_exert_sounds()
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 grenadeSound = "_grenade_exert_" + RandomInt(6);
 			    level.player_is_speaking = 1;
-                PlaySoundAtPosition("plr_" + index + grenadeSound, self.origin);
+                self PlaySound("plr_" + index + grenadeSound);
                 self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
                 wait 1.25; //Wait 1.25 seconds to sync sounds with grenade throwing, anything less or more breaks above code
 			    level.player_is_speaking = 0;
