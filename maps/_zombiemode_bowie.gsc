@@ -108,11 +108,11 @@ bowie_think()
 	}
 }
 
-give_bowie()
+give_bowie(player)
 {
 	self SetPerk( "specialty_altmelee" );
 	
-	self.has_altmelee = true;	
+	player.has_bowie = 1;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	plr = "plr_" + index + "_";
 	
@@ -136,7 +136,7 @@ bowie_filter( player )	//might not be required
 
 bowie_bay()    // Trebor - we want the bowie to play nicely with bayonets
 {
-    for(;;)
+    while(1)
     {
         current = self getCurrentWeapon();
         if( current == "mosin_rifle_bayonet" || current == "kar98k_bayonet" || current == "bayonet_bayonet")

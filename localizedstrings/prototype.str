@@ -107,9 +107,6 @@ LANG_ENGLISH        "M1897 'Trench Gun'"
 REFERENCE           WEAPON_SPRINGFIELD
 LANG_ENGLISH        "M1903 Springfield"
 
-REFERENCE           WEAPON_SPRINGFIELD_SCOPED_UPGRADED
-LANG_ENGLISH        "The Judicator"
-
 REFERENCE           WEAPON_STEN
 LANG_ENGLISH        "Sten Mk.5 w/ Extended Mag"
 
@@ -149,134 +146,11 @@ LANG_ENGLISH        "Type 100"
 REFERENCE           WEAPON_WALTHER
 LANG_ENGLISH        "P38"
 
-REFERENCE           ZOMBIE_TRADE_30_CAL_BIPOD
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1919 Browning MG"
+REFERENCE           WEAPON_BOWIE
+LANG_ENGLISH        "Bowie Knife"
 
-REFERENCE           ZOMBIE_TRADE_BAR
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1919 BAR w/ Bipod"
-
-REFERENCE           ZOMBIE_TRADE_BOWIE_KNIFE
-LANG_ENGLISH        "Hold ^3&&1 ^7for Bowie Knife"
-
-REFERENCE           ZOMBIE_TRADE_COLT
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1911A1 'Government'"
-
-REFERENCE           ZOMBIE_TRADE_DOUBLEBARREL
-LANG_ENGLISH        "Hold ^3&&1 ^7for Double-Barreled Shotgun"
-
-REFERENCE           ZOMBIE_TRADE_DOUBLEBARRELSAWED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Sawn-Off Shotgun w/ Grip"
-
-REFERENCE           ZOMBIE_TRADE_DP_27
-LANG_ENGLISH        "Hold ^3&&1 ^7for DP-27"
-
-REFERENCE           ZOMBIE_TRADE_FG_42
-LANG_ENGLISH        "Hold ^3&&1 ^7for FG 42"
-
-REFERENCE           ZOMBIE_TRADE_GEWEHR_43
-LANG_ENGLISH        "Hold ^3&&1 ^7for G43"
-
-REFERENCE           ZOMBIE_TRADE_KAR_98K
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k"
-
-REFERENCE           ZOMBIE_TRADE_KAR_98K_BAYONET
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k w/ Bayonet"
-
-REFERENCE           ZOMBIE_TRADE_KAR_98K_SCOPED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Kar98k w/ Scope"
-
-REFERENCE           ZOMBIE_TRADE_M1_GARAND
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1 Garand"
-
-REFERENCE           ZOMBIE_TRADE_M1_GARAND_GL
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1 Garand w/ Grenade Launcher"
-
-REFERENCE           ZOMBIE_TRADE_M2_FLAMETHROWER
-LANG_ENGLISH        "Hold ^3&&1 ^7for M2 Flamethrower"
-
-REFERENCE           ZOMBIE_TRADE_MG_42
-LANG_ENGLISH        "Hold ^3&&1 ^7for MG 42 w/ Bipod"
-
-REFERENCE           ZOMBIE_TRADE_MOLOTOV
-LANG_ENGLISH        "Hold ^3&&1 ^7for Molotov Cocktail"
-
-REFERENCE           ZOMBIE_TRADE_MOSIN
-LANG_ENGLISH        "Hold ^3&&1 ^7for 3-Line 'Mosin' Rifle M1891"
-
-REFERENCE           ZOMBIE_TRADE_MOSIN_RIFLE_BAYONET
-LANG_ENGLISH        "Hold ^3&&1 ^7for 3-Line 'Mosin' Rifle M1891 w/ Bayonet"
-
-REFERENCE           ZOMBIE_TRADE_MOSIN_RIFLE_SCOPED
-LANG_ENGLISH        "Hold ^3&&1 ^7for 3-Line 'Mosin' Rifle M1891 w/ Scope"
-
-REFERENCE           ZOMBIE_TRADE_MP_40
-LANG_ENGLISH        "Hold ^3&&1 ^7for MP 40"
-
-REFERENCE           ZOMBIE_TRADE_MP_40_MAG
-LANG_ENGLISH        "Hold ^3&&1 ^7for MP40/I"
-
-REFERENCE           ZOMBIE_TRADE_PANZERSCHREK
-LANG_ENGLISH        "Hold ^3&&1 ^7for RPzB 54 'Panzerschreck'"
-
-REFERENCE           ZOMBIE_TRADE_PPSH_41
-LANG_ENGLISH        "Hold ^3&&1 ^7for PPSh-41"
-
-REFERENCE           ZOMBIE_TRADE_PPSH_41_Drum
-LANG_ENGLISH        "Hold ^3&&1 ^7for PPSh-41 w/ Drum Mag"
-
-REFERENCE           ZOMBIE_TRADE_PTRS_41
-LANG_ENGLISH        "Hold ^3&&1 ^7for PTRS-41"
-
-REFERENCE           ZOMBIE_TRADE_RANDOM_PERK_BOTTLE
-LANG_ENGLISH        "Hold ^3&&1 ^7to for Random Perk Bottle"
-
-REFERENCE           ZOMBIE_TRADE_RAY_GUN
-LANG_ENGLISH        "Hold ^3&&1 ^7for Ray Gun"
-
-REFERENCE           ZOMBIE_TRADE_SPRINGFIELD
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1903 Springfield"
-
-REFERENCE           ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED
-LANG_ENGLISH        "Hold ^3&&1 ^7for The Judicator"
-
-REFERENCE           ZOMBIE_TRADE_SVT_40
-LANG_ENGLISH        "Hold ^3&&1 ^7for SVT-40"
-
-REFERENCE           ZOMBIE_TRADE_SW357
-LANG_ENGLISH        "Hold ^3&&1 ^7for .357 Magnum"
-
-REFERENCE           ZOMBIE_TRADE_MINE
-LANG_ENGLISH        "Hold ^3&&1 ^7for S-Mine 'Bouncing Betty'"
-
-REFERENCE           ZOMBIE_TRADE_STEN
-LANG_ENGLISH        "Hold ^3&&1 ^7for Sten Mk.5"
-
-REFERENCE           ZOMBIE_TRADE_STG_44
-LANG_ENGLISH        "Hold ^3&&1 ^7for StG-44"
-
-REFERENCE           ZOMBIE_TRADE_STG_44_UPGRADED
-LANG_ENGLISH        "Hold ^3&&1 ^7for Spatz-446 b+"
-
-REFERENCE           ZOMBIE_TRADE_THOMPSON
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1A1 Thompson"
-
-REFERENCE           ZOMBIE_TRADE_THOMPSON_DRUM
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1921 Thompson"
-
-REFERENCE           ZOMBIE_TRADE_TOKAREV
-LANG_ENGLISH        "Hold ^3&&1 ^7for TT-33"
-
-REFERENCE           ZOMBIE_TRADE_TYPE_99
-LANG_ENGLISH        "Hold ^3&&1 ^7for Type 99 LMG"
-
-REFERENCE           ZOMBIE_TRADE_TYPE_100
-LANG_ENGLISH        "Hold ^3&&1 ^7for Type 100"
-
-REFERENCE           ZOMBIE_TRADE_SHOTGUN
-LANG_ENGLISH        "Hold ^3&&1 ^7for M1897 'Trench Gun'"
-
-REFERENCE           ZOMBIE_TRADE_WALTHER
-LANG_ENGLISH        "Hold ^3&&1 ^7for P38"
+REFERENCE           ZOMBIE_TRADE_WEAPONS
+LANG_ENGLISH        "Hold ^3&&1 ^7for &&2"
 
 REFERENCE           ZOMBIE_RANDOM_WEAPON_LOCKED_1900
 LANG_ENGLISH        "Hold ^3&&1 ^7to unlock Mystery Box [Cost: 1900]"
@@ -284,11 +158,8 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to unlock Mystery Box [Cost: 1900]"
 REFERENCE           ZOMBIE_RANDOM_WEAPON_10
 LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 10]"
 
-REFERENCE           ZOMBIE_TRADE_WEAPONS
-LANG_ENGLISH        "Hold ^3&&1 ^7to trade Weapons"
-
 REFERENCE           ZOMBIE_WEAPON_COST_AMMO
-LANG_ENGLISH        "Hold ^3F ^7for &&1 ammo [Cost: &&2]"
+LANG_ENGLISH        "Hold ^3&&1 ^7for &&2 ammo [Cost: &&3]"
 
 REFERENCE           ZOMBIE_BUTTON_REWARD_BARRIER
 LANG_ENGLISH        "Hold ^3&&1 ^7to Rebuild Barrier"
@@ -307,29 +178,5 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: 20]"
 
 REFERENCE           ZOMBIE_RANDOM_WEAPON_950
 LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: 950]"
-
-REFERENCE           ZOMBIE_WEAPON_BAR_1800
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1919 BAR w/ Bipod [Cost: 1800]"
-
-REFERENCE           ZOMBIE_WEAPON_DOUBLEBARREL_1200
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Double-Barreled Shotgun [Cost: 1200]"
-
-REFERENCE           ZOMBIE_WEAPON_DOUBLEBARREL_SAWED_1200
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Sawn-Off Shotgun w/ Grip [Cost: 1200]"
-
-REFERENCE           ZOMBIE_WEAPON_KAR_98K_200
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy Kar98k [Cost: 200]"
-
-REFERENCE           ZOMBIE_WEAPON_M1_CARBINE_600
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1 Carbine [Cost: 600]"
-
-REFERENCE           ZOMBIE_WEAPON_THOMPSON_1500
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1A1 Thompson [Cost: 1500]"
-
-REFERENCE           ZOMBIE_WEAPON_SHOTGUN_1500
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy M1897 Trench Gun [Cost: 1500]"
-
-REFERENCE           ZOMBIE_WEAPON_STIELHANDGRANATE_250
-LANG_ENGLISH        "Hold ^3&&1 ^7to buy M43 Stielhandgranate [Cost: 250]"
 
 ENDMARKER
