@@ -992,14 +992,16 @@ fire_sale_powerup(drop_item) {
 
     if(!isdefined(level.zombie_mystery_box_padlock) || level.zombie_mystery_box_padlock == 0) {
         for(i=0;i<level.chests.size;i++) {
-            level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_10" );
             level.zombie_treasure_chest_cost = 10;
+            cost = level.zombie_treasure_chest_cost;
+            level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", cost );
             wait 0.05;
         }
 
         for(i=0;i<level.weapon_cabs.size;i++) {
-            level.weapon_cabs[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_20" );
-            level.zombie_weapon_cabinet_cost = 20;
+            level.zombie_treasure_chest_cost = 20;
+            cost = level.zombie_treasure_chest_cost;
+            level.weapon_cabs[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", cost );
             wait 0.05;
         }
     }
@@ -1009,14 +1011,16 @@ fire_sale_powerup(drop_item) {
 
     if(!isdefined(level.zombie_mystery_box_padlock) || level.zombie_mystery_box_padlock == 0) {
         for(i=0;i<level.chests.size;i++) {
-            level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950" );
             level.zombie_treasure_chest_cost = 950;
+            cost = level.zombie_treasure_chest_cost;
+            level.chests[i] SetHintString( &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", cost );
             wait 0.05;
         }
 
         for(i=0;i<level.weapon_cabs.size;i++) {
-            level.weapon_cabs[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900" );
-            level.zombie_weapon_cabinet_cost = 1900;
+            level.zombie_treasure_chest_cost = 1900;
+            cost = level.zombie_treasure_chest_cost;
+            level.weapon_cabs[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", cost );
             wait 0.05;
         }
     }

@@ -110,7 +110,7 @@ door_init()
 		cost = self.zombie_cost;
 	}
 
-	self set_hint_string( self, "default_buy_door_" + cost );
+	self SetHintString(&"PROTOTYPE_ZOMBIE_BUTTON_BUY_OPEN_DOOR", "&&1", cost);
 	self SetCursorHint( "HINT_NOICON" ); 	
 	self UseTriggerRequireLookAt();
 	self thread door_think(); 
@@ -357,7 +357,7 @@ debris_init()
 		cost = self.zombie_cost;
 	}
 
-	self set_hint_string( self, "default_buy_debris_" + cost );
+	self SetHintString(&"PROTOTYPE_ZOMBIE_BUTTON_BUY_CLEAR_DEBRIS", "&&1", cost);
 	self SetCursorHint( "HINT_NOICON" ); 
 
 	if( isdefined (self.script_flag)  && !IsDefined( level.flag[self.script_flag] ) )

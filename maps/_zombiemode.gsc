@@ -142,17 +142,16 @@ init_strings() {
     add_zombie_hint("undefined", &"ZOMBIE_UNDEFINED");
 
     // Random Treasure Chest
-    add_zombie_hint("default_treasure_chest_950", &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950");
-    add_zombie_hint("default_treasure_chest_1900", &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
+    add_zombie_hint("default_treasure_chest", &"PROTOTYPE_ZOMBIE_RANDOM_WEAPON");
 
     // REWARD Barrier Pieces
     add_zombie_hint("default_reward_barrier_piece", &"PROTOTYPE_ZOMBIE_BUTTON_REWARD_BARRIER");
 
     // Debris
-    add_zombie_hint("default_buy_debris_1000", &"PROTOTYPE_ZOMBIE_BUTTON_BUY_CLEAR_DEBRIS_1000");
+    add_zombie_hint("default_buy_debris", &"PROTOTYPE_ZOMBIE_BUTTON_BUY_CLEAR_DEBRIS");
 
     //Doors
-    add_zombie_hint("default_buy_door_1000", &"PROTOTYPE_ZOMBIE_BUTTON_BUY_OPEN_DOOR_1000");
+    add_zombie_hint("default_buy_door", &"PROTOTYPE_ZOMBIE_BUTTON_BUY_OPEN_DOOR");
 }
 
 init_sounds() {

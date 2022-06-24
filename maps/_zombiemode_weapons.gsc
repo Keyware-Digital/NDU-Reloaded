@@ -202,117 +202,111 @@ init_weapons()
 	PrecacheItem( "zombie_melee" );
 
 	// NDU: Reloaded
-	add_zombie_weapon( "m1921_thompson", 						&"PROTOTYPE_ZOMBIE_WEAPON_M1921",			1500 );
-	add_zombie_weapon( "mine_bouncing_betty",					&"ZOMBIE_WEAPON_BETTY_1000",				1000 );
-	add_zombie_weapon( "mp40_bigammo_mp", 						&"ZOMBIE_WEAPON_MP40_1000", 				1000 );	
-	add_zombie_weapon( "ppsh41",                        		&"ZOMBIE_WEAPON_PPSH_2000",               	2000 );
-	add_zombie_weapon( "ppsh41_drum", 							&"ZOMBIE_WEAPON_PPSH_2000",                 2000 );
-	add_zombie_weapon( "perks_a_cola", 							&"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000",	10000 );
-	add_zombie_weapon( "stg44_pap",    							&"ZOMBIE_WEAPON_STG44_1200", 				1200,		/*"vox_raygun",*/	6 ); 
-	add_zombie_weapon( "sten_mk5",                 			&"ZOMBIE_WEAPON_STEN_MARKV_1000",           1000 );
-	//add_zombie_weapon( "zombie_cymbal_monkey",				&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000,		/*"vox_monkey",*/	3 );
-	add_zombie_weapon( "zombie_bowie_flourish",					"", 										10,			/*"vox_bowie",*/	5 );
-	add_zombie_weapon( "zombie_type100_smg",                    &"ZOMBIE_WEAPON_TYPE100_1000",              1000 );
+	add_zombie_weapon( "m1921_thompson", &"PROTOTYPE_ZOMBIE_WEAPON_M1921", 1500 );
+	add_zombie_weapon( "mine_bouncing_betty", &"ZOMBIE_WEAPON_BETTY_1000", 1000 );
+	add_zombie_weapon( "mp40_bigammo_mp", &"ZOMBIE_WEAPON_MP40_1000", 1000 );	
+	add_zombie_weapon( "ppsh41", &"ZOMBIE_WEAPON_PPSH_2000", 2000 );
+	add_zombie_weapon( "ppsh41_drum", &"ZOMBIE_WEAPON_PPSH_2000", 2000 );
+	add_zombie_weapon( "perks_a_cola", &"PROTOTYPE_ZOMBIE_WEAPON_PERKS_A_COLA_10000", 10000 );
+	add_zombie_weapon( "stg44_pap", &"ZOMBIE_WEAPON_STG44_1200", 1200, 6 ); 
+	add_zombie_weapon( "sten_mk5", &"ZOMBIE_WEAPON_STEN_MARKV_1000", 1000 );
+	//add_zombie_weapon( "zombie_cymbal_monkey", &"ZOMBIE_WEAPON_SATCHEL_2000", 2000, 3 );
+	add_zombie_weapon( "zombie_bowie_flourish",	"", 5 );
+	add_zombie_weapon( "zombie_type100_smg", &"ZOMBIE_WEAPON_TYPE100_1000", 1000 );
 
 	// NDU: Reloaded Specials
 	//add_zombie_weapon( "death_hands", 					&"PROTOTYPE_ZOMBIE_DEATH_HANDS_10000",	10000 );
 	//add_zombie_weapon( "knuckle_crack_hands", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
 	
-	// Cut content
-	//add_zombie_weapon( "springfield_scoped_zombie_upgraded",  &"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750",     	1500,		/*"vox_raygun",*/	6 ); 
-	//add_zombie_weapon( "tesla_gun",							&"ZOMBIE_BUY_TESLA", 						10,			/*"vox_tesla",*/	5 );
-	//add_zombie_weapon( "walther_prototype",                   &"ZOMBIE_WEAPON_WALTHER_50",              	50,			/*"vox_raygun",*/	6 );
-
 	// Pistols
-	add_zombie_weapon( "colt", 									&"ZOMBIE_WEAPON_COLT_50", 					50 );
-	add_zombie_weapon( "colt_dirty_harry", 						&"ZOMBIE_WEAPON_COLT_DH_100", 				100 );
-	add_zombie_weapon( "nambu", 								&"ZOMBIE_WEAPON_NAMBU_50", 					50 );
-	add_zombie_weapon( "sw_357", 								&"ZOMBIE_WEAPON_SW357_100", 				100 );
-	add_zombie_weapon( "tokarev", 								&"ZOMBIE_WEAPON_TOKAREV_50", 				50 );
-	add_zombie_weapon( "walther", 								&"ZOMBIE_WEAPON_WALTHER_50", 				50 );
-	add_zombie_weapon( "zombie_colt", 							&"ZOMBIE_WEAPON_ZOMBIECOLT_25", 			25 );
+	add_zombie_weapon( "colt", &"", 50 );
+	add_zombie_weapon( "colt_dirty_harry", &"", 100 );
+	add_zombie_weapon( "nambu", &"", 50 );
+	add_zombie_weapon( "sw_357", &"", 100 );
+	add_zombie_weapon( "tokarev", &"", 50 );
+	add_zombie_weapon( "walther", &"", 50 );
+	add_zombie_weapon( "zombie_colt", &"", 25 );
                                                         		
 	// Bolt Action                                      		
-	add_zombie_weapon( "kar98k", 								&"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_200", 	200 );
-	add_zombie_weapon( "kar98k_bayonet", 						&"ZOMBIE_WEAPON_KAR98K_B_200", 				200 );
-	add_zombie_weapon( "mosin_rifle", 							&"ZOMBIE_WEAPON_MOSIN_200", 				200 );
-	add_zombie_weapon( "mosin_rifle_bayonet", 					&"ZOMBIE_WEAPON_MOSIN_B_200", 				200 );
-	add_zombie_weapon( "springfield", 							&"ZOMBIE_WEAPON_SPRINGFIELD_200", 			200 );
-	add_zombie_weapon( "springfield_bayonet", 					&"ZOMBIE_WEAPON_SPRINGFIELD_B_200", 		200 );
-	add_zombie_weapon( "type99_rifle", 							&"ZOMBIE_WEAPON_TYPE99_200", 				200 );
-	add_zombie_weapon( "type99_rifle_bayonet", 					&"ZOMBIE_WEAPON_TYPE99_B_200", 				200 );
+	add_zombie_weapon( "kar98k", &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K", 200 );
+	add_zombie_weapon( "kar98k_bayonet", &"", 200 );
+	add_zombie_weapon( "mosin_rifle", &"", 200 );
+	add_zombie_weapon( "mosin_rifle_bayonet", &"", 200 );
+	add_zombie_weapon( "springfield", &"", 200 );
+	add_zombie_weapon( "springfield_bayonet", &"", 200 );
+	add_zombie_weapon( "type99_rifle", &"", 200 );
+	add_zombie_weapon( "type99_rifle_bayonet", &"", 200 );
                                                         		
 	// Semi Auto                                        		
-	add_zombie_weapon( "gewehr43", 								&"ZOMBIE_WEAPON_GEWEHR43_600", 				600 );
-	add_zombie_weapon( "m1carbine", 							&"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE_600",	600 );
-	add_zombie_weapon( "m1carbine_bayonet", 					&"ZOMBIE_WEAPON_M1CARBINE_B_600", 			600 );
-	add_zombie_weapon( "m1garand", 								&"ZOMBIE_WEAPON_M1GARAND_600", 				600 );
-	add_zombie_weapon( "m1garand_bayonet", 						&"ZOMBIE_WEAPON_M1GARAND_B_600", 			600 );
-	add_zombie_weapon( "svt40", 								&"ZOMBIE_WEAPON_SVT40_600", 				600 );
+	add_zombie_weapon( "gewehr43", &"", 600 );
+	add_zombie_weapon( "m1carbine", &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE", 600 );
+	add_zombie_weapon( "m1carbine_bayonet", &"", 600 );
+	add_zombie_weapon( "m1garand", &"", 600 );
+	add_zombie_weapon( "m1garand_bayonet", &"", 600 );
+	add_zombie_weapon( "svt40", &"", 600 );
                                                         		
 	// Grenades                                         		
-	add_zombie_weapon( "fraggrenade", 							&"ZOMBIE_WEAPON_FRAGGRENADE_250", 			250 );
-	add_zombie_weapon( "molotov", 								&"ZOMBIE_WEAPON_MOLOTOV_200", 				200 );
-	add_zombie_weapon( "stick_grenade", 						&"ZOMBIE_WEAPON_STICKGRENADE_250", 			250 );
-	add_zombie_weapon( "stielhandgranate", 						&"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE_250", 		250 );
-	add_zombie_weapon( "type97_frag", 							&"ZOMBIE_WEAPON_TYPE97FRAG_250", 			250 );
+	add_zombie_weapon( "fraggrenade", &"", 250 );
+	add_zombie_weapon( "molotov", &"", 200 );
+	add_zombie_weapon( "stick_grenade", &"ZOMBIE_WEAPON_STICKGRENADE_250", 250 );
+	add_zombie_weapon( "stielhandgranate", &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE", 250 );
+	add_zombie_weapon( "type97_frag", &"", 250 );
 
 	// Scoped
-	add_zombie_weapon( "kar98k_scoped_zombie", 					&"ZOMBIE_WEAPON_KAR98K_S_750", 				1500 );
-	add_zombie_weapon( "kar98k_scoped_bayonet_zombie", 			&"ZOMBIE_WEAPON_KAR98K_S_B_750", 			750 );
-	add_zombie_weapon( "mosin_rifle_scoped_zombie", 			&"ZOMBIE_WEAPON_MOSIN_S_750", 				750 );
-	add_zombie_weapon( "mosin_rifle_scoped_bayonet_zombie", 	&"ZOMBIE_WEAPON_MOSIN_S_B_750", 			750 );
-	add_zombie_weapon( "ptrs41_zombie", 						&"ZOMBIE_WEAPON_PTRS41_750", 				750 );
-	add_zombie_weapon( "springfield_scoped_zombie", 			&"ZOMBIE_WEAPON_SPRINGFIELD_S_750", 		750 );
-	add_zombie_weapon( "springfield_scoped_bayonet_zombie", 	&"ZOMBIE_WEAPON_SPRINGFIELD_S_B_750", 		750 );
-	add_zombie_weapon( "type99_rifle_scoped_zombie", 			&"ZOMBIE_WEAPON_TYPE99_S_750", 				750 );
-	add_zombie_weapon( "type99_rifle_scoped_bayonet_zombie", 	&"ZOMBIE_WEAPON_TYPE99_S_B_750", 			750 );
+	add_zombie_weapon( "kar98k_scoped_zombie", &"", 1500 );
+	add_zombie_weapon( "kar98k_scoped_bayonet_zombie", &"", 750 );
+	add_zombie_weapon( "mosin_rifle_scoped_zombie", &"", 750 );
+	add_zombie_weapon( "mosin_rifle_scoped_bayonet_zombie", &"", 750 );
+	add_zombie_weapon( "ptrs41_zombie", &"", 750 );
+	add_zombie_weapon( "springfield_scoped_zombie", &"", 750 );
+	add_zombie_weapon( "springfield_scoped_bayonet_zombie", &"", 750 );
+	add_zombie_weapon( "type99_rifle_scoped_zombie", &"", 750 );
+	add_zombie_weapon( "type99_rifle_scoped_bayonet_zombie", &"", 750 );
                                                                                                 	
 	// Full Auto                                                                                	
-	add_zombie_weapon( "mp40", 								&"ZOMBIE_WEAPON_MP40_1000", 					1000 );
-	add_zombie_weapon( "ppsh", 								&"ZOMBIE_WEAPON_PPSH_2000", 					2000 );
-	add_zombie_weapon( "stg44", 							&"ZOMBIE_WEAPON_STG44_1200", 					1200 );
-	add_zombie_weapon( "thompson", 							&"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 		1500 );
-	add_zombie_weapon( "type100_smg", 						&"ZOMBIE_WEAPON_TYPE100_1000", 					1000 );
+	add_zombie_weapon( "mp40", &"", 1000 );
+	add_zombie_weapon( "ppsh", &"", 2000 );
+	add_zombie_weapon( "stg44", &"", 1200 );
+	add_zombie_weapon( "thompson", &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_1500", 1500 );
+	add_zombie_weapon( "type100_smg", &"", 1000 );
                                                         	
 	// Shotguns                                         	
-	add_zombie_weapon( "doublebarrel", 						&"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_1200", 			1200 );
-	add_zombie_weapon( "doublebarrel_sawed_grip", 			&"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_SAWED_1200", 	1200 );
-	add_zombie_weapon( "shotgun", 							&"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_1500", 				1500 );
+	add_zombie_weapon( "doublebarrel", &"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_1200", 1200 );
+	add_zombie_weapon( "doublebarrel_sawed_grip", &"PROTOTYPE_ZOMBIE_WEAPON_DOUBLEBARREL_SAWED_1200", 1200 );
+	add_zombie_weapon( "shotgun",&"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_1500", 1500 );
                                                         	
 	// Heavy Machineguns                                	
-	add_zombie_weapon( "30cal", 							&"ZOMBIE_WEAPON_30CAL_3000", 				3000 );
-	add_zombie_weapon( "bar", 								&"PROTOTYPE_ZOMBIE_WEAPON_BAR_1800", 		1800 );
-	add_zombie_weapon( "dp28", 								&"ZOMBIE_WEAPON_DP28_2250", 				2250 );
-	add_zombie_weapon( "fg42", 								&"ZOMBIE_WEAPON_FG42_1200", 				1500 );
-	add_zombie_weapon( "fg42_scoped", 						&"ZOMBIE_WEAPON_FG42_S_1200", 				1500 );
-	add_zombie_weapon( "mg42", 								&"ZOMBIE_WEAPON_MG42_1200", 				3000 );
-	add_zombie_weapon( "type99_lmg", 						&"ZOMBIE_WEAPON_TYPE99_LMG_1750", 			1750 );
+	add_zombie_weapon( "30cal", &"", 3000 );
+	add_zombie_weapon( "bar", &"PROTOTYPE_ZOMBIE_WEAPON_BAR_1800", 1800 );
+	add_zombie_weapon( "dp28", &"", 2250 );
+	add_zombie_weapon( "fg42", &"", 1500 );
+	add_zombie_weapon( "fg42_scoped", &"", 1500 );
+	add_zombie_weapon( "mg42", &"", 3000 );
+	add_zombie_weapon( "type99_lmg", &"", 1750 );
                                                         	
 	// Grenade Launcher                                 	
-	add_zombie_weapon( "m1garand_gl", 						&"ZOMBIE_WEAPON_M1GARAND_GL_1200", 			1200 );
-	add_zombie_weapon( "mosin_launcher", 					&"ZOMBIE_WEAPON_MOSIN_GL_1200", 			1200 );
+	add_zombie_weapon( "m1garand_gl", &"", 1200 );
+	add_zombie_weapon( "mosin_launcher", &"", 1200 );
 	                                        				
 	// Bipods                               				
-	add_zombie_weapon( "30cal_bipod", 						&"ZOMBIE_WEAPON_30CAL_BIPOD_3500", 			3500 );
-	add_zombie_weapon( "bar_bipod", 						&"ZOMBIE_WEAPON_BAR_BIPOD_2500", 			2500 );
-	add_zombie_weapon( "dp28_bipod", 						&"ZOMBIE_WEAPON_DP28_BIPOD_2500", 			2500 );
-	add_zombie_weapon( "fg42_bipod", 						&"ZOMBIE_WEAPON_FG42_BIPOD_2000", 			2000 );
-	add_zombie_weapon( "mg42_bipod", 						&"ZOMBIE_WEAPON_MG42_BIPOD_3250", 			3250 );
-	add_zombie_weapon( "type99_lmg_bipod", 					&"ZOMBIE_WEAPON_TYPE99_LMG_BIPOD_2250", 	2250 );
+	add_zombie_weapon( "30cal_bipod", &"", 3500 );
+	add_zombie_weapon( "bar_bipod", &"", 2500 );
+	add_zombie_weapon( "dp28_bipod", &"", 2500 );
+	add_zombie_weapon( "fg42_bipod", &"", 2000 );
+	add_zombie_weapon( "mg42_bipod", &"", 3250 );
+	add_zombie_weapon( "type99_lmg_bipod", &"", 2250 );
 	
 	// Rocket Launchers
-	add_zombie_weapon( "bazooka", 							&"ZOMBIE_WEAPON_BAZOOKA_2000", 				2000 );
-	add_zombie_weapon( "panzerschrek", 						&"ZOMBIE_WEAPON_PANZERSCHREK_2000", 		2000 );
+	add_zombie_weapon( "bazooka", &"", 2000 );
+	add_zombie_weapon( "panzerschrek", &"", 2000 );
 	                                                    	
 	// Flamethrower                                     	
-	add_zombie_weapon( "m2_flamethrower_zombie", 			&"ZOMBIE_WEAPON_M2_FLAMETHROWER_3000", 		3000 );	
+	add_zombie_weapon( "m2_flamethrower_zombie", &"", 3000 );	
                                                         	
 	// Special                                          	
-	add_zombie_weapon( "mortar_round", 						&"ZOMBIE_WEAPON_MORTARROUND_2000", 			2000 );
-	add_zombie_weapon( "satchel_charge", 					&"ZOMBIE_WEAPON_SATCHEL_2000", 				2000 );
-	//add_zombie_weapon( "ray_gun", 						&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );
-	add_zombie_weapon( "ray_gun_mk1_v2", 				&"ZOMBIE_WEAPON_RAYGUN_10000", 				10000,		/*"vox_raygun",*/		6 );
+	add_zombie_weapon( "mortar_round", &"", 2000 );
+	add_zombie_weapon( "satchel_charge", &"", 2000 );
+	add_zombie_weapon( "ray_gun_mk1_v2", &"", 10000, 6 );
 	
 	// ONLY 1 (OR MORE) OF THE BELOW SHOULD BE ALLOWED
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
@@ -335,14 +329,44 @@ add_limited_weapon( weapon_name, amount )
 // For buying weapon upgrades in the environment
 init_weapon_upgrade()
 {
+
+	weaponNameWallBuy = undefined;
+	
 	weapon_spawns = GetEntArray( "weapon_upgrade", "targetname" ); 
 
 	for( i = 0; i < weapon_spawns.size; i++ )
 	{
-		hint_string = get_weapon_hint( weapon_spawns[i].zombie_weapon_upgrade ); 
 
-		weapon_spawns[i] SetHintString( hint_string ); 
-		weapon_spawns[i] setCursorHint( "HINT_NOICON" ); 
+		weapon_name = get_weapon_name(weapon_spawns[i].zombie_weapon_upgrade);
+		cost = get_weapon_cost( weapon_spawns[i].zombie_weapon_upgrade );
+
+		switch(weapon_name)
+		{
+			case "kar98k":
+			weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
+				break; 
+			case "m1carbine":
+			weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
+				break;
+			case "thompson":
+			weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
+				break;  
+			case "doublebarrel":
+			weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+				break;
+			case "bar":
+			weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
+				break;
+			case "shotgun":
+			weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
+				break;
+			case "doublebarrel_sawed_grip":
+			weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+				break;
+		}
+
+		weapon_spawns[i] SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", "&&1", weaponNameWallBuy, cost);
+		weapon_spawns[i] setCursorHint( "HINT_NOICON" );  
 		weapon_spawns[i] UseTriggerRequireLookAt();
 
 		weapon_spawns[i] thread weapon_spawn_think(); 
@@ -432,12 +456,12 @@ treasure_chest_think(rand)
 		cost = level.zombie_treasure_chest_cost;
 	}
 
-	self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_950");
+	self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", cost);
 	self setCursorHint( "HINT_NOICON" );
 
 	if(isDefined(level.zombie_vars["zombie_fire_sale"]) && level.zombie_vars["zombie_fire_sale"])
 	{
-		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_10");
+		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", cost);
 	}
 
 	// waittill someuses uses this
@@ -503,95 +527,95 @@ treasure_chest_think(rand)
 	switch(weapon_spawn_org.weapon_string)
 	{
 		case "30cal_bipod":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_30_CAL_BIPOD";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_30_CAL_BIPOD";
 			break; 
 		case "bar":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_BAR";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
 			break;
 		case "colt":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_COLT_45";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_COLT_45";
 			break;  
 		case "dp28":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_DP_27";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_DP_27";
 			break;
 		case "doublebarrel":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
 			break;
 		case "doublebarrel_sawed_grip":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
 			break;
 		case "fg42_bipod":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_FG_42_BIPOD";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_FG_42_BIPOD";
 			break;
 		case "gewehr43":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_GEWEHR_43";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GEWEHR_43";
 			break;
 		case "m1garand_gl":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_M1_GARAND_GL";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M1_GARAND_GL";
 	        break;
 		case "m2_flamethrower_zombie":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_M2_FLAMETHROWER";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M2_FLAMETHROWER";
 		    break;
 		case "mg42_bipod":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_MG42_BIPOD";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_MG42_BIPOD";
 		    break;
 		case "mine_bouncing_betty":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_S_MINE";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_S_MINE";
 		    break;
 		case "molotov":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_MOLOTOV";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_MOLOTOV";
 		    break;
 		case "mosin_rifle":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_MOSIN_RIFLE";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_MOSIN_RIFLE";
 		    break;
 		case "mp40":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_MP_40";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_MP_40";
 		    break;
 		case "panzerschrek":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_PANZERSCHREK";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_PANZERSCHREK";
 		    break;
 		case "ppsh41":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_PPSH_41";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_PPSH_41";
 		    break;
 		case "ptrs41_zombie":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_PTRS_41";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_PTRS_41";
 		    break;
 		case "ray_gun_mk1_v2":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_RAY_GUN";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_RAY_GUN";
 		    break;
 		case "shotgun":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SHOTGUN";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
 		    break;
 		case "springfield":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SPRINGFIELD";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SPRINGFIELD";
 		    break;
 		case "stg44":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_STG_44";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_STG_44";
 		    break;
 		case "svt40":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SVT_40";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SVT_40";
 		    break;
 		case "sw_357":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_357_MAGNUM";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_357_MAGNUM";
 		    break;
 		case "thompson":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_THOMPSON";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
 		    break;
 		case "tokarev":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_TOKAREV";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_TOKAREV";
 		    break;
 		case "type99_lmg":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_TYPE_99";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_TYPE_99";
 		    break;
 		case "zombie_bowie_flourish":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_BOWIE";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_BOWIE";
 		    break;
 		case "zombie_type100_smg":
-		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_TYPE_100";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_TYPE_100";
 		    break;
 	}
 
-	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", "&&1", weaponNameMysteryBox);
+	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryBox);
 	
 	self setCursorHint( "HINT_NOICON" ); 
 	
@@ -891,7 +915,10 @@ treasure_chest_weapon_spawn( chest, player )
 		wait 1.5;
         PlaySoundAtPosition("la_vox", chest.origin);
 		wait 1;
-        chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED_1900");
+
+		cost = level.zombie_treasure_chest_cost;
+		
+        chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", cost);
         chest enable_trigger();
         
         while(1)
@@ -1056,12 +1083,12 @@ weapon_cabinet_think()
 		cost = level.zombie_weapon_cabinet_cost;
 	}
 
-	self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN_1900");
+	self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", cost);
 	self setCursorHint( "HINT_NOICON" );
 
 	if(isDefined(level.zombie_vars["zombie_fire_sale"]) && level.zombie_vars["zombie_fire_sale"])
 	{
-		self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN_20");
+		self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", cost);
 	}
 
 	level.cabinetguns = [];
@@ -1212,35 +1239,35 @@ weapon_cabinet_think()
 	switch(chosenweapon)
 	{
 		case "kar98k_scoped_zombie":
-		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_KAR_98K_SCOPED";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_SCOPED";
 			break; 
 		case "kar98k_bayonet":
-		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_KAR_98K_BAYONET";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_BAYONET";
 			break;
 		case "m1garand":
-		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_M1_GARAND";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_M1_GARAND";
 			break;  
 		case "m1921_thompson":
-		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_THOMPSON_DRUM";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_DRUM";
 			break;
 		case "mosin_rifle_bayonet":
-		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_MOSIN_RIFLE_BAYONET";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_MOSIN_RIFLE_BAYONET";
 			break;
 		case "mosin_rifle_scoped_zombie":
-		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_MOSIN_RIFLE_SCOPED";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_MOSIN_RIFLE_SCOPED";
 			break;
 		case "mp40_bigammo_mp":
-		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_MP_40_MAG";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_MP_40_MAG";
 			break;
 		case "ppsh41_drum":
-		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_PPSH_41_DRUM";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_PPSH_41_DRUM";
 			break;
 		case "sten_mk5":
-		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_STEN";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_STEN";
 		break;
 	}
 
-	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", "&&1", weaponNameMysteryCabinet);
+	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
 
 	for(i=0;i<level.keep_ents.size;i++)
     {
@@ -1260,7 +1287,15 @@ weapon_cabinet_think()
 			weaponmodelstruct Show();
 			weaponmodelstruct SetModel(GetWeaponModel( "perks_a_cola" ));
 			chosenweapon = "perks_a_cola";
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RANDOM_PERK_BOTTLE");
+
+			switch(chosenweapon)
+			{
+				case "perks_a_cola":
+				weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_RANDOM_PERK_BOTTLE";
+					break;
+			}
+
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
 			level.zombie_vars["enableRandomPerk"] = 1;
 
 		}
@@ -1276,7 +1311,15 @@ weapon_cabinet_think()
         	weaponmodelstruct Show();
         	weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
         	chosenweapon = "stg44_pap";
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44_UPGRADED");
+
+			switch(chosenweapon)
+			{
+				case "stg44_pap":
+				weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_STG_44_UPGRADED";
+					break;
+			}
+
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
 		}
     }
 
@@ -1479,7 +1522,8 @@ weapon_spawn_think()
 			continue;
 		}
 		
-		player_has_weapon = false; 
+		player_has_weapon = false;
+		 
 		weapons = player GetWeaponsList(); 
 		if( IsDefined( weapons ) )
 		{
@@ -1517,25 +1561,25 @@ weapon_spawn_think()
 						switch(weapon_name_ammo_cost)
 						{
 							case "kar98k":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_KAR_98K";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
 								break; 
 							case "m1carbine":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_M1_CARBINE";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
 								break;
 							case "thompson":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_THOMPSON";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
 								break;  
 							case "doublebarrel":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
 								break;
 							case "bar":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_BAR";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
 								break;
 							case "shotgun":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
 								break;
 							case "doublebarrel_sawed_grip":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
 								break;
 						}
 
@@ -1571,25 +1615,25 @@ weapon_spawn_think()
 						switch(weapon_name_ammo_cost)
 						{
 							case "kar98k":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_KAR_98K";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
 								break; 
 							case "m1carbine":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_M1_CARBINE";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
 								break;
 							case "thompson":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_THOMPSON";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
 								break;  
 							case "doublebarrel":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
 								break;
 							case "bar":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_BAR";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
 								break;
 							case "shotgun":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
 								break;
 							case "doublebarrel_sawed_grip":
-							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
 								break;
 						}
 
