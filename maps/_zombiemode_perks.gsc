@@ -366,7 +366,7 @@ perks_zombie_hit_effect(amount, attacker, point, mod)
 	{
 		if(attacker HasPerk("specialty_rof") && ( mod == "MOD_PISTOL_BULLET" || mod == "MOD_RIFLE_BULLET" ) )		//change specialty to "bulletdamage" for stopping power
 		{
-            self setClientDvar( "perk_weapRateMultiplier", level.zombie_vars[ "doubletap_fire_rate" ] );
+            attacker setClientDvar( "perk_weapRateMultiplier", level.zombie_vars[ "doubletap_fire_rate" ] );
 		    attacker maps\_zombiemode_score::player_add_points( "damage", mod, hitLocation );
 		    health = health - amount;
 		}

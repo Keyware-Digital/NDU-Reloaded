@@ -465,6 +465,7 @@ treasure_chest_think(rand)
 	// trigger_use->script_brushmodel lid->script_origin in radiant
 	lid = getent( self.target, "targetname" ); 
 	weapon_spawn_org = getent( lid.target, "targetname" ); 
+    weaponNameMysteryBox = undefined;
 	
 	//open the lid
 	lid thread treasure_chest_lid_open();
@@ -497,101 +498,100 @@ treasure_chest_think(rand)
 
 	level thread treasure_chest_user_hint( self, user );
 
-	//Commence hintstring switch for each weapon in the mystery box
+	//Commence hintstring weapon name value switch for each weapon in the mystery box
 
 	switch(weapon_spawn_org.weapon_string)
 	{
 		case "30cal_bipod":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_30_CAL_BIPOD");
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_30_CAL_BIPOD";
 			break; 
 		case "bar":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_BAR");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_BAR";
+			break;
 		case "colt":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_COLT");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_COLT_45";
+			break;  
 		case "dp28":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DP_27");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_DP_27";
+			break;
 		case "doublebarrel":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DOUBLEBARREL");
-			break;  
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+			break;
 		case "doublebarrel_sawed_grip":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_DOUBLEBARRELSAWED");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+			break;
 		case "fg42_bipod":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_FG_42");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_FG_42_BIPOD";
+			break;
 		case "gewehr43":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_GEWEHR_43");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_GEWEHR_43";
+			break;
 		case "m1garand_gl":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1_GARAND_GL");
-			break;  
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_M1_GARAND_GL";
+	        break;
 		case "m2_flamethrower_zombie":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M2_FLAMETHROWER");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_M2_FLAMETHROWER";
+		    break;
 		case "mg42_bipod":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MG_42");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_MG42_BIPOD";
+		    break;
 		case "mine_bouncing_betty":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MINE");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_S_MINE";
+		    break;
 		case "molotov":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOLOTOV");
-			break;
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_MOLOTOV";
+		    break;
 		case "mosin_rifle":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_MOSIN_RIFLE";
+		    break;
 		case "mp40":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_MP_40";
+		    break;
 		case "panzerschrek":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PANZERSCHREK");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_PANZERSCHREK";
+		    break;
 		case "ppsh41":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41");
-			break;
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_PPSH_41";
+		    break;
 		case "ptrs41_zombie":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PTRS_41");
-			break;  
-		/*case "ray_gun":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAY_GUN");
-			break;*/
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_PTRS_41";
+		    break;
 		case "ray_gun_mk1_v2":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_RAY_GUN");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_RAY_GUN";
+		    break;
 		case "shotgun":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SHOTGUN");
-			break; 
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SHOTGUN";
+		    break;
 		case "springfield":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD");
-			break;  
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SPRINGFIELD";
+		    break;
 		case "stg44":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STG_44");
-			break;  
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_STG_44";
+		    break;
 		case "svt40":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SVT_40");
-			break;
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_SVT_40";
+		    break;
 		case "sw_357":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SW357");
-			break;  
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_357_MAGNUM";
+		    break;
 		case "thompson":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON");
-			break;  
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_THOMPSON";
+		    break;
 		case "tokarev":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TOKAREV");
-			break;  
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_TOKAREV";
+		    break;
 		case "type99_lmg":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_99");
-			break;
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_TYPE_99";
+		    break;
 		case "zombie_bowie_flourish":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_BOWIE_KNIFE");
-			break;
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_BOWIE";
+		    break;
 		case "zombie_type100_smg":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_TYPE_100");
-			break;
+		weaponNameMysteryBox = &"PROTOTYPE_WEAPON_TYPE_100";
+		    break;
 	}
+
+	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", "&&1", weaponNameMysteryBox);
 	
 	self setCursorHint( "HINT_NOICON" ); 
 	
@@ -611,7 +611,7 @@ treasure_chest_think(rand)
 				self notify( "user_grabbed_weapon" );
 				if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
 				{
-					if(!user hasperk("specialty_altmelee" || user.has_altmelee))
+					if( !user HasPerk("specialty_altmelee") || user.has_bowie)
 					{
 						weapon_spawn_org notify("weapon_grabbed");
 						lid thread treasure_chest_lid_close( self.timedOut );
@@ -764,7 +764,7 @@ treasure_chest_ChooseRandomWeapon( player )
     }
 
 	// Filter bowie if player has it
-	if(player HasPerk( "specialty_altmelee" ))
+	if(isDefined(player.has_bowie) && player.has_bowie)
     {
         filtered = array_remove(filtered, "zombie_bowie_flourish");
     }
@@ -943,7 +943,7 @@ weapons_death_check() // numan - reset the betties var on death ( may be used fo
  
 	self.has_molotovs = undefined;
     self.has_betties = undefined;
-	self.has_altmelee = undefined;
+	self.has_bowie = undefined;
 }
 	// SRS 9/3/2008: if we timed out, move the weapon back into the box instead of deleting it
 timer_til_despawn(floatHeight)
@@ -1077,6 +1077,7 @@ weapon_cabinet_think()
 	/*level.cabinetguns[9] = "bloodhound";
 	level.cabinetguns[10] = "placeholder;*/
 	randomnumb = undefined;
+	weaponNameMysteryCabinet = undefined;
 	
     doors = getentarray( self.target, "targetname" );
     for( i = 0; i < doors.size; i++ )
@@ -1208,44 +1209,38 @@ weapon_cabinet_think()
 
 	chosenweapon = randomnumb;
 
-	//Commence hintstring switch for each weapon in the cabinet
-
-	switch( chosenweapon )
-		{
+	switch(chosenweapon)
+	{
 		case "kar98k_scoped_zombie":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_KAR_98K_SCOPED");
+		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_KAR_98K_SCOPED";
 			break; 
 		case "kar98k_bayonet":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_KAR_98K_BAYONET");
-			break; 
+		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_KAR_98K_BAYONET";
+			break;
 		case "m1garand":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_M1_GARAND");
-			break; 
+		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_M1_GARAND";
+			break;  
 		case "m1921_thompson":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_THOMPSON_DRUM");
-			break;   
+		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_THOMPSON_DRUM";
+			break;
 		case "mosin_rifle_bayonet":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_RIFLE_BAYONET");
-			break; 
+		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_MOSIN_RIFLE_BAYONET";
+			break;
 		case "mosin_rifle_scoped_zombie":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MOSIN_RIFLE_SCOPED");
+		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_MOSIN_RIFLE_SCOPED";
 			break;
 		case "mp40_bigammo_mp":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_MP_40_MAG");
+		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_MP_40_MAG";
 			break;
 		case "ppsh41_drum":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_PPSH_41_DRUM");
+		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_PPSH_41_DRUM";
 			break;
 		case "sten_mk5":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_STEN");
-			break;   
-		/*case "springfield_scoped_zombie_upgraded":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_SPRINGFIELD_SCOPED_UPGRADED");
-			break;   
-		case "walther_prototype":
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WALTHER");
-			break;*/
-		}
+		weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_STEN";
+		break;
+	}
+
+	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS", "&&1", weaponNameMysteryCabinet);
 
 	for(i=0;i<level.keep_ents.size;i++)
     {
@@ -1464,6 +1459,7 @@ weapon_spawn_think()
 	cost = get_weapon_cost( self.zombie_weapon_upgrade );
 	ammo_cost = get_ammo_cost( self.zombie_weapon_upgrade );
 	is_grenade = (WeaponType( self.zombie_weapon_upgrade ) == "grenade");
+	weaponNameWallBuy = undefined;
 
 	self.first_time_triggered = false; 
 	while(1)
@@ -1517,31 +1513,36 @@ weapon_spawn_think()
 					
 					if(!is_grenade)
 					{
-						self SetHintString(weapon_name_ammo_cost);
+
 						switch(weapon_name_ammo_cost)
-							{
+						{
 							case "kar98k":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_KAR_98K", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_KAR_98K";
 								break; 
 							case "m1carbine":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_M1_CARBINE", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_M1_CARBINE";
 								break;
 							case "thompson":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_THOMPSON", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_THOMPSON";
 								break;  
 							case "doublebarrel":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
 								break;
 							case "bar":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_BAR", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_BAR";
 								break;
 							case "shotgun":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN";
 								break;
 							case "doublebarrel_sawed_grip":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
 								break;
-							}
+						}
+
+						self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
+	
+						self setCursorHint( "HINT_NOICON" ); 
+
 					}
 				}
 			
@@ -1567,31 +1568,34 @@ weapon_spawn_think()
 					self.first_time_triggered = true;
 					if(!is_grenade)
 					{ 
-						self SetHintString(weapon_name_ammo_cost);
 						switch(weapon_name_ammo_cost)
-							{
+						{
 							case "kar98k":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_KAR_98K", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_KAR_98K";
 								break; 
 							case "m1carbine":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_M1_CARBINE", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_M1_CARBINE";
 								break;
 							case "thompson":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_THOMPSON", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_THOMPSON";
 								break;  
 							case "doublebarrel":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
 								break;
 							case "bar":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_BAR", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_BAR";
 								break;
 							case "shotgun":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN";
 								break;
 							case "doublebarrel_sawed_grip":
-							self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP", ammo_cost );
+							weaponNameWallBuy = &"PROTOTYPE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
 								break;
-							}
+						}
+
+						self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
+	
+						self setCursorHint( "HINT_NOICON" ); 
 					}
 				}
 				
