@@ -2559,7 +2559,8 @@ zombie_rise_fx(zombie)
 {
 	self thread zombie_rise_dust_fx(zombie);
 	self thread zombie_rise_burst_fx();
-	PlaySoundAtPosition("zombie_spawn", self.origin);
+    spawnSound = "zombie_spawn_" + RandomInt(2);
+	zombie PlaySound(spawnSound);
 	zombie endon("death");
 	self endon("stop_zombie_rise_fx");
 	wait 1;
@@ -2587,7 +2588,7 @@ zombie_rise_dust_fx(zombie)
 	self endon("stop_zombie_rise_dust_fx");
 	self thread stop_zombie_rise_dust_fx(zombie);
 
-	dust_time = 7.5; // play dust fx for a max time
+	dust_time = 3.25; // play dust fx for a max time
 	dust_interval = .1; //randomfloatrange(.1,.25); // wait this time in between playing the effect
 	
 	for (t = 0; t < dust_time; t += dust_interval)
