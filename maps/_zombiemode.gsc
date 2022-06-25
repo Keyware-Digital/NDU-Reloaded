@@ -2275,19 +2275,30 @@ player_no_ammmo_sounds() //We should use this for if the player is about to run 
 	    {
             wait 1;
             if(level.player_is_speaking != 1) {
-                current_weapon = self getCurrentWeapon();
-                if (current_weapon == "none" || current_weapon == "mine_bouncing_betty")  {
-                    break;
-                }
-                totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
-                if(totalCurrentWeaponAmmo < 1) {
-                    index = maps\_zombiemode_weapons::get_player_index(self);
-                    noAmmoSound = "_no_ammo";
-			        level.player_is_speaking = 1;
-                    self PlaySound("plr_" + index + noAmmoSound);
-			        level.player_is_speaking = 0;
-                    while(totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
-			            wait 0.1;
+                current_offhand = self getCurrentOffHand();
+                current_weapon = self GetCurrentWeapon();
+                filteredOffhandArray = getArrayKeys( level.filtered_offhand ); // get an array of the strings used to index
+
+                for ( i = 0; i < filteredOffhandArray.size; i++ )
+                {
+                    if ( current_offhand == level.filtered_offhand[filteredOffhandArray[i]])
+                    {
+                        break;
+                    }
+                    else 
+                    {
+                        totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
+                        if(totalCurrentWeaponAmmo < 1) {
+                            index = maps\_zombiemode_weapons::get_player_index(self);
+                            noAmmoSound = "_no_ammo";
+			                level.player_is_speaking = 1;
+                            self PlaySound("plr_" + index + noAmmoSound);
+			                level.player_is_speaking = 0;
+                            while(totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
+			                    wait 0.1;
+
+                        }
+                    }
                 }
             }
             wait 0.25;   
