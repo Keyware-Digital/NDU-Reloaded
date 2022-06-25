@@ -90,6 +90,10 @@ intro_screen() {
     level.intro_hud[1].y = -110;
     level.intro_hud[2].y = -90;
     level.intro_hud[3].y = -70;
+    level.intro_hud[0].x = 10;
+    level.intro_hud[1].x = 10;
+    level.intro_hud[2].x = 10;
+    level.intro_hud[3].x = 10;
 
     level.intro_hud[0] settext( &"PROTOTYPE_PLACE");
     level.intro_hud[1] settext( &"PROTOTYPE_REGION");

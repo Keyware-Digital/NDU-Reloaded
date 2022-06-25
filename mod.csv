@@ -6,6 +6,7 @@ fx,maps/zombie/fx_mp_zombie_hand_dirt_burst
 fx,maps/zombie/fx_zmb_phdflopper_exp
 material,loadscreen_nazi_zombie_prototype
 material,hud_grenade_german
+material,hud_player_portrait
 material,specialty_juggernaut_zombies
 material,specialty_speed_cola_zombies
 material,specialty_double_tap_zombies

@@ -554,7 +554,7 @@ onPlayerConnect_clientDvars() {
         "compass", "0",
         "hud_showStance", "0",
         "cg_thirdPerson", "0",
-        //"cg_fov", "80",
+        //"cg_fov", "80", //Should really be set in the menus and set here via dvarint
         "cg_thirdPersonAngle", "0",
         "ammoCounterHide", "0",
         "miniscoreboardhide", "0",
@@ -1043,7 +1043,7 @@ chalk_one_up() {
         round.vertAlign = "bottom";
         round.fontscale = 16;
         round.color = (1, 1, 1);
-        round.x = 0;
+        round.x = 20;
         round.y = -265;
         round.alpha = 0;
         round SetText( &"ZOMBIE_ROUND");
@@ -1068,7 +1068,7 @@ chalk_one_up() {
     if (intro) {
         hud.alpha = 0;
         hud.horzAlign = "center";
-        hud.x = -5;
+        hud.x = 10;
         hud.y = -200;
     }
 
@@ -2211,7 +2211,7 @@ setup_player_vars()
         players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
         // enable sv_cheats just to set level of detail for everyone
         players[i] SetClientDvar("sv_cheats", 1);
-        // these set the level of detail relative to distance (should really be set in the menus as one option like mature content)
+        // these set the level of detail relative to distance (should really be set in the menus as one option like mature content and set via dvarint)
         players[i] SetClientDvar("r_lodBiasRigid", -1000);
         players[i] SetClientDvar("r_lodBiasSkinned", -1000);
         players[i] SetClientDvar("r_lodScaleRigid", 1);
