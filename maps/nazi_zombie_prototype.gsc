@@ -358,14 +358,14 @@ filtered_weapons()
 {
 
     //Puts weapons that need filtering (such as when checking for ammo for reload vox) into an array for easy referencing
-    level.filtered_offhand = [];
-    level.filtered_offhand["none"] = "none";
-	level.filtered_offhand["mine_bouncing_betty"] = "mine_bouncing_betty";	
-	level.filtered_offhand["perks_a_cola"] = "perks_a_cola";		
-    level.filtered_offhand["zombie_bowie_flourish"] = "zombie_bowie_flourish";
-	level.filtered_offhand["stielhandgranate"] = "stielhandgranate";
-	level.filtered_offhand["molotov"] = "molotov";
-	level.filtered_offhand["zombie_knife"] = "zombie_knife";
+    level.filtered_weapons = [];
+    level.filtered_weapons["none"] = "none";
+	level.filtered_weapons["mine_bouncing_betty"] = "mine_bouncing_betty";	
+	level.filtered_weapons["perks_a_cola"] = "perks_a_cola";		
+    level.filtered_weapons["zombie_bowie_flourish"] = "zombie_bowie_flourish";
+	level.filtered_weapons["stielhandgranate"] = "stielhandgranate";
+	level.filtered_weapons["molotov"] = "molotov";
+	level.filtered_weapons["zombie_knife"] = "zombie_knife";
 
 }
 
@@ -377,23 +377,11 @@ reloading_monitor()
 
 		self waittill("reload_start");
 
-        current_offhand = self getCurrentOffHand();
         current_weapon = self GetCurrentWeapon();
-        filteredOffhandArray = getArrayKeys( level.filtered_offhand ); // get an array of the strings used to index
 
-        for ( i = 0; i < filteredOffhandArray.size; i++ )
-        {
-            if ( current_offhand == level.filtered_offhand[filteredOffhandArray[i]])
-            {
-                break;
-            }
-            else 
-            {
-		        currentMagAmmo = self GetWeaponAmmoClip(current_weapon); //get their current mag ammo during the reload
-		        self.reloading = true;
-                while(currentMagAmmo == self getWeaponAmmoClip(current_weapon)) //Wait for the ammo to change to something other than what we caught during the reload
-			        wait 0.1;
-            }
-        }
+		currentMagAmmo = self GetWeaponAmmoClip(current_weapon); //get their current mag ammo during the reload
+		self.reloading = true;
+        while(currentMagAmmo == self getWeaponAmmoClip(current_weapon)) //Wait for the ammo to change to something other than what we caught during the reload
+			wait 0.1;
 	}
 }
