@@ -357,16 +357,15 @@ health_show() {
 filtered_weapons()
 {
 
-    //Puts weapons that need filtering (such as when checking for ammo for reload vox) into an array for easy referencing
-    level.filtered_weapons = [];
-    level.filtered_weapons["none"] = "none";
-	level.filtered_weapons["mine_bouncing_betty"] = "mine_bouncing_betty";	
-	level.filtered_weapons["perks_a_cola"] = "perks_a_cola";		
-    level.filtered_weapons["zombie_bowie_flourish"] = "zombie_bowie_flourish";
-	level.filtered_weapons["stielhandgranate"] = "stielhandgranate";
-	level.filtered_weapons["molotov"] = "molotov";
-	level.filtered_weapons["zombie_knife"] = "zombie_knife";
-
+    //Puts weapons that need filtering into an array to be called later (use in functions that checks a weapons ammo count)
+	level.filtered_weapons = [];
+	level.filtered_weapons[level.filtered_weapons.size] = "none";
+	level.filtered_weapons[level.filtered_weapons.size] = "mine_bouncing_betty";
+    level.filtered_weapons[level.filtered_weapons.size] = "perks_a_cola";
+	level.filtered_weapons[level.filtered_weapons.size] = "zombie_bowie_flourish";
+	level.filtered_weapons[level.filtered_weapons.size] = "stielhandgranate";
+    level.filtered_weapons[level.filtered_weapons.size] = "molotov";
+	level.filtered_weapons[level.filtered_weapons.size] = "zombie_knife";
 }
 
 reloading_monitor()
@@ -374,10 +373,16 @@ reloading_monitor()
 	while(1)
 	{
 		self.reloading = false;
-
 		self waittill("reload_start");
-
         current_weapon = self GetCurrentWeapon();
+
+        for ( i = 0; i < level.filtered_weapons.size; i++ )
+        {
+            if ( current_weapon == level.filtered_weapons[i])
+            {
+                break;
+            }
+        }
 
 		currentMagAmmo = self GetWeaponAmmoClip(current_weapon); //get their current mag ammo during the reload
 		self.reloading = true;

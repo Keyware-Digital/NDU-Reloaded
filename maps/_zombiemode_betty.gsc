@@ -37,15 +37,15 @@ bouncing_betty_setup( player )
 	
 	player.has_betties = 1;
 	
-	current = self getCurrentWeapon();
+	//current = self getCurrentWeapon();
 	
-	self TakeWeapon( current );
+	//self TakeWeapon( current );
 
 	self giveweapon("mine_bouncing_betty");
 	self setactionslot(4,"weapon","mine_bouncing_betty");
 	self setweaponammostock("mine_bouncing_betty",5);
 	
-	self GiveWeapon( current );
+	//self GiveWeapon( current );
 }
 
 betty_think()

@@ -2231,7 +2231,6 @@ player_reload_sounds()
 {
 	self endon( "disconnect" );
 	self endon( "death" );
-    self waittill("reload_start");
 
 	while(1)
     {
@@ -2251,13 +2250,14 @@ player_reload_sounds()
 		    }
 	    }
 
-	    if(self.reloading && get_enemy_count() + level.zombie_total >= 6 && level.zombies_are_close == 1) //Play reload vox if reloading and at least six zombies are positioned 225 inches (18.75 feet) or less from a player
+	    if(self.reloading && get_enemy_count() + level.zombie_total >= 2 && level.zombies_are_close == 1) //Play reload vox if reloading and at least six zombies are positioned 225 inches (18.75 feet) or less from a player
 	    {
             if(level.player_is_speaking != 1) {
                 index = maps\_zombiemode_weapons::get_player_index(self);
                 reloadSound = "_vox_reload_" + RandomInt(2);
 			    level.player_is_speaking = 1;
                 self PlaySound("plr_" + index + reloadSound);
+                IPrintLn("reloading...");
 			    level.player_is_speaking = 0;
                 wait 3; //Wait 3 seconds to prevent sound from playing more than once per reload
             }
@@ -2271,38 +2271,34 @@ player_no_ammmo_sounds() //We should use this for if the player is about to run 
 	self endon( "disconnect" );
 	self endon( "death" );
 
-	    while(1)
-	    {
-            wait 1;
-            if(level.player_is_speaking != 1) {
-                current_weapon = self getCurrentWeapon();
+	while(1)
+	{
+        wait 1;
+        if(level.player_is_speaking != 1) {
+            current_weapon = self GetCurrentWeapon();
 
-                filteredWeaponArray = getArrayKeys( level.filtered_weapons ); // get an array of the strings used to index
-
-                for ( i = 0; i < filteredWeaponArray.size; i++ )
+            for ( i = 0; i < level.filtered_weapons.size; i++ )
+            {
+                if ( current_weapon == level.filtered_weapons[i])
                 {
-                    if ( current_weapon != level.filtered_weapons[filteredWeaponArray[i]])
-                    {
-                        IPrintLn(level.filtered_weapons[filteredWeaponArray[i]]);
-                        break;
-                    }
+                    break;
                 }
-
                 totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
                 if(totalCurrentWeaponAmmo < 1) {
                     index = maps\_zombiemode_weapons::get_player_index(self);
                     noAmmoSound = "_no_ammo";
 			        level.player_is_speaking = 1;
                     self PlaySound("plr_" + index + noAmmoSound);
+                    IPrintLn("no ammo...");
 			        level.player_is_speaking = 0;
                     while(totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
 			            wait 0.1;
                 }
             }
-            wait 0.25;   
-	    } 
+        }
+        wait 0.25;   
+	}
 }
-
 
 player_lunge_knife_exert_sounds()
 {
