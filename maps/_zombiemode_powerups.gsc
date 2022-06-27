@@ -586,7 +586,7 @@ powerup_grab() {
 
                 wait(0.1);
 
-                self PlaySound("powerup_grabbed");
+                PlaySoundatposition("powerup_grabbed", self.origin);    //self PlaySound("powerup_grabbed");
                 self StopLoopSound();
 
                 self delete();
