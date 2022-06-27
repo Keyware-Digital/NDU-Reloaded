@@ -130,8 +130,6 @@ include_weapons() {
     include_weapon("zombie_bowie_flourish", /*true,*/::prototype_bowie_weighting_func);
     //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func);
     include_weapon("zombie_type100_smg");
-    //include_weapon("death_hands");
-    //include_weapon("knuckle_crack_hands");
 
     // Weapon cabinet only additions	
     include_weapon("kar98k_bayonet");	
@@ -143,6 +141,10 @@ include_weapons() {
     include_weapon("ppsh41_drum");
     include_weapon("sten_mk5");
     include_weapon("stg44_pap");
+
+    // Other
+    //include_weapon("death_hands");
+    //include_weapon("knuckle_crack_hands");
 
     // Cut content
     //include_weapon("springfield_scoped_zombie_upgraded");
@@ -358,11 +360,12 @@ filtered_weapons()
     //Puts weapons that need filtering into an array to be called later (use in functions that checks a weapons ammo count)
 	level.filtered_weapons = [];
 	level.filtered_weapons[level.filtered_weapons.size] = "none";
-	level.filtered_weapons[level.filtered_weapons.size] = "mine_bouncing_betty";
-    level.filtered_weapons[level.filtered_weapons.size] = "perks_a_cola";
-	level.filtered_weapons[level.filtered_weapons.size] = "zombie_bowie_flourish";
+	level.filtered_weapons[level.filtered_weapons.size] = "molotov";
+    level.filtered_weapons[level.filtered_weapons.size] = "mine_bouncing_betty";
+	level.filtered_weapons[level.filtered_weapons.size] = "perks_a_cola";
 	level.filtered_weapons[level.filtered_weapons.size] = "stielhandgranate";
-    level.filtered_weapons[level.filtered_weapons.size] = "molotov";
+    level.filtered_weapons[level.filtered_weapons.size] = "zombie_bowie_flourish";
+    //level.filtered_weapons[level.filtered_weapons.size] = "zombie_cymbal_monkey";
 	level.filtered_weapons[level.filtered_weapons.size] = "zombie_knife";
 }
 

@@ -63,7 +63,7 @@ betty_think()
     playfxontag(level._effect["betty_trail"], tag_origin,"tag_origin");
     fake_model moveto (fake_model.origin + (0,0,32),.2);
     fake_model waittill("movedone");
-	fake_model PlaySound("mortart_dirt_zombie");
+	PlaySoundAtPosition("mortar_dirt_zombie",fake_model.origin);	// dont change or it breaks.
     playfx(level._effect["betty_explode"], fake_model.origin);
     earthquake(1, .4, fake_model.origin, 512);
 

@@ -212,9 +212,14 @@ init_weapons()
 	add_zombie_weapon( "zombie_bowie_flourish",	"", 0 );
 	add_zombie_weapon( "zombie_type100_smg", "", 0 );
 
-	// NDU: Reloaded Specials
-	//add_zombie_weapon( "death_hands", 					&"PROTOTYPE_ZOMBIE_DEATH_HANDS_10000",	10000 );
-	//add_zombie_weapon( "knuckle_crack_hands", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
+	// Other
+	//add_zombie_weapon( "death_hands", 						&"PROTOTYPE_ZOMBIE_DEATH_HANDS_10000",		10000 );
+	//add_zombie_weapon( "knuckle_crack_hands", 				&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
+
+	// Cut content
+	//add_zombie_weapon( "springfield_scoped_zombie_upgraded", "", 0 );
+	//add_zombie_weapon( "tesla_gun", "", 0 );
+	//add_zombie_weapon( "walther_prototype", "", 0 );
 	
 	// Pistols
 	add_zombie_weapon( "colt", "", 0 );
@@ -301,7 +306,7 @@ init_weapons()
 	add_zombie_weapon( "mortar_round", "", 0 );
 	add_zombie_weapon( "satchel_charge", "", 0 );
 	add_zombie_weapon( "ray_gun_mk1_v2", "", 0, 6 );
-	add_zombie_weapon("zombie_melee", "", 0);
+	add_zombie_weapon( "zombie_melee", "", 0);
 	
 	// ONLY 1 (OR MORE) OF THE BELOW SHOULD BE ALLOWED
 	add_limited_weapon( "m2_flamethrower_zombie", 1 );
@@ -432,7 +437,7 @@ init_treasure_chest()
 }
 
 init_mystery_box_vars() {
-	set_zombie_var("zombie_mystery_box_padlock_cost", 1900);
+	set_zombie_var("zombie_mystery_box_padlock_cost", 2000);	// matched botd
 	level.chest_accessed = 0;
 
 }
