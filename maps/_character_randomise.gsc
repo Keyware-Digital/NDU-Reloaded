@@ -5,7 +5,7 @@
 init()
 {
 	randomise_character_index();
-	get_player_score_colors();
+	get_player_score_colours();
 }
 
 randomise_character_index()
@@ -18,11 +18,11 @@ randomise_character_index()
 	level.random_character_index = array_randomize( level.random_character_index );
 }
 
-get_player_score_colors()
+get_player_score_colours()
 {
-	level.random_character_color = [];
+	level.character_colour = [];
 	for( i = 0; i < 4; i++ )
 	{
-		level.random_character_color[ i ] = GetDvar( "cg_ScoresColor_Gamertag_" + i );
+		level.character_colour[ i ] = GetDvar( "cg_ScoresColor_Gamertag_" + i);
 	}
 }

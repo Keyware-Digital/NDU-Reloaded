@@ -56,10 +56,13 @@ LANG_ENGLISH        "M7 Grenade Launcher"
 REFERENCE           ZOMBIE_WEAPON_M1_CARBINE
 LANG_ENGLISH        "M1 Carbine"
 
-REFERENCE           ZOMBIE_ZOMBIE_WEAPON_M1_GARAND
+REFERENCE           ZOMBIE_WEAPON_M1_GARAND
 LANG_ENGLISH        "M1 Garand"
 
 REFERENCE           ZOMBIE_WEAPON_M1_GARAND_GL
+LANG_ENGLISH        "M1 Garand w/ Grenade Launcher"
+
+REFERENCE           ZOMBIE_WEAPON_M7_LAUNCHER
 LANG_ENGLISH        "M1 Garand w/ Grenade Launcher"
 
 REFERENCE           ZOMBIE_WEAPON_MG42_BIPOD
@@ -166,6 +169,9 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: &&2]"
 
 REFERENCE           ZOMBIE_RANDOM_WEAPON
 LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: &&2]"
+
+REFERENCE           ZOMBIE_RANDOM_WEAPON_LOCKED
+LANG_ENGLISH        "Hold ^3&&1 ^7to unlock Mystery Box [Cost: &&2]"
 
 REFERENCE           ZOMBIE_BUTTON_REWARD_BARRIER
 LANG_ENGLISH        "Hold ^3&&1 ^7to Rebuild Barrier"

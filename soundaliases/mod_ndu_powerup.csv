@@ -51,6 +51,5 @@ cabinetbox_sting_2,SFX\Levels\zombie\cabinet_box\cabinetbox_sting_2.wav,,,1,1,50
 cabinetbox_lottery_laugh,SFX\Levels\zombie\cabinet_box\cabinetbox_lottery_laugh.wav,,,1,1,500,2500,1,oldest,,,full_vol,,,,4000,,curve2,1,1,,3d,,,,master,,,,,,,,,,,,,,,,,,,40,60,0.25,1,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 # Mystery Box,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-mysterybox_lottery_laugh,sfx\levels\zombie\mystery_box\mysterybox_lottery_laugh.wav,,,1,1,500,2500,1,oldest,,,full_vol,,,,4000,,curve2,1,1,,3d,,,,master,,,,,,,,,,,,,,,,,,,40,60,0.25,1,,
-mysterybox_lock,sfx\levels\zombie\mystery_box\mysterybox_lock.wav,,,1,1,500,2500,1,oldest,,,full_vol,,,,4000,,curve2,1,1,,3d,,,,master,,,,,,,,,,,,,,,,,,,40,60,0.25,1,,
-mysterybox_unlock,sfx\levels\zombie\mystery_box\mysterybox_unlock.wav,,,1,1,500,2500,1,oldest,,,full_vol,,,,4000,,curve2,1,1,,3d,,,,master,,,,,,,,,,,,,,,,,,,40,60,0.25,1,,
+mystery_box_lock,sfx\levels\zombie\mystery_box\mystery_box_lock.wav,,,1,1,50,2500,1,reject,1,reject,full_vol,,curve2,,,,,1,1,,2d,,,,master,,,,,,1000,wpn_all,,,,,,,,,,,,100,100,0.25,1,,
+mystery_box_unlock,sfx\levels\zombie\mystery_box\mystery_box_unlock.wav,,,1,1,50,2500,1,reject,1,reject,full_vol,,curve2,,,,,1,1,,2d,,,,master,,,,,,1000,wpn_all,,,,,,,,,,,,100,100,0.25,1,,

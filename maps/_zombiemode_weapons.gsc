@@ -188,7 +188,7 @@ include_zombie_weapon( weapon_name, in_box, weighting_func )
 
 	if( !isDefined( weighting_func ) )
 	{
-		level.weapon_weighting_funcs[weapon_name] = maps\_zombiemode_weapons::prototype_weighting_func;
+		level.weapon_weighting_funcs[weapon_name] = prototype_weighting_func();
 	}
 	else
 	{
@@ -198,7 +198,7 @@ include_zombie_weapon( weapon_name, in_box, weighting_func )
 
 init_weapons()
 {
-	//Only guns that are wall buy guns require their true cost, every other gun needs to have zero cost to prevent crashing and confusion
+	//Only guns that are wall buy guns require their true cost, every other gun needs to have zero cost to prevent errors and confusion
 	// NDU: Reloaded
 	add_zombie_weapon( "m1921_thompson", "", 0 );
 	add_zombie_weapon( "mine_bouncing_betty", "", 0 );
@@ -834,8 +834,8 @@ treasure_chest_weapon_spawn( chest, player )
     floatHeight = 40;
  
     //move it up
-    model moveto( model.origin + ( 0, 0, floatHeight ), 3, 2, 0.9 ); 
- 
+	model moveto( model.origin + ( 0, 0, floatHeight ), 3, 2, 0.9 ); 
+
     // rotation would go here
  
     // make with the mario kart
@@ -882,38 +882,45 @@ treasure_chest_weapon_spawn( chest, player )
         player thread weapons_death_check();
     }
  
-	// Padlock start
+	//Padlock start
 	
     chanceOfPadlock = RandomInt(100);
 
-    if(level.chest_accessed >= 10) // Adds 30% chance to get lock
-    {
-        chanceOfPadlock = 100;
-    }
-    else if(level.chest_accessed >= 8) // Adds 30% chance to get lock
-    {
-        chanceOfPadlock = chanceOfPadlock + 30;
-    }
-    else if(level.chest_accessed >= 3) // Adds 15% chance to get lock
+	//Teddy bear style chance of Padlock proc
+
+    if(level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
     {
         chanceOfPadlock = chanceOfPadlock + 15;
     }
+    else if(level.chest_accessed >= 8 && level.chest_accessed < 13) //30% chance to get lock between pull 8 and 12
+    {
+        chanceOfPadlock = chanceOfPadlock + 30;
+    }
+    else if(level.chest_accessed >= 13) //50% chance to get lock after 12th pull
+    {
+        chanceOfPadlock = 50;
+    }
 
-    if(chanceOfPadlock >= 100 && level.chest_accessed >= 3 && !level.zombie_vars["zombie_fire_sale"])
+    if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
     {
         chest.boxlocked = true;
 		level.zombie_vars["enableFireSale"] = 0;
         model SetModel("zmb_mdl_padlock");
 		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
-		wait 3.5;
-		chest PlaySound("mysterybox_lock");
-		//chest PlaySound("la_vox");
-		wait 1;
 
-		cost = level.zombie_treasure_chest_cost;
+		mystery_box_lock_sound = Spawn("script_origin", chest.origin);
+		mystery_box_lock_sound PlaySound("mystery_box_lock");
+		mystery_box_lock_sound Delete();
+
+		la_vox_sound = Spawn("script_origin", chest.origin);
+		la_vox_sound PlaySound("la_vox", "sound_done");
+		la_vox_sound waittill("sound_done");
+		la_vox_sound Delete();
+
+		cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
 		
-        chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", cost);
+        chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", cost);
         chest enable_trigger();
         
         while(1)
@@ -931,8 +938,10 @@ treasure_chest_weapon_spawn( chest, player )
 
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
-		chest PlaySound("mysterybox_unlock");
-		wait 2.5;
+		mystery_box_lock_sound = Spawn("script_origin", self.origin);
+		mystery_box_lock_sound PlaySound("mystery_box_unlock", "sound_done");
+		mystery_box_lock_sound waittill("sound_done");
+		mystery_box_lock_sound Delete();
         model Delete();
 		level.zombie_mystery_box_padlock = 0;
         level.chest_accessed = 0;
@@ -1190,12 +1199,18 @@ weapon_cabinet_think()
 
 	weaponmodelstruct MoveTo(self.origin - (0,0,6.5),4,0,4);
 
-	cabinetsong = "cabinetbox_sting_" + RandomInt(2);
-	cabinetlaugh = "cabinetbox_lottery_laugh";
+	cabinetSong = "cabinetbox_sting_" + RandomInt(2);
+	cabinetLaugh = "cabinetbox_lottery_laugh";
 
 	play_sound_at_pos( "open_chest", self.origin );
-	self PlaySound(cabinetsong);
-	self PlaySound(cabinetlaugh);
+
+	cabinet_song_sound = Spawn("script_origin", self.origin);
+	cabinet_song_sound PlaySound(cabinetSong);
+	cabinet_song_sound Delete();
+
+	cabinet_laugh_sound = Spawn("script_origin", self.origin);
+	cabinet_laugh_sound PlaySound(cabinetLaugh);
+	cabinet_laugh_sound Delete();
 
 	self thread cabinet_glowfx();
 	
@@ -1273,7 +1288,7 @@ weapon_cabinet_think()
 	
 	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
-		if(luckyNumCabinet <= 10)	//10 out of 100 chance to get a perk
+		if(luckyNumCabinet <= 100)	//10 out of 100 chance to get a perk
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
@@ -1420,7 +1435,7 @@ takenweapon(chosenweapon)
 {
 	self endon("weaponexpired");
 
-	self waittill("trigger",player);
+	self waittill("trigger", player);
 	self play_sound_on_ent( "purchase" ); 
 	self notify("weapontaken");
 
@@ -1428,15 +1443,16 @@ takenweapon(chosenweapon)
 	{
 		//thread play_raygun_stinger();		// we don't want the stinger sound for a perk bottle.
 		current_weapon = player GetCurrentWeapon();
-		player DisableOffhandWeapons();
-		player DisableWeaponCycling();
 		player GiveWeapon(chosenweapon);
 		player SwitchToWeapon(chosenweapon);
+		player DisableOffhandWeapons();
+		player DisableWeaponCycling();
 		wait 2.5;
 		player TakeWeapon(chosenweapon);
-		player EnableWeaponCycling();
 		player SwitchToWeapon(current_weapon);
 		player EnableOffhandWeapons();
+		player EnableWeaponCycling();
+
 		player thread maps\_zombiemode_perks::random_perk_powerup_think();
 		return;
 	}

@@ -7,7 +7,6 @@ self.hatModel = "char_usa_marine_helm1";
 self attach(self.hatModel);
 self.gearModel = "char_usa_raider_gear4";
 self attach(self.gearModel);
-self.voice = "american";
 }
 
 precache()

@@ -33,7 +33,10 @@ setup_player_dolphin_dive()
 			
 			run_velocity = self GetVelocity();
 			launch = "_launch_exert_" + RandomInt(6);
-			self PlaySound("plr_" + index + launch);
+		    launch_sound = Spawn("script_origin", self.origin);
+    		launch_sound PlaySound("plr_" + index + launch, "sound_done");
+			launch_sound waittill("sound_done");
+			launch_sound Delete();
 			self.is_diving = true;
 			self setClientDvar("hide_reload_hud", 1);
 			self setClientDvar("ammocounterhide", 1);
@@ -83,14 +86,17 @@ setup_player_dolphin_dive()
 			players_dolphin_dive UseAnimTree( #animtree );
 			players_dolphin_dive setAnim(dolphin_dive_anim_land);
 
-			// self playSound("d2p_fall");
-			// self playSound("d2p_slide");
-
-			self PlaySound("land_concrete");
+		    launch_sound = Spawn("script_origin", self.origin);
+    		launch_sound PlaySound("land_concrete", "sound_done");
+			launch_sound waittill("sound_done");
+			launch_sound Delete();
 
 			land = "_land_exert_" + RandomInt(6);
 
-			self PlaySound("plr_" + index + land);
+		    land_sound = Spawn("script_origin", self.origin);
+    		land_sound PlaySound(land, "sound_done");
+			land_sound waittill("sound_done");
+			land_sound Delete();
 
 			wait 0.05;
 

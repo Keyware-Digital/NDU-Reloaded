@@ -352,9 +352,42 @@ menuDef
 		name 			"playerPortrait"
 		rect			70 -35 24 24
 		forecolor		1 1 1 1
-		background		"hud_player_portrait" // player portrait texture
+		background		"plr_0_hud_portrait" //player 0 portrait texture
 		ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
-		visible			1
+		visible			when(dvarInt("plr_hud_portrait") == 0)
+		decoration
+	}
+
+	itemDef
+	{
+		name 			"playerPortrait"
+		rect			70 -35 24 24
+		forecolor		1 1 1 1
+		background		"plr_1_hud_portrait" //player 1 portrait texture
+		ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+		visible			when(dvarInt("plr_hud_portrait") == 1)
+		decoration
+	}
+
+	itemDef
+	{
+		name 			"playerPortrait"
+		rect			70 -35 24 24
+		forecolor		1 1 1 1
+		background		"plr_2_hud_portrait" //player 2 portrait texture
+		ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+		visible			when(dvarInt("plr_hud_portrait") == 2)
+		decoration
+	}
+
+	itemDef
+	{
+		name 			"playerPortrait"
+		rect			70 -35 24 24
+		forecolor		1 1 1 1
+		background		"plr_3_hud_portrait" //player 3 portrait texture
+		ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+		visible			when(dvarInt("plr_hud_portrait") == 3)
 		decoration
 	}
 
@@ -384,7 +417,7 @@ menuDef
 		itemDef
 		{
 			name			"clipGraphic"
-			rect			(WEAPINFO_X +151) (WEAPINFO_Y +56) 1 1
+			rect			(WEAPINFO_X +111) (WEAPINFO_Y +36) 1 1
 			forecolor		1 1 1 HUD_ALPHA
 			ownerdraw		CG_PLAYER_WEAPON_AMMO_CLIP_GRAPHIC
 			visible			1
@@ -394,10 +427,44 @@ menuDef
 		itemDef
 		{
 			name			"offhandFragIcon"
-			rect			(WEAPINFO_X +151) (WEAPINFO_Y +17) 24 24
+			rect			(WEAPINFO_X +86) (WEAPINFO_Y +2) 24 24
 			forecolor		1 1 1 HUD_ALPHA
 			ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
 			background		"hud_grenade_german" // german grenade texture
+			visible			when(dvarInt("player_hud_specialty_electric_cherry") == 0)
+			decoration
+		}
+
+		itemDef
+		{
+			name			"offhandFragIcon"
+			rect			(WEAPINFO_X +86) (WEAPINFO_Y +2) 24 24
+			forecolor		1 1 1 HUD_ALPHA
+			ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+			background		"hud_grenade_german_upgraded" // upgraded german grenade texture
+			visible			when(dvarInt("player_hud_specialty_electric_cherry") == 1)
+			decoration
+		}
+
+		itemDef
+		{
+			name			"offhandSmokeIcon"
+			rect			(WEAPINFO_X +56) (WEAPINFO_Y +2) 24 24
+			forecolor		1 1 1 HUD_ALPHA
+			ownerdraw		CG_OFFHAND_WEAPON_ICON_SMOKEFLASH
+			background		"hud_us_smokegrenade" // default texture
+			visible			1
+			decoration
+		}
+		itemDef
+		{
+			name			"offhandsmokeammo"
+			rect			(WEAPINFO_X +76) (WEAPINFO_Y +32) 25 25
+			textscale		TEXTSIZE_SMALL
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textfont		UI_FONT_OBJECTIVE
+			forecolor		1 1 1 HUD_FOREGROUND_ALPHA
+			ownerdraw		CG_OFFHAND_WEAPON_AMMO_SMOKEFLASH
 			visible			1
 			decoration
 		}
@@ -405,7 +472,7 @@ menuDef
 		itemDef
 		{
 			name			"offhandfragammo"
-			rect			(WEAPINFO_X +171) (WEAPINFO_Y +47) 25 25
+			rect			(WEAPINFO_X +106) (WEAPINFO_Y +32) 25 25
 			textscale		TEXTSIZE_SMALL
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textfont		UI_FONT_OBJECTIVE
@@ -418,7 +485,7 @@ menuDef
 		itemDef
 		{
 			name			"ammostock"
-			rect			(WEAPINFO_X +161) (WEAPINFO_Y +64) 25 25
+			rect			(WEAPINFO_X +115) (WEAPINFO_Y +44) 25 25
 			textscale		TEXTSIZE_SMALL
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textfont		UI_FONT_OBJECTIVE
@@ -431,7 +498,7 @@ menuDef
 		itemDef
 		{
 			name			"weapname_lowdef"
-			rect			(WEAPINFO_X -80) (WEAPINFO_Y +10) 290 40
+			rect			(WEAPINFO_X -115) (WEAPINFO_Y +0) 290 40
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textscale		TEXTSIZE_SMALL
 			textfont		UI_FONT_OBJECTIVE
@@ -450,6 +517,7 @@ menuDef
 			textalign		(ITEM_ALIGN_CENTER | ITEM_ALIGN_MIDDLE)
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			forecolor		1 1 1 1
+			//background	"white"
 			ownerdraw		CG_PLAYER_WEAPON_LOW_AMMO_WARNING
 			visible	when ( dvarInt( g_gameskill ) == 0 || dvarInt( g_gameskill ) == 1 || dvarstring( mapname ) == LEVEL_TRAINING );
 			decoration

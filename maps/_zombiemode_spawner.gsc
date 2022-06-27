@@ -1453,16 +1453,6 @@ zombie_gib_on_damage()
 
 		self thread maps\_zombiemode_perks::perks_zombie_hit_effect(amount, attacker, point, type); // also needed in dogs
 
-		// Bowie Knife Damage
-		if( isDefined( level.perk_altMeleeDamage ) && level.perk_altMeleeDamage )
-		{
-			SetDvar( "perk_altMeleeDamage", level.perk_altMeleeDamage );
-		}
-		else
-		{
-			SetDvar( "perk_altMeleeDamage", 1000 );
-		}
-
 		if( !self zombie_should_gib( amount, attacker, type ) )
 		{
 			continue; 

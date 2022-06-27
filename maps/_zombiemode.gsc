@@ -84,7 +84,6 @@ main() {
     // Start the Zombie MODE!
     level thread round_start();
     level thread players_playing();
-
     level thread setup_player_abilities();
     level thread setup_player_vars();
 
@@ -479,6 +478,7 @@ init_player_config() {
     set_zombie_var("dolphin_dive", 1);
     level.player_is_speaking = 0;
     level.zombies_are_close = 0;
+    SetDvar( "perk_altMeleeDamage", 1000 ); // adjusts how much melee damage a player with the perk will do, needs only be set once
 }
 
 // Handles the intro screen
@@ -531,6 +531,7 @@ onPlayerConnect() {
 
         player.entity_num = player GetEntityNumber();
         player thread onPlayerSpawned();
+
         player thread onPlayerDisconnect();
 
         player thread watchGrenadeThrow();
@@ -559,9 +560,6 @@ onPlayerConnect_clientDvars() {
         "ammoCounterHide", "0",
         "miniscoreboardhide", "0",
         "ui_hud_hardcore", "0");
-    for (i = 0; i < 4; i++) {
-        self SetClientDvar("cg_ScoresColor_Gamertag_" + i, level.random_character_color[level.random_character_index[i]]);
-    }
 
     self SetDepthOfField(0, 0, 512, 4000, 4, 0);
 }
@@ -1613,9 +1611,13 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
 
     if(level.player_is_speaking != 1) {
         index = maps\_zombiemode_weapons::get_player_index(self);
-        painSound = "_pain_exert_" + RandomInt(8);
+
         level.player_is_speaking = 1;
-        self PlaySound("plr_" + index + painSound);
+        painSound = "_pain_exert_" + RandomInt(8);
+        pain_vox_sound = Spawn("script_origin", self.origin);
+		pain_vox_sound PlaySound("plr_" + index + painSound, "sound_done");
+		pain_vox_sound waittill("sound_done");
+		pain_vox_sound Delete();
         level.player_is_speaking = 0;
     }
 
@@ -2207,8 +2209,11 @@ setup_player_vars()
 
     players = GetPlayers();
 
+    //index = maps\_zombiemode_weapons::get_player_index(player);
+
     for (i = 0; i < players.size; i++) {
         players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
+        players[i] setClientDvar("player_hud_specialty_electric_cherry", 0);
         // enable sv_cheats just to set level of detail for everyone
         players[i] SetClientDvar("sv_cheats", 1);
         // these set the level of detail relative to distance (should really be set in the menus as one option like mature content and set via dvarint)
@@ -2219,8 +2224,45 @@ setup_player_vars()
         // disable sv_cheats immediately afterwards so players can't use vars that are flagged as cheats
         players[i] SetClientDvar("sv_cheats", 0);
 
+        num = players[i].entity_num;
+
+        //Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
+		switch(num)
+		{
+			case 0:
+            players[i] SetClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[0]);
+				break; 
+			case 1:
+            players[i] SetClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[1]);
+				break;
+			case 2:
+            players[i] SetClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[2]);
+				break;  
+			case 3:
+            players[i] SetClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[3]);
+				break;
+		}
+
+
+        //Sets the correct player portrait based on what character they randomly spawned as
+		switch(level.random_character_index[i])
+		{
+			case 0:
+            players[i] SetClientDvar("plr_hud_portrait", 0);
+				break; 
+			case 1:
+            players[i] SetClientDvar("plr_hud_portrait", 1);
+				break;
+			case 2:
+            players[i] SetClientDvar("plr_hud_portrait", 2);
+				break;  
+			case 3:
+            players[i] SetClientDvar("plr_hud_portrait", 3);
+				break;
+		}
+
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
-        if (players[i].playername == "ReubenUKGB" || "TreborUK") {
+        if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {
             players[i] SetClientDvar("sv_cheats", 1);
             players[i] maps\_zombiemode_score::add_to_player_score(100000);
         }
@@ -2229,11 +2271,11 @@ setup_player_vars()
 
 player_reload_sounds()
 {
-	self endon( "disconnect" );
 	self endon( "death" );
 
 	while(1)
     {
+        wait 0.1;
 
 	    zombies = getaiarray("axis");
 
@@ -2254,10 +2296,12 @@ player_reload_sounds()
 	    {
             if(level.player_is_speaking != 1) {
                 index = maps\_zombiemode_weapons::get_player_index(self);
-                reloadSound = "_vox_reload_" + RandomInt(2);
 			    level.player_is_speaking = 1;
-                self PlaySound("plr_" + index + reloadSound);
-                IPrintLn("reloading...");
+                reloadSound = "_vox_reload_" + RandomInt(2);
+                reload_vox_sound = Spawn("script_origin", self.origin);
+		        reload_vox_sound PlaySound("plr_" + index + reloadSound, "sound_done");
+		        reload_vox_sound waittill("sound_done");
+		        reload_vox_sound Delete();
 			    level.player_is_speaking = 0;
                 wait 3; //Wait 3 seconds to prevent sound from playing more than once per reload
             }
@@ -2268,12 +2312,12 @@ player_reload_sounds()
 
 player_no_ammmo_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
 {
-	self endon( "disconnect" );
 	self endon( "death" );
 
 	while(1)
 	{
-        wait 1;
+        wait 0.1;
+
         if(level.player_is_speaking != 1) {
             current_weapon = self GetCurrentWeapon();
 
@@ -2286,11 +2330,14 @@ player_no_ammmo_sounds() //We should use this for if the player is about to run 
                 totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
                 if(totalCurrentWeaponAmmo < 1) {
                     index = maps\_zombiemode_weapons::get_player_index(self);
-                    noAmmoSound = "_no_ammo";
 			        level.player_is_speaking = 1;
-                    self PlaySound("plr_" + index + noAmmoSound);
-                    IPrintLn("no ammo...");
+                    noAmmoSound = "_no_ammo";
+                    no_ammo_vox_sound = Spawn("script_origin", self.origin);
+		            no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "sound_done");
+		            no_ammo_vox_sound waittill("sound_done");
+		            no_ammo_vox_sound Delete();
 			        level.player_is_speaking = 0;
+                    wait 3; //Wait 3 seconds to prevent sound from playing more than once
                     while(totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
 			            wait 0.1;
                 }
@@ -2302,19 +2349,22 @@ player_no_ammmo_sounds() //We should use this for if the player is about to run 
 
 player_lunge_knife_exert_sounds()
 {
-	self endon( "disconnect" );
 	self endon( "death" );
- 
+
 	while(1)
 	{
+        wait 0.1;
 		if(self IsMeleeing())
 		{
             if(level.player_is_speaking != 1) {
                 self AllowMelee(false); //Disables melee during melee and before sounds play to prevent more than one sound from playing at a time
                 index = maps\_zombiemode_weapons::get_player_index(self);
-                meleeSound = "_knife_exert_" + RandomInt(3);
 			    level.player_is_speaking = 1;
-                self PlaySound("plr_" + index + meleeSound);
+                meleeSound = "_knife_exert_" + RandomInt(3);
+                melee_vox_sound = Spawn("script_origin", self.origin);
+		        melee_vox_sound PlaySound("plr_" + index + meleeSound, "sound_done");
+		        melee_vox_sound waittill("sound_done");
+		        melee_vox_sound Delete();
                 self AllowMelee(true); //Reenables melee without any increase in melee delay
                 wait 1; //Wait 1 second to sync sounds with meleeing, anything less or more breaks above code
                 level.player_is_speaking = 0;
@@ -2326,19 +2376,23 @@ player_lunge_knife_exert_sounds()
 
 player_throw_grenade_exert_sounds()
 {
-	self endon( "disconnect" );
 	self endon( "death" );
  
 	while(1)
 	{
+        wait 0.1;
+
 		if(self IsThrowingGrenade())
         {
             if(level.player_is_speaking != 1) {
                 self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
                 index = maps\_zombiemode_weapons::get_player_index(self);
-                grenadeSound = "_grenade_exert_" + RandomInt(6);
 			    level.player_is_speaking = 1;
-                self PlaySound("plr_" + index + grenadeSound);
+                grenadeSound = "_grenade_exert_" + RandomInt(6);
+                grenade_vox_sound = Spawn("script_origin", self.origin);
+		        grenade_vox_sound PlaySound("plr_" + index + grenadeSound, "sound_done");
+		        grenade_vox_sound waittill("sound_done");
+		        grenade_vox_sound Delete();
                 self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
                 wait 1.25; //Wait 1.25 seconds to sync sounds with grenade throwing, anything less or more breaks above code
 			    level.player_is_speaking = 0;
@@ -2347,4 +2401,3 @@ player_throw_grenade_exert_sounds()
     wait 0.25;   
     }
 }
-

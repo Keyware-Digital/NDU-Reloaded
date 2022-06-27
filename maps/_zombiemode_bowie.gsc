@@ -197,7 +197,7 @@ do_bowie_flourish_end( gun )
 	self AllowLean( true );
 	self AllowAds( true );
 	self AllowSprint( true );
-	self AllowProne( true );		
+	//self AllowProne( true );		
 	self AllowMelee( true );
 	weapon = "zombie_bowie_flourish";
 

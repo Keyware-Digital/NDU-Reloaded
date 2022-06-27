@@ -73,13 +73,17 @@ random_perk_powerup_think() {
         self.maxhealth = level.zombie_vars[ "juggernaut_health" ];
     }
 
-    if (self.perkarray[self.perknum] == "specialty_fasreload") {
+    if (self.perkarray[self.perknum] == "specialty_fastreload") {
         self setClientDvar( "perk_weapReloadMultiplier", level.zombie_vars[ "speed_reload_rate" ] );
     }
 
     if (self.perkarray[self.perknum] == "specialty_longersprint") {
         self setMoveSpeedScale( level.zombie_vars[ "staminup_sprint_scale" ] );
 		self setClientDvar( "player_sprintTime", level.zombie_vars[ "staminup_sprint_max_duration" ] );
+    }
+
+    if (self.perkarray[self.perknum] == "specialty_explosivedamage") {
+		self SetClientDvar("player_hud_specialty_electric_cherry", 1);
     }
 
     self SetPerk(self.perkarray[self.perknum]);
@@ -255,7 +259,11 @@ phd_fall_damage(iDamage, point, attacker, type)
 
 	explosion = "explode_" + RandomInt(2);
 
-    self PlaySound(explosion);
+    explosion_sound = Spawn("script_origin", self.origin);
+    explosion_sound PlaySound(explosion, "sound_done");
+	explosion_sound waittill("sound_done");
+	explosion_sound Delete();
+
 	playFx( level._effect["fx_zmb_phdflopper_exp"], self.origin + ( 0, 0, 50 ));
 	self VisionSetNaked("zombie_cosmodrome_divetonuke", 1);
     wait 0.5;
@@ -304,7 +312,11 @@ phd_dive_damage(origin, point, attacker, type)
 
 	explosion = "explode_" + RandomInt(2);
 
-	PlaySoundAtPosition(explosion, self.origin);
+    explosion_sound = Spawn("script_origin", self.origin);
+    explosion_sound PlaySound(explosion, "sound_done");
+	explosion_sound waittill("sound_done");
+	explosion_sound Delete();
+
 	playFx( level._effect["fx_zmb_phdflopper_exp"], origin + ( 0, 0, 50 ));
 	self VisionSetNaked("cheat_contrast", 0.2);
     wait 0.5;
