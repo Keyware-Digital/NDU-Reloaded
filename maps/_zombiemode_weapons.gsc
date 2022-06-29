@@ -1446,7 +1446,26 @@ takenweapon(chosenweapon)
 		player SwitchToWeapon(chosenweapon);
 		player DisableOffhandWeapons();
 		player DisableWeaponCycling();
+		//player DisableUsability();	//causes crash
+		player AllowLean( false );
+		player AllowAds( false );
+		player AllowSprint( false );
+		player AllowProne( false );		
+		player AllowMelee( false );
 		wait 2.5;
+
+	// we don't want the player drinking when prone.
+	if ( self GetStance() == "prone" )
+	{
+		self SetStance( "crouch" );
+	}	
+
+		//player EnableUsability();
+		player AllowLean( true );
+		player AllowAds( true );
+		player AllowSprint( true );
+		player AllowProne( true );		
+		player AllowMelee( true );
 		player TakeWeapon(chosenweapon);
 		player SwitchToWeapon(current_weapon);
 		player EnableOffhandWeapons();
