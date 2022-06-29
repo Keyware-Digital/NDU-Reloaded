@@ -188,7 +188,7 @@ include_zombie_weapon( weapon_name, in_box, weighting_func )
 
 	if( !isDefined( weighting_func ) )
 	{
-		level.weapon_weighting_funcs[weapon_name] = prototype_weighting_func();
+		level.weapon_weighting_funcs[weapon_name] = ::prototype_weighting_func;
 	}
 	else
 	{
@@ -458,6 +458,7 @@ treasure_chest_think(rand)
 
 	self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", cost);
 	self setCursorHint( "HINT_NOICON" );
+	self UseTriggerRequireLookAt();
 
 	if(isDefined(level.zombie_vars["zombie_fire_sale"]) && level.zombie_vars["zombie_fire_sale"])
 	{
@@ -915,17 +916,13 @@ treasure_chest_weapon_spawn( chest, player )
         player maps\_zombiemode_score::add_to_player_score(950);
 
 		mystery_box_lock_sound = Spawn("script_origin", chest.origin);
-		mystery_box_lock_sound PlaySound("mystery_box_lock");
-		mystery_box_lock_sound Delete();
-
-		la_vox_sound = Spawn("script_origin", chest.origin);
-		la_vox_sound PlaySound("la_vox", "sound_done");
-		la_vox_sound waittill("sound_done");
-		la_vox_sound Delete();
+		mystery_box_lock_sound PlaySound("mystery_box_lock", "sound_done");
 
 		cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
 		
         chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", cost);
+		mystery_box_lock_sound waittill("sound_done");
+		mystery_box_lock_sound Delete();
         chest enable_trigger();
         
         while(1)
@@ -943,7 +940,7 @@ treasure_chest_weapon_spawn( chest, player )
 
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
-		mystery_box_lock_sound = Spawn("script_origin", self.origin);
+		mystery_box_lock_sound = Spawn("script_origin", chest.origin);
 		mystery_box_lock_sound PlaySound("mystery_box_unlock", "sound_done");
 		mystery_box_lock_sound waittill("sound_done");
 		mystery_box_lock_sound Delete();
@@ -1094,6 +1091,7 @@ weapon_cabinet_think()
 
 	self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", cost);
 	self setCursorHint( "HINT_NOICON" );
+	self UseTriggerRequireLookAt();
 
 	if(isDefined(level.zombie_vars["zombie_fire_sale"]) && level.zombie_vars["zombie_fire_sale"])
 	{
@@ -1204,18 +1202,12 @@ weapon_cabinet_think()
 
 	weaponmodelstruct MoveTo(self.origin - (0,0,6.5),4,0,4);
 
-	cabinetSong = "cabinetbox_sting_" + RandomInt(2);
-	cabinetLaugh = "cabinetbox_lottery_laugh";
+	cabinetSong = "cabinetbox_sting_" + RandomInt(3);
 
 	play_sound_at_pos( "open_chest", self.origin );
 
-	cabinet_song_sound = Spawn("script_origin", self.origin);
-	cabinet_song_sound PlaySound(cabinetSong);
-	cabinet_song_sound Delete();
-
-	cabinet_laugh_sound = Spawn("script_origin", self.origin);
-	cabinet_laugh_sound PlaySound(cabinetLaugh);
-	cabinet_laugh_sound Delete();
+	cabinet_sound = Spawn("script_origin", self.origin);
+	cabinet_sound PlaySound(cabinetSong, "sound_done");
 
 	self thread cabinet_glowfx();
 	
@@ -1373,6 +1365,8 @@ weapon_cabinet_think()
 	chosenweapon = undefined;
 	weaponmodel = undefined;
 	weaponmodelstruct Delete();
+	cabinet_sound waittill("sound_done");
+	cabinet_sound Delete();
 }
 
 movecabinetguns( cabinetmodel, coord)
@@ -1597,6 +1591,9 @@ weapon_spawn_think()
 							case "doublebarrel_sawed_grip":
 							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
 								break;
+							case "stielhandgranate":
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
+								break;
 						}
 
 						self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
@@ -1650,6 +1647,9 @@ weapon_spawn_think()
 								break;
 							case "doublebarrel_sawed_grip":
 							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+								break;
+							case "stielhandgranate":
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
 								break;
 						}
 

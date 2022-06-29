@@ -11,16 +11,8 @@ init_utility()
 get_enemy_count()
 {
 	enemies = [];
-	valid_enemies = [];
-	enemies = GetAiSpeciesArray( "axis", "all" );
-	for( i = 0; i < enemies.size; i++ )
-	{
-		if( enemies[i].animname != "boss_zombie" )
-		{
-			valid_enemies = array_add( valid_enemies, enemies[i] );
-		}
-	}
-	return valid_enemies.size;
+	enemies = GetAiArray( "axis" );
+	return enemies.size;
 }
 
 spawn_zombie( spawner, target_name ) 
@@ -1708,14 +1700,6 @@ do_player_killstreak_dialog(player_index, sound_to_play, waittime)
 	}
 }
 
-is_magic_bullet_shield_enabled( ent )
-{
-	if( !IsDefined( ent ) )
-		return false;
-
-	return ( IsDefined( ent.magic_bullet_shield ) && ent.magic_bullet_shield == true );
-}
-
 really_play_2D_sound(sound)
 {
 	temp_ent = spawn("script_origin", (0,0,0));
@@ -1910,4 +1894,16 @@ include_achievement( achievement, var1, var2, var3, var4 )
 achievement_notify( notify_name )
 {
 	self notify( notify_name );
+}
+
+remove_mod_from_methodofdeath( mod )
+{
+	modStrings = strtok( mod, "_" );
+	modName = "";
+	for ( i = 1; i < modStrings.size; i++ )
+	{
+		modName += modStrings[i];
+	}
+	
+	return modName;
 }

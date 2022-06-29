@@ -185,10 +185,6 @@ do_bowie_flourish_begin()
 
 do_bowie_flourish_end( gun )
 {
-	assert( gun != "zombie_perk_bottle_doubletap" );
-	assert( gun != "zombie_perk_bottle_revive" );
-	assert( gun != "zombie_perk_bottle_jugg" );
-	assert( gun != "zombie_perk_bottle_sleight" );
 	assert( gun != "syrette" );
 
 	self EnableOffhandWeapons();
@@ -197,7 +193,7 @@ do_bowie_flourish_end( gun )
 	self AllowLean( true );
 	self AllowAds( true );
 	self AllowSprint( true );
-	//self AllowProne( true );		
+	self AllowProne( true );		
 	self AllowMelee( true );
 	weapon = "zombie_bowie_flourish";
 

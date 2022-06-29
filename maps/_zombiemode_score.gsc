@@ -25,6 +25,11 @@ player_add_points( event, mod, hit_location )
 		case "death":
 			points = level.zombie_vars["zombie_score_kill"]; 
 			points += player_add_points_kill_bonus( mod, hit_location ); 
+			if (level.zombie_vars["zombie_powerup_insta_kill_on"] && mod == "MOD_UNKNOWN" )
+			{
+				points = points + 80;
+			}
+
 			break; 
 	
 		case "damage":
@@ -59,11 +64,6 @@ player_add_points_kill_bonus( mod, hit_location )
 	{
 		return level.zombie_vars["zombie_score_bonus_burn"];
 	}
-
-	if ( level.zombie_vars["zombie_powerup_insta_kill_on"] && mod == "MOD_MELEE" )
-    {
-		return level.zombie_vars["zombie_score_bonus_melee"]; 
-    }
 
 	score = 0; 
 

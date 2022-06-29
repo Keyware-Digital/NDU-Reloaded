@@ -1041,8 +1041,8 @@ chalk_one_up() {
         round.vertAlign = "bottom";
         round.fontscale = 16;
         round.color = (1, 1, 1);
-        round.x = 20;
-        round.y = -265;
+		round.x = 0;
+		round.y = -265;
         round.alpha = 0;
         round SetText( &"ZOMBIE_ROUND");
 
@@ -1063,12 +1063,13 @@ chalk_one_up() {
         hud = level.chalk_hud2;
     }
 
-    if (intro) {
-        hud.alpha = 0;
-        hud.horzAlign = "center";
-        hud.x = 10;
-        hud.y = -200;
-    }
+	if( intro )
+	{
+		hud.alpha = 0;
+		hud.horzAlign = "center";
+		hud.x = -5;
+		hud.y = -200;
+	}
 
     hud FadeOverTime(0.5);
     hud.alpha = 0;
@@ -1614,10 +1615,9 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
 
         level.player_is_speaking = 1;
         painSound = "_pain_exert_" + RandomInt(8);
-        pain_vox_sound = Spawn("script_origin", self.origin);
-		pain_vox_sound PlaySound("plr_" + index + painSound, "sound_done");
-		pain_vox_sound waittill("sound_done");
-		pain_vox_sound Delete();
+        level.pain_vox_sound = Spawn("script_origin", self.origin);
+		level.pain_vox_sound PlaySound("plr_" + index + painSound);
+		level.pain_vox_sound Delete();
         level.player_is_speaking = 0;
     }
 
@@ -2275,26 +2275,27 @@ player_reload_sounds()
 
 	while(1)
     {
-        wait 0.1;
+        wait 0.25;
 
-	    zombies = getaiarray("axis");
+        if(level.player_is_speaking != 1) {
 
-	    for(i=0;i<zombies.size;i++)
-	    {
+	        zombies = getaiarray("axis");
 
-		    if (Distance(zombies[i].origin, self.origin) > 15 * 15)
-		    {
-			    level.zombies_are_close = 0;
-		    }
-		    else if (Distance(zombies[i].origin, self.origin) <= 15 * 15)
-		    {
-			    level.zombies_are_close = 1;
-		    }
-	    }
+	        for(i=0;i<zombies.size;i++)
+	        {
 
-	    if(self.reloading && get_enemy_count() + level.zombie_total >= 2 && level.zombies_are_close == 1) //Play reload vox if reloading and at least six zombies are positioned 225 inches (18.75 feet) or less from a player
-	    {
-            if(level.player_is_speaking != 1) {
+		        if (Distance(zombies[i].origin, self.origin) > 15 * 15)
+		        {
+			        level.zombies_are_close = 0;
+		        }
+		        else if (Distance(zombies[i].origin, self.origin) <= 15 * 15)
+		        {
+			        level.zombies_are_close = 1;
+		        }
+	        }
+
+	        if(self.reloading && get_enemy_count() + level.zombie_total >= 6 && level.zombies_are_close == 1) //Play reload vox if reloading and at least six zombies are positioned 225 inches (18.75 feet) or less from a player
+	        {
                 index = maps\_zombiemode_weapons::get_player_index(self);
 			    level.player_is_speaking = 1;
                 reloadSound = "_vox_reload_" + RandomInt(2);
@@ -2303,44 +2304,37 @@ player_reload_sounds()
 		        reload_vox_sound waittill("sound_done");
 		        reload_vox_sound Delete();
 			    level.player_is_speaking = 0;
-                wait 3; //Wait 3 seconds to prevent sound from playing more than once per reload
-            }
-	    }
+	        }
+        }
         wait 0.25;   
 	}
 }
 
-player_no_ammmo_sounds() //We should use this for if the player is about to run out of or is out of bullets but for now this is a test (along with the sounds)
+//Probably broken right now
+player_no_ammmo_sounds()
 {
 	self endon( "death" );
 
 	while(1)
 	{
-        wait 0.1;
+        wait 0.25;
 
         if(level.player_is_speaking != 1) {
+
             current_weapon = self GetCurrentWeapon();
 
-            for ( i = 0; i < level.filtered_weapons.size; i++ )
-            {
-                if ( current_weapon == level.filtered_weapons[i])
-                {
-                    break;
-                }
-                totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
-                if(totalCurrentWeaponAmmo < 1) {
-                    index = maps\_zombiemode_weapons::get_player_index(self);
-			        level.player_is_speaking = 1;
-                    noAmmoSound = "_no_ammo";
-                    no_ammo_vox_sound = Spawn("script_origin", self.origin);
-		            no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "sound_done");
-		            no_ammo_vox_sound waittill("sound_done");
-		            no_ammo_vox_sound Delete();
-			        level.player_is_speaking = 0;
-                    wait 3; //Wait 3 seconds to prevent sound from playing more than once
-                    while(totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon)) //Wait for the ammo to change to something other than what we caught during low ammo
-			            wait 0.1;
-                }
+            totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
+
+            if(self.no_ammo && totalCurrentWeaponAmmo == 0) {
+                self notify("no_ammo");
+                index = maps\_zombiemode_weapons::get_player_index(self);
+		        level.player_is_speaking = 1;
+                noAmmoSound = "_no_ammo";
+                no_ammo_vox_sound = Spawn("script_origin", self.origin);
+		        no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "sound_done");
+		        no_ammo_vox_sound waittill("sound_done");
+		        no_ammo_vox_sound Delete();
+		        level.player_is_speaking = 0;
             }
         }
         wait 0.25;   
@@ -2353,10 +2347,10 @@ player_lunge_knife_exert_sounds()
 
 	while(1)
 	{
-        wait 0.1;
-		if(self IsMeleeing())
-		{
-            if(level.player_is_speaking != 1) {
+        wait 0.25;
+        
+        if(level.player_is_speaking != 1) {
+		    if(self IsMeleeing()) {
                 self AllowMelee(false); //Disables melee during melee and before sounds play to prevent more than one sound from playing at a time
                 index = maps\_zombiemode_weapons::get_player_index(self);
 			    level.player_is_speaking = 1;
@@ -2366,7 +2360,6 @@ player_lunge_knife_exert_sounds()
 		        melee_vox_sound waittill("sound_done");
 		        melee_vox_sound Delete();
                 self AllowMelee(true); //Reenables melee without any increase in melee delay
-                wait 1; //Wait 1 second to sync sounds with meleeing, anything less or more breaks above code
                 level.player_is_speaking = 0;
             }
 		}
@@ -2380,24 +2373,32 @@ player_throw_grenade_exert_sounds()
  
 	while(1)
 	{
-        wait 0.1;
+        wait 0.25;
 
-		if(self IsThrowingGrenade())
-        {
-            if(level.player_is_speaking != 1) {
-                self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
-                index = maps\_zombiemode_weapons::get_player_index(self);
-			    level.player_is_speaking = 1;
-                grenadeSound = "_grenade_exert_" + RandomInt(6);
-                grenade_vox_sound = Spawn("script_origin", self.origin);
-		        grenade_vox_sound PlaySound("plr_" + index + grenadeSound, "sound_done");
-		        grenade_vox_sound waittill("sound_done");
-		        grenade_vox_sound Delete();
-                self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
-                wait 1.25; //Wait 1.25 seconds to sync sounds with grenade throwing, anything less or more breaks above code
-			    level.player_is_speaking = 0;
+        if(level.player_is_speaking != 1) {
+            current_offhand = self GetCurrentOffHand();
+            for ( i = 0; i < level.filtered_weapon.size; i++ )
+            {
+                if (current_offhand == level.filtered_weapon[i])
+                {
+                    break;
+                }
+            
+		        if(self IsThrowingGrenade() && current_offhand != level.filtered_weapon[i])
+                {
+                    self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
+                    index = maps\_zombiemode_weapons::get_player_index(self);
+			        level.player_is_speaking = 1;
+                    grenadeSound = "_grenade_exert_" + RandomInt(6);
+                    grenade_vox_sound = Spawn("script_origin", self.origin);
+		            grenade_vox_sound PlaySound("plr_" + index + grenadeSound, "sound_done");
+		            grenade_vox_sound waittill("sound_done");
+		            grenade_vox_sound Delete();
+                    self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
+			        level.player_is_speaking = 0;
+		        }
             }
-		}
+        }    
     wait 0.25;   
     }
 }

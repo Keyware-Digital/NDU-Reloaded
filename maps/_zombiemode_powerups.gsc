@@ -81,13 +81,13 @@ init_precache() {
 init_powerups() {
 
     // Random Drops
-    add_zombie_powerup("double_points", "zmb_pwr_up_double_points", &"ZOMBIE_POWER_UP_DOUBLE_POINTS");
+    //add_zombie_powerup("double_points", "zmb_pwr_up_double_points", &"ZOMBIE_POWER_UP_DOUBLE_POINTS");
     add_zombie_powerup("insta_kill", "zmb_pwr_up_insta_kill", &"ZOMBIE_POWER_UP_INSTA_KILL");
-    add_zombie_powerup("max_ammo", "zmb_pwr_up_max_ammo", &"ZOMBIE_POWER_UP_MAX_AMMO");
-    add_zombie_powerup("carpenter", "zmb_pwr_up_carpenter", &"ZOMBIE_POWER_UP_CARPENTER");
-    add_zombie_powerup("death_machine", "zmb_pwr_up_death_machine", &"ZOMBIE_POWER_UP_DEATH_MACHINE");
-	add_zombie_powerup("nuke", "zmb_pwr_up_nuke", &"ZOMBIE_POWER_UP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
-    add_zombie_powerup("bonus_points", "zmb_pwr_up_bonus_points", &"ZOMBIE_POWER_UP_BONUS_POINTS");
+    //add_zombie_powerup("max_ammo", "zmb_pwr_up_max_ammo", &"ZOMBIE_POWER_UP_MAX_AMMO");
+    //add_zombie_powerup("carpenter", "zmb_pwr_up_carpenter", &"ZOMBIE_POWER_UP_CARPENTER");
+    //add_zombie_powerup("death_machine", "zmb_pwr_up_death_machine", &"ZOMBIE_POWER_UP_DEATH_MACHINE");
+	//add_zombie_powerup("nuke", "zmb_pwr_up_nuke", &"ZOMBIE_POWER_UP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
+    //add_zombie_powerup("bonus_points", "zmb_pwr_up_bonus_points", &"ZOMBIE_POWER_UP_BONUS_POINTS");
     if(level.zombie_vars["enableRandomPerk"] == 1)
 	{
 		add_zombie_powerup("random_perk", "zmb_pwr_up_perks_a_cola_world", &"ZOMBIE_POWER_UP_RANDOM_PERK");
@@ -388,7 +388,7 @@ watch_for_drop() {
         curr_total_score = 0;
 
         for (i = 0; i < players.size; i++) {
-            curr_total_score += players[i].score_total * 2;
+            curr_total_score += players[i].score_total;
         }
 
         if (curr_total_score > score_to_drop) {
@@ -511,7 +511,9 @@ powerup_setup() {
     self SetModel(struct.model_name);
 
     //TUEY Spawn Powerup
-    self PlaySound("spawn_powerup");
+
+	level.powerup_sound = Spawn("script_origin", self.origin);
+	level.powerup_sound PlaySound("spawn_powerup");
 
     self.powerup_name = struct.powerup_name;
     self.hint = struct.hint;
@@ -520,7 +522,8 @@ powerup_setup() {
         self.fx = struct.fx;
     }
 
-    self PlayLoopSound("spawn_powerup_loop");
+    level.powerup_sound PlayLoopSound("spawn_powerup_loop");
+
 }
 
 powerup_grab() {
@@ -586,10 +589,11 @@ powerup_grab() {
 
                 wait(0.1);
 
-                self PlaySound("powerup_grabbed");
-                self StopLoopSound();
+                self Delete();
+		        level.powerup_sound PlaySound("powerup_grabbed");
+				level.powerup_sound StopLoopSound();
 
-                self delete();
+		        level.powerup_sound Delete();
                 self notify("powerup_grabbed");
             }
         }
@@ -721,40 +725,17 @@ insta_kill_powerup(drop_item) {
 
 }
 
-check_for_instakill(player) {
+check_for_instakill(player, mod, hit_location)
+{
+	if( IsDefined( player ) && IsAlive( player ) && level.zombie_vars["zombie_insta_kill"])
+	{
 
-    if (IsDefined(player) && IsAlive(player) && level.zombie_vars["zombie_insta_kill"]) {
-        if (is_magic_bullet_shield_enabled(self)) {
-            return;
-        }
+        modName = remove_mod_from_methodofdeath( mod );
 
-        if (self.animname == "boss_zombie") {
-            return;
-        }
-
-        if (player.use_weapon_type == "MOD_MELEE") {
-           player.last_kill_method = "MOD_MELEE";
-            // BO3 Style melee points during instakill
-            player.score += 70 * level.zombie_vars["zombie_double_points"];
-            player.score_total += 70 * level.zombie_vars["zombie_double_points"];
-
-        } else {
-            player.last_kill_method = "MOD_UNKNOWN";
-        }
-
-        // Instakill will always gib heads
-        players = GetPlayers();
-
-        for (i = 0; i < players.size; i++) {
-            {
-            self maps\_zombiemode_spawner::zombie_head_gib();
-            self DoDamage(self.health + 666, self.origin, players[i]);
-            players[i] notify("zombie_killed");
-            }
-        }
-    }
-
-
+		self maps\_zombiemode_spawner::zombie_head_gib();
+		self DoDamage(self.health + 666, self.origin, player, modName, hit_location);
+        player notify("zombie_killed");
+	}
 }
 
 max_ammo_powerup(drop_item) {
@@ -887,14 +868,6 @@ nuke_powerup(drop_item) {
     for (i = 0; i < zombies.size; i++) {
         wait(randomfloatrange(0.1, 0.7));
         if (!IsDefined(zombies[i])) {
-            continue;
-        }
-
-        if (zombies[i].animname == "boss_zombie") {
-            continue;
-        }
-
-        if (is_magic_bullet_shield_enabled(zombies[i])) {
             continue;
         }
 

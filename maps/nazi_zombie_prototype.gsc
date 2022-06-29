@@ -22,6 +22,7 @@ main() {
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
     array_thread(getPlayers(), ::reloading_monitor);
+    array_thread(getPlayers(), ::no_ammo_monitor);
     maps\_walking_anim::main();
 
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box
@@ -354,25 +355,22 @@ health_show() {
     }
 }
 
+//Puts weapons that need filtering into an array to be called later
 filtered_weapons()
 {
-
-    //Puts weapons that need filtering into an array to be called later (use in functions that checks a weapons ammo count)
-	level.filtered_weapons = [];
-	level.filtered_weapons[level.filtered_weapons.size] = "none";
-	level.filtered_weapons[level.filtered_weapons.size] = "molotov";
-    level.filtered_weapons[level.filtered_weapons.size] = "mine_bouncing_betty";
-	level.filtered_weapons[level.filtered_weapons.size] = "perks_a_cola";
-	level.filtered_weapons[level.filtered_weapons.size] = "stielhandgranate";
-    level.filtered_weapons[level.filtered_weapons.size] = "zombie_bowie_flourish";
-    //level.filtered_weapons[level.filtered_weapons.size] = "zombie_cymbal_monkey";
-	level.filtered_weapons[level.filtered_weapons.size] = "zombie_knife";
+	level.filtered_weapon = [];
+	level.filtered_weapon[level.filtered_weapon.size] = "none";
+    level.filtered_weapon[level.filtered_weapon.size] = "mine_bouncing_betty";
+	level.filtered_weapon[level.filtered_weapon.size] = "perks_a_cola";
+	level.filtered_weapon[level.filtered_weapon.size] = "molotov";
+	level.filtered_weapon[level.filtered_weapon.size] = "stielhandgranate";
+	//level.filtered_weapon[level.filtered_weapon.size] = "zombie_cymbal_monkey";
 }
 
+
+//Probably broken right now
 reloading_monitor()
 {
-	self endon( "disconnect" );
-	self endon( "death" );
     
 	while(1)
 	{
@@ -380,17 +378,42 @@ reloading_monitor()
 		self waittill("reload_start");
         current_weapon = self GetCurrentWeapon();
 
-        for ( i = 0; i < level.filtered_weapons.size; i++ )
+        for ( i = 0; i < level.filtered_weapon.size; i++ )
         {
-            if ( current_weapon == level.filtered_weapons[i])
+            if (current_weapon == level.filtered_weapon[i])
             {
-                break;
+                continue;
             }
         }
 
-		currentMagAmmo = self GetWeaponAmmoClip(current_weapon); //get their current mag ammo during the reload
+		currentMagAmmo = self GetWeaponAmmoClip(current_weapon); //store their current mag ammo during the reload
 		self.reloading = true;
-        while(currentMagAmmo == self getWeaponAmmoClip(current_weapon)) //Wait for the ammo to change to something other than what we caught during the reload
-			wait 0.1;
+        while(currentMagAmmo == self GetWeaponAmmoClip(current_weapon)) { //Wait for the ammo to change to something other than what we caught during the reload
+			wait 0.01;
+        }
 	}
+}
+
+no_ammo_monitor()
+{
+    while(1)
+    {
+        self.no_ammo = false;
+        self waittill("no_ammo");
+        current_weapon = self GetCurrentWeapon();
+
+        for (i = 0; i < level.filtered_weapons.size; i++)
+        {
+            if (current_weapon == level.filtered_weapon[i])
+            {
+                continue;
+            }
+        }
+
+        totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
+        self.no_ammo = true;
+        while(totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon)) { //Wait for the ammo to change to something other than what we caught during low ammo
+			wait 0.1;
+        }
+    }
 }
