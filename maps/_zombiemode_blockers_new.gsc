@@ -132,7 +132,7 @@ door_think()
 	// maybe the door the should just bust open instead of slowly opening.
 	// maybe just destroy the door, could be two players from opposite sides..
 	// breaking into chunks seems best.
-	// or I cuold just give it no collision
+	// or I could just give it no collision
 	while( 1 )
 	{
 		if(isDefined(self.script_noteworthy) && self.script_noteworthy == "electric_door")

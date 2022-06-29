@@ -940,10 +940,10 @@ treasure_chest_weapon_spawn( chest, player )
 
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
-		mystery_box_lock_sound = Spawn("script_origin", chest.origin);
-		mystery_box_lock_sound PlaySound("mystery_box_unlock", "sound_done");
-		mystery_box_lock_sound waittill("sound_done");
-		mystery_box_lock_sound Delete();
+		mystery_box_unlock_sound = Spawn("script_origin", chest.origin);
+		mystery_box_unlock_sound PlaySound("mystery_box_unlock", "sound_done");
+		mystery_box_unlock_sound waittill("sound_done");
+		mystery_box_unlock_sound Delete();
         model Delete();
 		level.zombie_mystery_box_padlock = 0;
         level.chest_accessed = 0;
