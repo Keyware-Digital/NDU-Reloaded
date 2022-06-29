@@ -1636,7 +1636,8 @@ zombie_should_gib( amount, attacker, type )
 		case "MOD_SUICIDE": 
 		case "MOD_TRIGGER_HURT":
 		case "MOD_BURNED":
-		case "MOD_MELEE":		
+		case "MOD_MELEE":	
+		case "MOD_BAYONET":
 			return false; 
 	}
 

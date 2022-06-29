@@ -590,9 +590,10 @@ powerup_grab() {
 
                 wait(0.1);
 
+               
+				level.powerup_sound StopLoopSound();
 		        level.powerup_sound PlaySound("powerup_grabbed", "sound_done");
                 level.powerup_sound waittill("sound_done");
-				level.powerup_sound StopLoopSound();
 		        level.powerup_sound Delete();
                 self Delete();
                 self notify("powerup_grabbed");
@@ -730,7 +731,6 @@ check_for_instakill(player, mod, hit_location)
 {
 	if( IsDefined( player ) && IsAlive( player ) && level.zombie_vars["zombie_insta_kill"])
 	{
-
         modName = remove_mod_from_methodofdeath( mod );
 
 		self maps\_zombiemode_spawner::zombie_head_gib();

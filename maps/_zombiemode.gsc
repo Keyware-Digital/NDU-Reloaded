@@ -2275,7 +2275,7 @@ player_reload_sounds()
 
 	while(1)
     {
-        wait 0.25;
+        wait 0.3;
 
         if(level.player_is_speaking != 1) {
 
@@ -2306,7 +2306,7 @@ player_reload_sounds()
 			    level.player_is_speaking = 0;
 	        }
         }
-        wait 0.25;   
+        wait 0.3;   
 	}
 }
 
@@ -2317,7 +2317,7 @@ player_no_ammmo_sounds()
 
 	while(1)
 	{
-        wait 0.25;
+        wait 0.3;
 
         if(level.player_is_speaking != 1) {
 
@@ -2337,7 +2337,7 @@ player_no_ammmo_sounds()
 		        level.player_is_speaking = 0;
             }
         }
-        wait 0.25;   
+        wait 0.3;   
 	}
 }
 
@@ -2347,7 +2347,7 @@ player_lunge_knife_exert_sounds()
 
 	while(1)
 	{
-        wait 0.25;
+        wait 0.3;
         
         if(level.player_is_speaking != 1) {
 		    if(self IsMeleeing()) {
@@ -2363,7 +2363,7 @@ player_lunge_knife_exert_sounds()
                 level.player_is_speaking = 0;
             }
 		}
-    wait 0.25;   
+    wait 0.3;   
 	}
 }
 
@@ -2373,7 +2373,7 @@ player_throw_grenade_exert_sounds()
  
 	while(1)
 	{
-        wait 0.25;
+        wait 0.3;
 
         if(level.player_is_speaking != 1) {
             current_offhand = self GetCurrentOffHand();
@@ -2399,6 +2399,6 @@ player_throw_grenade_exert_sounds()
 		        }
             }
         }    
-    wait 0.25;   
+    wait 0.3;   
     }
 }

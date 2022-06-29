@@ -55,7 +55,7 @@ player_add_points( event, mod, hit_location )
 
 player_add_points_kill_bonus( mod, hit_location )
 {
-	if( mod == "MOD_MELEE" )
+	if( mod == "MOD_MELEE" || mod == "MOD_BAYONET" )
 	{
 		return level.zombie_vars["zombie_score_bonus_melee"]; 
 	}
