@@ -1443,10 +1443,10 @@ takenweapon(chosenweapon)
 		//thread play_raygun_stinger();		// we don't want the stinger sound for a perk bottle.
 		current_weapon = player GetCurrentWeapon();
 		player GiveWeapon(chosenweapon);
+		//self.is_drinking = 1;
 		player SwitchToWeapon(chosenweapon);
 		player DisableOffhandWeapons();
 		player DisableWeaponCycling();
-		//player DisableUsability();	//causes crash
 		player AllowLean( false );
 		player AllowAds( false );
 		player AllowSprint( false );
@@ -1460,12 +1460,12 @@ takenweapon(chosenweapon)
 		self SetStance( "crouch" );
 	}	
 
-		//player EnableUsability();
 		player AllowLean( true );
 		player AllowAds( true );
 		player AllowSprint( true );
 		player AllowProne( true );		
 		player AllowMelee( true );
+		//self.is_drinking = undefined;
 		player TakeWeapon(chosenweapon);
 		player SwitchToWeapon(current_weapon);
 		player EnableOffhandWeapons();
@@ -1538,6 +1538,11 @@ weapon_spawn_think()
 	{
 		self waittill( "trigger", player ); 		
 		// if not first time and they have the weapon give ammo
+
+		/*if(isdefined(self.is_drinking)){
+		IPrintLn("y u try drink and buy gun at same time?");
+		return; 
+		}*/
 		
 		if( !is_player_valid( player ) )
 		{
