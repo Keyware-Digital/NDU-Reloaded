@@ -516,7 +516,7 @@ watchGrenadeThrow() {
     while (1) {
         self waittill("grenade_fire", grenade);
 
-        if (isdefined(grenade)) {
+        if (isDefined(grenade)) {
             if (self maps\_laststand::player_is_in_laststand()) {
                 //wait(0.05);
                 grenade delete();
@@ -583,7 +583,7 @@ onPlayerSpawned() {
 
         self add_to_spectate_list();
 
-        if (isdefined(self.initialized)) {
+        if (isDefined(self.initialized)) {
             if (self.initialized == false) {
                 self.initialized = true;
                 //				self maps\_zombiemode_score::create_player_score_hud(); 
@@ -604,7 +604,7 @@ onPlayerSpawned() {
 player_laststand() {
     self maps\_zombiemode_score::player_downed_penalty();
 
-    if (IsDefined(self.intermission) && self.intermission) {
+    if (isDefined(self.intermission) && self.intermission) {
         // Taken from _laststand since we will never go back to it...
         self.downs++;
         maps\_challenges_coop::doMissionCallback("playerDied", self);
@@ -623,7 +623,7 @@ spawnSpectator() {
         return;
     }
 
-    if (IsDefined(level.no_spectator) && level.no_spectator) {
+    if (isDefined(level.no_spectator) && level.no_spectator) {
         wait(3);
         ExitLevel();
     }
@@ -634,7 +634,7 @@ spawnSpectator() {
     // Remove all reviving abilities
     self notify("zombified");
 
-    if (IsDefined(self.revivetrigger)) {
+    if (isDefined(self.revivetrigger)) {
         self.revivetrigger delete();
         self.revivetrigger = undefined;
     }
@@ -745,11 +745,11 @@ set_third_person(value) {
 spectators_respawn() {
     level endon("between_round_over");
 
-    if (!IsDefined(level.zombie_vars["spectators_respawn"]) || !level.zombie_vars["spectators_respawn"]) {
+    if (!isDefined(level.zombie_vars["spectators_respawn"]) || !level.zombie_vars["spectators_respawn"]) {
         return;
     }
 
-    if (!IsDefined(level.custom_spawnPlayer)) {
+    if (!isDefined(level.custom_spawnPlayer)) {
         // Custom spawn call for when they respawn from spectator
         level.custom_spawnPlayer = ::spectator_respawn;
     }
@@ -776,7 +776,7 @@ spectator_respawn() {
 
     self setSpectatePermissions(false);
 
-    if (IsDefined(origin)) {
+    if (isDefined(origin)) {
         angles = VectorToAngles(spawn_off_player.origin - origin);
     } else {
         spawnpoints = GetEntArray("info_player_deathmatch", "classname");
@@ -925,7 +925,7 @@ round_spawning() {
 
         ai = spawn_zombie(spawn_point);
 
-        if (IsDefined(ai)) {
+        if (isDefined(ai)) {
             level.zombie_total--;
 
             //level.zombies[level.zombies.size] = ai;
@@ -1007,7 +1007,7 @@ round_start() {
 }
 
 create_chalk_hud(x) {
-    if (!IsDefined(x)) {
+    if (!isDefined(x)) {
         x = 0;
     }
 
@@ -1074,7 +1074,7 @@ chalk_one_up() {
     hud FadeOverTime(0.5);
     hud.alpha = 0;
 
-    if (level.round_number == 11 && IsDefined(level.chalk_hud2)) {
+    if (level.round_number == 11 && isDefined(level.chalk_hud2)) {
         level.chalk_hud2 FadeOverTime(0.5);
         level.chalk_hud2.alpha = 0;
     }
@@ -1083,7 +1083,7 @@ chalk_one_up() {
 
     play_sound_at_pos("chalk_one_up", (0, 0, 0));
 
-    if (level.round_number == 11 && IsDefined(level.chalk_hud2)) {
+    if (level.round_number == 11 && isDefined(level.chalk_hud2)) {
         level.chalk_hud2 destroy_hud();
     }
 
@@ -1097,7 +1097,7 @@ chalk_one_up() {
     if (intro) {
         wait(3);
 
-        if (IsDefined(round)) {
+        if (isDefined(round)) {
             round FadeOverTime(1);
             round.alpha = 0;
         }
@@ -1145,7 +1145,7 @@ chalk_round_hint() {
     steps = (time * 0.5) / fade_time;
     for (q = 0; q < steps; q++) {
         for (i = 0; i < huds.size; i++) {
-            if (!IsDefined(huds[i])) {
+            if (!isDefined(huds[i])) {
                 continue;
             }
 
@@ -1156,7 +1156,7 @@ chalk_round_hint() {
         wait(fade_time);
 
         for (i = 0; i < huds.size; i++) {
-            if (!IsDefined(huds[i])) {
+            if (!isDefined(huds[i])) {
                 continue;
             }
 
@@ -1168,7 +1168,7 @@ chalk_round_hint() {
     }
 
     for (i = 0; i < huds.size; i++) {
-        if (!IsDefined(huds[i])) {
+        if (!isDefined(huds[i])) {
             continue;
         }
 
@@ -1333,7 +1333,7 @@ round_wait() {
 zombify_player() {
     self maps\_zombiemode_score::player_died_penalty();
 
-    if (!IsDefined(level.zombie_vars["zombify_player"]) || !level.zombie_vars["zombify_player"]) {
+    if (!isDefined(level.zombie_vars["zombify_player"]) || !level.zombie_vars["zombify_player"]) {
         self thread spawnSpectator();
         return;
     }
@@ -1345,7 +1345,7 @@ zombify_player() {
     self.team = "axis";
     self notify("zombified");
 
-    if (IsDefined(self.revivetrigger)) {
+    if (isDefined(self.revivetrigger)) {
         self.revivetrigger Delete();
     }
     self.revivetrigger = undefined;
@@ -1386,7 +1386,7 @@ playerzombie_player_damage() {
     while (1) {
         self waittill("damage", amount, attacker, directionVec, point, type);
 
-        if (!IsDefined(attacker) || !IsPlayer(attacker)) {
+        if (!isDefined(attacker) || !IsPlayer(attacker)) {
             wait(0.05);
             continue;
         }
@@ -1606,7 +1606,7 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
 
     players = GetPlayers();
 
-    if (isdefined(self.inSoloRevive)) {
+    if (isDefined(self.inSoloRevive)) {
         return;
     }  
 
@@ -1770,7 +1770,7 @@ player_exit_level() {
     self AllowCrouch(false);
     self AllowProne(false);
 
-    if (IsDefined(self.game_over_bg)) {
+    if (isDefined(self.game_over_bg)) {
         self.game_over_bg.foreground = true;
         self.game_over_bg.sort = 100;
         self.game_over_bg FadeOverTime(1);
@@ -1855,7 +1855,7 @@ stumble(stumble_angles, stumble_time, recover_time, no_notify) {
     self.ground_ref_ent RotateTo(base_angles, recover_time, 0, (recover_time / 2));
     self.ground_ref_ent waittill("rotatedone");
 
-    if (!IsDefined(no_notify)) {
+    if (!isDefined(no_notify)) {
         level notify("recovered");
     }
 }
@@ -2058,7 +2058,7 @@ intermission() {
     }
 
     visionset = "zombie";
-    if (IsDefined(level.zombie_vars["intermission_visionset"])) {
+    if (isDefined(level.zombie_vars["intermission_visionset"])) {
         visionset = level.zombie_vars["intermission_visionset"];
     }
 
@@ -2107,7 +2107,7 @@ player_intermission() {
 
     points = getstructarray("intermission", "targetname");
 
-    if (!IsDefined(points) || points.size == 0) {
+    if (!isDefined(points) || points.size == 0) {
         points = getentarray("info_intermission", "classname");
         if (points.size < 1) {
             println("NO info_intermission POINTS IN MAP");
@@ -2128,13 +2128,13 @@ player_intermission() {
             point = points[i];
             // Only spawn once if we are using 'moving' org
             // If only using info_intermissions, this will respawn after 5 seconds.
-            if (!IsDefined(org)) {
+            if (!isDefined(org)) {
                 self Spawn(point.origin, point.angles);
             }
 
             // Only used with STRUCTS
-            if (IsDefined(points[i].target)) {
-                if (!IsDefined(org)) {
+            if (isDefined(points[i].target)) {
+                if (!isDefined(org)) {
                     org = Spawn("script_origin", self.origin + (0, 0, -60));
                 }
 
@@ -2143,7 +2143,7 @@ player_intermission() {
                 org.origin = points[i].origin;
 
                 speed = 20;
-                if (IsDefined(points[i].speed)) {
+                if (isDefined(points[i].speed)) {
                     speed = points[i].speed;
                 }
 

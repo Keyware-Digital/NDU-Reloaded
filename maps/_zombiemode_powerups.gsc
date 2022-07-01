@@ -403,7 +403,7 @@ watch_for_drop() {
 
 add_zombie_powerup(powerup_name, model_name, hint, fx) {
 
-    if (IsDefined(level.zombie_include_powerups) && !IsDefined(level.zombie_include_powerups[powerup_name])) {
+    if (isDefined(level.zombie_include_powerups) && !isDefined(level.zombie_include_powerups[powerup_name])) {
         return;
     }
 
@@ -412,11 +412,11 @@ add_zombie_powerup(powerup_name, model_name, hint, fx) {
 
     struct = SpawnStruct();
 
-    if (!IsDefined(level.zombie_powerups)) {
+    if (!isDefined(level.zombie_powerups)) {
         level.zombie_powerups = [];
     }
 
-    if (!IsDefined(level.zombie_powerup_array)) {
+    if (!isDefined(level.zombie_powerup_array)) {
         level.zombie_powerup_array = [];
     }
 
@@ -425,7 +425,7 @@ add_zombie_powerup(powerup_name, model_name, hint, fx) {
     struct.weapon_classname = "script_model";
     struct.hint = hint;
 
-    if (IsDefined(fx)) {
+    if (isDefined(fx)) {
         struct.fx = LoadFx(fx);
     }
 
@@ -435,7 +435,7 @@ add_zombie_powerup(powerup_name, model_name, hint, fx) {
 
 include_zombie_powerup(powerup_name) {
 
-    if (!IsDefined(level.zombie_include_powerups)) {
+    if (!isDefined(level.zombie_include_powerups)) {
         level.zombie_include_powerups = [];
     }
 
@@ -518,7 +518,7 @@ powerup_setup() {
     self.powerup_name = struct.powerup_name;
     self.hint = struct.hint;
 
-    if (IsDefined(struct.fx)) {
+    if (isDefined(struct.fx)) {
         self.fx = struct.fx;
     }
 
@@ -532,7 +532,7 @@ powerup_grab() {
     self endon("powerup_timedout");
     self endon("powerup_grabbed");
 
-    while (isdefined(self)) {
+    while (isDefined(self)) {
         players = GetPlayers();
 
         for (i = 0; i < players.size; i++) {
@@ -540,7 +540,7 @@ powerup_grab() {
                 playfx(level._effect["powerup_grabbed"], self.origin);
                 playfx(level._effect["powerup_grabbed_wave"], self.origin);
 
-                if (IsDefined(level.zombie_powerup_grab_func)) {
+                if (isDefined(level.zombie_powerup_grab_func)) {
                     level thread[[level.zombie_powerup_grab_func]]();
                 } else {
                     switch (self.powerup_name) {
@@ -611,7 +611,7 @@ powerup_vo(type) {
     index = maps\_zombiemode_weapons::get_player_index(self);
     sound = undefined;
 
-    if (!isdefined(level.player_is_speaking)) {
+    if (!isDefined(level.player_is_speaking)) {
         level.player_is_speaking = 0;
     }
 
@@ -649,11 +649,11 @@ powerup_wobble() {
     self endon("powerup_grabbed");
     self endon("powerup_timedout");
 
-    if (isdefined(self)) {
+    if (isDefined(self)) {
         playfxontag(level._effect["powerup_on"], self, "tag_origin");
     }
 
-    while (isdefined(self)) {
+    while (isDefined(self)) {
         waittime = randomfloatrange(2.5, 5);
         yaw = RandomInt(360);
         if (yaw > 300) {
@@ -729,7 +729,7 @@ insta_kill_powerup(drop_item) {
 
 check_for_instakill(player, mod, hit_location)
 {
-	if( IsDefined( player ) && IsAlive( player ) && level.zombie_vars["zombie_insta_kill"])
+	if( isDefined( player ) && IsAlive( player ) && level.zombie_vars["zombie_insta_kill"])
 	{
         modName = remove_mod_from_methodofdeath( mod );
 
@@ -785,7 +785,7 @@ carpenter_powerup(origin, drop_item) {
 
     while (true) {
         windows = get_closest_window_repair(window_boards);
-        if (!IsDefined(windows)) {
+        if (!isDefined(windows)) {
             carp_ent StopLoopSound(1);
             carp_ent PlaySound("carp_end", "sound_done");
             carp_ent waittill("sound_done");
@@ -801,7 +801,7 @@ carpenter_powerup(origin, drop_item) {
 
             chunk = get_random_destroyed_chunk(windows.barrier_chunks);
 
-            if (!IsDefined(chunk))
+            if (!isDefined(chunk))
                 break;
 
             windows thread maps\_zombiemode_blockers_new::replace_chunk(chunk, false, true);
@@ -868,7 +868,7 @@ nuke_powerup(drop_item) {
 
     for (i = 0; i < zombies.size; i++) {
         wait(randomfloatrange(0.1, 0.7));
-        if (!IsDefined(zombies[i])) {
+        if (!isDefined(zombies[i])) {
             continue;
         }
 
@@ -964,7 +964,7 @@ fire_sale_powerup(drop_item) {
 
     level.zombie_vars["zombie_fire_sale"] = 1;
 
-    if(!isdefined(level.zombie_mystery_box_padlock) || level.zombie_mystery_box_padlock == 0) {
+    if(!isDefined(level.zombie_mystery_box_padlock) || level.zombie_mystery_box_padlock == 0) {
         for(i=0;i<level.chests.size;i++) {
             level.zombie_treasure_chest_cost = 10;
             cost = level.zombie_treasure_chest_cost;
@@ -983,7 +983,7 @@ fire_sale_powerup(drop_item) {
     wait(30);
     level.zombie_vars["zombie_fire_sale"] = 0;
 
-    if(!isdefined(level.zombie_mystery_box_padlock) || level.zombie_mystery_box_padlock == 0) {
+    if(!isDefined(level.zombie_mystery_box_padlock) || level.zombie_mystery_box_padlock == 0) {
         for(i=0;i<level.chests.size;i++) {
             level.zombie_treasure_chest_cost = 950;
             cost = level.zombie_treasure_chest_cost;

@@ -11,7 +11,7 @@ init()
 	radios = getentarray("kzmb","targetname");
 	
 	// no radios, return
-	if (!isdefined(radios) || !radios.size)
+	if (!isDefined(radios) || !radios.size)
 	{
 		return;
 	}

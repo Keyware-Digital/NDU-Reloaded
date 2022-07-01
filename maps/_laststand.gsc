@@ -597,11 +597,6 @@ can_revive( revivee )
 	if ( !self IsTouching( revivee.revivetrigger ) )
 		return false;
 		
-	//PI CHANGE: can revive in deep water in sumpf
-	if (IsDefined(level.script) && level.script == "nazi_zombie_sumpf" && (revivee depthinwater() > 10))
-		return true;
-	//END PI CHANGE
-		
 	if ( !self is_facing( revivee ) )
 		return false;
 		
@@ -622,13 +617,6 @@ can_revive( revivee )
 			return false;
 		}
 	}
-
-	//if the level is nazi_zombie_asylum and playeris drinking, disable the trigger
-	if(level.script == "nazi_zombie_asylum" && isdefined(self.is_drinking))
-		return false;
-
-	if(level.script == "nazi_zombie_sumpf" && isdefined(self.is_drinking))
-		return false;
 
 	return true;
 }

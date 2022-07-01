@@ -13,7 +13,7 @@ init()
 
 add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost  )
 {
-	if( IsDefined( level.zombie_include_weapons ) && !IsDefined( level.zombie_include_weapons[weapon_name] ) )
+	if( isDefined( level.zombie_include_weapons ) && !isDefined( level.zombie_include_weapons[weapon_name] ) )
 	{
 		return;
 	}
@@ -23,12 +23,12 @@ add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost
 	table_cost = TableLookUp( table, 0, weapon_name, 1 );
 	table_ammo_cost = TableLookUp( table, 0, weapon_name, 2 );
 
-	if( IsDefined( table_cost ) && table_cost != "" )
+	if( isDefined( table_cost ) && table_cost != "" )
 	{
 		cost = round_up_to_ten( int( table_cost ) );
 	}
 
-	if( IsDefined( table_ammo_cost ) && table_ammo_cost != "" )
+	if( isDefined( table_ammo_cost ) && table_ammo_cost != "" )
 	{
 		ammo_cost = round_up_to_ten( int( table_ammo_cost ) );
 	}
@@ -38,7 +38,7 @@ add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost
 
 	struct = SpawnStruct();
 
-	if( !IsDefined( level.zombie_weapons ) )
+	if( !isDefined( level.zombie_weapons ) )
 	{
 		level.zombie_weapons = [];
 	}
@@ -51,7 +51,7 @@ add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost
 	struct.variation_count = variation_count;
 	struct.is_in_box = level.zombie_include_weapons[weapon_name];
 	
-	if( !IsDefined( ammo_cost ) )
+	if( !isDefined( ammo_cost ) )
 	{
 		ammo_cost = round_up_to_ten( int( cost * 0.5 ) );
 	}
@@ -174,7 +174,7 @@ prototype_betty_weighting_func()
 
 include_zombie_weapon( weapon_name, in_box, weighting_func )
 {
-	if( !IsDefined( level.zombie_include_weapons ) )
+	if( !isDefined( level.zombie_include_weapons ) )
 	{
 		level.zombie_include_weapons = [];
 	}
@@ -318,7 +318,7 @@ init_weapons()
 
 add_limited_weapon( weapon_name, amount )
 {
-	if( !IsDefined( level.limited_weapons ) )
+	if( !isDefined( level.limited_weapons ) )
 	{
 		level.limited_weapons = [];
 	}
@@ -329,10 +329,6 @@ add_limited_weapon( weapon_name, amount )
 // For buying weapon upgrades in the environment
 init_weapon_upgrade()
 {
-
-	if(isDefined(self.is_drinking)) {
-		return;
-	}
 
 	weaponNameWallBuy = undefined;
 	
@@ -398,35 +394,35 @@ init_weapon_cabinet()
 // returns the trigger hint string for the given weapon
 get_weapon_name( weapon_name )
 {
-	AssertEx( IsDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
+	AssertEx( isDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
 
 	return level.zombie_weapons[weapon_name].weapon_name;
 }
 
 get_weapon_hint( weapon_name )
 {
-	AssertEx( IsDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
+	AssertEx( isDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
 
 	return level.zombie_weapons[weapon_name].hint;
 }
 
 get_weapon_cost( weapon_name )
 {
-	AssertEx( IsDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
+	AssertEx( isDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
 
 	return level.zombie_weapons[weapon_name].cost;
 }
 
 get_ammo_cost( weapon_name )
 {
-	AssertEx( IsDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
+	AssertEx( isDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
 
 	return level.zombie_weapons[weapon_name].ammo_cost;
 }
 
 get_is_in_box( weapon_name )
 {
-	AssertEx( IsDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
+	AssertEx( isDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
 	
 	return level.zombie_weapons[weapon_name].is_in_box;
 }
@@ -455,7 +451,7 @@ treasure_chest_think(rand)
 {
 	cost = 950;
 
-	if( IsDefined( level.zombie_treasure_chest_cost ) )
+	if( isDefined( level.zombie_treasure_chest_cost ) )
 	{
 		cost = level.zombie_treasure_chest_cost;
 	}
@@ -513,7 +509,7 @@ treasure_chest_think(rand)
 	
 	weapon_spawn_org waittill( "randomization_done" ); 
 
-	if(isdefined(self.boxlocked) && self.boxlocked) // Padlock stuff
+	if(isDefined(self.boxlocked) && self.boxlocked) // Padlock stuff
     {
         self.boxlocked = false;
         weapon_spawn_org notify("weapon_grabbed");
@@ -685,7 +681,7 @@ treasure_chest_user_hint( trigger, user )
 	dist = 128 * 128;
 	while( 1 )
 	{
-		if( !IsDefined( trigger ) )
+		if( !isDefined( trigger ) )
 		{
 			break;
 		}
@@ -758,7 +754,7 @@ treasure_chest_ChooseRandomWeapon( player )
     }
  
     // Filter out the limited weapons
-    if( IsDefined( level.limited_weapons ) )
+    if( isDefined( level.limited_weapons ) )
     {
         keys2 = GetArrayKeys( level.limited_weapons );
         players = GetPlayers();
@@ -820,7 +816,7 @@ treasure_chest_ChooseWeightedRandomWeapon( player )
 			continue;
 		}
 
-		if( !IsDefined( keys[i] ) )
+		if( !isDefined( keys[i] ) )
 		{
 			continue;
 		}
@@ -836,7 +832,7 @@ treasure_chest_ChooseWeightedRandomWeapon( player )
  
 treasure_chest_weapon_spawn( chest, player )
 {
-    assert(IsDefined(player));
+    assert(isDefined(player));
     // spawn the model
     model = spawn( "script_model", self.origin ); 
     model.angles = self.angles + ( 0, 90, 0 );
@@ -989,7 +985,7 @@ timer_til_despawn(floatHeight)
 	self MoveTo( self.origin - ( 0, 0, floatHeight ), putBackTime, ( putBackTime * 0.5 ) );
 	wait( putBackTime );
 
-	if(isdefined(self))
+	if(isDefined(self))
 	{	
 		self Delete();
 	}
@@ -1062,7 +1058,7 @@ treasure_chest_give_weapon( weapon_string )
 			current_weapon = undefined;
 		}
 
-		if( isdefined( current_weapon ) )
+		if( isDefined( current_weapon ) )
 		{
 			if( !( weapon_string == "fraggrenade" || weapon_string == "stielhandgranate" || weapon_string == "molotov" ) )
 			self TakeWeapon( current_weapon ); 
@@ -1075,7 +1071,7 @@ treasure_chest_give_weapon( weapon_string )
 	}
 
 
-	if( IsDefined( primaryWeapons ) && !isDefined( current_weapon ) )
+	if( isDefined( primaryWeapons ) && !isDefined( current_weapon ) )
 	{
 		for( i = 0; i < primaryWeapons.size; i++ )
 		{
@@ -1116,7 +1112,7 @@ weapon_cabinet_think()
 
 	cost = 1900;	//costs twice as much as the regular mystery box
 
-	if( IsDefined( level.zombie_weapon_cabinet_cost ) )
+	if( isDefined( level.zombie_weapon_cabinet_cost ) )
 	{
 		cost = level.zombie_weapon_cabinet_cost;
 	}
@@ -1156,7 +1152,7 @@ weapon_cabinet_think()
 
 
     flag_wait("all_players_connected");
-    if(!isdefined(level.cabinetthinkdone) || level.cabinetthinkdone == 0) // please for the love of god only do this once
+    if(!isDefined(level.cabinetthinkdone) || level.cabinetthinkdone == 0) // please for the love of god only do this once
 	{
 		all_ents = GetEntArray("script_model","classname"); // i really hate this way of doing it but im not good enough to see another way currently
 		for(i=0;i<all_ents.size;i++)
@@ -1315,7 +1311,7 @@ weapon_cabinet_think()
 
 	luckyNumCabinet = RandomInt(100);
 	
-	if(!isdefined(player.perknum) || player.perknum < 11)	//check if player has max perks
+	if(!isDefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
 		if(luckyNumCabinet <= 100)	//10 out of 100 chance to get a perk
 		{
@@ -1475,7 +1471,7 @@ takenweapon(chosenweapon)
 		//thread play_raygun_stinger();		// we don't want the stinger sound for a perk bottle.
 		current_weapon = player GetCurrentWeapon();
 		player GiveWeapon(chosenweapon);
-		self.is_drinking = 1;
+    	player.is_drinking = 1;
 		player SwitchToWeapon(chosenweapon);
 		player DisableOffhandWeapons();
 		player DisableWeaponCycling();
@@ -1487,7 +1483,7 @@ takenweapon(chosenweapon)
 		wait 2.5;
 
 		//Force crouch stance when using perk bottle
-		if(player GetStance() == "prone" && self.is_drinking == 1)
+		if(player GetStance() == "prone" && player.is_drinking == 1)
 		{
 			player SetStance("crouch");
 		}	
@@ -1497,7 +1493,7 @@ takenweapon(chosenweapon)
 		player AllowSprint( true );
 		player AllowProne( true );		
 		player AllowMelee( true );
-		self.is_drinking = undefined;
+    	player.is_drinking = undefined;
 		player TakeWeapon(chosenweapon);
 		player SwitchToWeapon(current_weapon);
 		player EnableOffhandWeapons();
@@ -1559,10 +1555,6 @@ weapon_cabinet_door_close( left_or_right )
 
 weapon_spawn_think()
 {
-
-	if(isDefined(self.is_drinking)) {
-		return;
-	}
 	
 	weapon_name_ammo_cost = get_weapon_name(self.zombie_weapon_upgrade);
 	cost = get_weapon_cost( self.zombie_weapon_upgrade );
@@ -1576,11 +1568,12 @@ weapon_spawn_think()
 		self waittill( "trigger", player ); 		
 		// if not first time and they have the weapon give ammo
 
-		/*if(isdefined(self.is_drinking)){
-		IPrintLn("y u try drink and buy gun at same time?");
-		return; 
-		}*/
-		
+		if(isDefined(player.is_drinking))
+		{
+			wait(0.1);
+			continue;
+		}
+
 		if( !is_player_valid( player ) )
 		{
 			player thread ignore_triggers( 0.5 );
@@ -1596,7 +1589,7 @@ weapon_spawn_think()
 		player_has_weapon = false;
 		 
 		weapons = player GetWeaponsList(); 
-		if( IsDefined( weapons ) )
+		if( isDefined( weapons ) )
 		{
 			for( i = 0; i < weapons.size; i++ )
 			{
@@ -1795,7 +1788,7 @@ weapon_give( weapon )
 			current_weapon = undefined;
 		}
 
-		if( isdefined( current_weapon ) )
+		if( isDefined( current_weapon ) )
 		{
 			if( !( weapon == "fraggrenade" || weapon == "stielhandgranate" || weapon == "molotov" /*|| weapon == "zombie_cymbal_monkey"*/ ) )
 			{
@@ -1803,12 +1796,12 @@ weapon_give( weapon )
 			}
 		} 
 	}
-	else if ( !IsDefined(self.muleLastWeapon) )
+	else if ( !isDefined(self.muleLastWeapon) )
 	{
 		current_weapon = self getCurrentWeapon();
 	}
 
-	if( IsDefined( primaryWeapons ) && !isDefined( current_weapon ) )
+	if( isDefined( primaryWeapons ) && !isDefined( current_weapon ) )
 	{
 		for( i = 0; i < primaryWeapons.size; i++ )
 		{
@@ -1848,7 +1841,7 @@ ammo_give( weapon )
 	//Check to see if ammo belongs to a primary weapon
 	if(weapon != "fraggrenade" && weapon != "stielhandgranate" && weapon != "molotov")
 	{
-		if( isdefined( weapon ) )  
+		if( isDefined( weapon ) )  
 		{
 			//Compare player current weapon ammo, if equal to default weapon ammo then don't give ammo, else do
 			if(totalCurrentWeaponAmmo == defaultMagAmmo + defaultWeaponAmmo)	
@@ -1897,7 +1890,7 @@ ammo_give( weapon )
 get_player_index(player)
 {
 	assert( IsPlayer( player ) );
-	assert( IsDefined( player.entity_num ) );
+	assert( isDefined( player.entity_num ) );
 /#
 	// used for testing to switch player's VO in-game from devgui
 	if( player.entity_num == 0 && GetDVar( "zombie_player_vo_overwrite" ) != "" )
@@ -1926,12 +1919,12 @@ has_weapon_or_upgrade( weaponname )
 	else
 	{
 		// If the weapon you're checking doesn't exist, it will return undefined
-		if( IsDefined( level.zombie_include_weapons[weaponname] ) )
+		if( isDefined( level.zombie_include_weapons[weaponname] ) )
 		{
 			has_weapon = self HasWeapon( weaponname );
 		}
 	
-		if( !has_weapon && isdefined( level.zombie_include_weapons[weaponname+"_upgraded"] ) )
+		if( !has_weapon && isDefined( level.zombie_include_weapons[weaponname+"_upgraded"] ) )
 		{
 			has_weapon = self HasWeapon( weaponname+"_upgraded" );
 		}

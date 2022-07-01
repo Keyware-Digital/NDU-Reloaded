@@ -5,7 +5,7 @@
 init( achievement, var1, var2, var3, var4 )
 {
 
-	if( !isdefined( achievement ) )
+	if( !isDefined( achievement ) )
 	{
 		return;
 	}
@@ -70,7 +70,7 @@ achievement_give_on_notify( notify_name, debug_text )
 	self waittill( notify_name );
 
 	/#
-		if ( !IsDefined( debug_text ) )
+		if ( !isDefined( debug_text ) )
 		{
 			debug_text = notify_name;
 		}
@@ -111,7 +111,7 @@ achievement_give_on_counter( notify_name, counter_name, counter_num, debug_text 
 		if( counter >= level.zombie_vars[counter_name] )
 		{
 			/#
-				if ( !IsDefined( debug_text ) )
+				if ( !isDefined( debug_text ) )
 				{
 					debug_text = notify_name;
 				}

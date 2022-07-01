@@ -10,13 +10,13 @@ setSkill( reset, skill_override )
 		println("File: _gameskill.gsc. Function: setSkill()\n");
 	#/
 	
-	if ( !isdefined( level.script ) )
+	if ( !isDefined( level.script ) )
 		level.script = tolower( getdvar( "mapname" ) );
 	
 
-	if ( !isdefined( reset ) || reset == false )
+	if ( !isDefined( reset ) || reset == false )
 	{
-		if ( isdefined( level.gameSkill ) )
+		if ( isDefined( level.gameSkill ) )
 		{
 			// CODER_MOD: Bryce (05/08/08): Useful output for debugging replay system
 			/#
@@ -26,7 +26,7 @@ setSkill( reset, skill_override )
 			return;
 		}
 	
-		if ( !isdefined( level.custom_player_attacker ) )
+		if ( !isDefined( level.custom_player_attacker ) )
 			level.custom_player_attacker = ::return_false;
 	
 		level.global_damage_func_ads = ::empty_kill_func; 
@@ -57,7 +57,7 @@ setSkill( reset, skill_override )
 	}
 
 	level.gameSkill = getdvarint( "g_gameskill" );
-	if ( isdefined( skill_override ) )
+	if ( isDefined( skill_override ) )
 		level.gameSkill = skill_override;
 	setdvar( "saved_gameskill", level.gameSkill );
 
@@ -503,7 +503,7 @@ apply_difficulty_frac_with_func( difficulty_func, current_frac )
 apply_threat_bias_to_all_players(difficulty_func, current_frac)
 {
 	// waittill the flag is defined, then check for it
-	while (!isdefined (level.flag) || !isdefined(level.flag[ "all_players_connected" ]))
+	while (!isDefined (level.flag) || !isDefined(level.flag[ "all_players_connected" ]))
 	{
 		wait 0.05;
 		continue;
@@ -521,12 +521,12 @@ apply_threat_bias_to_all_players(difficulty_func, current_frac)
 coop_damage_and_accuracy_scaling( difficulty_func, current_frac )
 {
 	// if it's not set up by now, wait for it
-	while (!isdefined (level.flag))
+	while (!isDefined (level.flag))
 	{
 		wait 0.05;
 	}
 	
-	while (!isdefined (level.flag["all_players_spawned"]))
+	while (!isDefined (level.flag["all_players_spawned"]))
 	{
 		wait 0.05;
 	}	
@@ -852,7 +852,7 @@ printHealthDebug()
 
 destroyHealthDebug()
 {
-	if ( !isdefined( level.healthBarHudElems ) )
+	if ( !isDefined( level.healthBarHudElems ) )
 		return;
 	for ( i = 0; i < level.healthBarKeys.size; i++ )
 	{
@@ -932,9 +932,9 @@ setSniperAccuracy()
 	/*
 	// if sniperShotCount isn't defined, a sniper is shooting from some place that's not in normal shoot behavior.
 	// that probably means they're doing some sort of blindfire or something that would look stupid for a sniper to do.
-	assert( isdefined( self.sniperShotCount ) );
+	assert( isDefined( self.sniperShotCount ) );
 	*/
-	if ( !isdefined( self.sniperShotCount ) )
+	if ( !isDefined( self.sniperShotCount ) )
 	{
 		// snipers get this error if a dog attacks them
 		self.sniperShotCount = 0;
@@ -1106,7 +1106,7 @@ playerHurtcheck()
 		self.damageAttacker = attacker;
 
 // MikeD (8/7/2007): New player_burned effect.
-		if( IsDefined (mod) && mod == "MOD_BURNED" )
+		if( isDefined (mod) && mod == "MOD_BURNED" )
 		{
 			self setburn( 0.5 );
 		}
@@ -1217,12 +1217,12 @@ playerHealthRegen()
 
 	// CODER_MOD
 	// Austin (5/29/07): restore these flags as player flags, these changes were clobbered during the integrate
-	if( !IsDefined( self.flag ) )
+	if( !isDefined( self.flag ) )
 	{
 		self.flag = []; 
 		self.flags_lock = []; 
 	}
-	if( !IsDefined(self.flag["player_has_red_flashing_overlay"]) )
+	if( !isDefined(self.flag["player_has_red_flashing_overlay"]) )
 	{
 		self player_flag_init("player_has_red_flashing_overlay");
 		self player_flag_init("player_is_invulnerable");
@@ -1449,7 +1449,7 @@ reduceTakeCoverWarnings()
 	//prof_begin( "reduceTakeCoverWarnings" );
 	players = get_players();
 	
-	if ( isdefined( players[0] ) && isAlive( players[0] ) )
+	if ( isDefined( players[0] ) && isAlive( players[0] ) )
 	{
 		takeCoverWarnings = getdvarint( "takeCoverWarnings" );
 		if ( takeCoverWarnings > 0 )
@@ -1478,7 +1478,7 @@ DebugTakeCoverWarnings()
  /#
 logHit( newhealth, invulTime )
 {
-	/* if ( !isdefined( level.hitlog ) )
+	/* if ( !isDefined( level.hitlog ) )
 	{
 		level.hitlog = [];
 		thread showHitLog();
@@ -1495,7 +1495,7 @@ logHit( newhealth, invulTime )
 
 logRegen( newhealth )
 {
-	/* if ( !isdefined( level.hitlog ) )
+	/* if ( !isDefined( level.hitlog ) )
 	{
 		level.hitlog = [];
 		thread showHitLog();
@@ -1545,7 +1545,7 @@ showHitLog()
 
 playerInvul( timer )
 {
-	if ( isdefined( self.flashendtime ) && self.flashendtime > gettime() )
+	if ( isDefined( self.flashendtime ) && self.flashendtime > gettime() )
 		timer = timer * getCurrentDifficultySetting( "flashbangedInvulFactor" );
 
 	if ( timer > 0 )
@@ -1609,7 +1609,7 @@ playerBreathingSound( healthcap )
 	{
 		wait( 0.2 );
 
-		if ( !isdefined(self) )
+		if ( !isDefined(self) )
 			return;
 			
 		if( self.health <= 0 )
@@ -1775,7 +1775,7 @@ add_hudelm_position_internal( alignY )
 	
 	/* if ( 0 )// if we ever get the chance to localize or find a way to dynamically find how many lines in a string
 	{
-		if ( isdefined( alignY ) )
+		if ( isDefined( alignY ) )
 			self.alignY = alignY;
 		else
 			self.alignY = "middle";	
@@ -1788,7 +1788,7 @@ add_hudelm_position_internal( alignY )
 	self.horzAlign = "center";
 	self.vertAlign = "middle";
 	
-	if ( !isdefined( self.background ) )
+	if ( !isDefined( self.background ) )
 		return;
 	self.background.x = 0;// 320;
 	self.background.y = -40;// 200;
@@ -1864,9 +1864,9 @@ destroy_warning_elem( fadeout )
 
 mayChangeCoverWarningAlpha( coverWarning )
 {
-	if ( !isdefined( coverWarning ) )
+	if ( !isDefined( coverWarning ) )
 		return false;
-	if ( isdefined( coverWarning.beingDestroyed ) )
+	if ( isDefined( coverWarning.beingDestroyed ) )
 		return false;
 	return true;
 }
@@ -1944,7 +1944,7 @@ fadeFunc( overlay, coverWarning, severity, mult, hud_scaleOnly )
 shouldShowCoverWarning()
 {
 	// Glocke: need to disable this for the Makin outro so adding in a level var
-	if( IsDefined(level.enable_cover_warning) )
+	if( isDefined(level.enable_cover_warning) )
 	{
 		return level.enable_cover_warning;
 	}
@@ -2196,7 +2196,7 @@ hud_debug_add( msg, num )
 //hud_debug_clear()
 //{
 //	level.hudNum = 0;
-//	if ( isdefined( level.hudDebugNum ) )
+//	if ( isDefined( level.hudDebugNum ) )
 //	{
 //		for ( i = 0;i < level.hudDebugNum.size;i++ )
 //			level.hudDebugNum[ i ] destroy();	
@@ -2207,9 +2207,9 @@ hud_debug_add( msg, num )
 
 hud_debug_add_message( msg )
 {
-	if ( !isdefined( level.hudMsgShare ) )
+	if ( !isDefined( level.hudMsgShare ) )
 		level.hudMsgShare = [];
-	if ( !isdefined( level.hudMsgShare[ msg ] ) )
+	if ( !isDefined( level.hudMsgShare[ msg ] ) )
 	{
 		hud = newHudElem();
 		hud.x = level.debugLeft;
@@ -2529,7 +2529,7 @@ command_used( cmd )
 //	if ( getdvar( "createfx" ) == "on" )
 //		return;
 //	#/
-//	if ( !isdefined( level.auto_adjust_flags ) )
+//	if ( !isDefined( level.auto_adjust_flags ) )
 //	{
 //		level.auto_adjust_flags = [];
 //	}
@@ -2725,7 +2725,7 @@ player_attacker( attacker )
 	if ( IsPlayer(attacker) )
 		return true;
 		
-	if ( !isdefined( attacker.car_damage_owner_recorder ) )
+	if ( !isDefined( attacker.car_damage_owner_recorder ) )
 		return false;
 	
 	return attacker player_did_most_damage();
@@ -2752,12 +2752,12 @@ auto_adjust_enemy_died( ai, amount, attacker, type, point )
 	// in case the team got changed.
 	if ( self.team != "axis" )
 		return;
-	if ( isdefined( self.civilian ) )
+	if ( isDefined( self.civilian ) )
 		return;
 	*/
 
 	aa_add_event( "aa_enemy_deaths", 1 );
-	if ( !isdefined( attacker ) )
+	if ( !isDefined( attacker ) )
 	{
 		//prof_end( "auto_adjust_enemy_died" );
 		return;
@@ -2795,11 +2795,11 @@ auto_adjust_enemy_died( ai, amount, attacker, type, point )
 	//CODER_MOD: TOMMYK
 	if( arcadeMode() ) 
 	{		
-		if( IsDefined( ai ) )
+		if( isDefined( ai ) )
 		{
 			//Used later to figure out whether AI was stabbed in the back
 			ai.anglesOnDeath = ai.angles;
-			if ( isdefined( attacker ) )
+			if ( isDefined( attacker ) )
 			{
 				attacker.anglesOnKill = attacker getPlayerAngles();
 			}
@@ -2821,7 +2821,7 @@ auto_adjust_enemy_died( ai, amount, attacker, type, point )
 	attacker.kills++;
 
 	damage_location = undefined;
-	if( IsDefined( ai ) )	
+	if( isDefined( ai ) )	
 	{
 		damage_location	 = ai.damagelocation;
 
@@ -2887,7 +2887,7 @@ aa_player_attacks_enemy_with_ads( player, amount, type, point )
 		self.attackerData = [];		
 	}
 			
-	if ( !isdefined( self.attackerData[player getEntityNumber()] ) )
+	if ( !isDefined( self.attackerData[player getEntityNumber()] ) )
 	{
 		self.attackers[ self.attackers.size ] = player;
 		self.attackerData[player getEntityNumber()] = false;
@@ -2942,7 +2942,7 @@ add_fractional_data_point( name, frac, val )
 {
 	//prof_begin( "add_fractional_data_point" );
 	
-	if ( !isdefined( level.difficultySettings_frac_data_points[ name ] ) )
+	if ( !isDefined( level.difficultySettings_frac_data_points[ name ] ) )
 	{
 		level.difficultySettings_frac_data_points[ name ] = [];
 	}
@@ -3024,7 +3024,7 @@ add_fractional_data_point( name, frac, val )
 //	
 //			for (i = 0; i < players.size; i++)
 //			{		
-//				if( IsDefined(healthscalar) && IsDefined(players[i].starthealth) )
+//				if( isDefined(healthscalar) && isDefined(players[i].starthealth) )
 //				{
 //					old_maxhealth = players[i].maxhealth;
 //					players[i].maxhealth = int(players[i].starthealth * healthscalar);
@@ -3141,13 +3141,13 @@ coop_axis_accuracy_scaler()
 	while (1)
 	{
 		// MikeD (6/25/2008): Since animscripts call this before the level var is even setup, we need to exit out until it is set.
-		if( !IsDefined( level.coop_enemy_accuracy_scalar ) )
+		if( !isDefined( level.coop_enemy_accuracy_scalar ) )
 		{
 			wait 0.5;
 			continue;
 		}
 
-		if (!isdefined(self.script_accuracy))
+		if (!isDefined(self.script_accuracy))
 		{
 			self.baseaccuracy = 1 * level.coop_enemy_accuracy_scalar;
 		}
@@ -3182,13 +3182,13 @@ coop_allies_accuracy_scaler()
 	while (1)
 	{
 		// MikeD (6/25/2008): Since animscripts call this before the level var is even setup, we need to exit out until it is set.
-		if( !IsDefined( level.coop_friendly_accuracy_scalar ) )
+		if( !isDefined( level.coop_friendly_accuracy_scalar ) )
 		{
 			wait 0.5;
 			continue;
 		}
 
-		if (!isdefined(self.script_accuracy))
+		if (!isDefined(self.script_accuracy))
 		{
 			self.baseaccuracy = 1 * level.coop_friendly_accuracy_scalar;
 		}
@@ -3211,7 +3211,7 @@ coop_player_threat_bias_adjuster()
 		wait 5;
 		
 		// ber3b is artifically harder
-		if (isdefined(level.script) && level.script == "ber3b")
+		if (isDefined(level.script) && level.script == "ber3b")
 		{
 			return;
 		}
@@ -3236,7 +3236,7 @@ coop_player_threat_bias_adjuster()
 coop_spawner_count_adjuster()
 {
 	// waittill the flag is defined, then check for it
-	while (!isdefined (level.flag) || !isdefined(level.flag[ "all_players_connected" ]))
+	while (!isDefined (level.flag) || !isDefined(level.flag[ "all_players_connected" ]))
 	{
 		wait 0.05;
 		continue;
@@ -3251,14 +3251,14 @@ coop_spawner_count_adjuster()
 	// for now, we only look for flood_spawners
 	for (i = 0; i < spawners.size; i++)
 	{
-		if (isdefined(spawners[i].targetname))
+		if (isDefined(spawners[i].targetname))
 		{
 			possible_trig = getentarray(spawners[i].targetname, "target");
 			
 			// only check the first trig in case somone messed up their trigger ents
-			if (isdefined(possible_trig[0]))
+			if (isDefined(possible_trig[0]))
 			{
-				if (isdefined(possible_trig[0].targetname))
+				if (isDefined(possible_trig[0].targetname))
 				{
 					if (possible_trig[0].targetname == "flood_spawner")
 					{
@@ -3272,12 +3272,12 @@ coop_spawner_count_adjuster()
 
 coop_set_spawner_adjustment_values( player_count )
 {
-	if (!isdefined(self.count))
+	if (!isDefined(self.count))
 	{
 		return;
 	}
 
-	if (isdefined(self.script_count_lock) && self.script_count_lock)
+	if (isDefined(self.script_count_lock) && self.script_count_lock)
 	{
 		return;
 	}

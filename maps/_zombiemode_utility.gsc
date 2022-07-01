@@ -19,7 +19,7 @@ spawn_zombie( spawner, target_name )
 { 
 	spawner.script_moveoverride = true; 
 
-	if( IsDefined( spawner.script_forcespawn ) && spawner.script_forcespawn ) 
+	if( isDefined( spawner.script_forcespawn ) && spawner.script_forcespawn ) 
 	{ 
 		guy = spawner StalingradSpawn();  
 	} 
@@ -32,14 +32,14 @@ spawn_zombie( spawner, target_name )
 
 //	// sometimes we want to ensure a zombie will go to a particular door node
 //	// so we target the spawner at a struct and put the struct near the entry point
-//	if( isdefined( spawner.target ) )
+//	if( isDefined( spawner.target ) )
 //	{
 //		guy.forced_entry = getstruct( spawner.target, "targetname" ); 
 //	}
 
 	if( !spawn_failed( guy ) ) 
 	{ 
-		if( IsDefined( target_name ) ) 
+		if( isDefined( target_name ) ) 
 		{ 
 			guy.targetname = target_name; 
 		} 
@@ -52,7 +52,7 @@ spawn_zombie( spawner, target_name )
 
 create_simple_hud( client )
 {
-	if( IsDefined( client ) )
+	if( isDefined( client ) )
 	{
 		hud = NewClientHudElem( client ); 
 	}
@@ -80,7 +80,7 @@ all_chunks_intact( barrier_chunks )
 {
 	for( i = 0; i < barrier_chunks.size; i++ )
 	{
-		if( barrier_chunks[i].destroyed && !IsDefined( barrier_chunks[i].mid_repair ))
+		if( barrier_chunks[i].destroyed && !isDefined( barrier_chunks[i].mid_repair ))
 		{
 			return false; 
 		}
@@ -97,7 +97,7 @@ all_chunks_destroyed( barrier_chunks )
 		{
 			return false; 
 		}
-		if ( IsDefined( barrier_chunks[i].target_by_zombie ) )
+		if ( isDefined( barrier_chunks[i].target_by_zombie ) )
 		{
 			return false;
 		}
@@ -369,7 +369,7 @@ debug_draw_attractor_positions()
 			Line( self.origin, self.attractor_positions[i][0], (1, 0, 0), true, 1 );
 		}
 		wait( 0.05 );
-		if( !IsDefined( self ) )
+		if( !isDefined( self ) )
 		{
 			return;
 		}
@@ -455,16 +455,16 @@ assign_zombie_point_of_interest (origin, poi)
 	position = undefined;
 	doremovalthread = false;
 
-	if (IsDefined(poi) && poi can_attract(self))
+	if (isDefined(poi) && poi can_attract(self))
 	{
 		//don't want to touch add poi attractor, but yeah, this is kind of weird
-		if (!IsDefined(poi.attractor_array) || ( IsDefined(poi.attractor_array) && array_check_for_dupes( poi.attractor_array, self ) ))
+		if (!isDefined(poi.attractor_array) || ( isDefined(poi.attractor_array) && array_check_for_dupes( poi.attractor_array, self ) ))
 			doremovalthread = true;
 		
 		position = self add_poi_attractor( poi );
 		
 		//now that I know this is the first time they've been added, set up the thread to remove them from the array
-		if (IsDefined(position) && doremovalthread && !array_check_for_dupes( poi.attractor_array, self  ))
+		if (isDefined(position) && doremovalthread && !array_check_for_dupes( poi.attractor_array, self  ))
 			self thread update_on_poi_removal( poi );		
 	}
 	
@@ -680,7 +680,7 @@ get_closest_valid_player( origin, ignore_player )
 	
 	players = get_players();
 
-	if( IsDefined( ignore_player ) )
+	if( isDefined( ignore_player ) )
 	{
 		players = array_remove( players, ignore_player );
 	}
@@ -690,7 +690,7 @@ get_closest_valid_player( origin, ignore_player )
 		// find the closest player
 		player = GetClosest( origin, players ); 
 
-		if( !isdefined( player ) )
+		if( !isDefined( player ) )
 		{
 			return undefined; 
 		}
@@ -707,7 +707,7 @@ get_closest_valid_player( origin, ignore_player )
 
 is_player_valid( player )
 {
-	if( !IsDefined( player ) ) 
+	if( !isDefined( player ) ) 
 	{
 		return false; 
 	}
@@ -755,12 +755,12 @@ in_revive_trigger()
 	players = get_players();
 	for( i = 0; i < players.size; i++ )
 	{
-		if( !IsDefined( players[i] ) || !IsAlive( players[i] ) ) 
+		if( !isDefined( players[i] ) || !IsAlive( players[i] ) ) 
 		{
 			continue; 
 		}
 	
-		if( IsDefined( players[i].revivetrigger ) )
+		if( isDefined( players[i].revivetrigger ) )
 		{
 			if( self IsTouching( players[i].revivetrigger ) )
 			{
@@ -779,7 +779,7 @@ get_closest_node( org, nodes )
 
 get_closest_2d( origin, ents )
 {
-	if( !IsDefined( ents ) )
+	if( !isDefined( ents ) )
 	{
 		return undefined; 
 	}
@@ -801,7 +801,7 @@ get_closest_2d( origin, ents )
 
 disable_trigger()
 {
-	if( !IsDefined( self.disabled ) || !self.disabled )
+	if( !isDefined( self.disabled ) || !self.disabled )
 	{
 		self.disabled = true; 
 		self.origin = self.origin -( 0, 0, 10000 ); 
@@ -810,7 +810,7 @@ disable_trigger()
 
 enable_trigger()
 {
-	if( !IsDefined( self.disabled ) || !self.disabled )
+	if( !isDefined( self.disabled ) || !self.disabled )
 	{
 		return; 
 	}
@@ -823,16 +823,16 @@ enable_trigger()
 //{
 //	playpoint = getstruct( "edge_fog_start", "targetname" ); 
 //
-//	if( !IsDefined( playpoint ) )
+//	if( !isDefined( playpoint ) )
 //	{
 //		
 //	} 
 //	
-//	while( isdefined( playpoint ) )
+//	while( isDefined( playpoint ) )
 //	{
 //		playfx( level._effect["edge_fog"], playpoint.origin ); 
 //		
-//		if( !isdefined( playpoint.target ) )
+//		if( !isDefined( playpoint.target ) )
 //		{
 //			return; 
 //		}
@@ -847,7 +847,7 @@ in_playable_area()
 {
 	trigger = GetEntarray( "playable_area", "targetname" );
 
-	if( !IsDefined( trigger ) )
+	if( !isDefined( trigger ) )
 	{
 		println( "No playable area trigger found! Assume EVERYWHERE is PLAYABLE" );
 		return true;
@@ -871,7 +871,7 @@ get_random_non_destroyed_chunk( barrier_chunks )
 
 	chunks = get_non_destroyed_chunks( barrier_chunks ); 
 
-	if( IsDefined( chunks ) )
+	if( isDefined( chunks ) )
 	{
 		return chunks[RandomInt( chunks.size )]; 
 	}
@@ -885,7 +885,7 @@ get_closest_non_destroyed_chunk( origin, barrier_chunks )
 
 	chunks = get_non_destroyed_chunks( barrier_chunks ); 
 
-	if( IsDefined( chunks ) )
+	if( isDefined( chunks ) )
 	{
 		return get_closest_2d( origin, chunks ); 
 	}
@@ -899,7 +899,7 @@ get_random_destroyed_chunk( barrier_chunks )
 
 	chunks = get_destroyed_chunks( barrier_chunks ); 
 
-	if( IsDefined( chunks ) )
+	if( isDefined( chunks ) )
 	{
 		return chunks[RandomInt( chunks.size )]; 
 	}
@@ -912,7 +912,7 @@ get_non_destroyed_chunks( barrier_chunks )
 	array = []; 
 	for( i = 0; i < barrier_chunks.size; i++ )
 	{
-		if( !barrier_chunks[i].destroyed && !IsDefined(barrier_chunks[i].target_by_zombie) && !IsDefined(barrier_chunks[i].mid_repair) )
+		if( !barrier_chunks[i].destroyed && !isDefined(barrier_chunks[i].target_by_zombie) && !isDefined(barrier_chunks[i].mid_repair) )
 		{
 			if ( barrier_chunks[i].origin == barrier_chunks[i].og_origin )
 			{
@@ -934,7 +934,7 @@ get_destroyed_chunks( barrier_chunks )
 	array = []; 
 	for( i = 0; i < barrier_chunks.size; i++ )
 	{
-		if( barrier_chunks[i].destroyed  && !isdefined( barrier_chunks[i].mid_repair ) )
+		if( barrier_chunks[i].destroyed  && !isDefined( barrier_chunks[i].mid_repair ) )
 		{
 			array[array.size] = barrier_chunks[i]; 
 		}
@@ -979,7 +979,7 @@ array_limiter( array, total )
 
 array_validate( array )
 {
-	if( IsDefined( array ) && array.size > 0 )
+	if( isDefined( array ) && array.size > 0 )
 	{
 		return true;
 	}
@@ -1001,17 +1001,17 @@ add_later_round_spawners()
 
 add_spawner( spawner )
 {
-	if( IsDefined( spawner.script_start ) && level.round_number < spawner.script_start )
+	if( isDefined( spawner.script_start ) && level.round_number < spawner.script_start )
 	{
 		return;
 	}
 
-	if( IsDefined( spawner.locked_spawner ) && spawner.locked_spawner )
+	if( isDefined( spawner.locked_spawner ) && spawner.locked_spawner )
 	{
 		return;
 	}
 
-	if( IsDefined( spawner.has_been_added ) && spawner.has_been_added )
+	if( isDefined( spawner.has_been_added ) && spawner.has_been_added )
 	{
 		return;
 	}
@@ -1050,7 +1050,7 @@ fake_physicslaunch( target_pos, power )
 //
 add_to_spectate_list()
 {
-	if( !IsDefined( level.spectate_list ) )
+	if( !isDefined( level.spectate_list ) )
 	{
 		level.spectate_list = [];
 	}
@@ -1060,7 +1060,7 @@ add_to_spectate_list()
 
 remove_from_spectate_list()
 {
-	if( !IsDefined( level.spectate_list ) )
+	if( !isDefined( level.spectate_list ) )
 	{
 		return undefined;
 	}
@@ -1099,7 +1099,7 @@ get_random_from_spectate_list()
 // 
 add_zombie_hint( ref, text )
 {
-	if( !IsDefined( level.zombie_hints ) )
+	if( !isDefined( level.zombie_hints ) )
 	{
 		level.zombie_hints = []; 
 	}
@@ -1110,7 +1110,7 @@ add_zombie_hint( ref, text )
 
 get_zombie_hint( ref )
 {
-	if( IsDefined( level.zombie_hints[ref] ) )
+	if( isDefined( level.zombie_hints[ref] ) )
 	{
 		return level.zombie_hints[ref]; 
 	}
@@ -1125,7 +1125,7 @@ get_zombie_hint( ref )
 // ent is the entity that has the script_hint info
 set_hint_string( ent, default_ref )
 {
-	if( IsDefined( ent.script_hint ) )
+	if( isDefined( ent.script_hint ) )
 	{
 		self SetHintString( get_zombie_hint( ent.script_hint ) ); 
 	}
@@ -1141,7 +1141,7 @@ set_hint_string( ent, default_ref )
 
 add_sound( ref, alias )
 {
-	if( !IsDefined( level.zombie_sounds ) )
+	if( !isDefined( level.zombie_sounds ) )
 	{
 		level.zombie_sounds = []; 
 	}
@@ -1151,15 +1151,15 @@ add_sound( ref, alias )
 
 play_sound_at_pos( ref, pos, ent )
 {
-	if( IsDefined( ent ) )
+	if( isDefined( ent ) )
 	{
-		if( IsDefined( ent.script_soundalias ) )
+		if( isDefined( ent.script_soundalias ) )
 		{
 			PlaySoundAtPosition( ent.script_soundalias, pos ); 
 			return;
 		}
 
-		if( IsDefined( self.script_sound ) )
+		if( isDefined( self.script_sound ) )
 		{
 			ref = self.script_sound; 
 		}
@@ -1170,7 +1170,7 @@ play_sound_at_pos( ref, pos, ent )
 		return; 
 	}
 
-	if( !IsDefined( level.zombie_sounds[ref] ) )
+	if( !isDefined( level.zombie_sounds[ref] ) )
 	{
 		AssertMsg( "Sound \"" + ref + "\" was not put to the zombie sounds list, please use add_sound( ref, alias ) at the start of your level." ); 
 		return; 
@@ -1181,13 +1181,13 @@ play_sound_at_pos( ref, pos, ent )
 
 play_sound_on_ent( ref )
 {
-	if( IsDefined( self.script_soundalias ) )
+	if( isDefined( self.script_soundalias ) )
 	{
 		self PlaySound( self.script_soundalias ); 
 		return;
 	}
 
-	if( IsDefined( self.script_sound ) )
+	if( isDefined( self.script_sound ) )
 	{
 		ref = self.script_sound; 
 	}
@@ -1197,7 +1197,7 @@ play_sound_on_ent( ref )
 		return; 
 	}
 
-	if( !IsDefined( level.zombie_sounds[ref] ) )
+	if( !isDefined( level.zombie_sounds[ref] ) )
 	{
 		AssertMsg( "Sound \"" + ref + "\" was not put to the zombie sounds list, please use add_sound( ref, alias ) at the start of your level." ); 
 		return; 
@@ -1208,7 +1208,7 @@ play_sound_on_ent( ref )
 
 play_loopsound_on_ent( ref )
 {
-	if( IsDefined( self.script_firefxsound ) )
+	if( isDefined( self.script_firefxsound ) )
 	{
 		ref = self.script_firefxsound; 
 	}
@@ -1218,7 +1218,7 @@ play_loopsound_on_ent( ref )
 		return; 
 	}
 
-	if( !IsDefined( level.zombie_sounds[ref] ) )
+	if( !isDefined( level.zombie_sounds[ref] ) )
 	{
 		AssertMsg( "Sound \"" + ref + "\" was not put to the zombie sounds list, please use add_sound( ref, alias ) at the start of your level." ); 
 		return; 
@@ -1255,12 +1255,12 @@ set_zombie_var( var, value, div, is_float )
 	table = "mp/zombiemode.csv";
 	table_value = TableLookUp( table, 0, var, 1 );
 
-	if ( !IsDefined( is_float ) )
+	if ( !isDefined( is_float ) )
 	{
 		is_float = false;
 	}
 
-	if( IsDefined( table_value ) && table_value != "" )
+	if( isDefined( table_value ) && table_value != "" )
 	{
 		if( is_float )
 		{
@@ -1272,7 +1272,7 @@ set_zombie_var( var, value, div, is_float )
 		}
 	}
 
-	if( IsDefined( div ) )
+	if( isDefined( div ) )
 	{
 		value = value / div;
 	}
@@ -1409,7 +1409,7 @@ draw_line_ent_to_pos( ent, pos, end_on )
 	ent notify( "stop_draw_line_ent_to_pos" ); 
 	ent endon( "stop_draw_line_ent_to_pos" ); 
 
-	if( IsDefined( end_on ) )
+	if( isDefined( end_on ) )
 	{
 		ent endon( end_on ); 
 	}
@@ -1475,13 +1475,13 @@ print3d_at_pos( msg, pos, thread_endon, offset )
 /#
 	self endon( "death" ); 
 
-	if( IsDefined( thread_endon ) )
+	if( isDefined( thread_endon ) )
 	{
 		self notify( thread_endon ); 
 		self endon( thread_endon ); 
 	}
 
-	if( !IsDefined( offset ) )
+	if( !isDefined( offset ) )
 	{
 		offset = ( 0, 0, 0 ); 
 	}
@@ -1565,7 +1565,7 @@ do_player_vo(snd, variation_count)
 	
 	index = maps\_zombiemode_weapons::get_player_index(self);	
 	sound = "plr_" + index + "_" + snd; 
-	if(IsDefined (variation_count))
+	if(isDefined (variation_count))
 	{
 		sound = sound + "_" + randomintrange(0, variation_count);
 	}
@@ -1598,7 +1598,7 @@ player_killstreak_timer()
 	kills = getdvarint("zombie_kills");
 	time = getdvarint("zombie_kill_timer");
 
-	if (!isdefined (self.timerIsrunning))	
+	if (!isDefined (self.timerIsrunning))	
 	{
 		self.timerIsrunning = 0;
 	}
@@ -1656,7 +1656,7 @@ play_killstreak_dialog()
 
 		//num_variants = 12;
 		waittime = 0.25;
-		if(!IsDefined (self.vox_killstreak))
+		if(!isDefined (self.vox_killstreak))
 		{
 			num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_killstreak");
 			self.vox_killstreak = [];
@@ -1686,7 +1686,7 @@ play_killstreak_dialog()
 }
 do_player_killstreak_dialog(player_index, sound_to_play, waittime)
 {
-	if(!IsDefined(level.player_is_speaking))
+	if(!isDefined(level.player_is_speaking))
 	{
 		level.player_is_speaking = 0;
 	}
@@ -1716,7 +1716,7 @@ play_sound_2D(sound)
 	level thread really_play_2D_sound(sound);
 	
 	/*
-	if(!isdefined(level.playsound2dent))
+	if(!isDefined(level.playsound2dent))
 	{
 		level.playsound2dent = spawn("script_origin",(0,0,0));
 	}
@@ -1737,13 +1737,13 @@ play_sound_2D(sound)
 
 create_and_play_dialog( player_index, dialog_category, waittime, response )
 {              
-	if( !IsDefined ( self.sound_dialog ) )
+	if( !isDefined ( self.sound_dialog ) )
 	{
 		self.sound_dialog = [];
 		self.sound_dialog_available = [];
 	}
 				
-	if ( !IsDefined ( self.sound_dialog[ dialog_category ] ) )
+	if ( !isDefined ( self.sound_dialog[ dialog_category ] ) )
 	{
 		num_variants = maps\_zombiemode_spawner::get_number_variants( player_index + dialog_category );                  
 		assertex( num_variants > 0, "No dialog variants found for category: " + dialog_category );
@@ -1801,8 +1801,8 @@ setup_rival_hero( player, hero, rival, response )
 {
 	players = getplayers();
 
-	playHero = isdefined(players[hero]);
-	playRival = isdefined(players[rival]);
+	playHero = isDefined(players[hero]);
+	playRival = isDefined(players[rival]);
 	
 	if(playHero && playRival)
 	{
@@ -1824,7 +1824,7 @@ setup_rival_hero( player, hero, rival, response )
 		}
 		else
 		{
-			if(isdefined( players[rival] ) )
+			if(isDefined( players[rival] ) )
 			{
 				playRival = true;
 			}
@@ -1842,13 +1842,13 @@ setup_rival_hero( player, hero, rival, response )
 
 create_and_play_responses( player_index, dialog_category, waittime )
 {              	
-	if( !IsDefined ( self.sound_dialog ) )
+	if( !isDefined ( self.sound_dialog ) )
 	{
 		self.sound_dialog = [];
 		self.sound_dialog_available = [];
 	}
 				
-	if ( !IsDefined ( self.sound_dialog[ dialog_category ] ) )
+	if ( !isDefined ( self.sound_dialog[ dialog_category ] ) )
 	{
 		num_variants = maps\_zombiemode_spawner::get_number_variants( player_index + dialog_category );                  
 		assertex( num_variants > 0, "No dialog variants found for category: " + dialog_category );

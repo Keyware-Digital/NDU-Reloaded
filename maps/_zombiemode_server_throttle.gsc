@@ -2,7 +2,7 @@
 
 server_choke_init( id, max )
 {
-	if ( !IsDefined( level.zombie_server_choke_ids_max ) )
+	if ( !isDefined( level.zombie_server_choke_ids_max ) )
 	{
 		level.zombie_server_choke_ids_max = [];
 		level.zombie_server_choke_ids_count = [];
@@ -33,7 +33,7 @@ server_choke_safe( id )
 
 server_choke_action( id, choke_action, arg1, arg2, arg3 )
 {
-	AssertEx( IsDefined( level.zombie_server_choke_ids_max[ id ] ), "server Choke: " + id + " undefined" );
+	AssertEx( isDefined( level.zombie_server_choke_ids_max[ id ] ), "server Choke: " + id + " undefined" );
 
 	while( !server_choke_safe( id ) )
 	{
@@ -42,17 +42,17 @@ server_choke_action( id, choke_action, arg1, arg2, arg3 )
 
 	level.zombie_server_choke_ids_count[ id ]++;
 
-	if ( !IsDefined( arg1 ) )
+	if ( !isDefined( arg1 ) )
 	{
 		return ( [[choke_action]]() );
 	}
 
-	if ( !IsDefined( arg2 ) )
+	if ( !isDefined( arg2 ) )
 	{
 		return ( [[choke_action]]( arg1 ) );
 	}
 	
-	if ( !IsDefined( arg3 ) )
+	if ( !isDefined( arg3 ) )
 	{
 		return ( [[choke_action]]( arg1, arg2 ) );
 	}
@@ -63,7 +63,7 @@ server_choke_action( id, choke_action, arg1, arg2, arg3 )
 
 server_entity_valid( entity )
 {
-	if( !IsDefined( entity ) )
+	if( !isDefined( entity ) )
 	{
 		return false;
 	}
@@ -74,7 +74,7 @@ server_entity_valid( entity )
 
 server_safe_init( id, max )
 {
-	if ( !IsDefined( level.zombie_server_choke_ids_max ) || !IsDefined( level.zombie_server_choke_ids_max[ id ] ) )
+	if ( !isDefined( level.zombie_server_choke_ids_max ) || !isDefined( level.zombie_server_choke_ids_max[ id ] ) )
 	{
 		server_choke_init( id, max );
 	}

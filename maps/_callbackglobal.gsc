@@ -103,7 +103,7 @@ Callback_SaveRestored()
 	
 	num = 0; 
 	
-	if( isdefined( level._save_pos ) )
+	if( isDefined( level._save_pos ) )
 	{
 		num = level._save_trig_ent; 
 	}
@@ -122,7 +122,7 @@ Callback_SaveRestored()
 /*			player setorigin( level._player_breadcrumbs[num][i].pos ); 
 			player setplayerangles( level._player_breadcrumbs[num][i].ang ); 	 */
 
-			if( isdefined( player.savedVisionSet ) )
+			if( isDefined( player.savedVisionSet ) )
 			{
 				player VisionSetNaked( player.savedVisionSet, 0.1 ); 
 			}
@@ -148,7 +148,7 @@ Callback_SaveRestored()
 
 Player_BreadCrumb_Reset( position, angles )
 {
-	if( !isdefined( angles ) )
+	if( !isDefined( angles ) )
 	{
 		angles = ( 0, 0, 0 ); 
 	}
@@ -156,7 +156,7 @@ Player_BreadCrumb_Reset( position, angles )
 	level.playerPrevOrigin0 = position; 
 	level.playerPrevOrigin1 = position; 
 	
-	if( !isdefined( level._player_breadcrumbs ) )
+	if( !isDefined( level._player_breadcrumbs ) )
 	{
 		level._player_breadcrumbs = []; 
 		
@@ -191,7 +191,7 @@ Player_BreadCrumb_Update()
 	level.playerPrevOrigin0 = self.origin + right; 
 	level.playerPrevOrigin1 = self.origin - right; 
 	
-	if( !isdefined( level._player_breadcrumbs ) )
+	if( !isDefined( level._player_breadcrumbs ) )
 	{
 		Player_BreadCrumb_Reset( self.origin, self.angles ); 
 	}
@@ -239,7 +239,7 @@ Player_BreadCrumb_Update()
 		
 		dropBreadcrumbs = true;
 		
-		if(IsDefined( level.flag ) && IsDefined( level.flag["drop_breadcrumbs"]))
+		if(isDefined( level.flag ) && isDefined( level.flag["drop_breadcrumbs"]))
 		{
 			if(!flag("drop_breadcrumbs"))
 			{
@@ -280,7 +280,7 @@ Player_BreadCrumb_Update()
 		
 		if( num == 0 )
 		{
-			if( isdefined( level._save_pos ) )
+			if( isDefined( level._save_pos ) )
 			{
 				print3d( level._save_pos, "svp " + level._save_trig_ent, ( 0.0, 0.8, 0.0 ), 1, 1, 20 ); 				
 			}
@@ -294,11 +294,11 @@ SetPlayerSpawnPos()
 	players = get_players(); 
 	player = players[0]; 
 
-	if( !isdefined( level._player_breadcrumbs ) )
+	if( !isDefined( level._player_breadcrumbs ) )
 	{
 		spawnpoints = getentarray( "info_player_deathmatch", "classname" ); 
 		
-		if( player.origin == ( 0, 0, 0 ) && isdefined( spawnpoints ) && spawnpoints.size > 0 )
+		if( player.origin == ( 0, 0, 0 ) && isDefined( spawnpoints ) && spawnpoints.size > 0 )
 		{
 			Player_BreadCrumb_Reset( spawnpoints[0].origin, spawnpoints[0].angles ); 
 		}
@@ -383,12 +383,12 @@ Callback_PlayerConnect()
 	// in the game
 	info_player_spawn = getentarray( "info_player_deathmatch", "classname" ); 
 	
-	if( isdefined( info_player_spawn ) && info_player_spawn.size > 0 )
+	if( isDefined( info_player_spawn ) && info_player_spawn.size > 0 )
 	{
 		// CODER_MOD
 		// Danl( 08/03/07 ) Band aid to spawn clients at host position.
 		players = get_players(); 
-		if( Isdefined( players ) &&( players.size != 0 ) )// || players[0] == self ) )
+		if( isDefined( players ) &&( players.size != 0 ) )// || players[0] == self ) )
 		{
 			if( players[0] == self )
 			{
@@ -417,19 +417,19 @@ Callback_PlayerConnect()
 	// JesseS( 3/15/2007 ): added player flag setup function
 	// CODER_MOD 
 	// Danl( 08/03/2007 ) - bandaid to facilitate hot joined players being at the host position on restart from checkpoint
-	if( !IsDefined( self.flag ) )
+	if( !isDefined( self.flag ) )
 	{
 		self.flag = []; 
 		self.flags_lock = []; 
 	}
 
-	if( !IsDefined( self.flag["player_has_red_flashing_overlay"] ) )
+	if( !isDefined( self.flag["player_has_red_flashing_overlay"] ) )
 	{
 		self player_flag_init( "player_has_red_flashing_overlay" ); 
 		self player_flag_init( "player_is_invulnerable" ); 
 	}
 
-	if( !IsDefined( self.flag["loadout_given"] ) )
+	if( !isDefined( self.flag["loadout_given"] ) )
 	{
 		self player_flag_init( "loadout_given" ); 
 	}
@@ -464,7 +464,7 @@ Callback_PlayerConnect()
 	}
 		
 /#
-	if( !isdefined( level.spawnClient ) )
+	if( !isDefined( level.spawnClient ) )
 	{
 		waittillframeend; 
 		//self spawn( self.origin, self.angles ); 
@@ -490,7 +490,7 @@ Callback_PlayerConnect()
 
 reset_clientdvars()
 {
-	if( IsDefined( level.reset_clientdvars ) )
+	if( isDefined( level.reset_clientdvars ) )
 	{
 		self [[level.reset_clientdvars]]();
 		return;
@@ -499,7 +499,7 @@ reset_clientdvars()
 	self setClientDvars( "compass", "1",
 						 "hud_showStance", "1",
 						 "cg_thirdPerson", "0",
-						 //"cg_fov", "80",
+						 "cg_fov", getdvar("cg_fov"),
 						 "cg_thirdPersonAngle", "0",
 						 "ammoCounterHide", "0",
 						 "miniscoreboardhide", "0",
@@ -520,7 +520,7 @@ Callback_PlayerDisconnect()
 Callback_PlayerDamage( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime )
 {
 	//CODER MOD: TOMMY K, this is to prevent a player killing another player
-	if( isdefined( eAttacker ) && isPlayer( eAttacker ) && ( !isDefined( level.friendlyexplosivedamage ) || !level.friendlyexplosivedamage ))
+	if( isDefined( eAttacker ) && isPlayer( eAttacker ) && ( !isDefined( level.friendlyexplosivedamage ) || !level.friendlyexplosivedamage ))
 	{
 		if( self != eAttacker )
 		{
@@ -541,7 +541,7 @@ Callback_PlayerDamage( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
 	}
 	
 	// Override MUST call finishPlayerDamage if the damage is to be applied
-	if( IsDefined( level.overridePlayerDamage ) )
+	if( isDefined( level.overridePlayerDamage ) )
 	{
 		self [[level.overridePlayerDamage]]( eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, modelIndex, psOffsetTime );
 		return;
@@ -588,7 +588,7 @@ Callback_PlayerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vD
 	dvarName = "player" + self GetEntityNumber() + "downs";
 	setdvar( dvarName, self.downs );
 
-	if( IsDefined( level.player_killed_shellshock ) )
+	if( isDefined( level.player_killed_shellshock ) )
 	{
 		self ShellShock( level.player_killed_shellshock, 3 );
 	}
@@ -609,7 +609,7 @@ Callback_PlayerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vD
 	wait( 1 ); 
 	// wait for the death sequence to finish
 
-	if( IsDefined( level.overridePlayerKilled ) )
+	if( isDefined( level.overridePlayerKilled ) )
 	{
 		self [[level.overridePlayerKilled]]();
 	}
@@ -643,7 +643,7 @@ Callback_PlayerKilled( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vD
 	}
 	
 /#
-	if( !isdefined( level.spawnClient ) )
+	if( !isDefined( level.spawnClient ) )
 	{
 		waittillframeend; 
 		self spawn( self.origin, self.angles ); 
@@ -666,7 +666,7 @@ spawnClient()
 	// shut off the spectate cam
 	self unlink(); 
 	
-	if( isdefined( self.spectate_cam ) )
+	if( isDefined( self.spectate_cam ) )
 	{
 		self.spectate_cam delete(); 
 	}
@@ -712,20 +712,20 @@ spawnPlayer( spawnOnHost )
 	println( "*************************spawnPlayer****" ); 
 	self detachAll(); 
 
-	if( IsDefined( level.custom_spawnPlayer ) )
+	if( isDefined( level.custom_spawnPlayer ) )
 	{
 		self [[level.custom_spawnPlayer]]();
 		return;
 	}
 
-	if( isdefined( level.onSpawnPlayer ) )
+	if( isDefined( level.onSpawnPlayer ) )
 	{
 		self [[level.onSpawnPlayer]](); 
 	}
 
 	wait_for_first_player(); 
 	
-	if( isdefined( spawnOnHost ) )
+	if( isDefined( spawnOnHost ) )
 	{
 		self Spawn( get_players()[0].origin, get_players()[0].angles ); 
 		self SetPlayerSpawnPos(); 
@@ -735,12 +735,12 @@ spawnPlayer( spawnOnHost )
 		self Spawn( self.origin, self.angles ); 			
 	}
 
-	if( isdefined( level.onPostSpawnPlayer ) )
+	if( isDefined( level.onPostSpawnPlayer ) )
 	{
 		self[[level.onPostSpawnPlayer]](); 
 	}
 
-	if( isdefined( level.onPlayerWeaponSwap ) )
+	if( isDefined( level.onPlayerWeaponSwap ) )
 	{
 		self thread[[level.onPlayerWeaponSwap]](); 
 	}
@@ -768,7 +768,7 @@ spawnPlayer( spawnOnHost )
 synchronize_players()
 {
 	// If this flag is not set, then we are either in a testmap or reflection probes is being called
-	if( !IsDefined( level.flag ) || !IsDefined( level.flag["all_players_connected"] ) )
+	if( !isDefined( level.flag ) || !isDefined( level.flag["all_players_connected"] ) )
 	{
 		println( "^1****    ERROR: You must call _load::main() if you don't want bad coop things to happen!    ****" );
 		println( "^1****    ERROR: You must call _load::main() if you don't want bad coop things to happen!    ****" );
@@ -819,7 +819,7 @@ synchronize_players()
 	}
 	else 
 	{
-		assert( IsDefined( background ) );
+		assert( isDefined( background ) );
 		background Destroy(); 
 	}
 }
@@ -835,7 +835,7 @@ spawnSpectator()
 	
 	self.sessionstate = "spectator"; 
 	self.spectatorclient = -1; 
-	if( isdefined( level.otherPlayersSpectateClient ) )
+	if( isDefined( level.otherPlayersSpectateClient ) )
 	{
 		self.spectatorclient = level.otherPlayersSpectateClient getEntityNumber(); 
 	}
@@ -859,7 +859,7 @@ spawnSpectator()
 	println( "*************************spawnSpectator***" ); 
 	self detachAll(); 
 
-	if( isdefined( level.onSpawnSpectator ) )
+	if( isDefined( level.onSpawnSpectator ) )
 	{
 		self[[level.onSpawnSpectator]](); 
 	}
@@ -954,7 +954,7 @@ first_player_connect()
 		level notify( "connecting", self ); 
 
 		players = get_players(); 
-		if( isdefined( players ) &&( players.size == 0 || players[0] == self ) )
+		if( isDefined( players ) &&( players.size == 0 || players[0] == self ) )
 		{
 			level notify( "connecting_first_player", self ); 
 			self waittill( "spawned_player" ); 

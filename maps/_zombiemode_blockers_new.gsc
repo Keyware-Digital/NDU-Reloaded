@@ -65,7 +65,7 @@ door_init()
 		
 	
 	//CHRIS_P - added script_flag support for doors as well
-	if( isDefined(self.script_flag) && !IsDefined( level.flag[self.script_flag] ) ) 
+	if( isDefined(self.script_flag) && !isDefined( level.flag[self.script_flag] ) ) 
 	{
 		flag_init( self.script_flag ); 
 	}	
@@ -74,18 +74,18 @@ door_init()
 	for(i=0;i<targets.size;i++)
 	{
 		targets[i] disconnectpaths();
-		if ( IsDefined(targets[i].script_noteworthy) && targets[i].script_noteworthy == "clip" )
+		if ( isDefined(targets[i].script_noteworthy) && targets[i].script_noteworthy == "clip" )
 		{
 			self.clip = targets[i];
 			self.script_string = "clip";
 		}
-		else if( !IsDefined( targets[i].script_string ) )
+		else if( !isDefined( targets[i].script_string ) )
 		{
-			if( IsDefined( targets[i].script_angles ) )
+			if( isDefined( targets[i].script_angles ) )
 			{
 				targets[i].script_string = "rotate";
 			}
-			else if( IsDefined( targets[i].script_vector ) )
+			else if( isDefined( targets[i].script_vector ) )
 			{
 				targets[i].script_string = "move";
 			}
@@ -94,18 +94,18 @@ door_init()
 		{
 			if ( targets[i].script_string == "anim" )
 			{
-				AssertEx( IsDefined( targets[i].script_animname ), "Blocker_init: You must specify a script_animname for "+targets[i].targetname ); 
-				AssertEx( IsDefined( level.scr_anim[ targets[i].script_animname ] ), "Blocker_init: You must define a level.scr_anim for script_anim -> "+targets[i].script_animname ); 
-				AssertEx( IsDefined( level.blocker_anim_func ), "Blocker_init: You must define a level.blocker_anim_func" ); 
+				AssertEx( isDefined( targets[i].script_animname ), "Blocker_init: You must specify a script_animname for "+targets[i].targetname ); 
+				AssertEx( isDefined( level.scr_anim[ targets[i].script_animname ] ), "Blocker_init: You must define a level.scr_anim for script_anim -> "+targets[i].script_animname ); 
+				AssertEx( isDefined( level.blocker_anim_func ), "Blocker_init: You must define a level.blocker_anim_func" ); 
 			}
 		}
 	}
 	self.doors = targets;
 
-	//AssertEx( IsDefined( self.type ), "You must determine how this door opens. Specify script_angles, script_vector, or a script_noteworthy... Door at: " + self.origin ); 
+	//AssertEx( isDefined( self.type ), "You must determine how this door opens. Specify script_angles, script_vector, or a script_noteworthy... Door at: " + self.origin ); 
 
 	cost = 1000;
-	if( IsDefined( self.zombie_cost ) )
+	if( isDefined( self.zombie_cost ) )
 	{
 		cost = self.zombie_cost;
 	}
@@ -116,7 +116,7 @@ door_init()
 	self thread door_think(); 
 
 	// MM - Added support for electric doors.  Don't have to add them to level scripts
-	if ( IsDefined( self.script_noteworthy ) && self.script_noteworthy == "electric_door" )
+	if ( isDefined( self.script_noteworthy ) && self.script_noteworthy == "electric_door" )
 	{
 		self set_door_unusable();
 		if( isDefined( level.door_dialog_function ) )
@@ -180,19 +180,19 @@ door_think()
 			self.doors[i] connectpaths();
 			
 			// Prevent multiple triggers from making doors move more than once
-			if ( IsDefined(self.doors[i].door_moving) )
+			if ( isDefined(self.doors[i].door_moving) )
 			{
 				continue;
 			}
 			self.doors[i].door_moving = 1;
 			
-			if ( ( IsDefined( self.doors[i].script_noteworthy )	&& self.doors[i].script_noteworthy == "clip" ) ||
-				 ( IsDefined( self.doors[i].script_string )		&& self.doors[i].script_string == "clip" ) )
+			if ( ( isDefined( self.doors[i].script_noteworthy )	&& self.doors[i].script_noteworthy == "clip" ) ||
+				 ( isDefined( self.doors[i].script_string )		&& self.doors[i].script_string == "clip" ) )
 			{
 				continue;
 			}
 
-			if ( IsDefined( self.doors[i].script_sound ) )
+			if ( isDefined( self.doors[i].script_sound ) )
 			{
 				play_sound_at_pos( self.doors[i].script_sound, self.doors[i].origin );
 			}
@@ -202,7 +202,7 @@ door_think()
 			}
 
 			time = 1; 
-			if( IsDefined( self.doors[i].script_transition_time ) )
+			if( isDefined( self.doors[i].script_transition_time ) )
 			{
 				time = self.doors[i].script_transition_time; 
 			}
@@ -254,7 +254,7 @@ door_think()
 	
 		//CHRIS_P
 		//set any flags
-		if( IsDefined( self.script_flag ) )
+		if( isDefined( self.script_flag ) )
 		{
 			flag_set( self.script_flag );
 		}				
@@ -352,7 +352,7 @@ set_door_unusable()
 debris_init()
 {
 	cost = 1000;
-	if( IsDefined( self.zombie_cost ) )
+	if( isDefined( self.zombie_cost ) )
 	{
 		cost = self.zombie_cost;
 	}
@@ -360,7 +360,7 @@ debris_init()
 	self SetHintString(&"PROTOTYPE_ZOMBIE_BUTTON_BUY_CLEAR_DEBRIS", "&&1", cost);
 	self SetCursorHint( "HINT_NOICON" ); 
 
-	if( isdefined (self.script_flag)  && !IsDefined( level.flag[self.script_flag] ) )
+	if( isDefined (self.script_flag)  && !isDefined( level.flag[self.script_flag] ) )
 	{
 		flag_init( self.script_flag ); 
 	}
@@ -379,7 +379,7 @@ debris_think()
 		ents = getentarray( self.target, "targetname" ); 
 		for( i = 0; i < ents.size; i++ )
 		{	
-			if( IsDefined( ents[i].script_linkTo ) )
+			if( isDefined( ents[i].script_linkTo ) )
 			{
 				ents[i] notsolid();
 			}
@@ -416,7 +416,7 @@ debris_think()
 				// delete the stuff
 				junk = getentarray( self.target, "targetname" ); 
 	
-				if( IsDefined( self.script_flag ) )
+				if( isDefined( self.script_flag ) )
 				{
 					flag_set( self.script_flag );
 				}
@@ -433,7 +433,7 @@ debris_think()
 	
 					level notify ("junk purchased");
 	
-					if( IsDefined( junk[i].script_noteworthy ) )
+					if( isDefined( junk[i].script_noteworthy ) )
 					{
 						if( junk[i].script_noteworthy == "clip" )
 						{
@@ -443,10 +443,10 @@ debris_think()
 					}
 	
 					struct = undefined;
-					if( IsDefined( junk[i].script_linkTo ) )
+					if( isDefined( junk[i].script_linkTo ) )
 					{
 						struct = getstruct( junk[i].script_linkTo, "script_linkname" );
-						if( IsDefined( struct ) )
+						if( isDefined( struct ) )
 						{
 							move_ent = junk[i];
 							junk[i] thread debris_move( struct );
@@ -470,9 +470,9 @@ debris_think()
 					all_trigs[i] delete(); 
 				}
 	
-				if( IsDefined( clip ) )
+				if( isDefined( clip ) )
 				{
-					if( IsDefined( move_ent ) )
+					if( isDefined( move_ent ) )
 					{
 						move_ent waittill( "movedone" );
 						move_ent notsolid();
@@ -500,13 +500,13 @@ debris_move( struct )
 	
 	self play_sound_on_ent( "debris_move" );
 	self PlaySound("lightning_1");
-	if( IsDefined( self.script_firefx ) )
+	if( isDefined( self.script_firefx ) )
 	{
 		PlayFX( level._effect[self.script_firefx], self.origin );
 	}
 
 	// Do a little jiggle, then move.
-	if( IsDefined( self.script_noteworthy ) )
+	if( isDefined( self.script_noteworthy ) )
 	{
 		if( self.script_noteworthy == "jiggle" )
 		{
@@ -523,7 +523,7 @@ debris_move( struct )
 	}
 
 	time = 0.5;
-	if( IsDefined( self.script_transition_time ) )
+	if( isDefined( self.script_transition_time ) )
 	{
 		time = self.script_transition_time; 
 	}
@@ -536,13 +536,13 @@ debris_move( struct )
 	self play_sound_on_entity ("couch_slam");
 //	self playloopsound ("couch_loop");
 //	self delete();
-	if( IsDefined( self.script_fxid ) )
+	if( isDefined( self.script_fxid ) )
 	{
 		PlayFX( level._effect[self.script_fxid], self.origin );
 		playsoundatposition("zombie_spawn", self.origin); //just playing the zombie_spawn sound when it deletes the blocker because it matches the particle.
 	}
 
-//	if( IsDefined( self.script_delete ) )
+//	if( isDefined( self.script_delete ) )
 //	{
 		self Delete();
 //	}
@@ -553,7 +553,7 @@ debris_move( struct )
 //
 blocker_init()
 {
-	if( !IsDefined( self.target ) )
+	if( !isDefined( self.target ) )
 	{
 		return;
 	}
@@ -563,7 +563,7 @@ blocker_init()
 	self.barrier_chunks = []; 
 	for( j = 0; j < targets.size; j++ )
 	{
-		if( IsDefined( targets[j].script_noteworthy ) )
+		if( isDefined( targets[j].script_noteworthy ) )
 		{
 			if( targets[j].script_noteworthy == "clip" )
 			{
@@ -580,7 +580,7 @@ blocker_init()
 		self blocker_attack_spots();
 	}
 
-	assert( IsDefined( self.clip ) );
+	assert( isDefined( self.clip ) );
 	self.trigger_location = getstruct( self.target, "targetname" ); 
 
 	self thread blocker_think(); 
@@ -628,7 +628,7 @@ blocker_trigger_think()
 {
 	// They don't cost, they now award the player the cost...
 	cost = 10;
-	if( IsDefined( self.zombie_cost ) )
+	if( isDefined( self.zombie_cost ) )
 	{
 		cost = self.zombie_cost; 
 	}
@@ -638,7 +638,7 @@ blocker_trigger_think()
 	radius = 96; 
 	height = 96; 
 
-	if( IsDefined( self.trigger_location ) )
+	if( isDefined( self.trigger_location ) )
 	{
 		trigger_location = self.trigger_location; 
 	}
@@ -647,12 +647,12 @@ blocker_trigger_think()
 		trigger_location = self; 
 	}
 
-	if( IsDefined( trigger_location.radius ) )
+	if( isDefined( trigger_location.radius ) )
 	{
 		radius = trigger_location.radius; 
 	}
 
-	if( IsDefined( trigger_location.height ) )
+	if( isDefined( trigger_location.height ) )
 	{
 		height = trigger_location.height; 
 	}
@@ -754,7 +754,7 @@ blocker_trigger_think()
 	
 			self thread replace_chunk( chunk, has_perk );
 	
-			assert( IsDefined( self.clip ) );
+			assert( isDefined( self.clip ) );
 			self.clip enable_trigger(); 
 			self.clip DisconnectPaths(); 
 	
@@ -775,7 +775,7 @@ blocker_trigger_think()
 				
 			}
 			// general contractor achievement for dlc 2. keep track of how many board player repaired.
-			if(IsDefined(player.board_repair))
+			if(isDefined(player.board_repair))
 			{
 				player.board_repair += 1;
 			}
@@ -792,7 +792,7 @@ blocker_trigger_think()
 
 trigger_delete_on_repair()
 {
-	while( IsDefined( self ) )
+	while( isDefined( self ) )
 	{
 		self waittill("all_boards_repaired");
 		self delete();
@@ -836,13 +836,13 @@ remove_chunk( chunk, node, destroy_immediately )
 	
 	chunk NotSolid();
 
-	//if ( isdefined( destroy_immediately ) && destroy_immediately)
+	//if ( isDefined( destroy_immediately ) && destroy_immediately)
 	//{
 	//	chunk.destroyed = true;
 	//}
 	//
 	fx = "wood_chunk_destory";
-	if( IsDefined( self.script_fxid ) )
+	if( isDefined( self.script_fxid ) )
 	{
 		fx = self.script_fxid;
 	}
@@ -851,7 +851,7 @@ remove_chunk( chunk, node, destroy_immediately )
 	//playfx( level._effect[fx], chunk.origin + ( randomint( 20 ), randomint( 20 ), randomint( 10 ) ) ); 
 	//playfx( level._effect[fx], chunk.origin + ( randomint( 40 ), randomint( 40 ), randomint( 20 ) ) ); 
 
-	if( IsDefined( chunk.script_moveoverride ) && chunk.script_moveoverride )
+	if( isDefined( chunk.script_moveoverride ) && chunk.script_moveoverride )
 	{
 		chunk Hide();
 	}
@@ -900,7 +900,7 @@ remove_chunk( chunk, node, destroy_immediately )
 		ent Delete(); 
 	}
 
-	//if (isdefined( destroy_immediately ) && destroy_immediately)
+	//if (isDefined( destroy_immediately ) && destroy_immediately)
 	//{
 	//	return;
 	//}
@@ -914,7 +914,7 @@ remove_chunk( chunk, node, destroy_immediately )
 	{
 		EarthQuake( randomfloatrange( 0.5, 0.8 ), 0.5, chunk.origin, 300 ); 
 	
-		if( IsDefined( node.clip ) )
+		if( isDefined( node.clip ) )
 		{
 			node.clip ConnectPaths(); 
 			wait( 0.05 ); 
@@ -936,31 +936,31 @@ remove_chunk( chunk, node, destroy_immediately )
 
 replace_chunk( chunk, has_perk, via_powerup )
 {
-	if(!IsDefined( has_perk ) )
+	if(!isDefined( has_perk ) )
 	{
 		has_perk = false;
 	}
 	//BUGGED LINE OF CODE, hover and slam sounds do not play when uncommented
-	//if(!IsDefined(via_powerup))
+	//if(!isDefined(via_powerup))
 	//{
 	//	via_powerup = false;
 	//}
 
-	assert( IsDefined( chunk.og_origin ) );
+	assert( isDefined( chunk.og_origin ) );
 	
-	assert( !IsDefined( chunk.mid_repair ) );
+	assert( !isDefined( chunk.mid_repair ) );
 	chunk.mid_repair = true;
 	
 	chunk Show();
 
 	sound = "rebuild_barrier_hover";
-	if( IsDefined( chunk.script_presound ) )
+	if( isDefined( chunk.script_presound ) )
 	{
 		sound = chunk.script_presound;
 	}
 
 
-	if( !isdefined( via_powerup  ) )
+	if( !isDefined( via_powerup  ) )
 	{
 		play_sound_at_pos( sound, chunk.origin );
 	}
@@ -1021,7 +1021,7 @@ replace_chunk( chunk, has_perk, via_powerup )
 
 	EarthQuake( RandomFloatRange( 0.1, 0.15 ), 0.7, chunk.origin, 200 ); 
 	sound = "barrier_rebuild_slam";
-	if( IsDefined( self.script_ender ) )
+	if( isDefined( self.script_ender ) )
 	{
 		sound = self.script_ender;
 	}
@@ -1031,12 +1031,12 @@ replace_chunk( chunk, has_perk, via_powerup )
 	chunk Solid(); 
 
 	fx = "wood_chunk_destory";
-	if( IsDefined( self.script_fxid ) )
+	if( isDefined( self.script_fxid ) )
 	{
 		fx = self.script_fxid;
 	}
 	
-	if( !IsDefined( via_powerup ) )
+	if( !isDefined( via_powerup ) )
 	{
 		play_sound_at_pos( sound, chunk.origin );
 		playfx( level._effect[fx], chunk.origin ); 
@@ -1044,7 +1044,7 @@ replace_chunk( chunk, has_perk, via_powerup )
 		//playfx( level._effect[fx], chunk.origin +( randomint( 40 ), randomint( 40 ), randomint( 20 ) ) ); 
 	}
 
-	if( !Isdefined( self.clip ) )
+	if( !isDefined( self.clip ) )
 	{
 		chunk Disconnectpaths(); 
 	}
@@ -1053,18 +1053,18 @@ replace_chunk( chunk, has_perk, via_powerup )
 
 add_new_zombie_spawners()
 {
-	if( isdefined( self.target ) )
+	if( isDefined( self.target ) )
 	{
 		self.possible_spawners = getentarray( self.target, "targetname" ); 
 	}	
 
-	if( isdefined( self.script_string ) )
+	if( isDefined( self.script_string ) )
 	{
 		spawners = getentarray( self.script_string, "targetname" ); 
 		self.possible_spawners = array_combine( self.possible_spawners, spawners );
 	}	
 	
-	if( !isdefined( self.possible_spawners ) )
+	if( !isDefined( self.possible_spawners ) )
 	{
 		return; 
 	}
@@ -1085,19 +1085,19 @@ add_new_zombie_spawners()
 
 flag_blocker()
 {
-	if( !IsDefined( self.script_flag_wait ) )
+	if( !isDefined( self.script_flag_wait ) )
 	{
 		AssertMsg( "Flag Blocker at " + self.origin + " does not have a script_flag_wait key value pair" );
 		return;
 	}
 
-	if( !IsDefined( level.flag[self.script_flag_wait] ) )
+	if( !isDefined( level.flag[self.script_flag_wait] ) )
 	{
 		flag_init( self.script_flag_wait ); 
 	}
 
 	type = "connectpaths";
-	if( IsDefined( self.script_noteworthy ) )
+	if( isDefined( self.script_noteworthy ) )
 	{
 		type = self.script_noteworthy;
 	}
@@ -1128,7 +1128,7 @@ play_no_money_purchase_dialog() {
     index = maps\_zombiemode_weapons::get_player_index(self);
 
     player_index = "plr_" + index + "_";
-    if (!IsDefined(self.vox_gen_sigh)) {
+    if (!isDefined(self.vox_gen_sigh)) {
         num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_gen_sigh");
         self.vox_gen_sigh = [];
         for (i = 0; i < num_variants; i++) {

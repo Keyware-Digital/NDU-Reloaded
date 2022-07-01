@@ -86,7 +86,7 @@ betty_think()
     trigger delete();
     fake_model delete();
     tag_origin delete();
-    if( isdefined( self ) )
+    if( isDefined( self ) )
     {
         self delete();
     }

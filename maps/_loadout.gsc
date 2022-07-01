@@ -4,7 +4,7 @@ init_loadout()
 {
 	// MikeD (7/30/2007): New method of precaching/giving weapons.
 	// Set the level variables.
-	if( !IsDefined( level.player_loadout ) )
+	if( !isDefined( level.player_loadout ) )
 	{
 		level.player_loadout = [];
 	}
@@ -483,7 +483,7 @@ init_models_and_variables_loadout()
 	set_switch_weapon( "m1garand" );
 
 	// SRS 6/29/2008: updated to allow defaulted maps to have different level.campaign default viewarms
-	if( IsDefined( level.campaign ) && level.campaign == "russian" )
+	if( isDefined( level.campaign ) && level.campaign == "russian" )
 	{
 		set_player_viewmodel( "viewmodel_rus_guard_arms");
 	}
@@ -527,7 +527,7 @@ set_action_slot( num, option1, option2 )
 	}
 
 	// Glocke 12/03/07 - added precaching of weapon type for action slot
-	if(IsDefined(option1))
+	if(isDefined(option1))
 	{
 		if(option1 == "weapon")
 		{
@@ -536,7 +536,7 @@ set_action_slot( num, option1, option2 )
 		}
 	}
 
-	if( !IsDefined( level.player_actionslots ) )
+	if( !isDefined( level.player_actionslots ) )
 	{
 		level.player_actionslots = [];
 	}
@@ -545,7 +545,7 @@ set_action_slot( num, option1, option2 )
 	action_slot.num = num;
 	action_slot.option1 = option1;
 
-	if( IsDefined( option2 ) )
+	if( isDefined( option2 ) )
 	{
 		action_slot.option2 = option2;
 	}
@@ -585,12 +585,12 @@ set_knuckle_crack_hands( weapon )
 
 give_loadout(wait_for_switch_weapon)
 {
-	if( !IsDefined( game["gaveweapons"] ) )
+	if( !isDefined( game["gaveweapons"] ) )
 	{
 		game["gaveweapons"] = 0;
 	}
 
-	if( !IsDefined( game["expectedlevel"] ) )
+	if( !isDefined( game["expectedlevel"] ) )
 	{
 		game["expectedlevel"] = "";
 	}
@@ -624,7 +624,7 @@ give_loadout(wait_for_switch_weapon)
 	// If we can't automatically do this, then the scripter needs to do by hand in the level
 	if( !gave_grenade )
 	{
-		if( IsDefined( level.player_grenade ) )
+		if( isDefined( level.player_grenade ) )
 		{
 			grenade = level.player_grenade;
 			self GiveWeapon( grenade );
@@ -637,11 +637,11 @@ give_loadout(wait_for_switch_weapon)
 			// Get all of the AI and assign any grenade to the player
 			ai = GetAiArray( "allies" );
 
-			if( IsDefined( ai ) )
+			if( isDefined( ai ) )
 			{
 				for( i = 0; i < ai.size; i++ )
 				{
-					if( IsDefined( ai[i].grenadeWeapon ) )
+					if( isDefined( ai[i].grenadeWeapon ) )
 					{
 						grenade = ai[i].grenadeWeapon;
 						self GiveWeapon( grenade );
@@ -665,14 +665,14 @@ give_loadout(wait_for_switch_weapon)
 	self SetActionSlot( 3, "altMode" );	// toggles between attached grenade launcher
 	self SetActionSlot( 4, "" );
 
-	if( IsDefined( level.player_actionslots ) )
+	if( isDefined( level.player_actionslots ) )
 	{
 		for( i = 0; i < level.player_actionslots.size; i++ )
 		{
 			num = level.player_actionslots[i].num;
 			option1 = level.player_actionslots[i].option1;
 
-			if( IsDefined( level.player_actionslots[i].option2 ) )
+			if( isDefined( level.player_actionslots[i].option2 ) )
 			{
 				option2 = level.player_actionslots[i].option2;
 				self SetActionSlot( num, option1, option2 );
@@ -684,12 +684,12 @@ give_loadout(wait_for_switch_weapon)
 		}
 	}
 
-	if( IsDefined( level.player_switchweapon ) )
+	if( isDefined( level.player_switchweapon ) )
 	{
 		// the wait was added to fix a revive issue with the host
 		// for some reson the SwitchToWeapon message gets lost
 		// this can be removed if that is ever resolved
-		if ( isdefined(wait_for_switch_weapon) && wait_for_switch_weapon == true )
+		if ( isDefined(wait_for_switch_weapon) && wait_for_switch_weapon == true )
 		{
 			wait(0.5);
 		}
@@ -811,7 +811,7 @@ give_model( class )
 SavePlayerWeaponStatePersistent( slot )
 {
 	current = level.player getCurrentWeapon();
-	if ( ( !isdefined( current ) ) || ( current == "none" ) )
+	if ( ( !isDefined( current ) ) || ( current == "none" ) )
 		assertmsg( "Player's current weapon is 'none' or undefined. Make sure 'disableWeapons()' has not been called on the player when trying to save weapon states." );
 	game[ "weaponstates" ][ slot ][ "current" ] = current;
 
@@ -843,10 +843,10 @@ RestorePlayerWeaponStatePersistent( slot )
 	{
 		weapName = game[ "weaponstates" ][ slot ][ "list" ][ weapIdx ][ "name" ];
 
-		if ( isdefined( level.legit_weapons ) )
+		if ( isDefined( level.legit_weapons ) )
 		{
 			// weapon doesn't exist in this level
-			if ( !isdefined( level.legit_weapons[ weapName ] ) )
+			if ( !isDefined( level.legit_weapons[ weapName ] ) )
 				continue;
 		}
 
@@ -863,14 +863,14 @@ RestorePlayerWeaponStatePersistent( slot )
 		// level.player SetWeaponAmmoStock( weapName, game[ "weaponstates" ][ slot ][ "list" ][ weapIdx ][ "stock" ] );
 	}
 
-	if ( isdefined( level.legit_weapons ) )
+	if ( isDefined( level.legit_weapons ) )
 	{
 		weapname = game[ "weaponstates" ][ slot ][ "offhand" ];
-		if ( isdefined( level.legit_weapons[ weapName ] ) )
+		if ( isDefined( level.legit_weapons[ weapName ] ) )
 			level.player switchtooffhand( weapname );
 
 		weapname = game[ "weaponstates" ][ slot ][ "current" ];
-		if ( isdefined( level.legit_weapons[ weapName ] ) )
+		if ( isDefined( level.legit_weapons[ weapName ] ) )
 			level.player SwitchToWeapon( weapname );
 	}
 	else
@@ -884,7 +884,7 @@ RestorePlayerWeaponStatePersistent( slot )
 
 set_player_specific_add_weapon(num, name)
 {
-if(!IsDefined(level.player_specific_add_weapon))
+if(!isDefined(level.player_specific_add_weapon))
          level.player_specific_add_weapon = [];
 level.player_specific_add_weapon[num] = name;
 PrecacheItem(name);
@@ -892,11 +892,11 @@ PrecacheItem(name);
 
 give_player_specific_add_weapon()
 {
-if(IsDefined(level.player_specific_add_weapon) && IsDefined(level.player_specific_add_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+if(isDefined(level.player_specific_add_weapon) && isDefined(level.player_specific_add_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]))
 {
          self giveWeapon(level.player_specific_add_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]);
 }
-else if(IsDefined(level.player_loadout))
+else if(isDefined(level.player_loadout))
 {
          self giveWeapon(level.player_loadout);
 }
@@ -904,7 +904,7 @@ else if(IsDefined(level.player_loadout))
 
 set_player_specific_switch_weapon(num, name)
 {
-if(!IsDefined(level.player_specific_switch_weapon))
+if(!isDefined(level.player_specific_switch_weapon))
          level.player_specific_switch_weapon = [];
 level.player_specific_switch_weapon[num] = name;
 PrecacheItem(name);
@@ -912,11 +912,11 @@ PrecacheItem(name);
 
 give_player_specific_switch_weapon()
 {
-if(IsDefined(level.player_specific_switch_weapon) && IsDefined(level.player_specific_switch_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+if(isDefined(level.player_specific_switch_weapon) && isDefined(level.player_specific_switch_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]))
 {
          self switchToWeapon(level.player_specific_switch_weapon[ maps\_zombiemode_weapons::get_player_index( self ) ]);
 }
-else if(IsDefined(level.player_switchweapon))
+else if(isDefined(level.player_switchweapon))
 {
          self switchToWeapon(level.player_switchweapon);
 }
@@ -924,7 +924,7 @@ else if(IsDefined(level.player_switchweapon))
 
 set_player_specific_laststand_pistol(num, name)
 {
-if(!IsDefined(level.player_specific_laststand_pistol))
+if(!isDefined(level.player_specific_laststand_pistol))
          level.player_specific_laststand_pistol = [];
 level.player_specific_laststand_pistol[num] = name;
 PrecacheItem(name);
@@ -932,11 +932,11 @@ PrecacheItem(name);
 
 give_player_specific_laststand_pistol()
 {
-if(IsDefined(level.player_specific_laststand_pistol) && IsDefined(level.player_specific_laststand_pistol[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+if(isDefined(level.player_specific_laststand_pistol) && isDefined(level.player_specific_laststand_pistol[ maps\_zombiemode_weapons::get_player_index( self ) ]))
 {
          self switchToWeapon(level.player_specific_laststand_pistol[ maps\_zombiemode_weapons::get_player_index( self ) ]);
 }
-else if(IsDefined(level.laststandpistol))
+else if(isDefined(level.laststandpistol))
 {
          self switchToWeapon(level.laststandpistol);
 }
@@ -944,7 +944,7 @@ else if(IsDefined(level.laststandpistol))
 
 set_player_specific_viewmodel(num, name)
 {
-if(!IsDefined(level.player_specific_viewmodels))
+if(!isDefined(level.player_specific_viewmodels))
          level.player_specific_viewmodels = [];
 level.player_specific_viewmodels[num] = name;
 PrecacheModel(name);
@@ -952,11 +952,11 @@ PrecacheModel(name);
 
 give_player_specific_viewmodel()
 {
-if(IsDefined(level.player_specific_viewmodels) && IsDefined(level.player_specific_viewmodels[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+if(isDefined(level.player_specific_viewmodels) && isDefined(level.player_specific_viewmodels[ maps\_zombiemode_weapons::get_player_index( self ) ]))
 {
          self SetViewModel(level.player_specific_viewmodels[ maps\_zombiemode_weapons::get_player_index( self ) ]);
 }
-else if(IsDefined(level.player_viewmodel))
+else if(isDefined(level.player_viewmodel))
 {
          self SetViewModel(level.player_viewmodel);
 }
@@ -964,7 +964,7 @@ else if(IsDefined(level.player_viewmodel))
 
 set_player_specific_interactive_hands(num, name)
 {
-if(!IsDefined(level.player_specific_interactive_hands))
+if(!isDefined(level.player_specific_interactive_hands))
          level.player_specific_interactive_hands = [];
 level.player_specific_interactive_hands[num] = name;
 PrecacheModel(name);
@@ -972,7 +972,7 @@ PrecacheModel(name);
 
 /*set_player_specific_death_hands(num, name)
 {
-if(!IsDefined(level.player_specific_death_hands))
+if(!isDefined(level.player_specific_death_hands))
          level.player_specific_death_hands = [];
 level.player_specific_death_hands[num] = name;
 PrecacheModel(name);
@@ -981,12 +981,12 @@ IPrintLn("death anim");
 
 give_player_specific_death_hands()
 {
-if(IsDefined(level.player_specific_death_hands) && IsDefined(level.player_specific_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+if(isDefined(level.player_specific_death_hands) && isDefined(level.player_specific_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
 {
          self SetViewModel(level.player_specific_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
 		 IPrintLn("death anim");
 }
-else if(IsDefined(level.death_hands))
+else if(isDefined(level.death_hands))
 {
          self SetViewModel(level.death_hands);
 		 IPrintLn("death anim");
@@ -995,7 +995,7 @@ else if(IsDefined(level.death_hands))
 
 set_player_specific_knuckle_crack_hands(num, name)
 {
-if(!IsDefined(level.player_specific_knuckle_crack_hands))
+if(!isDefined(level.player_specific_knuckle_crack_hands))
          level.player_specific_knuckle_crack_hands = [];
 level.player_specific_knuckle_crack_hands[num] = name;
 PrecacheModel(name);
@@ -1004,12 +1004,12 @@ IPrintLn("death anim");
 
 give_player_specific_knuckle_crack_hands()
 {
-if(IsDefined(level.player_specific_knuckle_crack_hands) && IsDefined(level.player_specific_knuckle_crack_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+if(isDefined(level.player_specific_knuckle_crack_hands) && isDefined(level.player_specific_knuckle_crack_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
 {
          self SetViewModel(level.player_specific_knuckle_crack_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
 		 IPrintLn("death anim");
 }
-else if(IsDefined(level.knuckle_crack_hands))
+else if(isDefined(level.knuckle_crack_hands))
 {
          self SetViewModel(level.knuckle_crack_hands);
 		 IPrintLn("death anim");

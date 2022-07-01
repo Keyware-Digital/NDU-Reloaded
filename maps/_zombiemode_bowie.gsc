@@ -30,7 +30,7 @@ bowie_think()
 	
 	self.first_time_triggered = false; 
 	
-	for( ;; )
+	while(1)
 	{
 		self waittill( "trigger", player ); 		
 		// if not first time and they have the weapon give ammo
@@ -53,7 +53,7 @@ bowie_think()
 			continue;
 		}
 
-		if(isdefined(player.is_drinking))
+		if(isDefined(player.is_drinking))
 		{
 			wait(0.1);
 			continue;
@@ -214,7 +214,7 @@ do_bowie_flourish_end( gun )
 	{
 		// try to switch to first primary weapon
 		primaryWeapons = self GetWeaponsListPrimaries();
-		if( IsDefined( primaryWeapons ) && primaryWeapons.size > 0 )
+		if( isDefined( primaryWeapons ) && primaryWeapons.size > 0 )
 		{
 			self SwitchToWeapon( primaryWeapons[0] );
 		}
@@ -257,7 +257,7 @@ bowie_show( player )
 /*play_bowie_pickup_dialog(player_index)
 {
 	waittime = 0.05;
-	if(!IsDefined (self.vox_bowie))
+	if(!isDefined (self.vox_bowie))
 	{
 		num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_bowie");
 		self.vox_bowie = [];
@@ -267,7 +267,7 @@ bowie_show( player )
 		}
 		self.vox_bowie_available = self.vox_bowie;
 	}
-	if(!isdefined (level.player_is_speaking))
+	if(!isDefined (level.player_is_speaking))
 	{
 		level.player_is_speaking = 0;
 	}

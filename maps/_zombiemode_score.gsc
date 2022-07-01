@@ -187,7 +187,7 @@ set_player_score_hud( init )
 
 	self thread score_highlight( self.score, score_diff ); 
 
-	if( IsDefined( init ) )
+	if( isDefined( init ) )
 	{
 		return; 
 	}
@@ -200,14 +200,14 @@ set_player_score_hud( init )
 //{
 //	// TODO: We need to clean up the score huds if a player disconnects
 //
-//	if( !IsDefined( level.score_leaders ) )
+//	if( !isDefined( level.score_leaders ) )
 //	{
 //		level.score_leaders = []; 
 //	}
 //
 //	level.score_leaders[level.score_leaders.size] = self; 
 //
-//	if( !IsDefined( level.hud_scores ) )
+//	if( !isDefined( level.hud_scores ) )
 //	{
 //		if( is_coop() )
 //		{
@@ -243,7 +243,7 @@ set_player_score_hud( init )
 //	font_size = 8; 
 //
 //	// Use newclienthudelem if playing sp or splitscreen
-//	if( IsDefined( playing_sp ) && playing_sp )
+//	if( isDefined( playing_sp ) && playing_sp )
 //	{
 //		font_size = 16; 
 //		hud = NewClientHudElem( self ); 
@@ -295,7 +295,7 @@ set_player_score_hud( init )
 //		num = players[i].entity_num; 
 //		y = i * 20;
 //
-//		if( IsDefined( level.hud_scores[num] ) )
+//		if( isDefined( level.hud_scores[num] ) )
 //		{
 //			if( level.hud_scores[num].y != y )
 //			{
@@ -375,7 +375,7 @@ score_highlight( score, value )
 	}
 //	places = places_before_decimal( score ) - 1; 
 
-//	if( IsDefined( playing_sp ) && playing_sp )
+//	if( isDefined( playing_sp ) && playing_sp )
 //	{
 //		// Adds more to the X if the score is larger
 //		x += places * 20; 

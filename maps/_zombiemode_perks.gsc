@@ -48,7 +48,7 @@ init_perk_vars() {
 
 random_perk_powerup_think() {
 
-    if (!isdefined(self.perknum) || self.perknum == 0) // if player doesn't have any perks
+    if (!isDefined(self.perknum) || self.perknum == 0) // if player doesn't have any perks
     {
         self thread resetperkdefs();
         self thread death_check();
@@ -163,7 +163,7 @@ death_check() {
 
 perk_hud_create(perk) {
 
-    if (!IsDefined(self.perk_hud)) {
+    if (!isDefined(self.perk_hud)) {
         self.perk_hud = [];
     }
 
@@ -246,7 +246,7 @@ play_no_money_perk_dialog() {
     index = maps\_zombiemode_weapons::get_player_index(self);
 
     player_index = "plr_" + index + "_";
-    if (!IsDefined(self.vox_nomoney_perk)) {
+    if (!isDefined(self.vox_nomoney_perk)) {
         num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_nomoney_perk");
         self.vox_nomoney_perk = [];
         for (i = 0; i < num_variants; i++) {
@@ -296,12 +296,14 @@ phd_dive_damage(origin)
 			if (zombies[i].health <= phd_damage)
 			{
 				zombies[i] DoDamage( phd_damage, zombies[i].origin, self);
-                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
+                self maps\_zombiemode_spawner::zombie_head_gib();
+                zombies[i] maps\_zombiemode_spawner::zombie_head_gib();
 			}
 			else
 			{
 				zombies[i] DoDamage( phd_damage , zombies[i].origin, self);
-                //zombies[i] maps\_zombiemode_spawner::zombie_gib_on_damage(); // this needs to gib zombies like in BO1, currently gibs player
+                self maps\_zombiemode_spawner::zombie_head_gib();
+                zombies[i] maps\_zombiemode_spawner::zombie_head_gib();
 			}
 		}
 		wait .01;
@@ -352,7 +354,7 @@ player_cook_grenade_watcher()
 	{
 		self waittill("grenade_fire", grenade, weaponName);
 
-		if(isdefined(grenade))
+		if(isDefined(grenade))
 		{
 			wait 0.125;
 			
@@ -369,7 +371,7 @@ player_cook_grenade_watcher()
 				if(self fragButtonPressed())
 				{
 					self waittill("grenade_fire", grenade2, weaponName);
-					if(isdefined(grenade2))
+					if(isDefined(grenade2))
 					{
 						grenade2 delete();
 					}
@@ -511,7 +513,7 @@ solo_quickrevive() // numan solo revive function
 
     soloReviveTime = 10;
 
-    if (!isdefined(self.soloReviveProgressBar))
+    if (!isDefined(self.soloReviveProgressBar))
         self.soloReviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
 
     self.soloReviveProgressBar.alignX = "center";
@@ -534,11 +536,11 @@ solo_quickrevive() // numan solo revive function
 
     wait 10;
 
-    if (isdefined(self.soloReviveProgressBar)) {
+    if (isDefined(self.soloReviveProgressBar)) {
         self.soloReviveProgressBar maps\_hud_util::destroyElem();
     }
 
-    if (isdefined(self.revive_hud)) {
+    if (isDefined(self.revive_hud)) {
         self maps\_laststand::revive_hud_hide();
     }
 
@@ -585,7 +587,7 @@ mule_kick_function(old_weapon, new_weapon)
 		return;
 	}
 	
-	if (!IsDefined(new_weapon))
+	if (!isDefined(new_weapon))
 	{
 		return;
 	}
@@ -593,11 +595,11 @@ mule_kick_function(old_weapon, new_weapon)
 	primaryWeapons = self GetWeaponsListPrimaries(); 	
 	if( primaryWeapons.size == level.zombie_vars[ "mulekick_max_weapon_slots" ] )
 	{
-		if (!IsDefined(self.muleLastWeapon))
+		if (!isDefined(self.muleLastWeapon))
 		{
 			self.muleLastWeapon = new_weapon;
 		}
-		else if (IsDefined(old_weapon) && old_weapon == self.muleLastWeapon)
+		else if (isDefined(old_weapon) && old_weapon == self.muleLastWeapon)
 		{
 			self.muleLastWeapon = new_weapon;
 		}

@@ -61,7 +61,7 @@ init_risers()
 }
 is_spawner_targeted_by_blocker( ent )
 {
-	if( IsDefined( ent.targetname ) )
+	if( isDefined( ent.targetname ) )
 	{
 		targeters = GetEntArray( ent.targetname, "target" );
 
@@ -285,7 +285,7 @@ zombie_think()
 	desired_nodes = [];
 	self.entrance_nodes = [];
 
-	if ( IsDefined( level.max_barrier_search_dist_override ) )
+	if ( isDefined( level.max_barrier_search_dist_override ) )
 	{
 		max_dist = level.max_barrier_search_dist_override;
 	}
@@ -294,11 +294,11 @@ zombie_think()
 		max_dist = 1048;
 	}
 
-	if( IsDefined( self.script_forcegoal ) && self.script_forcegoal )
+	if( isDefined( self.script_forcegoal ) && self.script_forcegoal )
 	{
 		desired_origin = get_desired_origin();
 
-		AssertEx( IsDefined( desired_origin ), "Spawner @ " + self.origin + " has a script_forcegoal but did not find a target" );
+		AssertEx( isDefined( desired_origin ), "Spawner @ " + self.origin + " has a script_forcegoal but did not find a target" );
 	
 		origin = desired_origin;
 			
@@ -307,12 +307,12 @@ zombie_think()
 
 		self zombie_history( "zombie_think -> #1 entrance (script_forcegoal) origin = " + self.entrance_nodes[0].origin );
 	}
-	else if( IsDefined(rise_struct_string) && rise_struct_string == "riser_door" )
+	else if( isDefined(rise_struct_string) && rise_struct_string == "riser_door" )
 	{
 		origin = self.origin;
 
 		desired_origin = get_desired_origin();
-		if( IsDefined( desired_origin ) )
+		if( isDefined( desired_origin ) )
 		{
 			origin = desired_origin;
 		}
@@ -354,7 +354,7 @@ zombie_think()
 		origin = self.origin;
 
 		desired_origin = get_desired_origin();
-		if( IsDefined( desired_origin ) )
+		if( isDefined( desired_origin ) )
 		{
 			origin = desired_origin;
 		}
@@ -392,7 +392,7 @@ zombie_think()
 		self thread zombie_assure_node();
 	}
 
-	AssertEx( IsDefined( node ), "Did not find a node!!! [Should not see this!]" );
+	AssertEx( isDefined( node ), "Did not find a node!!! [Should not see this!]" );
 
 	level thread draw_line_ent_to_pos( self, node.origin, "goal" );
 
@@ -403,20 +403,20 @@ zombie_think()
 
 get_desired_origin()
 {
-	if( IsDefined( self.target ) )
+	if( isDefined( self.target ) )
 	{
 		ent = GetEnt( self.target, "targetname" );
-		if( !IsDefined( ent ) )
+		if( !isDefined( ent ) )
 		{
 			ent = getstruct( self.target, "targetname" );
 		}
 	
-		if( !IsDefined( ent ) )
+		if( !isDefined( ent ) )
 		{
 			ent = GetNode( self.target, "targetname" );
 		}
 	
-		AssertEx( IsDefined( ent ), "Cannot find the targeted ent/node/struct, \"" + self.target + "\" at " + self.origin );
+		AssertEx( isDefined( ent ), "Cannot find the targeted ent/node/struct, \"" + self.target + "\" at " + self.origin );
 	
 		return ent.origin;
 	}
@@ -429,7 +429,7 @@ zombie_goto_entrance( node, endon_bad_path )
 	self endon( "death" );
 	level endon( "intermission" );
 
-	if( IsDefined( endon_bad_path ) && endon_bad_path )
+	if( isDefined( endon_bad_path ) && endon_bad_path )
 	{
 		// If we cannot go to the goal, then end...
 		// Used from find_flesh
@@ -549,7 +549,7 @@ zombie_bad_path()
 	self thread zombie_bad_path_timeout();
 
 	self.zombie_bad_path = undefined;
-	while( !IsDefined( self.zombie_bad_path ) )
+	while( !isDefined( self.zombie_bad_path ) )
 	{
 		wait( 0.05 );
 	}
@@ -590,7 +590,7 @@ tear_into_building()
 
 	while( 1 )
 	{
-		if( IsDefined( self.first_node.script_noteworthy ) )
+		if( isDefined( self.first_node.script_noteworthy ) )
 		{
 			if( self.first_node.script_noteworthy == "no_blocker" )
 			{
@@ -598,7 +598,7 @@ tear_into_building()
 			}
 		}
 
-		if( !IsDefined( self.first_node.target ) )
+		if( !isDefined( self.first_node.target ) )
 		{
 			return;
 		}
@@ -643,7 +643,7 @@ tear_into_building()
 		{
 			chunk = get_closest_non_destroyed_chunk( self.origin, self.first_node.barrier_chunks );
 	
-			if( !IsDefined( chunk ) )
+			if( !isDefined( chunk ) )
 			{
 				for( i = 0; i < self.first_node.attack_spots_taken.size; i++ )
 				{
@@ -807,7 +807,7 @@ crash_into_building()
 
 	while( 1 )
 	{
-		if( IsDefined( self.first_node.script_noteworthy ) )
+		if( isDefined( self.first_node.script_noteworthy ) )
 		{
 			if( self.first_node.script_noteworthy == "no_blocker" )
 			{
@@ -815,7 +815,7 @@ crash_into_building()
 			}
 		}
 
-		if( !IsDefined( self.first_node.target ) )
+		if( !isDefined( self.first_node.target ) )
 		{
 			return;
 		}
@@ -844,7 +844,7 @@ crash_into_building()
 		{
 			chunk = get_closest_non_destroyed_chunk( self.origin, self.first_node.barrier_chunks );
 	
-			if( !IsDefined( chunk ) )
+			if( !isDefined( chunk ) )
 			{
 				for( i = 0; i < self.first_node.attack_spots_taken.size; i++ )
 				{
@@ -868,7 +868,7 @@ crash_into_building()
 			{
 				EarthQuake( randomfloatrange( 0.5, 0.8 ), 0.5, chunk.origin, 300 ); 
 	
-				if( IsDefined( self.first_node.clip ) )
+				if( isDefined( self.first_node.clip ) )
 				{
 					self.first_node.clip ConnectPaths(); 
 					wait( 0.05 ); 
@@ -894,7 +894,7 @@ crash_into_building()
 }
 reset_attack_spot()
 {
-	if( IsDefined( self.attacking_node ) )
+	if( isDefined( self.attacking_node ) )
 	{
 		node = self.attacking_node;
 		index = self.attacking_spot_index;
@@ -908,7 +908,7 @@ reset_attack_spot()
 get_attack_spot( node )
 {
 	index = get_attack_spot_index( node );
-	if( !IsDefined( index ) )
+	if( !isDefined( index ) )
 	{
 		return false;
 	}
@@ -1013,7 +1013,7 @@ get_tear_anim( chunk, zombo )
 	if( self.has_legs )
 	{
 
-		if(isdefined(chunk.script_noteworthy))
+		if(isDefined(chunk.script_noteworthy))
 		{
 
 			if(zombo.attacking_spot_index == 0)
@@ -1146,7 +1146,7 @@ get_tear_anim( chunk, zombo )
 	else
 	{
 
-		if(isdefined(chunk.script_noteworthy))
+		if(isDefined(chunk.script_noteworthy))
 		{
 
 			if(zombo.attacking_spot_index == 0)
@@ -1272,7 +1272,7 @@ get_tear_anim( chunk, zombo )
 
 zombie_head_gib( attacker )
 {
-	if( IsDefined( self.head_gibbed ) && self.head_gibbed )
+	if( isDefined( self.head_gibbed ) && self.head_gibbed )
 	{
 		return;
 	}
@@ -1317,7 +1317,7 @@ damage_over_time( dmg, delay, attacker )
 	{
 		wait( delay );
 
-		if( IsDefined( attacker ) )
+		if( isDefined( attacker ) )
 		{
 			self DoDamage( dmg, self.origin, attacker );
 		}
@@ -1342,7 +1342,7 @@ head_should_gib( attacker, type, point )
 	}
 
 	// check if the attacker was a player
-	if( !IsDefined( attacker ) || !IsPlayer( attacker ) )
+	if( !isDefined( attacker ) || !IsPlayer( attacker ) )
 	{
 		return false; 
 	}
@@ -1410,7 +1410,7 @@ head_should_gib( attacker, type, point )
 // does blood fx for fun and to mask head gib swaps
 headshot_blood_fx()
 {
-	if( !IsDefined( self ) )
+	if( !isDefined( self ) )
 	{
 		return;
 	}
@@ -1431,7 +1431,7 @@ headshot_blood_fx()
 	
 	wait( 0.3 );
 	
-	if( IsDefined( self ) )
+	if( isDefined( self ) )
 	{
 		PlayFxOnTag( level._effect["bloodspurt"], self, fxTag );
 	}
@@ -1446,7 +1446,7 @@ zombie_gib_on_damage()
 	{
 		self waittill( "damage", amount, attacker, direction_vec, point, type ); 
 
-		if( !IsDefined( self ) )
+		if( !isDefined( self ) )
 		{
 			return;
 		}
@@ -1486,7 +1486,7 @@ zombie_gib_on_damage()
 				case "right_arm_upper":
 				case "right_arm_lower":
 				case "right_hand":
-					//if( IsDefined( self.left_arm_gibbed ) )
+					//if( isDefined( self.left_arm_gibbed ) )
 					//	refs[refs.size] = "no_arms"; 
 					//else
 					refs[refs.size] = "right_arm"; 
@@ -1497,7 +1497,7 @@ zombie_gib_on_damage()
 				case "left_arm_upper":
 				case "left_arm_lower":
 				case "left_hand":
-					//if( IsDefined( self.right_arm_gibbed ) )
+					//if( isDefined( self.right_arm_gibbed ) )
 					//	refs[refs.size] = "no_arms"; 
 					//else
 					refs[refs.size] = "left_arm"; 
@@ -1622,7 +1622,7 @@ zombie_gib_on_damage()
 
 zombie_should_gib( amount, attacker, type )
 {
-	if( !IsDefined( type ) )
+	if( !isDefined( type ) )
 	{
 		return false; 
 	}
@@ -1643,7 +1643,7 @@ zombie_should_gib( amount, attacker, type )
 
 	if( type == "MOD_PISTOL_BULLET" || type == "MOD_RIFLE_BULLET" )
 	{
-		if( !IsDefined( attacker ) || !IsPlayer( attacker ) )
+		if( !isDefined( attacker ) || !IsPlayer( attacker ) )
 		{
 			return false; 
 		}
@@ -1689,7 +1689,7 @@ zombie_should_gib( amount, attacker, type )
 // SRS 9/7/2008: need to derive damage location for types that return location of "none"
 derive_damage_refs( point )
 {
-	if( !IsDefined( level.gib_tags ) )
+	if( !isDefined( level.gib_tags ) )
 	{
 		init_gib_tags();
 	}
@@ -1698,7 +1698,7 @@ derive_damage_refs( point )
 	
 	for( i = 0; i < level.gib_tags.size; i++ )
 	{
-		if( !IsDefined( closestTag ) )
+		if( !isDefined( closestTag ) )
 		{
 			closestTag = level.gib_tags[i];
 		}
@@ -1783,7 +1783,7 @@ zombie_death_points( origin, mod, hit_location, player )
 {
 	level thread maps\_zombiemode_powerups::powerup_drop( origin );
 
-	if( !IsDefined( player ) || !IsPlayer( player ) )
+	if( !isDefined( player ) || !IsPlayer( player ) )
 	{
 		return; 
 	}
@@ -1794,7 +1794,7 @@ do_player_playdialog(player_index, sound_to_play, waittime, response)
 {
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	
-	if(!IsDefined(level.player_is_speaking))
+	if(!isDefined(level.player_is_speaking))
 	{
 		level.player_is_speaking = 0;	
 	}
@@ -1806,7 +1806,7 @@ do_player_playdialog(player_index, sound_to_play, waittime, response)
 		self waittill("sound_done" + sound_to_play);
 		wait(waittime);		
 		level.player_is_speaking = 0;
-		/*if( isdefined( response ) )
+		/*if( isDefined( response ) )
 		{
 			level thread setup_response_line( self, index, response ); 
 		}*/
@@ -1818,7 +1818,7 @@ zombie_death_animscript()
 	self reset_attack_spot();
 
 	// If no_legs, then use the AI no-legs death
-	if( self.has_legs && IsDefined( self.a.gib_ref ) && self.a.gib_ref == "no_legs" )
+	if( self.has_legs && isDefined( self.a.gib_ref ) && self.a.gib_ref == "no_legs" )
 	{
 		self.deathanim = %ai_gib_bothlegs_gib;
 	}
@@ -1842,7 +1842,7 @@ damage_on_fire( player )
 	self endon ("stop_flame_damage");
 	wait( 2 );
 	
-	while( isdefined( self.is_on_fire) && self.is_on_fire )
+	while( isDefined( self.is_on_fire) && self.is_on_fire )
 	{
 		if( level.round_number < 6 )
 		{
@@ -1861,7 +1861,7 @@ damage_on_fire( player )
 			dmg = level.zombie_health * RandomFloatRange( 0.06, 0.14 ); // 5% - 10%
 		}
 
-		if ( Isdefined( player ) && Isalive( player ) )
+		if ( isDefined( player ) && Isalive( player ) )
 		{
 			self DoDamage( dmg, self.origin, player );
 		}
@@ -1876,7 +1876,7 @@ damage_on_fire( player )
 
 zombie_damage( mod, hit_location, hit_origin, player )
 {
-	if( !IsDefined( player ) )
+	if( !isDefined( player ) )
 	{
 		return; 
 	}
@@ -1895,7 +1895,7 @@ zombie_damage( mod, hit_location, hit_origin, player )
 
 	if ( mod == "MOD_GRENADE" || mod == "MOD_GRENADE_SPLASH" )
 	{
-		if ( isdefined( player ) && isalive( player ) )
+		if ( isDefined( player ) && isalive( player ) )
 		{
 			self DoDamage( level.round_number + randomint( 100, 500 ), self.origin, player);
 		}
@@ -1906,7 +1906,7 @@ zombie_damage( mod, hit_location, hit_origin, player )
 	}
 	else if( mod == "MOD_PROJECTILE" || mod == "MOD_EXPLOSIVE" || mod == "MOD_PROJECTILE_SPLASH" || mod == "MOD_PROJECTILE_SPLASH")
 	{
-		if ( isdefined( player ) && isalive( player ) )
+		if ( isDefined( player ) && isalive( player ) )
 		{
 			self DoDamage( level.round_number * randomint( 100, 500 ), self.origin, player);
 		}
@@ -1917,7 +1917,7 @@ zombie_damage( mod, hit_location, hit_origin, player )
 	}
 	else if( mod == "MOD_ZOMBIE_BETTY" )
 	{
-		if ( isdefined( player ) && isalive( player ) )
+		if ( isDefined( player ) && isalive( player ) )
 		{
 			self DoDamage( level.round_number * randomintrange( 100, 200 ), self.origin, player);
 		}
@@ -1932,7 +1932,7 @@ zombie_damage( mod, hit_location, hit_origin, player )
 
 zombie_damage_ads( mod, hit_location, hit_origin, player )
 {
-	if( !IsDefined( player ) )
+	if( !isDefined( player ) )
 	{
 		return; 
 	}
@@ -1967,7 +1967,7 @@ zombie_flame_damage( mod, player )
 {
 	if( mod == "MOD_BURNED" )
 	{
-		if( !IsDefined( self.is_on_fire ) || ( Isdefined( self.is_on_fire ) && !self.is_on_fire ) )
+		if( !isDefined( self.is_on_fire ) || ( isDefined( self.is_on_fire ) && !self.is_on_fire ) )
 		{
 			self thread damage_on_fire( player );
 		}
@@ -1977,7 +1977,7 @@ zombie_flame_damage( mod, player )
 		ai = GetAiArray( "axis" );
 		for( i = 0; i < ai.size; i++ )
 		{
-			if( IsDefined( ai[i].is_on_fire ) && ai[i].is_on_fire )
+			if( isDefined( ai[i].is_on_fire ) && ai[i].is_on_fire )
 			{
 				if( DistanceSquared( ai[i].origin, self.origin ) < dist )
 				{
@@ -2052,7 +2052,7 @@ find_flesh()
         
         // solo revive functionality
         structs = getstructarray( "initial_spawn_points", "targetname" ); 
-        while(isdefined(players[0].inSoloRevive) && players[0].inSoloRevive)
+        while(isDefined(players[0].inSoloRevive) && players[0].inSoloRevive)
         {
             self SetGoalPos(structs[0].origin);
             wait 0.5;
@@ -2062,10 +2062,10 @@ find_flesh()
         player = get_closest_valid_player( self.origin, self.ignore_player ); 
 
         
-        if( !IsDefined( player ) )
+        if( !isDefined( player ) )
         {
             self zombie_history( "find flesh -> can't find player, continue" );
-            if( IsDefined( self.ignore_player ) )
+            if( isDefined( self.ignore_player ) )
             {
                 self.ignore_player = undefined;
             }
@@ -2104,7 +2104,7 @@ zombie_testing()
 			continue;
 		}
 
-		if( !IsDefined( self.favoriteenemy ) )
+		if( !isDefined( self.favoriteenemy ) )
 		{
 			wait( 0.5 );
 			continue;
@@ -2130,7 +2130,7 @@ zombie_pathing()
 	self notify( "stop_acquire_acquire_enemy" );
 	self endon( "stop_acquire_acquire_enemy" );
 
-	if( IsDefined( self.favoriteenemy ) )
+	if( isDefined( self.favoriteenemy ) )
 	{
 		self.favoriteenemy endon( "disconnect" );
 		self thread zombie_follow_enemy();
@@ -2177,7 +2177,7 @@ zombie_pathing()
 		else
 		{
 			// Ok, we failed to get to the player, used for when AI cannot path after tearing barriers
-			if( IsDefined( self.entrance_nodes[0] ) )
+			if( isDefined( self.entrance_nodes[0] ) )
 			{
 				self zombie_history( "find flesh -> failed to get to a player and not in playable area" );
 				self thread zombie_goto_entrance( self.entrance_nodes[0], true );
@@ -2209,7 +2209,7 @@ zombie_follow_enemy()
 
 	while( 1 )
 	{
-		if( IsDefined( self.favoriteenemy ) )
+		if( isDefined( self.favoriteenemy ) )
 		{
 			self SetGoalPos( self.favoriteenemy.origin );
 		}
@@ -2222,12 +2222,12 @@ zombie_follow_enemy()
 // When a Zombie spawns, set his eyes to glowing.
 zombie_eye_glow()
 {
-	if( IsDefined( level.zombie_eye_glow ) && !level.zombie_eye_glow )
+	if( isDefined( level.zombie_eye_glow ) && !level.zombie_eye_glow )
 {
 		return; 
 	}
 
-	if( !IsDefined( self ) )
+	if( !isDefined( self ) )
 	{
 		return;
 	}
@@ -2252,7 +2252,7 @@ zombie_eye_glow()
 // Called when either the Zombie dies or if his head gets blown off
 zombie_eye_glow_stop()
 {
-	if( IsDefined( self.fx_eye_glow ) )
+	if( isDefined( self.fx_eye_glow ) )
 	{
 		self.fx_eye_glow Delete();
 	}
@@ -2262,7 +2262,7 @@ zombie_eye_glow_stop()
 make_crawler()
 {
 	//	self endon( "death" ); 
-	if( !IsDefined( self ) )
+	if( !isDefined( self ) )
 	{
 		return;
 	}
@@ -2391,7 +2391,7 @@ make_crawler()
 zombie_history( msg )
 {
 /#
-	if( !IsDefined( self.zombie_history ) )
+	if( !isDefined( self.zombie_history ) )
 	{
 		self.zombie_history = [];
 	}
@@ -2405,7 +2405,7 @@ zombie_rise()
 	self endon("death");
 	self endon("no_rise");
 
-	while(!IsDefined(self.do_rise))
+	while(!isDefined(self.do_rise))
 	{
 		wait_network_frame();
 	}
@@ -2471,7 +2471,7 @@ do_zombie_rise()
 	self.anchor waittill("movedone");
 
 	target_org = maps\_zombiemode_spawner_prototype::get_desired_origin();
-	if (IsDefined(target_org))
+	if (isDefined(target_org))
 	{
 		anim_ang = VectorToAngles(target_org - self.origin);
 		self.anchor RotateTo((0, anim_ang[1], 0), .05);
@@ -2627,7 +2627,7 @@ self delete();
 {
 		
 		waittime = 0.05;
-		if(!IsDefined (self.vox_kill_ray))
+		if(!isDefined (self.vox_kill_ray))
 		{
 			num_variants = get_number_variants(player_index + "vox_kill_ray");
 			//iprintlnbold(num_variants);
@@ -2640,7 +2640,7 @@ self delete();
 			self.vox_kill_ray_available = self.vox_kill_ray;
 		}
 
-		if(!isdefined (level.player_is_speaking))
+		if(!isDefined (level.player_is_speaking))
 		{
 			level.player_is_speaking = 0;
 		}
