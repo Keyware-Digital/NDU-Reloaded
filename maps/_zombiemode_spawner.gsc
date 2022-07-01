@@ -1451,7 +1451,7 @@ zombie_gib_on_damage()
 			return;
 		}
 
-		self thread maps\_zombiemode_perks::perks_zombie_hit_effect(amount, attacker, point, type); // also needed in dogs
+		self thread maps\_zombiemode_perks::perks_zombie_hit_effect(amount, attacker, point, type);
 
 		if( !self zombie_should_gib( amount, attacker, type ) )
 		{

@@ -19,6 +19,7 @@ material,specialty_stamin_up_zombies
 material,specialty_elemental_pop_zombies
 material,specialty_electric_cherry_zombies
 material,specialty_mule_kick_zombies
+material,specialty_mule_kick_glow_zombies
 material,specialty_widows_wine_zombies
 material,specialty_deadshot_daiquiri_zombies
 material,specialty_double_points_zombies
@@ -266,6 +267,7 @@ xanim,ai_zombie_traverse_ground_v2_walk_altB
 xanim,ai_zombie_traverse_ground_climbout_fast
 xanim,zmb_player_dolphin_dive_action
 xanim,zmb_player_dolphin_dive_land
+xmodel,zmb_player_dolphin_dive
 xmodel,char_ger_hnrgd_player_body_hmg
 xmodel,char_ger_hnrgd_player_head_hmg
 xmodel,char_ger_hnrgd_player_body_cqb

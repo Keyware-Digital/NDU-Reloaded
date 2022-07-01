@@ -3,6 +3,7 @@ main()
 self setModel("char_rus_guard_player_body_smg");
 self.headModel = "char_rus_guard_player_head_smg";
 self attach(self.headModel, "", true);
+self.voice = "russian";
 }
 
 precache()

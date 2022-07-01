@@ -2,7 +2,6 @@
 #include animscripts\utility;
 #include common_scripts\utility;
 // this script handles all major global gameskill considerations
-
 setSkill( reset, skill_override )
 {
 	// CODER_MOD: Bryce (05/08/08): Useful output for debugging replay system
@@ -198,6 +197,27 @@ setSkill( reset, skill_override )
 	add_fractional_data_point( "max_sniper_burst_delay_time", 1.0, 2.5 );
 	level.difficultySettings[ "max_sniper_burst_delay_time" ][ "hardened" ] = 2.0;
 	level.difficultySettings[ "max_sniper_burst_delay_time" ][ "veteran" ] = 1.5;
+
+
+	add_fractional_data_point( "dog_health", 0.0, 0.2 );
+	add_fractional_data_point( "dog_health", 0.25, 0.25 ); // original easy
+	add_fractional_data_point( "dog_health", 0.75, 0.75 ); // original normal
+	add_fractional_data_point( "dog_health", 1.0, 0.8 );
+	level.difficultySettings[ "dog_health" ][ "hardened" ] = 1.0;
+	level.difficultySettings[ "dog_health" ][ "veteran" ] = 1.0;
+
+
+	add_fractional_data_point( "dog_presstime", 0.25, 415 ); // original easy
+	add_fractional_data_point( "dog_presstime", 0.75, 375 ); // original normal
+	level.difficultySettings[ "dog_presstime" ][ "hardened" ] = 250;
+	level.difficultySettings[ "dog_presstime" ][ "veteran" ] = 225;
+	
+	level.difficultySettings[ "dog_hits_before_kill" ][ "easy" ] = 2;
+	level.difficultySettings[ "dog_hits_before_kill" ][ "normal" ] = 1;
+	level.difficultySettings[ "dog_hits_before_kill" ][ "hardened" ] = 0;
+	level.difficultySettings[ "dog_hits_before_kill" ][ "veteran" ] = 0;
+	level.difficultySettings_stepFunc_percent[ "dog_hits_before_kill" ] = 0.5;
+	
 
 	// anim.pain_test
 	level.difficultySettings[ "pain_test" ][ "easy" ] = ::always_pain;
@@ -466,6 +486,9 @@ apply_difficulty_frac_with_func( difficulty_func, current_frac )
 	anim.min_sniper_burst_delay_time = [[ difficulty_func ]]( "min_sniper_burst_delay_time", current_frac );
 	anim.max_sniper_burst_delay_time = [[ difficulty_func ]]( "max_sniper_burst_delay_time", current_frac );
 		
+	anim.dog_health = [[ difficulty_func ]]( "dog_health", current_frac );
+	anim.dog_presstime = [[ difficulty_func ]]( "dog_presstime", current_frac );
+		
 	setsaveddvar( "ai_accuracyDistScale", [[ difficulty_func ]]( "accuracyDistScale", current_frac ) );
 	
 	thread coop_damage_and_accuracy_scaling(difficulty_func, current_frac);
@@ -532,6 +555,7 @@ apply_difficulty_step_with_func( difficulty_func, current_frac )
 	// sets the value of difficulty settings that can't blend between two 
 	anim.missTimeConstant = [[ difficulty_func ]]( "missTimeConstant", current_frac );
 	anim.missTimeDistanceFactor = [[ difficulty_func ]]( "missTimeDistanceFactor", current_frac );
+	anim.dog_hits_before_kill = [[ difficulty_func ]]( "dog_hits_before_kill", current_frac );
 	anim.double_grenades_allowed = [[ difficulty_func ]]( "double_grenades_allowed", current_frac );
 	
 	//prof_end( "apply_difficulty_step_with_func" );
@@ -1222,7 +1246,6 @@ playerHealthRegen()
 	else
 	 */ 
 	regenRate = 0.1; // 0.017;
-	
  // 	regenRate = 0.01; // 0.017;
 	veryHurt = false;
 	playerJustGotRedFlashing = false;
@@ -1244,8 +1267,7 @@ playerHealthRegen()
 	//CODER_MOD: King (6/11/08) - Local copy of this dvar. Calling dvar get is expensive
 	playerInvulTimeScale = getdvarfloat( "scr_playerInvulTimeScale" );
 
-	// CODER_MOD: Austin
-	// (5/31/08): added collectible_vampire game mode
+	// CODER_MOD: Austin (5/31/08): added collectible_vampire game mode
 	if ( maps\_collectibles::has_collectible( "collectible_vampire" ) )
 		regenRate = 0.0;
 	
@@ -3282,4 +3304,3 @@ coop_set_spawner_adjustment_values( player_count )
 	}
 
 }
-

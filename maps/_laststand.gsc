@@ -179,7 +179,14 @@ laststand_allowed( sWeapon, sMeansOfDeath, sHitLoc )
 // self = a player
 laststand_take_player_weapons()
 {
-	self.weaponInventory = self GetWeaponsList();
+	if (isDefined(self.muleLastWeapon))
+	{
+		self TakeWeapon(self.muleLastWeapon);
+	}
+
+	weaponlist = self GetWeaponsList();
+	
+	self.weaponInventory = weaponlist;
 	self.lastActiveWeapon = self GetCurrentWeapon();
 	self.laststandpistol = undefined;
 	
@@ -193,9 +200,9 @@ laststand_take_player_weapons()
 
 		if(WeaponClass(weapon) == "pistol")
 		{
-			if(weapon == "ray_gun")
+			if(weapon == "ray_gun_mk1_v2")
 			{
-				self.laststandpistol = "ray_gun";
+				self.laststandpistol = "ray_gun_mk1_v2";
 			}
 			else if(weapon == "sw_357")
 			{
@@ -331,7 +338,7 @@ laststand_give_pistol()
 		self GiveWeapon( self.laststandpistol );
 		ammoclip = WeaponClipSize( self.laststandpistol );
 		
-		if (self.laststandpistol == "ray_gun")
+		if (self.laststandpistol == "ray_gun_mk1_v2")
 		{
 			self SetWeaponAmmoClip( self.laststandpistol, ammoclip );
 			self SetWeaponAmmoStock( self.laststandpistol, 0 );
@@ -677,9 +684,6 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	
 	playerBeingRevived startrevive( self );
 
-	if( !isdefined(playerBeingRevived.reviveProgressBar) )
-		playerBeingRevived.reviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
-
 	playerBeingRevived.reviveProgressBar.alignX = "center";
 	playerBeingRevived.reviveProgressBar.alignY = "middle";
 	playerBeingRevived.reviveProgressBar.horzAlign = "center";
@@ -688,17 +692,13 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	
 	playerBeingRevived.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
 
-	if( !isdefined(playerBeingRevived.reviveProgressBar) )
-		playerBeingRevived.reviveProgressBar = playerBeingRevived createPrimaryProgressBar();
+	if(!isdefined(playerBeingRevived.reviveProgressBar)) {
+		playerBeingRevived.reviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
+	}
 
-	playerBeingRevived.reviveProgressBar.alignX = "center";
-	playerBeingRevived.reviveProgressBar.alignY = "middle";
-	playerBeingRevived.reviveProgressBar.horzAlign = "center";
-	playerBeingRevived.reviveProgressBar.vertAlign = "bottom";
-	playerBeingRevived.reviveProgressBar.y = -190;
-
-	if( !isdefined(self.reviveTextHud) )
+	if( !isdefined(self.reviveTextHud)) {
 		self.reviveTextHud = newclientHudElem( self );	
+	}
 	
 	self thread laststand_clean_up_on_disconnect( playerBeingRevived, reviverGun );
 	
@@ -709,14 +709,6 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	self.reviveTextHud.horzAlign = "center";
 	self.reviveTextHud.vertAlign = "bottom";
 	self.reviveTextHud.y = -210;
-	if ( IsSplitScreen() )
-	self.reviveTextHud.y = -107;
-	self.reviveTextHud.foreground = true;
-	self.reviveTextHud.font = "default";
-	self.reviveTextHud.fontScale = 1.8;
-	self.reviveTextHud.alpha = 1;
-	self.reviveTextHud.color = ( 1.0, 1.0, 1.0 );
-	self.reviveTextHud setText( &"GAME_REVIVING" );
 	
 	//chrisp - zombiemode addition for reviving vo
 	// cut , but leave the script just in case 

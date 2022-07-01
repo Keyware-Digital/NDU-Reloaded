@@ -22,7 +22,7 @@ main() {
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
     array_thread(getPlayers(), ::reloading_monitor);
-    array_thread(getPlayers(), ::no_ammo_monitor);
+    //array_thread(getPlayers(), ::no_ammo_monitor);
     maps\_walking_anim::main();
 
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box
@@ -207,7 +207,6 @@ include_weapons() {
     include_weapon("panzerschrek");
 
     // Special
-    //include_weapon("ray_gun", /*true,*/::prototype_ray_gun_weighting_func);
     include_weapon("ray_gun_mk1_v2", /*true,*/::prototype_ray_gun_weighting_func);
 
     // Weapon limiter
@@ -367,8 +366,6 @@ filtered_weapons()
 	//level.filtered_weapon[level.filtered_weapon.size] = "zombie_cymbal_monkey";
 }
 
-
-//Probably broken right now
 reloading_monitor()
 {
     
@@ -382,7 +379,7 @@ reloading_monitor()
         {
             if (current_weapon == level.filtered_weapon[i])
             {
-                continue;
+                return;
             }
         }
 
@@ -394,7 +391,8 @@ reloading_monitor()
 	}
 }
 
-no_ammo_monitor()
+//Probably broken right now
+/*no_ammo_monitor()
 {
     while(1)
     {
@@ -406,7 +404,7 @@ no_ammo_monitor()
         {
             if (current_weapon == level.filtered_weapon[i])
             {
-                continue;
+                return;
             }
         }
 
@@ -416,4 +414,4 @@ no_ammo_monitor()
 			wait 0.1;
         }
     }
-}
+}*/

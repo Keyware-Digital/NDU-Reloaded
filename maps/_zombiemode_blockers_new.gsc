@@ -688,7 +688,7 @@ blocker_trigger_think()
 	{
 		trigger waittill( "trigger", player ); 
 
-		if( player hasperk( "specialty_fastreload" ) )
+		if( player HasPerk ( "specialty_fastreload" ) )
 		{
 			has_perk = true;
 		}

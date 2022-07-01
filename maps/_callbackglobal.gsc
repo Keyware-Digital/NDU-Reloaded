@@ -496,7 +496,7 @@ reset_clientdvars()
 		return;
 	}
 
-	self SetClientDvars( "compass", "1",
+	self setClientDvars( "compass", "1",
 						 "hud_showStance", "1",
 						 "cg_thirdPerson", "0",
 						 //"cg_fov", "80",

@@ -3,6 +3,7 @@ main()
 self setModel("char_usa_marine_player_body2_1");
 self.headModel = "char_usa_marine_head4_2";
 self attach(self.headModel, "", true);
+self.voice = "american";
 self.hatModel = "char_usa_marine_helm1";
 self attach(self.hatModel);
 self.gearModel = "char_usa_raider_gear4";

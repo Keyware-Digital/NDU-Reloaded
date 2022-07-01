@@ -504,7 +504,20 @@ menuDef
 			textfont		UI_FONT_OBJECTIVE
 			forecolor		1 1 1 HUD_FOREGROUND_ALPHA
 			ownerdraw		CG_PLAYER_WEAPON_NAME
-			visible			1
+			visible			when(dvarInt("player_hud_specialty_mule_kick") == 0)
+			decoration
+		}
+
+		itemDef
+		{
+			name			"weapname_lowdef"
+			rect			(WEAPINFO_X -115) (WEAPINFO_Y +0) 290 40
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textscale		TEXTSIZE_SMALL
+			textfont		UI_FONT_OBJECTIVE
+			forecolor		0.3137 1 0 0.0039
+			ownerdraw		CG_PLAYER_WEAPON_NAME
+			visible			when(dvarInt("player_hud_specialty_mule_kick") == 1)
 			decoration
 		}
 	
@@ -517,7 +530,6 @@ menuDef
 			textalign		(ITEM_ALIGN_CENTER | ITEM_ALIGN_MIDDLE)
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			forecolor		1 1 1 1
-			//background	"white"
 			ownerdraw		CG_PLAYER_WEAPON_LOW_AMMO_WARNING
 			visible	when ( dvarInt( g_gameskill ) == 0 || dvarInt( g_gameskill ) == 1 || dvarstring( mapname ) == LEVEL_TRAINING );
 			decoration
@@ -1356,7 +1368,7 @@ menuDef
 			decoration 
 		}
 		
-		itemDef
+		/*itemDef
 		{
 			name			hud_grenadeicon
 			rect			315 300 60 60
@@ -1380,7 +1392,7 @@ menuDef
 			showdvar		{ "1" }
 			visible			1
 			decoration
-		}
+		}*/
 	}
 
 	// Hold breath hint

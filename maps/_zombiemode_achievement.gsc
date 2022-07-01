@@ -158,7 +158,7 @@ Achievement_martian_weapons()
 			martian_weapon_owned += 1;
 		}
 
-		if( self maps\_zombiemode_weapons::has_weapon_or_upgrade( "ray_gun" ) )
+		if( self maps\_zombiemode_weapons::has_weapon_or_upgrade( "ray_gun_mk1_v2" ) )
 		{
 			martian_weapon_owned += 1;
 		}

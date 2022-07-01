@@ -16,8 +16,8 @@ walk()
 {
 	self.is_sliding = false;			// blst
 
-	self SetClientDvars("bg_bobAmplitudeStanding", "0.012 0.005");
-	self SetClientDvars("cg_bobWeaponMax", "3");
+	self setClientDvars("bg_bobAmplitudeStanding", "0.012 0.005");
+	self setClientDvars("cg_bobWeaponMax", "3");
 
 	//Fine-tuned for NDU: Reloaded
 	while(1)
@@ -39,9 +39,9 @@ gun_rotation()
 		if(!self.is_sliding)
 		{
 			if(GetDvarInt("walking_holster") == 1)
-				self SetClientDvar("cg_gun_rot_r",roll[0]+roll[1]+roll[2]);
+				self setClientDvar("cg_gun_rot_r",roll[0]+roll[1]+roll[2]);
 			else
-				self SetClientDvar("cg_gun_rot_r",roll[0]+roll[1]+roll[2]);
+				self setClientDvar("cg_gun_rot_r",roll[0]+roll[1]+roll[2]);
 		}
 		wait(0.05);
 	}
@@ -53,13 +53,13 @@ prone_check()
 	{
 		if( self GetStance() == "prone" || self GetStance() == "crouch" )
 		{
-			self SetClientDvar("cg_gun_move_minspeed", 0);
-			self SetClientDvar("bg_bobAmplitudeProne","1");
+			self setClientDvar("cg_gun_move_minspeed", 0);
+			self setClientDvar("bg_bobAmplitudeProne","1");
 		}
 		else
 		{
-			self SetClientDvar("cg_gun_move_minspeed", 100000);
-			self SetClientDvar("bg_bobAmplitudeProne","0");
+			self setClientDvar("cg_gun_move_minspeed", 100000);
+			self setClientDvar("bg_bobAmplitudeProne","0");
 		}
 	wait .1;
 	}

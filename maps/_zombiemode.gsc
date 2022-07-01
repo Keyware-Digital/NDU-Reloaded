@@ -547,7 +547,7 @@ onPlayerConnect() {
 }
 
 onPlayerConnect_clientDvars() {
-    self SetClientDvars("cg_deadChatWithDead", "1",
+    self setClientDvars("cg_deadChatWithDead", "1",
         "cg_deadChatWithTeam", "1",
         "cg_deadHearTeamLiving", "1",
         "cg_deadHearAllLiving", "1",
@@ -555,7 +555,7 @@ onPlayerConnect_clientDvars() {
         "compass", "0",
         "hud_showStance", "0",
         "cg_thirdPerson", "0",
-        //"cg_fov", "80", //Should really be set in the menus and set here via dvarint
+        "cg_fov", getdvar("cg_fov"),
         "cg_thirdPersonAngle", "0",
         "ammoCounterHide", "0",
         "miniscoreboardhide", "0",
@@ -575,8 +575,8 @@ onPlayerSpawned() {
     while (1) {
         self waittill("spawned_player");
 
-        self SetClientDvars("cg_thirdPerson", "0",
-            //"cg_fov", "80",
+        self setClientDvars("cg_thirdPerson", "0",
+            "cg_fov", getdvar("cg_fov"),
             "cg_thirdPersonAngle", "0");
 
         self SetDepthOfField(0, 0, 512, 4000, 4, 0);
@@ -592,7 +592,7 @@ onPlayerSpawned() {
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
                 self thread player_reload_sounds();
-                self thread player_no_ammmo_sounds();
+                //self thread player_no_ammmo_sounds();
                 self thread player_lunge_knife_exert_sounds();
                 self thread player_throw_grenade_exert_sounds();
             }
@@ -728,14 +728,14 @@ spectator_toggle_3rd_person() {
 
 set_third_person(value) {
     if (value) {
-        self SetClientDvars("cg_thirdPerson", "1",
-            "cg_fov", "40",
+        self setClientDvars("cg_thirdPerson", "1",
+            "cg_fov", getdvar("cg_fov"),
             "cg_thirdPersonAngle", "354");
 
         self setDepthOfField(0, 128, 512, 4000, 6, 1.8);
     } else {
-        self SetClientDvars("cg_thirdPerson", "0",
-            "cg_fov", "40", 
+        self setClientDvars("cg_thirdPerson", "0",
+            "cg_fov", getdvar("cg_fov"), 
             "cg_thirdPersonAngle", "0");
 
         self setDepthOfField(0, 0, 512, 4000, 4, 0);
@@ -2041,9 +2041,9 @@ intermission() {
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
-        setclientsysstate("levelNotify", "zi", players[i]); // Tell clientscripts we're in zombie intermission
+        setClientsysstate("levelNotify", "zi", players[i]); // Tell clientscripts we're in zombie intermission
 
-        players[i] SetClientDvars("cg_thirdPerson", "0" /*, "cg_fov", "80"*/ );
+        players[i] setClientDvars("cg_thirdPerson", "0" , "cg_fov", getdvar("cg_fov") );
 
         players[i].health = 100; // This is needed so the player view doesn't get stuck
         players[i] thread player_intermission();
@@ -2201,6 +2201,7 @@ setup_player_abilities()
 	for (i = 0; i < players.size; i++)
     {
 		players[i] thread maps\_dolphin_dive::setup_player_dolphin_dive();
+        players[i] thread maps\_zombiemode_perks::player_switch_weapon_watcher();
 	}
 }
 
@@ -2212,17 +2213,18 @@ setup_player_vars()
     //index = maps\_zombiemode_weapons::get_player_index(player);
 
     for (i = 0; i < players.size; i++) {
-        players[i] SetClientDvar("player_lastStandBleedoutTime", 45);
+        players[i] setClientDvar("player_lastStandBleedoutTime", 45);
         players[i] setClientDvar("player_hud_specialty_electric_cherry", 0);
+        players[i] setClientDvar("player_hud_specialty_mule_kick", 0);
         // enable sv_cheats just to set level of detail for everyone
-        players[i] SetClientDvar("sv_cheats", 1);
+        players[i] setClientDvar("sv_cheats", 1);
         // these set the level of detail relative to distance (should really be set in the menus as one option like mature content and set via dvarint)
-        players[i] SetClientDvar("r_lodBiasRigid", -1000);
-        players[i] SetClientDvar("r_lodBiasSkinned", -1000);
-        players[i] SetClientDvar("r_lodScaleRigid", 1);
-        players[i] SetClientDvar("r_lodScaleSkinned", 1);
+        players[i] setClientDvar("r_lodBiasRigid", -1000);
+        players[i] setClientDvar("r_lodBiasSkinned", -1000);
+        players[i] setClientDvar("r_lodScaleRigid", 1);
+        players[i] setClientDvar("r_lodScaleSkinned", 1);
         // disable sv_cheats immediately afterwards so players can't use vars that are flagged as cheats
-        players[i] SetClientDvar("sv_cheats", 0);
+        players[i] setClientDvar("sv_cheats", 0);
 
         num = players[i].entity_num;
 
@@ -2230,16 +2232,16 @@ setup_player_vars()
 		switch(num)
 		{
 			case 0:
-            players[i] SetClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[0]);
+            players[i] setClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[0]);
 				break; 
 			case 1:
-            players[i] SetClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[1]);
+            players[i] setClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[1]);
 				break;
 			case 2:
-            players[i] SetClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[2]);
+            players[i] setClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[2]);
 				break;  
 			case 3:
-            players[i] SetClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[3]);
+            players[i] setClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[3]);
 				break;
 		}
 
@@ -2248,22 +2250,22 @@ setup_player_vars()
 		switch(level.random_character_index[i])
 		{
 			case 0:
-            players[i] SetClientDvar("plr_hud_portrait", 0);
+            players[i] setClientDvar("plr_hud_portrait", 0);
 				break; 
 			case 1:
-            players[i] SetClientDvar("plr_hud_portrait", 1);
+            players[i] setClientDvar("plr_hud_portrait", 1);
 				break;
 			case 2:
-            players[i] SetClientDvar("plr_hud_portrait", 2);
+            players[i] setClientDvar("plr_hud_portrait", 2);
 				break;  
 			case 3:
-            players[i] SetClientDvar("plr_hud_portrait", 3);
+            players[i] setClientDvar("plr_hud_portrait", 3);
 				break;
 		}
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {
-            players[i] SetClientDvar("sv_cheats", 1);
+            players[i] setClientDvar("sv_cheats", 1);
             players[i] maps\_zombiemode_score::add_to_player_score(100000);
         }
     }
@@ -2275,7 +2277,7 @@ player_reload_sounds()
 
 	while(1)
     {
-        wait 0.3;
+        wait 0.1;
 
         if(level.player_is_speaking != 1) {
 
@@ -2303,27 +2305,24 @@ player_reload_sounds()
 		        reload_vox_sound PlaySound("plr_" + index + reloadSound, "sound_done");
 		        reload_vox_sound waittill("sound_done");
 		        reload_vox_sound Delete();
+                wait 3; //Wait one second to sync sound with reloading to prevent extra sounds playing
 			    level.player_is_speaking = 0;
 	        }
         }
-        wait 0.3;   
+        wait 0.1;   
 	}
 }
 
 //Probably broken right now
-player_no_ammmo_sounds()
+/*player_no_ammmo_sounds()
 {
 	self endon( "death" );
 
 	while(1)
 	{
-        wait 0.3;
+        wait 0.1;
 
         if(level.player_is_speaking != 1) {
-
-            current_weapon = self GetCurrentWeapon();
-
-            totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
 
             if(self.no_ammo && totalCurrentWeaponAmmo == 0) {
                 self notify("no_ammo");
@@ -2334,12 +2333,13 @@ player_no_ammmo_sounds()
 		        no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "sound_done");
 		        no_ammo_vox_sound waittill("sound_done");
 		        no_ammo_vox_sound Delete();
+                wait 3; //Wait three second to sync sound to prevent extra sounds playing
 		        level.player_is_speaking = 0;
             }
         }
-        wait 0.3;   
+        wait 0.1;   
 	}
-}
+}*/
 
 player_lunge_knife_exert_sounds()
 {
@@ -2347,7 +2347,7 @@ player_lunge_knife_exert_sounds()
 
 	while(1)
 	{
-        wait 0.3;
+        wait 0.1;
         
         if(level.player_is_speaking != 1) {
 		    if(self IsMeleeing()) {
@@ -2360,10 +2360,11 @@ player_lunge_knife_exert_sounds()
 		        melee_vox_sound waittill("sound_done");
 		        melee_vox_sound Delete();
                 self AllowMelee(true); //Reenables melee without any increase in melee delay
+                wait 1; //Wait one second to sync sound with meleeing to prevent extra sounds playing
                 level.player_is_speaking = 0;
             }
 		}
-    wait 0.3;   
+        wait 0.1;
 	}
 }
 
@@ -2373,7 +2374,7 @@ player_throw_grenade_exert_sounds()
  
 	while(1)
 	{
-        wait 0.3;
+        wait 0.1;
 
         if(level.player_is_speaking != 1) {
             current_offhand = self GetCurrentOffHand();
@@ -2381,7 +2382,7 @@ player_throw_grenade_exert_sounds()
             {
                 if (current_offhand == level.filtered_weapon[i])
                 {
-                    break;
+                    return;
                 }
             
 		        if(self IsThrowingGrenade() && current_offhand != level.filtered_weapon[i])
@@ -2395,10 +2396,11 @@ player_throw_grenade_exert_sounds()
 		            grenade_vox_sound waittill("sound_done");
 		            grenade_vox_sound Delete();
                     self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
+                    wait 1.25; //Wait one second to sync sound with grenade throwing to prevent extra sounds playing
 			        level.player_is_speaking = 0;
 		        }
             }
         }    
-    wait 0.3;   
+        wait 0.1;   
     }
 }

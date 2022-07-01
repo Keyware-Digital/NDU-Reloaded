@@ -2,7 +2,30 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 #include maps\_anim;
-#using_animtree( "animations" );
+#using_animtree("animations");
+
+isSprinting()
+{
+	v = self GetVelocity();
+	if( v[0] >= 170 || v[1] >= 170 || v[0] <= 170 - 170 * 2 || v[1] <= 170 - 170 * 2 )
+		return true;
+	return false;
+}
+
+update_angles_origin(players_dolphin_dive)
+{
+	while(isDefined(players_dolphin_dive))
+	{
+		players_dolphin_dive.origin = self.origin;
+		players_dolphin_dive.angles = self.angles;
+		wait 0.01;
+	}
+}
+
+getSurface()
+{
+	return self.origin[2];
+}
 
 setup_player_dolphin_dive()
 {
@@ -32,12 +55,9 @@ setup_player_dolphin_dive()
 			self setStance("prone");
 			
 			run_velocity = self GetVelocity();
-			launch = "_launch_exert_" + RandomInt(6);
-		    launch_sound = Spawn("script_origin", self.origin);
-    		launch_sound PlaySound("plr_" + index + launch, "sound_done");
-			launch_sound waittill("sound_done");
-			launch_sound Delete();
+
 			self.is_diving = true;
+
 			self setClientDvar("hide_reload_hud", 1);
 			self setClientDvar("ammocounterhide", 1);
 			current_weapon = self GetCurrentWeapon();
@@ -45,7 +65,12 @@ setup_player_dolphin_dive()
 			players_dolphin_dive setModel(self.model);
 			players_dolphin_dive hide();
 			players_dolphin_dive attach(GetWeaponModel(current_weapon), "tag_weapon_right");
-			players_dolphin_dive setInVisibleToPlayer(self);
+			if(getdvar("cg_thirdperson") == "0") {
+				players_dolphin_dive setInVisibleToPlayer(self);
+			}
+			else if(getdvar("cg_thirdperson") == "1") {
+				self SetInvisibleToPlayer(self);
+			}
 			self thread update_angles_origin(players_dolphin_dive);
 			players_dolphin_dive UseAnimTree( #animtree );
 			players_dolphin_dive setAnim(dolphin_dive_anim_start);
@@ -53,6 +78,9 @@ setup_player_dolphin_dive()
 			wait 0.05;
 		
 			self hide();
+			launch = "_launch_exert_" + RandomInt(6);
+			launch_sound = Spawn("script_origin", self.origin);
+    		launch_sound PlaySound("plr_" + index + launch);
 			players_dolphin_dive show();
 			self AllowMelee(false);
 			self AllowLean(false);
@@ -83,18 +111,15 @@ setup_player_dolphin_dive()
 			}
 			self SetVelocity(AnglesToForward(angles) * 450);
 			self setStance("prone");
-			players_dolphin_dive UseAnimTree( #animtree );
+			players_dolphin_dive UseAnimTree(#animtree);
 			players_dolphin_dive setAnim(dolphin_dive_anim_land);
 
-		    launch_sound = Spawn("script_origin", self.origin);
-    		launch_sound PlaySound("land_concrete", "sound_done");
-			launch_sound waittill("sound_done");
 			launch_sound Delete();
 
 			land = "_land_exert_" + RandomInt(6);
-
-		    land_sound = Spawn("script_origin", self.origin);
-    		land_sound PlaySound(land, "sound_done");
+			index = maps\_zombiemode_weapons::get_player_index(self);
+			land_sound = Spawn("script_origin", self.origin);
+    		land_sound PlaySound( "plr_" + index + land, "sound_done");
 			land_sound waittill("sound_done");
 			land_sound Delete();
 
@@ -128,8 +153,9 @@ setup_player_dolphin_dive()
 			self AllowCrouch(true);
 			self EnableOffhandWeapons();
 			self EnableWeaponCycling();
-			players_dolphin_dive delete();
+			players_dolphin_dive Delete();
 			self show();
+
 			self.is_diving = false;
 
 			if( self IsOnGround() )
@@ -141,27 +167,4 @@ setup_player_dolphin_dive()
         }
 	    wait 0.05;
 	}
-}
-
-isSprinting()
-{
-	v = self GetVelocity();
-	if( v[0] >= 170 || v[1] >= 170 || v[0] <= 170 - 170 * 2 || v[1] <= 170 - 170 * 2 )
-		return true;
-	return false;
-}
-
-update_angles_origin(players_dolphin_dive)
-{
-	while(isDefined(players_dolphin_dive))
-	{
-		players_dolphin_dive.origin = self.origin;
-		players_dolphin_dive.angles = self.angles;
-		wait 0.01;
-	}
-}
-
-getSurface()
-{
-	return self.origin[2];
 }

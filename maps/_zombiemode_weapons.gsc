@@ -330,6 +330,10 @@ add_limited_weapon( weapon_name, amount )
 init_weapon_upgrade()
 {
 
+	if(isDefined(self.is_drinking)) {
+		return;
+	}
+
 	weaponNameWallBuy = undefined;
 	
 	weapon_spawns = GetEntArray( "weapon_upgrade", "targetname" ); 
@@ -1008,7 +1012,40 @@ treasure_chest_glowfx()
 treasure_chest_give_weapon( weapon_string )
 {
 	primaryWeapons = self GetWeaponsListPrimaries(); 
-	current_weapon = undefined; 
+	current_weapon = undefined;
+
+	if( !self HasPerk("specialty_extraammo")) {
+		self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
+	}
+	else {
+		self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
+	}
+
+	if (WeaponClass( weapon_string ) != "grenade" && current_weapon != "mine_bouncing_betty")
+	{
+		if (primaryWeapons.size >= self.MuleCount)
+		{
+			self TakeWeapon( current_weapon ); 
+
+			self GiveWeapon(weapon_string, 0);
+			self GiveMaxAmmo(weapon_string);
+			self SwitchToWeapon(weapon_string);
+		}
+		else
+		{
+			self GiveWeapon(weapon_string, 0);
+			self GiveMaxAmmo(weapon_string);
+			self SwitchToWeapon(weapon_string);
+		}
+		
+		self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon_string);
+	}
+	else
+	{
+		self TakeWeapon(weapon_string);
+		self GiveWeapon(weapon_string, 0);
+		self GiveMaxAmmo(weapon_string);
+	} 
 
 	// This should never be true for the first time.
 	if( primaryWeapons.size >= 2 ) // he has two weapons
@@ -1030,12 +1067,7 @@ treasure_chest_give_weapon( weapon_string )
 			if( !( weapon_string == "fraggrenade" || weapon_string == "stielhandgranate" || weapon_string == "molotov" ) )
 			self TakeWeapon( current_weapon ); 
 		} 
-	} 
-
-	/*if(( weapon_string ==  "ray_gun" ))
-	{
-		thread play_raygun_stinger();
-	}*/
+	}
 
 	if(( weapon_string ==  "ray_gun_mk1_v2" ))
 	{
@@ -1443,7 +1475,7 @@ takenweapon(chosenweapon)
 		//thread play_raygun_stinger();		// we don't want the stinger sound for a perk bottle.
 		current_weapon = player GetCurrentWeapon();
 		player GiveWeapon(chosenweapon);
-		//self.is_drinking = 1;
+		self.is_drinking = 1;
 		player SwitchToWeapon(chosenweapon);
 		player DisableOffhandWeapons();
 		player DisableWeaponCycling();
@@ -1454,18 +1486,18 @@ takenweapon(chosenweapon)
 		player AllowMelee( false );
 		wait 2.5;
 
-	// we don't want the player drinking when prone.
-	if ( self GetStance() == "prone" )
-	{
-		self SetStance( "crouch" );
-	}	
+		//Force crouch stance when using perk bottle
+		if(player GetStance() == "prone" && self.is_drinking == 1)
+		{
+			player SetStance("crouch");
+		}	
 
 		player AllowLean( true );
 		player AllowAds( true );
 		player AllowSprint( true );
 		player AllowProne( true );		
 		player AllowMelee( true );
-		//self.is_drinking = undefined;
+		self.is_drinking = undefined;
 		player TakeWeapon(chosenweapon);
 		player SwitchToWeapon(current_weapon);
 		player EnableOffhandWeapons();
@@ -1527,6 +1559,11 @@ weapon_cabinet_door_close( left_or_right )
 
 weapon_spawn_think()
 {
+
+	if(isDefined(self.is_drinking)) {
+		return;
+	}
+	
 	weapon_name_ammo_cost = get_weapon_name(self.zombie_weapon_upgrade);
 	cost = get_weapon_cost( self.zombie_weapon_upgrade );
 	ammo_cost = get_ammo_cost( self.zombie_weapon_upgrade );
@@ -1738,21 +1775,38 @@ weapon_give( weapon )
 {
 
 	primaryWeapons = self GetWeaponsListPrimaries(); 
-	current_weapon = undefined; 
+	current_weapon = undefined;
+
+	if( !self HasPerk("specialty_extraammo")) {
+		self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
+		self.muleLastWeapon = undefined;
+	}
+	else {
+		self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
+	}
 
 	// This should never be true for the first time.
-	if( primaryWeapons.size >= 2 ) // he has two weapons
+	if( primaryWeapons.size >= self.MuleCount ) // he has two weapons
 	{
 		current_weapon = self getCurrentWeapon(); // get his current weapon
 
+		if ( current_weapon == "mine_bouncing_betty" )
+		{
+			current_weapon = undefined;
+		}
+
 		if( isdefined( current_weapon ) )
 		{
-			if( !( weapon == "fraggrenade" || weapon == "stielhandgranate" || weapon == "molotov" ) )
+			if( !( weapon == "fraggrenade" || weapon == "stielhandgranate" || weapon == "molotov" /*|| weapon == "zombie_cymbal_monkey"*/ ) )
 			{
 				self TakeWeapon( current_weapon ); 
 			}
 		} 
-	} 
+	}
+	else if ( !IsDefined(self.muleLastWeapon) )
+	{
+		current_weapon = self getCurrentWeapon();
+	}
 
 	if( IsDefined( primaryWeapons ) && !isDefined( current_weapon ) )
 	{
@@ -1774,6 +1828,7 @@ weapon_give( weapon )
 	self GiveWeapon( weapon, 0 ); 
 	self GiveMaxAmmo( weapon ); 
 	self SwitchToWeapon( weapon ); 
+	self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon);
 
 }
 
