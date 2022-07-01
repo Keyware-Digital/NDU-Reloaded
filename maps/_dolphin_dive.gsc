@@ -29,12 +29,6 @@ getSurface()
 
 setup_player_dolphin_dive()
 {
-	if (!level.zombie_vars[ "dolphin_dive" ])
-	{
-		return;
-	}
-
-	index = maps\_zombiemode_weapons::get_player_index(self);
 
 	self.is_diving = false;
 	self.can_flop = false;
@@ -72,15 +66,16 @@ setup_player_dolphin_dive()
 				self SetInvisibleToPlayer(self);
 			}
 			self thread update_angles_origin(players_dolphin_dive);
+
+			self thread maps\_sounds::dolphin_dive_launch_sound();
+
 			players_dolphin_dive UseAnimTree( #animtree );
 			players_dolphin_dive setAnim(dolphin_dive_anim_start);
 
 			wait 0.05;
 		
 			self hide();
-			launch = "_launch_exert_" + RandomInt(6);
-			launch_sound = Spawn("script_origin", self.origin);
-    		launch_sound PlaySound("plr_" + index + launch);
+
 			players_dolphin_dive show();
 			self AllowMelee(false);
 			self AllowLean(false);
@@ -114,14 +109,7 @@ setup_player_dolphin_dive()
 			players_dolphin_dive UseAnimTree(#animtree);
 			players_dolphin_dive setAnim(dolphin_dive_anim_land);
 
-			launch_sound Delete();
-
-			land = "_land_exert_" + RandomInt(6);
-			index = maps\_zombiemode_weapons::get_player_index(self);
-			land_sound = Spawn("script_origin", self.origin);
-    		land_sound PlaySound( "plr_" + index + land, "sound_done");
-			land_sound waittill("sound_done");
-			land_sound Delete();
+			self thread maps\_sounds::dolphin_dive_land_sound();
 
 			wait 0.05;
 

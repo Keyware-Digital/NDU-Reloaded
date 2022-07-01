@@ -512,8 +512,7 @@ powerup_setup() {
 
     //TUEY Spawn Powerup
 
-	level.powerup_sound = Spawn("script_origin", self.origin);
-	level.powerup_sound PlaySound("spawn_powerup", "sound_done");
+    self thread maps\_sounds::powerup_start_sound();
 
     self.powerup_name = struct.powerup_name;
     self.hint = struct.hint;
@@ -521,9 +520,6 @@ powerup_setup() {
     if (isDefined(struct.fx)) {
         self.fx = struct.fx;
     }
-
-    level.powerup_sound waittill("sound_done");
-    level.powerup_sound PlayLoopSound("spawn_powerup_loop");
 
 }
 
@@ -590,11 +586,8 @@ powerup_grab() {
 
                 wait(0.1);
 
-               
-				level.powerup_sound StopLoopSound();
-		        level.powerup_sound PlaySound("powerup_grabbed", "sound_done");
-                level.powerup_sound waittill("sound_done");
-		        level.powerup_sound Delete();
+                self thread maps\_sounds::powerup_end_sound();
+
                 self Delete();
                 self notify("powerup_grabbed");
             }

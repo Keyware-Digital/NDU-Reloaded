@@ -1,7 +1,5 @@
 #include maps\_utility;
-
 #include common_scripts\utility;
-
 #include maps\_zombiemode_utility;
 
 init() {
@@ -274,10 +272,7 @@ phd_dive_damage(origin)
     wait 0.5;
     self VisionSetNaked("zombie", 1);
 
-	explosion = "explode_" + RandomInt(3);
-
-    explosion_sound = Spawn("script_origin", self.origin);
-    explosion_sound PlaySound(explosion, "sound_done");
+    self thread maps\_sounds::phd_explosion_sound();
 		
 	phd_damage = level.zombie_vars[ "phd_dive_damage" ];
 	
@@ -311,8 +306,6 @@ phd_dive_damage(origin)
 	
 	wait 0.2;
 
-    explosion_sound waittill("sound_done");
-	explosion_sound Delete();
 }
 
 player_switch_weapon_watcher()

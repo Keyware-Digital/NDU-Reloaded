@@ -21,7 +21,8 @@ main() {
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
-    array_thread(getPlayers(), ::reloading_monitor);
+	players = GetPlayers();
+	array_thread(players, ::reloading_monitor);
     //array_thread(getPlayers(), ::no_ammo_monitor);
     maps\_walking_anim::main();
 

@@ -475,7 +475,6 @@ init_animscripts() {
 }
 
 init_player_config() {
-    set_zombie_var("dolphin_dive", 1);
     level.player_is_speaking = 0;
     level.zombies_are_close = 0;
     SetDvar( "perk_altMeleeDamage", 1000 ); // adjusts how much melee damage a player with the perk will do, needs only be set once
@@ -1611,13 +1610,11 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
     }  
 
     if(level.player_is_speaking != 1) {
-        index = maps\_zombiemode_weapons::get_player_index(self);
 
         level.player_is_speaking = 1;
-        painSound = "_pain_exert_" + RandomInt(8);
-        level.pain_vox_sound = Spawn("script_origin", self.origin);
-		level.pain_vox_sound PlaySound("plr_" + index + painSound);
-		level.pain_vox_sound Delete();
+
+        self thread maps\_sounds::pain_vox_sound();
+
         level.player_is_speaking = 0;
     }
 
@@ -2210,8 +2207,6 @@ setup_player_vars()
 
     players = GetPlayers();
 
-    //index = maps\_zombiemode_weapons::get_player_index(player);
-
     for (i = 0; i < players.size; i++) {
         players[i] setClientDvar("player_lastStandBleedoutTime", 45);
         players[i] setClientDvar("player_hud_specialty_electric_cherry", 0);
@@ -2298,13 +2293,10 @@ player_reload_sounds()
 
 	        if(self.reloading && get_enemy_count() + level.zombie_total >= 6 && level.zombies_are_close == 1) //Play reload vox if reloading and at least six zombies are positioned 225 inches (18.75 feet) or less from a player
 	        {
-                index = maps\_zombiemode_weapons::get_player_index(self);
 			    level.player_is_speaking = 1;
-                reloadSound = "_vox_reload_" + RandomInt(2);
-                reload_vox_sound = Spawn("script_origin", self.origin);
-		        reload_vox_sound PlaySound("plr_" + index + reloadSound, "sound_done");
-		        reload_vox_sound waittill("sound_done");
-		        reload_vox_sound Delete();
+
+                self thread maps\_sounds::reload_vox_sound();
+
                 wait 3; //Wait one second to sync sound with reloading to prevent extra sounds playing
 			    level.player_is_speaking = 0;
 	        }
@@ -2352,13 +2344,11 @@ player_lunge_knife_exert_sounds()
         if(level.player_is_speaking != 1) {
 		    if(self IsMeleeing()) {
                 self AllowMelee(false); //Disables melee during melee and before sounds play to prevent more than one sound from playing at a time
-                index = maps\_zombiemode_weapons::get_player_index(self);
+
 			    level.player_is_speaking = 1;
-                meleeSound = "_knife_exert_" + RandomInt(3);
-                melee_vox_sound = Spawn("script_origin", self.origin);
-		        melee_vox_sound PlaySound("plr_" + index + meleeSound, "sound_done");
-		        melee_vox_sound waittill("sound_done");
-		        melee_vox_sound Delete();
+
+                self thread maps\_sounds::melee_vox_sound();
+
                 self AllowMelee(true); //Reenables melee without any increase in melee delay
                 wait 1; //Wait one second to sync sound with meleeing to prevent extra sounds playing
                 level.player_is_speaking = 0;
@@ -2388,13 +2378,11 @@ player_throw_grenade_exert_sounds()
 		        if(self IsThrowingGrenade() && current_offhand != level.filtered_weapon[i])
                 {
                     self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
-                    index = maps\_zombiemode_weapons::get_player_index(self);
+
 			        level.player_is_speaking = 1;
-                    grenadeSound = "_grenade_exert_" + RandomInt(6);
-                    grenade_vox_sound = Spawn("script_origin", self.origin);
-		            grenade_vox_sound PlaySound("plr_" + index + grenadeSound, "sound_done");
-		            grenade_vox_sound waittill("sound_done");
-		            grenade_vox_sound Delete();
+
+                    self thread maps\_sounds::grenade_vox_sound();
+
                     self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
                     wait 1.25; //Wait one second to sync sound with grenade throwing to prevent extra sounds playing
 			        level.player_is_speaking = 0;
