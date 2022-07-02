@@ -86,3 +86,76 @@ phd_explosion_sound() {
 	explosion_sound Delete();
 
 }
+
+mystery_box_lock_sound(chest) {
+    mystery_box_lock_sound = Spawn("script_origin", chest.origin);
+	mystery_box_lock_sound PlaySound("mystery_box_lock", "sound_done");
+	mystery_box_lock_sound waittill("sound_done");
+	mystery_box_lock_sound Delete();
+
+}
+
+mystery_box_unlock_sound(chest) {
+	mystery_box_unlock_sound = Spawn("script_origin", chest.origin);
+	mystery_box_unlock_sound PlaySound("mystery_box_unlock", "sound_done");
+	mystery_box_unlock_sound waittill("sound_done");
+	mystery_box_unlock_sound Delete();
+
+}
+
+cabinet_sound() {
+	cabinetSong = "cabinetbox_sting_" + RandomInt(3);
+	cabinet_sound = Spawn("script_origin", self.origin);
+	cabinet_sound PlaySound(cabinetSong, "sound_done");
+	cabinet_sound waittill("sound_done");
+	cabinet_sound Delete();
+
+}
+
+good_stinger_sound() {
+    good_stinger_sound = Spawn("script_origin", self.origin);
+	good_stinger_sound PlaySound("raygun_stinger", "sound_done");
+	good_stinger_sound waittill("sound_done");
+	good_stinger_sound Delete();
+
+}
+
+bad_stinger_sound() {
+    bad_stinger_sound = Spawn("script_origin", self.origin);
+	bad_stinger_sound PlaySound("raygun_stinger", "sound_done");
+	bad_stinger_sound waittill("sound_done");
+	bad_stinger_sound Delete();
+
+}
+
+cash_register_sound() {
+    chash_register_sound = Spawn("script_origin", self.origin);
+	chash_register_sound PlaySound("cha_ching", "sound_done");
+	chash_register_sound waittill("sound_done");
+	chash_register_sound Delete();
+
+}
+
+purchase_sound() {
+    purchase_sound = Spawn("script_origin", self.origin);
+	purchase_sound PlaySound("purchase", "sound_done");
+	purchase_sound waittill("sound_done");
+	purchase_sound Delete();
+
+}
+
+no_purchase_sound() {
+    no_purchase_sound = Spawn("script_origin", self.origin);
+	no_purchase_sound PlaySound("no_purchase", "sound_done");
+	no_purchase_sound waittill("sound_done");
+	no_purchase_sound Delete();
+
+}
+
+lightning_sound() {
+    lightning_sound = Spawn("script_origin", self.origin);
+	lightning_sound PlaySound("lightning_1", "sound_done");
+	lightning_sound waittill("sound_done");
+	lightning_sound Delete();
+    
+}

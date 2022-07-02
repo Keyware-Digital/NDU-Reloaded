@@ -499,7 +499,7 @@ debris_move( struct )
 	self notsolid();
 	
 	self play_sound_on_ent( "debris_move" );
-	self PlaySound("lightning_1");
+	self thread maps\_sounds::lightning_sound();
 	if( isDefined( self.script_firefx ) )
 	{
 		PlayFX( level._effect[self.script_firefx], self.origin );

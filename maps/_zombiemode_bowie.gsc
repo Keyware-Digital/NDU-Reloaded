@@ -53,7 +53,7 @@ bowie_think()
 			continue;
 		}
 
-		if(isDefined(player.is_drinking))
+		if(isDefined(player.is_drinking) && player.is_drinking)
 		{
 			wait(0.1);
 			continue;

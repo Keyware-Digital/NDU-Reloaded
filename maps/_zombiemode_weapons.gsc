@@ -915,14 +915,12 @@ treasure_chest_weapon_spawn( chest, player )
 		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
 
-		mystery_box_lock_sound = Spawn("script_origin", chest.origin);
-		mystery_box_lock_sound PlaySound("mystery_box_lock", "sound_done");
+		self thread maps\_sounds::mystery_box_lock_sound();
 
 		cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
 		
         chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", cost);
-		mystery_box_lock_sound waittill("sound_done");
-		mystery_box_lock_sound Delete();
+
         chest enable_trigger();
         
         while(1)
@@ -930,20 +928,19 @@ treasure_chest_weapon_spawn( chest, player )
             chest waittill("trigger", player);
             if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
             {
-                player PlaySound( "purchase" ); 
+				player thread maps\_sounds::purchase_sound();
                 player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
                 break;
             }
-            player PlaySound( "no_purchase" );
+			player thread maps\_sounds::no_purchase_sound();
             wait 0.05;
         }
 
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
-		mystery_box_unlock_sound = Spawn("script_origin", chest.origin);
-		mystery_box_unlock_sound PlaySound("mystery_box_unlock", "sound_done");
-		mystery_box_unlock_sound waittill("sound_done");
-		mystery_box_unlock_sound Delete();
+
+		self thread maps\_sounds::mystery_box_unlock_sound();
+
         model Delete();
 		level.zombie_mystery_box_padlock = 0;
         level.chest_accessed = 0;
@@ -1067,7 +1064,7 @@ treasure_chest_give_weapon( weapon_string )
 
 	if(( weapon_string ==  "ray_gun_mk1_v2" ))
 	{
-		thread play_raygun_stinger();
+		self thread maps\_sounds::good_stinger_sound();
 	}
 
 
@@ -1230,12 +1227,9 @@ weapon_cabinet_think()
 
 	weaponmodelstruct MoveTo(self.origin - (0,0,6.5),4,0,4);
 
-	cabinetSong = "cabinetbox_sting_" + RandomInt(3);
-
 	play_sound_at_pos( "open_chest", self.origin );
 
-	cabinet_sound = Spawn("script_origin", self.origin);
-	cabinet_sound PlaySound(cabinetSong, "sound_done");
+	self thread maps\_sounds::cabinet_sound();
 
 	self thread cabinet_glowfx();
 	
@@ -1393,8 +1387,7 @@ weapon_cabinet_think()
 	chosenweapon = undefined;
 	weaponmodel = undefined;
 	weaponmodelstruct Delete();
-	cabinet_sound waittill("sound_done");
-	cabinet_sound Delete();
+
 }
 
 movecabinetguns( cabinetmodel, coord)
@@ -1429,15 +1422,6 @@ movecabinetguns( cabinetmodel, coord)
     }
 }
 
-play_raygun_stinger()
-{
-	players = GetPlayers();
-	for(i=0;i<players.size;i++)
-	{
-		players[i] PlaySound("raygun_stinger");
-	}
-}
-
 cabinet_glowfx()
 {
 	fxObj = spawn( "script_model", self.origin -( 0, 0, 30 ) ); 
@@ -1468,7 +1452,6 @@ takenweapon(chosenweapon)
 
 	if(chosenweapon == "perks_a_cola")
 	{
-		//thread play_raygun_stinger();		// we don't want the stinger sound for a perk bottle.
 		current_weapon = player GetCurrentWeapon();
 		player GiveWeapon(chosenweapon);
     	player.is_drinking = 1;
@@ -1503,14 +1486,9 @@ takenweapon(chosenweapon)
 		return;
 	}
 
-	/*if(chosenweapon == "springfield_scoped_zombie_upgraded" )
-	{
-		thread play_raygun_stinger();
-	}*/
-
 	if(chosenweapon == "stg44_pap")
 	{
-		thread play_raygun_stinger();
+		self thread maps\_sounds::good_stinger_sound();
 	}
 
 	plyweapons = player GetWeaponsListPrimaries();
@@ -1568,7 +1546,7 @@ weapon_spawn_think()
 		self waittill( "trigger", player ); 		
 		// if not first time and they have the weapon give ammo
 
-		if(isDefined(player.is_drinking))
+		if(isDefined(player.is_drinking) && player.is_drinking)
 		{
 			wait(0.1);
 			continue;
@@ -1875,7 +1853,7 @@ ammo_give( weapon )
 
 	if( give_ammo )
 	{
-		self playsound( "cha_ching" ); 
+		self thread maps\_sounds::cash_register_sound();
 		self GivemaxAmmo( weapon ); 
 		self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) );
 		return true;
