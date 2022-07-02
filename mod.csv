@@ -268,7 +268,6 @@ xanim,ai_zombie_traverse_ground_v2_walk_altB
 xanim,ai_zombie_traverse_ground_climbout_fast
 xanim,zmb_player_dolphin_dive_action
 xanim,zmb_player_dolphin_dive_land
-xmodel,zmb_player_dolphin_dive
 xmodel,char_ger_hnrgd_player_body_hmg
 xmodel,char_ger_hnrgd_player_head_hmg
 xmodel,char_ger_hnrgd_player_body_cqb
