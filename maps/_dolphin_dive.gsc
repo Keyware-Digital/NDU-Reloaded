@@ -56,7 +56,44 @@ setup_player_dolphin_dive()
 			self setClientDvar("ammocounterhide", 1);
 			current_weapon = self GetCurrentWeapon();
 			players_dolphin_dive = spawn("script_model", self.origin);
-			players_dolphin_dive setModel(self.model);
+
+			players = GetPlayers();
+
+			for (i = 0; i < players.size; i++) {
+
+				switch(level.random_character_index[i])
+				{
+					case 0:
+					players_dolphin_dive setModel("char_usa_marine_player_body2_1");
+					players_dolphin_dive.headModel = "char_usa_marine_head4_2";
+					players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
+					players_dolphin_dive.hatModel = "char_usa_marine_helm1";
+					players_dolphin_dive attach(players_dolphin_dive.hatModel);
+					players_dolphin_dive.gearModel = "char_usa_raider_gear4";
+					players_dolphin_dive attach(players_dolphin_dive.gearModel);
+						break; 
+					case 1:
+            		players_dolphin_dive setModel("char_ger_hnrgd_player_body_hmg");
+					players_dolphin_dive.headModel = "char_ger_hnrgd_player_head_hmg";
+					players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
+						break;
+					case 2:
+            		players_dolphin_dive setModel("char_usa_marine_player_body2_1");
+					players_dolphin_dive.headModel = "char_usa_marine_head4_4";
+					players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
+					players_dolphin_dive.hatModel = "char_usa_raider_helm1";
+					players_dolphin_dive attach(players_dolphin_dive.hatModel);
+					players_dolphin_dive.gearModel = "char_usa_raider_gear3";
+					players_dolphin_dive attach(players_dolphin_dive.gearModel);
+						break;  
+					case 3:
+            		players_dolphin_dive setModel("char_rus_guard_player_body_smg");
+					players_dolphin_dive.headModel = "char_rus_guard_player_head_smg";
+					players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
+						break;
+				}
+			}
+
 			players_dolphin_dive hide();
 			players_dolphin_dive attach(GetWeaponModel(current_weapon), "tag_weapon_right");
 			if(getdvar("cg_thirdperson") == "0") {
