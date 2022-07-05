@@ -80,22 +80,16 @@ init_precache() {
 
 init_powerups() {
 
-    // Random Drops
-    //add_zombie_powerup("double_points", "zmb_pwr_up_double_points", &"ZOMBIE_POWER_UP_DOUBLE_POINTS");
+    //Random Drops
+    add_zombie_powerup("double_points", "zmb_pwr_up_double_points", &"ZOMBIE_POWER_UP_DOUBLE_POINTS");
     add_zombie_powerup("insta_kill", "zmb_pwr_up_insta_kill", &"ZOMBIE_POWER_UP_INSTA_KILL");
-    //add_zombie_powerup("max_ammo", "zmb_pwr_up_max_ammo", &"ZOMBIE_POWER_UP_MAX_AMMO");
-    //add_zombie_powerup("carpenter", "zmb_pwr_up_carpenter", &"ZOMBIE_POWER_UP_CARPENTER");
-    //add_zombie_powerup("death_machine", "zmb_pwr_up_death_machine", &"ZOMBIE_POWER_UP_DEATH_MACHINE");
-	//add_zombie_powerup("nuke", "zmb_pwr_up_nuke", &"ZOMBIE_POWER_UP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
-    //add_zombie_powerup("bonus_points", "zmb_pwr_up_bonus_points", &"ZOMBIE_POWER_UP_BONUS_POINTS");
-    if(level.zombie_vars["enableRandomPerk"] == 1)
-	{
-		add_zombie_powerup("random_perk", "zmb_pwr_up_perks_a_cola_world", &"ZOMBIE_POWER_UP_RANDOM_PERK");
-	}
-    if(level.zombie_vars["enableFireSale"] == 1)
-	{
-        add_zombie_powerup("fire_sale", "zmb_pwr_up_fire_sale", &"ZOMBIE_POWER_UP_FIRE_SALE");
-    }
+    add_zombie_powerup("max_ammo", "zmb_pwr_up_max_ammo", &"ZOMBIE_POWER_UP_MAX_AMMO");
+    add_zombie_powerup("carpenter", "zmb_pwr_up_carpenter", &"ZOMBIE_POWER_UP_CARPENTER");
+    add_zombie_powerup("death_machine", "zmb_pwr_up_death_machine", &"ZOMBIE_POWER_UP_DEATH_MACHINE");
+	add_zombie_powerup("nuke", "zmb_pwr_up_nuke", &"ZOMBIE_POWER_UP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
+    add_zombie_powerup("bonus_points", "zmb_pwr_up_bonus_points", &"ZOMBIE_POWER_UP_BONUS_POINTS");
+	add_zombie_powerup("random_perk", "zmb_pwr_up_perks_a_cola_world", &"ZOMBIE_POWER_UP_RANDOM_PERK");
+    add_zombie_powerup("fire_sale", "zmb_pwr_up_fire_sale", &"ZOMBIE_POWER_UP_FIRE_SALE");
 
     // Randomize the order
     randomize_powerups();
@@ -510,17 +504,26 @@ powerup_setup() {
     struct = level.zombie_powerups[powerup];
     self SetModel(struct.model_name);
 
-    //TUEY Spawn Powerup
+    if(powerup == "fire_sale" && level.zombie_vars["enableFireSale"] == 0) {
+        self Delete();
+        return;
 
-    self thread maps\_sounds::powerup_start_sound();
-
-    self.powerup_name = struct.powerup_name;
-    self.hint = struct.hint;
-
-    if (isDefined(struct.fx)) {
-        self.fx = struct.fx;
     }
+    else if(powerup == "random_perk" && level.zombie_vars["enableRandomPerk"] == 0) {
+        self Delete();
+        return;
 
+    }
+    else {
+        self.powerup_name = struct.powerup_name;
+        self.hint = struct.hint;
+        self thread maps\_sounds::powerup_start_sound();
+
+        if (isDefined(struct.fx)) {
+            self.fx = struct.fx;
+        }
+
+    }
 }
 
 powerup_grab() {
@@ -966,8 +969,8 @@ fire_sale_powerup(drop_item) {
         }
 
         for(i=0;i<level.weapon_cabs.size;i++) {
-            level.zombie_treasure_chest_cost = 20;
-            cost = level.zombie_treasure_chest_cost;
+            level.zombie_weapon_cabinet_cost = 20;
+            cost = level.zombie_weapon_cabinet_cost;
             level.weapon_cabs[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", cost );
             wait 0.05;
         }
@@ -985,8 +988,8 @@ fire_sale_powerup(drop_item) {
         }
 
         for(i=0;i<level.weapon_cabs.size;i++) {
-            level.zombie_treasure_chest_cost = 1900;
-            cost = level.zombie_treasure_chest_cost;
+            level.zombie_weapon_cabinet_cost = 1900;
+            cost = level.zombie_weapon_cabinet_cost;
             level.weapon_cabs[i] SetHintString( &"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", cost );
             wait 0.05;
         }

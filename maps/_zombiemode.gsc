@@ -2297,7 +2297,7 @@ player_reload_sounds()
 
                 self thread maps\_sounds::reload_vox_sound();
 
-                wait 3; //Wait one second to sync sound with reloading to prevent extra sounds playing
+                wait 3; //Wait to sync sound with reloading to prevent extra sounds playing
 			    level.player_is_speaking = 0;
 	        }
         }
@@ -2325,7 +2325,7 @@ player_reload_sounds()
 		        no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "sound_done");
 		        no_ammo_vox_sound waittill("sound_done");
 		        no_ammo_vox_sound Delete();
-                wait 3; //Wait three second to sync sound to prevent extra sounds playing
+                wait 3; //Wait to sync sound to prevent extra sounds playing
 		        level.player_is_speaking = 0;
             }
         }
@@ -2350,7 +2350,7 @@ player_lunge_knife_exert_sounds()
                 self thread maps\_sounds::melee_vox_sound();
 
                 self AllowMelee(true); //Reenables melee without any increase in melee delay
-                wait 1; //Wait one second to sync sound with meleeing to prevent extra sounds playing
+                wait 1.25; //Wait to sync sound with meleeing to prevent extra sounds playing
                 level.player_is_speaking = 0;
             }
 		}
@@ -2384,7 +2384,7 @@ player_throw_grenade_exert_sounds()
                     self thread maps\_sounds::grenade_vox_sound();
 
                     self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
-                    wait 1.25; //Wait one second to sync sound with grenade throwing to prevent extra sounds playing
+                    wait 1.75; //Wait to sync sound with grenade throwing to prevent extra sounds playing
 			        level.player_is_speaking = 0;
 		        }
             }

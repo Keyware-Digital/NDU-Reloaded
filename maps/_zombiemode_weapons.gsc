@@ -1005,40 +1005,7 @@ treasure_chest_glowfx()
 treasure_chest_give_weapon( weapon_string )
 {
 	primaryWeapons = self GetWeaponsListPrimaries(); 
-	current_weapon = undefined;
-
-	if( !self HasPerk("specialty_extraammo")) {
-		self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
-	}
-	else {
-		self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
-	}
-
-	if (WeaponClass( weapon_string ) != "grenade" && current_weapon != "mine_bouncing_betty")
-	{
-		if (primaryWeapons.size >= self.MuleCount)
-		{
-			self TakeWeapon( current_weapon ); 
-
-			self GiveWeapon(weapon_string, 0);
-			self GiveMaxAmmo(weapon_string);
-			self SwitchToWeapon(weapon_string);
-		}
-		else
-		{
-			self GiveWeapon(weapon_string, 0);
-			self GiveMaxAmmo(weapon_string);
-			self SwitchToWeapon(weapon_string);
-		}
-		
-		self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon_string);
-	}
-	else
-	{
-		self TakeWeapon(weapon_string);
-		self GiveWeapon(weapon_string, 0);
-		self GiveMaxAmmo(weapon_string);
-	} 
+	current_weapon = undefined; 
 
 	// This should never be true for the first time.
 	if( primaryWeapons.size >= 2 ) // he has two weapons
