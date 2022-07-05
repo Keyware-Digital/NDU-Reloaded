@@ -81,12 +81,12 @@ init_precache() {
 init_powerups() {
 
     //Random Drops
-    //add_zombie_powerup("double_points", "zmb_pwr_up_double_points", &"ZOMBIE_POWER_UP_DOUBLE_POINTS");
-    //add_zombie_powerup("insta_kill", "zmb_pwr_up_insta_kill", &"ZOMBIE_POWER_UP_INSTA_KILL");
-    //add_zombie_powerup("max_ammo", "zmb_pwr_up_max_ammo", &"ZOMBIE_POWER_UP_MAX_AMMO");
-    //add_zombie_powerup("carpenter", "zmb_pwr_up_carpenter", &"ZOMBIE_POWER_UP_CARPENTER");
-    //add_zombie_powerup("death_machine", "zmb_pwr_up_death_machine", &"ZOMBIE_POWER_UP_DEATH_MACHINE");
-	//add_zombie_powerup("nuke", "zmb_pwr_up_nuke", &"ZOMBIE_POWER_UP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
+    add_zombie_powerup("double_points", "zmb_pwr_up_double_points", &"ZOMBIE_POWER_UP_DOUBLE_POINTS");
+    add_zombie_powerup("insta_kill", "zmb_pwr_up_insta_kill", &"ZOMBIE_POWER_UP_INSTA_KILL");
+    add_zombie_powerup("max_ammo", "zmb_pwr_up_max_ammo", &"ZOMBIE_POWER_UP_MAX_AMMO");
+    add_zombie_powerup("carpenter", "zmb_pwr_up_carpenter", &"ZOMBIE_POWER_UP_CARPENTER");
+    add_zombie_powerup("death_machine", "zmb_pwr_up_death_machine", &"ZOMBIE_POWER_UP_DEATH_MACHINE");
+	add_zombie_powerup("nuke", "zmb_pwr_up_nuke", &"ZOMBIE_POWER_UP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
     add_zombie_powerup("bonus_points", "zmb_pwr_up_bonus_points", &"ZOMBIE_POWER_UP_BONUS_POINTS");
 	add_zombie_powerup("random_perk", "zmb_pwr_up_perks_a_cola_world", &"ZOMBIE_POWER_UP_RANDOM_PERK");
     add_zombie_powerup("fire_sale", "zmb_pwr_up_fire_sale", &"ZOMBIE_POWER_UP_FIRE_SALE");
@@ -345,23 +345,11 @@ randomize_powerups() {
     level.zombie_powerup_array = array_randomize(level.zombie_powerup_array);
 }
 
-get_next_powerup()
-{
-	powerup = level.zombie_powerup_array[ level.zombie_powerup_index ];
-	level.zombie_powerup_index++;
-	if( level.zombie_powerup_index >= level.zombie_powerup_array.size )
-	{
-		level.zombie_powerup_index = 0;
-		randomize_powerups();
-	}
-	return powerup;
-}
-
 get_valid_powerup()
 {
 
 	powerup = get_next_powerup();
-	while( 1 )
+	while(1)
 	{	
         if(powerup == "fire_sale" && level.zombie_vars["enableFireSale"] == 0) {
             powerup = get_next_powerup();
@@ -373,9 +361,21 @@ get_valid_powerup()
         }
 		else
 		{
-			return( powerup );
+			return powerup;
 		}
 	}
+}
+
+get_next_powerup()
+{
+	powerup = level.zombie_powerup_array[ level.zombie_powerup_index ];
+	level.zombie_powerup_index++;
+	if( level.zombie_powerup_index >= level.zombie_powerup_array.size )
+	{
+		level.zombie_powerup_index = 0;
+		randomize_powerups();
+	}
+	return powerup;
 }
 
 get_num_window_destroyed() {

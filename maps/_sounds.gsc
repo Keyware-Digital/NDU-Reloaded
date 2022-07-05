@@ -87,16 +87,16 @@ phd_explosion_sound() {
 
 }
 
-mystery_box_lock_sound(chest) {
-    mystery_box_lock_sound = Spawn("script_origin", chest.origin);
+mystery_box_lock_sound() {
+    mystery_box_lock_sound = Spawn("script_origin", self.origin);
 	mystery_box_lock_sound PlaySound("mystery_box_lock", "sound_done");
 	mystery_box_lock_sound waittill("sound_done");
 	mystery_box_lock_sound Delete();
 
 }
 
-mystery_box_unlock_sound(chest) {
-	mystery_box_unlock_sound = Spawn("script_origin", chest.origin);
+mystery_box_unlock_sound() {
+	mystery_box_unlock_sound = Spawn("script_origin", self.origin);
 	mystery_box_unlock_sound PlaySound("mystery_box_unlock", "sound_done");
 	mystery_box_unlock_sound waittill("sound_done");
 	mystery_box_unlock_sound Delete();

@@ -928,7 +928,7 @@ treasure_chest_weapon_spawn( chest, player )
             chest waittill("trigger", player);
             if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
             {
-				player thread maps\_sounds::purchase_sound();
+				player thread maps\_sounds::mystery_box_unlock_sound();
                 player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
                 break;
             }
@@ -938,8 +938,6 @@ treasure_chest_weapon_spawn( chest, player )
 
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
-
-		self thread maps\_sounds::mystery_box_unlock_sound();
 
         model Delete();
 		level.zombie_mystery_box_padlock = 0;
