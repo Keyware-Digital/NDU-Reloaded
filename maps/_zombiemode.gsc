@@ -2281,11 +2281,11 @@ player_reload_sounds()
 	        for(i=0;i<zombies.size;i++)
 	        {
 
-		        if (Distance(zombies[i].origin, self.origin) > 15 * 15)
+		        if (zombies[i].origin[2] < self.origin[2] + 80 && zombies[i].origin[2] > self.origin[2] - 80 && Distance(zombies[i].origin, self.origin) > 15 * 15)
 		        {
 			        level.zombies_are_close = 0;
 		        }
-		        else if (Distance(zombies[i].origin, self.origin) <= 15 * 15)
+		        else if (zombies[i].origin[2] < self.origin[2] + 80 && zombies[i].origin[2] > self.origin[2] - 80 && Distance(zombies[i].origin, self.origin) <= 15 * 15)
 		        {
 			        level.zombies_are_close = 1;
 		        }
