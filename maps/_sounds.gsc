@@ -44,8 +44,7 @@ reload_vox_sound() {
 
 powerup_start_sound() {
     level.powerup_sound = Spawn("script_origin", self.origin);
-	level.powerup_sound PlaySound("spawn_powerup", "sound_done");
-    level.powerup_sound waittill("sound_done");
+	level.powerup_sound PlaySound("spawn_powerup");
     level.powerup_sound PlayLoopSound("spawn_powerup_loop");
 
 }
