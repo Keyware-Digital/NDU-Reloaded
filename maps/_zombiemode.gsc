@@ -591,7 +591,7 @@ onPlayerSpawned() {
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
                 self thread player_reload_sounds();
-                //self thread player_no_ammmo_sounds();
+                self thread player_no_ammmo_sounds();
                 self thread player_lunge_knife_exert_sounds();
                 self thread player_throw_grenade_exert_sounds();
             }
@@ -2305,8 +2305,7 @@ player_reload_sounds()
 	}
 }
 
-//Probably broken right now
-/*player_no_ammmo_sounds()
+player_no_ammmo_sounds()
 {
 	self endon( "death" );
 
@@ -2316,22 +2315,29 @@ player_reload_sounds()
 
         if(level.player_is_speaking != 1) {
 
-            if(self.no_ammo && totalCurrentWeaponAmmo == 0) {
-                self notify("no_ammo");
-                index = maps\_zombiemode_weapons::get_player_index(self);
-		        level.player_is_speaking = 1;
-                noAmmoSound = "_no_ammo";
-                no_ammo_vox_sound = Spawn("script_origin", self.origin);
-		        no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "sound_done");
-		        no_ammo_vox_sound waittill("sound_done");
-		        no_ammo_vox_sound Delete();
-                wait 3; //Wait to sync sound to prevent extra sounds playing
-		        level.player_is_speaking = 0;
+            current_weapon = self GetCurrentWeapon();
+            for ( i = 0; i < level.filtered_weapon.size; i++ )
+            {
+                if ( current_weapon == level.filtered_weapon[i])
+                {
+                    return;
+                }
+            }
+
+            totalCurrentWeaponAmmo = self GetAmmoCount(self GetCurrentWeapon()); //current clip + reserve ammo
+            if(totalCurrentWeaponAmmo == 0) {
+			    level.player_is_speaking = 1;
+                    
+                self thread maps\_sounds::no_ammo_vox();
+
+			    level.player_is_speaking = 0;
+                while(totalCurrentWeaponAmmo == self GetAmmoCount(self GetCurrentWeapon())) //Wait for the ammo to change to something other than what we caught during low ammo
+			        wait 0.1;
             }
         }
-        wait 0.1;   
+        wait 0.25;   
 	}
-}*/
+}
 
 player_lunge_knife_exert_sounds()
 {
@@ -2367,6 +2373,7 @@ player_throw_grenade_exert_sounds()
         wait 0.1;
 
         if(level.player_is_speaking != 1) {
+
             current_offhand = self GetCurrentOffHand();
             for ( i = 0; i < level.filtered_weapon.size; i++ )
             {
@@ -2374,20 +2381,20 @@ player_throw_grenade_exert_sounds()
                 {
                     return;
                 }
-            
-		        if(self IsThrowingGrenade() && current_offhand != level.filtered_weapon[i])
-                {
-                    self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
-
-			        level.player_is_speaking = 1;
-
-                    self thread maps\_sounds::grenade_vox_sound();
-
-                    self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
-                    wait 1.75; //Wait to sync sound with grenade throwing to prevent extra sounds playing
-			        level.player_is_speaking = 0;
-		        }
             }
+            
+		    if(self IsThrowingGrenade())
+            {
+                self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
+
+			    level.player_is_speaking = 1;
+
+                self thread maps\_sounds::grenade_vox_sound();
+
+                self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
+                wait 1.75; //Wait to sync sound with grenade throwing to prevent extra sounds playing
+			    level.player_is_speaking = 0;
+		    }
         }    
         wait 0.1;   
     }

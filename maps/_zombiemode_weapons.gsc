@@ -917,6 +917,8 @@ treasure_chest_weapon_spawn( chest, player )
 
 		self thread maps\_sounds::mystery_box_lock_sound();
 
+		wait 2;
+
 		cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
 		
         chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", cost);
@@ -929,10 +931,12 @@ treasure_chest_weapon_spawn( chest, player )
             if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
             {
 				player thread maps\_sounds::mystery_box_unlock_sound();
+
+				wait 2;
+
                 player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
                 break;
             }
-			player thread maps\_sounds::no_purchase_sound();
             wait 0.05;
         }
 

@@ -42,6 +42,16 @@ reload_vox_sound() {
 
 }
 
+no_ammo_vox() {
+
+    index = maps\_zombiemode_weapons::get_player_index(self);
+    noAmmoSound = "_no_ammo";
+    no_ammo_vox_sound = Spawn("script_origin", self.origin);
+	no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "sound_done");
+	no_ammo_vox_sound waittill("sound_done");
+	no_ammo_vox_sound Delete();
+}
+
 powerup_start_sound() {
     level.powerup_sound = Spawn("script_origin", self.origin);
 	level.powerup_sound PlaySound("spawn_powerup");

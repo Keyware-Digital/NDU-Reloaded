@@ -21,9 +21,7 @@ main() {
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
-	players = GetPlayers();
-	array_thread(players, ::reloading_monitor);
-    //array_thread(getPlayers(), ::no_ammo_monitor);
+	array_thread(GetPlayers(), ::reloading_monitor);
     maps\_walking_anim::main();
 
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box
@@ -391,28 +389,3 @@ reloading_monitor()
         }
 	}
 }
-
-//Probably broken right now
-/*no_ammo_monitor()
-{
-    while(1)
-    {
-        self.no_ammo = false;
-        self waittill("no_ammo");
-        current_weapon = self GetCurrentWeapon();
-
-        for (i = 0; i < level.filtered_weapons.size; i++)
-        {
-            if (current_weapon == level.filtered_weapon[i])
-            {
-                return;
-            }
-        }
-
-        totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); //current clip + reserve ammo
-        self.no_ammo = true;
-        while(totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon)) { //Wait for the ammo to change to something other than what we caught during low ammo
-			wait 0.1;
-        }
-    }
-}*/
