@@ -14,6 +14,10 @@
 #ifdef PC
 	#define LOGO_START_X			-300
 	#define LOGO_START_Y			-160
+	#define CHARACTER_PORTRAIT_X			50
+	#define CHARACTER_PORTRAIT_Y			-225
+	#define CHARACTER_BIO_X			-350
+	#define CHARACTER_BIO_Y			100
 	#undef	SIGNED_IN_RECT
 	#define SIGNED_IN_RECT			-350 60 250 15
 #endif
@@ -270,7 +274,7 @@
                itemDef                                                      
                {                                                         
                   name         "character_bio_menu_1"
-                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER  
+                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM 
                   forecolor      1 1 1 1
                   style         WINDOW_STYLE_SHADER
                   visible when   (localVarInt( ui_highlight ) == 15);
@@ -279,7 +283,7 @@
                itemDef                                                      
                {                                                         
                   name         "character_bio_portrait_1"
-                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER   
+                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
                   forecolor      1 1 1 1
                   style         WINDOW_STYLE_SHADER
                   background      "plr_0_character_bio_portrait"
@@ -289,7 +293,7 @@
                itemDef                                                      
                {                                                         
                   name         "character_bio_portrait_2"
-                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER  
+                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
                   forecolor      1 1 1 1
                   style         WINDOW_STYLE_SHADER
                   background      "plr_1_character_bio_portrait"
@@ -298,7 +302,7 @@
                itemDef                                                      
                {                                                         
                   name         "character_bio_portrait_3"
-                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER   
+                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
                   forecolor      1 1 1 1
                   style         WINDOW_STYLE_SHADER
                   background      "plr_2_character_bio_portrait"
@@ -308,7 +312,7 @@
                itemDef                                                      
                {                                                         
                   name         "character_bio_portrait_4"      
-                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER   
+                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
                   forecolor      1 1 1 1      
                   style         WINDOW_STYLE_SHADER
                   background      "plr_3_character_bio_portrait"
@@ -322,7 +326,7 @@
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 600 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			      textfont		UI_FONT_NORMAL
 				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
@@ -339,7 +343,7 @@
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 600 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			      textfont		UI_FONT_NORMAL
 				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
@@ -356,7 +360,7 @@
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 600 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			      textfont		UI_FONT_NORMAL
 				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
@@ -373,7 +377,7 @@
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 600 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			      textfont		UI_FONT_NORMAL
 				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
