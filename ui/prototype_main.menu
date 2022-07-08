@@ -318,12 +318,13 @@
 			   itemDef 
 			   {
 				  name			"character_bio_paragraph_1"
-			      text			"John Johnson, was a new recruit of Enigma squad, freshly recruited from the frontlines of WW2 for demonstrating an exemplary term of service. Unfortunately, his first mission might even be his last, as Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his new team members. Johnson and Jones are now seemingly stranded at the bunker, facing waves of the undead in a newly founded, fragile alliance."
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE"
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
 			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
 			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
 			      textscale		TEXTSIZE_SMALL
 			      visible when   (localVarInt( ui_highlight ) == 1);
@@ -334,12 +335,13 @@
 			   itemDef 
 			   {
 				  name			"character_bio_paragraph_2"
-			      text			"Not much is known about Siegfried Steiner, except that Enigma Squad found him in the bunker near the crash site as a lone, shell shocked survivor. It can be assumed he must be there for a reason though. Although Steiner's English isn't great, one thing in agreement is that if he doesn't cooperate with his newly encountered acquaintances, they will all surely end up like the undead they face."
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO"
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
 			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
 			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
 			      textscale		TEXTSIZE_SMALL
 			      visible when   (localVarInt( ui_highlight ) == 2);
@@ -350,12 +352,13 @@
 			   itemDef 
 			   {
 				  name			"character_bio_paragraph_3"
-			      text			"Theodore Jones was leader of Enigma Squad, a team of four crack operatives originally sent to investigate a mysterious bunker on an abandoned airfield in Poland, thought to hide a rumoured Group 935 top secret research facility. Unfortunately, Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his team. Jones and surviving member Johson are now stranded at the bunker, determined to finish their mission or die trying."
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE"
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
 			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
 			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
 			      textscale		TEXTSIZE_SMALL
 			      visible when   (localVarInt( ui_highlight ) == 3);
@@ -366,12 +369,13 @@
 			   itemDef 
 			   {
 				  name			"character_bio_paragraph_4"
-			      text			"Operating as a lone scout, Artyom Belinski was ordered by the NKVD to investigate the bunker and it's surrounding area for the Red Army, Fuelled by the belief his estranged half-brother might be there, Belinski began his mission. His cocksure and suspicious behaviour is of concern for his new reluctant allies. Is there something bigger afoot?"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR"
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
 			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
 			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
 			      textscale		TEXTSIZE_SMALL
 			      visible when   (localVarInt( ui_highlight ) == 4);
@@ -380,13 +384,13 @@
 			      autowrapped
 			   }
 
-			   CHOICE_MENU_TITLE( "CHARACTER BIOS" )
-			   CHOICE_BUTTON_VIS( 14, "Back", close credits_menu, when(dvarInt("sub_menu") == 1 ); )
-			   CHOICE_BUTTON_VIS( 1, "John Johnson", 1, when(dvarInt("sub_menu") == 1 ); )
+			   CHOICE_MENU_TITLE( "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TITLE" )
+			   CHOICE_BUTTON_VIS( 14, "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_EXIT", close credits_menu, when(dvarInt("sub_menu") == 1 ); )
+			   CHOICE_BUTTON_VIS( 1, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_ONE", 1, when(dvarInt("sub_menu") == 1 ); )
 			   CHOICE_SEPARATOR( CHOICE_BIO_SEP_1 )            
-			   CHOICE_BUTTON_VIS( 2, "Siegfried Steiner", 1, when(dvarInt("sub_menu") == 1 ); )      
-			   CHOICE_BUTTON_VIS( 3, "Theodore Jones", 1, when(dvarInt("sub_menu") == 1 ); )    
-			   CHOICE_BUTTON_VIS( 4, "Artyom Belinski", 1, when(dvarInt("sub_menu") == 1 ); )
+			   CHOICE_BUTTON_VIS( 2, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_TWO", 1, when(dvarInt("sub_menu") == 1 ); )      
+			   CHOICE_BUTTON_VIS( 3, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_THREE", 1, when(dvarInt("sub_menu") == 1 ); )    
+			   CHOICE_BUTTON_VIS( 4, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_FOUR", 1, when(dvarInt("sub_menu") == 1 ); )
                
             }
             
@@ -502,7 +506,7 @@
 		#include "ui/info_box.inc"
 		CHOICE_MENU_TITLE( "@MENU_MAIN_MENU" )
 #else
-		CHOICE_MENU_TITLE( "Nacht Der Untoten: Reloaded" )
+		CHOICE_MENU_TITLE( "@PROTOTYPE_ZOMBIE_MENU_TITLE" )
 #endif // #ifdef CONSOLE
 
 		itemDef
@@ -557,17 +561,17 @@
 			open credits_menu
 				
 #ifdef PC
-			CHOICE_BUTTON_VIS( 1, "Play Solo", exec "map nazi_zombie_prototype";, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_BUTTON_VIS( 2, "Play Co-op", open main_online; LOCAL_ZOMBIE_RESET, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_BUTTON_VIS( 1, "@PROTOTYPE_ZOMBIE_MENU_SOLO", exec "map nazi_zombie_prototype";, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_BUTTON_VIS( 2, "@PROTOTYPE_ZOMBIE_MENU_COOP", open main_online; LOCAL_ZOMBIE_RESET, when( !localvarBool( ui_hideBack ) ); )
 			CHOICE_SEPARATOR_VIS( CHOICE_SEP_1, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_BUTTON_VIS( 3, "Select Online Profile", execOnDvarIntValue dw_loggedin 0 "dwconnect"; setdvar ui_playerProfileAlreadyChosen 0; open player_profile, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_BUTTON_VIS( 4, "Friends/Invites", open menu_pc_friends;, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_BUTTON_VIS( 3, "@PROTOTYPE_ZOMBIE_MENU_PROFILE", execOnDvarIntValue dw_loggedin 0 "dwconnect"; setdvar ui_playerProfileAlreadyChosen 0; open player_profile, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_BUTTON_VIS( 4, "@PROTOTYPE_ZOMBIE_MENU_NETWORK", open menu_pc_friends;, when( !localvarBool( ui_hideBack ) ); )
 			CHOICE_NEWICON_VIS( 4, "specialty_new", when( hasinvites() || haspendingfriends() ); )
 			CHOICE_SEPARATOR_VIS( CHOICE_SEP_2, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_BUTTON( 5, "Character Bios", open credits_menu; )
-			CHOICE_BUTTON_VIS( 6, "Options", open options_new_pc;, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_BUTTON( 5, "@PROTOTYPE_ZOMBIE_MENU_CHARACTER_BIO", open credits_menu; )
+			CHOICE_BUTTON_VIS( 6, "@PROTOTYPE_ZOMBIE_MENU_OPTIONS", open options_new_pc;, when( !localvarBool( ui_hideBack ) ); )
 			CHOICE_SEPARATOR_VIS( CHOICE_SEP_3, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_BUTTON_VIS( 7, "Quit", open quit_popmenu, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_BUTTON_VIS( 7, "@PROTOTYPE_ZOMBIE_MENU_EXIT", open quit_popmenu, when( !localvarBool( ui_hideBack ) ); )
 			
 #endif // #ifdef PC
 

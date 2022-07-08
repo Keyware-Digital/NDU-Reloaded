@@ -182,4 +182,58 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to Clear Debris [Cost: &&2]"
 REFERENCE           ZOMBIE_BUTTON_BUY_OPEN_DOOR
 LANG_ENGLISH        "Hold ^3&&1 ^7to Open Door [Cost: &&2]"
 
+REFERENCE           ZOMBIE_MENU_TITLE
+LANG_ENGLISH        "Nacht Der Untoten: Reloaded"
+
+REFERENCE           ZOMBIE_MENU_SOLO
+LANG_ENGLISH        "Play Solo"
+
+REFERENCE           ZOMBIE_MENU_COOP
+LANG_ENGLISH        "Play Co-op"
+
+REFERENCE           ZOMBIE_MENU_PROFILE
+LANG_ENGLISH        "Select Online Profile"
+
+REFERENCE           ZOMBIE_MENU_NETWORK
+LANG_ENGLISH        "Friends/Invites"
+
+REFERENCE           ZOMBIE_MENU_CHARACTER_BIO
+LANG_ENGLISH        "Character Bios"
+
+REFERENCE           ZOMBIE_MENU_OPTIONS
+LANG_ENGLISH        "Options"
+
+REFERENCE           ZOMBIE_MENU_EXIT
+LANG_ENGLISH        "Quit"
+
+REFERENCE           ZOMBIE_CHARACTER_BIO_TITLE
+LANG_ENGLISH        "CHARACTER BIOS"
+
+REFERENCE           ZOMBIE_CHARACTER_BIO_EXIT
+LANG_ENGLISH        "Back"
+
+REFERENCE           ZOMBIE_CHARACTER_NAME_ONE
+LANG_ENGLISH        "John Johnson"
+
+REFERENCE           ZOMBIE_CHARACTER_NAME_TWO
+LANG_ENGLISH        "Siegfried Steiner"
+
+REFERENCE           ZOMBIE_CHARACTER_NAME_THREE
+LANG_ENGLISH        "Theodore Jones"
+
+REFERENCE           ZOMBIE_CHARACTER_NAME_FOUR
+LANG_ENGLISH        "Artyom Belinski"
+
+REFERENCE           ZOMBIE_CHARACTER_BIO_ONE
+LANG_ENGLISH        "John Johnson, was a new recruit of Enigma squad, freshly recruited from the frontlines of WW2 for demonstrating an exemplary term of service. Unfortunately, his first mission might even be his last, as Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his new team members. Johnson and Jones are now seemingly stranded at the bunker, facing waves of the undead in a newly founded, fragile alliance."
+
+REFERENCE           ZOMBIE_CHARACTER_BIO_TWO
+LANG_ENGLISH        "Not much is known about Siegfried Steiner, except that Enigma Squad found him in the bunker near the crash site as a lone, shell shocked survivor. It can be assumed he must be there for a reason though. Although Steiner's English isn't great, one thing in agreement is that if he doesn't cooperate with his newly encountered acquaintances, they will all surely end up like the undead they face."
+
+REFERENCE           ZOMBIE_CHARACTER_BIO_THREE
+LANG_ENGLISH        "Theodore Jones was leader of Enigma Squad, a team of four crack operatives originally sent to investigate a mysterious bunker on an abandoned airfield in Poland, thought to hide a rumoured Group 935 top secret research facility. Unfortunately, Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his team. Jones and surviving member Johson are now stranded at the bunker, determined to finish their mission or die trying."
+
+REFERENCE           ZOMBIE_CHARACTER_BIO_FOUR
+LANG_ENGLISH        "Operating as a lone scout, Artyom Belinski was ordered by the NKVD to investigate the bunker and it's surrounding area for the Red Army, Fuelled by the belief his estranged half-brother might be there, Belinski began his mission. His cocksure and suspicious behaviour is of concern for his new reluctant allies. Is there something bigger afoot?"
+
 ENDMARKER
