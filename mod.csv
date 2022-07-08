@@ -10,6 +10,10 @@ material,plr_0_hud_portrait
 material,plr_1_hud_portrait
 material,plr_2_hud_portrait
 material,plr_3_hud_portrait
+material,plr_0_character_bio_portrait
+material,plr_1_character_bio_portrait
+material,plr_2_character_bio_portrait
+material,plr_3_character_bio_portrait
 material,specialty_juggernaut_zombies
 material,specialty_speed_cola_zombies
 material,specialty_double_tap_zombies

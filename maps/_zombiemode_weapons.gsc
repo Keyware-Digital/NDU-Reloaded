@@ -1779,11 +1779,11 @@ ammo_give( weapon )
 	//Should we give ammo to the player
 	give_ammo = false; 
 
-	defaultMagAmmo = WeaponClipSize(weapon); //default clip size
+	defaultMagAmmo = WeaponClipSize(weapon); //default clip/mag size
 
 	defaultWeaponAmmo = WeaponMaxAmmo(weapon); //default reserve ammo
 
-	totalCurrentWeaponAmmo = self GetAmmoCount(weapon); //current clip + reserve ammo
+	totalCurrentWeaponAmmo = self GetAmmoCount(weapon); //current clip/mag + reserve ammo
 
 	//Check to see if ammo belongs to a primary weapon
 	if(weapon != "fraggrenade" && weapon != "stielhandgranate" && weapon != "molotov")

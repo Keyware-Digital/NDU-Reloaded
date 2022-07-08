@@ -47,8 +47,9 @@
 
 #ifdef PC
 	#undef CHOICE_SEP_1
-	#define CHOICE_SEP_1			3
-	#define CHOICE_SEP_2			6
+	#define CHOICE_SEP_1			2
+	#define CHOICE_SEP_2			4
+	#define CHOICE_SEP_3			6
 #endif
 #ifdef CONSOLE
 	#define CHOICE_SEP_1			3
@@ -248,17 +249,140 @@
     // This menu is called to devmap into credits because devmapping from
     // main_text will give main the focus and unlock all the controllers.
     // Having this menu do the devmap prevents main from getting focus.
-	menuDef 
-	{
-		name			credits_menu
-		fullScreen		1				
-		rect			0 0 640 480				// Size and position of the menu
-		focusColor		COLOR_FOCUSED	// Menu focus color for text and items
-		onOpen
-		{
-            execnow "map credits";
-		}
-	}
+
+   #define    CHOICE_BIO_SEP_1      2
+
+   menuDef
+   {
+	  name			credits_menu
+	  fullScreen		1				
+	  rect			0 0 640 480				// Size and position of the menu
+	  soundloop 		"music_mainmenu"
+	  focusColor		COLOR_FOCUSED	// Menu focus color for text and items
+	  visible 1
+	  onEsc  			{ close self; }
+      onOpen
+      {      
+    	setdvar sub_menu "1";
+		
+            menuDef
+            {
+               itemDef                                                      
+               {                                                         
+                  name         "character_bio_menu_1"
+                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER  
+                  forecolor      1 1 1 1
+                  style         WINDOW_STYLE_SHADER
+                  visible when   (localVarInt( ui_highlight ) == 15);
+                  
+               }
+               itemDef                                                      
+               {                                                         
+                  name         "character_bio_portrait_1"
+                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER   
+                  forecolor      1 1 1 1
+                  style         WINDOW_STYLE_SHADER
+                  background      "plr_0_character_bio_portrait"
+                  visible when   (localVarInt( ui_highlight ) == 1);
+                  
+               }
+               itemDef                                                      
+               {                                                         
+                  name         "character_bio_portrait_2"
+                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER  
+                  forecolor      1 1 1 1
+                  style         WINDOW_STYLE_SHADER
+                  background      "plr_1_character_bio_portrait"
+                  visible when   (localVarInt( ui_highlight ) == 2);
+                  
+               }
+               itemDef                                                      
+               {                                                         
+                  name         "character_bio_portrait_3"
+                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER   
+                  forecolor      1 1 1 1
+                  style         WINDOW_STYLE_SHADER
+                  background      "plr_2_character_bio_portrait"
+                  visible when   (localVarInt( ui_highlight ) == 3);
+                  decoration
+               }
+               itemDef                                                      
+               {                                                         
+                  name         "character_bio_portrait_4"      
+                  rect         -375 10 128 128   HORIZONTAL_ALIGN_CENTER HORIZONTAL_ALIGN_CENTER   
+                  forecolor      1 1 1 1      
+                  style         WINDOW_STYLE_SHADER
+                  background      "plr_3_character_bio_portrait"
+                  visible when   (localVarInt( ui_highlight ) == 4);
+                  decoration
+               }
+
+               itemDef
+               {
+                  name         "character_bio_paragraph_1"
+                  rect         -100 -350 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+                  textscale      TEXTSIZE_SMALL
+                  textstyle      ITEM_TEXTSTYLE_NORMAL
+                  textfont      UI_FONT_OBJECTIVE
+                  textalign      ITEM_ALIGN_CENTER
+                  forecolor      1 1 1 1
+                  exp text      ("John Johnson, was a new recruit of Enigma squad, freshly recruited\nfrom the frontlines of WW2 for demonstrating an exemplary term\n of service. Unfortunately, his first mission might even be his last, as Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his new team members.\nJohnson and Jones are now seemingly stranded at the bunker, facing waves of the undead in a newly founded, fragile alliance.")
+                  visible when   (localVarInt( ui_highlight ) == 1);
+                  decoration
+               }
+               itemDef
+               {
+                  name         "character_bio_paragraph_2"
+                  rect         -100 -350 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+                  textscale      TEXTSIZE_SMALL
+                  textstyle      ITEM_TEXTSTYLE_NORMAL
+                  textfont      UI_FONT_OBJECTIVE
+                  textalign      ITEM_ALIGN_CENTER
+                  forecolor      1 1 1 1
+                  exp text      ("Not much is known about Siegfried Steiner, except that Enigma\nSquad found him in the bunker near the crash site as a lone,\nshell shocked survivor.\nIt can be assumed he must be there for a reason though. Although Steiner's English isn't great, one thing in agreement is that if he doesn't cooperate with his newly encountered acquaintances, they will all surely end up like the undead they face.")
+                  visible when   (localVarInt( ui_highlight ) == 2);
+                  decoration
+               }
+               
+               itemDef
+               {
+                  name         "character_bio_paragraph_3"
+                  rect         -100 -350 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+                  textscale      TEXTSIZE_SMALL
+                  textstyle      ITEM_TEXTSTYLE_NORMAL
+                  textfont      UI_FONT_OBJECTIVE
+                  textalign      ITEM_ALIGN_CENTER
+                  forecolor      1 1 1 1
+                  exp text      ("Theodore Jones was leader of Enigma Squad, a team of four crack\noperatives originally sent to investigate a mysterious bunker on an abandoned airfield in Poland, thought to hide a rumoured Group 935 top secret research facility. Unfortunately, Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his team.\nJones and surviving member Johson are now stranded at the bunker, determined to finish their mission or die trying.")
+                  visible when   (localVarInt( ui_highlight ) == 3);
+                  decoration
+               }
+               
+               itemDef
+               {
+                  name         "character_bio_paragraph_4"
+                  rect         -100 -350 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+				  textscale      TEXTSIZE_SMALL
+                  textstyle      ITEM_TEXTSTYLE_NORMAL
+                  textfont      UI_FONT_DEFAULT
+                  textalign      ITEM_ALIGN_CENTER
+                  forecolor      1 1 1 1
+                  exp text      ("Operating as a lone scout, Artyom Belinski was ordered by the NKVD\nto investigate the bunker and it's surrounding area for the Red Army,\nFuelled by the belief his estranged half-brother might be there,\n Belinski began his mission. His cocksure and suspicious behaviour is of concern for his new reluctant allies. Is there something bigger afoot?")
+                  visible when   (localVarInt( ui_highlight ) == 4);
+                  decoration
+               }
+
+			   CHOICE_MENU_TITLE( "CHARACTER BIOS" )
+			   CHOICE_BUTTON_VIS( 14, "Back", close credits_menu, when(dvarInt("sub_menu") == 1 ); )
+			   CHOICE_BUTTON_VIS( 1, "John Johnson", 1, when(dvarInt("sub_menu") == 1 ); )
+			   CHOICE_SEPARATOR( CHOICE_BIO_SEP_1 )            
+			   CHOICE_BUTTON_VIS( 2, "Siegfried Steiner", 1, when(dvarInt("sub_menu") == 1 ); )      
+			   CHOICE_BUTTON_VIS( 3, "Theodore Jones", 1, when(dvarInt("sub_menu") == 1 ); )    
+			   CHOICE_BUTTON_VIS( 4, "Artyom Belinski", 1, when(dvarInt("sub_menu") == 1 ); )
+               
+            }
+            
+      }
 
 	#define LOCAL_ZOMBIE_RESET\
 		exec "set zombiemode 0";
@@ -423,77 +547,22 @@
 			close main_text; \
 			close main; \
 			open credits_menu
-
-#ifdef CONSOLE 
-			CHOICE_BUTTON_BG( 1, 1 )
-			CHOICE_HIGHLIGHT( 1, 1 )
-			CHOICE_BUTTON_VIS_NOHI( 1, "@MENU_SOLO_CAP", SETUP_ACTION_SOLO, when ( !dvarbool( cg_development ) ); )
-			CHOICE_BUTTON_VIS_NOHI( 1, "@MENU_SOLO_CAP", SETUP_ACTION_SOLO, when ( dvarbool( cg_development) ); ) 
-
-		  	CHOICE_BUTTON( 2, "@MENU_COOPERATIVE", open main_online )
-			CHOICE_BUTTON( 3, "@MENU_MULTIPLAYER", setdvar ui_changed_exe 1; exec "wait;wait;wait"; uiScript startMultiplayer )
-
-			//CHOICE_SEPARATOR( CHOICE_SEP_1 )
-			CHOICE_BUTTON_BG( 4, 1 )
-			CHOICE_HIGHLIGHT( 4, 1 )
-			CHOICE_BUTTON_NOHI_EX( 4, "@MENU_OPTIONS_UPPER_CASE", open options;, name optionsselect )
-			CHOICE_BUTTON_NOHI_EX( 4, "@MENU_OPTIONS_UPPER_CASE", open popup_options_noprofile;, name optionsselect_noprofile )
-
-			CHOICE_BUTTON_BG( 5, 1 )
-			CHOICE_HIGHLIGHT( 5, 1 )
-			CHOICE_BUTTON_VIS_NOHI( 5, "@MENU_CREDITS", SETUP_ACTION_CREDITS, when( dvarInt( mis_01 ) < dvarInt( mis_01_unlock ) ); )
-			//CHOICE_BUTTON_VIS( 5, "@MENU_CREDITS", setdvar credits_load 1; setdvar credits_frommenu 1; LOCAL_ZOMBIE_RESET; open credits_menu, when( dvarInt( mis_01 ) >= 20 ); )
-			//CHOICE_BUTTON_VIS_NOHI( 5, "@MENU_CREDITS", setdvar credits_load 1; LOCAL_ZOMBIE_RESET; open credits_menu, when( dvarInt( mis_01 ) < 20 ) )
-			CHOICE_BUTTON_VIS_NOHI( 5, "@MENU_CREDITS", SETUP_ACTION_CREDITS, when( dvarInt( mis_01 ) >= dvarInt( mis_01_unlock ) ) )
-#endif
 				
 #ifdef PC
-			// all buttons will be hidden when option menus are opened, LocalVarBool(ui_hideBack)
-			//CHOICE_BUTTON_VIS( 1, "@MENU_NEWGAME", open popmenu_newgame, when( !localVarBool( ui_hideBack ) ); name new )
-			//CHOICE_BUTTON_BG( 1, when( !localvarBool( ui_hideBack ) ); )
-			//CHOICE_HIGHLIGHT( 1, 1 )
-			//CHOICE_BUTTON_FOCUS_VIS_NOHI_EX( 1, "@MENU_NEWGAME", exec DEVMAP_LEVEL_TRAINING; LOCAL_ZOMBIE_RESET, ;, ;, when( !localvarBool( ui_hideBack ) );, name newgame )
-			//CHOICE_BUTTON_FOCUS_VIS_NOHI_EX( 1, "@MENU_RESUMEGAME", open resume_popmenu; LOCAL_ZOMBIE_RESET, ;, ;, when( !localvarBool( ui_hideBack ) );, name resume )*/
 			CHOICE_BUTTON_VIS( 1, "Play Solo", exec "map nazi_zombie_prototype";, when( !localvarBool( ui_hideBack ) ); )
 			CHOICE_BUTTON_VIS( 2, "Play Co-op", open main_online; LOCAL_ZOMBIE_RESET, when( !localvarBool( ui_hideBack ) ); )
 			CHOICE_SEPARATOR_VIS( CHOICE_SEP_1, when( !localvarBool( ui_hideBack ) ); )
-			//CHOICE_BUTTON_VIS( 3, "Join LAN Game", open menu_lan; LOCAL_ZOMBIE_RESET, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_BUTTON_VIS( 4, "Select Online Profile", execOnDvarIntValue dw_loggedin 0 "dwconnect"; setdvar ui_playerProfileAlreadyChosen 0; open player_profile, when( !localvarBool( ui_hideBack ) ); )
-			//CHOICE_BUTTON_VIS( 5, "@MENU_ARCADEMODE", open popmenu_arcade; LOCAL_ZOMBIE_RESET, when( dvarInt( mis_01 ) >= 20 && !localvarBool( ui_hideBack ) ); )
-			//CHOICE_DBUTTON_VIS( 5, "@MENU_ARCADEMODE", when( dvarInt( mis_01 ) < 20 && !localvarBool( ui_hideBack ) ); )	
-			CHOICE_BUTTON_VIS( 5, "Friends/Invites", open menu_pc_friends;, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_NEWICON_VIS( 5, "specialty_new", when( hasinvites() || haspendingfriends() ); )
-			CHOICE_BUTTON_VIS( 6, "Options", open options_new_pc;, when( !localvarBool( ui_hideBack ) ); )
-
+			CHOICE_BUTTON_VIS( 3, "Select Online Profile", execOnDvarIntValue dw_loggedin 0 "dwconnect"; setdvar ui_playerProfileAlreadyChosen 0; open player_profile, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_BUTTON_VIS( 4, "Friends/Invites", open menu_pc_friends;, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_NEWICON_VIS( 4, "specialty_new", when( hasinvites() || haspendingfriends() ); )
 			CHOICE_SEPARATOR_VIS( CHOICE_SEP_2, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_BUTTON_VIS( 7, "Mods", open mods_menu;, when( !localvarBool( ui_hideBack ) ) )
-						
-			CHOICE_BUTTON_BG( 8, 1 )
-			CHOICE_HIGHLIGHT( 8, 1 )
-			CHOICE_BUTTON_VIS_NOHI( 8, "Credits", SETUP_ACTION_CREDITS, when( !localvarBool( ui_hideBack ) && dvarInt( mis_01 ) < dvarInt( mis_01_unlock ) ); )
-			CHOICE_BUTTON_VIS_NOHI( 8, "Credits", SETUP_ACTION_CREDITS, when( !localvarBool( ui_hideBack ) && dvarInt( mis_01 ) >= dvarInt( mis_01_unlock ) ); )
-			//CHOICE_BUTTON_VIS( 10, "@MENU_MULTIPLAYER", open multi_popmenu, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_BUTTON_VIS( 9, "Quit", open quit_popmenu, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_BUTTON( 5, "Character Bios", open credits_menu; )
+			CHOICE_BUTTON_VIS( 6, "Options", open options_new_pc;, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_SEPARATOR_VIS( CHOICE_SEP_3, when( !localvarBool( ui_hideBack ) ); )
+			CHOICE_BUTTON_VIS( 7, "Quit", open quit_popmenu, when( !localvarBool( ui_hideBack ) ); )
 			
 #endif // #ifdef PC
 
-/*
-#ifdef XENON
-			// ----------------- BEGIN Message of the day ------------------------		
-			#define	INFO_BOX_ORIENT				1
-			#define INFO_BOX_TITLE_HEIGHT		20
-			#define INFO_BOX_WIDTH				(CHOICE_SIZE_X-(INFO_BOX_TITLE_HEIGHT/4))
-			#define INFO_BOX_HEIGHT				126
-			#define INFO_BOX_X					(CHOICE_X_START)
-			#define INFO_BOX_Y					304
-			#define ORIGIN_INFO_BOX_TITLE		INFO_BOX_X INFO_BOX_Y
-	
-			#define INFO_TEXT				dvarString( "motd" )
-			#define INFO_TITLE				"@MENU_MESSAGE_OF_THE_DAY"
-			
-			#include "ui_mp/info_box.inc"
-#endif
-*/
 		#include "ui/safearea.menu"
 	}
 
