@@ -293,8 +293,7 @@
                   forecolor      1 1 1 1
                   style         WINDOW_STYLE_SHADER
                   background      "plr_1_character_bio_portrait"
-                  visible when   (localVarInt( ui_highlight ) == 2);
-                  
+                  visible when   (localVarInt( ui_highlight ) == 2);     
                }
                itemDef                                                      
                {                                                         
@@ -316,61 +315,70 @@
                   visible when   (localVarInt( ui_highlight ) == 4);
                   decoration
                }
-
-               itemDef
-               {
-                  name         "character_bio_paragraph_1"
-                  rect         -100 -350 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
-                  textscale      TEXTSIZE_SMALL
-                  textstyle      ITEM_TEXTSTYLE_NORMAL
-                  textfont      UI_FONT_OBJECTIVE
-                  textalign      ITEM_ALIGN_CENTER
-                  forecolor      1 1 1 1
-                  exp text      ("John Johnson, was a new recruit of Enigma squad, freshly recruited\nfrom the frontlines of WW2 for demonstrating an exemplary term\n of service. Unfortunately, his first mission might even be his last, as Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his new team members.\nJohnson and Jones are now seemingly stranded at the bunker, facing waves of the undead in a newly founded, fragile alliance.")
-                  visible when   (localVarInt( ui_highlight ) == 1);
-                  decoration
-               }
-               itemDef
-               {
-                  name         "character_bio_paragraph_2"
-                  rect         -100 -350 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
-                  textscale      TEXTSIZE_SMALL
-                  textstyle      ITEM_TEXTSTYLE_NORMAL
-                  textfont      UI_FONT_OBJECTIVE
-                  textalign      ITEM_ALIGN_CENTER
-                  forecolor      1 1 1 1
-                  exp text      ("Not much is known about Siegfried Steiner, except that Enigma\nSquad found him in the bunker near the crash site as a lone,\nshell shocked survivor.\nIt can be assumed he must be there for a reason though. Although Steiner's English isn't great, one thing in agreement is that if he doesn't cooperate with his newly encountered acquaintances, they will all surely end up like the undead they face.")
-                  visible when   (localVarInt( ui_highlight ) == 2);
-                  decoration
-               }
-               
-               itemDef
-               {
-                  name         "character_bio_paragraph_3"
-                  rect         -100 -350 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
-                  textscale      TEXTSIZE_SMALL
-                  textstyle      ITEM_TEXTSTYLE_NORMAL
-                  textfont      UI_FONT_OBJECTIVE
-                  textalign      ITEM_ALIGN_CENTER
-                  forecolor      1 1 1 1
-                  exp text      ("Theodore Jones was leader of Enigma Squad, a team of four crack\noperatives originally sent to investigate a mysterious bunker on an abandoned airfield in Poland, thought to hide a rumoured Group 935 top secret research facility. Unfortunately, Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his team.\nJones and surviving member Johson are now stranded at the bunker, determined to finish their mission or die trying.")
-                  visible when   (localVarInt( ui_highlight ) == 3);
-                  decoration
-               }
-               
-               itemDef
-               {
-                  name         "character_bio_paragraph_4"
-                  rect         -100 -350 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
-				  textscale      TEXTSIZE_SMALL
-                  textstyle      ITEM_TEXTSTYLE_NORMAL
-                  textfont      UI_FONT_DEFAULT
-                  textalign      ITEM_ALIGN_CENTER
-                  forecolor      1 1 1 1
-                  exp text      ("Operating as a lone scout, Artyom Belinski was ordered by the NKVD\nto investigate the bunker and it's surrounding area for the Red Army,\nFuelled by the belief his estranged half-brother might be there,\n Belinski began his mission. His cocksure and suspicious behaviour is of concern for his new reluctant allies. Is there something bigger afoot?")
-                  visible when   (localVarInt( ui_highlight ) == 4);
-                  decoration
-               }
+			   itemDef 
+			   {
+				  name			"character_bio_paragraph_1"
+			      text			"John Johnson, was a new recruit of Enigma squad, freshly recruited from the frontlines of WW2 for demonstrating an exemplary term of service. Unfortunately, his first mission might even be his last, as Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his new team members. Johnson and Jones are now seemingly stranded at the bunker, facing waves of the undead in a newly founded, fragile alliance."
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			      textfont		UI_FONT_NORMAL
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 1);
+			      mouseEnter		{ play "mouse_over"; }
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_paragraph_2"
+			      text			"Not much is known about Siegfried Steiner, except that Enigma Squad found him in the bunker near the crash site as a lone, shell shocked survivor. It can be assumed he must be there for a reason though. Although Steiner's English isn't great, one thing in agreement is that if he doesn't cooperate with his newly encountered acquaintances, they will all surely end up like the undead they face."
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			      textfont		UI_FONT_NORMAL
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 2);
+			      mouseEnter		{ play "mouse_over"; }
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_paragraph_3"
+			      text			"Theodore Jones was leader of Enigma Squad, a team of four crack operatives originally sent to investigate a mysterious bunker on an abandoned airfield in Poland, thought to hide a rumoured Group 935 top secret research facility. Unfortunately, Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his team. Jones and surviving member Johson are now stranded at the bunker, determined to finish their mission or die trying."
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			      textfont		UI_FONT_NORMAL
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 3);
+			      mouseEnter		{ play "mouse_over"; }
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_paragraph_4"
+			      text			"Operating as a lone scout, Artyom Belinski was ordered by the NKVD to investigate the bunker and it's surrounding area for the Red Army, Fuelled by the belief his estranged half-brother might be there, Belinski began his mission. His cocksure and suspicious behaviour is of concern for his new reluctant allies. Is there something bigger afoot?"
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			340 -360 440 400 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			      textfont		UI_FONT_NORMAL
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 4);
+			      mouseEnter		{ play "mouse_over"; }
+			      decoration
+			      autowrapped
+			   }
 
 			   CHOICE_MENU_TITLE( "CHARACTER BIOS" )
 			   CHOICE_BUTTON_VIS( 14, "Back", close credits_menu, when(dvarInt("sub_menu") == 1 ); )
