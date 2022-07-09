@@ -321,69 +321,193 @@
                }
 			   itemDef 
 			   {
-				  name			"character_bio_paragraph_1"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE"
+				  name			"character_bio_1_paragraph_1"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_ONE"
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 600 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			      textfont		UI_FONT_NORMAL
 				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
 			      textscale		TEXTSIZE_SMALL
 			      visible when   (localVarInt( ui_highlight ) == 1);
-			      mouseEnter		{ play "mouse_over"; }
 			      decoration
 			      autowrapped
 			   }
 			   itemDef 
 			   {
-				  name			"character_bio_paragraph_2"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO"
+				  name			"character_bio_1_paragraph_2"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_TWO"
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 600 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y+160) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 1);
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_1_paragraph_3"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_THREE"
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y+320) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 1);
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_2_paragraph_1"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_ONE"
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			      textfont		UI_FONT_NORMAL
 				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
 			      textscale		TEXTSIZE_SMALL
 			      visible when   (localVarInt( ui_highlight ) == 2);
-			      mouseEnter		{ play "mouse_over"; }
 			      decoration
 			      autowrapped
 			   }
 			   itemDef 
 			   {
-				  name			"character_bio_paragraph_3"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE"
+				  name			"character_bio_2_paragraph_2"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_TWO"
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 600 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y+160) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 2);
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_2_paragraph_3"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_THREE"
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y+320) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 2);
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_3_paragraph_1"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_ONE"
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			      textfont		UI_FONT_NORMAL
 				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
 			      textscale		TEXTSIZE_SMALL
 			      visible when   (localVarInt( ui_highlight ) == 3);
-			      mouseEnter		{ play "mouse_over"; }
 			      decoration
 			      autowrapped
 			   }
 			   itemDef 
 			   {
-				  name			"character_bio_paragraph_4"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR"
+				  name			"character_bio_3_paragraph_2"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_TWO"
 			      type			1
 			      style			WINDOW_STYLE_FILLED
 			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 600 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y+160) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 3);
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_3_paragraph_3"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_THREE"
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y+320) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 3);
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_4_paragraph_1"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_ONE"
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			      textfont		UI_FONT_NORMAL
 				  forecolor		0.7529 0.7647 0.7686 1
 			      textalign		ITEM_ALIGN_LEFT
 			      textscale		TEXTSIZE_SMALL
 			      visible when   (localVarInt( ui_highlight ) == 4);
-			      mouseEnter		{ play "mouse_over"; }
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_4_paragraph_2"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_TWO"
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y+160) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 4);
+			      decoration
+			      autowrapped
+			   }
+			   itemDef 
+			   {
+				  name			"character_bio_4_paragraph_3"
+				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_THREE"
+			      type			1
+			      style			WINDOW_STYLE_FILLED
+			      textstyle		ITEM_TEXTSTYLE_SHADOWED
+			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y+320) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+			      textfont		UI_FONT_NORMAL
+				  forecolor		0.7529 0.7647 0.7686 1
+			      textalign		ITEM_ALIGN_LEFT
+			      textscale		TEXTSIZE_SMALL
+			      visible when   (localVarInt( ui_highlight ) == 4);
 			      decoration
 			      autowrapped
 			   }
