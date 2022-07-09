@@ -225,38 +225,39 @@ REFERENCE           ZOMBIE_CHARACTER_NAME_FOUR
 LANG_ENGLISH        "Artyom Belinski"
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_ONE
-LANG_ENGLISH        "John 'J.J' Johnson was a new recruit of Enigma squad, freshly recruited from the frontlines of WW2 for demonstrating an exemplary term of service. Unfortunately, his first mission might even be his last, as Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his new team members. Johnson and Jones are now seemingly stranded at the bunker, facing waves of the undead in a newly founded, fragile alliance."
+LANG_ENGLISH        "Every war needs a soldier like John Johnson. A resourceful, tenacious soldier who thinks on their feet and is fiercely loyal to their unit."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_TWO
-LANG_ENGLISH        "Paragraph 2"
+LANG_ENGLISH        "In a twist of fates which saw Johnson fighting alongside Theodore Jones during the Battle of Okinawa, Johnson proved his worth, holding back the relentless waves of Japanese banzai charges, with little to no ammunition. It is no surprise that Johnson was handpicked by Jones to join Enigma Squad."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_THREE
-LANG_ENGLISH        "Paragraph 3"
+LANG_ENGLISH        "Unfortunately, his first mission might even be his last, as Enigma Squads plane was shot down and crash landed near the bunker, immediately killing two of his new team members. Johnson and Jones are now seemingly stranded at the bunker, facing waves of the undead in a newly founded, fragile alliance."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_ONE
-LANG_ENGLISH        "Siegfried Steiner.  Wehrmacht veteran. Infamous on the battlefield for being near unkillable. Feared amongst all Allied troops for his impressive number of confirmed kills which he supposedly etches on the inside of his helmet."
+LANG_ENGLISH        "Siegfried Steiner. Wehrmacht veteran. Infamous on the battlefield for being virtually un-killable. Feared amongst all Allied troops for his impressive number of confirmed kills which he supposedly etches on the inside of his helmet."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_TWO
-LANG_ENGLISH        "Intel suggests Steiner's reputation alone had him selected by Group 935 for his new mission in the bunker. Unfortunately for Steiner his mission would be cut short by waves of the undead, leaving him as the lone, shell shocked survivor."
+LANG_ENGLISH        "Intel suggests Steiner's reputation alone had him selected by Group 935 for his new mission in the bunker. Unfortunately for Steiner, his mission would be cut short by waves of the undead leaving him as the lone, shell shocked survivor."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_THREE
 LANG_ENGLISH        "Although Steiner's English isn't great, one thing he seems to realise is that if he doesn't cooperate with his newly encountered acquaintances, they will all surely end up like the undead they face."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_ONE
-LANG_ENGLISH        "Theodore 'T.J' Jones was leader of the newly assembled Enigma Squad, a task force of four crack operatives set up by the United States. Their first mission was to investigate a mysterious bunker on an abandoned airfield in Poland, thought to hide a rumoured Group 935 top secret research facility. Unfortunately, Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his team. Jones and surviving member Johnson are now stranded at the bunker, determined to finish their mission or die trying."
+LANG_ENGLISH        "Known for his hands on approach, Lieutenant Theodore Jones was no stranger to combat and refused to let his troops fight alone. A true leader. It was this doctrine that saw Jones appointed leader of the newly assembled Enigma Squad; a task force of four crack operatives set up by the United States."
+
 REFERENCE           ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_TWO
-LANG_ENGLISH        "Paragraph 2"
+LANG_ENGLISH        "Enigma Squads first assignment was to investigate a mysterious bunker on an abandoned airfield in Poland, thought to hide a rumoured Group 935 top secret research facility."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_THREE
-LANG_ENGLISH        "Paragraph 3"
+LANG_ENGLISH        "Unfortunately, Enigma squads plane was shot down and crash landed near the bunker, immediately killing two of his team. Jones and surviving member Johnson are now stranded at the bunker, determined to finish their mission or die trying."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_ONE
-LANG_ENGLISH        "Operating as a lone scout, Artyom Belinski was ordered by the NKVD to investigate the bunker and it's surrounding area for the Red Army. Fuelled by the belief his estranged half-brother might be there, Belinski began his mission. His cocksure and suspicious behaviour is of concern for his new reluctant allies. Is there something bigger afoot?"
+LANG_ENGLISH        "None have lived a life quite as tragic as Artyom Belinski. Before the war, Belinski was homeless, broke, and estranged from his family. In a way, being conscripted into the Red Army saved his life."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_TWO
-LANG_ENGLISH        "Paragraph 2"
+LANG_ENGLISH        "After surviving the Reichstag onslaught, Belinski caught the attention of NKVD officers and was subsequently recruited into a destruction battalion to investigate a mysterious bunker on an abandoned airfield in Poland, thought to hide a rumoured Group 935 top secret research facility."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_THREE
-LANG_ENGLISH        "Paragraph 3"
+LANG_ENGLISH        "Operating as a lone scout and fuelled by the belief his estranged half-brother might be there, Belinski began his mission, only to find waves of the undead have overrun the bunker. Belinski now has no choice but to work in a reluctant allegiance with survivors found across the airfield, which goes against his taciturn nature."
 
 ENDMARKER
