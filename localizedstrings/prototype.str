@@ -110,6 +110,9 @@ LANG_ENGLISH        "M1897 'Trench Gun'"
 REFERENCE           ZOMBIE_WEAPON_SPRINGFIELD
 LANG_ENGLISH        "M1903 Springfield"
 
+REFERENCE           ZOMBIE_WEAPON_SPRINGFIELD_SCOPED
+LANG_ENGLISH        "M1903 Springfield w/ Scope"
+
 REFERENCE           ZOMBIE_WEAPON_STEN
 LANG_ENGLISH        "Sten MK V w/ Extended Mag"
 

@@ -206,8 +206,10 @@ init_weapons()
 	add_zombie_weapon( "ppsh41", "", 0 );
 	add_zombie_weapon( "ppsh41_drum", "", 0 );
 	add_zombie_weapon( "perks_a_cola", "", 0 );
+	add_zombie_weapon( "springfield_scoped_zombie", "", 0 );
 	add_zombie_weapon( "stg44_pap", "", 0, 6 ); 
 	add_zombie_weapon( "sten_mk5", "", 0 );
+	add_zombie_weapon( "type99_lmg", "", 0 );
 	//add_zombie_weapon( "zombie_cymbal_monkey", &"ZOMBIE_WEAPON_SATCHEL_2000", 2000, 3 );
 	add_zombie_weapon( "zombie_bowie_flourish",	"", 0 );
 	add_zombie_weapon( "zombie_type100_smg", "", 0 );
@@ -281,7 +283,6 @@ init_weapons()
 	add_zombie_weapon( "fg42", "", 0 );
 	add_zombie_weapon( "fg42_scoped", "", 0 );
 	add_zombie_weapon( "mg42", "", 0 );
-	add_zombie_weapon( "type99_lmg", "", 0 );
                                                         	
 	// Grenade Launcher                                 	
 	add_zombie_weapon( "m1garand_gl", "", 0 );
@@ -314,8 +315,8 @@ init_weapons()
 	// Precache the padlock
 	PrecacheModel("zmb_mdl_padlock");
 
-}             
-
+}
+	
 add_limited_weapon( weapon_name, amount )
 {
 	if( !isDefined( level.limited_weapons ) )
@@ -1033,9 +1034,41 @@ treasure_chest_give_weapon( weapon_string )
 
 	if(( weapon_string ==  "ray_gun_mk1_v2" ))
 	{
-		self thread maps\_sounds::good_stinger_sound();
+		self thread maps\_sounds::raygun_stinger_sound();
 	}
 
+	// Weapon VOX lines
+	// Add / remove weapons as you see fit...
+
+	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "ppsh41_drum" ) )
+	{
+		self thread maps\_sounds::great_weapon_sound();
+	}
+
+	if(( weapon_string == "kar98k" || weapon_string == "mosin_rifle" || weapon_string == "springfield" || weapon_string == "sw_357" || weapon_string == "molotov" ) )
+	{
+		self thread maps\_sounds::crappy_weapon_sound();
+	}
+
+	if(( weapon_string ==  "zombie_bowie_flourish" ))
+	{
+		self thread maps\_sounds::pickup_bowie_sound();
+	}
+
+	if(( weapon_string ==  "m2_flamethrower_zombie" ))
+	{
+		self thread maps\_sounds::pickup_flamethrower_sound();
+	}
+
+	if(( weapon_string ==  "panzerschrek" ))
+	{
+		self thread maps\_sounds::pickup_panzerschrek_sound();
+	}
+
+	if(( weapon_string ==  "kar98k_scoped_zombie" || weapon_string == "mosin_rifle_scoped" || weapon_string == "ptrs41_zombie" || weapon_string == "springfield_scoped_zombie" ) )
+	{
+		self thread maps\_sounds::pickup_sniper_sound();
+	}
 
 	if( isDefined( primaryWeapons ) && !isDefined( current_weapon ) )
 	{
@@ -1101,9 +1134,10 @@ weapon_cabinet_think()
 	level.cabinetguns[5] = "mosin_rifle_scoped_zombie";
 	level.cabinetguns[6] = "mp40_bigammo_mp";
 	level.cabinetguns[7] = "ppsh41_drum";
-	level.cabinetguns[8] = "sten_mk5";
-	/*level.cabinetguns[9] = "bloodhound";
-	level.cabinetguns[10] = "placeholder;*/
+	level.cabinetguns[8] = "springfield_scoped_zombie";
+	level.cabinetguns[9] = "sten_mk5";
+	/*level.cabinetguns[10] = "bloodhound;
+	level.cabinetguns[11] = "placeholder;*/
 	randomnumb = undefined;
 	weaponNameMysteryCabinet = undefined;
 	
@@ -1260,6 +1294,9 @@ weapon_cabinet_think()
 		case "ppsh41_drum":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_PPSH_41_DRUM";
 			break;
+		case "springfield_scoped_zombie":
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_SPRINGFIELD_SCOPED";
+		break;
 		case "sten_mk5":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_STEN";
 		break;
@@ -1457,7 +1494,7 @@ takenweapon(chosenweapon)
 
 	if(chosenweapon == "stg44_pap")
 	{
-		self thread maps\_sounds::good_stinger_sound();
+		self thread maps\_sounds::raygun_stinger_sound();
 	}
 
 	plyweapons = player GetWeaponsListPrimaries();
