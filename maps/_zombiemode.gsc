@@ -2379,6 +2379,7 @@ player_throw_grenade_exert_sounds()
             {
                 if (current_offhand == level.filtered_weapon[i])
                 {
+                    self thread player_throw_molotov_exert_sounds();
                     return;
                 }
             }
@@ -2390,6 +2391,33 @@ player_throw_grenade_exert_sounds()
 			    level.player_is_speaking = 1;
 
                 self thread maps\_sounds::grenade_vox_sound();
+
+                self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
+                wait 1.75; //Wait to sync sound with grenade throwing to prevent extra sounds playing
+			    level.player_is_speaking = 0;
+		    }
+        }    
+        wait 0.1;   
+    }
+}
+
+player_throw_molotov_exert_sounds()
+{
+	self endon( "death" );
+ 
+	while(1)
+	{
+        wait 0.1;
+
+        if(level.player_is_speaking != 1) {
+            
+		    if(self IsThrowingGrenade())
+            {
+                self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
+
+			    level.player_is_speaking = 1;
+
+                self thread maps\_sounds::molotov_vox_sound();
 
                 self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
                 wait 1.75; //Wait to sync sound with grenade throwing to prevent extra sounds playing

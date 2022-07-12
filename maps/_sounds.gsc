@@ -32,6 +32,16 @@ grenade_vox_sound() {
 
 }
 
+molotov_vox_sound() {
+    index = maps\_zombiemode_weapons::get_player_index(self);
+    molotovSound = "_molotov_exert_" + RandomInt(3);
+    molotov_vox_sound = Spawn("script_origin", self.origin);
+	molotov_vox_sound PlaySound("plr_" + index + molotovSound, "sound_done");
+	molotov_vox_sound waittill("sound_done");
+	molotov_vox_sound Delete();
+
+}
+
 reload_vox_sound() {
     index = maps\_zombiemode_weapons::get_player_index(self);
     reloadSound = "_vox_reload_" + RandomInt(2);
@@ -43,13 +53,13 @@ reload_vox_sound() {
 }
 
 no_ammo_vox() {
-
     index = maps\_zombiemode_weapons::get_player_index(self);
     noAmmoSound = "_no_ammo";
     no_ammo_vox_sound = Spawn("script_origin", self.origin);
 	no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "sound_done");
 	no_ammo_vox_sound waittill("sound_done");
 	no_ammo_vox_sound Delete();
+	
 }
 
 powerup_start_sound() {
