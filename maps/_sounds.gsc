@@ -213,6 +213,16 @@ no_purchase_sound() {
 
 }
 
+no_money_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	momoneySound = "_nomoney_" + RandomInt(1);
+    no_money_sound = Spawn("script_origin", self.origin);
+	no_money_sound PlaySound("plr_" + index + momoneySound, "sound_done");
+	no_money_sound waittill("sound_done");
+	no_money_sound Delete();
+
+}
+
 lightning_sound() {
     lightning_sound = Spawn("script_origin", self.origin);
 	lightning_sound PlaySound("lightning_1", "sound_done");
