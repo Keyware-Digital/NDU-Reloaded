@@ -131,7 +131,7 @@ raygun_stinger_sound() {
 
 great_weapon_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
-	greatweaponSound = "_positive_" + RandomInt(2);
+	greatweaponSound = "_positive_" + RandomInt(3);
     great_weapon_sound = Spawn("script_origin", self.origin);
 	great_weapon_sound PlaySound("plr_" + index + greatweaponSound, "sound_done");
 	great_weapon_sound waittill("sound_done");
@@ -141,7 +141,7 @@ great_weapon_sound() {
 
 crappy_weapon_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
-	crappyweaponSound = "_negative_" + RandomInt(2);
+	crappyweaponSound = "_negative_" + RandomInt(3);
     crappy_weapon_sound = Spawn("script_origin", self.origin);
 	crappy_weapon_sound PlaySound("plr_" + index + crappyweaponSound, "sound_done");
 	crappy_weapon_sound waittill("sound_done");
@@ -151,7 +151,7 @@ crappy_weapon_sound() {
 
 pickup_bowie_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupbowieSound = "_melee_" + RandomInt(2);
+	pickupbowieSound = "_melee_" + RandomInt(3);
     pickup_bowie_sound = Spawn("script_origin", self.origin);
 	pickup_bowie_sound PlaySound("plr_" + index + pickupbowieSound, "sound_done");
 	pickup_bowie_sound waittill("sound_done");
@@ -181,7 +181,7 @@ pickup_panzerschrek_sound() {
 
 pickup_sniper_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupsniperSound = "_sniper_" + RandomInt(2);
+	pickupsniperSound = "_sniper_" + RandomInt(3);
     pickup_sniper_sound = Spawn("script_origin", self.origin);
 	pickup_sniper_sound PlaySound("plr_" + index + pickupsniperSound, "sound_done");
 	pickup_sniper_sound waittill("sound_done");
