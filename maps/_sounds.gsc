@@ -149,6 +149,16 @@ crappy_weapon_sound() {
 
 }
 
+pickup_betty_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupbettySound = "_betty_" + RandomInt(1);
+    pickup_betty_sound = Spawn("script_origin", self.origin);
+	pickup_betty_sound PlaySound("plr_" + index + pickupbettySound, "sound_done");
+	pickup_betty_sound waittill("sound_done");
+	pickup_betty_sound Delete();
+
+}
+
 pickup_bowie_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupbowieSound = "_melee_" + RandomInt(3);

@@ -1045,7 +1045,7 @@ treasure_chest_give_weapon( weapon_string )
 	// Weapon VOX lines
 	// Add / remove weapons as you see fit...
 
-	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "ppsh41_drum" || weapon_string == "ray_gun_mk1_v2" ) )
+	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "ppsh41_drum" || weapon_string == "ray_gun_mk1_v2" || weapon_string == "stg44_pap" ) )
 	{
 		self thread maps\_sounds::great_weapon_sound();
 	}
@@ -1053,6 +1053,11 @@ treasure_chest_give_weapon( weapon_string )
 	if(( weapon_string == "kar98k" || weapon_string == "mosin_rifle" || weapon_string == "springfield" || weapon_string == "molotov" ) )
 	{
 		self thread maps\_sounds::crappy_weapon_sound();
+	}
+
+	if(( weapon_string == "mine_bouncing_betty" ) )
+	{
+		self thread maps\_sounds::pickup_betty_sound();
 	}
 
 	if(( weapon_string ==  "zombie_bowie_flourish" ))
