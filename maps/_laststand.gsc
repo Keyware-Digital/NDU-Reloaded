@@ -175,7 +175,6 @@ laststand_allowed( sWeapon, sMeansOfDeath, sHitLoc )
 	return true;
 }
 
-
 // self = a player
 laststand_take_player_weapons()
 {

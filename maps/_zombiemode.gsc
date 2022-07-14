@@ -1,11 +1,7 @@
 #include maps\_anim;
-
 #include maps\_utility;
-
 #include common_scripts\utility;
-
 #include maps\_music;
-
 #include maps\_zombiemode_utility;
 
 #using_animtree("generic_human");

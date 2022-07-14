@@ -1,6 +1,7 @@
 #include maps\_utility;
 #include animscripts\utility;
 #include common_scripts\utility;
+
 // this script handles all major global gameskill considerations
 setSkill( reset, skill_override )
 {
