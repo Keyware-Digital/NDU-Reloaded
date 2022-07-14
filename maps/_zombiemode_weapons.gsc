@@ -1037,17 +1037,27 @@ treasure_chest_give_weapon( weapon_string )
 		self thread maps\_sounds::raygun_stinger_sound();
 	}
 
+	/*if(( weapon_string ==  "zombie_cymbal_monkey" ))
+	{
+		self thread maps\_sounds::raygun_stinger_sound();
+	}*/
+
 	// Weapon VOX lines
 	// Add / remove weapons as you see fit...
 
-	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "ppsh41_drum" ) )
+	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "ppsh41_drum" || weapon_string == "ray_gun_mk1_v2" || weapon_string == "stg44_pap" ) )
 	{
 		self thread maps\_sounds::great_weapon_sound();
 	}
 
-	if(( weapon_string == "kar98k" || weapon_string == "mosin_rifle" || weapon_string == "springfield" || weapon_string == "sw_357" || weapon_string == "molotov" ) )
+	if(( weapon_string == "kar98k" || weapon_string == "mosin_rifle" || weapon_string == "springfield" || weapon_string == "molotov" ) )
 	{
 		self thread maps\_sounds::crappy_weapon_sound();
+	}
+
+	if(( weapon_string == "mine_bouncing_betty" ) )
+	{
+		self thread maps\_sounds::pickup_betty_sound();
 	}
 
 	if(( weapon_string ==  "zombie_bowie_flourish" ))
@@ -1060,7 +1070,7 @@ treasure_chest_give_weapon( weapon_string )
 		self thread maps\_sounds::pickup_flamethrower_sound();
 	}
 
-	if(( weapon_string ==  "panzerschrek" ))
+	if(( weapon_string ==  "panzerschrek" || weapon_string == "m1garand_gl" ) )
 	{
 		self thread maps\_sounds::pickup_panzerschrek_sound();
 	}
@@ -1068,6 +1078,12 @@ treasure_chest_give_weapon( weapon_string )
 	if(( weapon_string ==  "kar98k_scoped_zombie" || weapon_string == "mosin_rifle_scoped" || weapon_string == "ptrs41_zombie" || weapon_string == "springfield_scoped_zombie" ) )
 	{
 		self thread maps\_sounds::pickup_sniper_sound();
+	}
+
+	// Neither bad or good
+	if(( weapon_string ==  "sw_357" ))
+	{
+		self thread maps\_sounds::no_money_sound();
 	}
 
 	if( isDefined( primaryWeapons ) && !isDefined( current_weapon ) )

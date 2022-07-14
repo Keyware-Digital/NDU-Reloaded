@@ -159,6 +159,16 @@ crappy_weapon_sound() {
 
 }
 
+pickup_betty_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupbettySound = "_betty_" + RandomInt(1);
+    pickup_betty_sound = Spawn("script_origin", self.origin);
+	pickup_betty_sound PlaySound("plr_" + index + pickupbettySound, "sound_done");
+	pickup_betty_sound waittill("sound_done");
+	pickup_betty_sound Delete();
+
+}
+
 pickup_bowie_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupbowieSound = "_melee_" + RandomInt(3);
@@ -220,6 +230,16 @@ no_purchase_sound() {
 	no_purchase_sound PlaySound("no_purchase", "sound_done");
 	no_purchase_sound waittill("sound_done");
 	no_purchase_sound Delete();
+
+}
+
+no_money_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	momoneySound = "_nomoney_" + RandomInt(1);
+    no_money_sound = Spawn("script_origin", self.origin);
+	no_money_sound PlaySound("plr_" + index + momoneySound, "sound_done");
+	no_money_sound waittill("sound_done");
+	no_money_sound Delete();
 
 }
 
