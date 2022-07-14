@@ -110,6 +110,9 @@ LANG_ENGLISH        "M1897 'Trench Gun'"
 REFERENCE           ZOMBIE_WEAPON_SPRINGFIELD
 LANG_ENGLISH        "M1903 Springfield"
 
+REFERENCE           ZOMBIE_WEAPON_SPRINGFIELD_SCOPED
+LANG_ENGLISH        "M1903 Springfield w/ Scope"
+
 REFERENCE           ZOMBIE_WEAPON_STEN
 LANG_ENGLISH        "Sten MK V w/ Extended Mag"
 
@@ -258,6 +261,6 @@ REFERENCE           ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_TWO
 LANG_ENGLISH        "After surviving the Reichstag onslaught, Belinski caught the attention of NKVD officers and was subsequently recruited into a destruction battalion to investigate a mysterious bunker on an abandoned airfield in Poland, thought to hide a rumoured Group 935 top secret research facility."
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_THREE
-LANG_ENGLISH        "Operating as a lone scout and fuelled by the belief his estranged half-brother might be there, Belinski began his mission, only to find waves of the undead have overrun the bunker. Belinski now has no choice but to work in a reluctant allegiance with survivors found across the airfield, which goes against his taciturn nature."
+LANG_ENGLISH        "Operating as a lone scout and fuelled by the belief his estranged half-brother might be there, Belinski began his mission, only to find waves of the undead had already overrun the bunker. Belinski now has no choice but to work in a reluctant allegiance with survivors found across the airfield, which goes against his taciturn nature."
 
 ENDMARKER
