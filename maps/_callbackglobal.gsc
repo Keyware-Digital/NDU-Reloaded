@@ -995,5 +995,3 @@ setSpawnVariables()
 	self StopShellshock(); 
 	self StopRumble( "damage_heavy" ); 
 }
-
-

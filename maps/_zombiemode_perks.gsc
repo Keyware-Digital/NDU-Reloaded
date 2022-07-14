@@ -266,7 +266,6 @@ play_no_money_perk_dialog() {
 
 phd_dive_damage(origin)
 {
-
     self thread maps\_sounds::phd_explosion_sound();
 	playFx( level._effect["fx_zmb_phdflopper_exp"], self.origin + ( 0, 0, 50 ));
 	self VisionSetNaked("zombie_cosmodrome_divetonuke", 1);
