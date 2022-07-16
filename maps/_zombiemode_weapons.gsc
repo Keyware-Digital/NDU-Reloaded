@@ -1045,7 +1045,7 @@ treasure_chest_give_weapon( weapon_string )
 	// Weapon VOX lines
 	// Add / remove weapons as you see fit...
 
-	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "ppsh41_drum" || weapon_string == "ray_gun_mk1_v2" || weapon_string == "stg44_pap" ) )
+	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "ray_gun_mk1_v2" || weapon_string == "stg44_pap" ) )
 	{
 		self thread maps\_sounds::great_weapon_sound();
 	}
@@ -1070,12 +1070,17 @@ treasure_chest_give_weapon( weapon_string )
 		self thread maps\_sounds::pickup_flamethrower_sound();
 	}
 
+	if(( weapon_string ==  "bar" || weapon_string == "fg42_bipod" || weapon_string == "type99_lmg" ) )
+	{
+		self thread maps\_sounds::pickup_lmg_sound();
+	}
+
 	if(( weapon_string ==  "panzerschrek" || weapon_string == "m1garand_gl" ) )
 	{
 		self thread maps\_sounds::pickup_panzerschrek_sound();
 	}
 
-	if(( weapon_string ==  "kar98k_scoped_zombie" || weapon_string == "mosin_rifle_scoped" || weapon_string == "ptrs41_zombie" || weapon_string == "springfield_scoped_zombie" ) )
+	if(( weapon_string == "ptrs41_zombie" ) )
 	{
 		self thread maps\_sounds::pickup_sniper_sound();
 	}
@@ -1512,6 +1517,21 @@ takenweapon(chosenweapon)
 	{
 		self thread maps\_sounds::raygun_stinger_sound();
 	}
+
+	/*if(( weapon_string == "ppsh41_drum" ) )
+	{
+		self thread maps\_sounds::great_weapon_sound();
+	}*/
+
+	/*if( weapon_string == "m1garand")
+	{
+		self thread maps\_sounds::crappy_weapon_sound();
+	}*/
+
+	/*if(( weapon_string ==  "kar98k_scoped_zombie" || weapon_string == "mosin_rifle_scoped" || weapon_string == "springfield_scoped_zombie" ) )
+	{
+		self thread maps\_sounds::pickup_sniper_sound();
+	}*/
 
 	plyweapons = player GetWeaponsListPrimaries();
 	if(plyweapons.size >= 2)

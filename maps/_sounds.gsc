@@ -189,6 +189,16 @@ pickup_flamethrower_sound() {
 
 }
 
+pickup_lmg_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickuplmgSound = "_lmg_" + RandomInt(1);
+    pickup_lmg_sound = Spawn("script_origin", self.origin);
+	pickup_lmg_sound PlaySound("plr_" + index + pickuplmgSound, "sound_done");
+	pickup_lmg_sound waittill("sound_done");
+	pickup_lmg_sound Delete();
+
+}
+
 pickup_panzerschrek_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickuprocketSound = "_rocket_" + RandomInt(1);
