@@ -1070,7 +1070,7 @@ treasure_chest_give_weapon( weapon_string )
 		self thread maps\_sounds::pickup_flamethrower_sound();
 	}
 
-	if(( weapon_string ==  "bar" || weapon_string == "fg42_bipod" || weapon_string == "type99_lmg" ) )
+	if(( weapon_string ==  "bar" || weapon_string == "fg42_bipod" || weapon_string == "stg44" || weapon_string == "type99_lmg" ) )
 	{
 		self thread maps\_sounds::pickup_lmg_sound();
 	}
@@ -1078,6 +1078,22 @@ treasure_chest_give_weapon( weapon_string )
 	if(( weapon_string ==  "panzerschrek" || weapon_string == "m1garand_gl" ) )
 	{
 		self thread maps\_sounds::pickup_panzerschrek_sound();
+		
+	}
+
+	if(( weapon_string == "gewehr43" || weapon_string == "m1carbine" || weapon_string == "svt40" ) )
+	{
+		self thread maps\_sounds::pickup_semi_sound();
+	}
+
+	if(( weapon_string == "doublebarrel" || weapon_string == "doublebarrel_sawed_grip" || weapon_string == "shotgun" ) )
+	{
+		self thread maps\_sounds::pickup_shotgun_sound();
+	}
+
+	if(( weapon_string == "mp40" || weapon_string == "thompson" || weapon_string == "ppsh41" || weapon_string == "zombie_type100_smg" ) )
+	{
+		self thread maps\_sounds::pickup_smg_sound();
 	}
 
 	if(( weapon_string == "ptrs41_zombie" ) )
@@ -1526,6 +1542,11 @@ takenweapon(chosenweapon)
 	/*if( weapon_string == "m1garand")
 	{
 		self thread maps\_sounds::crappy_weapon_sound();
+	}*/
+
+	/*if(( weapon_string ==  "m1921_thompson" || weapon_string == "mp40_bigammo_mp" || weapon_string == "sten_mk5" ) )
+	{
+		self thread maps\_sounds::pickup_smg_sound();
 	}*/
 
 	/*if(( weapon_string ==  "kar98k_scoped_zombie" || weapon_string == "mosin_rifle_scoped" || weapon_string == "springfield_scoped_zombie" ) )

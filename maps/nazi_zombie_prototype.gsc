@@ -217,7 +217,7 @@ include_weapons() {
     level.limited_weapons["kar98k_bayonet"] = 0;
     level.limited_weapons["kar98k_scoped_zombie"] = 0;
     level.limited_weapons["m1921_thompson"] = 0;
-    level.limited_weapons["m1carbine"] = 0;
+    //level.limited_weapons["m1carbine"] = 0;
     level.limited_weapons["m1garand"] = 0;
     level.limited_weapons["mosin_rifle_bayonet"] = 0;
     level.limited_weapons["mosin_rifle_scoped_zombie"] = 0;

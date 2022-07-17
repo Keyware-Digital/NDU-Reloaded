@@ -209,6 +209,36 @@ pickup_panzerschrek_sound() {
 
 }
 
+pickup_semi_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupsemiSound = "_semi_" + RandomInt(1);
+    pickup_semi_sound = Spawn("script_origin", self.origin);
+	pickup_semi_sound PlaySound("plr_" + index + pickupsemiSound, "sound_done");
+	pickup_semi_sound waittill("sound_done");
+	pickup_semi_sound Delete();
+
+}
+
+pickup_shotgun_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupshotgunSound = "_shotgun_" + RandomInt(1);
+    pickup_shotgun_sound = Spawn("script_origin", self.origin);
+	pickup_shotgun_sound PlaySound("plr_" + index + pickupshotgunSound, "sound_done");
+	pickup_shotgun_sound waittill("sound_done");
+	pickup_shotgun_sound Delete();
+
+}
+
+pickup_smg_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupsmgSound = "_smg_" + RandomInt(1);
+    pickup_smg_sound = Spawn("script_origin", self.origin);
+	pickup_smg_sound PlaySound("plr_" + index + pickupsmgSound, "sound_done");
+	pickup_smg_sound waittill("sound_done");
+	pickup_smg_sound Delete();
+
+}
+
 pickup_sniper_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupsniperSound = "_sniper_" + RandomInt(3);
