@@ -2416,7 +2416,7 @@ player_throw_molotov_exert_sounds()
                 self thread maps\_sounds::molotov_vox_sound();
 
                 self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
-                wait 1.75; //Wait to sync sound with grenade throwing to prevent extra sounds playing
+                wait 2.25; //Wait to sync sound with grenade throwing to prevent extra sounds playing
 			    level.player_is_speaking = 0;
 		    }
         }    
