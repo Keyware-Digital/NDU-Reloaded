@@ -249,6 +249,60 @@ pickup_sniper_sound() {
 
 }
 
+pickup_carpenter_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupcarpenterSound = "_repair_" + RandomInt(1);
+    pickup_carpenter_sound = Spawn("script_origin", self.origin);
+	pickup_carpenter_sound PlaySound("plr_" + index + pickupcarpenterSound, "sound_done");
+	pickup_carpenter_sound waittill("sound_done");
+	pickup_carpenter_sound Delete();
+}
+
+pickup_doublepoints_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupdoublepointsSound = "_points_" + RandomInt(1);
+    pickup_doublepoints_sound = Spawn("script_origin", self.origin);
+	pickup_doublepoints_sound PlaySound("plr_" + index + pickupdoublepointsSound, "sound_done");
+	pickup_doublepoints_sound waittill("sound_done");
+	pickup_doublepoints_sound Delete();
+}
+
+pickup_firesale_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupfiresaleSound = "_points_" + RandomInt(1);
+    pickup_firesale_sound = Spawn("script_origin", self.origin);
+	pickup_firesale_sound PlaySound("plr_" + index + pickupfiresaleSound, "sound_done");
+	pickup_firesale_sound waittill("sound_done");
+	pickup_firesale_sound Delete();
+}
+
+pickup_insta_kill_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupinstakillSound = "_instakill_" + RandomInt(1);
+    pickup_insta_kill_sound = Spawn("script_origin", self.origin);
+	pickup_insta_kill_sound PlaySound("plr_" + index + pickupinstakillSound, "sound_done");
+	pickup_insta_kill_sound waittill("sound_done");
+	pickup_insta_kill_sound Delete();
+}
+
+pickup_maxammo_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupmaxammoSound = "_maxammo_" + RandomInt(1);
+    pickup_maxammo_sound = Spawn("script_origin", self.origin);
+	pickup_maxammo_sound PlaySound("plr_" + index + pickupmaxammoSound, "sound_done");
+	pickup_maxammo_sound waittill("sound_done");
+	pickup_maxammo_sound Delete();
+}
+
+pickup_nuke_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupnukeSound = "_nuke_" + RandomInt(1);
+    pickup_nuke_sound = Spawn("script_origin", self.origin);
+	pickup_nuke_sound PlaySound("plr_" + index + pickupnukeSound, "sound_done");
+	pickup_nuke_sound waittill("sound_done");
+	pickup_nuke_sound Delete();
+}
+
 cash_register_sound() {
     chash_register_sound = Spawn("script_origin", self.origin);
 	chash_register_sound PlaySound("cha_ching", "sound_done");
