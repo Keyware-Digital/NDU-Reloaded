@@ -249,6 +249,15 @@ pickup_sniper_sound() {
 
 }
 
+pickup_bonus_points_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupbonuspointsSound = "_points_" + RandomInt(1);
+    pickup_bonus_points_sound = Spawn("script_origin", self.origin);
+	pickup_bonus_points_sound PlaySound("plr_" + index + pickupbonuspointsSound, "sound_done");
+	pickup_bonus_points_sound waittill("sound_done");
+	pickup_bonus_points_sound Delete();
+}
+
 pickup_carpenter_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupcarpenterSound = "_repair_" + RandomInt(1);
@@ -256,6 +265,15 @@ pickup_carpenter_sound() {
 	pickup_carpenter_sound PlaySound("plr_" + index + pickupcarpenterSound, "sound_done");
 	pickup_carpenter_sound waittill("sound_done");
 	pickup_carpenter_sound Delete();
+}
+
+pickup_death_machine_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupdeathmachineSound = "_instakill_" + RandomInt(1);
+    pickup_death_machine_sound = Spawn("script_origin", self.origin);
+	pickup_death_machine_sound PlaySound("plr_" + index + pickupdeathmachineSound, "sound_done");
+	pickup_death_machine_sound waittill("sound_done");
+	pickup_death_machine_sound Delete();
 }
 
 pickup_doublepoints_sound() {

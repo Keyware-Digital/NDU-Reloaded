@@ -552,6 +552,9 @@ treasure_chest_think(rand)
 		case "gewehr43":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GEWEHR_43";
 			break;
+		case "m1carbine":
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M1_GARAND_GL";
+	        break;
 		case "m1garand_gl":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M1_GARAND_GL";
 	        break;
@@ -1045,8 +1048,14 @@ treasure_chest_give_weapon( weapon_string )
 	// Weapon VOX lines
 	// Add / remove weapons as you see fit...
 
-	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "ray_gun_mk1_v2" || weapon_string == "stg44_pap" ) )
+	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "stg44_pap" ) )
 	{
+		self thread maps\_sounds::great_weapon_sound();
+	}
+
+	if(( weapon_string == "ray_gun_mk1_v2"  ) )
+	{
+		//wait 6;	//trying to make the vox play after the stinger
 		self thread maps\_sounds::great_weapon_sound();
 	}
 
