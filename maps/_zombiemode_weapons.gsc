@@ -553,7 +553,7 @@ treasure_chest_think(rand)
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GEWEHR_43";
 			break;
 		case "m1carbine":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M1_GARAND_GL";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
 	        break;
 		case "m1garand_gl":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M1_GARAND_GL";

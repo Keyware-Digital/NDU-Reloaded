@@ -623,42 +623,42 @@ powerup_vo(type) {
 
     switch (type) {
     case "bonus_points":
-        wait 4;
+        wait 3;
         self thread maps\_sounds::pickup_bonus_points_sound();
         //sound = "plr_0_vox_powerup_carp_" + index + "";
         break;
     case "carpenter":
-        wait 4;
+        wait 3;
         self thread maps\_sounds::pickup_carpenter_sound();
         //sound = "plr_0_vox_powerup_carp_" + index + "";
         break;
     case "death_machine":
-        wait 4;
+        wait 3;
         self thread maps\_sounds::pickup_death_machine_sound();
         //sound = "plr_" + index + "_vox_powerup_insta_0";
         break;
     case "double_points":
-        wait 4;
+        wait 3;
         self thread maps\_sounds::pickup_doublepoints_sound();
         //sound = "plr_" + index + "_vox_powerup_double_0";
         break;
     case "fire_sale":
-        wait 4;
+        wait 3;
         self thread maps\_sounds::pickup_firesale_sound();
         //sound = "plr_" + index + "_vox_powerup_double_0";
         break;
     case "insta_kill":
-        wait 4;
+        wait 3;
         self thread maps\_sounds::pickup_insta_kill_sound();
         //sound = "plr_" + index + "_vox_powerup_insta_0";
         break;
     case "max_ammo":
-       wait 4;
+       wait 3;
         self thread maps\_sounds::pickup_maxammo_sound();
         //sound = "plr_" + index + "_vox_powerup_ammo_0";
         break;
     case "nuke":
-        wait 4;
+        wait 3;
         self thread maps\_sounds::pickup_nuke_sound();
         //sound = "plr_" + index + "_vox_powerup_nuke_0";
         break;
