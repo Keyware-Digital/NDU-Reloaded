@@ -362,3 +362,10 @@ lightning_sound() {
 	lightning_sound Delete();
     
 }
+
+announcer_vox_bonus_points_sound() {
+    pickup_bonus_points_sound = Spawn("script_origin", self.origin);
+	pickup_bonus_points_sound PlaySound("bp_vox", "sound_done");
+	pickup_bonus_points_sound waittill("sound_done");
+	pickup_bonus_points_sound Delete();
+}

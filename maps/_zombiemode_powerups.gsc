@@ -623,7 +623,6 @@ powerup_vo(type) {
 
     switch (type) {
     case "bonus_points":
-        wait 3;
         self thread maps\_sounds::pickup_bonus_points_sound();
         //sound = "plr_0_vox_powerup_carp_" + index + "";
         break;
@@ -1360,7 +1359,7 @@ time_remaining_on_bonus_points_powerup() {
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("bp_vox");
+        players[i] thread maps\_sounds::announcer_vox_bonus_points_sound();
     }
 
     // time it down!
