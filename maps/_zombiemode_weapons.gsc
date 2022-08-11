@@ -916,6 +916,12 @@ treasure_chest_weapon_spawn( chest, player )
         chest.boxlocked = true;
 		level.zombie_vars["enableFireSale"] = 0;
         model SetModel("zmb_mdl_padlock");
+		players = GetPlayers();
+
+   		for (i = 0; i < players.size; i++) { 
+			players[i] thread maps\_sounds::crappy_weapon_sound();
+		}
+		
 		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
 

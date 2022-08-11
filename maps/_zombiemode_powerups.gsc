@@ -1342,7 +1342,7 @@ time_remaining_on_nuke_powerup() {
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("nuke_flash");
         //players[i] PlaySound("nuke_vox");
-        players[i] thread maps\_sounds::announcer_vox_nuke_sound(); players[i] PlaySound("bp_vox");
+        players[i] thread maps\_sounds::announcer_vox_nuke_sound();
     }
 
     // time it down!
