@@ -623,41 +623,42 @@ powerup_vo(type) {
 
     switch (type) {
     case "bonus_points":
+        //wait 3;
         self thread maps\_sounds::pickup_bonus_points_sound();
         //sound = "plr_0_vox_powerup_carp_" + index + "";
         break;
     case "carpenter":
-        wait 3;
+        //wait 3;
         self thread maps\_sounds::pickup_carpenter_sound();
         //sound = "plr_0_vox_powerup_carp_" + index + "";
         break;
     case "death_machine":
-        wait 3;
+        //wait 3;
         self thread maps\_sounds::pickup_death_machine_sound();
         //sound = "plr_" + index + "_vox_powerup_insta_0";
         break;
     case "double_points":
-        wait 3;
+        //wait 3;
         self thread maps\_sounds::pickup_doublepoints_sound();
         //sound = "plr_" + index + "_vox_powerup_double_0";
         break;
     case "fire_sale":
-        wait 3;
+        //wait 3;
         self thread maps\_sounds::pickup_firesale_sound();
         //sound = "plr_" + index + "_vox_powerup_double_0";
         break;
     case "insta_kill":
-        wait 3;
+        //wait 3;
         self thread maps\_sounds::pickup_insta_kill_sound();
         //sound = "plr_" + index + "_vox_powerup_insta_0";
         break;
     case "max_ammo":
-       wait 3;
+        //wait 3;
         self thread maps\_sounds::pickup_maxammo_sound();
         //sound = "plr_" + index + "_vox_powerup_ammo_0";
         break;
     case "nuke":
-        wait 3;
+        //wait 3;
         self thread maps\_sounds::pickup_nuke_sound();
         //sound = "plr_" + index + "_vox_powerup_nuke_0";
         break;
@@ -1190,7 +1191,8 @@ time_remaining_on_double_points_powerup() {
     players = GetPlayers();
 
     for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("dp_vox");
+        //players[i] PlaySound("dp_vox");
+        players[i] thread maps\_sounds::announcer_vox_double_points_sound();
     }
 
     x2_ent = spawn("script_origin", (0, 0, 0));
@@ -1225,7 +1227,8 @@ time_remaining_on_insta_kill_powerup() {
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
         //players[i] PlaySound("insta_kill");
-        players[i] PlaySound("insta_vox");
+        //players[i] PlaySound("insta_vox");
+        players[i] thread maps\_sounds::announcer_vox_insta_kill_sound();
     }
 
     insta_kill_ent = spawn("script_origin", (0, 0, 0));
@@ -1258,7 +1261,8 @@ time_remaining_on_max_ammo_powerup() {
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("ma_vox");
+        //players[i] PlaySound("ma_vox");
+        players[i] thread maps\_sounds::announcer_vox_max_ammo_sound();
     }
 
     // time it down!
@@ -1282,7 +1286,8 @@ time_remaining_on_carpenter_powerup() {
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("carp_vox");
+        //players[i] PlaySound("carp_vox");
+        players[i] thread maps\_sounds::announcer_vox_carpenter_sound();
     }
 
     // time it down!
@@ -1306,7 +1311,8 @@ time_remaining_on_death_machine_powerup() {
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("dm_vox");
+       //players[i] PlaySound("dm_vox");
+        players[i] thread maps\_sounds::announcer_vox_death_machine_sound();
     }
 
     // time it down!
@@ -1335,7 +1341,8 @@ time_remaining_on_nuke_powerup() {
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("nuke_flash");
-        players[i] PlaySound("nuke_vox");
+        //players[i] PlaySound("nuke_vox");
+        players[i] thread maps\_sounds::announcer_vox_nuke_sound(); players[i] PlaySound("bp_vox");
     }
 
     // time it down!
@@ -1359,6 +1366,7 @@ time_remaining_on_bonus_points_powerup() {
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
+        //players[i] PlaySound("bp_vox");
         players[i] thread maps\_sounds::announcer_vox_bonus_points_sound();
     }
 
@@ -1407,7 +1415,8 @@ time_remaining_on_fire_sale_powerup() {
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("fs_vox");
+        //players[i] PlaySound("fs_vox");
+        players[i] thread maps\_sounds::announcer_vox_fire_sale_sound();
         wait 1;
     }
 

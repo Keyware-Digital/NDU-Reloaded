@@ -2,6 +2,62 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 
+announcer_vox_bonus_points_sound() {
+    pickup_bonus_points_sound = Spawn("script_origin", self.origin);
+	pickup_bonus_points_sound PlaySound("bp_vox", "sound_done");
+	pickup_bonus_points_sound waittill("sound_done");
+	pickup_bonus_points_sound Delete();
+}
+
+announcer_vox_carpenter_sound() {
+    pickup_carpenter_sound = Spawn("script_origin", self.origin);
+	pickup_carpenter_sound PlaySound("carp_vox", "sound_done");
+	pickup_carpenter_sound waittill("sound_done");
+	pickup_carpenter_sound Delete();
+}
+
+announcer_vox_death_machine_sound() {
+    pickup_death_machine_sound = Spawn("script_origin", self.origin);
+	pickup_death_machine_sound PlaySound("dm_vox", "sound_done");
+	pickup_death_machine_sound waittill("sound_done");
+	pickup_death_machine_sound Delete();
+}
+
+announcer_vox_double_points_sound() {
+    pickup_double_points_sound = Spawn("script_origin", self.origin);
+	pickup_double_points_sound PlaySound("dp_vox", "sound_done");
+	pickup_double_points_sound waittill("sound_done");
+	pickup_double_points_sound Delete();
+}
+
+announcer_vox_fire_sale_sound() {
+    pickup_fire_sale_sound = Spawn("script_origin", self.origin);
+	pickup_fire_sale_sound PlaySound("fs_vox", "sound_done");
+	pickup_fire_sale_sound waittill("sound_done");
+	pickup_fire_sale_sound Delete();
+}
+
+announcer_vox_insta_kill_sound() {
+    pickup_insta_kill_sound = Spawn("script_origin", self.origin);
+	pickup_insta_kill_sound PlaySound("insta_vox", "sound_done");
+	pickup_insta_kill_sound waittill("sound_done");
+	pickup_insta_kill_sound Delete();
+}
+
+announcer_vox_max_ammo_sound() {
+    pickup_max_ammo_sound = Spawn("script_origin", self.origin);
+	pickup_max_ammo_sound PlaySound("ma_vox", "sound_done");
+	pickup_max_ammo_sound waittill("sound_done");
+	pickup_max_ammo_sound Delete();
+}
+
+announcer_vox_nuke_sound() {
+    pickup_nuke_sound = Spawn("script_origin", self.origin);
+	pickup_nuke_sound PlaySound("nuke_vox", "sound_done");
+	pickup_nuke_sound waittill("sound_done");
+	pickup_nuke_sound Delete();
+}
+
 pain_vox_sound() {
     index = maps\_zombiemode_weapons::get_player_index(self);
     painSound = "_pain_exert_" + RandomInt(8);
@@ -361,11 +417,4 @@ lightning_sound() {
 	lightning_sound waittill("sound_done");
 	lightning_sound Delete();
     
-}
-
-announcer_vox_bonus_points_sound() {
-    pickup_bonus_points_sound = Spawn("script_origin", self.origin);
-	pickup_bonus_points_sound PlaySound("bp_vox", "sound_done");
-	pickup_bonus_points_sound waittill("sound_done");
-	pickup_bonus_points_sound Delete();
 }
