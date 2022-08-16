@@ -2373,7 +2373,7 @@ player_throw_grenade_exert_sounds()
             current_offhand = self GetCurrentOffHand();
             for ( i = 0; i < level.filtered_weapon.size; i++ )
             {
-                if (current_offhand == level.filtered_weapon[i])
+                if (current_offhand == "molotov")
                 {
                     self thread player_throw_molotov_exert_sounds();
                     return;
