@@ -1188,8 +1188,8 @@ weapon_cabinet_think()
 	level.cabinetguns[7] = "ppsh41_drum";
 	level.cabinetguns[8] = "springfield_scoped_zombie";
 	level.cabinetguns[9] = "sten_mk5";
-	/*level.cabinetguns[10] = "bloodhound;
-	level.cabinetguns[11] = "placeholder;*/
+	/*level.cabinetguns[10] = "bloodhound";
+	level.cabinetguns[11] = "placeholder";*/
 	randomnumb = undefined;
 	weaponNameMysteryCabinet = undefined;
 	

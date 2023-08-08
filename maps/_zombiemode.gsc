@@ -36,7 +36,7 @@ main() {
     maps\_zombiemode_spawner::init();
     maps\_zombiemode_powerups::init();
     maps\_zombiemode_perks::init();
-    maps\_zombiemode_radio::init();
+    maps\_zombiemode_radio::init_radio();
 
     init_utility();
 

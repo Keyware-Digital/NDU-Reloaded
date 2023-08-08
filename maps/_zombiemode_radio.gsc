@@ -1,8 +1,9 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
+#include maps\_zombiemode_powerups;
 
-init()
+init_radio()
 {
 	// radio spark
 	level._effect["broken_radio_spark"] = LoadFx( "env/electrical/fx_elec_short_oneshot" );
@@ -23,18 +24,21 @@ init()
 
 zombie_radio_play()
 {
-	self transmittargetname();
-
-	self setcandamage(true);
-	
-	while (1)
-	{
-		self waittill ("damage");
-
-		println("changing radio stations");
-
-		SetClientSysState("levelNotify","kzmb_next_song");
-
-		wait(1.0);
-	}
+    self transmittargetname();
+    self setcandamage(true);
+    
+    while (1)
+    {
+        self waittill ("damage");
+        
+        println("changing radio stations");
+        
+        SetClientSysState("levelNotify","kzmb_next_song");
+        
+        // Call the random_perk_powerup function from powerups.gsc
+        random_perk_powerup("random_perk");
+        // quick & dirty proof of concept for potential ee
+        
+        wait(1.0);
+    }
 }
