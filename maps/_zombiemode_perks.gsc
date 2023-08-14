@@ -306,8 +306,7 @@ phd_dive_damage(origin)
 
 player_switch_weapon_watcher()
 {
-	self endon( "disconnect" );	
-	self thread player_cook_grenade_watcher();
+	self endon( "disconnect" );
 
 	while(1)
 	{
@@ -345,9 +344,8 @@ player_cook_grenade_watcher()
 
 		if(isDefined(grenade))
 		{
-			wait 0.125;
+			//wait 0.125; //This wait causes an undefined error for grenade.origin
 			
-			// Check if grenade is defined before accessing its properties (should fix script runtime error; cannot cast undefined to bool)
 			if (isDefined(grenade) && distance( self.origin, grenade.origin ) <= 0 && self fragButtonPressed() && self isThrowingGrenade())
 			{
 				self FreezeControls(true);

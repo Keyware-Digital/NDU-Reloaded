@@ -2196,6 +2196,7 @@ setup_player_abilities()
     {
 		players[i] thread maps\_dolphin_dive::setup_player_dolphin_dive();
         players[i] thread maps\_zombiemode_perks::player_switch_weapon_watcher();
+        players[i] thread maps\_zombiemode_perks::player_cook_grenade_watcher();
 	}
 }
 
@@ -2420,4 +2421,3 @@ player_throw_molotov_exert_sounds()
         wait 0.1;
     }
 }
-
