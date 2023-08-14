@@ -645,6 +645,8 @@ treasure_chest_think(rand)
 						weapon_spawn_org notify("weapon_grabbed");
 						lid thread treasure_chest_lid_close( self.timedOut );
 						self.grab_weapon_hint = false;
+						// have the player comment on picking up bowie test
+						// self thread maps\_sounds::pickup_bowie_sound();
 						self disable_trigger();
 						user maps\_zombiemode_bowie::give_bowie();
 						break;
@@ -1366,7 +1368,7 @@ weapon_cabinet_think()
 	
 	if(!isDefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
-		if(luckyNumCabinet <= 100)	//10 out of 100 chance to get a perk
+		if(luckyNumCabinet <= 10)	//10 out of 100 chance to get a perk (make 100 to test perks)
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();

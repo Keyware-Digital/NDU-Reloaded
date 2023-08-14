@@ -30,15 +30,69 @@ zombie_radio_play()
     while (1)
     {
         self waittill ("damage");
+
+        // if (isPlayerUsingWeapon(self, "stg44_pap") || isPlayerUsingWeapon(self, "kar98k"));
+
+        // Increment the shot count //WIP
+        // level.radio_shots++;
+
+        // Check if the shot count reaches 5 //WIP
+        // if (level.radio_shots >= 5)
         
         println("changing radio stations");
         
         SetClientSysState("levelNotify","kzmb_next_song");
         
         // Call the random_perk_powerup function from powerups.gsc
-        random_perk_powerup("random_perk");
         // quick & dirty proof of concept for potential ee
+        radio_ee(self.origin);
         
         wait(1.0);
     }
 }
+
+radio_ee(radio_origin)  //robs janky ass code, pls fix dan
+{
+    valid_drop = false;
+
+    while (!valid_drop)
+    {
+        radio_origin = radio_origin - (15, 15, 0);
+
+        playable_area = getentarray("playable_area", "targetname");
+
+        for (i = 0; i < playable_area.size; i++)
+        {
+            if (radio_origin istouching(playable_area[i]))
+            {
+                valid_drop = true;
+                break;
+            }
+        }
+
+        wait(0.01);
+    }
+
+        for (i = 0; i < level.zombie_powerup_array.size; i++)
+    {
+        if (level.zombie_powerup_array[i] == "random_perk")
+        {
+            level.zombie_powerup_index = i;
+            break;
+        }
+    }
+    
+    // Spawn the power-up on the radio's location
+    //play_sound_2D("bright_sting");
+    level.zombie_vars["zombie_drop_item"] = 1;
+    level.powerup_drop_count = 0;
+    level thread maps\_zombiemode_powerups::powerup_drop(radio_origin); // Spawn the power-up on the radio's location
+}
+
+    //we need to add SetClientSysState("levelNotify","kzmb_next_song"); as the else statement
+
+/*isPlayerUsingWeapon(player, weaponName)
+{
+    return player GetCurrentWeapon() == weaponName;
+}*/
+

@@ -334,7 +334,7 @@ player_switch_weapon_watcher()
 	}
 }
 
-//Fixed ugly bug while holding / cooking the grenade
+//Fixed ugly bug while holding and/or cooking the grenade
 player_cook_grenade_watcher()
 {
 	self endon( "disconnect" ); 
@@ -347,7 +347,8 @@ player_cook_grenade_watcher()
 		{
 			wait 0.125;
 			
-			if (distance( self.origin, grenade.origin ) <= 0 && self fragButtonPressed() && self isThrowingGrenade())
+			// Check if grenade is defined before accessing its properties (should fix script runtime error; cannot cast undefined to bool)
+			if (isDefined(grenade) && distance( self.origin, grenade.origin ) <= 0 && self fragButtonPressed() && self isThrowingGrenade())
 			{
 				self FreezeControls(true);
 				self DisableOffhandWeapons();
@@ -379,6 +380,7 @@ player_cook_grenade_watcher()
 		}
 	}
 }
+
 
 perks_zombie_hit_effect(amount, attacker, point, mod)
 {
