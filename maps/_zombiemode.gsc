@@ -473,7 +473,7 @@ init_animscripts() {
 init_player_config() {
     level.player_is_speaking = 0;
     level.zombies_are_close = 0;
-    level.player_is_using_box = 0;
+    level.player_is_grabbing_weapon = 0;
     SetDvar( "perk_altMeleeDamage", 1000 ); // adjusts how much melee damage a player with the perk will do, needs only be set once
 }
 
@@ -2310,7 +2310,7 @@ player_no_ammo_sounds()
 	{
         wait 0.1;
 
-        if(level.player_is_speaking == 0 && level.player_is_using_box == 0) {
+        if(level.player_is_speaking == 0 && level.player_is_grabbing_weapon == 0) {
 
             current_weapon = self GetCurrentWeapon();
             for ( i = 0; i < level.filtered_weapon.size; i++ )

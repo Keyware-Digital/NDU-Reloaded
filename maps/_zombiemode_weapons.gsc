@@ -1149,13 +1149,13 @@ treasure_chest_give_weapon( weapon_string )
 		return;
 	}
 
-	level.player_is_using_box = 1;
+	level.player_is_grabbing_weapon = 1;
 	self play_sound_on_ent( "purchase" ); 
 
 	self GiveWeapon( weapon_string, 0 );
 	self GiveMaxAmmo( weapon_string );
 	self SwitchToWeapon( weapon_string );
-	level.player_is_using_box = 0;
+	level.player_is_grabbing_weapon = 0;
 }
 
 // NDU: Reloaded's Mystery Box 2.0
@@ -1582,8 +1582,10 @@ takenweapon(chosenweapon)
 			player TakeWeapon(player GetCurrentWeapon());
 		}
 	}
+	level.player_is_grabbing_weapon = 1;
 	player GiveWeapon(chosenweapon);
 	player SwitchToWeapon(chosenweapon);
+	level.player_is_grabbing_weapon = 0;
 }
 
 weapon_cabinet_door_open( left_or_right )
