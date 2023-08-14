@@ -364,6 +364,8 @@ filtered_weapons()
 	level.filtered_weapon[level.filtered_weapon.size] = "perks_a_cola";
 	level.filtered_weapon[level.filtered_weapon.size] = "molotov";
 	level.filtered_weapon[level.filtered_weapon.size] = "stielhandgranate";
+    level.filtered_weapon[level.filtered_weapon.size] = "zombie_bowie_flourish";
+    level.filtered_weapon[level.filtered_weapon.size] = "m2_flamethrower_zombie";
 	//level.filtered_weapon[level.filtered_weapon.size] = "zombie_cymbal_monkey";
 }
 

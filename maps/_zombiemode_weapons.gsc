@@ -515,7 +515,7 @@ treasure_chest_think(rand)
         self.boxlocked = false;
         weapon_spawn_org notify("weapon_grabbed");
         lid thread treasure_chest_lid_close( self.timedOut );
-        wait 3;
+		wait 1;
         self thread treasure_chest_think();
         return;
     }
@@ -916,6 +916,9 @@ treasure_chest_weapon_spawn( chest, player )
         chest.boxlocked = true;
 		level.zombie_vars["enableFireSale"] = 0;
         model SetModel("zmb_mdl_padlock");
+
+		//model moveto( model.origin + ( 0, 0, floatHeight ), 3, 2, 0.9 );
+
 		players = GetPlayers();
 
    		for (i = 0; i < players.size; i++) { 
@@ -926,8 +929,6 @@ treasure_chest_weapon_spawn( chest, player )
         player maps\_zombiemode_score::add_to_player_score(950);
 
 		self thread maps\_sounds::mystery_box_lock_sound();
-
-		wait 2;
 
 		cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
 		
@@ -941,8 +942,6 @@ treasure_chest_weapon_spawn( chest, player )
             if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
             {
 				player thread maps\_sounds::mystery_box_unlock_sound();
-
-				wait 2;
 
                 player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
                 break;
@@ -1150,11 +1149,13 @@ treasure_chest_give_weapon( weapon_string )
 		return;
 	}
 
+	level.player_is_using_box = 1;
 	self play_sound_on_ent( "purchase" ); 
 
 	self GiveWeapon( weapon_string, 0 );
 	self GiveMaxAmmo( weapon_string );
-	self SwitchToWeapon( weapon_string ); 
+	self SwitchToWeapon( weapon_string );
+	level.player_is_using_box = 0;
 }
 
 // NDU: Reloaded's Mystery Box 2.0

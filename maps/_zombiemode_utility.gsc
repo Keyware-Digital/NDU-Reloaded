@@ -1577,12 +1577,12 @@ do_player_vo(snd, variation_count)
 	if (level.player_is_speaking == 0)
 	{	
 		level.player_is_speaking = 1;
-		self playsound(sound, "sound_done");			
-		self waittill("sound_done");
+		self playsound(sound, "vox_sound_done");			
+		self waittill("vox_sound_done");
 		//This ensures that there is at least 3 seconds waittime before playing another VO.
 		wait(2);
 		level.player_is_speaking = 0;
-	}	
+	}
 }
 player_killstreak_timer()
 {

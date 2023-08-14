@@ -473,6 +473,7 @@ init_animscripts() {
 init_player_config() {
     level.player_is_speaking = 0;
     level.zombies_are_close = 0;
+    level.player_is_using_box = 0;
     SetDvar( "perk_altMeleeDamage", 1000 ); // adjusts how much melee damage a player with the perk will do, needs only be set once
 }
 
@@ -2303,40 +2304,37 @@ player_reload_sounds()
 
 player_no_ammo_sounds()
 {
-    self endon("death");
+	self endon( "death" );
 
-    while (1)
-    {
+	while(1)
+	{
         wait 0.1;
 
-        if (level.player_is_speaking != 1)
-        {
-            current_weapon = self GetCurrentWeapon();
-            totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon); // Store the value
+        if(level.player_is_speaking == 0 && level.player_is_using_box == 0) {
 
-            for (i = 0; i < level.filtered_weapon.size; i++)
+            current_weapon = self GetCurrentWeapon();
+            for ( i = 0; i < level.filtered_weapon.size; i++ )
             {
-                if (current_weapon == level.filtered_weapon[i])
+                if ( current_weapon == level.filtered_weapon[i])
                 {
                     return;
                 }
             }
 
-            if (i == level.filtered_weapon.size && totalCurrentWeaponAmmo == 0)
-            {
-                level.player_is_speaking = 1;
+            totalCurrentWeaponAmmo = self GetAmmoCount(self GetCurrentWeapon()); //current clip + reserve ammo
+            if(totalCurrentWeaponAmmo == 0) {
+			    level.player_is_speaking = 1;
+                    
                 self thread maps\_sounds::no_ammo_vox();
-                level.player_is_speaking = 0;
+                self waittill("no_ammo_sound_finished");
 
-                while (totalCurrentWeaponAmmo == self GetAmmoCount(current_weapon))
-                {
-                    wait 0.1;
-                }
+			    level.player_is_speaking = 0;
+                while(totalCurrentWeaponAmmo == self GetAmmoCount(self GetCurrentWeapon())) //Wait for the ammo to change to something other than what we caught during low ammo
+			        wait 0.1;
             }
         }
-
-        wait 0.25;
-    }
+        wait 0.25;   
+	}
 }
 
 player_lunge_knife_exert_sounds()
@@ -2349,7 +2347,6 @@ player_lunge_knife_exert_sounds()
 
         if(level.player_is_speaking != 1) {
             if(self IsMeleeing()) {
-                self AllowMelee(false);
 
                 level.player_is_speaking = 1;
 
@@ -2358,7 +2355,6 @@ player_lunge_knife_exert_sounds()
                 self waittill("melee_sound_finished");
 
                 level.player_is_speaking = 0;
-                self AllowMelee(true);
             }
         }
         wait 0.1;
@@ -2387,13 +2383,10 @@ player_throw_grenade_exert_sounds()
             
 		    if(self IsThrowingGrenade())
             {
-                self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
 
 			    level.player_is_speaking = 1;
 
                 self thread maps\_sounds::grenade_vox_sound();
-
-                self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
                 
                 self waittill("grenade_sound_finished");
 
@@ -2406,29 +2399,25 @@ player_throw_grenade_exert_sounds()
 
 player_throw_molotov_exert_sounds()
 {
-	self endon( "death" );
- 
-	while(1)
-	{
+    self endon("death");
+
+    while (1)
+    {
         wait 0.1;
 
-        if(level.player_is_speaking != 1) {
-            
-		    if(self IsThrowingGrenade())
-            {
-                self DisableOffhandWeapons(); //Disables throwing during throwing grenade and before sounds play to prevent more than one sound from playing at a time 
+        if (self IsThrowingGrenade() && level.player_is_speaking != 1)
+        {
+            level.player_is_speaking = 1;
 
-			    level.player_is_speaking = 1;
+            self thread maps\_sounds::molotov_vox_sound();
 
-                self thread maps\_sounds::molotov_vox_sound();
+            self waittill("molotov_sound_finished");
+            wait 2; //Needed until sounds match length of animation
 
-                self EnableOffhandWeapons(); //Reenables grenade throwing without any increase to grenade throwing delay
-                
-                self waittill("molotov_sound_finished");
-			    
-                level.player_is_speaking = 0;
-		    }
-        }    
-        wait 0.1;   
+            level.player_is_speaking = 0;
+        }
+
+        wait 0.1;
     }
 }
+

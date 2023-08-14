@@ -74,8 +74,9 @@ melee_vox_sound() {
     melee_vox_sound = Spawn("script_origin", self.origin);
 	melee_vox_sound PlaySound("plr_" + index + meleeSound, "knife_exert_sound_done");
 	melee_vox_sound waittill("knife_exert_sound_done");
-	self notify("melee_sound_finished");
 	melee_vox_sound Delete();
+
+	self notify("melee_sound_finished");
 
 }
 
@@ -85,8 +86,9 @@ grenade_vox_sound() {
     grenade_vox_sound = Spawn("script_origin", self.origin);
 	grenade_vox_sound PlaySound("plr_" + index + grenadeSound, "grenade_exert_sound_done");
 	grenade_vox_sound waittill("grenade_exert_sound_done");
-	self notify("grenade_sound_finished");
 	grenade_vox_sound Delete();
+
+	self notify("grenade_sound_finished");
 
 }
 
@@ -96,8 +98,9 @@ molotov_vox_sound() {
     molotov_vox_sound = Spawn("script_origin", self.origin);
 	molotov_vox_sound PlaySound("plr_" + index + molotovSound, "molotov_exert_sound_done");
 	molotov_vox_sound waittill("molotov_exert_sound_done");
-	self notify("molotov_sound_finished");
 	molotov_vox_sound Delete();
+
+	self notify("molotov_sound_finished");
 
 }
 
@@ -107,8 +110,9 @@ reload_vox_sound() {
     reload_vox_sound = Spawn("script_origin", self.origin);
 	reload_vox_sound PlaySound("plr_" + index + reloadSound, "vox_reload_sound_done");
 	reload_vox_sound waittill("vox_reload_sound_done");
-	self notify("reloading_sound_finished");
 	reload_vox_sound Delete();
+
+	self notify("reloading_sound_finished");
 
 }
 
@@ -119,6 +123,8 @@ no_ammo_vox() {
 	no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "no_ammo_sound_done");
 	no_ammo_vox_sound waittill("no_ammo_sound_done");
 	no_ammo_vox_sound Delete();
+
+	self notify("no_ammo_sound_finished");
 	
 }
 
@@ -172,6 +178,8 @@ mystery_box_lock_sound() {
 	mystery_box_lock_sound waittill("mystery_box_lock_sound_done");
 	mystery_box_lock_sound Delete();
 
+	self notify("mystery_box_lock_sound_finished");
+
 }
 
 mystery_box_unlock_sound() {
@@ -179,6 +187,8 @@ mystery_box_unlock_sound() {
 	mystery_box_unlock_sound PlaySound("mystery_box_unlock", "mystery_box_unlock_sound_done");
 	mystery_box_unlock_sound waittill("mystery_box_unlock_sound_done");
 	mystery_box_unlock_sound Delete();
+
+	self notify("mystery_box_unlock_sound_finished");
 
 }
 
