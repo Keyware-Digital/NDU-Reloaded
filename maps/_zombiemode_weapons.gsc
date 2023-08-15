@@ -1723,7 +1723,10 @@ weapon_spawn_think()
 			
 				player maps\_zombiemode_score::minus_to_player_score( cost ); 
 
+				level.player_is_grabbing_weapon = 1;
 				player weapon_give( self.zombie_weapon_upgrade );
+				level.player_is_grabbing_weapon = 0;
+				
 			}
 			else
 			{
@@ -1776,8 +1779,9 @@ weapon_spawn_think()
 						self setCursorHint( "HINT_NOICON" ); 
 					}
 				}
-				
+				level.player_is_grabbing_weapon = 1;
 				ammo_given = player ammo_give( self.zombie_weapon_upgrade ); 
+				level.player_is_grabbing_weapon = 0;
 				if( ammo_given )
 				{
 					if(is_grenade)

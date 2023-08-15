@@ -2405,7 +2405,6 @@ player_throw_molotov_exert_sounds()
             self thread maps\_sounds::molotov_vox_sound();
 
             self waittill("molotov_sound_finished");
-            //wait 2; //Needed until sounds match length of animation
 
             level.player_is_speaking = 0;
         }

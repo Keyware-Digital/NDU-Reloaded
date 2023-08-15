@@ -29,7 +29,34 @@ zombie_radio_play()
     
     while (1)
     {
-        self waittill ("damage");
+        self waittill ("damage", damage, attacker, direction_vec, point, type);
+
+        iPrintLn(damage); //Damage value taken from weapon
+        iPrintLn(attacker); //Name of player who damaged entity
+        iPrintLn(direction_vec); //Direction of attack?
+        iPrintLn(point); //Point of origin of attack?
+        iPrintLn(type); //Type of attack used (i.e. bullet type for guns)
+
+        ////////////////////////////////////////////
+
+        //You could make a complex ee with the above info and creating logic gates with other functions, but here's a simple example:
+        //This will award 500 points only to someone who shoots the radio each time with a gun that does 20 damage and has pistol ammo, i.e. the starting guns
+
+        if (type == "MOD_PISTOL_BULLET" && damage == 20)
+        {
+            players = GetPlayers();
+
+            for (i = 0; i < players.size; i++) {
+
+                if (players[i] == attacker) {
+                    players[i].score += 500;
+                    players[i].score_total += 500;
+                    players[i] maps\_zombiemode_score::set_player_score_hud();
+                }
+            }
+        }
+        
+        ////////////////////////////////////////////
 
         // if (isPlayerUsingWeapon(self, "stg44_pap") || isPlayerUsingWeapon(self, "kar98k"));
 
@@ -45,13 +72,13 @@ zombie_radio_play()
         
         // Call the random_perk_powerup function from powerups.gsc
         // quick & dirty proof of concept for potential ee
-        radio_ee(self.origin);
+        //radio_ee(self.origin);
         
         wait(1.0);
     }
 }
 
-radio_ee(radio_origin)  //robs janky ass code, pls fix dan
+/*radio_ee(radio_origin)  //robs janky ass code, pls fix dan
 {
     valid_drop = false;
 
@@ -87,7 +114,7 @@ radio_ee(radio_origin)  //robs janky ass code, pls fix dan
     level.zombie_vars["zombie_drop_item"] = 1;
     level.powerup_drop_count = 0;
     level thread maps\_zombiemode_powerups::powerup_drop(radio_origin); // Spawn the power-up on the radio's location
-}
+}*/
 
     //we need to add SetClientSysState("levelNotify","kzmb_next_song"); as the else statement
 
