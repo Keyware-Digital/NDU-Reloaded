@@ -2371,18 +2371,15 @@ player_throw_stielhandgranate_exert_sounds()
     {
         wait 0.1;
 
-        current_offhand = self GetCurrentOffHand();
+      	self waittill("grenade_fire", grenade, weaponName);
 
-        if (level.player_is_speaking == 0 && current_offhand == "stielhandgranate" && self IsThrowingGrenade())
+        if (level.player_is_speaking == 0 && weaponName == "Stielhandgranate" && self IsThrowingGrenade()) //for some reason the game only accepts Stielhandgranate and not stielhandgranate, might have to capitalise others?
         {
             level.player_is_speaking = 1;
-
-            iPrintLn("throwing stielhandgranate"); //doesn't proc because current_offhand == "stielhandgranate" fails check even though thats the weapon name, probably something to do with the way nades are given at the start of the game
 
             self thread maps\_sounds::stielhandgranate_vox_sound();
 
             self waittill("stielhandgranate_sound_finished");
-            wait 2; //Needed until sounds match length of animation
 
             level.player_is_speaking = 0;
         }
@@ -2399,18 +2396,16 @@ player_throw_molotov_exert_sounds()
     {
         wait 0.1;
 
-        current_offhand = self GetCurrentOffHand();
+      	self waittill("grenade_fire", grenade2, weaponName);
 
-        if (level.player_is_speaking == 0 && current_offhand == "molotov" && self IsThrowingGrenade())
+        if (level.player_is_speaking == 0 && weaponName == "molotov" && self IsThrowingGrenade())
         {
             level.player_is_speaking = 1;
-
-            iPrintLn("throwing molotov");
 
             self thread maps\_sounds::molotov_vox_sound();
 
             self waittill("molotov_sound_finished");
-            wait 2; //Needed until sounds match length of animation
+            //wait 2; //Needed until sounds match length of animation
 
             level.player_is_speaking = 0;
         }
