@@ -117,7 +117,8 @@ give_bowie(player)
 	plr = "plr_" + index + "_";
 	
 	gun = self do_bowie_flourish_begin();
-	//self thread play_bowie_pickup_dialog(plr);
+	// have the player comment on picking up bowie
+	self thread maps\_sounds::pickup_bowie_sound();
 	self.is_drinking = 1;
 	self waittill_any( "fake_death", "death", "player_downed", "weapon_change_complete" );
 

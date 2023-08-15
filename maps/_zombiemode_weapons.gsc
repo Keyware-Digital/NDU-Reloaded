@@ -648,8 +648,6 @@ treasure_chest_think(rand)
 						weapon_spawn_org notify("weapon_grabbed");
 						lid thread treasure_chest_lid_close( self.timedOut );
 						self.grab_weapon_hint = false;
-						// have the player comment on picking up bowie test
-						// self thread maps\_sounds::pickup_bowie_sound();
 						self disable_trigger();
 						user maps\_zombiemode_bowie::give_bowie();
 						break;
@@ -1079,10 +1077,10 @@ treasure_chest_give_weapon( weapon_string )
 		self thread maps\_sounds::pickup_betty_sound();
 	}
 
-	if(( weapon_string ==  "zombie_bowie_flourish" ))
+	/*if(( weapon_string ==  "zombie_bowie_flourish" ))
 	{
 		self thread maps\_sounds::pickup_bowie_sound();
-	}
+	}*/
 
 	if(( weapon_string ==  "m2_flamethrower_zombie" ))
 	{
@@ -1527,7 +1525,7 @@ takenweapon(chosenweapon)
 		player AllowMelee( false );
 		wait 2.5;
 
-		//Force crouch stance when using perk bottle
+		//Force crouch stance minimum when using perk bottle
 		if(player GetStance() == "prone" && player.is_drinking == 1)
 		{
 			player SetStance("crouch");
