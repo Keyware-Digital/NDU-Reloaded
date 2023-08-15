@@ -41,6 +41,7 @@ zombie_radio_play()
 
         //You could make a complex ee with the above info and creating logic gates with other functions, but here's a simple example:
         //This will award 500 points only to someone who shoots the radio each time with a gun that does 20 damage and has pistol ammo, i.e. the starting guns
+        //This code could be adapted to give random perks or powerups and spawn them near the player or we could gut the logic that procs the music and replace it with logic that procs ee songs from other maps
 
         if (type == "MOD_PISTOL_BULLET" && damage == 20)
         {
