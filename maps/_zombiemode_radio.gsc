@@ -20,9 +20,7 @@ init_radio()
 	array_thread(radios, ::zombie_radio_play );
 }
 
-
-
-zombie_radio_play()
+/*zombie_radio_play()
 {
     self transmittargetname();
     self setcandamage(true);
@@ -31,19 +29,7 @@ zombie_radio_play()
     {
         self waittill ("damage", damage, attacker, direction_vec, point, type);
 
-        iPrintLn(damage); //Damage value taken from weapon
-        iPrintLn(attacker); //Name of player who damaged entity
-        iPrintLn(direction_vec); //Direction of attack?
-        iPrintLn(point); //Point of origin of attack?
-        iPrintLn(type); //Type of attack used (i.e. bullet type for guns)
-
-        ////////////////////////////////////////////
-
-        //You could make a complex ee with the above info and creating logic gates with other functions, but here's a simple example:
-        //This will award 500 points only to someone who shoots the radio each time with a gun that does 20 damage and has pistol ammo, i.e. the starting guns
-        //This code could be adapted to give random perks or powerups and spawn them near the player or we could gut the logic that procs the music and replace it with logic that procs ee songs from other maps
-
-        if (type == "MOD_PISTOL_BULLET" && damage == 20)
+        if (type == "MOD_EXPLOSIVE" && damage == 100)
         {
             players = GetPlayers();
 
@@ -56,66 +42,108 @@ zombie_radio_play()
                 }
             }
         }
-        
-        ////////////////////////////////////////////
+        else if (type == "MOD_WEAPON" && attacker isPlayer() && isPlayerUsingWeapon(attacker, "stg44_pap"))
+        {
+            level.radio_shots++;
 
-        // if (isPlayerUsingWeapon(self, "stg44_pap") || isPlayerUsingWeapon(self, "kar98k"));
-
-        // Increment the shot count //WIP
-        // level.radio_shots++;
-
-        // Check if the shot count reaches 5 //WIP
-        // if (level.radio_shots >= 5)
-        
-        println("changing radio stations");
-        
-        SetClientSysState("levelNotify","kzmb_next_song");
-        
-        // Call the random_perk_powerup function from powerups.gsc
-        // quick & dirty proof of concept for potential ee
-        //radio_ee(self.origin);
+            if (level.radio_shots >= 30)
+            {
+                radio_origin = self.origin;
+                level.zombie_vars["zombie_drop_item"] = 1;
+                level.powerup_drop_count = 0;
+                level thread maps\_zombiemode_powerups::powerup_drop(radio_origin);
+                level.radio_shots = 0;
+            }
+        }
+        else
+        {
+            println("playing original music");
+            SetClientSysState("levelNotify", "kzmb_next_song");
+        }
         
         wait(1.0);
     }
+}*/
+
+isPlayerUsingWeapon(player, weaponName)
+{
+    return player GetCurrentWeapon() == weaponName;
 }
 
-/*radio_ee(radio_origin)  //robs janky ass code, pls fix dan
+zombie_radio_play()
 {
-    valid_drop = false;
+    self transmittargetname();
+    self setcandamage(true);
 
-    while (!valid_drop)
+    weapon_fired_count = 0;
+    
+    while (1)
     {
-        radio_origin = radio_origin - (15, 15, 0);
+        self waittill ("damage", damage, attacker, direction_vec, point, type);
 
-        playable_area = getentarray("playable_area", "targetname");
+        iPrintLn(damage); //Damage value taken from weapon
+        iPrintLn(attacker); //Name of player who damaged entity
+        iPrintLn(direction_vec); //Direction of bullet impact
+        iPrintLn(point); //Origin of bullet impact
+        iPrintLn(type); //Type of attack used (i.e. bullet type for guns)
 
-        for (i = 0; i < playable_area.size; i++)
-        {
-            if (radio_origin istouching(playable_area[i]))
-            {
-                valid_drop = true;
-                break;
+        players = GetPlayers();
+
+        for (i = 0; i < players.size; i++) {
+
+            if (players[i] == attacker) {
+
+            attacker waittill("weapon_fired");
+            weapon_fired_count++;
+
             }
         }
 
-        wait(0.01);
-    }
+        iPrintLn(weapon_fired_count);
 
-        for (i = 0; i < level.zombie_powerup_array.size; i++)
-    {
-        if (level.zombie_powerup_array[i] == "random_perk")
+        if (isPlayerUsingWeapon(attacker, "ray_gun_mk1_v2"))
         {
-            level.zombie_powerup_index = i;
-            break;
+            players = GetPlayers();
+
+            for (i = 0; i < players.size; i++) {
+
+                if (players[i] == attacker) {
+                    players[i].score += 500;
+                    players[i].score_total += 500;
+                    players[i] maps\_zombiemode_score::set_player_score_hud();
+                }
+            }
         }
+        else if (isPlayerUsingWeapon(attacker, "stg44_pap") && weapon_fired_count >= 5)
+        {
+            powerup_spawn = (-100.611, 707.825, 21.0648);
+
+                for (i = 0; i < level.zombie_powerup_array.size; i++)
+                {
+                    if (level.zombie_powerup_array[i] == "random_perk")
+                    {
+                        level.zombie_powerup_index = i;
+                        break;
+                    }
+                }
+
+            play_sound_2D("bright_sting");
+            level.zombie_vars["zombie_drop_item"] = 1;
+            level.powerup_drop_count = 0;
+            //level thread maps\_zombiemode_powerups::powerup_drop(-183, 897, 41); // Spawn the power-up on the radio's location
+            level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
+            iPrintLn(powerup_spawn);
+        }
+        else if (isPlayerUsingWeapon(attacker, "kar98k"))
+        {
+            println("changing radio stations");
+        
+            SetClientSysState("levelNotify","kzmb_next_song");
+        }
+        
+        wait 1;
     }
-    
-    // Spawn the power-up on the radio's location
-    //play_sound_2D("bright_sting");
-    level.zombie_vars["zombie_drop_item"] = 1;
-    level.powerup_drop_count = 0;
-    level thread maps\_zombiemode_powerups::powerup_drop(radio_origin); // Spawn the power-up on the radio's location
-}*/
+}
 
     //we need to add SetClientSysState("levelNotify","kzmb_next_song"); as the else statement
 
