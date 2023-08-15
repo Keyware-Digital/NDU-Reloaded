@@ -344,7 +344,7 @@ player_cook_grenade_watcher()
 
 		if(isDefined(grenade))
 		{
-			//wait 0.125; //This wait causes an undefined error for grenade.origin
+			wait 0.125;
 			
 			if (isDefined(grenade) && distance( self.origin, grenade.origin ) <= 0 && self fragButtonPressed() && self isThrowingGrenade())
 			{

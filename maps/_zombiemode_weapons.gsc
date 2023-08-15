@@ -364,6 +364,9 @@ init_weapon_upgrade()
 			case "doublebarrel_sawed_grip":
 			weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
 				break;
+			case "stielhandgranate":
+			weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
+				break;
 		}
 
 		weapon_spawns[i] SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, cost);

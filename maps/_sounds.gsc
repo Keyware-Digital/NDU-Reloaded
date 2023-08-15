@@ -80,15 +80,15 @@ melee_vox_sound() {
 
 }
 
-grenade_vox_sound() {
+stielhandgranate_vox_sound() {
     index = maps\_zombiemode_weapons::get_player_index(self);
-    grenadeSound = "_grenade_exert_" + RandomInt(6);
-    grenade_vox_sound = Spawn("script_origin", self.origin);
-	grenade_vox_sound PlaySound("plr_" + index + grenadeSound, "grenade_exert_sound_done");
-	grenade_vox_sound waittill("grenade_exert_sound_done");
-	grenade_vox_sound Delete();
+    stielhandgranateSound = "_stielhandgranate_exert_" + RandomInt(6);
+    stielhandgranate_vox_sound = Spawn("script_origin", self.origin);
+	stielhandgranate_vox_sound PlaySound("plr_" + index + stielhandgranateSound, "stielhandgranate_exert_sound_done");
+	stielhandgranate_vox_sound waittill("stielhandgranate_exert_sound_done");
+	stielhandgranate_vox_sound Delete();
 
-	self notify("grenade_sound_finished");
+	self notify("stielhandgranate_sound_finished");
 
 }
 

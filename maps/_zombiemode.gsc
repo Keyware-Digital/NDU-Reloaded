@@ -590,7 +590,8 @@ onPlayerSpawned() {
                 self thread player_reload_sounds();
                 self thread player_no_ammo_sounds();
                 self thread player_lunge_knife_exert_sounds();
-                self thread player_throw_grenade_exert_sounds();
+                self thread player_throw_stielhandgranate_exert_sounds();
+                self thread player_throw_molotov_exert_sounds();
             }
         }
 
@@ -2362,39 +2363,31 @@ player_lunge_knife_exert_sounds()
     }
 }
 
-player_throw_grenade_exert_sounds()
+player_throw_stielhandgranate_exert_sounds()
 {
-	self endon( "death" );
- 
-	while(1)
-	{
+    self endon("death");
+
+    while (1)
+    {
         wait 0.1;
 
-        if(level.player_is_speaking != 1) {
+        current_offhand = self GetCurrentOffHand();
 
-            current_offhand = self GetCurrentOffHand();
-            for ( i = 0; i < level.filtered_weapon.size; i++ )
-            {
-                if (current_offhand == "molotov")
-                {
-                    self thread player_throw_molotov_exert_sounds();
-                    return;
-                }
-            }
-            
-		    if(self IsThrowingGrenade())
-            {
+        if (level.player_is_speaking == 0 && current_offhand == "stielhandgranate" && self IsThrowingGrenade())
+        {
+            level.player_is_speaking = 1;
 
-			    level.player_is_speaking = 1;
+            iPrintLn("throwing stielhandgranate"); //doesn't proc because current_offhand == "stielhandgranate" fails check even though thats the weapon name, probably something to do with the way nades are given at the start of the game
 
-                self thread maps\_sounds::grenade_vox_sound();
-                
-                self waittill("grenade_sound_finished");
+            self thread maps\_sounds::stielhandgranate_vox_sound();
 
-                level.player_is_speaking = 0;
-		    }
-        }    
-        wait 0.1;   
+            self waittill("stielhandgranate_sound_finished");
+            wait 2; //Needed until sounds match length of animation
+
+            level.player_is_speaking = 0;
+        }
+
+        wait 0.1;
     }
 }
 
@@ -2406,9 +2399,13 @@ player_throw_molotov_exert_sounds()
     {
         wait 0.1;
 
-        if (self IsThrowingGrenade() && level.player_is_speaking != 1)
+        current_offhand = self GetCurrentOffHand();
+
+        if (level.player_is_speaking == 0 && current_offhand == "molotov" && self IsThrowingGrenade())
         {
             level.player_is_speaking = 1;
+
+            iPrintLn("throwing molotov");
 
             self thread maps\_sounds::molotov_vox_sound();
 
