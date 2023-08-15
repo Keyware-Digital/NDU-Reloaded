@@ -1154,13 +1154,11 @@ treasure_chest_give_weapon( weapon_string )
 		return;
 	}
 
-	level.player_is_grabbing_weapon = 1;
 	self play_sound_on_ent( "purchase" ); 
 
 	self GiveWeapon( weapon_string, 0 );
 	self GiveMaxAmmo( weapon_string );
 	self SwitchToWeapon( weapon_string );
-	level.player_is_grabbing_weapon = 0;
 }
 
 // NDU: Reloaded's Mystery Box 2.0
@@ -1587,10 +1585,10 @@ takenweapon(chosenweapon)
 			player TakeWeapon(player GetCurrentWeapon());
 		}
 	}
-	level.player_is_grabbing_weapon = 1;
+
 	player GiveWeapon(chosenweapon);
 	player SwitchToWeapon(chosenweapon);
-	level.player_is_grabbing_weapon = 0;
+
 }
 
 weapon_cabinet_door_open( left_or_right )
@@ -1723,10 +1721,7 @@ weapon_spawn_think()
 			
 				player maps\_zombiemode_score::minus_to_player_score( cost ); 
 
-				level.player_is_grabbing_weapon = 1;
-				player weapon_give( self.zombie_weapon_upgrade );
-				level.player_is_grabbing_weapon = 0;
-				
+				player weapon_give( self.zombie_weapon_upgrade );				
 			}
 			else
 			{
@@ -1779,9 +1774,7 @@ weapon_spawn_think()
 						self setCursorHint( "HINT_NOICON" ); 
 					}
 				}
-				level.player_is_grabbing_weapon = 1;
 				ammo_given = player ammo_give( self.zombie_weapon_upgrade ); 
-				level.player_is_grabbing_weapon = 0;
 				if( ammo_given )
 				{
 					if(is_grenade)

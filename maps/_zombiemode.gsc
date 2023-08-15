@@ -473,8 +473,8 @@ init_animscripts() {
 init_player_config() {
     level.player_is_speaking = 0;
     level.zombies_are_close = 0;
-    level.player_is_grabbing_weapon = 0;
     level.player_has_done_radio_ee_one = 0;
+    level.player_has_done_radio_ee_two = 0;
     SetDvar( "perk_altMeleeDamage", 1000 ); // adjusts how much melee damage a player with the perk will do, needs only be set once
 }
 
@@ -2313,7 +2313,7 @@ player_no_ammo_sounds()
 	{
         wait 0.1;
 
-        if(level.player_is_speaking == 0 && level.player_is_grabbing_weapon == 0) {
+        if(level.player_is_speaking == 0) {
 
             current_weapon = self GetCurrentWeapon();
             for ( i = 0; i < level.filtered_weapon.size; i++ )
@@ -2324,10 +2324,12 @@ player_no_ammo_sounds()
                 }
             }
 
+            self waittill("weapon_fired"); //Prevent the no ammo vox sound from playing if ammo is depleted other than from firing the weapon
+
             totalCurrentWeaponAmmo = self GetAmmoCount(self GetCurrentWeapon()); //current clip + reserve ammo
             if(totalCurrentWeaponAmmo == 0) {
 			    level.player_is_speaking = 1;
-                    
+
                 self thread maps\_sounds::no_ammo_vox();
                 self waittill("no_ammo_sound_finished");
 
@@ -2348,12 +2350,13 @@ player_lunge_knife_exert_sounds()
     {
         wait 0.1;
 
-        if(level.player_is_speaking != 1) {
+        if(level.player_is_speaking == 0) {
             if(self IsMeleeing()) {
 
                 level.player_is_speaking = 1;
 
                 self thread maps\_sounds::melee_vox_sound();
+                wait 1; //Prevent sound from playing more than once during knive lunges
 
                 self waittill("melee_sound_finished");
 

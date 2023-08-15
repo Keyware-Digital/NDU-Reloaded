@@ -20,56 +20,6 @@ init_radio()
 	array_thread(radios, ::zombie_radio_play );
 }
 
-/*zombie_radio_play()
-{
-    self transmittargetname();
-    self setcandamage(true);
-    
-    while (1)
-    {
-        self waittill ("damage", damage, attacker, direction_vec, point, type);
-
-        if (type == "MOD_EXPLOSIVE" && damage == 100)
-        {
-            players = GetPlayers();
-
-            for (i = 0; i < players.size; i++) {
-
-                if (players[i] == attacker) {
-                    players[i].score += 500;
-                    players[i].score_total += 500;
-                    players[i] maps\_zombiemode_score::set_player_score_hud();
-                }
-            }
-        }
-        else if (type == "MOD_WEAPON" && attacker isPlayer() && isPlayerUsingWeapon(attacker, "stg44_pap"))
-        {
-            level.radio_shots++;
-
-            if (level.radio_shots >= 30)
-            {
-                radio_origin = self.origin;
-                level.zombie_vars["zombie_drop_item"] = 1;
-                level.powerup_drop_count = 0;
-                level thread maps\_zombiemode_powerups::powerup_drop(radio_origin);
-                level.radio_shots = 0;
-            }
-        }
-        else
-        {
-            println("playing original music");
-            SetClientSysState("levelNotify", "kzmb_next_song");
-        }
-        
-        wait(1.0);
-    }
-}*/
-
-isPlayerUsingWeapon(player, weaponName)
-{
-    return player GetCurrentWeapon() == weaponName;
-}
-
 zombie_radio_play()
 {
     self transmittargetname();
@@ -87,65 +37,59 @@ zombie_radio_play()
         iPrintLn(point); //Origin of bullet impact
         iPrintLn(type); //Type of attack used (i.e. bullet type for guns)
 
-        if (isPlayerUsingWeapon(attacker, "stg44_pap")) {
+        //Maybe spawn something under each light that is lit?
+        //Add ee songs from other maps to be played when doing something with the radio and stop the original ones from playing until afterwards?
 
-            attacker waittill("weapon_fired");
-            weapon_fired_count++;
-            iPrintLn(weapon_fired_count);
-        }
+        players = GetPlayers();
 
-        if (level.player_has_done_radio_ee_one == 0 && isPlayerUsingWeapon(attacker, "ray_gun_mk1_v2"))
-        {
+        for (i = 0; i < players.size; i++) {
 
-            players = GetPlayers();
+            if (players[i] == attacker && attacker GetCurrentWeapon() == "stg44_pap") {
+                attacker waittill("weapon_fired");
+                weapon_fired_count++;
+                iPrintLn(weapon_fired_count);
+            }
 
-            for (i = 0; i < players.size; i++) {
 
+            if (level.player_has_done_radio_ee_one == 0 && players[i] == attacker && attacker GetCurrentWeapon() == "ray_gun_mk1_v2")
+            {
                 if (players[i] == attacker) {
                     players[i].score += 500;
                     players[i].score_total += 500;
                     players[i] maps\_zombiemode_score::set_player_score_hud();
                 }
+                
+                level.player_has_done_radio_ee_one = 1;
             }
+            else if (level.player_has_done_radio_ee_two == 0 && weapon_fired_count == 5)
+            {
 
-            level.player_has_done_radio_ee_one = 1;
+                powerup_spawn = (720.611, 907.825, 21.0648);
 
-        }
-        else if (weapon_fired_count == 5)
-        {
-
-            powerup_spawn = (-100.611, 707.825, 21.0648);
-
-                for (i = 0; i < level.zombie_powerup_array.size; i++)
-                {
-                    if (level.zombie_powerup_array[i] == "random_perk")
+                    for (i = 0; i < level.zombie_powerup_array.size; i++)
                     {
-                        level.zombie_powerup_index = i;
-                        break;
+                        if (level.zombie_powerup_array[i] == "random_perk")
+                        {
+                            level.zombie_powerup_index = i;
+                            break;
+                        }
                     }
-                }
 
-            play_sound_2D("bright_sting");
-            level.zombie_vars["zombie_drop_item"] = 1;
-            level.powerup_drop_count = 0;
-            level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
-            iPrintLn(powerup_spawn);
-        }
-        else if (isPlayerUsingWeapon(attacker, "kar98k"))
-        {
-            println("changing radio stations");
-        
-            SetClientSysState("levelNotify","kzmb_next_song");
+                play_sound_2D("bright_sting");
+                level.zombie_vars["zombie_drop_item"] = 1;
+                level.powerup_drop_count = 0;
+                level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
+                level.player_has_done_radio_ee_two = 1;
+                iPrintLn(powerup_spawn);
+            }
+            else
+            {
+                iPrintLn("changing radio stations");
+            
+                SetClientSysState("levelNotify","kzmb_next_song");
+            }
         }
         
         wait 1;
     }
 }
-
-    //we need to add SetClientSysState("levelNotify","kzmb_next_song"); as the else statement
-
-/*isPlayerUsingWeapon(player, weaponName)
-{
-    return player GetCurrentWeapon() == weaponName;
-}*/
-
