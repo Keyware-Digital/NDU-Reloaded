@@ -87,22 +87,16 @@ zombie_radio_play()
         iPrintLn(point); //Origin of bullet impact
         iPrintLn(type); //Type of attack used (i.e. bullet type for guns)
 
-        players = GetPlayers();
-
-        for (i = 0; i < players.size; i++) {
-
-            if (players[i] == attacker) {
+        if (isPlayerUsingWeapon(attacker, "stg44_pap")) {
 
             attacker waittill("weapon_fired");
             weapon_fired_count++;
-
-            }
+            iPrintLn(weapon_fired_count);
         }
 
-        iPrintLn(weapon_fired_count);
-
-        if (isPlayerUsingWeapon(attacker, "ray_gun_mk1_v2"))
+        if (level.player_has_done_radio_ee_one == 0 && isPlayerUsingWeapon(attacker, "ray_gun_mk1_v2"))
         {
+
             players = GetPlayers();
 
             for (i = 0; i < players.size; i++) {
@@ -113,9 +107,13 @@ zombie_radio_play()
                     players[i] maps\_zombiemode_score::set_player_score_hud();
                 }
             }
+
+            level.player_has_done_radio_ee_one = 1;
+
         }
-        else if (isPlayerUsingWeapon(attacker, "stg44_pap") && weapon_fired_count >= 5)
+        else if (weapon_fired_count == 5)
         {
+
             powerup_spawn = (-100.611, 707.825, 21.0648);
 
                 for (i = 0; i < level.zombie_powerup_array.size; i++)
@@ -130,7 +128,6 @@ zombie_radio_play()
             play_sound_2D("bright_sting");
             level.zombie_vars["zombie_drop_item"] = 1;
             level.powerup_drop_count = 0;
-            //level thread maps\_zombiemode_powerups::powerup_drop(-183, 897, 41); // Spawn the power-up on the radio's location
             level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
             iPrintLn(powerup_spawn);
         }
