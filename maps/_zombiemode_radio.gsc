@@ -68,7 +68,7 @@ zombie_radio_play()
                 if (players[i] == attacker) {
                     players[i].score += 500;
                     players[i].score_total += 500;
-                    maps\_zombiemode_score::set_player_score_hud();
+                    players[i] maps\_zombiemode_score::set_player_score_hud();
                     players[i]thread maps\_sounds::cash_register_sound();
                 }
                 
@@ -77,7 +77,7 @@ zombie_radio_play()
             else if (level.player_has_done_radio_ee_two == 0 && weapon_fired_count == 5)
             {
 
-                powerup_spawn = (720.611, 907.825, 21.0648);       
+                powerup_spawn = (740.611, 907.825, 11.0648);       
 
                     for (i = 0; i < level.zombie_powerup_array.size; i++)
                     {
