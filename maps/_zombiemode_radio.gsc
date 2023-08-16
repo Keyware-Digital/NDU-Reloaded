@@ -10,6 +10,7 @@ init_radio()
 
 	// kzmb, for all the latest killer hits
 	radios = getentarray("kzmb","targetname");
+    //self.barrel = getClosestEnt(self.start.origin, getentarray ("explodable_barrel","targetname")); //maybe make a _barrels.gsc to move the ee songs to them like the bo1 version of nacht
 	
 	// no radios, return
 	if (!isDefined(radios) || !radios.size)
@@ -27,6 +28,7 @@ zombie_radio_play()
 
     weapon_fired_count = 0;
     level.eeTrackIndex = 1;
+    radio_station_count = 1;
     
     while (1)
     {
@@ -42,6 +44,8 @@ zombie_radio_play()
         //Maybe spawn something in the tunnel?
         //Add ee songs from other maps to be played when doing something with the radio and stop the original ones from playing until afterwards?
 
+        
+
         players = GetPlayers();
 
         for (i = 0; i < players.size; i++) {
@@ -49,6 +53,14 @@ zombie_radio_play()
             if (players[i] == attacker && attacker GetCurrentWeapon() == "stg44_pap") {
                 weapon_fired_count++;
                 iPrintLn(weapon_fired_count);
+            }
+
+            if (players[i] == attacker) {
+             
+                iPrintLn(radio_station_count);
+                if  (radio_station_count == 13){
+                    radio_station_count = 0;
+                }
             }
 
             if (level.player_has_done_radio_ee_one == 0 && players[i] == attacker && attacker GetCurrentWeapon() == "ray_gun_mk1_v2")
@@ -86,16 +98,18 @@ zombie_radio_play()
             }
             else
             {
-                if(level.player_has_done_radio_ee_three == 0 && players[i] == attacker && attacker GetCurrentWeapon() == "kar98k_scoped_zombie"){
+                if(level.player_has_done_radio_ee_three == 0 && radio_station_count == 1 && players[i] == attacker && attacker GetCurrentWeapon() == "kar98k_scoped_zombie") //will only play ee songs if they aren't playing already, the vanilla radio is uninitialised or playing the empty radio station, if the person interacting with the radio is the attacker and if the attacker is using a scope kar98k
+                {
                     players[i] thread maps\_sounds::ee_track_sound();
                     level.player_has_done_radio_ee_three = 1;
 	                players[i] waittill("ee_track_sound_finished");
                     level.player_has_done_radio_ee_three = 0;
-
                 }
-                else if(level.player_has_done_radio_ee_three == 0){
+                else if(level.player_has_done_radio_ee_three == 0 && radio_station_count <= 13 && attacker GetCurrentWeapon() != "kar98k_scoped_zombie"){
+                    SetClientSysState("levelNotify","kzmb_next_song"); //has 13 radio stations, the last one is empty for silence
+                    wait 2; //wait for radio stations to change or desync occurs
+                    radio_station_count++;
                     iPrintLn("changing radio stations");
-                    SetClientSysState("levelNotify","kzmb_next_song");
                 }
           
             }
