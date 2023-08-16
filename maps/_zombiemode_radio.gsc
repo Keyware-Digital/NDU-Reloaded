@@ -39,6 +39,7 @@ zombie_radio_play()
         iPrintLn(type); //Type of attack used (i.e. MOD_MELEE)
 
         //Maybe spawn something under each light that is lit?
+        //Maybe spawn something in the tunnel?
         //Add ee songs from other maps to be played when doing something with the radio and stop the original ones from playing until afterwards?
 
         players = GetPlayers();
@@ -59,22 +60,24 @@ zombie_radio_play()
                     players[i] maps\_zombiemode_score::set_player_score_hud();
                 }
                 
+                self thread maps\_sounds::cash_register_sound();
                 level.player_has_done_radio_ee_one = 1;
             }
             else if (level.player_has_done_radio_ee_two == 0 && weapon_fired_count == 5)
             {
 
-                powerup_spawn = (720.611, 907.825, 21.0648);
+                powerup_spawn = (720.611, 907.825, 21.0648);       
 
                     for (i = 0; i < level.zombie_powerup_array.size; i++)
                     {
-                        if (level.zombie_powerup_array[i] == "random_perk")
+                        if (level.zombie_powerup_array[i] == "random_powerup")
                         {
                             level.zombie_powerup_index = i;
                             break;
                         }
                     }
 
+                self thread maps\_sounds::lightning_sound();
                 play_sound_2D("bright_sting");
                 level.zombie_vars["zombie_drop_item"] = 1;
                 level.powerup_drop_count = 0;

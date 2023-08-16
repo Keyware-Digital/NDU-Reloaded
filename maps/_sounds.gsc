@@ -68,6 +68,16 @@ pain_vox_sound() {
     
 }
 
+death_sound() {
+    index = maps\_zombiemode_weapons::get_player_index(self);
+    deathSound = "_death_" + RandomInt(3);
+    death_sound = Spawn("script_origin", self.origin);
+	death_sound PlaySound("plr_" + index + deathSound, "death_sound_done");
+    death_sound waittill("death_sound_done");
+	death_sound Delete();
+    
+}
+
 melee_vox_sound() {
     index = maps\_zombiemode_weapons::get_player_index(self);
     meleeSound = "_knife_exert_" + RandomInt(3);
@@ -389,6 +399,76 @@ pickup_nuke_sound() {
 	pickup_nuke_sound PlaySound("plr_" + index + pickupnukeSound, "nuke_sound_done");
 	pickup_nuke_sound waittill("nuke_sound_done");
 	pickup_nuke_sound Delete();
+}
+
+quip_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	quipSound = "_quip_" + RandomInt(3);
+    quip_sound = Spawn("script_origin", self.origin);
+	quip_sound PlaySound("plr_" + index + quipSound, "_quip_sound_done");
+	quip_sound waittill("quip_sound_done");
+	quip_sound Delete();
+
+}
+
+blockers_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	blockersSound = "_blockers_" + RandomInt(3);
+    blockers_sound = Spawn("script_origin", self.origin);
+	blockers_sound  PlaySound("plr_" + index + blockersSound, "_blockers_sound_done");
+	blockers_sound  waittill("blockers_sound_done");
+	blockers_sound  Delete();
+
+}
+
+killstreak_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	killstreakSound = "_killstreak_" + RandomInt(3);
+    killstreak_sound = Spawn("script_origin", self.origin);
+	killstreak_sound PlaySound("plr_" + index + killstreakSound, "_killstreak_sound_done");
+	killstreak_sound waittill("killstreak_sound_done");
+	killstreak_sound Delete();
+
+}
+
+friendly_fire_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	friendlyfireSound = "_ff_" + RandomInt(3);
+    friendly_fire_sound = Spawn("script_origin", self.origin);
+	friendly_fire_sound PlaySound("plr_" + index + friendlyfireSound, "_ff_sound_done");
+	friendly_fire_sound waittill("ff_sound_done");
+	friendly_fire_sound Delete();
+
+}
+
+headshot_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	headshotSound = "_headshot_" + RandomInt(5);
+    headshot_sound = Spawn("script_origin", self.origin);
+	headshot_sound PlaySound("plr_" + index + headshotSound, "_headshot_sound_done");
+	headshot_sound waittill("headshot_sound_done");
+	headshot_sound Delete();
+
+}
+
+revive_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	reviveSound = "_revive_" + RandomInt(3);
+    revive_sound = Spawn("script_origin", self.origin);
+	revive_sound PlaySound("plr_" + index + reviveSound, "_revive_sound_done");
+	revive_sound waittill("revive_sound_done");
+	revive_sound Delete();
+
+}
+
+swarm_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	swarmSound = "_swarm_" + RandomInt(4);
+    swarm_sound = Spawn("script_origin", self.origin);
+	swarm_sound PlaySound("plr_" + index + swarmSound, "_swarm_sound_done");
+	swarm_sound waittill("swarm_sound_done");
+	swarm_sound Delete();
+
 }
 
 cash_register_sound() {
