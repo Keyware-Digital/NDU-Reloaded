@@ -475,6 +475,7 @@ init_player_config() {
     level.zombies_are_close = 0;
     level.player_has_done_radio_ee_one = 0;
     level.player_has_done_radio_ee_two = 0;
+    level.player_has_done_radio_ee_three = 0;
     SetDvar( "perk_altMeleeDamage", 1000 ); // adjusts how much melee damage a player with the perk will do, needs only be set once
 }
 

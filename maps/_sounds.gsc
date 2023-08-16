@@ -432,3 +432,20 @@ lightning_sound() {
 	lightning_sound Delete();
     
 }
+
+ee_track_sound() {
+    if (level.eeTrackIndex >= 10) {
+        // If all tracks have been played, reset the index
+        level.eeTrackIndex = 1;
+    }
+
+    eeTrackSound = "ee_track_" + level.eeTrackIndex;
+    level.eeTrackIndex++;
+
+    ee_track_sound = Spawn("script_origin", self.origin);
+    ee_track_sound PlaySound(eeTrackSound, "ee_track_sound_done");
+    ee_track_sound waittill("ee_track_sound_done");
+    ee_track_sound Delete();
+
+    self notify("ee_track_sound_finished");
+}

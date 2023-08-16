@@ -26,6 +26,7 @@ zombie_radio_play()
     self setcandamage(true);
 
     weapon_fired_count = 0;
+    level.eeTrackIndex = 1;
     
     while (1)
     {
@@ -35,7 +36,7 @@ zombie_radio_play()
         iPrintLn(attacker); //Name of player who damaged entity
         iPrintLn(direction_vec); //Direction of bullet impact
         iPrintLn(point); //Origin of bullet impact
-        iPrintLn(type); //Type of attack used (i.e. bullet type for guns)
+        iPrintLn(type); //Type of attack used (i.e. MOD_MELEE)
 
         //Maybe spawn something under each light that is lit?
         //Add ee songs from other maps to be played when doing something with the radio and stop the original ones from playing until afterwards?
@@ -45,7 +46,6 @@ zombie_radio_play()
         for (i = 0; i < players.size; i++) {
 
             if (players[i] == attacker && attacker GetCurrentWeapon() == "stg44_pap") {
-                attacker waittill("weapon_fired");
                 weapon_fired_count++;
                 iPrintLn(weapon_fired_count);
             }
@@ -84,9 +84,18 @@ zombie_radio_play()
             }
             else
             {
-                iPrintLn("changing radio stations");
-            
-                SetClientSysState("levelNotify","kzmb_next_song");
+                if(level.player_has_done_radio_ee_three == 0 && players[i] == attacker && attacker GetCurrentWeapon() == "kar98k_scoped_zombie"){
+                    players[i] thread maps\_sounds::ee_track_sound();
+                    level.player_has_done_radio_ee_three = 1;
+	                players[i] waittill("ee_track_sound_finished");
+                    level.player_has_done_radio_ee_three = 0;
+
+                }
+                else if(level.player_has_done_radio_ee_three == 0){
+                    iPrintLn("changing radio stations");
+                    SetClientSysState("levelNotify","kzmb_next_song");
+                }
+          
             }
         }
         
