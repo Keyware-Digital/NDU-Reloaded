@@ -51,16 +51,15 @@ zombie_radio_play()
                 iPrintLn(weapon_fired_count);
             }
 
-
             if (level.player_has_done_radio_ee_one == 0 && players[i] == attacker && attacker GetCurrentWeapon() == "ray_gun_mk1_v2")
             {
                 if (players[i] == attacker) {
                     players[i].score += 500;
                     players[i].score_total += 500;
-                    players[i] maps\_zombiemode_score::set_player_score_hud();
+                    maps\_zombiemode_score::set_player_score_hud();
+                    players[i]thread maps\_sounds::cash_register_sound();
                 }
                 
-                self thread maps\_sounds::cash_register_sound();
                 level.player_has_done_radio_ee_one = 1;
             }
             else if (level.player_has_done_radio_ee_two == 0 && weapon_fired_count == 5)
