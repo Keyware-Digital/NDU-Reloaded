@@ -26,93 +26,100 @@ zombie_radio_play()
     self transmittargetname();
     self setcandamage(true);
 
-    weapon_fired_count = 0;
+    weapon_fired_count = 1;
+    radio_station_count = 13;
+    player_is_interacting_with_radio = 0; // We don't want radio functions overlapping
+    player_has_done_radio_ee_one = 0;
+    player_has_done_radio_ee_two = 0;
+    player_has_done_radio_ee_three = 0;
     level.eeTrackIndex = 1;
-    radio_station_count = 1;
     
     while (1)
     {
         self waittill ("damage", damage, attacker, direction_vec, point, type);
 
-        iPrintLn(damage); //Damage value taken from weapon
-        iPrintLn(attacker); //Name of player who damaged entity
-        iPrintLn(direction_vec); //Direction of bullet impact
-        iPrintLn(point); //Origin of bullet impact
-        iPrintLn(type); //Type of attack used (i.e. MOD_MELEE)
-
         //Maybe spawn something under each light that is lit?
         //Maybe spawn something in the tunnel?
         //Add ee songs from other maps to be played when doing something with the radio and stop the original ones from playing until afterwards?
 
-        
+        player_is_interacting_with_radio = 0; // Radio is no longer busy after loop is done
 
         players = GetPlayers();
 
         for (i = 0; i < players.size; i++) {
-
-            if (players[i] == attacker && attacker GetCurrentWeapon() == "stg44_pap") {
-                weapon_fired_count++;
-                iPrintLn(weapon_fired_count);
-            }
-
-            if (players[i] == attacker) {
-             
-                iPrintLn(radio_station_count);
-                if  (radio_station_count == 13){
-                    radio_station_count = 0;
-                }
-            }
-
-            if (level.player_has_done_radio_ee_one == 0 && players[i] == attacker && attacker GetCurrentWeapon() == "ray_gun_mk1_v2")
-            {
-                if (players[i] == attacker) {
-                    players[i].score += 500;
-                    players[i].score_total += 500;
-                    players[i] maps\_zombiemode_score::set_player_score_hud();
-                    players[i]thread maps\_sounds::cash_register_sound();
-                }
-                
-                level.player_has_done_radio_ee_one = 1;
-            }
-            else if (level.player_has_done_radio_ee_two == 0 && weapon_fired_count == 5)
+            
+            if (player_is_interacting_with_radio == 0 && player_has_done_radio_ee_one == 0 && players[i] == attacker && attacker GetCurrentWeapon() == "ray_gun_mk1_v2")
             {
 
-                powerup_spawn = (740.611, 907.825, 11.0648);       
+                player_is_interacting_with_radio = 1; // Radio is busy
 
-                    for (i = 0; i < level.zombie_powerup_array.size; i++)
+                players[i].score += 500;
+                players[i].score_total += 500;
+                players[i] maps\_zombiemode_score::set_player_score_hud();
+                players[i] thread maps\_sounds::cash_register_sound();
+                player_has_done_radio_ee_one = 1;
+            }
+            
+            if (player_is_interacting_with_radio == 0 && player_has_done_radio_ee_two == 0 && radio_station_count == 13 && players[i] == attacker && attacker GetCurrentWeapon() == "stg44_pap") {
+
+                player_is_interacting_with_radio = 1; // Radio is busy
+
+                iPrintLn(weapon_fired_count + " out of 5 shots done" );
+
+                if (weapon_fired_count == 5)
+                {
+
+                    powerup_spawn = (740.611, 907.825, 11.0648);       
+
+                    for (k = 0; k < level.zombie_powerup_array.size; k++)
                     {
-                        if (level.zombie_powerup_array[i] == "random_powerup")
+                        if (level.zombie_powerup_array[k] == "random_powerup")
                         {
-                            level.zombie_powerup_index = i;
+                            level.zombie_powerup_index = k;
                             break;
                         }
                     }
 
-                self thread maps\_sounds::lightning_sound();
-                play_sound_2D("bright_sting");
-                level.zombie_vars["zombie_drop_item"] = 1;
-                level.powerup_drop_count = 0;
-                level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
-                level.player_has_done_radio_ee_two = 1;
-                iPrintLn(powerup_spawn);
+                    self thread maps\_sounds::lightning_sound();
+                    play_sound_2D("bright_sting");
+                    level.zombie_vars["zombie_drop_item"] = 1;
+                    level.powerup_drop_count = 0;
+                    level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
+                    player_has_done_radio_ee_two = 1;
+                    iPrintLn(powerup_spawn);
+                }
+                else {
+                    weapon_fired_count++;
+                }
+
             }
-            else
+            
+            if(player_is_interacting_with_radio == 0 && player_has_done_radio_ee_three == 0 && radio_station_count == 13 && players[i] == attacker && attacker GetCurrentWeapon() == "kar98k_scoped_zombie") //will only play ee songs if they aren't playing already, the vanilla radio is uninitialised or playing the empty radio station, if the person interacting with the radio is the attacker and if the attacker is using a scope kar98k
             {
-                if(level.player_has_done_radio_ee_three == 0 && radio_station_count == 1 && players[i] == attacker && attacker GetCurrentWeapon() == "kar98k_scoped_zombie") //will only play ee songs if they aren't playing already, the vanilla radio is uninitialised or playing the empty radio station, if the person interacting with the radio is the attacker and if the attacker is using a scope kar98k
-                {
-                    players[i] thread maps\_sounds::ee_track_sound();
-                    level.player_has_done_radio_ee_three = 1;
-	                players[i] waittill("ee_track_sound_finished");
-                    level.player_has_done_radio_ee_three = 0;
-                }
-                else if(level.player_has_done_radio_ee_three == 0 && radio_station_count <= 13 && attacker GetCurrentWeapon() != "kar98k_scoped_zombie"){
-                    SetClientSysState("levelNotify","kzmb_next_song"); //has 13 radio stations, the last one is empty for silence
-                    wait 2; //wait for radio stations to change or desync occurs
-                    radio_station_count++;
-                    iPrintLn("changing radio stations");
-                }
-          
+
+                player_is_interacting_with_radio = 1; // Radio is busy
+
+                iPrintLn("Playing ee track...");
+                players[i] thread maps\_sounds::ee_track_sound();
+                player_has_done_radio_ee_three = 1;
+	            players[i] waittill("ee_track_sound_finished");
+                player_has_done_radio_ee_three = 0;
             }
+            
+            if(player_is_interacting_with_radio == 0 && player_has_done_radio_ee_three == 0 && radio_station_count <= 13 && players[i] == attacker){
+                player_is_interacting_with_radio = 1; // Radio is busy
+                SetClientSysState("levelNotify","kzmb_next_song"); //has 13 radio stations, the last one is empty for silence
+                wait 2; //wait for radio stations to change or desync occurs
+                // Make sure only 13 radio stations are tracked
+                if (radio_station_count == 13){
+                    radio_station_count = 1;
+                }
+                else {
+                    radio_station_count++;
+                }
+                iPrintLn("changing to radio station " + radio_station_count);
+            }
+
         }
         
         wait 1;
