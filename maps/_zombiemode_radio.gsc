@@ -74,7 +74,7 @@ zombie_radio_play()
                 
                 level.player_has_done_radio_ee_one = 1;
             }
-            else if (level.player_has_done_radio_ee_two == 0 && weapon_fired_count == 5)
+            else if (level.player_has_done_radio_ee_two == 0 && weapon_fired_count == 1)
             {
 
                 powerup_spawn = (740.611, 907.825, 11.0648);       
@@ -98,14 +98,16 @@ zombie_radio_play()
             }
             else
             {
-                if(level.player_has_done_radio_ee_three == 0 && radio_station_count == 1 && players[i] == attacker && attacker GetCurrentWeapon() == "kar98k_scoped_zombie") //will only play ee songs if they aren't playing already, the vanilla radio is uninitialised or playing the empty radio station, if the person interacting with the radio is the attacker and if the attacker is using a scope kar98k
+                //will only play ee songs if they aren't playing already, the vanilla radio is uninitialised or playing the empty radio station, if the person interacting with the radio is the attacker and if the attacker is using a scoped rifle.
+                if(level.player_has_done_radio_ee_three == 0 && radio_station_count == 1 && players[i] == attacker && attacker GetCurrentWeapon() == "kar98k_scoped_zombie" || attacker GetCurrentWeapon() == "springfield_scoped_zombie")
                 {
                     players[i] thread maps\_sounds::ee_track_sound();
                     level.player_has_done_radio_ee_three = 1;
 	                players[i] waittill("ee_track_sound_finished");
                     level.player_has_done_radio_ee_three = 0;
                 }
-                else if(level.player_has_done_radio_ee_three == 0 && radio_station_count <= 13 && attacker GetCurrentWeapon() != "kar98k_scoped_zombie"){
+                else if(level.player_has_done_radio_ee_three == 0 && radio_station_count <= 13 && attacker GetCurrentWeapon() != "kar98k_scoped_zombie" || attacker GetCurrentWeapon() == "springfield_scoped_zombie")
+                {
                     SetClientSysState("levelNotify","kzmb_next_song"); //has 13 radio stations, the last one is empty for silence
                     wait 2; //wait for radio stations to change or desync occurs
                     radio_station_count++;
