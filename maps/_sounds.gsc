@@ -513,14 +513,14 @@ lightning_sound() {
     
 }
 
-barrel_ee_track_sound() {
+explosive_barrels_ee_track_sound() {
 
-    barrelEeTrackSound = "barrel_ee_track_" + RandomInt(2); // Three tracks but counts from zero to two for a maximum of three track randomly selected
+    explosiveBarrelsEETrackSound = "explosive_barrels_ee_track_" + RandomInt(2); // Three tracks but counts from zero to two for a maximum of three track randomly selected
 
-    barrel_ee_track_sound = Spawn("script_origin", self.origin);
-    barrel_ee_track_sound PlaySound("barrel_ee_track_2", "barrel_ee_track_sound_done");
-    barrel_ee_track_sound waittill("ee_track_sound_done");
-    barrel_ee_track_sound Delete();
+    explosive_barrels_ee_track_sound = Spawn("script_origin", self.origin);
+    explosive_barrels_ee_track_sound PlaySound(explosiveBarrelsEETrackSound, "barrel_ee_track_sound_done");
+    explosive_barrels_ee_track_sound waittill("ee_track_sound_done");
+    explosive_barrels_ee_track_sound Delete();
 }
 
 radio_ee_track_sound() {
