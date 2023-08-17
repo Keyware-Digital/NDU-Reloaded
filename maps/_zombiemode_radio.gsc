@@ -92,8 +92,8 @@ zombie_radio_play()
                 }
 
             }
-            
-            if(player_is_interacting_with_radio == 0 && player_has_done_radio_ee_three == 0 && radio_station_count == 13 && players[i] == attacker && attacker GetCurrentWeapon() == "springfield_scoped_zombie") //will only play ee songs if they aren't playing already, the vanilla radio is uninitialised or playing the empty radio station, if the person interacting with the radio is the attacker and if the attacker is using a scope kar98k
+            //will only play ee songs if they aren't playing already, the vanilla radio is uninitialised or playing the empty radio station, if the person interacting with the radio is the attacker and if the attacker is using a scoped rifle.
+            if(player_is_interacting_with_radio == 0 && player_has_done_radio_ee_three == 0 && radio_station_count == 13 && players[i] == attacker && attacker GetCurrentWeapon() == "kar98k_scoped_zombie" || attacker GetCurrentWeapon() == "springfield_scoped_zombie") 
             {
 
                 player_is_interacting_with_radio = 1; // Radio is busy

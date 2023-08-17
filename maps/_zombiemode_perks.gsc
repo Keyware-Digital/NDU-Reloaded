@@ -22,6 +22,7 @@ init_precache() {
     PrecacheShader("specialty_mule_kick_zombies");
     PrecacheShader("specialty_mule_kick_glow_zombies");
     PrecacheShader("specialty_widows_wine_zombies");
+    PrecacheItem( "zombie_knuckle_crack" );
 }
 
 init_perk_fx() {

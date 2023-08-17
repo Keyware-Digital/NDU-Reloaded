@@ -748,7 +748,7 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	return revived;
 }
 
-
+//test
 say_reviving_vo()
 {
 	if( GetDvar( "zombiemode" ) == "1" || IsSubStr( level.script, "nazi_zombie_" ) ) // CODER_MOD (Austin 5/4/08): zombiemode loadout setup
@@ -759,7 +759,7 @@ say_reviving_vo()
 		{
 			if (players[i] == self)
 			{
-				self playsound("plr_" + i + "_vox_reviving" + "_" + randomintrange(0, 2));
+				self playsound("plr_" + i + "_revive_" + "_" + randomintrange(0, 2));
 
 			}												
 		}
@@ -775,7 +775,7 @@ say_revived_vo()
 		{
 			if (players[i] == self)
 			{
-				self playsound("plr_" + i + "_vox_revived" + "_" + randomintrange(0, 2));
+				self playsound("plr_" + i + "_revive_" + "_" + randomintrange(0, 2));
 			}		
 		}	
 	}
