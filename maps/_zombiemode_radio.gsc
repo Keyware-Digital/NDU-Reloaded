@@ -10,7 +10,6 @@ init_radio()
 
 	// kzmb, for all the latest killer hits
 	radios = getentarray("kzmb","targetname");
-    //self.barrel = getClosestEnt(self.start.origin, getentarray ("explodable_barrel","targetname")); //maybe make a _barrels.gsc to move the ee songs to them like the bo1 version of nacht
 	
 	// no radios, return
 	if (!isDefined(radios) || !radios.size)
@@ -31,8 +30,8 @@ zombie_radio_play()
     player_is_interacting_with_radio = 0; // We don't want radio functions overlapping
     player_has_done_radio_ee_one = 0;
     player_has_done_radio_ee_two = 0;
-    player_has_done_radio_ee_three = 0;
-    level.eeTrackIndex = 1;
+    player_has_done_radio_ee_three = 1; // Disabled for now, maybe add BO1 Dead Ops arcade music like the radio from the BO1 version of Nacht
+    level.radioEETrackIndex = 1;
     
     while (1)
     {
@@ -100,7 +99,7 @@ zombie_radio_play()
                 player_is_interacting_with_radio = 1; // Radio is busy
 
                 iPrintLn("Playing ee track...");
-                players[i] thread maps\_sounds::ee_track_sound();
+                players[i] thread maps\_sounds::radio_ee_track_sound();
                 player_has_done_radio_ee_three = 1;
 	            players[i] waittill("ee_track_sound_finished");
                 player_has_done_radio_ee_three = 0;

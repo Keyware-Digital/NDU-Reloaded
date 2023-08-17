@@ -513,19 +513,31 @@ lightning_sound() {
     
 }
 
-ee_track_sound() {
-    if (level.eeTrackIndex >= 10) {
+barrel_ee_track_sound() {
+
+    barrelEeTrackSound = "barrel_ee_track_" + RandomInt(2); // Three tracks but counts from zero to two for a maximum of three track randomly selected
+
+    barrel_ee_track_sound = Spawn("script_origin", self.origin);
+    barrel_ee_track_sound PlaySound("barrel_ee_track_2", "barrel_ee_track_sound_done");
+    barrel_ee_track_sound waittill("ee_track_sound_done");
+    barrel_ee_track_sound Delete();
+}
+
+radio_ee_track_sound() {
+    if (level.radioEETrackIndex >= 10) {
         // If all tracks have been played, reset the index
-        level.eeTrackIndex = 1;
+        level.radioEETrackIndex = 1;
     }
 
-    eeTrackSound = "ee_track_" + level.eeTrackIndex;
-    level.eeTrackIndex++;
+    radioEeTrackSound = "radio_ee_track_" + level.radioEETrackIndex;
+    level.radioEETrackIndex++;
 
-    ee_track_sound = Spawn("script_origin", self.origin);
-    ee_track_sound PlaySound(eeTrackSound, "ee_track_sound_done");
-    ee_track_sound waittill("ee_track_sound_done");
-    ee_track_sound Delete();
+    radio_ee_track_sound = Spawn("script_origin", self.origin);
+    radio_ee_track_sound PlaySound(radioEeTrackSound);
+    wait 1;
+	radio_ee_track_sound StopSound(radioEeTrackSound);
+	wait 1;
+    radio_ee_track_sound Delete();
 
     self notify("ee_track_sound_finished");
 }

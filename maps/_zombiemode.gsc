@@ -2270,8 +2270,6 @@ player_reload_sounds()
 
 	while(1)
     {
-        wait 0.1;
-
         if(level.player_is_speaking != 1) {
 
 	        zombies = getaiarray("axis");
@@ -2299,7 +2297,7 @@ player_reload_sounds()
 			    level.player_is_speaking = 0;
 	        }
         }
-        wait 0.1;   
+        wait(0.05);
 	}
 }
 
@@ -2309,8 +2307,6 @@ player_no_ammo_sounds()
 
 	while(1)
 	{
-        wait 0.1;
-
         if(level.player_is_speaking == 0) {
 
             current_weapon = self GetCurrentWeapon();
@@ -2336,7 +2332,7 @@ player_no_ammo_sounds()
 			        wait 0.1;
             }
         }
-        wait 0.25;   
+        wait(0.05);
 	}
 }
 
@@ -2346,7 +2342,7 @@ player_lunge_knife_exert_sounds()
 
     while(1)
     {
-        wait 0.1;
+        wait (1.25); // Prevent sound from playing more than once during long knive lunges
 
         if(level.player_is_speaking == 0) {
             if(self IsMeleeing()) {
@@ -2354,14 +2350,13 @@ player_lunge_knife_exert_sounds()
                 level.player_is_speaking = 1;
 
                 self thread maps\_sounds::melee_vox_sound();
-                wait 1; //Prevent sound from playing more than once during knive lunges
 
                 self waittill("melee_sound_finished");
 
                 level.player_is_speaking = 0;
             }
         }
-        wait 0.1;
+        wait(0.05);
     }
 }
 
@@ -2371,8 +2366,6 @@ player_throw_stielhandgranate_exert_sounds()
 
     while (1)
     {
-        wait 0.1;
-
       	self waittill("grenade_fire", grenade, weaponName);
 
         if (level.player_is_speaking == 0 && weaponName == "Stielhandgranate" && self IsThrowingGrenade()) //for some reason the game only accepts Stielhandgranate and not stielhandgranate, might have to capitalise others?
@@ -2385,8 +2378,7 @@ player_throw_stielhandgranate_exert_sounds()
 
             level.player_is_speaking = 0;
         }
-
-        wait 0.1;
+        wait(0.05);
     }
 }
 
@@ -2396,8 +2388,6 @@ player_throw_molotov_exert_sounds()
 
     while (1)
     {
-        wait 0.1;
-
       	self waittill("grenade_fire", grenade2, weaponName);
 
         if (level.player_is_speaking == 0 && weaponName == "molotov" && self IsThrowingGrenade())
@@ -2410,7 +2400,5 @@ player_throw_molotov_exert_sounds()
 
             level.player_is_speaking = 0;
         }
-
-        wait 0.1;
     }
 }
