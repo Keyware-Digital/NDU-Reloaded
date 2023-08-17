@@ -1727,6 +1727,7 @@ weapon_spawn_think()
 			else
 			{
 				play_sound_on_ent( "no_purchase" );
+				play_sound_on_ent( "no_money_sound" );	//am i dum dum?
 			}
 		}
 		else
@@ -1791,6 +1792,7 @@ weapon_spawn_think()
 			else
 			{
 				play_sound_on_ent( "no_purchase" );
+				play_sound_on_ent( "no_money_sound" );	//am i dum dum?
 			}
 		}
 	}
@@ -2083,3 +2085,4 @@ upgrade_knuckle_crack_end( gun )
 		self SwitchToWeapon( "colt" );
 	}
 }
+
