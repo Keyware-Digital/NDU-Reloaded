@@ -1518,11 +1518,6 @@ takenweapon(chosenweapon, buyer)
 	{
 		self setHintString("No stealing you Jew!");
 		self playsound("door_deny");
-		continue;
-	}
-	else
-	{
-		break;
 	}
 
 	self play_sound_on_ent( "purchase" ); 
