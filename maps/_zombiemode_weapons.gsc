@@ -1420,7 +1420,7 @@ weapon_cabinet_think()
 
 	origin = self.origin;
 	
-	self thread takenweapon(chosenweapon, player, origin);
+	self thread takenweapon(chosenweapon, player, player);
 	self thread waitforexpire();
 
 	self waittill_any("weapontaken","weaponexpired");
@@ -1507,13 +1507,9 @@ waitforexpire()
 	self notify("weaponexpired");
 }
 
-takenweapon(chosenweapon, buyer, origin)
+takenweapon(chosenweapon, buyer, player)
 {
 	self endon("weaponexpired");
-
-	players = GetPlayers();
-
-	player = GetClosest( origin, players ); 
 
 	if (buyer != player)
 	{
