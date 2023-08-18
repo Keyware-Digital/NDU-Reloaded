@@ -2668,3 +2668,261 @@ get_number_variants(aliasPrefix)
 			}
 		}
 }
+
+/*
+play_death_vo(hit_location, player,mod,zombie)
+{
+	// CHRISP - adding some modifiers here so that it doens't play 100% of the time 
+	// and takes into account the damage type. 
+	//	default is 10% chance of saying something
+	//iprintlnbold(mod);
+	
+	//iprintlnbold(player);
+	
+	if( getdvar("zombie_death_vo_freq") == "" )
+	{
+		setdvar("zombie_death_vo_freq","100"); //TUEY moved to 50---We can take this out\tweak this later.
+	}
+	
+	chance = getdvarint("zombie_death_vo_freq");
+	
+	weapon = player GetCurrentWeapon();
+	//iprintlnbold (weapon);
+	
+	sound = undefined;
+	//just return and don't play a sound if the chance is not there
+	if(chance < randomint(100) )
+	{
+		return;
+	}
+
+	//TUEY - this funciton allows you to play a voice over when you kill a zombie and its last hit spot was something specific (like Headshot).
+	//players = getplayers();
+	index = maps\_zombiemode_weapons::get_player_index(player);
+	
+	players = getplayers();
+
+	if(!isdefined (level.player_is_speaking))
+	{
+		level.player_is_speaking = 0;
+	}
+	if(!isdefined(level.zombie_vars["zombie_insta_kill"] ))
+	{
+		level.zombie_vars["zombie_insta_kill"] = 0;
+	}
+	if(hit_location == "head" && level.zombie_vars["zombie_insta_kill"] != 1   )
+	{
+		//no VO for non bullet headshot kills
+		if( mod != "MOD_PISTOL_BULLET" &&	mod != "MOD_RIFLE_BULLET" )
+		{
+			return;
+		}					
+		//chrisp - far headshot sounds
+		if(distance(player.origin,zombie.origin) > 450)
+		{
+			//sound = "plr_" + index + "_vox_kill_headdist" + "_" + randomintrange(0, 11);
+			plr = "plr_" + index + "_";
+			player thread play_headshot_dialog (plr);
+
+			if(index == 0)
+			{	//DEMPSEY gets a headshot, response hero Tenko, rival The Doc
+			
+				designate_rival_hero(player,2,3);	
+			}
+			if(index == 1)	
+			{		
+				//Nickolai gets a headshot, response hero Dempsey, rival Tenko
+				designate_rival_hero(player,3,2);
+			}		
+			if(index == 2)
+			{
+				//Tenko gets a headshot, response hero The Doctor, rival Nickolai
+				designate_rival_hero(player,0,1);	
+			}
+			if(index == 3)
+			{
+				//The Doc gets a headshot, response hero Nickolai, rival Dempsey
+				designate_rival_hero(player,1,0);	
+			}
+			return;
+
+		}	
+		//remove headshot sounds for instakill
+		if (level.zombie_vars["zombie_insta_kill"] != 0)
+		{			
+			sound = undefined;
+		}
+
+	}
+	if(weapon == "ray_gun")
+	{
+		//Ray Gun Kills
+		if(distance(player.origin,zombie.origin) > 348 && level.zombie_vars["zombie_insta_kill"] == 0)
+		{
+			rand = randomintrange(0, 100);
+			if(rand < 28)
+			{
+				plr = "plr_" + index + "_";
+				player play_raygun_dialog(plr);
+				
+			}
+			
+		}	
+		return;
+	}
+	if(weapon == "ray_gun")
+	{
+		//Ray Gun Kills
+		if(distance(player.origin,zombie.origin) > 348 && level.zombie_vars["zombie_insta_kill"] == 0)
+		{
+			rand = randomintrange(0, 100);
+			if(rand < 28)
+			{
+				plr = "plr_" + index + "_";
+				player play_raygun_dialog(plr);
+				
+			}
+			
+		}	
+		return;
+	}
+	if( mod == "MOD_BURNED" )
+	{
+		//TUEY play flamethrower death sounds
+		
+		//	iprintlnbold(mod);
+		plr = "plr_" + index + "_";
+		player play_flamethrower_dialog (plr);
+		return;
+	}	
+	//check for close range kills, and play a special sound, unless instakill is on 
+	
+	if( mod != "MOD_MELEE" && hit_location != "head" && level.zombie_vars["zombie_insta_kill"] == 0 && !zombie.has_legs )
+	{
+		rand = randomintrange(0, 100);
+		if(rand < 15)
+		{
+			plr = "plr_" + index + "_";
+			player create_and_play_dialog ( plr, "vox_crawl_kill", 0.25 );
+		}
+		return;
+	}
+	
+	if( player HasPerk( "specialty_altmelee" ) && mod == "MOD_MELEE" && level.zombie_vars["zombie_insta_kill"] == 0 )
+	{
+		rand = randomintrange(0, 100);
+		if(rand < 25)
+		{
+			plr = "plr_" + index + "_";
+			player create_and_play_dialog ( plr, "vox_kill_bowie", 0.25 );
+		}
+		return;
+	}
+	
+	//special case for close range melee attacks while insta-kill is on
+	if (level.zombie_vars["zombie_insta_kill"] != 0)
+	{
+		if( mod == "MOD_MELEE" || mod == "MOD_BAYONET" || mod == "MOD_UNKNOWN" && distance(player.origin,zombie.origin) < 64)
+		{
+			plr = "plr_" + index + "_";
+			player play_insta_melee_dialog(plr);
+			//sound = "plr_" + index + "_vox_melee_insta" + "_" + randomintrange(0, 5); 
+			return;
+		}
+	}
+	
+	//Explosive Kills
+	if((mod == "MOD_GRENADE_SPLASH" || mod == "MOD_GRENADE") && level.zombie_vars["zombie_insta_kill"] == 0 )
+	{
+		//Plays explosion dialog
+		if( zombie.damageweapon	== "zombie_cymbal_monkey" )
+		{
+			plr = "plr_" + index + "_";
+			player create_and_play_dialog( plr, "vox_kill_monkey", 0.25 );
+			return;
+		}
+		else
+		{
+			plr = "plr_" + index + "_";
+			player play_explosion_dialog(plr);
+			return;
+		}
+	}
+	
+	if( mod == "MOD_PROJECTILE")
+	{	
+		//Plays explosion dialog
+		plr = "plr_" + index + "_";
+		player play_explosion_dialog(plr);
+	}
+	
+	if(IsDefined(zombie) && distance(player.origin,zombie.origin) < 64 && level.zombie_vars["zombie_insta_kill"] == 0 && mod != "MOD_BURNED" )
+	{
+		rand = randomintrange(0, 100);
+		if(rand < 40)
+		{
+			plr = "plr_" + index + "_";
+			player play_closekill_dialog (plr);				
+		}	
+		return;
+	
+	}	
+
+		//AUDIO Plays a sound when Crawlers are created
+	if( IsDefined( self.a.gib_ref ) && (self.a.gib_ref == "no_legs") && isalive( self ) )
+	{
+		if ( isdefined( player ) )
+		{
+			rand = randomintrange(0, 100);
+			if(rand < 10)
+			{
+				index = maps\_zombiemode_weapons::get_player_index(player);
+				plr = "plr_" + index + "_";
+				player thread create_and_play_dialog( plr, "vox_crawl_spawn", 0.25, "resp_cspawn" );
+			}
+		}
+	}
+	else if( IsDefined( self.a.gib_ref ) && ( (self.a.gib_ref == "right_arm") || (self.a.gib_ref == "left_arm") ) )
+	{
+		if( self.has_legs && isalive( self ) )
+		{
+			if ( isdefined( player ) )
+			{
+				rand = randomintrange(0, 100);
+				if(rand < 3)
+				{
+					index = maps\_zombiemode_weapons::get_player_index(player);
+					plr = "plr_" + index + "_";
+					player thread create_and_play_dialog( plr, "vox_shoot_limb", 0.25 );
+				}
+			}
+		}
+	}	
+	self thread maps\_zombiemode_powerups::check_for_instakill( player );
+}
+
+play_closeDamage_dialog()
+{
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	player_index = "plr_" + index + "_";
+	
+	if(!IsDefined (self.vox_dmg_close))
+	{
+		num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_dmg_close");
+		self.vox_dmg_close = [];
+		for(i=0;i<num_variants;i++)
+		{
+			self.vox_dmg_close[self.vox_dmg_close.size] = "vox_dmg_close_" + i;	
+		}
+		self.vox_dmg_close_available = self.vox_dmg_close;
+	}
+	sound_to_play = random(self.vox_dmg_close_available);
+	self.vox_dmg_close_available = array_remove(self.vox_dmg_close_available,sound_to_play);
+	
+	if( self.vox_dmg_close_available.size < 1)
+	{
+		self.vox_dmg_close_available = self.vox_dmg_close;	
+	}
+	
+	self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
+}*/
