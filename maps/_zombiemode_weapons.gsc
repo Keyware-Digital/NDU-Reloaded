@@ -1420,7 +1420,7 @@ weapon_cabinet_think()
 
 	origin = self.origin;
 	
-	self thread takenweapon(chosenweapon, player, player);
+	self thread takenweapon(chosenweapon, player);
 	self thread waitforexpire();
 
 	self waittill_any("weapontaken","weaponexpired");
@@ -1507,15 +1507,26 @@ waitforexpire()
 	self notify("weaponexpired");
 }
 
-takenweapon(chosenweapon, buyer, player)
+takenweapon(chosenweapon, buyer)
 {
 	self endon("weaponexpired");
 
-	if (buyer != player)
+	while(1)
 	{
-		self setHintString("");
-		return;
+		self waittill("trigger", player);
+		
+		if (buyer != player)
+		{
+			self setHintString("No stealing you Jew!");
+			self playsound("door_deny");
+			continue;
+		}
+		else
+		{
+			break;
+		}
 	}
+	
 
 	self waittill("trigger", player);
 
