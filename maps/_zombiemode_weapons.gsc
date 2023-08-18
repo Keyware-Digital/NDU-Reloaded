@@ -1511,24 +1511,19 @@ takenweapon(chosenweapon, buyer)
 {
 	self endon("weaponexpired");
 
-	while(1)
-	{
-		self waittill("trigger", player);
-		
-		if (buyer != player)
-		{
-			self setHintString("No stealing you Jew!");
-			self playsound("door_deny");
-			continue;
-		}
-		else
-		{
-			break;
-		}
-	}
-	
 
 	self waittill("trigger", player);
+		
+	if (buyer != player)
+	{
+		self setHintString("No stealing you Jew!");
+		self playsound("door_deny");
+		continue;
+	}
+	else
+	{
+		break;
+	}
 
 	self play_sound_on_ent( "purchase" ); 
 	self notify("weapontaken");
