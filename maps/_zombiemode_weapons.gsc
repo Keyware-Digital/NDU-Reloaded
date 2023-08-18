@@ -1079,10 +1079,11 @@ treasure_chest_give_weapon( weapon_string )
 		self thread maps\_sounds::pickup_betty_sound();
 	}
 
-	if(( weapon_string ==  "zombie_bowie_flourish" ))
+	//leave disabled for now, testing sound in "bowie" gsc.
+	/*if(( weapon_string ==  "zombie_bowie_flourish" ))
 	{
 		self thread maps\_sounds::pickup_bowie_sound();
-	}
+	}*/
 
 	if(( weapon_string ==  "m2_flamethrower_zombie" ))
 	{
