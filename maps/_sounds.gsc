@@ -517,23 +517,13 @@ sam_start_ee_vox_sound() {
     sam_start_ee_vox_sound = Spawn("script_origin", self.origin);
     sam_start_ee_vox_sound PlaySound("sam_fly_laugh", "sam_fly_laugh_sound_done");
     sam_start_ee_vox_sound waittill("sam_fly_laugh_sound_done");
-    sam_start_ee_vox_sound PlaySound("sam_fly_act_0", "sam_fly_act_0_sound_done");
-    sam_start_ee_vox_sound waittill("sam_fly_act_0_sound_done");
     sam_start_ee_vox_sound Delete();
-}
-
-sam_end_ee_vox_sound() {
-    sam_end_ee_vox_sound = Spawn("script_origin", self.origin);
-    sam_end_ee_vox_sound PlaySound("sam_fly_last", "sam_fly_laugh_sound_done");
-    sam_end_ee_vox_sound waittill("sam_fly_laugh_sound_done");
-    sam_end_ee_vox_sound Delete();
-	//self notify("sam_end_ee_vox_sound_finished");
 }
 
 explosive_barrels_ee_track_sound() {
     explosive_barrels_ee_track_sound = Spawn("script_origin", self.origin);
-    explosive_barrels_ee_track_sound PlaySound("explosive_barrels_ee_track_0", "barrel_ee_track_sound_done");
-    explosive_barrels_ee_track_sound waittill("ee_track_sound_done");
+    explosive_barrels_ee_track_sound PlaySound("explosive_barrels_ee_track_0", "explosive_barrels_ee_track_sound_done");
+    explosive_barrels_ee_track_sound waittill("explosive_barrels_ee_track_sound_done");
     explosive_barrels_ee_track_sound Delete();
 }
 

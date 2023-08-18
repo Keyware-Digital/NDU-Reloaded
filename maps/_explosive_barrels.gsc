@@ -51,9 +51,6 @@ explosive_barrels_think(all_explosive_barrels)
 
 			if (level.shot_explosive_barrels == 31)
 			{
-				players[i] thread maps\_sounds::sam_end_ee_vox_sound();
-				//self waittill("sam_end_ee_vox_sound_finished");
-				wait(4); // wait for sam to finish talking
 				players[i] thread maps\_sounds::explosive_barrels_ee_track_sound();
 			}
 		wait 1;
