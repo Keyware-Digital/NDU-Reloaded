@@ -1735,7 +1735,38 @@ weapon_spawn_think()
 				player weapon_give( self.zombie_weapon_upgrade );		
 
 				//test as proof of concept
-				//player thread do_knuckle_crack();		
+				//player thread do_knuckle_crack();	
+
+				//Wall buy vox - wip
+				/*if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_KAR_98K" ) )
+				{
+					self thread maps\_sounds::crappy_weapon_sound();
+				}
+
+				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE" ) )
+				{
+					self thread maps\_sounds::pickup_semi_sound();
+				}
+
+				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_THOMPSON" ) )
+				{
+					self thread maps\_sounds::pickup_smg_sound();
+				}
+
+				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_BAR" ) )
+				{
+					self thread maps\_sounds::pickup_lmg_sound();
+				}
+
+				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED" || weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN" || weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP" ) )
+				{
+					self thread maps\_sounds::pickup_shotgun_sound();
+				}
+
+				if(( weaponNameWallBuy == "stielhandgranate" ) )
+				{
+					self thread maps\_sounds::pickup_lmg_sound();
+				}*/	
 			}
 			else
 			{
@@ -1789,6 +1820,7 @@ weapon_spawn_think()
 						self setCursorHint( "HINT_NOICON" ); 
 					}
 				}
+
 				ammo_given = player ammo_give( self.zombie_weapon_upgrade ); 
 				if( ammo_given )
 				{

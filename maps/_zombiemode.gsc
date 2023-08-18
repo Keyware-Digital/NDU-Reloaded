@@ -1250,7 +1250,7 @@ award_grenades_for_survivors() {
             } else if (players[i] GetFractionMaxAmmo("stielhandgranate") < .5) {
                 players[i] SetWeaponAmmoClip("stielhandgranate", 3);
             } else {
-                players[i] SetWeaponAmmoClip("stielhandgranate", 4);
+                players[i] SetWeaponAmmoClip("stielhandgranate", 2);
             }
 
             if (players[i] GetFractionMaxAmmo("molotov") < .25) {
@@ -1258,7 +1258,7 @@ award_grenades_for_survivors() {
             } else if (players[i] GetFractionMaxAmmo("molotov") < .5) {
                 players[i] SetWeaponAmmoClip("molotov", 3);
             } else {
-                players[i] SetWeaponAmmoClip("molotov", 4);
+                players[i] SetWeaponAmmoClip("molotov", 2);
             }
         }
     }
@@ -2261,7 +2261,7 @@ setup_player_vars()
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {
             players[i] setClientDvar("sv_cheats", 1);
-            players[i] maps\_zombiemode_score::add_to_player_score(100000);
+            players[i] maps\_zombiemode_score::add_to_player_score(100000); //comment out for default behaviour
         }
     }
 }
@@ -2344,7 +2344,7 @@ player_lunge_knife_exert_sounds()
 
     while(1)
     {
-        wait (1.25); // Prevent sound from playing more than once during long knive lunges
+        wait (0.2); //was 1.25, prevent sound from playing more than once during long knive lunges
 
         if(level.player_is_speaking == 0) {
             if(self IsMeleeing()) {
@@ -2358,7 +2358,7 @@ player_lunge_knife_exert_sounds()
                 level.player_is_speaking = 0;
             }
         }
-        wait(0.05);
+        wait(0.3);  //was 0.05
     }
 }
 
