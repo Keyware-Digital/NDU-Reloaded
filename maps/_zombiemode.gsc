@@ -120,6 +120,8 @@ init_models() {
     precachemodel("char_ger_honorgd_zomb_behead");
     precachemodel("char_ger_zombieeye");
     PrecacheModel("tag_origin");
+    PrecacheModel("zombie_teddybear");
+    PrecacheModel("collision_geo_32x32x32");
 }
 
 init_shellshocks() {
