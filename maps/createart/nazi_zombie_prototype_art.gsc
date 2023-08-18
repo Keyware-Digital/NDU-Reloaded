@@ -42,7 +42,7 @@ main()
 
 	level thread fog_settings();
  
-	level thread maps\_utility::set_all_players_visionset( "zombie", 0.1 );
+	level thread maps\_utility::set_all_players_visionset( "zombie_bo3", 0.1 );
 }
 
 fog_settings()

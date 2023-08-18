@@ -1077,10 +1077,10 @@ treasure_chest_give_weapon( weapon_string )
 		self thread maps\_sounds::pickup_betty_sound();
 	}
 
-	/*if(( weapon_string ==  "zombie_bowie_flourish" ))
+	if(( weapon_string ==  "zombie_bowie_flourish" ))
 	{
 		self thread maps\_sounds::pickup_bowie_sound();
-	}*/
+	}
 
 	if(( weapon_string ==  "m2_flamethrower_zombie" ))
 	{
@@ -1415,7 +1415,9 @@ weapon_cabinet_think()
 	level thread treasure_chest_user_hint( self, player );
 	weaponmodelstruct MoveTo(self.origin - (20,0,6.5),10);
 
-	self thread takenweapon(chosenweapon);
+	origin = self.origin;
+	
+	self thread takenweapon(chosenweapon, player, origin);
 	self thread waitforexpire();
 
 	self waittill_any("weapontaken","weaponexpired");
@@ -1502,11 +1504,22 @@ waitforexpire()
 	self notify("weaponexpired");
 }
 
-takenweapon(chosenweapon)
+takenweapon(chosenweapon, buyer, origin)
 {
 	self endon("weaponexpired");
 
+	players = GetPlayers();
+
+	player = GetClosest( origin, players ); 
+
+	if (buyer != player)
+	{
+		self setHintString("");
+		return;
+	}
+
 	self waittill("trigger", player);
+
 	self play_sound_on_ent( "purchase" ); 
 	self notify("weapontaken");
 
@@ -1525,7 +1538,7 @@ takenweapon(chosenweapon)
 		player AllowMelee( false );
 		wait 2.5;
 
-		//Force crouch stance minimum when using perk bottle
+		//Force crouch stance when using perk bottle
 		if(player GetStance() == "prone" && player.is_drinking == 1)
 		{
 			player SetStance("crouch");

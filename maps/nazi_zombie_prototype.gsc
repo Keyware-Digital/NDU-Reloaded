@@ -22,7 +22,7 @@ main() {
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
 	array_thread(GetPlayers(), ::reloading_monitor);
-    thread maps\_explosive_barrels::main();
+    thread maps\_explosive_barrels::init_explosive_barrels();
     maps\_walking_anim::main();
 
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box
