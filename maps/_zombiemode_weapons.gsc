@@ -1420,7 +1420,7 @@ weapon_cabinet_think()
 
 	origin = self.origin;
 	
-	self thread takenweapon(chosenweapon, player, weaponNameMysteryCabinet);
+	self thread takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct);
 	self thread waitforexpire();
 
 	self waittill_any("weapontaken","weaponexpired");
@@ -1507,19 +1507,17 @@ waitforexpire()
 	self notify("weaponexpired");
 }
 
-takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet)
+takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 {
 	self endon("weaponexpired");
 
-	// Let only the buyer take the weapon unless the buyer knifes one of the cabinet doors from the outside, I want to make it so you knife the cabinet or weapon but I'm not sure how
+	// Let only the buyer take the weapon unless the buyer nades the cabinet, I want to make it knife but I don't know where the invisible trigger is on the cabinet and so only grenade splash damage can damage it so far
 
 	buyer_gave_permission = 0;
-	//player_name = "player";  // For solo testing only
+	player_name = "player";  // For solo testing only
 	attacker = undefined;
 	type = undefined;
 	check_for_cabinet_damage = true;
-
-	doors = getentarray( self.target, "targetname" );
 
 	while(1)
 	{
@@ -1530,27 +1528,25 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet)
 		{
 			if (buyer_gave_permission == 0)
 			{
-				self SetHintString( buyer.playername + " needs to give permission for you to take this item"); // Pressing the use key again after obtaining the item causes this text to appear again due to the loop, needs a waittill 
+				self SetHintString( buyer.playername + " needs to give permission for you to take this item");
 				self playsound("door_deny");
 			}
-
-			for( i = 0; i < doors.size; i++ )
-			{
-				if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" || doors[i].model == "dest_test_cabinet_rdoor_dmg0" && check_for_cabinet_damage)
+			
+				if(check_for_cabinet_damage)
 				{
-					doors[i] Solid();
-					doors[i] setCanDamage(true);
-					doors[i] waittill("damage", damage, attacker, direction_vec, point, type);
+					weaponmodelstruct Solid();
+					weaponmodelstruct setCanDamage(true);
+					weaponmodelstruct waittill("damage", damage, attacker, direction_vec, point, type);
 					buyer_gave_permission = 1;
 					check_for_cabinet_damage = false;
 					attacker = attacker;
 					type = type;
+					iprintln(type);
 					iprintln("you knifed the door!");
-				}
-			}
+				}			
 
-			if (buyer_gave_permission == 1 && attacker != player && type == "MOD_MELEE") // For multiplayer
-			//if (buyer_gave_permission == 1 && attacker == player && type == "MOD_MELEE") // For solo testing only
+			if (buyer_gave_permission == 1 && attacker != player && type == "MOD_MELEE") // For multiplayer MOD_GRENADE_SPLASH
+			//if (buyer_gave_permission == 1 && attacker == player) // For solo testing only
 			{
 				iprintln(attacker.playername + " gave permission with their knife");
 				self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
