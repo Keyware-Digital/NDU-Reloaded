@@ -1514,44 +1514,48 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet)
 	// Let only the buyer take the weapon unless the buyer knifes one of the cabinet doors from the outside, I want to make it so you knife the cabinet or weapon but I'm not sure how
 
 	buyer_gave_permission = 0;
-	test = "test";  // For solo testing only
+	//player_name = "player";  // For solo testing only
 	attacker = undefined;
 	type = undefined;
+	check_for_cabinet_damage = true;
+
 	doors = getentarray( self.target, "targetname" );
 
 	while(1)
 	{
 		self waittill("trigger", player);
 		
-		if (buyer != player)
-		//if (test != player.playername) // For solo testing only
+		if (buyer != player) // For multiplayer
+		//if (player_name != player.playername) // For solo testing only
 		{
-			self SetHintString( buyer.playername + " needs to give permission for you to take this item"); // Pressing the use key again after obtaining the item causes this text to appear again due to the loop, needs a waittill 
-			self playsound("door_deny");
+			if (buyer_gave_permission == 0)
+			{
+				self SetHintString( buyer.playername + " needs to give permission for you to take this item"); // Pressing the use key again after obtaining the item causes this text to appear again due to the loop, needs a waittill 
+				self playsound("door_deny");
+			}
 
 			for( i = 0; i < doors.size; i++ )
 			{
-				if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" || doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
+				if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" || doors[i].model == "dest_test_cabinet_rdoor_dmg0" && check_for_cabinet_damage)
 				{
 					doors[i] Solid();
 					doors[i] setCanDamage(true);
 					doors[i] waittill("damage", damage, attacker, direction_vec, point, type);
+					buyer_gave_permission = 1;
+					check_for_cabinet_damage = false;
 					attacker = attacker;
 					type = type;
-					iprintln(attacker);
-					iprintln(type);
+					iprintln("you knifed the door!");
 				}
 			}
-			buyer_gave_permission = 1;
 
-			if (buyer_gave_permission == 1 && attacker.playername == player.playername && type == "MOD_MELEE")
+			if (buyer_gave_permission == 1 && attacker != player && type == "MOD_MELEE") // For multiplayer
+			//if (buyer_gave_permission == 1 && attacker == player && type == "MOD_MELEE") // For solo testing only
 			{
+				iprintln(attacker.playername + " gave permission with their knife");
 				self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
 				self waittill("trigger", player);
 				break;
-			}
-			else {
-				continue;
 			}
 		}
 		else
