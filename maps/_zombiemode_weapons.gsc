@@ -1420,7 +1420,7 @@ weapon_cabinet_think()
 
 	origin = self.origin;
 	
-	self thread takenweapon(chosenweapon, player);
+	self thread takenweapon(chosenweapon, player, weaponNameMysteryCabinet);
 	self thread waitforexpire();
 
 	self waittill_any("weapontaken","weaponexpired");
@@ -1507,17 +1507,57 @@ waitforexpire()
 	self notify("weaponexpired");
 }
 
-takenweapon(chosenweapon, buyer)
+takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet)
 {
 	self endon("weaponexpired");
 
+	// Let only the buyer take the weapon unless the buyer knifes one of the cabinet doors from the outside, I want to make it so you knife the cabinet or weapon but I'm not sure how
 
-	self waittill("trigger", player);
-		
-	if (buyer != player)
+	buyer_gave_permission = 0;
+	test = "test";  // For solo testing only
+	attacker = undefined;
+	type = undefined;
+	doors = getentarray( self.target, "targetname" );
+
+	while(1)
 	{
-		self setHintString("No stealing you Jew!");
-		self playsound("door_deny");
+		self waittill("trigger", player);
+		
+		if (buyer != player)
+		//if (test != player.playername) // For solo testing only
+		{
+			self SetHintString( buyer.playername + " needs to give permission for you to take this item"); // Pressing the use key again after obtaining the item causes this text to appear again due to the loop, needs a waittill 
+			self playsound("door_deny");
+
+			for( i = 0; i < doors.size; i++ )
+			{
+				if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" || doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
+				{
+					doors[i] Solid();
+					doors[i] setCanDamage(true);
+					doors[i] waittill("damage", damage, attacker, direction_vec, point, type);
+					attacker = attacker;
+					type = type;
+					iprintln(attacker);
+					iprintln(type);
+				}
+			}
+			buyer_gave_permission = 1;
+
+			if (buyer_gave_permission == 1 && attacker.playername == player.playername && type == "MOD_MELEE")
+			{
+				self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
+				self waittill("trigger", player);
+				break;
+			}
+			else {
+				continue;
+			}
+		}
+		else
+		{
+			break;
+		}
 	}
 
 	self play_sound_on_ent( "purchase" ); 
@@ -1527,7 +1567,7 @@ takenweapon(chosenweapon, buyer)
 	{
 		current_weapon = player GetCurrentWeapon();
 		player GiveWeapon(chosenweapon);
-    	player.is_drinking = 1;
+		player.is_drinking = 1;
 		player SwitchToWeapon(chosenweapon);
 		player DisableOffhandWeapons();
 		player DisableWeaponCycling();
@@ -1549,7 +1589,7 @@ takenweapon(chosenweapon, buyer)
 		player AllowSprint( true );
 		player AllowProne( true );		
 		player AllowMelee( true );
-    	player.is_drinking = undefined;
+		player.is_drinking = undefined;
 		player TakeWeapon(chosenweapon);
 		player SwitchToWeapon(current_weapon);
 		player EnableOffhandWeapons();
@@ -1599,7 +1639,6 @@ takenweapon(chosenweapon, buyer)
 
 	player GiveWeapon(chosenweapon);
 	player SwitchToWeapon(chosenweapon);
-
 }
 
 weapon_cabinet_door_open( left_or_right )
