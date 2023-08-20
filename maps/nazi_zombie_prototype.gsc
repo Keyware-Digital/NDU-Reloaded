@@ -24,7 +24,7 @@ main() {
 	array_thread(GetPlayers(), ::reloading_monitor);
     thread maps\_explosive_barrels::init_explosive_barrels();
     maps\_map_script_models::main();
-    maps\_walking_anim::main();
+    animscripts\walking_anim::main();
 
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box
 	level.pulls_since_last_ray_gun = 0;

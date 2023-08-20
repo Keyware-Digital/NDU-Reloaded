@@ -74,9 +74,9 @@ rawfile,maps/_zombiemode_server_throttle.gsc
 rawfile,maps/_zombiemode_spawner.gsc
 rawfile,maps/_zombiemode_weapons.gsc
 rawfile,maps/_zombiemode_perks.gsc
-rawfile,maps/_dolphin_dive.gsc
+rawfile,animscripts/dolphin_dive.gsc
 rawfile,maps/_sounds.gsc
-rawfile,maps/_walking_anim.gsc
+rawfile,animscripts/walking_anim.gsc
 rawfile,mp/playeranim.script
 rawfile,mp/playeranimtypes.txt
 rawfile,animtrees/generic_human.atr
@@ -274,7 +274,7 @@ xanim,ai_zombie_traverse_ground_v2_walk
 xanim,ai_zombie_traverse_ground_v2_walk_altA
 xanim,ai_zombie_traverse_ground_v2_walk_altB
 xanim,ai_zombie_traverse_ground_climbout_fast
-xanim,zmb_player_dolphin_dive_action
+xanim,zmb_player_dolphin_dive_prone
 xanim,zmb_player_dolphin_dive_land
 xmodel,char_ger_hnrgd_player_body_hmg
 xmodel,char_ger_hnrgd_player_head_hmg

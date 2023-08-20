@@ -2196,7 +2196,7 @@ setup_player_abilities()
 	players = GetPlayers();
 	for (i = 0; i < players.size; i++)
     {
-		players[i] thread maps\_dolphin_dive::setup_player_dolphin_dive();
+		players[i] thread animscripts\dolphin_dive::setup_player_dolphin_dive();
         players[i] thread maps\_zombiemode_perks::player_switch_weapon_watcher();
         players[i] thread maps\_zombiemode_perks::player_cook_grenade_watcher();
 	}
