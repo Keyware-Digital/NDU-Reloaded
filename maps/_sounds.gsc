@@ -471,6 +471,16 @@ swarm_sound() {
 
 }
 
+plant_mine_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	plantmineSound = "_plantmine_" + RandomInt(4);
+    plant_mine_sound = Spawn("script_origin", self.origin);
+	plant_mine_sound PlaySound("plr_" + index + plantmineSound, "_plant_mine_sound_done");
+	plant_mine_sound waittill("plant_mine_sound_done");
+	plant_mine_sound Delete();
+
+}
+
 cash_register_sound() {
     chash_register_sound = Spawn("script_origin", self.origin);
 	chash_register_sound PlaySound("cha_ching", "cha_ching_sound_done");

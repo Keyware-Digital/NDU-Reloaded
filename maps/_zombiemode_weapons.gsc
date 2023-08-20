@@ -1604,24 +1604,29 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		self thread maps\_sounds::raygun_stinger_sound();
 	}
 
-	/*if(( weapon_string == "ppsh41_drum" ) )
+	if(chosenweapon == "ppsh41_drum")
 	{
 		self thread maps\_sounds::great_weapon_sound();
-	}*/
+	}
 
-	/*if( weapon_string == "m1garand")
+	if(chosenweapon == "m1garand")
 	{
 		self thread maps\_sounds::crappy_weapon_sound();
-	}*/
+	}
 
-	/*if(( weapon_string ==  "m1921_thompson" || weapon_string == "mp40_bigammo_mp" || weapon_string == "sten_mk5" ) )
+	if(chosenweapon ==  "m1921_thompson" || chosenweapon == "mp40_bigammo_mp" || chosenweapon == "sten_mk5")
 	{
 		self thread maps\_sounds::pickup_smg_sound();
-	}*/
+	}
 
-	/*if(( weapon_string ==  "kar98k_scoped_zombie" || weapon_string == "mosin_rifle_scoped" || weapon_string == "springfield_scoped_zombie" ) )
+	if( chosenweapon ==  "kar98k_scoped_zombie" || chosenweapon == "mosin_rifle_scoped" || chosenweapon == "springfield_scoped_zombie")
 	{
 		self thread maps\_sounds::pickup_sniper_sound();
+	}
+	
+	/*if(chosenweapon == "perks_a_cola")
+	{
+		self thread maps\_sounds::raygun_stinger_sound();
 	}*/
 
 	plyweapons = player GetWeaponsListPrimaries();
@@ -1801,44 +1806,21 @@ weapon_spawn_think()
 						case "doublebarrel_sawed_grip":
 						players[i] thread maps\_sounds::pickup_shotgun_sound();
 							break;
-						case "stielhandgranate":
-						players[i] thread maps\_sounds::pickup_lmg_sound();
+						/*case "stielhandgranate":
+						players[i] thread maps\_sounds::no_money_sound();
+							break;*/
+						case "no_money":
+						players[i] thread maps\_sounds::no_money_sound();
 							break;
 					}
 				}
-
-				//Wall buy vox - wip
-				/*
-
-				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE" ) )
-				{
-					self thread maps\_sounds::pickup_semi_sound();
-				}
-
-				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_THOMPSON" ) )
-				{
-					self thread maps\_sounds::pickup_smg_sound();
-				}
-
-				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_BAR" ) )
-				{
-					self thread maps\_sounds::pickup_lmg_sound();
-				}
-
-				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED" || weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN" || weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP" ) )
-				{
-					self thread maps\_sounds::pickup_shotgun_sound();
-				}
-
-				if(( weaponNameWallBuy == "stielhandgranate" ) )
-				{
-					self thread maps\_sounds::pickup_lmg_sound();
-				}*/	
 			}
 			else
 			{
 				play_sound_on_ent( "no_purchase" );
-				play_sound_on_ent( "no_money_sound" );	//am i dum dum?
+				//for (i = 0; i < players.size; i++) {
+				//wait 0.25
+				//players[i] thread maps\_sounds::no_money_sound();
 			}
 		}
 		else
@@ -1904,7 +1886,9 @@ weapon_spawn_think()
 			else
 			{
 				play_sound_on_ent( "no_purchase" );
-				play_sound_on_ent( "no_money_sound" );	//am i dum dum?
+				//for (i = 0; i < players.size; i++) {
+				//wait 0.25
+				//play_sound_on_ent( "no_money");
 			}
 		}
 	}
