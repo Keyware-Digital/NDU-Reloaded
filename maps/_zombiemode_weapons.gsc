@@ -1737,7 +1737,7 @@ weapon_spawn_think()
 						switch(weapon_name_ammo_cost)
 						{
 							case "kar98k":
-							weaponNameWallBuy = "kar98k";
+							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
 								break; 
 							case "m1carbine":
 							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
