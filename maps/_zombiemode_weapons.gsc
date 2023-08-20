@@ -1733,16 +1733,10 @@ weapon_spawn_think()
 					
 					if(!is_grenade)
 					{
-
-
-						players = GetPlayers();
-
-						for (i = 0; i < players.size; i++) {
 							switch(weapon_name_ammo_cost)
 							{
 								case "kar98k":
 								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
-								players[i] thread maps\_sounds::crappy_weapon_sound();
 									break; 
 								case "m1carbine":
 								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
@@ -1766,7 +1760,6 @@ weapon_spawn_think()
 								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
 									break;
 							}
-						}
 
 						self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
 	
@@ -1781,6 +1774,38 @@ weapon_spawn_think()
 
 				//test as proof of concept
 				//player thread do_knuckle_crack();	
+
+				players = GetPlayers();
+
+				for (i = 0; i < players.size; i++) {
+					switch(weapon_name_ammo_cost)
+					{
+						case "kar98k":
+						players[i] thread maps\_sounds::crappy_weapon_sound();
+							break; 
+						case "m1carbine":
+						players[i] thread maps\_sounds::pickup_semi_sound();
+							break;
+						case "thompson":
+						players[i] thread maps\_sounds::pickup_smg_sound();
+							break;  
+						case "doublebarrel":
+						players[i] thread maps\_sounds::pickup_shotgun_sound();
+							break;
+						case "bar":
+						players[i] thread maps\_sounds::pickup_lmg_sound();
+							break;
+						case "shotgun":
+						players[i] thread maps\_sounds::pickup_shotgun_sound();
+							break;
+						case "doublebarrel_sawed_grip":
+						players[i] thread maps\_sounds::pickup_shotgun_sound();
+							break;
+						case "stielhandgranate":
+						players[i] thread maps\_sounds::pickup_lmg_sound();
+							break;
+					}
+				}
 
 				//Wall buy vox - wip
 				/*
