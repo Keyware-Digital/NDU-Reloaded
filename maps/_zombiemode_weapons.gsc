@@ -1670,6 +1670,61 @@ weapon_cabinet_door_close( left_or_right )
 	}	
 }
 
+play_weapon_wallbuy_sound(weapon_name_ammo_cost)
+{		
+
+	players = GetPlayers();
+
+	switch(weapon_name_ammo_cost)
+	{
+		case "kar98k":
+			for (i = 0; i < players.size; i++) { 
+				players[i] thread maps\_sounds::crappy_weapon_sound();
+			}
+			break; 
+		case "m1carbine":
+			for (i = 0; i < players.size; i++) {
+				players[i] thread maps\_sounds::pickup_semi_sound();
+			}
+			break;
+		case "thompson":
+			for (i = 0; i < players.size; i++) { 
+				players[i] thread maps\_sounds::pickup_smg_sound();
+			}
+			break;  
+		case "doublebarrel":
+			for (i = 0; i < players.size; i++) { 
+				players[i] thread maps\_sounds::pickup_semi_sound();
+			}
+			break;
+		case "bar":
+			for (i = 0; i < players.size; i++) { 
+				players[i] thread maps\_sounds::pickup_lmg_sound();
+			}
+			break;
+		case "shotgun":
+			for (i = 0; i < players.size; i++) { 
+				players[i] thread maps\_sounds::pickup_shotgun_sound();
+			}
+			break;
+		case "doublebarrel_sawed_grip":
+			for (i = 0; i < players.size; i++) { 
+				players[i] thread maps\_sounds::pickup_shotgun_sound();
+			}
+			break;
+		case "stielhandgranate":
+			for (i = 0; i < players.size; i++) { 
+				players[i] thread maps\_sounds::no_money_sound();
+			}
+			break;
+		case "no_money":
+			for (i = 0; i < players.size; i++) { 
+				players[i] thread maps\_sounds::no_money_sound();
+			}
+			break;
+	}
+}		
+
 weapon_spawn_think()
 {
 	
@@ -1780,47 +1835,13 @@ weapon_spawn_think()
 				//test as proof of concept
 				//player thread do_knuckle_crack();	
 
-				players = GetPlayers();
-
-				for (i = 0; i < players.size; i++) {
-					switch(weapon_name_ammo_cost)
-					{
-						case "kar98k":
-						players[i] thread maps\_sounds::crappy_weapon_sound();
-							break; 
-						case "m1carbine":
-						players[i] thread maps\_sounds::pickup_semi_sound();
-							break;
-						case "thompson":
-						players[i] thread maps\_sounds::pickup_smg_sound();
-							break;  
-						case "doublebarrel":
-						players[i] thread maps\_sounds::pickup_shotgun_sound();
-							break;
-						case "bar":
-						players[i] thread maps\_sounds::pickup_lmg_sound();
-							break;
-						case "shotgun":
-						players[i] thread maps\_sounds::pickup_shotgun_sound();
-							break;
-						case "doublebarrel_sawed_grip":
-						players[i] thread maps\_sounds::pickup_shotgun_sound();
-							break;
-						/*case "stielhandgranate":
-						players[i] thread maps\_sounds::no_money_sound();
-							break;*/
-						case "no_money":
-						players[i] thread maps\_sounds::no_money_sound();
-							break;
-					}
-				}
+				play_weapon_wallbuy_sound(weapon_name_ammo_cost);
 			}
 			else
 			{
 				play_sound_on_ent( "no_purchase" );
-				//for (i = 0; i < players.size; i++) {
-				//wait 0.25
-				//players[i] thread maps\_sounds::no_money_sound();
+
+				play_weapon_wallbuy_sound("no_money");
 			}
 		}
 		else
@@ -1886,9 +1907,8 @@ weapon_spawn_think()
 			else
 			{
 				play_sound_on_ent( "no_purchase" );
-				//for (i = 0; i < players.size; i++) {
-				//wait 0.25
-				//play_sound_on_ent( "no_money");
+
+				play_weapon_wallbuy_sound("no_money");
 			}
 		}
 	}
