@@ -1734,7 +1734,8 @@ weapon_spawn_think()
 	is_grenade = (WeaponType( self.zombie_weapon_upgrade ) == "grenade");
 	weaponNameWallBuy = undefined;
 
-	self.first_time_triggered = false; 
+	self.first_time_triggered = false;
+
 	while(1)
 	{
 		self waittill( "trigger", player ); 		
@@ -1790,7 +1791,7 @@ weapon_spawn_think()
 //					model show(); 
 					model thread weapon_show( player );
 					self.first_time_triggered = true;
-					
+
 					if(!is_grenade)
 					{
 							switch(weapon_name_ammo_cost)
@@ -1820,11 +1821,6 @@ weapon_spawn_think()
 								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
 									break;
 							}
-
-						self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
-	
-						self setCursorHint( "HINT_NOICON" ); 
-
 					}
 				}
 			
@@ -1911,6 +1907,19 @@ weapon_spawn_think()
 				play_weapon_wallbuy_sound("no_money");
 			}
 		}
+
+
+		//Intended outcome is for these hintstrings to be set before the user presses the use key but th code below executes after the player triggers the waittill
+		if(player_has_weapon == true)
+		{
+			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
+		}
+		else if (player_has_weapon == false)
+		{
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, cost);
+		}
+		
+		self setCursorHint( "HINT_NOICON" ); 
 	}
 }
 
