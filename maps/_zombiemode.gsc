@@ -2261,7 +2261,7 @@ setup_player_vars()
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {
             players[i] setClientDvar("sv_cheats", 1);
-            players[i] maps\_zombiemode_score::add_to_player_score(100000); //comment out for default behaviour //disabled to test no_money vox
+           players[i] maps\_zombiemode_score::add_to_player_score(9500); //comment out for default behaviour  //100000
         }
     }
 }
@@ -2358,7 +2358,7 @@ player_lunge_knife_exert_sounds()
                 level.player_is_speaking = 0;
             }
         }
-        wait(0.3);  //was 0.05
+        wait(0.4);  //was 0.05
     }
 }
 

@@ -489,6 +489,13 @@ treasure_chest_think(rand)
 		}
 		
 		wait 0.05; 
+
+		//play the "no purchase" sound and have the player react.
+		/*else 
+		{
+			self play_sound_on_ent( "no_purchase" );
+			play_weapon_wallbuy_sound("no_money");
+		}*/
 	}
 	
 	// trigger_use->script_brushmodel lid->script_origin in radiant
@@ -1183,7 +1190,7 @@ weapon_cabinet_think()
 	}
 
 	level.cabinetguns = [];
-	level.cabinetguns[0] = "kar98k_scoped_zombie";						// default
+	level.cabinetguns[0] = "kar98k_scoped_zombie";						// default ndu
 	level.cabinetguns[1] = "kar98k_bayonet";	
 	level.cabinetguns[2] = "m1garand";		
 	level.cabinetguns[3] = "m1921_thompson";						
@@ -1247,6 +1254,7 @@ weapon_cabinet_think()
 	if(player.score < level.zombie_weapon_cabinet_cost)
     {
     	self play_sound_on_ent( "no_purchase" );
+		play_weapon_wallbuy_sound("no_money");
     	wait 0.5;
     	self thread weapon_cabinet_think();
     	return;
