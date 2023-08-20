@@ -1737,7 +1737,7 @@ weapon_spawn_think()
 						switch(weapon_name_ammo_cost)
 						{
 							case "kar98k":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
+							weaponNameWallBuy = "kar98k";
 								break; 
 							case "m1carbine":
 							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
@@ -1777,10 +1777,16 @@ weapon_spawn_think()
 				//player thread do_knuckle_crack();	
 
 				//Wall buy vox - wip
-				/*if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_KAR_98K" ) )
+
+				if(weapon_name_ammo_cost == "kar98k")
 				{
-					self thread maps\_sounds::crappy_weapon_sound();
+					players = GetPlayers();
+
+					for (i = 0; i < players.size; i++) { 
+						players[i] thread maps\_sounds::crappy_weapon_sound();
+					}
 				}
+				/*
 
 				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE" ) )
 				{
@@ -2169,4 +2175,3 @@ upgrade_knuckle_crack_end( gun )
 		self SwitchToWeapon( "colt" );
 	}
 }
-
