@@ -1734,32 +1734,38 @@ weapon_spawn_think()
 					if(!is_grenade)
 					{
 
-						switch(weapon_name_ammo_cost)
-						{
-							case "kar98k":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
-								break; 
-							case "m1carbine":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
-								break;
-							case "thompson":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
-								break;  
-							case "doublebarrel":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
-								break;
-							case "bar":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
-								break;
-							case "shotgun":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
-								break;
-							case "doublebarrel_sawed_grip":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
-								break;
-							case "stielhandgranate":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
-								break;
+
+						players = GetPlayers();
+
+						for (i = 0; i < players.size; i++) {
+							switch(weapon_name_ammo_cost)
+							{
+								case "kar98k":
+								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
+								players[i] thread maps\_sounds::crappy_weapon_sound();
+									break; 
+								case "m1carbine":
+								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
+									break;
+								case "thompson":
+								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
+									break;  
+								case "doublebarrel":
+								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+									break;
+								case "bar":
+								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
+									break;
+								case "shotgun":
+								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
+									break;
+								case "doublebarrel_sawed_grip":
+								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+									break;
+								case "stielhandgranate":
+								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
+									break;
+							}
 						}
 
 						self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
@@ -1777,15 +1783,6 @@ weapon_spawn_think()
 				//player thread do_knuckle_crack();	
 
 				//Wall buy vox - wip
-
-				if(weapon_name_ammo_cost == "kar98k")
-				{
-					players = GetPlayers();
-
-					for (i = 0; i < players.size; i++) { 
-						players[i] thread maps\_sounds::crappy_weapon_sound();
-					}
-				}
 				/*
 
 				if(( weaponNameWallBuy == "PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE" ) )
