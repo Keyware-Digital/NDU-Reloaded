@@ -1495,7 +1495,6 @@ weapon_cabinet_think()
 	chosenweapon = undefined;
 	weaponmodel = undefined;
 	weaponmodelstruct Delete();
-
 }
 
 movecabinetguns( cabinetmodel, coord)
@@ -1557,7 +1556,7 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	// Let only the buyer take the weapon unless the buyer nades the cabinet, I want to make it knife but I don't know where the invisible trigger is on the cabinet and so only grenade splash damage can damage it so far
 
 	buyer_gave_permission = 0;
-	//player_name = "player";  // For solo testing only
+	player_name = "player";  // For solo testing only
 	attacker = undefined;
 	type = undefined;
 	check_for_cabinet_damage = true;
@@ -1566,8 +1565,8 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	{
 		self waittill("trigger", player);
 		
-		if (buyer != player) // For multiplayer
-		//if (player_name != player.playername) // For solo testing only
+		//if (buyer != player) // For multiplayer
+		if (player_name != player.playername) // For solo testing only
 		{
 			if (buyer_gave_permission == 0)
 			{
@@ -1577,22 +1576,38 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 			
 			if(check_for_cabinet_damage)
 			{
-				fake_cabinet_trigger = spawn("script_model", self.origin);
-				fake_cabinet_trigger setmodel("zombie_teddybear"); 
-				fake_cabinet_trigger Hide();
-				fake_cabinet_trigger Solid();
-				fake_cabinet_trigger setCanDamage(true);
-				fake_cabinet_trigger waittill("damage", damage, attacker, direction_vec, point, type);
-				fake_cabinet_trigger Delete();
-				buyer_gave_permission = 1;
+				fake_cabinet_entity = spawn("script_model", self.origin);
+				fake_cabinet_entity setmodel("zombie_teddybear"); 
+				fake_cabinet_entity Show();
+				fake_cabinet_entity Solid();
+				fake_cabinet_entity setCanDamage(true);
+				fake_cabinet_entity waittill("damage", amount, attacker, direction_vec, point, type);
+				// BEAR ONLY DELETES ITSELF WHEN DAMAGED BY KNIFE, IT WAITS UNTIL THEN, WE NEED IT TO ALSO DELETE ITSELF WHEN weaponexpired otherwise multiple bears spawn and the bear with the active damage event can't be reached which breaks the share function if nobody grabs the weapon in time but only when it's shared
+
+				if(type == "MOD_MELEE")
+				{
+					iprintln("you knived the bear");
+					buyer_gave_permission = 1;
+					fake_cabinet_entity Hide();
+					fake_cabinet_entity Delete();
+					
+				}
+				else {
+					iprintln("you didn't knife the bear");
+					buyer_gave_permission = 0;
+					fake_cabinet_entity Hide();
+					fake_cabinet_entity Delete();
+				}
+
 				check_for_cabinet_damage = false;
 				attacker = attacker;
 				type = type;
 			}			
 
-			if (buyer_gave_permission == 1 && attacker != player && type == "MOD_MELEE") // For multiplayer
-			//if (buyer_gave_permission == 1 && attacker == player && type == "MOD_MELEE") // For solo testing only
+			//if (buyer_gave_permission == 1 && attacker != player) // For multiplayer
+			if (buyer_gave_permission == 1 && attacker == player) // For solo testing only
 			{
+				iprintln("permission given");
 				self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
 				self waittill("trigger", player);
 				break;
