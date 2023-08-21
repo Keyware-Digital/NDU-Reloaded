@@ -1,14 +1,28 @@
+#include maps\_utility; 
 #include common_scripts\utility;
-#include maps\_utility;
 #include maps\_zombiemode_utility;
 
 // Proof of concept, button easter egg from bo3 nacht possible
 
 main()
 {
-    teddy = spawn("script_model", (-85, -480, 15));
+    teddy = spawn("script_model", (-55, -480, 15));
 	teddy.angles = (0, 45, 0);
 	teddy setmodel("zombie_teddybear");
+
+	////
+
+	teddy Show();
+	teddy Solid();
+	teddy setCanDamage(true);
+	teddy PlayLoopSound("meteor_loop");
+	teddy SetCursorHint("HINT_NOICON");
+	teddy waittill("trigger", player);
+	teddy StopLoopSound();
+	teddy PlaySound("meteor_affirm");
+	teddy Delete();
+
+	////
 
 	collision = spawnCollision("collision_geo_32x32x32", "collider", teddy.origin, teddy.angles);
 	collision LinkTo(teddy);

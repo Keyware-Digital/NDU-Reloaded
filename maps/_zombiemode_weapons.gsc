@@ -11,7 +11,7 @@ init()
 	init_mystery_box_vars();
 }
 
-add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost  )
+add_zombie_weapon( weapon_name, hint, weapon_cost, weaponVO, variation_count, ammo_cost  )
 {
 	if( isDefined( level.zombie_include_weapons ) && !isDefined( level.zombie_include_weapons[weapon_name] ) )
 	{
@@ -25,7 +25,7 @@ add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost
 
 	if( isDefined( table_cost ) && table_cost != "" )
 	{
-		cost = round_up_to_ten( int( table_cost ) );
+		weapon_cost = round_up_to_ten( int( table_cost ) );
 	}
 
 	if( isDefined( table_ammo_cost ) && table_ammo_cost != "" )
@@ -46,14 +46,14 @@ add_zombie_weapon( weapon_name, hint, cost, weaponVO, variation_count, ammo_cost
 	struct.weapon_name = weapon_name;
 	struct.weapon_classname = "weapon_" + weapon_name;
 	struct.hint = hint;
-	struct.cost = cost;
+	struct.weapon_cost = weapon_cost;
 	struct.sound = weaponVO;
 	struct.variation_count = variation_count;
 	struct.is_in_box = level.zombie_include_weapons[weapon_name];
 	
 	if( !isDefined( ammo_cost ) )
 	{
-		ammo_cost = round_up_to_ten( int( cost * 0.5 ) );
+		ammo_cost = round_up_to_ten( int( weapon_cost * 0.5 ) );
 	}
 
 	struct.ammo_cost = ammo_cost;
@@ -339,7 +339,7 @@ init_weapon_upgrade()
 	{
 
 		weapon_name = get_weapon_name(weapon_spawns[i].zombie_weapon_upgrade);
-		cost = get_weapon_cost( weapon_spawns[i].zombie_weapon_upgrade );
+		weapon_cost = get_weapon_cost( weapon_spawns[i].zombie_weapon_upgrade );
 
 		switch(weapon_name)
 		{
@@ -369,7 +369,7 @@ init_weapon_upgrade()
 				break;
 		}
 
-		weapon_spawns[i] SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, cost);
+		weapon_spawns[i] SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, weapon_cost);
 		weapon_spawns[i] setCursorHint( "HINT_NOICON" );  
 		weapon_spawns[i] UseTriggerRequireLookAt();
 
@@ -414,7 +414,7 @@ get_weapon_cost( weapon_name )
 {
 	AssertEx( isDefined( level.zombie_weapons[weapon_name] ), weapon_name + " was not included or is not part of the zombie weapon list." );
 
-	return level.zombie_weapons[weapon_name].cost;
+	return level.zombie_weapons[weapon_name].weapon_cost;
 }
 
 get_ammo_cost( weapon_name )
@@ -446,27 +446,27 @@ init_mystery_box_vars() {
 
 }
 
-set_treasure_chest_cost( cost )
+set_treasure_chest_cost( weapon_cost )
 {
-	level.zombie_treasure_chest_cost = cost;
+	level.zombie_treasure_chest_cost = weapon_cost;
 }
 
 treasure_chest_think(rand)
 {
-	cost = 950;
+	weapon_cost = 950;
 
 	if( isDefined( level.zombie_treasure_chest_cost ) )
 	{
-		cost = level.zombie_treasure_chest_cost;
+		weapon_cost = level.zombie_treasure_chest_cost;
 	}
 
-	self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", cost);
+	self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", weapon_cost);
 	self setCursorHint( "HINT_NOICON" );
 	self UseTriggerRequireLookAt();
 
 	if(isDefined(level.zombie_vars["zombie_fire_sale"]) && level.zombie_vars["zombie_fire_sale"])
 	{
-		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", cost);
+		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", weapon_cost);
 	}
 
 	// waittill someuses uses this
@@ -487,15 +487,14 @@ treasure_chest_think(rand)
 			user maps\_zombiemode_score::minus_to_player_score( level.zombie_treasure_chest_cost ); 
 			break; 
 		}
-		
-		wait 0.05; 
-
-		//play the "no purchase" sound and have the player react.
-		/*else 
-		{
+		else 
+		{   //play the "no purchase" sound and have the player react.
 			self play_sound_on_ent( "no_purchase" );
-			play_weapon_wallbuy_sound("no_money");
-		}*/
+			wait 0.5;
+			user play_weapon_wallbuy_sound("no_money");
+		}
+		
+		wait 0.05;
 	}
 	
 	// trigger_use->script_brushmodel lid->script_origin in radiant
@@ -942,9 +941,9 @@ treasure_chest_weapon_spawn( chest, player )
 		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
 
-		cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
+		weapon_cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
 		
-        chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", cost);
+        chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", weapon_cost);
 
         chest enable_trigger();
         
@@ -1065,6 +1064,44 @@ treasure_chest_give_weapon( weapon_string )
 	// Weapon VOX lines
 	// Add / remove weapons as you see fit...
 
+	/*
+	switch(weapon_string)
+	{
+		case "30cal_bipod":
+		self thread maps\_sounds::great_weapon_sound();
+			break; 
+		case "dp28":
+		self thread maps\_sounds::great_weapon_sound();
+			break;
+		case "a weapon string":
+			execute code if weapon string is true
+			break;  
+		case "":
+
+			break;
+		case "":
+
+			break;
+		case "":
+
+			break;
+		case "":
+
+			break;
+		case "":
+
+			break;
+		case "":
+
+		break;
+		case "":
+
+		break;
+	}
+	*/
+
+	// this is all shit and needs putting into the switch above
+
 	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "stg44_pap" ) )
 	{
 		self thread maps\_sounds::great_weapon_sound();
@@ -1162,8 +1199,7 @@ treasure_chest_give_weapon( weapon_string )
 		return;
 	}
 
-	self play_sound_on_ent( "purchase" ); 
-
+	self play_sound_on_ent("purchase");
 	self GiveWeapon( weapon_string, 0 );
 	self GiveMaxAmmo( weapon_string );
 	self SwitchToWeapon( weapon_string );
@@ -1173,20 +1209,20 @@ treasure_chest_give_weapon( weapon_string )
 weapon_cabinet_think()
 {
 
-	cost = 1900;	//costs twice as much as the regular mystery box
+	weapon_cost = 1900;	//costs twice as much as the regular mystery box
 
 	if( isDefined( level.zombie_weapon_cabinet_cost ) )
 	{
-		cost = level.zombie_weapon_cabinet_cost;
+		weapon_cost = level.zombie_weapon_cabinet_cost;
 	}
 
-	self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", cost);
+	self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", weapon_cost);
 	self setCursorHint( "HINT_NOICON" );
 	self UseTriggerRequireLookAt();
 
 	if(isDefined(level.zombie_vars["zombie_fire_sale"]) && level.zombie_vars["zombie_fire_sale"])
 	{
-		self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", cost);
+		self SetHintString(&"PROTOTYPE_ZOMBIE_CABINET_OPEN", "&&1", weapon_cost);
 	}
 
 	level.cabinetguns = [];
@@ -1254,7 +1290,7 @@ weapon_cabinet_think()
 	if(player.score < level.zombie_weapon_cabinet_cost)
     {
     	self play_sound_on_ent( "no_purchase" );
-		play_weapon_wallbuy_sound("no_money");
+		self play_weapon_wallbuy_sound("no_money");
     	wait 0.5;
     	self thread weapon_cabinet_think();
     	return;
@@ -1262,7 +1298,6 @@ weapon_cabinet_think()
     else
     {
 		player maps\_zombiemode_score::minus_to_player_score(level.zombie_weapon_cabinet_cost);
-		//play_sound_on_ent( "purchase" );
 	}
 
 	plyweapons = player GetWeaponsListPrimaries();
@@ -1375,6 +1410,8 @@ weapon_cabinet_think()
     }
 
 	luckyNumCabinet = RandomInt(100);
+
+	// needs burp sound in animation file
 	
 	if(!isDefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
@@ -1522,7 +1559,7 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	// Let only the buyer take the weapon unless the buyer nades the cabinet, I want to make it knife but I don't know where the invisible trigger is on the cabinet and so only grenade splash damage can damage it so far
 
 	buyer_gave_permission = 0;
-	player_name = "player";  // For solo testing only
+	//player_name = "player";  // For solo testing only
 	attacker = undefined;
 	type = undefined;
 	check_for_cabinet_damage = true;
@@ -1540,23 +1577,24 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 				self playsound("door_deny");
 			}
 			
-				if(check_for_cabinet_damage)
-				{
-					weaponmodelstruct Solid();
-					weaponmodelstruct setCanDamage(true);
-					weaponmodelstruct waittill("damage", damage, attacker, direction_vec, point, type);
-					buyer_gave_permission = 1;
-					check_for_cabinet_damage = false;
-					attacker = attacker;
-					type = type;
-					iprintln(type);
-					iprintln("you knifed the door!");
-				}			
-
-			if (buyer_gave_permission == 1 && attacker != player && type == "MOD_MELEE") // For multiplayer MOD_GRENADE_SPLASH
-			//if (buyer_gave_permission == 1 && attacker == player) // For solo testing only
+			if(check_for_cabinet_damage)
 			{
-				iprintln(attacker.playername + " gave permission with their knife");
+				fake = spawn("script_model", self.origin);
+				fake setmodel("zombie_teddybear"); 
+				fake Hide();
+				fake Solid();
+				fake setCanDamage(true);
+				fake waittill("damage", damage, attacker, direction_vec, point, type);
+				fake Delete();
+				buyer_gave_permission = 1;
+				check_for_cabinet_damage = false;
+				attacker = attacker;
+				type = type;
+			}			
+
+			if (buyer_gave_permission == 1 && attacker != player && type == "MOD_MELEE") // For multiplayer
+			//if (buyer_gave_permission == 1 && attacker == player && type == "MOD_MELEE") // For solo testing only
+			{
 				self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
 				self waittill("trigger", player);
 				break;
@@ -1568,7 +1606,6 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		}
 	}
 
-	self play_sound_on_ent( "purchase" ); 
 	self notify("weapontaken");
 
 	if(chosenweapon == "perks_a_cola")
@@ -1607,29 +1644,35 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		return;
 	}
 
-	if(chosenweapon == "stg44_pap")
+	switch(chosenweapon)
 	{
-		self thread maps\_sounds::raygun_stinger_sound();
-	}
-
-	if(chosenweapon == "ppsh41_drum")
-	{
-		self thread maps\_sounds::great_weapon_sound();
-	}
-
-	if(chosenweapon == "m1garand")
-	{
-		self thread maps\_sounds::crappy_weapon_sound();
-	}
-
-	if(chosenweapon ==  "m1921_thompson" || chosenweapon == "mp40_bigammo_mp" || chosenweapon == "sten_mk5")
-	{
-		self thread maps\_sounds::pickup_smg_sound();
-	}
-
-	if( chosenweapon ==  "kar98k_scoped_zombie" || chosenweapon == "mosin_rifle_scoped" || chosenweapon == "springfield_scoped_zombie")
-	{
-		self thread maps\_sounds::pickup_sniper_sound();
+		case "stg44_pap":
+				player thread maps\_sounds::raygun_stinger_sound();
+			break; 
+		case "ppsh41_drum":
+				player thread maps\_sounds::great_weapon_sound();
+			break;
+		case "m1garand":
+				player thread maps\_sounds::crappy_weapon_sound();
+			break;  
+		case "m1921_thompson":
+				player thread maps\_sounds::pickup_smg_sound();
+			break;
+		case "mp40_bigammo_mp":
+				player thread maps\_sounds::pickup_smg_sound();
+			break;
+		case "sten_mk5":
+				player thread maps\_sounds::pickup_smg_sound();
+			break;
+		case "kar98k_scoped_zombie":
+				player thread maps\_sounds::pickup_shotgun_sound();
+			break;
+		case "mosin_rifle_scoped":
+				player thread maps\_sounds::pickup_sniper_sound();
+			break;
+		case "springfield_scoped_zombie":
+				player thread maps\_sounds::pickup_sniper_sound();
+			break;
 	}
 	
 	/*if(chosenweapon == "perks_a_cola")
@@ -1650,6 +1693,7 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		}
 	}
 
+	self play_sound_on_ent("purchase");
 	player GiveWeapon(chosenweapon);
 	player SwitchToWeapon(chosenweapon);
 }
@@ -1678,57 +1722,36 @@ weapon_cabinet_door_close( left_or_right )
 	}	
 }
 
-play_weapon_wallbuy_sound(weapon_name_ammo_cost)
-{		
-
-	players = GetPlayers();
-
-	switch(weapon_name_ammo_cost)
+play_weapon_wallbuy_sound(weapon_name)
+{
+	switch(weapon_name)
 	{
 		case "kar98k":
-			for (i = 0; i < players.size; i++) { 
-				players[i] thread maps\_sounds::crappy_weapon_sound();
-			}
+				self thread maps\_sounds::crappy_weapon_sound();
 			break; 
 		case "m1carbine":
-			for (i = 0; i < players.size; i++) {
-				players[i] thread maps\_sounds::pickup_semi_sound();
-			}
+				self thread maps\_sounds::pickup_semi_sound();
 			break;
 		case "thompson":
-			for (i = 0; i < players.size; i++) { 
-				players[i] thread maps\_sounds::pickup_smg_sound();
-			}
+				self thread maps\_sounds::pickup_smg_sound();
 			break;  
 		case "doublebarrel":
-			for (i = 0; i < players.size; i++) { 
-				players[i] thread maps\_sounds::pickup_semi_sound();
-			}
+				self thread maps\_sounds::pickup_semi_sound();
 			break;
 		case "bar":
-			for (i = 0; i < players.size; i++) { 
-				players[i] thread maps\_sounds::pickup_lmg_sound();
-			}
+				self thread maps\_sounds::pickup_lmg_sound();
 			break;
 		case "shotgun":
-			for (i = 0; i < players.size; i++) { 
-				players[i] thread maps\_sounds::pickup_shotgun_sound();
-			}
+				self thread maps\_sounds::pickup_shotgun_sound();
 			break;
 		case "doublebarrel_sawed_grip":
-			for (i = 0; i < players.size; i++) { 
-				players[i] thread maps\_sounds::pickup_shotgun_sound();
-			}
+				self thread maps\_sounds::pickup_shotgun_sound();
 			break;
 		case "stielhandgranate":
-			for (i = 0; i < players.size; i++) { 
-				players[i] thread maps\_sounds::no_money_sound();
-			}
+				self thread maps\_sounds::no_money_sound();
 			break;
 		case "no_money":
-			for (i = 0; i < players.size; i++) { 
-				players[i] thread maps\_sounds::no_money_sound();
-			}
+				self thread maps\_sounds::no_money_sound();
 			break;
 	}
 }		
@@ -1736,8 +1759,8 @@ play_weapon_wallbuy_sound(weapon_name_ammo_cost)
 weapon_spawn_think()
 {
 	
-	weapon_name_ammo_cost = get_weapon_name(self.zombie_weapon_upgrade);
-	cost = get_weapon_cost( self.zombie_weapon_upgrade );
+	weapon_name = get_weapon_name(self.zombie_weapon_upgrade);
+	weapon_cost = get_weapon_cost( self.zombie_weapon_upgrade );
 	ammo_cost = get_ammo_cost( self.zombie_weapon_upgrade );
 	is_grenade = (WeaponType( self.zombie_weapon_upgrade ) == "grenade");
 	weaponNameWallBuy = undefined;
@@ -1791,7 +1814,7 @@ weapon_spawn_think()
 		if( !player_has_weapon )
 		{
 			// else make the weapon show and give it
-			if( player.score >= cost )
+			if( player.score >= weapon_cost )
 			{
 				if( self.first_time_triggered == false )
 				{
@@ -1800,52 +1823,49 @@ weapon_spawn_think()
 					model thread weapon_show( player );
 					self.first_time_triggered = true;
 
-					if(!is_grenade)
+					switch(weapon_name)
 					{
-							switch(weapon_name_ammo_cost)
-							{
-								case "kar98k":
-								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
-									break; 
-								case "m1carbine":
-								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
-									break;
-								case "thompson":
-								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
-									break;  
-								case "doublebarrel":
-								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
-									break;
-								case "bar":
-								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
-									break;
-								case "shotgun":
-								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
-									break;
-								case "doublebarrel_sawed_grip":
-								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
-									break;
-								case "stielhandgranate":
-								weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
-									break;
-							}
+						case "kar98k":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
+							break; 
+						case "m1carbine":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
+							break;
+						case "thompson":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
+							break;  
+						case "doublebarrel":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+							break;
+						case "bar":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
+							break;
+						case "shotgun":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
+							break;
+						case "doublebarrel_sawed_grip":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+							break;
+						case "stielhandgranate":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
+							break;
 					}
 				}
 			
-				player maps\_zombiemode_score::minus_to_player_score( cost ); 
+				player maps\_zombiemode_score::minus_to_player_score( weapon_cost ); 
 
 				player weapon_give( self.zombie_weapon_upgrade );		
 
 				//test as proof of concept
 				//player thread do_knuckle_crack();	
 
-				play_weapon_wallbuy_sound(weapon_name_ammo_cost);
+				player play_weapon_wallbuy_sound(weapon_name);
 			}
 			else
 			{
-				play_sound_on_ent( "no_purchase" );
+				self play_sound_on_ent( "no_purchase" );
 
-				play_weapon_wallbuy_sound("no_money");
+				player play_weapon_wallbuy_sound("no_money");
 			}
 		}
 		else
@@ -1859,40 +1879,37 @@ weapon_spawn_think()
 //					model show(); 
 					model thread weapon_show( player );
 					self.first_time_triggered = true;
-					if(!is_grenade)
-					{ 
-						switch(weapon_name_ammo_cost)
-						{
-							case "kar98k":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
-								break; 
-							case "m1carbine":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
-								break;
-							case "thompson":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
-								break;  
-							case "doublebarrel":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
-								break;
-							case "bar":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
-								break;
-							case "shotgun":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
-								break;
-							case "doublebarrel_sawed_grip":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
-								break;
-							case "stielhandgranate":
-							weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
-								break;
-						}
 
-						self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
-	
-						self setCursorHint( "HINT_NOICON" ); 
+					switch(weapon_name)
+					{
+						case "kar98k":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
+							break; 
+						case "m1carbine":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
+							break;
+						case "thompson":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
+							break;  
+						case "doublebarrel":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+							break;
+						case "bar":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
+							break;
+						case "shotgun":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
+							break;
+						case "doublebarrel_sawed_grip":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+							break;
+						case "stielhandgranate":
+						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
+							break;
 					}
+
+					self setCursorHint( "HINT_NOICON" ); 
+					
 				}
 
 				ammo_given = player ammo_give( self.zombie_weapon_upgrade ); 
@@ -1900,7 +1917,7 @@ weapon_spawn_think()
 				{
 					if(is_grenade)
 					{
-						player maps\_zombiemode_score::minus_to_player_score( cost ); // this give him ammo to early
+						player maps\_zombiemode_score::minus_to_player_score( weapon_cost ); // this give him ammo to early
 					}
 					else
 					{
@@ -1910,21 +1927,21 @@ weapon_spawn_think()
 			}
 			else
 			{
-				play_sound_on_ent( "no_purchase" );
+				self play_sound_on_ent( "no_purchase" );
 
-				play_weapon_wallbuy_sound("no_money");
+				player play_weapon_wallbuy_sound("no_money");
 			}
 		}
 
 
-		//Intended outcome is for these hintstrings to be set before the user presses the use key but th code below executes after the player triggers the waittill
+		//Intended outcome is for these hintstrings to be set before the user presses the use key but the code below executes after the player triggers the waittill
 		if(player_has_weapon == true)
 		{
 			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
 		}
 		else if (player_has_weapon == false)
 		{
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, cost);
+			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, weapon_cost);
 		}
 		
 		self setCursorHint( "HINT_NOICON" ); 
@@ -2013,8 +2030,8 @@ weapon_give( weapon )
 			}
 		}
 	}
-
 	self play_sound_on_ent( "purchase" );
+
 	self GiveWeapon( weapon, 0 ); 
 	self GiveMaxAmmo( weapon ); 
 	self SwitchToWeapon( weapon ); 
