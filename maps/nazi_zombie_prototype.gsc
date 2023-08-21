@@ -128,10 +128,10 @@ include_weapons() {
     include_weapon("mosin_rifle");
     include_weapon("ppsh41");
     include_weapon("svt40");
-    include_weapon("type99_lmg");
+    include_weapon("type99_lmg");           //remove japenese theatre weapons at some point and replaced with something else.
     include_weapon("zombie_bowie_flourish", /*true,*/::prototype_bowie_weighting_func);
     //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func);
-    include_weapon("zombie_type100_smg");
+    include_weapon("zombie_type100_smg");   //remove japenese theatre weapons at some point and replaced with something else.
 
     // Weapon cabinet only additions	
     include_weapon("kar98k_bayonet");	

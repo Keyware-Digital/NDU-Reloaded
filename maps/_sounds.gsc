@@ -249,7 +249,7 @@ pickup_betty_sound() {
 
 }
 
-pickup_bowie_sound() {
+pickup_bowie_sound() {	//melee_kill
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupbowieSound = "_melee_" + RandomInt(3);
     pickup_bowie_sound = Spawn("script_origin", self.origin);
@@ -413,11 +413,21 @@ quip_sound() {
 
 blockers_sound() {
 	index = maps\_zombiemode_weapons::get_player_index(self);
-	blockersSound = "_blockers_" + RandomInt(3);
+	blockersSound = "_blockers_" + RandomInt(5);
     blockers_sound = Spawn("script_origin", self.origin);
 	blockers_sound  PlaySound("plr_" + index + blockersSound, "_blockers_sound_done");
 	blockers_sound  waittill("blockers_sound_done");
 	blockers_sound  Delete();
+
+}
+
+explosive_kill_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	explosivekillSound = "_explosive_" + RandomInt(5);
+    explosive_kill_sound = Spawn("script_origin", self.origin);
+	explosive_kill_sound PlaySound("plr_" + index + explosivekillSound, "_explosive_sound_done");
+	explosive_kill_sound waittill("explosive_sound_done");
+	explosive_kill_sound Delete();
 
 }
 
