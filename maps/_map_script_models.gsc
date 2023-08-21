@@ -2,39 +2,95 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 
-// Proof of concept, button easter egg from bo3 nacht possible
+// Proof of concept, this will be turned into the button easter egg from bo3 nacht
 
 main()
 {
-    teddy = spawn("script_model", (-55, -480, 15));
-	teddy.angles = (0, 45, 0);
-	teddy setmodel("zombie_teddybear");
+	// Make these returns instead of level vars at some point
+	level.teddy_one_knifed = 0;
+	level.teddy_two_knifed = 0;
+	level.teddy_three_knifed = 0;
+	ee_done = 0;
 
-	////
+    teddy_one = spawn("script_model", (-55, -460, 15));
+	teddy_one.angles = (0, 45, 0);
+	teddy_one setmodel("zombie_teddybear");
 
-	teddy Show();
-	teddy Solid();
-	teddy setCanDamage(true);
-	teddy PlayLoopSound("meteor_loop");
-	teddy SetCursorHint("HINT_NOICON");
-	teddy waittill("trigger", player);
-	teddy StopLoopSound();
-	teddy PlaySound("meteor_affirm");
-	teddy Delete();
+    teddy_two = spawn("script_model", (-35, -260, 15));
+	teddy_two.angles = (0, 45, 0);
+	teddy_two setmodel("zombie_teddybear");
 
-	////
+    teddy_three = spawn("script_model", (-15, -60, 15));
+	teddy_three.angles = (0, 45, 0);
+	teddy_three setmodel("zombie_teddybear");
 
-	collision = spawnCollision("collision_geo_32x32x32", "collider", teddy.origin, teddy.angles);
-	collision LinkTo(teddy);
+	teddy_one setCanDamage(true);
+	teddy_one PlayLoopSound("meteor_loop");
+	thread handle_teddy_one_damage(teddy_one); // Start a new thread to handle the waittill for teddy_one
 
-	collision PlayLoopSound("meteor_loop");
-	/*collision SetCursorHint("HINT_NOICON");
- 
-	collision waittill("trigger", player);
- 
-	collision StopLoopSound();
-	collision PlaySound("meteor_affirm");*/
+	teddy_two setCanDamage(true);
+	teddy_two PlayLoopSound("meteor_loop");
+	thread handle_teddy_two_damage(teddy_two); // Start a new thread to handle the waittill for teddy_two
+
+	teddy_three setCanDamage(true);
+	teddy_three PlayLoopSound("meteor_loop");
+	thread handle_teddy_three_damage(teddy_three); // Start a new thread to handle the waittill for teddy_three
+	
+	players = GetPlayers();
+
+	while (1) // Infinite loop to keep the script running
+	{
+		if ( ee_done == 0 && level.teddy_one_knifed == 1 && level.teddy_two_knifed == 1 && level.teddy_three_knifed == 1)
+		{
+			for (i = 0; i < players.size; i++)
+			{
+				players[i] thread maps\_sounds::samantha_says_ee_track_sound();
+			}
+
+			ee_done = 1; // Prevent the track being played more than once
+		}
+
+		wait 1; // Delay to prevent excessive looping
+	}
 }
+
+handle_teddy_one_damage(teddy_one)
+{
+	teddy_one waittill("damage", damage, attacker, direction_vec, point, type);
+	if(type == "MOD_MELEE")
+	{
+		teddy_one StopLoopSound();
+		teddy_one PlaySound("meteor_affirm");
+		level.teddy_one_knifed = 1;
+		iprintln("you knifed teddy one");
+	}
+}
+
+
+handle_teddy_two_damage(teddy_two)
+{
+	teddy_two waittill("damage", damage, attacker, direction_vec, point, type);
+	if(type == "MOD_MELEE")
+	{
+		teddy_two StopLoopSound();
+		teddy_two PlaySound("meteor_affirm");
+		level.teddy_two_knifed = 1;
+		iprintln("you knifed teddy two");
+	}
+}
+
+handle_teddy_three_damage(teddy_three)
+{
+	teddy_three waittill("damage", damage, attacker, direction_vec, point, type);
+	if(type == "MOD_MELEE")
+	{
+		teddy_three StopLoopSound();
+		teddy_three PlaySound("meteor_affirm");
+		level.teddy_three_knifed = 1;
+		iprintln("you knifed teddy three");
+	}
+}
+
 
 // Ignore below, can use elements of the code for the button ee
 

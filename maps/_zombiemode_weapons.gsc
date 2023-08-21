@@ -1290,7 +1290,7 @@ weapon_cabinet_think()
 	if(player.score < level.zombie_weapon_cabinet_cost)
     {
     	self play_sound_on_ent( "no_purchase" );
-		self play_weapon_wallbuy_sound("no_money");
+		player play_weapon_wallbuy_sound("no_money");
     	wait 0.5;
     	self thread weapon_cabinet_think();
     	return;
@@ -1579,13 +1579,13 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 			
 			if(check_for_cabinet_damage)
 			{
-				fake = spawn("script_model", self.origin);
-				fake setmodel("zombie_teddybear"); 
-				fake Hide();
-				fake Solid();
-				fake setCanDamage(true);
-				fake waittill("damage", damage, attacker, direction_vec, point, type);
-				fake Delete();
+				fake_cabinet_trigger = spawn("script_model", self.origin);
+				fake_cabinet_trigger setmodel("zombie_teddybear"); 
+				fake_cabinet_trigger Hide();
+				fake_cabinet_trigger Solid();
+				fake_cabinet_trigger setCanDamage(true);
+				fake_cabinet_trigger waittill("damage", damage, attacker, direction_vec, point, type);
+				fake_cabinet_trigger Delete();
 				buyer_gave_permission = 1;
 				check_for_cabinet_damage = false;
 				attacker = attacker;

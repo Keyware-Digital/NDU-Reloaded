@@ -532,9 +532,16 @@ sam_start_ee_vox_sound() {
 
 explosive_barrels_ee_track_sound() {
     explosive_barrels_ee_track_sound = Spawn("script_origin", self.origin);
-    explosive_barrels_ee_track_sound PlaySound("explosive_barrels_ee_track_0", "explosive_barrels_ee_track_sound_done");
+    explosive_barrels_ee_track_sound PlaySound("explosive_barrels_ee_track", "explosive_barrels_ee_track_sound_done");
     explosive_barrels_ee_track_sound waittill("explosive_barrels_ee_track_sound_done");
     explosive_barrels_ee_track_sound Delete();
+}
+
+samantha_says_ee_track_sound() {
+    samantha_says_ee_track_sound = Spawn("script_origin", self.origin);
+    samantha_says_ee_track_sound PlaySound("samantha_says_ee_track", "samantha_says_ee_track_sound_done");
+    samantha_says_ee_track_sound waittill("samantha_says_ee_track_sound_done");
+    samantha_says_ee_track_sound Delete();
 }
 
 radio_ee_track_sound() {
