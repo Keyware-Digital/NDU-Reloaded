@@ -122,6 +122,8 @@ setup_player_dolphin_dive()
 			self AllowCrouch(false);
 			self DisableOffhandWeapons();
 			self DisableWeaponCycling();
+			//disable weapons so you can't dive and shoot (like bo1/2)
+			self DisableWeapons();
 			
 			for(l = 0; l < 5; l++)
 			{
@@ -178,6 +180,8 @@ setup_player_dolphin_dive()
 			self AllowCrouch(true);
 			self EnableOffhandWeapons();
 			self EnableWeaponCycling();
+			//give back weapons
+			self EnableWeapons();
 			players_dolphin_dive Delete();
 			self show();
 

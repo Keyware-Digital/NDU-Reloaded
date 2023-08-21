@@ -133,6 +133,7 @@ door_think()
 	// maybe just destroy the door, could be two players from opposite sides..
 	// breaking into chunks seems best.
 	// or I could just give it no collision
+
 	while( 1 )
 	{
 		if(isDefined(self.script_noteworthy) && self.script_noteworthy == "electric_door")
@@ -167,6 +168,7 @@ door_think()
 				else // Not enough money
 				{
 					play_sound_at_pos( "no_purchase", self.doors[0].origin );
+					who thread maps\_zombiemode_weapons::play_weapon_wallbuy_sound("no_money");
 					// who thread maps\_zombiemode_perks::play_no_money_perk_dialog();
 					continue;
 				}
@@ -371,8 +373,7 @@ debris_init()
 
 debris_think()
 {
-	
-	
+
 	//this makes the script_model not-solid ( for asylum only! )
 	if(level.script == "nazi_zombie_asylum")
 	{
@@ -486,6 +487,7 @@ debris_think()
 			else
 			{
 				play_sound_at_pos( "no_purchase", self.origin );
+				who thread maps\_zombiemode_weapons::play_weapon_wallbuy_sound("no_money");
 				// who thread maps\nazi_zombie_sumpf_blockers::play_no_money_purchase_dialog();
 			}
 		}

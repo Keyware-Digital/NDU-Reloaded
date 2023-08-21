@@ -957,6 +957,10 @@ treasure_chest_weapon_spawn( chest, player )
                 player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
                 break;
             }
+			else 
+			{
+				player play_weapon_wallbuy_sound("no_money");
+			}
             wait 0.05;
         }
 
@@ -1064,113 +1068,107 @@ treasure_chest_give_weapon( weapon_string )
 	// Weapon VOX lines
 	// Add / remove weapons as you see fit...
 
-	/*
 	switch(weapon_string)
-	{
+	{	
+		//mystery box
+		//great
 		case "30cal_bipod":
 		self thread maps\_sounds::great_weapon_sound();
 			break; 
 		case "dp28":
 		self thread maps\_sounds::great_weapon_sound();
 			break;
-		case "a weapon string":
-			execute code if weapon string is true
+		case "mg42_bipod":
+			self thread maps\_sounds::great_weapon_sound();
 			break;  
-		case "":
-
+		//wunderweps
+		case "ray_gun_mk1_v2":
+			self thread maps\_sounds::great_weapon_sound();
 			break;
-		case "":
-
+		/*case "zombie_cymbal_monkey":
+			self thread maps\_sounds::great_weapon_sound();
+			break;*/
+		//crappy
+		case "kar98k":
+			self thread maps\_sounds::crappy_weapon_sound();
 			break;
-		case "":
-
+		case "mosin_rifle":
+			self thread maps\_sounds::crappy_weapon_sound();
 			break;
-		case "":
-
+		case "springfield":
+			self thread maps\_sounds::crappy_weapon_sound();
 			break;
-		case "":
-
+		case "molotov":
+			self thread maps\_sounds::crappy_weapon_sound();
 			break;
-		case "":
-
-		break;
-		case "":
-
-		break;
+		//impartial
+		case "sw_357":
+			self thread maps\_sounds::no_money_sound();
+			break;
+		//semi-auto
+		case "gewehr43":
+			self thread maps\_sounds::pickup_semi_sound();
+			break;
+		case "m1carbine":
+			self thread maps\_sounds::pickup_semi_sound();
+			break;
+		case "svt40":
+			self thread maps\_sounds::pickup_semi_sound();
+			break;
+		//automatic-rifle
+		case "bar":
+			self thread maps\_sounds::pickup_lmg_sound();
+			break;
+		case "fg42_bipod":
+			self thread maps\_sounds::pickup_lmg_sound();
+			break;
+		case "stg44":
+			self thread maps\_sounds::pickup_lmg_sound();
+			break;
+		case "type99_lmg":
+			self thread maps\_sounds::pickup_lmg_sound();
+		//smg
+		case "mp40":
+			self thread maps\_sounds::pickup_smg_sound();
+			break;
+		case "thompson":
+			self thread maps\_sounds::pickup_smg_sound();
+			break;
+		case "ppsh41":
+			self thread maps\_sounds::pickup_smg_sound();
+			break;
+		case "zombie_type100_smg":
+			self thread maps\_sounds::pickup_smg_sound();
+			break;
+		//shotgun
+		case "doublebarrel":
+			self thread maps\_sounds::pickup_shotgun_sound();
+			break;
+		case "doublebarrel_sawed_grip":
+			self thread maps\_sounds::pickup_shotgun_sound();
+			break;
+		case "shotgun":
+			self thread maps\_sounds::pickup_shotgun_sound();
+			break;
+		//misc
+		case "mine_bouncing_betty":
+			self thread maps\_sounds::pickup_betty_sound();
+			break;
+		case "m2_flamethrower_zombie":
+			self thread maps\_sounds::pickup_flamethrower_sound();
+			break;
+		case "panzerschrek":
+			self thread maps\_sounds::pickup_panzerschrek_sound();
+			break;
+		case "m1garand_gl":
+			self thread maps\_sounds::pickup_panzerschrek_sound();
+			break;
+		//scoped
+		case "ptrs41_zombie":
+			self thread maps\_sounds::pickup_sniper_sound();
+			break;
 	}
-	*/
-
-	// this is all shit and needs putting into the switch above
-
-	if(( weapon_string == "30cal_bipod" || weapon_string == "dp28" || weapon_string == "mg42_bipod" || weapon_string == "stg44_pap" ) )
-	{
-		self thread maps\_sounds::great_weapon_sound();
-	}
-
-	if(( weapon_string == "ray_gun_mk1_v2"  ) )
-	{
-		//wait 6;	//trying to make the vox play after the stinger
-		self thread maps\_sounds::great_weapon_sound();
-	}
-
-	if(( weapon_string == "kar98k" || weapon_string == "mosin_rifle" || weapon_string == "springfield" || weapon_string == "molotov" ) )
-	{
-		self thread maps\_sounds::crappy_weapon_sound();
-	}
-
-	if(( weapon_string == "mine_bouncing_betty" ) )
-	{
-		self thread maps\_sounds::pickup_betty_sound();
-	}
-
-	//leave disabled for now, testing sound in "bowie" gsc.
-	/*if(( weapon_string ==  "zombie_bowie_flourish" ))
-	{
-		self thread maps\_sounds::pickup_bowie_sound();
-	}*/
-
-	if(( weapon_string ==  "m2_flamethrower_zombie" ))
-	{
-		self thread maps\_sounds::pickup_flamethrower_sound();
-	}
-
-	if(( weapon_string ==  "bar" || weapon_string == "fg42_bipod" || weapon_string == "stg44" || weapon_string == "type99_lmg" ) )
-	{
-		self thread maps\_sounds::pickup_lmg_sound();
-	}
-
-	if(( weapon_string ==  "panzerschrek" || weapon_string == "m1garand_gl" ) )
-	{
-		self thread maps\_sounds::pickup_panzerschrek_sound();
-		
-	}
-
-	if(( weapon_string == "gewehr43" || weapon_string == "m1carbine" || weapon_string == "svt40" ) )
-	{
-		self thread maps\_sounds::pickup_semi_sound();
-	}
-
-	if(( weapon_string == "doublebarrel" || weapon_string == "doublebarrel_sawed_grip" || weapon_string == "shotgun" ) )
-	{
-		self thread maps\_sounds::pickup_shotgun_sound();
-	}
-
-	if(( weapon_string == "mp40" || weapon_string == "thompson" || weapon_string == "ppsh41" || weapon_string == "zombie_type100_smg" ) )
-	{
-		self thread maps\_sounds::pickup_smg_sound();
-	}
-
-	if(( weapon_string == "ptrs41_zombie" ) )
-	{
-		self thread maps\_sounds::pickup_sniper_sound();
-	}
-
-	// Neither bad or good
-	if(( weapon_string ==  "sw_357" ))
-	{
-		self thread maps\_sounds::no_money_sound();
-	}
-
+	
 	if( isDefined( primaryWeapons ) && !isDefined( current_weapon ) )
 	{
 		for( i = 0; i < primaryWeapons.size; i++ )
@@ -1647,25 +1645,25 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	switch(chosenweapon)
 	{
 		case "stg44_pap":
-				player thread maps\_sounds::raygun_stinger_sound();
+				player thread maps\_sounds::great_weapon_sound();
 			break; 
+		case "m1garand":
+				player thread maps\_sounds::pickup_semi_sound();
+			break;  
 		case "ppsh41_drum":
 				player thread maps\_sounds::great_weapon_sound();
 			break;
-		case "m1garand":
-				player thread maps\_sounds::crappy_weapon_sound();
-			break;  
-		case "m1921_thompson":
+		case "mp40_bigammo_mp":
 				player thread maps\_sounds::pickup_smg_sound();
 			break;
-		case "mp40_bigammo_mp":
+		case "m1921_thompson":
 				player thread maps\_sounds::pickup_smg_sound();
 			break;
 		case "sten_mk5":
 				player thread maps\_sounds::pickup_smg_sound();
 			break;
 		case "kar98k_scoped_zombie":
-				player thread maps\_sounds::pickup_shotgun_sound();
+				player thread maps\_sounds::pickup_sniper_sound();
 			break;
 		case "mosin_rifle_scoped":
 				player thread maps\_sounds::pickup_sniper_sound();
@@ -1673,6 +1671,17 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		case "springfield_scoped_zombie":
 				player thread maps\_sounds::pickup_sniper_sound();
 			break;
+		case "kar98k_bayonet":
+				player thread maps\_sounds::crappy_weapon_sound();
+			break;
+		case "mosin_rifle_bayonet":
+				player thread maps\_sounds::crappy_weapon_sound();
+			break;
+	}
+
+	if(chosenweapon == "stg44_pap")
+	{
+		self thread maps\_sounds::raygun_stinger_sound();
 	}
 	
 	/*if(chosenweapon == "perks_a_cola")
@@ -1747,9 +1756,9 @@ play_weapon_wallbuy_sound(weapon_name)
 		case "doublebarrel_sawed_grip":
 				self thread maps\_sounds::pickup_shotgun_sound();
 			break;
-		case "stielhandgranate":
+		/*case "stielhandgranate":
 				self thread maps\_sounds::no_money_sound();
-			break;
+			break;*/
 		case "no_money":
 				self thread maps\_sounds::no_money_sound();
 			break;
