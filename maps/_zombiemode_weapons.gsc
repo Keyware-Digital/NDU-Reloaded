@@ -1937,10 +1937,69 @@ weapon_spawn_think()
 		//Intended outcome is for these hintstrings to be set before the user presses the use key but the code below executes after the player triggers the waittill
 		if(player_has_weapon == true)
 		{
+			// Dirty fix, needs putting into its own function and then being called from here
+			switch(weapon_name)
+			{
+				case "kar98k":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
+					break; 
+				case "m1carbine":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
+					break;
+				case "thompson":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
+					break;  
+				case "doublebarrel":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+					break;
+				case "bar":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
+					break;
+				case "shotgun":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
+					break;
+				case "doublebarrel_sawed_grip":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+					break;
+				case "stielhandgranate":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
+					break;
+			}
+			
 			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
 		}
 		else if (player_has_weapon == false)
 		{
+
+			// Dirty fix, needs putting into its own function and then being called from here
+			switch(weapon_name)
+			{
+				case "kar98k":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
+					break; 
+				case "m1carbine":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
+					break;
+				case "thompson":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
+					break;  
+				case "doublebarrel":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+					break;
+				case "bar":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
+					break;
+				case "shotgun":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
+					break;
+				case "doublebarrel_sawed_grip":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+					break;
+				case "stielhandgranate":
+				weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
+					break;
+			}
+
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, weapon_cost);
 		}
 		
