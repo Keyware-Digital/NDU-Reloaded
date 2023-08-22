@@ -23,7 +23,7 @@ main() {
     maps\_zombiemode::main();
 	array_thread(GetPlayers(), ::reloading_monitor);
     thread maps\_explosive_barrels::init_explosive_barrels();
-    thread maps\_map_script_models::main();
+    thread maps\_samantha_dolls::main();
     animscripts\walking_anim::main();
 
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box
