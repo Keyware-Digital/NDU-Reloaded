@@ -1474,6 +1474,13 @@ weapon_cabinet_think()
 
 	weaponmodelstruct Hide();
 
+	if(isDefined(level.fake_cabinet_entity))
+	{
+		level.buyer_gave_permission = 0;
+		level.fake_cabinet_entity Hide();
+		level.fake_cabinet_entity Delete();
+	}
+
 	play_sound_at_pos( "close_chest", self.origin );
 	for( i = 0; i < doors.size; i++ )
 	{
@@ -1553,12 +1560,11 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 {
 	self endon("weaponexpired");
 
-	// Let only the buyer take the weapon unless the buyer nades the cabinet, I want to make it knife but I don't know where the invisible trigger is on the cabinet and so only grenade splash damage can damage it so far
+	// Let only the buyer take the weapon unless the buyer knifes the cabinet
 
-	buyer_gave_permission = 0;
+	level.buyer_gave_permission = 0;
+	level.attacker = undefined;
 	player_name = "player";  // For solo testing only
-	attacker = undefined;
-	type = undefined;
 	check_for_cabinet_damage = true;
 
 	while(1)
@@ -1568,49 +1574,27 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		//if (buyer != player) // For multiplayer
 		if (player_name != player.playername) // For solo testing only
 		{
-			if (buyer_gave_permission == 0)
+			if (level.buyer_gave_permission == 0)
 			{
-				self SetHintString( buyer.playername + " needs to give permission for you to take this item");
-				self playsound("door_deny");
+				self play_sound_on_ent("no_purchase");
+			}
+			//if (level.buyer_gave_permission == 1 && level.attacker != player) // For multiplayer
+			if (level.buyer_gave_permission == 1 && level.attacker == player) // For solo testing only
+			{
+				break;
 			}
 			
 			if(check_for_cabinet_damage)
 			{
-				fake_cabinet_entity = spawn("script_model", self.origin);
-				fake_cabinet_entity setmodel("zombie_teddybear"); 
-				fake_cabinet_entity Show();
-				fake_cabinet_entity Solid();
-				fake_cabinet_entity setCanDamage(true);
-				fake_cabinet_entity waittill("damage", amount, attacker, direction_vec, point, type);
-				// BEAR ONLY DELETES ITSELF WHEN DAMAGED BY KNIFE, IT WAITS UNTIL THEN, WE NEED IT TO ALSO DELETE ITSELF WHEN weaponexpired otherwise multiple bears spawn and the bear with the active damage event can't be reached which breaks the share function if nobody grabs the weapon in time but only when it's shared
+				level.fake_cabinet_entity = spawn("script_model", self.origin);
+				level.fake_cabinet_entity setmodel("zombie_teddybear"); 
+				level.fake_cabinet_entity Show();
+				level.fake_cabinet_entity Solid();
+				level.fake_cabinet_entity setCanDamage(true);
 
-				if(type == "MOD_MELEE")
-				{
-					iprintln("you knived the bear");
-					buyer_gave_permission = 1;
-					fake_cabinet_entity Hide();
-					fake_cabinet_entity Delete();
-					
-				}
-				else {
-					iprintln("you didn't knife the bear");
-					buyer_gave_permission = 0;
-					fake_cabinet_entity Hide();
-					fake_cabinet_entity Delete();
-				}
+				thread fake_cabinet_entity_damage_recieved();
 
 				check_for_cabinet_damage = false;
-				attacker = attacker;
-				type = type;
-			}			
-
-			//if (buyer_gave_permission == 1 && attacker != player) // For multiplayer
-			if (buyer_gave_permission == 1 && attacker == player) // For solo testing only
-			{
-				iprintln("permission given");
-				self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
-				self waittill("trigger", player);
-				break;
 			}
 		}
 		else
@@ -1720,6 +1704,23 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	self play_sound_on_ent("purchase");
 	player GiveWeapon(chosenweapon);
 	player SwitchToWeapon(chosenweapon);
+}
+
+fake_cabinet_entity_damage_recieved()
+{
+	while(1)
+	{
+		level.fake_cabinet_entity waittill("damage", amount, attacker, direction_vec, point, type);
+
+		if(type == "MOD_MELEE" || type == "MOD_BAYONET")
+		{
+			level.buyer_gave_permission = 1;
+			level.fake_cabinet_entity Hide();
+			level.fake_cabinet_entity Delete();
+		}
+
+		level.attacker = attacker;
+	}
 }
 
 weapon_cabinet_door_open( left_or_right )

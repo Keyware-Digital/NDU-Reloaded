@@ -159,7 +159,7 @@ REFERENCE           ZOMBIE_WEAPON_STG_44_UPGRADED
 LANG_ENGLISH        "Spatz-446 b+"
 
 REFERENCE           ZOMBIE_TRADE_WEAPONS_BOX
-LANG_ENGLISH        "Hold ^3&&1 ^7for &&2"
+LANG_ENGLISH        "Hold ^3&&1 ^7for &&2 or Melee to share"
 
 REFERENCE           ZOMBIE_TRADE_WEAPONS_WALL_BUY
 LANG_ENGLISH        "Hold ^3&&1 ^7for &&2 [Cost: &&3]"
