@@ -181,7 +181,7 @@ zombie_spawn_init()
 	self set_zombie_run_cycle(); 
 	self thread zombie_think(); 
 	self thread zombie_gib_on_damage();
-//	self thread zombie_head_gib();
+//	self thread zombie_head_gib();	//dont enable, causes insta zombie death
 	self thread delayed_zombie_eye_glow();	// delayed eye glow for ground crawlers (the eyes floated above the ground before the anim started)
 	self.deathFunction = ::zombie_death_animscript;
 	self.flame_damage_time = 0;
@@ -1390,6 +1390,10 @@ head_should_gib( attacker, type, point )
 		{
 			return false; 
 		}
+		/*else if( type == "MOD_BAYONET" )
+		{
+			return false; 
+		}*/
 	}
 
 	// check location now that we've checked for grenade damage (which reports "none" as a location)
@@ -1926,6 +1930,17 @@ zombie_damage( mod, hit_location, hit_origin, player )
 			self DoDamage( level.round_number * randomintrange( 100, 200 ), self.origin, undefined );
 		}
 	}
+	/*else if( mod == "MOD_BAYONET" )
+	{
+		if ( isDefined( player ) && isalive( player ) )
+		{
+			self DoDamage( level.round_number * randomintrange( 100, 200 ), self.origin, player);
+		}	
+		else
+		{
+			self DoDamage( level.round_number * randomint( 100, 500 ), self.origin, undefined );
+		}
+	}*/
 	
 	self thread maps\_zombiemode_powerups::check_for_instakill( player, mod, hit_location );
 }
