@@ -1560,26 +1560,26 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 {
 	self endon("weaponexpired");
 
-	// Let only the buyer take the weapon unless the buyer knifes the cabinet
+	// Let only the buyer take the weapon unless the buyer knifes the cabinet, pressing the use key and knifing needs to be done slowly or it'll break
 
 	level.buyer_gave_permission = 0;
 	level.attacker = undefined;
-	player_name = "player";  // For solo testing only
+	player_name = "player";  // Enable for solo testing only
 	check_for_cabinet_damage = true;
 
 	while(1)
 	{
 		self waittill("trigger", player);
 		
-		//if (buyer != player) // For multiplayer
-		if (player_name != player.playername) // For solo testing only
+		//if (buyer != player) // Enable for live build
+		if (player_name != player.playername) // Enable for solo testing only
 		{
 			if (level.buyer_gave_permission == 0)
 			{
 				self play_sound_on_ent("no_purchase");
 			}
-			//if (level.buyer_gave_permission == 1 && level.attacker != player) // For multiplayer
-			if (level.buyer_gave_permission == 1 && level.attacker == player) // For solo testing only
+			//if (level.buyer_gave_permission == 1 && level.attacker != player) // Enable for live build
+			if (level.buyer_gave_permission == 1 && level.attacker == player) // Enable for solo testing only
 			{
 				break;
 			}
@@ -1587,8 +1587,9 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 			if(check_for_cabinet_damage)
 			{
 				level.fake_cabinet_entity = spawn("script_model", self.origin);
-				level.fake_cabinet_entity setmodel("zombie_teddybear"); 
-				level.fake_cabinet_entity Show();
+				level.fake_cabinet_entity setmodel("zombie_teddybear");  // Need to replace with a model that doesn't play fx and can be damaged, possibily make a custom model
+				//level.fake_cabinet_entity Hide(); // Enable for live build
+				level.fake_cabinet_entity Show(); // Enable for solo testing only
 				level.fake_cabinet_entity Solid();
 				level.fake_cabinet_entity setCanDamage(true);
 
