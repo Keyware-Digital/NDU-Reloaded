@@ -1258,7 +1258,7 @@ award_grenades_for_survivors() {
             } else if (players[i] GetFractionMaxAmmo("molotov") < .5) {
                 players[i] SetWeaponAmmoClip("molotov", 3);
             } else {
-                players[i] SetWeaponAmmoClip("molotov", 2);
+                players[i] SetWeaponAmmoClip("molotov", 4);
             }
         }
     }
@@ -2358,7 +2358,7 @@ player_lunge_knife_exert_sounds()
                 level.player_is_speaking = 0;
             }
         }
-        wait(0.4);  //was 0.05
+        wait(0.45);  //was 0.05
     }
 }
 
