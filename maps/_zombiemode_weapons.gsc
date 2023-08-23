@@ -1564,15 +1564,15 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 
 	level.buyer_gave_permission = 0;
 	level.attacker = undefined;
-	player_name = "player";  // Enable for solo testing only
+	//player_name = "player";  // Enable for solo testing only
 	check_for_cabinet_damage = true;
 
 	while(1)
 	{
 		self waittill("trigger", player);
 		
-		//if (buyer != player) // Enable for live build
-		if (player_name != player.playername) // Enable for solo testing only
+		if (buyer != player) // Enable for live build
+		//if (player_name != player.playername) // Enable for solo testing only
 		{
 			if (level.buyer_gave_permission == 0)
 			{

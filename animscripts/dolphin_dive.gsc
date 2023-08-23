@@ -57,9 +57,9 @@ setup_player_dolphin_dive()
 			current_weapon = self GetCurrentWeapon();
 			players_dolphin_dive = spawn("script_model", self.origin);
 
-			players = GetPlayers();
+			//players = GetPlayers();
 
-			for (i = 0; i < players.size; i++) {
+			for (i = 0; i < self.size; i++) {
 
 				switch(level.random_character_index[i])
 				{
