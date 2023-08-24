@@ -5,7 +5,7 @@
 // Proof of concept, this will be turned into the samantha dolls button easter egg from bo3 nacht
 //Testing new way of spawning stuff in to improve cabinet share feature too
 
-main()
+init_samantha_dolls()
 {
 	// Make these returns instead of level vars at some point
 	level.teddy_one_interacted = 0;
@@ -32,13 +32,13 @@ main()
 	teddy_three setmodel("zombie_teddybear");
 
 	teddy_one PlayLoopSound("meteor_loop");
-	thread handle_teddy_one_damage(teddy_one, trigger_one); // Start a new thread to handle the waittill for teddy_one
+	thread handle_teddy_one_interaction(teddy_one, trigger_one); // Start a new thread to handle the waittill for teddy_one
 
 	teddy_two PlayLoopSound("meteor_loop");
-	thread handle_teddy_two_damage(teddy_two, trigger_two); // Start a new thread to handle the waittill for teddy_two
+	thread handle_teddy_two_interaction(teddy_two, trigger_two); // Start a new thread to handle the waittill for teddy_two
 
 	teddy_three PlayLoopSound("meteor_loop");
-	thread handle_teddy_three_damage(teddy_three, trigger_three); // Start a new thread to handle the waittill for teddy_three
+	thread handle_teddy_three_interaction(teddy_three, trigger_three); // Start a new thread to handle the waittill for teddy_three
 	
 	players = GetPlayers();
 
@@ -58,7 +58,7 @@ main()
 	}
 }
 
-handle_teddy_one_damage(teddy_one, trigger_one)
+handle_teddy_one_interaction(teddy_one, trigger_one)
 {
 	while(1)
 	{
@@ -102,7 +102,7 @@ handle_teddy_one_damage(teddy_one, trigger_one)
 }
 
 
-handle_teddy_two_damage(teddy_two, trigger_two)
+handle_teddy_two_interaction(teddy_two, trigger_two)
 {
 	while(1)
 	{
@@ -145,7 +145,7 @@ handle_teddy_two_damage(teddy_two, trigger_two)
 	}
 }
 
-handle_teddy_three_damage(teddy_three, trigger_three)
+handle_teddy_three_interaction(teddy_three, trigger_three)
 {	
 	while(1)
 	{

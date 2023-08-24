@@ -122,6 +122,7 @@ init_models() {
     PrecacheModel("tag_origin");
     PrecacheModel("zombie_teddybear");
     PrecacheModel("collision_geo_32x32x32");
+    PrecacheModel("static_berlin_ger_radio_d");
 }
 
 init_shellshocks() {

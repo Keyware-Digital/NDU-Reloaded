@@ -62,6 +62,7 @@ rawfile,maps/_callbackglobal.gsc
 rawfile,maps/_character_randomise.gsc
 rawfile,maps/_gameskill.gsc
 rawfile,maps/_loadout.gsc
+rawfile,maps/_monty_radio.gsc
 rawfile,maps/_samantha_dolls.gsc
 rawfile,maps/_zombiemode.gsc
 rawfile,maps/_zombiemode_betty.gsc
@@ -84,7 +85,7 @@ rawfile,animtrees/animations.atr
 rawfile,shock/zombie_death.shock
 sound,mod_ndu,,all_sp
 sound,mod_ndu_powerup,,all_sp
-sound,mod_ndu_ee_tracks,,all_sp
+sound,mod_ndu_ee,,all_sp
 sound,mod_ndu_menu_music,,all_sp
 sound,mod_ndu_vox,,all_sp
 xanim,ai_zombie_attack_forward_v1
@@ -304,6 +305,7 @@ xmodel,zmb_pwr_up_max_ammo
 xmodel,zmb_pwr_up_nuke
 xmodel,zmb_pwr_up_perks_a_cola_world
 xmodel,zombie_teddybear
+xmodel,static_berlin_ger_radio_d
 xmodel,collision_geo_32x32x32
 weapon,sp/dp28
 weapon,sp/kar98k_bayonet

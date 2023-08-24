@@ -569,6 +569,13 @@ explosive_barrels_ee_track_sound() {
     explosive_barrels_ee_track_sound Delete();
 }
 
+monty_dialogue_sound() {
+    monty_dialogue_sound = Spawn("script_origin", self.origin);
+    monty_dialogue_sound PlaySound("monty_dialogue", "monty_dialogue_sound_done");
+    monty_dialogue_sound waittill("monty_dialogue_sound_done");
+    monty_dialogue_sound Delete();	
+}
+
 samantha_says_ee_track_sound() {
     samantha_says_ee_track_sound = Spawn("script_origin", self.origin);
     samantha_says_ee_track_sound PlaySound("samantha_says_ee_track", "samantha_says_ee_track_sound_done");
