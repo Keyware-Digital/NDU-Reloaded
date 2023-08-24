@@ -85,6 +85,7 @@ melee_vox_sound() {
 	melee_vox_sound PlaySound("plr_" + index + meleeSound, "knife_exert_sound_done");
 	melee_vox_sound waittill("knife_exert_sound_done");
 	melee_vox_sound Delete();
+	wait 0.5;	//cool down to prevent duplicate sounds on knife lunges
 
 	self notify("melee_sound_finished");
 
@@ -220,6 +221,7 @@ raygun_stinger_sound() {
 }
 
 great_weapon_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	greatweaponSound = "_positive_" + RandomInt(3);
     great_weapon_sound = Spawn("script_origin", self.origin);
@@ -230,6 +232,7 @@ great_weapon_sound() {
 }
 
 crappy_weapon_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	crappyweaponSound = "_negative_" + RandomInt(3);
     crappy_weapon_sound = Spawn("script_origin", self.origin);
@@ -240,6 +243,7 @@ crappy_weapon_sound() {
 }
 
 pickup_betty_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupbettySound = "_betty_" + RandomInt(1);
     pickup_betty_sound = Spawn("script_origin", self.origin);
@@ -249,7 +253,8 @@ pickup_betty_sound() {
 
 }
 
-pickup_bowie_sound() {	//melee_kill
+pickup_bowie_sound() {	//melee_kill in files
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupbowieSound = "_melee_" + RandomInt(3);
     pickup_bowie_sound = Spawn("script_origin", self.origin);
@@ -260,6 +265,7 @@ pickup_bowie_sound() {	//melee_kill
 }
 
 pickup_flamethrower_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupflamerSound = "_flamer_" + RandomInt(1);
     pickup_flamethrower_sound = Spawn("script_origin", self.origin);
@@ -270,6 +276,7 @@ pickup_flamethrower_sound() {
 }
 
 pickup_lmg_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickuplmgSound = "_lmg_" + RandomInt(1);
     pickup_lmg_sound = Spawn("script_origin", self.origin);
@@ -280,6 +287,7 @@ pickup_lmg_sound() {
 }
 
 pickup_panzerschrek_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickuprocketSound = "_rocket_" + RandomInt(1);
     pickup_panzerschrek_sound = Spawn("script_origin", self.origin);
@@ -290,6 +298,7 @@ pickup_panzerschrek_sound() {
 }
 
 pickup_semi_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupsemiSound = "_semi_" + RandomInt(1);
     pickup_semi_sound = Spawn("script_origin", self.origin);
@@ -300,6 +309,7 @@ pickup_semi_sound() {
 }
 
 pickup_shotgun_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupshotgunSound = "_shotgun_" + RandomInt(1);
     pickup_shotgun_sound = Spawn("script_origin", self.origin);
@@ -310,6 +320,7 @@ pickup_shotgun_sound() {
 }
 
 pickup_smg_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupsmgSound = "_smg_" + RandomInt(1);
     pickup_smg_sound = Spawn("script_origin", self.origin);
@@ -320,6 +331,7 @@ pickup_smg_sound() {
 }
 
 pickup_sniper_sound() {
+	wait 0.60;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupsniperSound = "_sniper_" + RandomInt(3);
     pickup_sniper_sound = Spawn("script_origin", self.origin);
@@ -330,6 +342,7 @@ pickup_sniper_sound() {
 }
 
 pickup_bonus_points_sound() {
+	wait 0.75;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupbonuspointsSound = "_points_" + RandomInt(1);
     pickup_bonus_points_sound = Spawn("script_origin", self.origin);
@@ -339,6 +352,7 @@ pickup_bonus_points_sound() {
 }
 
 pickup_carpenter_sound() {
+	wait 0.75;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupcarpenterSound = "_repair_" + RandomInt(1);
     pickup_carpenter_sound = Spawn("script_origin", self.origin);
@@ -348,6 +362,7 @@ pickup_carpenter_sound() {
 }
 
 pickup_death_machine_sound() {
+	wait 0.75;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupdeathmachineSound = "_instakill_" + RandomInt(1);
     pickup_death_machine_sound = Spawn("script_origin", self.origin);
@@ -357,6 +372,7 @@ pickup_death_machine_sound() {
 }
 
 pickup_doublepoints_sound() {
+	wait 0.75;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupdoublepointsSound = "_points_" + RandomInt(1);
     pickup_doublepoints_sound = Spawn("script_origin", self.origin);
@@ -366,6 +382,7 @@ pickup_doublepoints_sound() {
 }
 
 pickup_firesale_sound() {
+	wait 0.75;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupfiresaleSound = "_points_" + RandomInt(1);
     pickup_firesale_sound = Spawn("script_origin", self.origin);
@@ -375,6 +392,7 @@ pickup_firesale_sound() {
 }
 
 pickup_insta_kill_sound() {
+	wait 0.75;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupinstakillSound = "_instakill_" + RandomInt(1);
     pickup_insta_kill_sound = Spawn("script_origin", self.origin);
@@ -384,6 +402,7 @@ pickup_insta_kill_sound() {
 }
 
 pickup_maxammo_sound() {
+	wait 0.75;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupmaxammoSound = "_maxammo_" + RandomInt(1);
     pickup_maxammo_sound = Spawn("script_origin", self.origin);
@@ -393,6 +412,7 @@ pickup_maxammo_sound() {
 }
 
 pickup_nuke_sound() {
+	wait 0.75;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupnukeSound = "_nuke_" + RandomInt(1);
     pickup_nuke_sound = Spawn("script_origin", self.origin);
@@ -482,6 +502,7 @@ swarm_sound() {
 }
 
 plant_mine_sound() {
+	wait 0.125;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	plantmineSound = "_plantmine_" + RandomInt(4);
     plant_mine_sound = Spawn("script_origin", self.origin);
@@ -516,6 +537,7 @@ no_purchase_sound() {
 }
 
 no_money_sound() {
+	wait 0.5;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	momoneySound = "_nomoney_" + RandomInt(1);
     no_money_sound = Spawn("script_origin", self.origin);
