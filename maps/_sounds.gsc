@@ -452,6 +452,7 @@ explosive_kill_sound() {
 }
 
 killstreak_sound() {
+	wait 0.125;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	killstreakSound = "_killstreak_" + RandomInt(3);
     killstreak_sound = Spawn("script_origin", self.origin);
