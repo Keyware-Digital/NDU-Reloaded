@@ -1773,9 +1773,9 @@ play_weapon_wallbuy_sound(weapon_name)
 		case "doublebarrel_sawed_grip":
 				self thread maps\_sounds::pickup_shotgun_sound();
 			break;
-		/*case "stielhandgranate":
-				self thread maps\_sounds::no_money_sound();
-			break;*/
+		case "stielhandgranate":
+				self thread maps\_sounds::pickup_flamer_sound();
+			break;
 		case "no_money":
 				self thread maps\_sounds::no_money_sound();
 			break;
