@@ -124,3 +124,21 @@ zombie_radio_play()
         wait 1;
     }
 }
+
+/*zombie_radio_play() //default to restore
+{
+	self transmittargetname();
+
+	self setcandamage(true);
+	
+	while (1)
+	{
+		self waittill ("damage");
+
+		println("changing radio stations");
+
+		SetClientSysState("levelNotify","kzmb_next_song");
+
+		wait(1.0);
+	}
+}*/
