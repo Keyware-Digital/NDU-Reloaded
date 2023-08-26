@@ -37,6 +37,14 @@ material,specialty_random_perk_zombies
 material,specialty_fire_sale_zombies
 material,logo_cod2
 material,mtl_zmb_mdl_padlock
+material,mtl_zmb_mdl_button
+material,mtl_zmb_mdl_samantha_figure_bear
+material,mtl_zmb_mdl_samantha_figure_bear_eyes
+material,mtl_zmb_mdl_samantha_figure_bear_fur
+material,mtl_zmb_mdl_samantha_figure_body
+material,mtl_zmb_mdl_samantha_figure_head
+material,mtl_zmb_mdl_samantha_figure_metal_01
+material,mtl_zmb_mdl_samantha_figure_metal_02
 material,mtl_zmb_pwr_up_bonus_points
 material,mtl_zmb_pwr_up_carpenter
 material,mtl_zmb_pwr_up_death_machine
@@ -295,6 +303,8 @@ xmodel,viewmodel_usa_marine_player
 xmodel,viewmodel_rus_guard_player
 xmodel,viewmodel_knife_bowie
 xmodel,zmb_mdl_padlock
+xmodel,zmb_mdl_button
+xmodel,zmb_mdl_samantha_figure
 xmodel,zmb_pwr_up_bonus_points
 xmodel,zmb_pwr_up_carpenter
 xmodel,zmb_pwr_up_death_machine

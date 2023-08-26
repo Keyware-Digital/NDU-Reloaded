@@ -123,6 +123,8 @@ init_models() {
     PrecacheModel("zombie_teddybear");
     PrecacheModel("collision_geo_32x32x32");
     PrecacheModel("static_berlin_ger_radio_d");
+    PrecacheModel("zmb_mdl_samantha_figure");
+    PrecacheModel("zmb_mdl_button");
 }
 
 init_shellshocks() {

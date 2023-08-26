@@ -5,7 +5,7 @@
 // Proof of concept, this will be turned into the samantha dolls button easter egg from bo3 nacht
 //Testing new way of spawning stuff in to improve cabinet share feature too
 
-init_samantha_dolls()
+init_samantha_says()
 {
 	// Make these returns instead of level vars at some point
 	level.teddy_one_interacted = 0;
@@ -30,6 +30,18 @@ init_samantha_dolls()
 	teddy_three.angles = (0, 45, 0);
 	teddy_three Solid();
 	teddy_three setmodel("zombie_teddybear");
+
+    samantha_figure = spawn("script_model", (-15, 0, 15));
+	trigger_four = spawn("trigger_radius", (samantha_figure.origin), 0, 64, 64);
+	samantha_figure.angles = (0, 45, 0);
+	samantha_figure Solid();
+	samantha_figure setmodel("zmb_mdl_samantha_figure");
+
+    button = spawn("script_model", (-15, 60, 15));
+	trigger_five = spawn("trigger_radius", (button.origin), 0, 64, 64);
+	button.angles = (0, 45, 0);
+	button Solid();
+	button setmodel("zmb_mdl_button");
 
 	teddy_one PlayLoopSound("meteor_loop");
 	thread handle_teddy_one_interaction(teddy_one, trigger_one); // Start a new thread to handle the waittill for teddy_one
