@@ -1665,7 +1665,7 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		case "kar98k_scoped_zombie":
 				player thread maps\_sounds::pickup_sniper_sound();
 			break;
-		case "mosin_rifle_scoped":
+		case "mosin_rifle_scoped_zombie":
 				player thread maps\_sounds::pickup_sniper_sound();
 			break;
 		case "springfield_scoped_zombie":
@@ -1676,6 +1676,9 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 			break;
 		case "mosin_rifle_bayonet":
 				player thread maps\_sounds::crappy_weapon_sound();
+			break;
+		case "perks_a_cola":
+				player thread maps\_sounds::killstreak_sound();
 			break;
 	}
 
@@ -1773,9 +1776,9 @@ play_weapon_wallbuy_sound(weapon_name)
 		case "doublebarrel_sawed_grip":
 				self thread maps\_sounds::pickup_shotgun_sound();
 			break;
-		/*case "stielhandgranate":
-				self thread maps\_sounds::no_money_sound();
-			break;*/
+		case "stielhandgranate":
+				self thread maps\_sounds::pickup_flamethrower_sound();
+			break;
 		case "no_money":
 				self thread maps\_sounds::no_money_sound();
 			break;
