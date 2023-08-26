@@ -572,10 +572,16 @@ explosive_barrels_ee_track_sound() {
 
 monty_dialogue_sound() {
     monty_dialogue_sound = Spawn("script_origin", self.origin);
-	iprintln("playing..");
     monty_dialogue_sound PlaySound("monty_dialogue", "monty_dialogue_sound_done");
     monty_dialogue_sound waittill("monty_dialogue_sound_done");
     monty_dialogue_sound Delete();	
+}
+
+button_press_sound() {
+    samantha_says_ee_track_sound = Spawn("script_origin", self.origin);
+    samantha_says_ee_track_sound PlaySound("button_press", "button_press_sound_done");
+    samantha_says_ee_track_sound waittill("button_press_sound_done");
+    samantha_says_ee_track_sound Delete();
 }
 
 samantha_says_ee_track_sound() {

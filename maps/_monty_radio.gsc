@@ -7,7 +7,7 @@ init_monty_radio()
 	level.monty_radio_interacted = 0;
 	ee_done = 0;
 
-    monty_radio = Spawn("script_model", (270, 158, 0));
+    monty_radio = Spawn("script_model", (280, 158, 0));
 	monty_radio_trigger = Spawn("trigger_radius", (monty_radio.origin), 0, 10, 10);
 	monty_radio.angles = (0, 90, 0);
 	monty_radio Solid();

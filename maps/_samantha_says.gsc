@@ -8,60 +8,61 @@
 init_samantha_says()
 {
 	// Make these returns instead of level vars at some point
-	level.teddy_one_interacted = 0;
-	level.teddy_two_interacted = 0;
-	level.teddy_three_interacted = 0;
+	level.first_room_stairs_button_interacted = 0; 
+	level.first_room_power_section_button_interacted = 0;
+	level.help_room_button_interacted = 0;
+	level.cabinet_room_button_interacted = 0;
 	ee_done = 0;
 
-    teddy_one = spawn("script_model", (-55, -460, 15));
-	trigger_one = spawn("trigger_radius", (teddy_one.origin), 0, 64, 64);
-	teddy_one.angles = (0, 45, 0);
-	teddy_one Solid();
-	teddy_one setmodel("zombie_teddybear");
+    first_room_stairs_button = spawn("script_model", (200, 0, 267));
+	button_trigger_one = spawn("trigger_radius", (first_room_stairs_button.origin - (0, 0, 50)), 0, 64, 64);
+	first_room_stairs_button.angles = (0, 0, 90);
+	first_room_stairs_button Solid();
+	first_room_stairs_button setmodel("zmb_mdl_button");
 
-    teddy_two = spawn("script_model", (-35, -260, 15));
-	trigger_two = spawn("trigger_radius", (teddy_two.origin), 0, 64, 64);
-	teddy_two.angles = (0, 45, 0);
-	teddy_two Solid();
-	teddy_two setmodel("zombie_teddybear");
+    first_room_power_section_button = spawn("script_model", (-113, -869, 113));
+	button_trigger_two = spawn("trigger_radius", (first_room_power_section_button.origin - (0, 0, 3)), 0, 64, 64);
+	first_room_power_section_button.angles = (0, -90, 0);
+	first_room_power_section_button Solid();
+	first_room_power_section_button setmodel("zmb_mdl_button");
 
-    teddy_three = spawn("script_model", (-15, -60, 15));
-	trigger_three = spawn("trigger_radius", (teddy_three.origin), 0, 64, 64);
-	teddy_three.angles = (0, 45, 0);
-	teddy_three Solid();
-	teddy_three setmodel("zombie_teddybear");
+    help_room_button = spawn("script_model", (260, 1113, 20));
+	button_trigger_three = spawn("trigger_radius", (help_room_button.origin), 0, 64, 64);
+	help_room_button.angles = (90, 0, 0);
+	help_room_button Solid();
+	help_room_button setmodel("zmb_mdl_button");
 
-    samantha_figure = spawn("script_model", (-15, 0, 15));
-	trigger_four = spawn("trigger_radius", (samantha_figure.origin), 0, 64, 64);
-	samantha_figure.angles = (0, 45, 0);
-	samantha_figure Solid();
-	samantha_figure setmodel("zmb_mdl_samantha_figure");
+    cabinet_room_button = spawn("script_model", (830, 630, 210));
+	button_trigger_four = spawn("trigger_radius", (cabinet_room_button.origin), 0, 64, 64);
+	cabinet_room_button.angles = (0, 0, 180);
+	cabinet_room_button Solid();
+	cabinet_room_button setmodel("zmb_mdl_button");
 
-    button = spawn("script_model", (-15, 60, 15));
-	trigger_five = spawn("trigger_radius", (button.origin), 0, 64, 64);
-	button.angles = (0, 45, 0);
-	button Solid();
-	button setmodel("zmb_mdl_button");
+	thread handle_first_room_stairs_button(first_room_stairs_button, button_trigger_two);
 
-	teddy_one PlayLoopSound("meteor_loop");
-	thread handle_teddy_one_interaction(teddy_one, trigger_one); // Start a new thread to handle the waittill for teddy_one
+	thread handle_first_room_power_section_button(first_room_power_section_button, button_trigger_one);
 
-	teddy_two PlayLoopSound("meteor_loop");
-	thread handle_teddy_two_interaction(teddy_two, trigger_two); // Start a new thread to handle the waittill for teddy_two
-
-	teddy_three PlayLoopSound("meteor_loop");
-	thread handle_teddy_three_interaction(teddy_three, trigger_three); // Start a new thread to handle the waittill for teddy_three
+	thread handle_help_room_button(help_room_button, button_trigger_three);
 	
+	thread handle_cabinet_room_button(cabinet_room_button, button_trigger_four);
+
 	players = GetPlayers();
 
 	while (1) // Infinite loop to keep the script running
 	{
-		if ( ee_done == 0 && level.teddy_one_interacted == 1 && level.teddy_two_interacted == 1 && level.teddy_three_interacted == 1)
+		if (ee_done == 0 && level.first_room_power_section_button_interacted == 1 && level.first_room_stairs_button_interacted == 1 && level.help_room_button_interacted == 1 && level.cabinet_room_button_interacted == 1)
 		{
-			for (i = 0; i < players.size; i++)
+			iprintln("samantha figure step soon, spawning initial samantha figure...");
+
+			samantha_figure_one = spawn("script_model", (-15, 0, 15));
+			samantha_figure_trigger_one = spawn("trigger_radius", (samantha_figure_one.origin), 0, 64, 64);
+			samantha_figure_one.angles = (0, 45, 0);
+			samantha_figure_one Solid();
+			samantha_figure_one setmodel("zmb_mdl_samantha_figure");
+			/*for (i = 0; i < players.size; i++)
 			{
 				players[i] thread maps\_sounds::samantha_says_ee_track_sound();
-			}
+			}*/
 
 			ee_done = 1; // Prevent the track being played more than once
 		}
@@ -70,40 +71,24 @@ init_samantha_says()
 	}
 }
 
-handle_teddy_one_interaction(teddy_one, trigger_one)
+handle_first_room_stairs_button(first_room_stairs_button, button_trigger_one)
 {
 	while(1)
 	{
 		players = GetPlayers();
 
-		if(IsDefined(trigger_one))
+		if(IsDefined(button_trigger_one))
 		{
 			for (i = 0; i < players.size; i++)
-			{
-				if(players[i] IsTouching(trigger_one))  ///////////////////////////////////////
-				{																			   //
-					level.teddy_one_text = NewHudElem();											   //	
-					level.teddy_one_text.alignX = "center";										   //
-					level.teddy_one_text.alignY = "middle";										   //
-					level.teddy_one_text.horzAlign = "center";									   //
-					level.teddy_one_text.vertAlign = "middle";									   //
-					level.teddy_one_text.y = 70;
-					level.teddy_one_text.font = "default";												   //
-					level.teddy_one_text.fontScale = 1;
-					level.teddy_one_text.alpha = 1;										       //
-					level.teddy_one_text SetText("Press ^3F ^7to activate this Teddy"); //Temporary block of code to experiment with using hudelem text instead of hintstrings to prevent the hintstring limit bug
-					level.teddy_one_text fadeOverTime(1.5);
-					level.teddy_one_text.alpha = 0;
-				}																			   		   //
+			{																			   		   
+				if(players[i] IsTouching (button_trigger_one) && players[i] UseButtonPressed())
+				{		
+					first_room_stairs_button thread maps\_sounds::button_press_sound();
 
-				if(players[i] IsTouching (trigger_one) && players[i] UseButtonPressed())
-				{	
-					teddy_one StopLoopSound();
-					teddy_one PlaySound("meteor_affirm");
-					
-					level.teddy_one_interacted = 1;
+					iprintln("button pressed...");
+					level.first_room_stairs_button_interacted = 1;
 
-					trigger_one Delete();
+					button_trigger_one Delete();
 
 					break;
 				}
@@ -113,41 +98,24 @@ handle_teddy_one_interaction(teddy_one, trigger_one)
 	}
 }
 
-
-handle_teddy_two_interaction(teddy_two, trigger_two)
+handle_first_room_power_section_button(first_room_power_section_button, button_trigger_two)
 {
 	while(1)
 	{
 		players = GetPlayers();
 
-		if(IsDefined(trigger_two))
+		if(IsDefined(button_trigger_two))
 		{
 			for (i = 0; i < players.size; i++)
-			{
-				if(players[i] IsTouching(trigger_two))  ///////////////////////////////////////
-				{																			   //
-					level.teddy_two_text = NewHudElem();											   //	
-					level.teddy_two_text.alignX = "center";										   //
-					level.teddy_two_text.alignY = "middle";										   //
-					level.teddy_two_text.horzAlign = "center";									   //
-					level.teddy_two_text.vertAlign = "middle";									   //
-					level.teddy_two_text.y = 70;
-					level.teddy_two_text.font = "default";												   //
-					level.teddy_two_text.fontScale = 1;
-					level.teddy_two_text.alpha = 1;										       //
-					level.teddy_two_text SetText("Press ^3F ^7to activate this Teddy"); //Temporary block of code to experiment with using hudelem text instead of hintstrings to prevent the hintstring limit bug
-					level.teddy_two_text fadeOverTime(1.5);
-					level.teddy_two_text.alpha = 0;
-				}																			   		   //
+			{																			   		   
+				if(players[i] IsTouching (button_trigger_two) && players[i] UseButtonPressed())
+				{		
+					first_room_power_section_button thread maps\_sounds::button_press_sound();
 
-				if(players[i] IsTouching (trigger_two) && players[i] UseButtonPressed())
-				{	
-					teddy_two StopLoopSound();
-					teddy_two PlaySound("meteor_affirm");
-					
-					level.teddy_two_interacted = 1;
+					iprintln("button pressed...");
+					level.first_room_power_section_button_interacted = 1;
 
-					trigger_two Delete();
+					button_trigger_two Delete();
 
 					break;
 				}
@@ -157,40 +125,24 @@ handle_teddy_two_interaction(teddy_two, trigger_two)
 	}
 }
 
-handle_teddy_three_interaction(teddy_three, trigger_three)
-{	
+handle_help_room_button(help_room_button, button_trigger_three)
+{
 	while(1)
 	{
 		players = GetPlayers();
 
-		if(IsDefined(trigger_three))
+		if(IsDefined(button_trigger_three))
 		{
 			for (i = 0; i < players.size; i++)
-			{
-				if(players[i] IsTouching(trigger_three))  ///////////////////////////////////////
-				{																			   //
-					level.teddy_three_text = NewHudElem();											   //	
-					level.teddy_three_text.alignX = "center";										   //
-					level.teddy_three_text.alignY = "middle";										   //
-					level.teddy_three_text.horzAlign = "center";									   //
-					level.teddy_three_text.vertAlign = "middle";									   //
-					level.teddy_three_text.y = 70;
-					level.teddy_three_text.font = "default";												   //
-					level.teddy_three_text.fontScale = 1;
-					level.teddy_three_text.alpha = 1;										       //
-					level.teddy_three_text SetText("Press ^3F ^7to activate this Teddy"); //Temporary block of code to experiment with using hudelem text instead of hintstrings to prevent the hintstring limit bug
-					level.teddy_three_text fadeOverTime(1.5);
-					level.teddy_three_text.alpha = 0;
-				}																			   		   //
-
-				if(players[i] IsTouching (trigger_three) && players[i] UseButtonPressed())
-				{	
-					teddy_three StopLoopSound();
-					teddy_three PlaySound("meteor_affirm");
+			{																			   		   
+				if(players[i] IsTouching (button_trigger_three) && players[i] UseButtonPressed())
+				{		
+					help_room_button thread maps\_sounds::button_press_sound();
 					
-					level.teddy_three_interacted = 1;
+					iprintln("button pressed...");
+					level.help_room_button_interacted = 1;
 
-					trigger_three Delete();
+					button_trigger_three Delete();
 
 					break;
 				}
@@ -200,78 +152,29 @@ handle_teddy_three_interaction(teddy_three, trigger_three)
 	}
 }
 
-// Ignore below, can use elements of the code for the button ee
-
-/*
-#include common_scripts\utility;
-#include maps\_utility;
-#include maps\_zombiemode_utility;
-
-main()
+handle_cabinet_room_button(cabinet_room_button, button_trigger_four)
 {
-	level.explosive_barrels = 0;
-	level.barrel_count = 0;
-	level.shot_explosive_barrels = 0;
-	level.keep_explosive_barrels = [];
-    thread explosive_barrels();
-}
+	while(1)
+	{
+		players = GetPlayers();
 
-explosive_barrels()
-{
-
-	flag_wait("all_players_connected");
-
-		all_explosive_barrels = GetEntArray("script_model","classname");
-
-		for(i = 0; i < all_explosive_barrels.size; i++)
+		if(IsDefined(button_trigger_four))
 		{
-			if(all_explosive_barrels[i].model == "global_explosive_barrel_japanese")
-			{
-				level.barrel_count++;
-				level.keep_explosive_barrels = array_insert(level.keep_explosive_barrels,all_explosive_barrels[i],level.keep_explosive_barrels.size);
-			}
-			wait 0.05;
-		}
-		
-		iPrintLn("There are " + level.barrel_count + " explosive barrels in this map.");
-		
-		array_thread(level.keep_explosive_barrels, ::explosive_barrels_think);
-}
+			for (i = 0; i < players.size; i++)
+			{																			   		   
+				if(players[i] IsTouching (button_trigger_four) && players[i] UseButtonPressed())
+				{		
+					cabinet_room_button thread maps\_sounds::button_press_sound();
 
-explosive_barrels_think()
-{
+					iprintln("button pressed...");
+					level.cabinet_room_button_interacted = 1;
 
-	players = GetPlayers();
+					button_trigger_four Delete();
 
-    while (1)
-    {
-        
-		self waittill ("damage");
-		
-		for (i = 0; i < level.keep_explosive_barrels.size; i++)
-		{
-			self endon ("death");
-
-			if (level.keep_explosive_barrels[i] == self)
-			{
-				level.shot_explosive_barrels++; // Increment the shot explosive_barrels counter
-				break;
+					break;
+				}
 			}
 		}
-
-		iPrintLn("Explosive barrels shot: " + level.shot_explosive_barrels); // Print the updated shot explosive_barrels count
-
-		if (level.shot_explosive_barrels == level.barrel_count) // Check if all explosive_barrels are shot
-		{
-			iPrintLn("DONE"); // Print "DONE" when all explosive_barrels are shot
-
-        	for (k = 0; k < players.size; k++) {
-			    iPrintLn("Playing ee track...");
-                players[k] thread maps\_sounds::explosive_barrels_ee_track_sound();
-			}
-		}
-
-		wait 1;
+		wait 0.05;
 	}
 }
-*/
