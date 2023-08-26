@@ -23,7 +23,7 @@ main() {
     maps\_zombiemode::main();
 	array_thread(GetPlayers(), ::reloading_monitor);
     thread maps\_explosive_barrels::init_explosive_barrels();
-    thread maps\_monty_radio::init_monty_radio();
+    thread maps\_new_radios::init_new_radios();
     thread maps\_samantha_says::init_samantha_says();
     animscripts\walking_anim::main();
 

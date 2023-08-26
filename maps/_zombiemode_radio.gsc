@@ -92,7 +92,7 @@ zombie_radio_play()
                 }
 
             }
-            if(player_is_interacting_with_radio == 0 && player_has_done_radio_ee_three == 0 && radio_station_count == 13 && players[i] == attacker && attacker GetCurrentWeapon() == "springfield_scoped_zombie") // Don't modify for now
+            if(player_is_interacting_with_radio == 0 && player_has_done_radio_ee_three == 0 && radio_station_count == 13 && players[i] == attacker && attacker GetCurrentWeapon() == "springfield_scoped_zombie" ) // Don't modify for now, add kar98k_scoped_zombie later.
             {
 
                 player_is_interacting_with_radio = 1; // Radio is busy
