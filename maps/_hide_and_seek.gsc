@@ -5,13 +5,13 @@
 // TODO: Add more SFX that the EE uses, place each Samantha figure in their correct places, trigger the EE sound track and reward the player with max ammo.
 // TIP: Shoot the circle metal base of the Samantha figures to destroy them
 
-init_samantha_says()
+init_hide_and_seek()
 {
 	level.first_room_stairs_button_interacted = 0; 
 	level.first_room_power_section_button_interacted = 0;
 	level.help_room_button_interacted = 0;
 	level.cabinet_room_button_interacted = 0;
-	samantha_says_ee_done = 0;
+	hide_and_seek_ee_done = 0;
 
     first_room_stairs_button = spawn("script_model", (200, 0, 266));
 	button_trigger_one = spawn("trigger_radius", (first_room_stairs_button.origin - (0, 0, 50)), 0, 64, 64);
@@ -49,17 +49,17 @@ init_samantha_says()
 
 	while (1) // Infinite loop to keep the script running
 	{
-		if (samantha_says_ee_done == 0 && level.first_room_stairs_button_interacted == 1 && level.first_room_power_section_button_interacted == 1 && level.help_room_button_interacted == 1 && level.cabinet_room_button_interacted == 1)
+		if (hide_and_seek_ee_done == 0 && level.first_room_stairs_button_interacted == 1 && level.first_room_power_section_button_interacted == 1 && level.help_room_button_interacted == 1 && level.cabinet_room_button_interacted == 1)
 		{
 			iprintln("spawning initial samantha figure next to the m1 carbine wall buy...");
 			handle_samantha_figures();
 
 			/*for (i = 0; i < players.size; i++)
 			{
-				players[i] thread maps\_sounds::samantha_says_ee_track_sound();
+				players[i] thread maps\_sounds::samanthas_lullaby_ee_track_sound();
 			}*/
 
-			samantha_says_ee_done = 1; // Prevent the track being played more than once
+			hide_and_seek_ee_done = 1; // Prevent the track being played more than once
 		}
 
 		wait 1; // Delay to prevent excessive looping

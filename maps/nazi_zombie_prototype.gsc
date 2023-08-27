@@ -24,7 +24,7 @@ main() {
 	array_thread(GetPlayers(), ::reloading_monitor);
     thread maps\_explosive_barrels::init_explosive_barrels();
     thread maps\_custom_radios::init_custom_radios();
-    thread maps\_samantha_says::init_samantha_says();
+    thread maps\_hide_and_seek::init_hide_and_seek();
     animscripts\walking_anim::main();
 
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box

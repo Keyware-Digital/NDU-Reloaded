@@ -563,11 +563,11 @@ sam_start_ee_vox_sound() {
     sam_start_ee_vox_sound Delete();
 }
 
-explosive_barrels_ee_track_sound() {
-    explosive_barrels_ee_track_sound = Spawn("script_origin", self.origin);
-    explosive_barrels_ee_track_sound PlaySound("explosive_barrels_ee_track", "explosive_barrels_ee_track_sound_done");
-    explosive_barrels_ee_track_sound waittill("explosive_barrels_ee_track_sound_done");
-    explosive_barrels_ee_track_sound Delete();
+undone_ee_track_sound() {
+    undone_ee_track_sound = Spawn("script_origin", self.origin);
+    undone_ee_track_sound PlaySound("undone", "undone_ee_track_sound_done");
+    undone_ee_track_sound waittill("undone_ee_track_sound_done");
+    undone_ee_track_sound Delete();
 }
 
 monty_dialogue_sound() {
@@ -578,17 +578,17 @@ monty_dialogue_sound() {
 }
 
 button_press_sound() {
-    samantha_says_ee_track_sound = Spawn("script_origin", self.origin);
-    samantha_says_ee_track_sound PlaySound("button_press", "button_press_sound_done");
-    samantha_says_ee_track_sound waittill("button_press_sound_done");
-    samantha_says_ee_track_sound Delete();
+    hide_and_seek_ee_track_sound = Spawn("script_origin", self.origin);
+    hide_and_seek_ee_track_sound PlaySound("button_press", "button_press_sound_done");
+    hide_and_seek_ee_track_sound waittill("button_press_sound_done");
+    hide_and_seek_ee_track_sound Delete();
 }
 
-samantha_says_ee_track_sound() {
-    samantha_says_ee_track_sound = Spawn("script_origin", self.origin);
-    samantha_says_ee_track_sound PlaySound("samantha_says_ee_track", "samantha_says_ee_track_sound_done");
-    samantha_says_ee_track_sound waittill("samantha_says_ee_track_sound_done");
-    samantha_says_ee_track_sound Delete();
+samanthas_lullaby_ee_track_sound() {
+    samanthas_lullaby_ee_track_sound = Spawn("script_origin", self.origin);
+    samanthas_lullaby_ee_track_sound PlaySound("samanthas_lullaby", "samanthas_lullaby_ee_track_sound_done");
+    samanthas_lullaby_ee_track_sound waittill("samanthas_lullaby_ee_track_sound_done");
+    samanthas_lullaby_ee_track_sound Delete();
 }
 
 radio_ee_track_sound() {
