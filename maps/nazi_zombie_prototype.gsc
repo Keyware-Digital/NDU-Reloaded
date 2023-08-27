@@ -16,14 +16,14 @@ main() {
     include_weapons();
     maps\_character_randomise::init();
     include_powerups();
-    level thread betty_fx();
+    level thread fx();
     //level thread dolphine_dive_fx();
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
 	array_thread(GetPlayers(), ::reloading_monitor);
     thread maps\_explosive_barrels::init_explosive_barrels();
-    thread maps\_new_radios::init_new_radios();
+    thread maps\_custom_radios::init_custom_radios();
     thread maps\_samantha_says::init_samantha_says();
     animscripts\walking_anim::main();
 
@@ -46,9 +46,10 @@ main() {
 
 }
 
-betty_fx() {
+fx() {
     level._effect["betty_explode"] = loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
     level._effect["betty_trail"] = loadfx("weapon/bouncing_betty/fx_betty_trail");
+    level._effect["raygun_impact"] = loadFX("misc/fx_exp_raygun_impact");
 }
 
 /*dolphine_dive_fx() {
