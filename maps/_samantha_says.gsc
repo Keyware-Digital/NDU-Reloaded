@@ -3,6 +3,7 @@
 #include maps\_zombiemode_utility;
 
 // TODO: Add more SFX that the EE uses, place each Samantha figure in their correct places, trigger the EE sound track and reward the player with max ammo.
+// TIP: Shoot the circle metal base of the Samantha figures to destroy them
 
 init_samantha_says()
 {
@@ -205,7 +206,7 @@ handle_cabinet_room_button(cabinet_room_button, button_trigger_four)
 
 handle_samantha_figures()
 {
-	initial_samantha_figure = spawn("script_model", (-15, -400, 5));
+	initial_samantha_figure = spawn("script_model", (-15, -400, 2));
 	initial_samantha_figure.angles = (0, 90, -90);
 	initial_samantha_figure setModel("zmb_mdl_samantha_figure");
 	initial_samantha_figure solid();
