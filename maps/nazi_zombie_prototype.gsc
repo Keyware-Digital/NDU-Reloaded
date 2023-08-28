@@ -145,7 +145,7 @@ include_weapons() {
     include_weapon("ppsh41_drum");
     include_weapon("springfield_scoped_zombie");
     include_weapon("sten_mk5");
-    include_weapon("stg44_pap");    // "b" variant of pap StG, deals 125dmg (was 150)
+    include_weapon("stg44_pap");    // "b" variant of pap StG, 4-round burst.
 
     // Other
     //include_weapon("death_hands");

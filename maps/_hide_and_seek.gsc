@@ -14,7 +14,7 @@ init_hide_and_seek()
 	button_step_done = 0;
 
     first_room_stairs_button = spawn("script_model", (200, 0, 266));
-	button_trigger_one = spawn("trigger_radius", (first_room_stairs_button.origin - (0, 0, 50)), 0, 64, 64);
+	button_trigger_one = spawn("trigger_radius", (first_room_stairs_button.origin - (0, 0, 100)), 0, 64, 64);	//lower trigger box so you can actviate without opening stairs.
 	first_room_stairs_button.angles = (0, 0, 90);
 	first_room_stairs_button setModel("zmb_mdl_button");
 	first_room_stairs_button solid();
@@ -234,7 +234,7 @@ handle_samantha_figures()
 	level.samantha_figure_timed_out = 0;
 	level.hide_and_seek_done = 0;
 	//Please move the figures to their proper locations
-	samantha_figure_one = spawn("script_model", (-15, 30, 15));
+	samantha_figure_one = spawn("script_model", (-15, 30, 15));		//position needs setting
 	samantha_figure_one.angles = (0, 45, 0);
 	samantha_figure_one setModel("zmb_mdl_samantha_figure");
 	samantha_figure_one playLoopSound("musicbox_loop");
@@ -251,7 +251,7 @@ handle_samantha_figures()
 	samantha_figure_one stopLoopSound(0.1);
 	samantha_figure_one delete();
 
-	samantha_figure_two = spawn("script_model", (-15, 60, 15));
+	samantha_figure_two = spawn("script_model", (-15, 60, 15));		//position needs setting
 	samantha_figure_two.angles = (0, 45, 0);
 	samantha_figure_two setModel("zmb_mdl_samantha_figure");
 	samantha_figure_two playLoopSound("musicbox_loop");
@@ -268,7 +268,7 @@ handle_samantha_figures()
 	samantha_figure_two StopLoopSound(0.1);
 	samantha_figure_two delete();
 
-	samantha_figure_three = spawn("script_model", (-15, 90, 15));
+	samantha_figure_three = spawn("script_model", (-15, 90, 15));		//position needs setting
 	samantha_figure_three.angles = (0, 45, 0);
 	samantha_figure_three setModel("zmb_mdl_samantha_figure");
 	samantha_figure_three playLoopSound("musicbox_loop");
@@ -285,7 +285,7 @@ handle_samantha_figures()
 	samantha_figure_three StopLoopSound(0.1);
 	samantha_figure_three delete();
 
-	samantha_figure_four = spawn("script_model", (-15, 120, 15));
+	samantha_figure_four = spawn("script_model", (-15, 120, 15));		//position needs setting
 	samantha_figure_four.angles = (0, 45, 0);
 	samantha_figure_four setModel("zmb_mdl_samantha_figure");
 	samantha_figure_four playLoopSound("musicbox_loop");
@@ -302,7 +302,7 @@ handle_samantha_figures()
 	samantha_figure_four StopLoopSound(0.1);
 	samantha_figure_four delete();
 
-	samantha_figure_five = spawn("script_model", (-15, 160, 15));
+	samantha_figure_five = spawn("script_model", (-15, 160, 15));		//position needs setting
 	samantha_figure_five.angles = (0, 45, 0);
 	samantha_figure_five setModel("zmb_mdl_samantha_figure");
 	samantha_figure_five playLoopSound("musicbox_loop");
@@ -319,7 +319,7 @@ handle_samantha_figures()
 	samantha_figure_five StopLoopSound(0.1);
 	samantha_figure_five delete();
 
-	samantha_figure_six = spawn("script_model", (-15, 200, 15));
+	samantha_figure_six = spawn("script_model", (-15, 200, 15));		//position needs setting
 	samantha_figure_six.angles = (0, 45, 0);
 	samantha_figure_six setModel("zmb_mdl_samantha_figure");
 	samantha_figure_six playLoopSound("musicbox_loop");
@@ -336,7 +336,7 @@ handle_samantha_figures()
 	samantha_figure_six StopLoopSound(0.1);
 	samantha_figure_six delete();
 
-	samantha_figure_seven = spawn("script_model", (-15, 240, 15));
+	samantha_figure_seven = spawn("script_model", (-15, 240, 15));		//position needs setting
 	samantha_figure_seven.angles = (0, 45, 0);
 	samantha_figure_seven setModel("zmb_mdl_samantha_figure");
 	samantha_figure_seven playLoopSound("musicbox_loop");
@@ -353,7 +353,7 @@ handle_samantha_figures()
 	samantha_figure_seven StopLoopSound(0.1);
 	samantha_figure_seven delete();
 
-	samantha_figure_eight = spawn("script_model", (-15, 280, 15));
+	samantha_figure_eight = spawn("script_model", (-15, 280, 15));		//position needs setting
 	samantha_figure_eight.angles = (0, 45, 0);
 	samantha_figure_eight setModel("zmb_mdl_samantha_figure");
 	samantha_figure_eight playLoopSound("musicbox_loop");
