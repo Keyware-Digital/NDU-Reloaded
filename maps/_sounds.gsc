@@ -85,7 +85,7 @@ melee_vox_sound() {
 	melee_vox_sound PlaySound("plr_" + index + meleeSound, "knife_exert_sound_done");
 	melee_vox_sound waittill("knife_exert_sound_done");
 	melee_vox_sound Delete();
-	wait 0.525;	//cool down to prevent duplicate sounds on knife lunges
+	wait 0.55;	//cool down to prevent duplicate sounds on knife lunges
 
 	self notify("melee_sound_finished");
 

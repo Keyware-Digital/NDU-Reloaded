@@ -1645,6 +1645,7 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	switch(chosenweapon)
 	{
 		case "stg44_pap":
+				player thread do_knuckle_crack();	
 				player thread maps\_sounds::great_weapon_sound();
 			break; 
 		case "m1garand":
@@ -1884,9 +1885,6 @@ weapon_spawn_think()
 				player maps\_zombiemode_score::minus_to_player_score( weapon_cost ); 
 
 				player weapon_give( self.zombie_weapon_upgrade );		
-
-				//test as proof of concept
-				//player thread do_knuckle_crack();	
 
 				player play_weapon_wallbuy_sound(weapon_name);
 			}
