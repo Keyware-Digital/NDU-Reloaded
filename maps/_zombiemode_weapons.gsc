@@ -1677,9 +1677,9 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		case "mosin_rifle_bayonet":
 				player thread maps\_sounds::crappy_weapon_sound();
 			break;
-		case "perks_a_cola":
+		/*case "perks_a_cola":
 				player thread maps\_sounds::killstreak_sound();
-			break;
+			break;*/
 	}
 
 	if(chosenweapon == "stg44_pap")
