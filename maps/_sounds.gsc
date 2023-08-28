@@ -584,6 +584,20 @@ button_press_sound() {
     hide_and_seek_ee_track_sound Delete();
 }
 
+samantha_start_sound() {
+    samantha_start_sound = Spawn("script_origin", self.origin);
+    samantha_start_sound PlaySound("samantha_start", "samantha_start_sound_done");
+    samantha_start_sound waittill("samantha_start_sound_done");
+    samantha_start_sound Delete();
+}
+
+samantha_fail_sound() {
+    samantha_fail_sound = Spawn("script_origin", self.origin);
+    samantha_fail_sound PlaySound("samantha_fail", "samantha_fail_sound_done");
+    samantha_fail_sound waittill("samantha_fail_sound_done");
+    samantha_fail_sound Delete();
+}
+
 samanthas_lullaby_ee_track_sound() {
     samanthas_lullaby_ee_track_sound = Spawn("script_origin", self.origin);
     samanthas_lullaby_ee_track_sound PlaySound("samanthas_lullaby", "samanthas_lullaby_ee_track_sound_done");
