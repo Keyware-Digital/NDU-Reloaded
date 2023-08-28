@@ -11,7 +11,7 @@ init_hide_and_seek()
 	level.first_room_power_section_button_interacted = 0;
 	level.help_room_button_interacted = 0;
 	level.cabinet_room_button_interacted = 0;
-	hide_and_seek_ee_done = 0;
+	button_step_done = 0;
 
     first_room_stairs_button = spawn("script_model", (200, 0, 266));
 	button_trigger_one = spawn("trigger_radius", (first_room_stairs_button.origin - (0, 0, 50)), 0, 64, 64);
@@ -49,7 +49,7 @@ init_hide_and_seek()
 
 	while (1) // Infinite loop to keep the script running
 	{
-		if (hide_and_seek_ee_done == 0 && level.first_room_stairs_button_interacted == 1 && level.first_room_power_section_button_interacted == 1 && level.help_room_button_interacted == 1 && level.cabinet_room_button_interacted == 1)
+		if (button_step_done == 0 && level.first_room_stairs_button_interacted == 1 && level.first_room_power_section_button_interacted == 1 && level.help_room_button_interacted == 1 && level.cabinet_room_button_interacted == 1)
 		{
 			for (i = 0; i < players.size; i++)
 			{
@@ -58,12 +58,7 @@ init_hide_and_seek()
 
 			handle_initial_samantha_figure();
 
-			/*for (i = 0; i < players.size; i++)
-			{
-				players[i] thread maps\_sounds::samanthas_lullaby_ee_track_sound();
-			}*/
-
-			hide_and_seek_ee_done = 1; // Prevent the track being played more than once
+			button_step_done = 1; // Prevent the track being played more than once
 		}
 
 		wait 0.05; // Delay to prevent excessive looping
@@ -375,6 +370,16 @@ handle_samantha_figures()
 	samantha_figure_eight StopLoopSound(0.1);
 	samantha_figure_eight delete();
 	level.hide_and_seek_done = 1;
+
+	if(level.hide_and_seek_done == 1)
+	{
+		players = GetPlayers();
+		for (i = 0; i < players.size; i++)
+		{
+			players[i] thread maps\_sounds::samanthas_lullaby_ee_track_sound();
+			// Spawn max ammo here
+		}
+	}
 }
 
 rotate_samantha_figure(samantha_figure)
