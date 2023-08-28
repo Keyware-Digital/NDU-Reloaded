@@ -2,7 +2,7 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 
-// TODO: Add more SFX that the EE uses, place each Samantha figure in their correct places, trigger the EE sound track and reward the player with max ammo.
+// TODO: Add more SFX that the EE uses, place each Samantha figure in their correct places and make the samantha figure spawn next to the m1 carbinet again being raised by a skeleton hand, interaction with it spawns a max ammo
 // TIP: Shoot the circle metal base of the Samantha figures to destroy them
 
 init_hide_and_seek()
@@ -373,12 +373,26 @@ handle_samantha_figures()
 
 	if(level.hide_and_seek_done == 1)
 	{
+
+		powerup_spawn = (-15, -430, 2);
 		players = GetPlayers();
 		for (i = 0; i < players.size; i++)
 		{
 			players[i] thread maps\_sounds::samanthas_lullaby_ee_track_sound();
-			// Spawn max ammo here
 		}
+			
+		for ( i = 0; i < level.zombie_powerup_array.size; i++ )
+		{
+			if ( level.zombie_powerup_array[i] == "max_ammo" )
+			{
+				level.zombie_powerup_index = i;
+				break;
+			}
+		}
+		play_sound_2D( "bright_sting" );
+		level.zombie_vars["zombie_drop_item"] = 1;
+		level.powerup_drop_count = 0;
+		level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
 	}
 }
 
