@@ -342,7 +342,7 @@ pickup_sniper_sound() {
 }
 
 pickup_bonus_points_sound() {
-	wait 0.75;
+	wait 0.80;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupbonuspointsSound = "_points_" + RandomInt(1);
     pickup_bonus_points_sound = Spawn("script_origin", self.origin);
@@ -352,7 +352,7 @@ pickup_bonus_points_sound() {
 }
 
 pickup_carpenter_sound() {
-	wait 0.75;
+	wait 0.80;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupcarpenterSound = "_repair_" + RandomInt(1);
     pickup_carpenter_sound = Spawn("script_origin", self.origin);
@@ -362,7 +362,7 @@ pickup_carpenter_sound() {
 }
 
 pickup_death_machine_sound() {
-	wait 0.75;
+	wait 0.80;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupdeathmachineSound = "_instakill_" + RandomInt(1);
     pickup_death_machine_sound = Spawn("script_origin", self.origin);
@@ -372,7 +372,7 @@ pickup_death_machine_sound() {
 }
 
 pickup_doublepoints_sound() {
-	wait 0.75;
+	wait 0.80;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupdoublepointsSound = "_points_" + RandomInt(1);
     pickup_doublepoints_sound = Spawn("script_origin", self.origin);
@@ -382,7 +382,7 @@ pickup_doublepoints_sound() {
 }
 
 pickup_firesale_sound() {
-	wait 0.75;
+	wait 0.80;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupfiresaleSound = "_points_" + RandomInt(1);
     pickup_firesale_sound = Spawn("script_origin", self.origin);
@@ -392,7 +392,7 @@ pickup_firesale_sound() {
 }
 
 pickup_insta_kill_sound() {
-	wait 0.75;
+	wait 0.80;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupinstakillSound = "_instakill_" + RandomInt(1);
     pickup_insta_kill_sound = Spawn("script_origin", self.origin);
@@ -402,7 +402,7 @@ pickup_insta_kill_sound() {
 }
 
 pickup_maxammo_sound() {
-	wait 0.75;
+	wait 0.80;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupmaxammoSound = "_maxammo_" + RandomInt(1);
     pickup_maxammo_sound = Spawn("script_origin", self.origin);
@@ -412,7 +412,7 @@ pickup_maxammo_sound() {
 }
 
 pickup_nuke_sound() {
-	wait 0.75;
+	wait 0.80;
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	pickupnukeSound = "_nuke_" + RandomInt(1);
     pickup_nuke_sound = Spawn("script_origin", self.origin);
