@@ -942,7 +942,8 @@ round_spawning() {
     }
 }
 
-round_completion_award_points()
+//bo3 style end of round points rewards
+round_completion_award_points()     
 {
     maxPoints = 50 * level.round_number;
 
@@ -1745,6 +1746,36 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
         end_game();
     }
 }
+
+/*play_death_hands_animation(player)
+{
+	player DisableOffhandWeapons();
+	player DisableWeaponCycling();
+
+	player AllowLean( false );
+	player AllowAds( false );
+	player AllowSprint( false );
+	player AllowProne( false );
+	player AllowMelee( false );
+
+    // Play the "zombie_death_hands" animation here
+	self SwitchToWeapon("zombie_death_hands");
+	wait 0.1; // Adjust this delay as needed
+	//player Notify("zombie_death_hands_start");  //dont think we need this line
+
+	// Wait for the animation to finish
+	self waittill("zombie_death_hands_end");
+
+	// Restore player actions - don't think we want this, keep disabled
+	//player EnableOffhandWeapons();
+	//player EnableWeaponCycling();
+
+	//player AllowLean( true );
+	//player AllowAds( true );
+	//player AllowSprint( true );
+	//player AllowProne( true );
+	//player AllowMelee( true );
+}*/
 
 end_game() {
     level.intermission = true;

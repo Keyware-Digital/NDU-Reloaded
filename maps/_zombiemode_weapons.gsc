@@ -1438,7 +1438,7 @@ weapon_cabinet_think()
 
     if(!(player hasWeapon("stg44_pap")))	//check if player has the stg
     {
-		if(luckyNumCabinet <= 10)	//10 out of 100 chance to get a pap'd stg
+		if(luckyNumCabinet <= 90)	//10 out of 100 chance to get a pap'd stg
 		{
         	weaponmodelstruct Hide();
 			weaponmodelstruct.angles = self.angles + ( -90,90,0 );	//so it gets displayed like the other cabinet weapons.
@@ -1446,10 +1446,6 @@ weapon_cabinet_think()
         	weaponmodelstruct Show();
         	weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
         	chosenweapon = "stg44_pap";
-			// ghetto test, currently breaks sidearm (if you're the German or Russian). Also should ideally play AFTER you take the gun. Plays before atm.
-			// we can use a similar method for death hands.
-			player thread do_knuckle_crack();
-			PrintLn("FAUX PAP ANIM A-GO!");
 
 			switch(chosenweapon)
 			{
@@ -1485,6 +1481,13 @@ weapon_cabinet_think()
 		level.fake_cabinet_entity Delete();
 	}
 
+	// Play the knucklecrack animation onl if the stg44_pap is picked up
+	if(chosenweapon == "stg44_pap")
+	{
+		IPrintLn("FAUX PAP ANIM A-GO!");
+		player thread do_knuckle_crack();
+	}
+	
 	play_sound_at_pos( "close_chest", self.origin );
 	for( i = 0; i < doors.size; i++ )
 	{
@@ -2257,7 +2260,10 @@ upgrade_knuckle_crack_begin()
 	self AllowSprint( false );
 	self AllowProne( false );		
 	self AllowMelee( false );
-	
+
+	// Initialize the oldPistol variable
+	oldPistol = "";
+
 	if ( self GetStance() == "prone" )
 	{
 		self SetStance( "crouch" );
@@ -2267,60 +2273,87 @@ upgrade_knuckle_crack_begin()
 
 	gun = self GetCurrentWeapon();
 	weapon = "zombie_knuckle_crack";
-	
+
 	if ( gun != "none" && gun != "mine_bouncing_betty" )
 	{
+		// Store the player's current pistol
+		if (primaries.size > 0)
+		{
+			oldPistol = primaries[0];
+		}
 		self TakeWeapon( gun );
 	}
-	else
-	{
-		return;
-	}
 
-	if( primaries.size <= 1 )
+	if (oldPistol != "")
+	{
+		// Switch to the appropriate original pistol or default to Colt
+		switch (oldPistol)
+		{
+			case "colt":
+			case "walther":
+			case "tokarev":
+			case "sw_357":
+			case "ray_gun_mk1_v2":
+				self GiveWeapon( oldPistol );
+				break;
+			default:
+				self GiveWeapon( "colt" ); // Default to Colt if the original pistol isn't recognized
+				break;
+		}
+	}
+	else if (primaries.size <= 1)
 	{
 		self GiveWeapon( "colt" );
 	}
-	
+
 	self GiveWeapon( weapon );
 	self SwitchToWeapon( weapon );
 
 	return gun;
 }
 
-upgrade_knuckle_crack_end( gun )
+upgrade_knuckle_crack_end(gun)
 {
-	//assert( gun != "zombie_perk_bottle_doubletap" );
-	//assert( gun != "zombie_perk_bottle_revive" );
-	//assert( gun != "zombie_perk_bottle_jugg" );
-	//assert( gun != "zombie_perk_bottle_sleight" );
-	assert( gun != "syrette" );
+	assert(gun != "syrette");
 
 	self EnableOffhandWeapons();
 	self EnableWeaponCycling();
 
-	self AllowLean( true );
-	self AllowAds( true );
-	self AllowSprint( true );
-	self AllowProne( true );		
-	self AllowMelee( true );
-	weapon = "zombie_knuckle_crack";
+	self AllowLean(true);
+	self AllowAds(true);
+	self AllowSprint(true);
+	self AllowProne(true);
+	self AllowMelee(true);
 
 	// TODO: race condition?
-	if ( self maps\_laststand::player_is_in_laststand() )
+	if (self maps\_laststand::player_is_in_laststand())
 	{
-		self TakeWeapon(weapon);
+		self TakeWeapon("zombie_knuckle_crack");
 		return;
 	}
 
-	self TakeWeapon(weapon);
 	primaries = self GetWeaponsListPrimaries();
-	if( isDefined( primaries ) && primaries.size > 0 )
+	if (isDefined(primaries) && primaries.size > 0)
 	{
-		self SwitchToWeapon( primaries[0] );
+		oldPistol = primaries[0];
+
+		// Switch to the appropriate original pistol or default to Colt
+		switch (oldPistol)
+		{
+			case "colt":
+			case "walther":
+			case "tokarev":
+			case "sw_357":
+			case "ray_gun_mk1_v2":
+				self SwitchToWeapon(oldPistol);
+				break;
+			default:
+				self SwitchToWeapon("colt");
+				break;
+		}
 	}
-	else
-	{
-		self SwitchToWeapon( "colt" );
-	}
+
+	// Switch back to the stg44_pap, dirty way of doing it. What if we wanted more pap guns?
+	// also has mulekick bug if you ditch your pistol prior to doing all of this.
+	self SwitchToWeapon("stg44_pap");
 }
