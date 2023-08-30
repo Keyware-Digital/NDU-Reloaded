@@ -962,7 +962,7 @@ round_completion_award_points()
 
     level.round_completion_award_points_text[0].y = 0;
     level.round_completion_award_points_text[1].y = 15;
-    level.round_completion_award_points_text[0].x = -30;
+    level.round_completion_award_points_text[0].x = -20;
     level.round_completion_award_points_text[1].x = 0;
 
     level.round_completion_award_points_text[0] setText("+" + maxPoints); // Use fontscale to briefly increase the size of the points text and then decrease it back to normal like in BO3
