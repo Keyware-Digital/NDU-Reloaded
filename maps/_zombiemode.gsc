@@ -967,6 +967,12 @@ round_completion_award_points()
     level.round_completion_award_points_text[1].x = 0;
 
     for (i = 0; i < 4; i++) {
+    level.round_completion_award_points_text[i].fontScale = 1.75;
+    }
+
+    wait(0.05);
+
+    for (i = 0; i < 4; i++) {
     level.round_completion_award_points_text[i].fontScale = 3.5;
     }
 
@@ -992,7 +998,7 @@ round_completion_award_points()
         level.round_completion_award_points_text[i] destroy();
     }
 
-    if(maxPoints > 650)
+    if(maxPoints >= 650)
     {
         maxPoints = 650;
     }
