@@ -950,22 +950,33 @@ round_completion_award_points()
 
     for (i = 0; i < 4; i++) {
         level.round_completion_award_points_text[i] = newHudElem();
+        level.round_completion_award_points_text[i].x = 0;
+        level.round_completion_award_points_text[i].y = 0;
         level.round_completion_award_points_text[i].alignX = "center";
         level.round_completion_award_points_text[i].alignY = "middle";
         level.round_completion_award_points_text[i].horzAlign = "center";
         level.round_completion_award_points_text[i].vertAlign = "middle";
         level.round_completion_award_points_text[i].foreground = true;
-
-        level.round_completion_award_points_text[i].fontScale = 1.75;
         level.round_completion_award_points_text[i].alpha = 1;
     }
 
     level.round_completion_award_points_text[0].y = 0;
     level.round_completion_award_points_text[1].y = 15;
-    level.round_completion_award_points_text[0].x = -20;
+    level.round_completion_award_points_text[0].x = -15;
     level.round_completion_award_points_text[1].x = 0;
 
-    level.round_completion_award_points_text[0] setText("+" + maxPoints); // Use fontscale to briefly increase the size of the points text and then decrease it back to normal like in BO3
+    for (i = 0; i < 4; i++) {
+    level.round_completion_award_points_text[i].fontScale = 3.5;
+    }
+
+    level.round_completion_award_points_text[0] setText("+" + maxPoints);
+    
+    wait(0.05);
+
+    for (i = 0; i < 4; i++) {
+    level.round_completion_award_points_text[i].fontScale = 1.75;
+    }
+
     level.round_completion_award_points_text[1] setText("Survived"); // Add to localised strings like the rest
 
     for (i = 0; i < 4; i++) {
