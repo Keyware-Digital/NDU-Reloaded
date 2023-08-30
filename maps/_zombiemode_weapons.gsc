@@ -1438,7 +1438,7 @@ weapon_cabinet_think()
 
     if(!(player hasWeapon("stg44_pap")))	//check if player has the stg
     {
-		if(luckyNumCabinet <= 5)	//5 out of 100 chance to get a pap'd stg
+		if(luckyNumCabinet <= 10)	//10 out of 100 chance to get a pap'd stg
 		{
         	weaponmodelstruct Hide();
 			weaponmodelstruct.angles = self.angles + ( -90,90,0 );	//so it gets displayed like the other cabinet weapons.
@@ -1446,6 +1446,10 @@ weapon_cabinet_think()
         	weaponmodelstruct Show();
         	weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
         	chosenweapon = "stg44_pap";
+			// ghetto test, currently breaks sidearm (if you're the German or Russian). Also should ideally play AFTER you take the gun. Plays before atm.
+			// we can use a similar method for death hands.
+			player thread do_knuckle_crack();
+			PrintLn("FAUX PAP ANIM A-GO!");
 
 			switch(chosenweapon)
 			{
@@ -1644,8 +1648,7 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 
 	switch(chosenweapon)
 	{
-		case "stg44_pap":
-				player thread do_knuckle_crack();	
+		case "stg44_pap":	
 				player thread maps\_sounds::great_weapon_sound();
 			break; 
 		case "m1garand":
@@ -1687,7 +1690,7 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	{
 		self thread maps\_sounds::raygun_stinger_sound();
 	}
-	
+
 	/*if(chosenweapon == "perks_a_cola")
 	{
 		self thread maps\_sounds::raygun_stinger_sound();
