@@ -524,13 +524,16 @@ powerup_setup() {
 
     self SetModel(struct.model_name);
 
+    playsoundatposition("spawn_powerup", self.origin);
+
     self.powerup_name = struct.powerup_name;
     self.hint = struct.hint;
-    self thread maps\_sounds::powerup_start_sound();
 
     if (isDefined(struct.fx)) {
         self.fx = struct.fx;
     }
+
+    self PlayLoopSound("spawn_powerup_loop");
 
 }
 
@@ -595,12 +598,13 @@ powerup_grab() {
                     }
                 }
 
-                wait(0.1);
+				wait( 0.1 );
 
-                self thread maps\_sounds::powerup_end_sound();
+				playsoundatposition("powerup_grabbed", self.origin);
+				self stoploopsound();
 
-                self Delete();
-                self notify("powerup_grabbed");
+				self delete();
+				self notify ("powerup_grabbed");
             }
         }
         wait 0.1;

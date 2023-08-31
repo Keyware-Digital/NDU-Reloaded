@@ -139,21 +139,6 @@ no_ammo_vox() {
 	
 }
 
-powerup_start_sound() {
-    level.powerup_sound = Spawn("script_origin", self.origin);
-	level.powerup_sound PlaySound("spawn_powerup");
-    level.powerup_sound PlayLoopSound("spawn_powerup_loop");
-
-}
-
-powerup_end_sound() {
-    level.powerup_sound StopLoopSound();
-	level.powerup_sound PlaySound("powerup_grabbed", "powerup_grabbed_sound_done");
-    level.powerup_sound waittill("powerup_grabbed_sound_done");
-	level.powerup_sound Delete();
-
-}
-
 dolphin_dive_launch_sound() {
     index = maps\_zombiemode_weapons::get_player_index(self);
 	launch = "_launch_exert_" + RandomInt(6);

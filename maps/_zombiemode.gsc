@@ -946,6 +946,11 @@ round_spawning() {
 round_completion_award_points()     
 {
     maxPoints = 50 * level.round_number;
+    
+    if(maxPoints >= 650)
+    {
+        maxPoints = 650;
+    }
 
     level.round_completion_award_points_text = [];
 
@@ -996,11 +1001,6 @@ round_completion_award_points()
 
     for (i = 0; i < 4; i++) {
         level.round_completion_award_points_text[i] destroy();
-    }
-
-    if(maxPoints >= 650)
-    {
-        maxPoints = 650;
     }
 
     players = GetPlayers();
@@ -1855,6 +1855,9 @@ update_leaderboards() {
 
 player_fake_death() {
     self TakeAllWeapons();
+    //self GiveWeapon(bo2_deathhands);
+    //self GiveMaxAmmo(bo2_deathhands);
+    //self SwitchToWeapon(bo2_deathhands);
     self AllowStand(false);
     self AllowCrouch(false);
     self.ignoreme = true;

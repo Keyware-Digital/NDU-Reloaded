@@ -9,7 +9,7 @@ init_explosive_barrels()
 	explosive_barrels_entity = GetEntArray("explodable_barrel", "targetname");
 
 	level.shot_explosive_barrels = 0;
-	level.sam_ee_vox_sound_done = 0;
+	level.barrel_ee_started = 0;
 
 	all_explosive_barrels = [];
 
@@ -35,11 +35,10 @@ explosive_barrels_think(all_explosive_barrels)
 
 		players = GetPlayers();
 
-			if (level.shot_explosive_barrels == 1 && level.sam_ee_vox_sound_done == 0)
+			if (level.shot_explosive_barrels == 1 && level.barrel_ee_started == 0)
 			{
 				for (i = 0; i < players.size; i++) {
-					players[i] thread maps\_sounds::sam_start_ee_vox_sound();	
-					level.sam_ee_vox_sound_done = 1;
+					level.barrel_ee_started = 1;
 					wait 1;
 				}
 			}
