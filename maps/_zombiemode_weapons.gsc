@@ -2217,12 +2217,12 @@ has_weapon_or_upgrade( weaponname )
 
 do_knuckle_crack()
 {
-	gun = self upgrade_knuckle_crack_begin();
+	currentGun = self upgrade_knuckle_crack_begin();
 	
 	self.is_drinking = 1;
 	self waittill_any( "fake_death", "death", "player_downed", "weapon_change_complete" );
 	
-	self upgrade_knuckle_crack_end( gun );
+	self upgrade_knuckle_crack_end(currentGun);
 	self.is_drinking = undefined;
 }
 
@@ -2237,61 +2237,26 @@ upgrade_knuckle_crack_begin()
 	self AllowProne( false );		
 	self AllowMelee( false );
 
-	// Initialize the oldPistol variable
-	oldPistol = "";
-
 	if ( self GetStance() == "prone" )
 	{
 		self SetStance( "crouch" );
 	}
 
-	primaries = self GetWeaponsListPrimaries();
+	currentGun = self GetCurrentWeapon();
 
-	gun = self GetCurrentWeapon();
-	weapon = "zombie_knuckle_crack";
-
-	if ( gun != "none" && gun != "mine_bouncing_betty" )
+	if (currentGun != "none" && currentGun != "mine_bouncing_betty")
 	{
-		// Store the player's current pistol
-		if (primaries.size > 0)
-		{
-			oldPistol = primaries[0];
-		}
-		self TakeWeapon( gun );
+		self TakeWeapon(currentGun);
 	}
 
-	if (oldPistol != "")
-	{
-		// Switch to the appropriate original pistol or default to Colt
-		switch (oldPistol)
-		{
-			case "colt":
-			case "walther":
-			case "tokarev":
-			case "sw_357":
-			case "ray_gun_mk1_v2":
-				self GiveWeapon( oldPistol );
-				break;
-			default:
-				self GiveWeapon( "colt" ); // Default to Colt if the original pistol isn't recognized
-				break;
-		}
-	}
-	else if (primaries.size <= 1)
-	{
-		self GiveWeapon( "colt" );
-	}
+	self GiveWeapon("zombie_knuckle_crack");
+	self SwitchToWeapon("zombie_knuckle_crack");
 
-	self GiveWeapon( weapon );
-	self SwitchToWeapon( weapon );
-
-	return gun;
+	return currentGun;
 }
 
-upgrade_knuckle_crack_end(gun)
+upgrade_knuckle_crack_end(currentGun)
 {
-	assert(gun != "syrette");
-
 	self EnableOffhandWeapons();
 	self EnableWeaponCycling();
 
@@ -2308,28 +2273,16 @@ upgrade_knuckle_crack_end(gun)
 		return;
 	}
 
-	primaries = self GetWeaponsListPrimaries();
-	if (isDefined(primaries) && primaries.size > 0)
-	{
-		oldPistol = primaries[0];
+	cabinetGun = self GetWeaponsListPrimaries();
+	switchToGun = undefined;
 
-		// Switch to the appropriate original pistol or default to Colt
-		switch (oldPistol)
-		{
-			case "colt":
-			case "walther":
-			case "tokarev":
-			case "sw_357":
-			case "ray_gun_mk1_v2":
-				self SwitchToWeapon(oldPistol);
-				break;
-			default:
-				self SwitchToWeapon("colt");
-				break;
-		}
+	switch(cabinetGun[0])
+	{
+		case "stg44_pap":
+		switchToGun = "stg44_pap";
+			break; 
 	}
 
-	// Switch back to the stg44_pap, dirty way of doing it. What if we wanted more pap guns?
-	// also has mulekick bug if you ditch your pistol prior to doing all of this.
-	self SwitchToWeapon("stg44_pap");
+	self SwitchToWeapon(switchToGun);
+	self GiveWeapon(currentGun);
 }
