@@ -168,7 +168,7 @@ door_think()
 				else // Not enough money
 				{
 					play_sound_at_pos( "no_purchase", self.doors[0].origin );
-					who thread maps\_zombiemode_weapons::play_weapon_wallbuy_sound("no_money");
+					who thread maps\_sounds::no_money_sound();
 					// who thread maps\_zombiemode_perks::play_no_money_perk_dialog();
 					continue;
 				}
@@ -487,7 +487,7 @@ debris_think()
 			else
 			{
 				play_sound_at_pos( "no_purchase", self.origin );
-				who thread maps\_zombiemode_weapons::play_weapon_wallbuy_sound("no_money");
+				who thread maps\_sounds::no_money_sound();
 				// who thread maps\nazi_zombie_sumpf_blockers::play_no_money_purchase_dialog();
 			}
 		}

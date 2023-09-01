@@ -5,6 +5,7 @@
 //Share points amongst players, deliberately doesn't carry over between games, BO2 style bank system requires 100 points to withdraw.
 
 init_share_points() {
+
     withdrawCost = 100;
 	level.shared_points = 0;
 
@@ -29,21 +30,24 @@ init_share_points() {
 }
 
 points_withdraw(bank_withdraw, bank_withdraw_trigger, withdrawCost) {
+
 	while(1) {
         bank_withdraw_trigger waittill("trigger", player);
 
         if(is_player_valid(player) && player IsTouching (bank_withdraw_trigger) && player UseButtonPressed() && level.shared_points > 0 && player.score >= 100) {
             player maps\_zombiemode_score::minus_to_player_score(withdrawCost);
-            player playlocalsound("cha_ching");
+            bank_withdraw maps\_sounds::cash_register_sound();
             wait 0.1;
             player maps\_zombiemode_score::add_to_player_score(1000);
            	level.shared_points -= 1000;
         }
-       	else if (level.shared_points < 1000) {
-            player playLocalSound("no_money");
+       	else if (player IsTouching (bank_withdraw_trigger) && player UseButtonPressed() && level.shared_points < 1000) {
+           	//player thread maps\_sounds::no_money_sound();
+			bank_withdraw play_sound_on_ent("no_purchase");
         }
-		else if (player.score < 100) {
-			player playLocalSound("no_money");
+		else if (player IsTouching (bank_withdraw_trigger) && player UseButtonPressed() && player.score < 100) {
+			//player thread maps\_sounds::no_money_sound();
+			bank_withdraw play_sound_on_ent("no_purchase");
 		}
 
         wait (1);
@@ -51,18 +55,20 @@ points_withdraw(bank_withdraw, bank_withdraw_trigger, withdrawCost) {
 }
 
 points_deposit(bank_deposit, bank_deposit_trigger) {
+
 	while(1) {
         bank_deposit_trigger waittill("trigger", player);
 
 	    if(is_player_valid(player) && player IsTouching (bank_deposit_trigger) && player UseButtonPressed() && player.score >= 1000) {
-            player playLocalSound("cha_ching");
+            bank_deposit maps\_sounds::cash_register_sound();
             player maps\_zombiemode_score::minus_to_player_score(1000);
             level.shared_points += 1000;
 	    }
-		else {
-			player playLocalSound("no_money");
-
+		else if (player IsTouching (bank_deposit_trigger) && player UseButtonPressed() && player.score < 1000) {
+			//player thread maps\_sounds::no_money_sound();
+			bank_deposit play_sound_on_ent("no_purchase");
 		}
+
         wait (1);
     }
 }

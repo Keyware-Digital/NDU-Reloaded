@@ -491,7 +491,7 @@ treasure_chest_think(rand)
 		{   //play the "no purchase" sound and have the player react.
 			self play_sound_on_ent("no_purchase");
 			wait 0.5;
-			user play_weapon_wallbuy_sound("no_money");
+			user play_interact_sound("no_money");
 		}
 		
 		wait 0.05;
@@ -959,7 +959,7 @@ treasure_chest_weapon_spawn( chest, player )
             }
 			else 
 			{
-				player play_weapon_wallbuy_sound("no_money");
+				player play_interact_sound("no_money");
 			}
             wait 0.05;
         }
@@ -1287,8 +1287,8 @@ weapon_cabinet_think()
 
 	if(player.score < level.zombie_weapon_cabinet_cost)
     {
-    	self play_sound_on_ent( "no_purchase" );
-		player play_weapon_wallbuy_sound("no_money");
+    	self play_sound_on_ent("no_purchase");
+		player play_interact_sound("no_money");
     	wait 0.5;
     	self thread weapon_cabinet_think();
     	return;
@@ -1758,7 +1758,7 @@ weapon_cabinet_door_close( left_or_right )
 	}	
 }
 
-play_weapon_wallbuy_sound(weapon_name)
+play_interact_sound(weapon_name)
 {
 	switch(weapon_name)
 	{
@@ -1923,13 +1923,13 @@ weapon_spawn_think()
 
 				player weapon_give( self.zombie_weapon_upgrade );		
 
-				player play_weapon_wallbuy_sound(weapon_name);
+				player play_interact_sound(weapon_name);
 			}
 			else
 			{
-				self play_sound_on_ent( "no_purchase" );
+				self play_sound_on_ent("no_purchase");
 
-				player play_weapon_wallbuy_sound("no_money");
+				player play_interact_sound("no_money");
 			}
 		}
 		else
@@ -1993,7 +1993,7 @@ weapon_spawn_think()
 			{
 				self play_sound_on_ent( "no_purchase" );
 
-				player play_weapon_wallbuy_sound("no_money");
+				player play_interact_sound("no_money");
 			}
 		}
 
