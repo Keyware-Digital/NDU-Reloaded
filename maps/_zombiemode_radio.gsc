@@ -20,7 +20,7 @@ init_radio()
 	array_thread(radios, ::zombie_radio_play );
 }
 
-zombie_radio_play() //default to restore
+zombie_radio_play()
 {
 	self transmittargetname();
 
