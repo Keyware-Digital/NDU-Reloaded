@@ -38,6 +38,7 @@ material,specialty_random_perk_zombies
 material,specialty_fire_sale_zombies
 material,logo_cod2
 material,mtl_zmb_mdl_padlock
+material,mtl_zmb_mdl_cash_register
 material,mtl_zmb_mdl_button
 material,mtl_zmb_mdl_samantha_figure_bear
 material,mtl_zmb_mdl_samantha_figure_bear_eyes
@@ -73,6 +74,7 @@ rawfile,maps/_gameskill.gsc
 rawfile,maps/_loadout.gsc
 rawfile,maps/_custom_radios.gsc
 rawfile,maps/_hide_and_seek.gsc
+rawfile,maps/_share_points.gsc
 rawfile,maps/_zombiemode.gsc
 rawfile,maps/_zombiemode_betty.gsc
 rawfile,maps/_zombiemode_bowie.gsc
@@ -304,6 +306,7 @@ xmodel,viewmodel_usa_marine_player
 xmodel,viewmodel_rus_guard_player
 xmodel,viewmodel_knife_bowie
 xmodel,zmb_mdl_padlock
+xmodel,zmb_mdl_cash_register
 xmodel,zmb_mdl_button
 xmodel,zmb_mdl_samantha_figure
 xmodel,zmb_pwr_up_bonus_points

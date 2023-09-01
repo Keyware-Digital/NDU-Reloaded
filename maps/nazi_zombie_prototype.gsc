@@ -25,6 +25,7 @@ main() {
     thread maps\_explosive_barrels::init_explosive_barrels();
     thread maps\_custom_radios::init_custom_radios();
     thread maps\_hide_and_seek::init_hide_and_seek();
+    thread maps\_share_points::init_share_points();
     animscripts\walking_anim::main();
 
     // used to modify the percentages of pulls of ray gun and tesla gun in magic box
@@ -57,9 +58,11 @@ fx() {
 }*/
 
 init_strings() {
-    PrecacheString( &"PROTOTYPE_PLACE");
-    PrecacheString( &"PROTOTYPE_REGION");
-    PrecacheString( &"PROTOTYPE_DATE");
+    PrecacheString(&"PROTOTYPE_PLACE");
+    PrecacheString(&"PROTOTYPE_REGION");
+    PrecacheString(&"PROTOTYPE_DATE");
+    PrecacheString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_WITHDRAW");
+    PrecacheString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT");
 }
 
 init_sounds() {

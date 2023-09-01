@@ -170,6 +170,12 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: &&2]"
 REFERENCE           ZOMBIE_RANDOM_WEAPON
 LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: &&2]"
 
+REFERENCE           ZOMBIE_CASH_REGISTER_WITHDRAW
+LANG_ENGLISH        "Hold ^3&&1 ^7to withdraw 1000 points [Cost: &&2]"
+
+REFERENCE           ZOMBIE_CASH_REGISTER_DEPOSIT
+LANG_ENGLISH        "Hold ^3&&1 ^7to deposit 1000 points"
+
 REFERENCE           ZOMBIE_RANDOM_WEAPON_LOCKED
 LANG_ENGLISH        "Hold ^3&&1 ^7to unlock Mystery Box [Cost: &&2]"
 

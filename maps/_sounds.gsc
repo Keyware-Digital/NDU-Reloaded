@@ -601,10 +601,7 @@ radio_ee_track_sound() {
 
     radio_ee_track_sound = Spawn("script_origin", self.origin);
     radio_ee_track_sound PlaySound(radioEeTrackSound);
-    wait 1;
-	radio_ee_track_sound StopSound(radioEeTrackSound);
-	wait 1;
+    radio_ee_track_sound PlaySound(radioEeTrackSound, "radio_ee_track_sound_done");
+    radio_ee_track_sound waittill("radio_ee_track_sound_done");
     radio_ee_track_sound Delete();
-
-    self notify("ee_track_sound_finished");
 }

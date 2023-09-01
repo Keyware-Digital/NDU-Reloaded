@@ -3,7 +3,7 @@
 #include maps\_zombiemode_utility;
 
 // TODO: Add more SFX that the EE uses, place each Samantha figure in their correct places and make the samantha figure spawn next to the m1 carbinet again being raised by a skeleton hand, interaction with it spawns a max ammo
-// TIP: Shoot the circle metal base of the Samantha figures to destroy them
+// TIP: Shoot the head of the Samantha figures to destroy them
 
 init_hide_and_seek()
 {
