@@ -489,7 +489,7 @@ treasure_chest_think(rand)
 		}
 		else 
 		{   //play the "no purchase" sound and have the player react.
-			self play_sound_on_ent( "no_purchase" );
+			self play_sound_on_ent("no_purchase");
 			wait 0.5;
 			user play_weapon_wallbuy_sound("no_money");
 		}
