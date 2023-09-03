@@ -943,14 +943,13 @@ round_spawning() {
     }
 }
 
-//bo3 style end of round points rewards
-round_completion_award_points()     
-{
+//bo3 style end of round points rewards, probably should be xp instead
+round_completion_award_points() {
     maxPoints = 50 * level.round_number;
     
-    if(maxPoints >= 650)
+    if(maxPoints >= 1000)
     {
-        maxPoints = 650;
+        maxPoints = 1000;
     }
 
     level.round_completion_award_points_text = [];
