@@ -160,7 +160,7 @@ setup_player_dolphin_dive()
 					origin = self.origin;
 					maps\_zombiemode_perks::phd_dive_damage(origin);
 					self.oldSurface = self getSurface();
-					wait 0.2;	
+					//wait 0.2;	
 			}
 
 			if( self.can_flop )
@@ -168,7 +168,7 @@ setup_player_dolphin_dive()
 				self.can_flop = false;
 			}
 			
-			wait 0.4;
+			//wait 0.4;
 			
 			self setClientDvar("hide_reload_hud", 0);
 			self setClientDvar("ammocounterhide", 0);

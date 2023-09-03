@@ -266,13 +266,11 @@ play_no_money_perk_dialog() {
 
 }
 
-phd_dive_damage(origin)
-{
+phd_dive_damage(origin) {
     self thread maps\_sounds::phd_explosion_sound();
 	playFx( level._effect["fx_zmb_phdflopper_exp"], self.origin + ( 0, 0, 50 ));
-	self VisionSetNaked("zombie_cosmodrome_divetonuke", 1);
-    wait 0.1;   //was 0.5
-    self VisionSetNaked("zombie", 1);
+	
+    self thread phd_dive_vision();
 		
 	phd_damage = level.zombie_vars[ "phd_dive_damage" ];
 	
@@ -299,10 +297,18 @@ phd_dive_damage(origin)
                 zombies[i] maps\_zombiemode_spawner::zombie_head_gib();
 			}
 		}
+
 		wait .01;
 	}
 	
 	wait 0.1;   //was 0.2
+}
+
+phd_dive_vision() {
+
+    self VisionSetNaked("zombie_cosmodrome_divetonuke", 1);
+    wait 1.5;
+    self VisionSetNaked("zombie", 1);
 
 }
 

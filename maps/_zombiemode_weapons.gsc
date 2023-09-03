@@ -1431,7 +1431,7 @@ weapon_cabinet_think()
 	
 	if(!isDefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
-		if(luckyNumCabinet <= 90)	//10 out of 100 chance to get a perk (make 100 to test perks)
+		if(luckyNumCabinet <= 10)	//10 out of 100 chance to get a perk (make 100 to test perks)
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
@@ -1456,7 +1456,7 @@ weapon_cabinet_think()
 
     if(!(player hasWeapon("stg44_pap")))	//check if player has the stg
     {
-		if(luckyNumCabinet <= 7.5)	//7.5 out of 100 chance to get a pap'd stg
+		if(luckyNumCabinet <= 10)	//7.5 out of 100 chance to get a pap'd stg
 		{
         	weaponmodelstruct Hide();
 			weaponmodelstruct.angles = self.angles + ( -90,90,0 );	//so it gets displayed like the other cabinet weapons.
@@ -2315,11 +2315,8 @@ upgrade_knuckle_crack_end(currentGun)
 	cabinetGun = self GetWeaponsListPrimaries();
 	switchToGun = undefined;
 
-	switch(cabinetGun[0])
-	{
-		case "stg44_pap":
+	if(cabinetGun[0] == "stg44_pap" || cabinetGun[1] == "stg44_pap" || cabinetGun[2] == "stg44_pap") {
 		switchToGun = "stg44_pap";
-			break; 
 	}
 
 	self SwitchToWeapon(switchToGun);

@@ -973,55 +973,55 @@ revive_completion_award_points() {
 	
     points = 250;
     
-    level.level.revive_completion_award_points_text = [];
+    level.revive_completion_award_points_text = [];
 
     for (i = 0; i < 4; i++) {
-        level.level.revive_completion_award_points_text[i] = newHudElem();
-        level.level.revive_completion_award_points_text[i].x = 0;
-        level.level.revive_completion_award_points_text[i].y = 0;
-        level.level.revive_completion_award_points_text[i].alignX = "center";
-        level.level.revive_completion_award_points_text[i].alignY = "middle";
-        level.level.revive_completion_award_points_text[i].horzAlign = "center";
-        level.level.revive_completion_award_points_text[i].vertAlign = "middle";
-        level.level.revive_completion_award_points_text[i].foreground = true;
-        level.level.revive_completion_award_points_text[i].alpha = 1;
+        level.revive_completion_award_points_text[i] = newHudElem();
+        level.revive_completion_award_points_text[i].x = 0;
+        level.revive_completion_award_points_text[i].y = 0;
+        level.revive_completion_award_points_text[i].alignX = "center";
+        level.revive_completion_award_points_text[i].alignY = "middle";
+        level.revive_completion_award_points_text[i].horzAlign = "center";
+        level.revive_completion_award_points_text[i].vertAlign = "middle";
+        level.revive_completion_award_points_text[i].foreground = true;
+        level.revive_completion_award_points_text[i].alpha = 1;
     }
 
-    level.level.revive_completion_award_points_text[0].y = 0;
-    level.level.revive_completion_award_points_text[1].y = 15;
-    level.level.revive_completion_award_points_text[0].x = -15;
-    level.level.revive_completion_award_points_text[1].x = 0;
+    level.revive_completion_award_points_text[0].y = 0;
+    level.revive_completion_award_points_text[1].y = 15;
+    level.revive_completion_award_points_text[0].x = -15;
+    level.revive_completion_award_points_text[1].x = 0;
 
     for (i = 0; i < 4; i++) {
-    level.level.revive_completion_award_points_text[i].fontScale = 1.75;
+    level.revive_completion_award_points_text[i].fontScale = 1.75;
     }
 
     wait(0.05);
 
     for (i = 0; i < 4; i++) {
-    level.level.revive_completion_award_points_text[i].fontScale = 3.5;
+    level.revive_completion_award_points_text[i].fontScale = 3.5;
     }
 
-    level.level.revive_completion_award_points_text[0] setText("+" + points);
+    level.revive_completion_award_points_text[0] setText("+" + points);
     
     wait(0.05);
 
     for (i = 0; i < 4; i++) {
-    level.level.revive_completion_award_points_text[i].fontScale = 1.75;
+    level.revive_completion_award_points_text[i].fontScale = 1.75;
     }
 
-    level.level.revive_completion_award_points_text[1] setText("Survived"); // Add to localised strings like the rest
+    level.revive_completion_award_points_text[1] setText("Survived"); // Add to localised strings like the rest
 
     for (i = 0; i < 4; i++) {
-        level.level.revive_completion_award_points_text[i] fadeOverTime(1);
-        level.level.revive_completion_award_points_text[i].alpha = 0;
+        level.revive_completion_award_points_text[i] fadeOverTime(1);
+        level.revive_completion_award_points_text[i].alpha = 0;
         wait(0.75);
     }
 
     wait(0.25);
 
     for (i = 0; i < 4; i++) {
-        level.level.revive_completion_award_points_text[i] destroy();
+        level.revive_completion_award_points_text[i] destroy();
     }
 
     players = GetPlayers();
