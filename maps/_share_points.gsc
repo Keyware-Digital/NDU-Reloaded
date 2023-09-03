@@ -2,27 +2,28 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 
-//Share points amongst players, deliberately doesn't carry over between games, BO2 style bank system requires 100 points to withdraw.
+//Share points amongst players, deliberately doesn't carry over between games, BO2 style bank system requires 100 points to withdraw
 
 init_share_points() {
 
     withdrawCost = 100;
 	level.shared_points = 0;
 
-    bank_deposit = spawn("script_model", (100, 188, 50));
-	bank_deposit_trigger = spawn("trigger_radius", (bank_deposit.origin - (0, 0, 100)), 0, 64, 64);	//lower trigger box so you can actviate without opening stairs.
-	bank_deposit.angles = (0, -90, 0);
+    bank_deposit = spawn("script_model", (264, 671.5, 25));	//was (100, 188, 50));
+	bank_deposit_trigger = spawn("trigger_radius", (bank_deposit.origin), 0, 32, 32);
+	bank_deposit.angles = (0, -160, 0);		//weird angle to fit box better
 	bank_deposit setModel("zmb_mdl_cash_register");
 	bank_deposit solid();
-    bank_deposit_trigger setHintString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT"); 
+	//we want to hide these hintstrings to make it harder to find and look more like it was always in the map
+    //bank_deposit_trigger setHintString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT"); 
 	bank_deposit_trigger setCursorHint("HINT_NOICON");
 
-    bank_withdraw = spawn("script_model", (-15, 188, 50));
-	bank_withdraw_trigger = spawn("trigger_radius", (bank_withdraw.origin - (0, 0, 100)), 0, 64, 64);
-	bank_withdraw.angles = (0, -90, 0);
+    bank_withdraw = spawn("script_model", (-36, 1015, 50)); 	//was (-15, 188, 50));
+	bank_withdraw_trigger = spawn("trigger_radius", (bank_withdraw.origin), 0, 32, 32);	
+	bank_withdraw.angles = (0, -260, 0);
 	bank_withdraw setModel("zmb_mdl_cash_register");
 	bank_withdraw solid();
-    bank_withdraw_trigger setHintString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_WITHDRAW", "&&1", withdrawCost);
+    //bank_withdraw_trigger setHintString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_WITHDRAW", "&&1", withdrawCost);
 	bank_withdraw_trigger setCursorHint("HINT_NOICON");
 
 	thread points_deposit(bank_deposit, bank_deposit_trigger);
@@ -45,7 +46,7 @@ points_deposit(bank_deposit, bank_deposit_trigger) {
 			bank_deposit play_sound_on_ent("no_purchase");
 		}
 
-        wait (0.05);
+        wait (0.025);
     }
 }
 
@@ -70,6 +71,6 @@ points_withdraw(bank_withdraw, bank_withdraw_trigger, withdrawCost) {
 			bank_withdraw play_sound_on_ent("no_purchase");
 		}
 
-        wait (0.05);
+        wait (0.025);
 	}
 }

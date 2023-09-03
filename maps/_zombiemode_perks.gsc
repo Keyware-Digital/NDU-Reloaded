@@ -271,7 +271,7 @@ phd_dive_damage(origin)
     self thread maps\_sounds::phd_explosion_sound();
 	playFx( level._effect["fx_zmb_phdflopper_exp"], self.origin + ( 0, 0, 50 ));
 	self VisionSetNaked("zombie_cosmodrome_divetonuke", 1);
-    wait 0.5;
+    wait 0.1;   //was 0.5
     self VisionSetNaked("zombie", 1);
 		
 	phd_damage = level.zombie_vars[ "phd_dive_damage" ];
@@ -302,7 +302,7 @@ phd_dive_damage(origin)
 		wait .01;
 	}
 	
-	wait 0.2;
+	wait 0.1;   //was 0.2
 
 }
 

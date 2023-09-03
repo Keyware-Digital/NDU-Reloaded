@@ -2,7 +2,7 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 
-// TODO: Add more SFX that the EE uses, place each Samantha figure in their correct places and make the samantha figure spawn next to the m1 carbinet again being raised by a skeleton hand, interaction with it spawns a max ammo
+// TODO: Add more SFX that the EE uses, make the samantha figure spawn next to the m1 carbinet again being raised by a skeleton hand, interaction with it spawns a max ammo
 // TIP: Shoot the head of the Samantha figures to destroy them
 
 init_hide_and_seek()
@@ -37,13 +37,15 @@ init_hide_and_seek()
 	cabinet_room_button setModel("zmb_mdl_button");
 	cabinet_room_button solid();
 
-	thread handle_first_room_stairs_button(first_room_stairs_button, button_trigger_one);
+	//thread handle_first_room_stairs_button(first_room_stairs_button, button_trigger_one);
 
-	thread handle_first_room_power_section_button(first_room_power_section_button, button_trigger_two);
+	//thread handle_first_room_power_section_button(first_room_power_section_button, button_trigger_two);
 
-	thread handle_help_room_button(help_room_button, button_trigger_three);
+	//thread handle_help_room_button(help_room_button, button_trigger_three);
 	
-	thread handle_cabinet_room_button(cabinet_room_button, button_trigger_four);
+	//thread handle_cabinet_room_button(cabinet_room_button, button_trigger_four);
+
+	handle_samantha_figures();	//spawn figures instantly
 
 	players = GetPlayers();
 
@@ -233,8 +235,7 @@ handle_samantha_figures()
 {
 	level.samantha_figure_timed_out = 0;
 	level.hide_and_seek_done = 0;
-	//Please move the figures to their proper locations
-	samantha_figure_one = spawn("script_model", (-15, 30, 15));		//position needs setting
+	samantha_figure_one = spawn("script_model", (145, -528, 145));		//ceiling, above initial figure
 	samantha_figure_one.angles = (0, 45, 0);
 	samantha_figure_one setModel("zmb_mdl_samantha_figure");
 	samantha_figure_one playLoopSound("musicbox_loop");
@@ -251,7 +252,7 @@ handle_samantha_figures()
 	samantha_figure_one stopLoopSound(0.1);
 	samantha_figure_one delete();
 
-	samantha_figure_two = spawn("script_model", (-15, 60, 15));		//position needs setting
+	samantha_figure_two = spawn("script_model", (308.5, -1417.5, 46.5));		//fence post
 	samantha_figure_two.angles = (0, 45, 0);
 	samantha_figure_two setModel("zmb_mdl_samantha_figure");
 	samantha_figure_two playLoopSound("musicbox_loop");
@@ -268,7 +269,7 @@ handle_samantha_figures()
 	samantha_figure_two StopLoopSound(0.1);
 	samantha_figure_two delete();
 
-	samantha_figure_three = spawn("script_model", (-15, 90, 15));		//position needs setting
+	samantha_figure_three = spawn("script_model", (-385.5, -702, 31.5));		//truck
 	samantha_figure_three.angles = (0, 45, 0);
 	samantha_figure_three setModel("zmb_mdl_samantha_figure");
 	samantha_figure_three playLoopSound("musicbox_loop");
@@ -285,7 +286,7 @@ handle_samantha_figures()
 	samantha_figure_three StopLoopSound(0.1);
 	samantha_figure_three delete();
 
-	samantha_figure_four = spawn("script_model", (-15, 120, 15));		//position needs setting
+	samantha_figure_four = spawn("script_model", (750, -333, -15));		//mud
 	samantha_figure_four.angles = (0, 45, 0);
 	samantha_figure_four setModel("zmb_mdl_samantha_figure");
 	samantha_figure_four playLoopSound("musicbox_loop");
@@ -302,7 +303,7 @@ handle_samantha_figures()
 	samantha_figure_four StopLoopSound(0.1);
 	samantha_figure_four delete();
 
-	samantha_figure_five = spawn("script_model", (-15, 160, 15));		//position needs setting
+	samantha_figure_five = spawn("script_model", (-405, 570, 71.7));		//2nd truck
 	samantha_figure_five.angles = (0, 45, 0);
 	samantha_figure_five setModel("zmb_mdl_samantha_figure");
 	samantha_figure_five playLoopSound("musicbox_loop");
@@ -319,7 +320,7 @@ handle_samantha_figures()
 	samantha_figure_five StopLoopSound(0.1);
 	samantha_figure_five delete();
 
-	samantha_figure_six = spawn("script_model", (-15, 200, 15));		//position needs setting
+	samantha_figure_six = spawn("script_model", (-106, 646, 281));		//ceiling, near BAR
 	samantha_figure_six.angles = (0, 45, 0);
 	samantha_figure_six setModel("zmb_mdl_samantha_figure");
 	samantha_figure_six playLoopSound("musicbox_loop");
@@ -336,7 +337,7 @@ handle_samantha_figures()
 	samantha_figure_six StopLoopSound(0.1);
 	samantha_figure_six delete();
 
-	samantha_figure_seven = spawn("script_model", (-15, 240, 15));		//position needs setting
+	samantha_figure_seven = spawn("script_model", (445, 306, 145));		//catwalk
 	samantha_figure_seven.angles = (0, 45, 0);
 	samantha_figure_seven setModel("zmb_mdl_samantha_figure");
 	samantha_figure_seven playLoopSound("musicbox_loop");
@@ -353,7 +354,7 @@ handle_samantha_figures()
 	samantha_figure_seven StopLoopSound(0.1);
 	samantha_figure_seven delete();
 
-	samantha_figure_eight = spawn("script_model", (-15, 280, 15));		//position needs setting
+	samantha_figure_eight = spawn("script_model", (1228, 594.5, 260.75));		//lamp post 
 	samantha_figure_eight.angles = (0, 45, 0);
 	samantha_figure_eight setModel("zmb_mdl_samantha_figure");
 	samantha_figure_eight playLoopSound("musicbox_loop");

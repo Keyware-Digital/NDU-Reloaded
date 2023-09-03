@@ -209,7 +209,6 @@ init_weapons()
 	add_zombie_weapon( "springfield_scoped_zombie", "", 0 );
 	add_zombie_weapon( "stg44_pap", "", 0, 6 ); 
 	add_zombie_weapon( "sten_mk5", "", 0 );
-	add_zombie_weapon( "type99_lmg", "", 0 );
 	//add_zombie_weapon( "zombie_cymbal_monkey", &"ZOMBIE_WEAPON_SATCHEL_2000", 2000, 3 );
 	add_zombie_weapon( "zombie_bowie_flourish",	"", 0 );
 	add_zombie_weapon( "zombie_type100_smg", "", 0 );
@@ -222,6 +221,8 @@ init_weapons()
 	//add_zombie_weapon( "springfield_scoped_zombie_upgraded", "", 0 );
 	//add_zombie_weapon( "tesla_gun", "", 0 );
 	//add_zombie_weapon( "walther_prototype", "", 0 );
+	// JP weapons, to be removed because don't really fit in Nacht's europe setting
+	add_zombie_weapon( "type99_lmg", "", 0 );
 	
 	// Pistols
 	add_zombie_weapon( "colt", "", 0 );
@@ -233,9 +234,9 @@ init_weapons()
                                                         		
 	// Bolt Action                                      		
 	add_zombie_weapon( "kar98k", "", 200 );
-	add_zombie_weapon( "kar98k_bayonet", "", 0 );
+	add_zombie_weapon( "kar98k_bayonet", "", 0 );	//to remove
 	add_zombie_weapon( "mosin_rifle", "", 0 );
-	add_zombie_weapon( "mosin_rifle_bayonet", "", 0 );
+	add_zombie_weapon( "mosin_rifle_bayonet", "", 0 );	//to remove
 	add_zombie_weapon( "springfield", "", 0 );
 	add_zombie_weapon( "springfield_bayonet", "", 0 );
 	add_zombie_weapon( "type99_rifle", "", 0 );
@@ -1033,11 +1034,19 @@ treasure_chest_give_weapon( weapon_string )
 	primaryWeapons = self GetWeaponsListPrimaries(); 
 	current_weapon = undefined; 
 
+	if( !self HasPerk("specialty_extraammo")) {
+		self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
+		self.muleLastWeapon = undefined;
+	}
+	else {
+		self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
+	}
+
 	// This should never be true for the first time.
-	if( primaryWeapons.size >= 2 ) // he has two weapons
+	if( primaryWeapons.size >= self.MuleCount ) // he has two weapons
 	{
 		current_weapon = self getCurrentWeapon(); // get his current weapon
-		
+
 		if ( current_weapon == "mine_bouncing_betty" )
 		{
 			current_weapon = undefined;
@@ -1053,6 +1062,11 @@ treasure_chest_give_weapon( weapon_string )
 			if( !( weapon_string == "fraggrenade" || weapon_string == "stielhandgranate" || weapon_string == "molotov" ) )
 			self TakeWeapon( current_weapon ); 
 		} 
+	}
+
+	else if ( !isDefined(self.muleLastWeapon) )
+	{
+		current_weapon = self getCurrentWeapon();
 	}
 
 	if(( weapon_string ==  "ray_gun_mk1_v2" ))
@@ -1201,6 +1215,10 @@ treasure_chest_give_weapon( weapon_string )
 	self GiveWeapon( weapon_string, 0 );
 	self GiveMaxAmmo( weapon_string );
 	self SwitchToWeapon( weapon_string );
+
+	// mule kick check
+	//IPrintLn( "Does this playa have mulekick?" );
+    self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon_string);
 }
 
 // NDU: Reloaded's Mystery Box 2.0
@@ -1413,7 +1431,7 @@ weapon_cabinet_think()
 	
 	if(!isDefined(player.perknum) || player.perknum < 11)	//check if player has max perks
 	{
-		if(luckyNumCabinet <= 10)	//10 out of 100 chance to get a perk (make 100 to test perks)
+		if(luckyNumCabinet <= 90)	//10 out of 100 chance to get a perk (make 100 to test perks)
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
@@ -1438,7 +1456,7 @@ weapon_cabinet_think()
 
     if(!(player hasWeapon("stg44_pap")))	//check if player has the stg
     {
-		if(luckyNumCabinet <= 90)	//10 out of 100 chance to get a pap'd stg
+		if(luckyNumCabinet <= 7.5)	//7.5 out of 100 chance to get a pap'd stg
 		{
         	weaponmodelstruct Hide();
 			weaponmodelstruct.angles = self.angles + ( -90,90,0 );	//so it gets displayed like the other cabinet weapons.
@@ -1481,10 +1499,20 @@ weapon_cabinet_think()
 		level.fake_cabinet_entity Delete();
 	}
 
-	// Play the knucklecrack animation onl if the stg44_pap is picked up
+	// perks_a_cola vox has to be here otherwise it doesn't play
+	if(chosenweapon == "perks_a_cola")
+	{	
+		//Iprintln("Playing announcer vox");
+		//self thread maps\_sounds::raygun_stinger();
+		wait 3.0;	//wait 3 secs for drink anim to play
+		//IPrintLn("Playing test vox for [erks_a_cola");
+		player thread maps\_sounds::killstreak_sound();		
+	}
+
+	// Play the knucklecrack animation only if the stg44_pap is picked up
 	if(chosenweapon == "stg44_pap")
 	{
-		IPrintLn("FAUX PAP ANIM A-GO!");
+		//IPrintLn("FAUX PAP ANIM A-GO!");
 		player thread do_knuckle_crack();
 	}
 	
@@ -1573,6 +1601,10 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	level.attacker = undefined;
 	//player_name = "player";  // Enable for solo testing only
 	check_for_cabinet_damage = true;
+
+	// Define current_weapon and weapon_string variables for mule kick
+    /*current_weapon = undefined;
+    weapon_string = chosenweapon;*/
 
 	while(1)
 	{
@@ -1684,9 +1716,6 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		case "mosin_rifle_bayonet":
 				player thread maps\_sounds::crappy_weapon_sound();
 			break;
-		/*case "perks_a_cola":
-				player thread maps\_sounds::killstreak_sound();
-			break;*/
 	}
 
 	if(chosenweapon == "stg44_pap")
@@ -1694,12 +1723,17 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		self thread maps\_sounds::raygun_stinger_sound();
 	}
 
-	/*if(chosenweapon == "perks_a_cola")
-	{
-		self thread maps\_sounds::raygun_stinger_sound();
+	// Test fix for mule kick, had no luck with this yet it worked on the mystery box. 
+	/*if (!isDefined(self) || !self HasPerk("specialty_extraammo")) {
+    self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
+    self.muleLastWeapon = undefined;
+	}
+	else {
+		self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
 	}*/
 
 	plyweapons = player GetWeaponsListPrimaries();
+	//if( plyweapons.size >= self.MuleCount ) // he has two weapons
 	if(plyweapons.size >= 2)
 	{
 		if(player GetCurrentWeapon() == "mine_bouncing_betty")
@@ -1711,10 +1745,15 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 			player TakeWeapon(player GetCurrentWeapon());
 		}
 	}
+	/*else if ( !isDefined(self.muleLastWeapon) )
+	{
+		current_weapon = self getCurrentWeapon();
+	}*/
 
 	self play_sound_on_ent("purchase");
 	player GiveWeapon(chosenweapon);
 	player SwitchToWeapon(chosenweapon);
+	//self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon_string);
 }
 
 fake_cabinet_entity_damage_recieved()
@@ -2184,7 +2223,7 @@ get_player_index(player)
 	return level.random_character_index[player.entity_num];
 }
 
-//test
+//we added the below function for reasons I forget
 has_weapon_or_upgrade( weaponname )
 {
 	has_weapon = false;

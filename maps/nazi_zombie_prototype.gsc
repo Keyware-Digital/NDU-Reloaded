@@ -133,15 +133,13 @@ include_weapons() {
     include_weapon("mosin_rifle");
     include_weapon("ppsh41");
     include_weapon("svt40");
-    include_weapon("type99_lmg");           //remove japenese theatre weapons at some point and replace with something else.
     include_weapon("zombie_bowie_flourish", /*true,*/::prototype_bowie_weighting_func);
     //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func);
-    include_weapon("zombie_type100_smg");   //remove japenese theatre weapons at some point and replace with something else.
-
+    
     // Weapon cabinet only additions	
-    include_weapon("kar98k_bayonet");	
+    include_weapon("kar98k_bayonet");	//to remove
     include_Weapon("m1921_thompson");
-    include_weapon("mosin_rifle_bayonet");
+    include_weapon("mosin_rifle_bayonet");  //to remove
     include_weapon("mosin_rifle_scoped_zombie");
     include_weapon("mp40_bigammo_mp");
     include_weapon("perks_a_cola");
@@ -158,6 +156,9 @@ include_weapons() {
     //include_weapon("springfield_scoped_zombie_upgraded");
     //include_weapon("walther_prototype" );
     //include_weapon("tesla_gun", /*true,*/ );
+    // JP weapons, to be removed because don't really fit in Nacht's europe setting
+    include_weapon("type99_lmg"); 
+    include_weapon("zombie_type100_smg");
 
     // Pistols
     include_weapon("colt");     //for Americans
