@@ -176,7 +176,7 @@ handle_samantha_figures()
         {
             samantha_figure = samantha_figures[i];
 
-			thread samantha_figure_damage(samantha_figure);
+			thread samantha_figure_damage(samantha_figure, samantha_figures);
         }
 
         /*if (level.samantha_figure_shot == 1)
@@ -188,20 +188,35 @@ handle_samantha_figures()
     }
 }
 
-//Causes script error, can be fixed
-samantha_figure_damage(samantha_figure)
+// This function needs fixing
+samantha_figure_damage(samantha_figure, samantha_figures)
 {
-		samantha_figure waittill("damage", damage, attacker, direction_vec, point, type);
-		level.samantha_figure_shot = 1;
-		playFX(level._effect["raygun_impact"], samantha_figure.origin);
-		samantha_figure StopLoopSound(0.1);
+    samantha_figure waittill("damage", damage, attacker, direction_vec, point, type);
+    level.samantha_figure_shot = 1;
+    playFX(level._effect["raygun_impact"], samantha_figure.origin);
+    samantha_figure StopLoopSound(0.1);
 
+    // Find the index of the damaged Samantha figure in the array
+    for (i = 0; i < samantha_figures.size; i++)
+    {
+        if (samantha_figures[i] == samantha_figure)
+        {
+            // Delete the specific Samantha figure
+			while(isDefined(samantha_figure))
+			{
+				samantha_figure delete();
+			}
 
-		samantha_figure delete();
+            // Remove the figure from the array using
+            samantha_figures = array_remove(samantha_figures, samantha_figure);
 
-	// Check if the 8th Samantha figure is deleted, then set hide_and_seek_done to 1
-		if (samantha_figure == samantha_figure[7])
-			level.hide_and_seek_done = 1;
+            // Check if the 8th Samantha figure is deleted, then set hide_and_seek_done to 1
+            if (i == 7)
+                level.hide_and_seek_done = 1;
+
+            break; // Exit the loop since we found the figure
+        }
+    }
 }
 
 rotate_samantha_figure(samantha_figure)
