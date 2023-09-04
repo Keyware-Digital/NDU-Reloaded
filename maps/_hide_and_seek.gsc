@@ -176,18 +176,7 @@ handle_samantha_figures()
         {
             samantha_figure = samantha_figures[i];
 
-            if (!isDefined(samantha_figure))
-                continue;
-
-            samantha_figure waittill("damage", damage, attacker, direction_vec, point, type);
-            level.samantha_figure_shot = 1;
-            playFX(level._effect["raygun_impact"], samantha_figure.origin);
-            samantha_figure StopLoopSound(0.1);
-            samantha_figure delete();
-
-            // Check if the 8th Samantha figure is deleted, then set hide_and_seek_done to 1
-            if (i == 7)
-                level.hide_and_seek_done = 1;
+			thread samantha_figure_damage(samantha_figure);
         }
 
         /*if (level.samantha_figure_shot == 1)
@@ -197,6 +186,22 @@ handle_samantha_figures()
 
         wait 0.05;
     }
+}
+
+//Causes script error, can be fixed
+samantha_figure_damage(samantha_figure)
+{
+		samantha_figure waittill("damage", damage, attacker, direction_vec, point, type);
+		level.samantha_figure_shot = 1;
+		playFX(level._effect["raygun_impact"], samantha_figure.origin);
+		samantha_figure StopLoopSound(0.1);
+
+
+		samantha_figure delete();
+
+	// Check if the 8th Samantha figure is deleted, then set hide_and_seek_done to 1
+		if (samantha_figure == samantha_figure[7])
+			level.hide_and_seek_done = 1;
 }
 
 rotate_samantha_figure(samantha_figure)
