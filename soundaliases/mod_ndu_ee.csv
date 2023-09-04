@@ -7,7 +7,7 @@ ee_track,mus\zombie\ee\ee_track.wav,,,1,1,50,800,,,,,music,,,0.8,1800,,curve0,1,
 monty_dialogue,voiceovers\zombie\radio\monty_dialogue.wav,,,1,1,200,800,,,,,voice,,curve3,,,,curve3,1,1,,3d,,,,,,,,,,,,,,50,300,0.9,0,,,,,,30,60,0.25,1,0.8,,
 # Easter Egg SFX,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 radio_static,SFX\Levels\zombie\maps\giant\radio_egg_loop.wav,,,0.35,0.35,50,150,,,,,full_vol,,curve3,,,,curve3,1,1,,3d,,,looping,,,,,,,,,,,,,,0.2,,,,,,5,10,0.1,1,0.8,,
-musicbox_loop,SFX\Levels\zombie\hide_and_seek\musicbox_loop.wav,,,0.35,0.35,50,600,,,,,full_vol,,curve3,,,,curve3,1,1,,3d,,,looping,,,,,,,,,,,,,,0.2,,,,,,5,10,0.1,1,0.8,,
+musicbox_loop,SFX\Levels\zombie\hide_and_seek\musicbox_loop.wav,,,0.35,0.35,50,1500,,,,,full_vol,,curve3,,,,curve3,1,1,,3d,,,looping,,,,,,,,,,,,,,0.2,,,,,,5,10,0.1,1,0.8,,
 button_press,SFX\Levels\zombie\hide_and_seek\button_press.wav,,,0.45,0.45,50,150,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,3d,,,,,,,,,,,,,,,,,0.3,,,,,,5,10,0.1,1,,,1
 samantha_start,SFX\Levels\zombie\hide_and_seek\samantha_start.wav,,,1,1,50,2500,1,reject,1,reject,voice,,curve2,,,,,1,1,,2d,,,,master,,,,,,1000,wpn_all,,,,,,,,,,,,100,100,0.25,1,,,
 samantha_fail,SFX\Levels\zombie\hide_and_seek\samantha_fail.wav,,,1,1,50,2500,1,reject,1,reject,voice,,curve2,,,,,1,1,,2d,,,,master,,,,,,1000,wpn_all,,,,,,,,,,,,100,100,0.25,1,,,

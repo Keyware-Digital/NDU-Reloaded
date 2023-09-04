@@ -1819,7 +1819,7 @@ weapon_spawn_think()
 
 		self waittill( "trigger", player );
 
-		//Intended outcome is for these hintstrings to be set before the user presses the use key but the code below executes after the player triggers the waittill
+		// Update the wallbuy hintstring if the player has interacted with the wallbuy and the player has enough points
 		if( player.score >= weapon_cost )
 		{
 			wall_buy_weapon_names(weapon_name);

@@ -7,10 +7,7 @@
 
 init_hide_and_seek()
 {
-	level.first_room_stairs_button_interacted = 0; 
-	level.first_room_power_section_button_interacted = 0;
-	level.help_room_button_interacted = 0;
-	level.cabinet_room_button_interacted = 0;
+	level.buttons_interacted = 0;
 	button_step_done = 0;
 
     first_room_stairs_button = spawn("script_model", (200, 0, 266));
@@ -37,13 +34,13 @@ init_hide_and_seek()
 	cabinet_room_button setModel("zmb_mdl_button");
 	cabinet_room_button solid();
 
-	thread handle_first_room_stairs_button(first_room_stairs_button, button_trigger_one);
+	thread handle_button(first_room_stairs_button, button_trigger_one);
 
-	thread handle_first_room_power_section_button(first_room_power_section_button, button_trigger_two);
+	thread handle_button(first_room_power_section_button, button_trigger_two);
 
-	thread handle_help_room_button(help_room_button, button_trigger_three);
+	thread handle_button(help_room_button, button_trigger_three);
 	
-	thread handle_cabinet_room_button(cabinet_room_button, button_trigger_four);
+	thread handle_button(cabinet_room_button, button_trigger_four);
 
 	//comment out the below and the above 4x theads to spawn figures instantly for debugging
 	//handle_samantha_figures();
@@ -52,7 +49,7 @@ init_hide_and_seek()
 
 	while (1) // Infinite loop to keep the script running
 	{
-		if (button_step_done == 0 && level.first_room_stairs_button_interacted == 1 && level.first_room_power_section_button_interacted == 1 && level.help_room_button_interacted == 1 && level.cabinet_room_button_interacted == 1)
+		if (button_step_done == 0 && level.buttons_interacted == 4)
 		{
 			for (i = 0; i < players.size; i++)
 			{
@@ -68,8 +65,7 @@ init_hide_and_seek()
 	}
 }
 
-/*
-handle_button(button, button_trigger, button_interacted)
+handle_button(button, button_trigger)
 {
 	while(1)
 	{
@@ -83,115 +79,9 @@ handle_button(button, button_trigger, button_interacted)
 				{		
 					button thread maps\_sounds::button_press_sound();
 
-					button_interacted = 1;
+					level.buttons_interacted++;
 
 					button_trigger delete();
-
-					break;
-				}
-			}
-		}
-		wait 0.05;
-	}
-}
-*/
-
-//These four functions below should be one function being fed vars like rotate_samantha_figure() but I don't know if passing an updated var value up after it's been passed down is possible in GSC
-handle_first_room_stairs_button(first_room_stairs_button, button_trigger_one)
-{
-	while(1)
-	{
-		players = GetPlayers();
-
-		if(IsDefined(button_trigger_one))
-		{
-			for (i = 0; i < players.size; i++)
-			{																			   		   
-				if(players[i] IsTouching (button_trigger_one) && players[i] UseButtonPressed())
-				{		
-					first_room_stairs_button maps\_sounds::button_press_sound();
-
-					level.first_room_stairs_button_interacted = 1;
-
-					button_trigger_one delete();
-
-					break;
-				}
-			}
-		}
-		wait 0.05;
-	}
-}
-
-handle_first_room_power_section_button(first_room_power_section_button, button_trigger_two)
-{
-	while(1)
-	{
-		players = GetPlayers();
-
-		if(IsDefined(button_trigger_two))
-		{
-			for (i = 0; i < players.size; i++)
-			{																			   		   
-				if(players[i] IsTouching (button_trigger_two) && players[i] UseButtonPressed())
-				{		
-					first_room_power_section_button maps\_sounds::button_press_sound();
-
-					level.first_room_power_section_button_interacted = 1;
-
-					button_trigger_two delete();
-
-					break;
-				}
-			}
-		}
-		wait 0.05;
-	}
-}
-
-handle_help_room_button(help_room_button, button_trigger_three)
-{
-	while(1)
-	{
-		players = GetPlayers();
-
-		if(IsDefined(button_trigger_three))
-		{
-			for (i = 0; i < players.size; i++)
-			{																			   		   
-				if(players[i] IsTouching (button_trigger_three) && players[i] UseButtonPressed())
-				{		
-					help_room_button maps\_sounds::button_press_sound();
-					
-					level.help_room_button_interacted = 1;
-
-					button_trigger_three delete();
-
-					break;
-				}
-			}
-		}
-		wait 0.05;
-	}
-}
-
-handle_cabinet_room_button(cabinet_room_button, button_trigger_four)
-{
-	while(1)
-	{
-		players = GetPlayers();
-
-		if(IsDefined(button_trigger_four))
-		{
-			for (i = 0; i < players.size; i++)
-			{																			   		   
-				if(players[i] IsTouching (button_trigger_four) && players[i] UseButtonPressed())
-				{		
-					cabinet_room_button maps\_sounds::button_press_sound();
-
-					level.cabinet_room_button_interacted = 1;
-
-					button_trigger_four delete();
 
 					break;
 				}
@@ -232,169 +122,81 @@ handle_initial_samantha_figure()
 	}
 }
 
+spawn_samantha_figures(position, angles) {
+    samantha_figure = spawn("script_model", position);
+    samantha_figure.angles = angles;
+    samantha_figure setModel("zmb_mdl_samantha_figure");
+    samantha_figure playLoopSound("musicbox_loop");
+    samantha_figure solid();
+    samantha_figure setCanDamage(true);
+
+    thread rotate_samantha_figure(samantha_figure);
+    thread init_samantha_figure_timeout();
+    thread handle_samantha_figure_timeout(samantha_figure);
+
+    return samantha_figure; // Return the spawned figure
+}
+
 handle_samantha_figures()
 {
-	level.samantha_figure_timed_out = 0;
-	level.hide_and_seek_done = 0;
-	samantha_figure_one = spawn("script_model", (145, -528, 158));		//ceiling, above initial figure		//was 145, -528, 145
-	samantha_figure_one setModel("zmb_mdl_samantha_figure");
-	samantha_figure_one playLoopSound("musicbox_loop");
-	samantha_figure_one solid();
-	samantha_figure_one setCanDamage(true);
+    level.samantha_figure_timed_out = 0;
+    level.hide_and_seek_done = 0;
 
-	thread rotate_samantha_figure(samantha_figure_one);
-	thread init_samantha_figure_timeout();
-	thread handle_samantha_figure_timeout(samantha_figure_one);
+    samantha_figure_positions = [];
+    samantha_figure_positions[0] = (145, -528, 158);
+    samantha_figure_positions[1] = (308.5, -1417.5, 59.5);
+    samantha_figure_positions[2] = (-385.5, -702, 44);
+    samantha_figure_positions[3] = (750, -333, 0);
+    samantha_figure_positions[4] = (-405, 570, 84.5);
+    samantha_figure_positions[5] = (-106, 646, 294);
+    samantha_figure_positions[6] = (445, 306, 158);
+    samantha_figure_positions[7] = (1228, 594.5, 273.75);
 
-	samantha_figure_one waittill ("damage", damage, attacker, direction_vec, point, type);
-	level.samantha_figure_shot = 1;
-	playFX(level._effect["raygun_impact"], samantha_figure_one.origin);
-	samantha_figure_one stopLoopSound(0.1);
-	samantha_figure_one delete();
+    samantha_figure_angles = [];
+    samantha_figure_angles[0] = (0, 45, 0);
+    samantha_figure_angles[1] = (0, 45, 0);
+    samantha_figure_angles[2] = (0, 45, 0);
+    samantha_figure_angles[3] = (0, 45, 0);
+    samantha_figure_angles[4] = (0, 45, 0);
+    samantha_figure_angles[5] = (0, 45, 0);
+    samantha_figure_angles[6] = (0, 45, 0);
+    samantha_figure_angles[7] = (0, 45, 0);
 
-	samantha_figure_two = spawn("script_model", (308.5, -1417.5, 59.5));		//fence post		//was 308.5, -1417.5, 46.5
-	samantha_figure_two.angles = (0, 45, 0);
-	samantha_figure_two setModel("zmb_mdl_samantha_figure");
-	samantha_figure_two playLoopSound("musicbox_loop");
-	samantha_figure_two solid();
-	samantha_figure_two setCanDamage(true);
+    samantha_figures = [];
 
-	thread rotate_samantha_figure(samantha_figure_two);
-	thread init_samantha_figure_timeout();
-	thread handle_samantha_figure_timeout(samantha_figure_two);
+    for (i = 0; i < samantha_figure_positions.size; i++)
+    {
+        samantha_figure = spawn_samantha_figures(samantha_figure_positions[i], samantha_figure_angles[i]);
+        samantha_figures[i] = samantha_figure; // Store the spawned figure in the array
+    }
 
-	samantha_figure_two waittill ("damage", damage, attacker, direction_vec, point, type);
-	level.samantha_figure_shot = 1;
-	playFX(level._effect["raygun_impact"], samantha_figure_two.origin);
-	samantha_figure_two StopLoopSound(0.1);
-	samantha_figure_two delete();
+    while (1)
+    {
+        for (i = 0; i < samantha_figures.size; i++)
+        {
+            samantha_figure = samantha_figures[i];
 
-	samantha_figure_three = spawn("script_model", (-385.5, -702, 44));		//truck		//was -385.5, -702, 31.5
-	samantha_figure_three.angles = (0, 45, 0);
-	samantha_figure_three setModel("zmb_mdl_samantha_figure");
-	samantha_figure_three playLoopSound("musicbox_loop");
-	samantha_figure_three solid();
-	samantha_figure_three setCanDamage(true);
+            if (!isDefined(samantha_figure))
+                continue;
 
-	thread rotate_samantha_figure(samantha_figure_three);
-	thread init_samantha_figure_timeout();
-	thread handle_samantha_figure_timeout(samantha_figure_three);
+            samantha_figure waittill("damage", damage, attacker, direction_vec, point, type);
+            level.samantha_figure_shot = 1;
+            playFX(level._effect["raygun_impact"], samantha_figure.origin);
+            samantha_figure StopLoopSound(0.1);
+            samantha_figure delete();
 
-	samantha_figure_three waittill ("damage", damage, attacker, direction_vec, point, type);
-	level.samantha_figure_shot = 1;
-	playFX(level._effect["raygun_impact"], samantha_figure_three.origin);
-	samantha_figure_three StopLoopSound(0.1);
-	samantha_figure_three delete();
+            // Check if the 8th Samantha figure is deleted, then set hide_and_seek_done to 1
+            if (i == 7)
+                level.hide_and_seek_done = 1;
+        }
 
-	samantha_figure_four = spawn("script_model", (750, -333, 0));		//mud		//was 750, -333, -15
-	samantha_figure_four.angles = (0, 45, 0);
-	samantha_figure_four setModel("zmb_mdl_samantha_figure");
-	samantha_figure_four playLoopSound("musicbox_loop");
-	samantha_figure_four solid();
-	samantha_figure_four setCanDamage(true);
+        /*if (level.samantha_figure_shot == 1)
+        {
+            // Handle other actions when a figure is shot
+        }*/
 
-	thread rotate_samantha_figure(samantha_figure_four);
-	thread init_samantha_figure_timeout();
-	thread handle_samantha_figure_timeout(samantha_figure_four);
-
-	samantha_figure_four waittill ("damage", damage, attacker, direction_vec, point, type);
-	level.samantha_figure_shot = 1;
-	playFX(level._effect["raygun_impact"], samantha_figure_four.origin);
-	samantha_figure_four StopLoopSound(0.1);
-	samantha_figure_four delete();
-
-	samantha_figure_five = spawn("script_model", (-405, 570, 84.5));		//2nd truck		//was -405, 570, 71.7
-	samantha_figure_five.angles = (0, 45, 0);
-	samantha_figure_five setModel("zmb_mdl_samantha_figure");
-	samantha_figure_five playLoopSound("musicbox_loop");
-	samantha_figure_five solid();
-	samantha_figure_five setCanDamage(true);
-
-	thread rotate_samantha_figure(samantha_figure_five);
-	thread init_samantha_figure_timeout();
-	thread handle_samantha_figure_timeout(samantha_figure_five);
-
-	samantha_figure_five waittill ("damage", damage, attacker, direction_vec, point, type);
-	level.samantha_figure_shot = 1;
-	playFX(level._effect["raygun_impact"], samantha_figure_five.origin);
-	samantha_figure_five StopLoopSound(0.1);
-	samantha_figure_five delete();
-
-	samantha_figure_six = spawn("script_model", (-106, 646, 294));		//ceiling, near BAR		//was 106, 646, 281
-	samantha_figure_six.angles = (0, 45, 0);
-	samantha_figure_six setModel("zmb_mdl_samantha_figure");
-	samantha_figure_six playLoopSound("musicbox_loop");
-	samantha_figure_six solid();
-	samantha_figure_six setCanDamage(true);
-
-	thread rotate_samantha_figure(samantha_figure_six);
-	thread init_samantha_figure_timeout();
-	thread handle_samantha_figure_timeout(samantha_figure_six);
-
-	samantha_figure_six waittill ("damage", damage, attacker, direction_vec, point, type);
-	level.samantha_figure_shot = 1;
-	playFX(level._effect["raygun_impact"], samantha_figure_six.origin);
-	samantha_figure_six StopLoopSound(0.1);
-	samantha_figure_six delete();
-
-	samantha_figure_seven = spawn("script_model", (445, 306, 158));		//catwalk		//was 445, 306, 145
-	samantha_figure_seven.angles = (0, 45, 0);
-	samantha_figure_seven setModel("zmb_mdl_samantha_figure");
-	samantha_figure_seven playLoopSound("musicbox_loop");
-	samantha_figure_seven solid();
-	samantha_figure_seven setCanDamage(true);
-
-	thread rotate_samantha_figure(samantha_figure_seven);
-	thread init_samantha_figure_timeout();
-	thread handle_samantha_figure_timeout(samantha_figure_seven);
-
-	samantha_figure_seven waittill ("damage", damage, attacker, direction_vec, point, type);
-	level.samantha_figure_shot = 1;
-	playFX(level._effect["raygun_impact"], samantha_figure_seven.origin);
-	samantha_figure_seven StopLoopSound(0.1);
-	samantha_figure_seven delete();
-
-	samantha_figure_eight = spawn("script_model", (1228, 594.5, 273.75));		//lamp post 	//was 1228, 594.5, 260.75
-	samantha_figure_eight.angles = (0, 45, 0);
-	samantha_figure_eight setModel("zmb_mdl_samantha_figure");
-	samantha_figure_eight playLoopSound("musicbox_loop");
-	samantha_figure_eight solid();
-	samantha_figure_eight setCanDamage(true);
-
-	thread rotate_samantha_figure(samantha_figure_eight);
-	thread init_samantha_figure_timeout();
-	thread handle_samantha_figure_timeout(samantha_figure_eight);
-
-	samantha_figure_eight waittill ("damage", damage, attacker, direction_vec, point, type);
-	level.samantha_figure_shot = 1;
-	playFX(level._effect["raygun_impact"], samantha_figure_eight.origin);
-	samantha_figure_eight StopLoopSound(0.1);
-	samantha_figure_eight delete();
-	level.hide_and_seek_done = 1;
-
-	if(level.hide_and_seek_done == 1)
-	{
-
-		powerup_spawn = (-15, -430, 2);
-		players = GetPlayers();
-		for (i = 0; i < players.size; i++)
-		{
-			players[i] thread maps\_sounds::samanthas_lullaby_ee_track_sound();
-		}
-			
-		for ( i = 0; i < level.zombie_powerup_array.size; i++ )
-		{
-			if ( level.zombie_powerup_array[i] == "max_ammo" )
-			{
-				level.zombie_powerup_index = i;
-				break;
-			}
-		}
-		play_sound_2D( "bright_sting" );
-		level.zombie_vars["zombie_drop_item"] = 1;
-		level.powerup_drop_count = 0;
-		level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
-	}
+        wait 0.05;
+    }
 }
 
 rotate_samantha_figure(samantha_figure)
