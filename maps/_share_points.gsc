@@ -14,8 +14,8 @@ init_share_points() {
 	bank_deposit.angles = (0, -160, 0);		//weird angle to fit box better
 	bank_deposit setModel("zmb_mdl_cash_register");
 	bank_deposit solid();
-	//we want to hide these hintstrings to make it harder to find and look more like it was always in the map
-    //bank_deposit_trigger setHintString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT"); 
+	//we might want to hide these hintstrings to make it harder to find and look more like it was always in the map
+    bank_deposit_trigger setHintString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT"); 
 	bank_deposit_trigger setCursorHint("HINT_NOICON");
 
     bank_withdraw = spawn("script_model", (-36, 1015, 50)); 	//was (-15, 188, 50));
@@ -23,7 +23,7 @@ init_share_points() {
 	bank_withdraw.angles = (0, -260, 0);
 	bank_withdraw setModel("zmb_mdl_cash_register");
 	bank_withdraw solid();
-    //bank_withdraw_trigger setHintString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_WITHDRAW", "&&1", withdrawCost);
+    bank_withdraw_trigger setHintString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_WITHDRAW", "&&1", withdrawCost);
 	bank_withdraw_trigger setCursorHint("HINT_NOICON");
 
 	thread points_deposit(bank_deposit, bank_deposit_trigger);

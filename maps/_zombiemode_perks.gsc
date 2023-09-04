@@ -24,6 +24,7 @@ init_precache() {
     PrecacheShader("specialty_widows_wine_zombies");
     PrecacheItem( "zombie_knuckle_crack" );
    // PrecacheItem( "zombie_death_hands" ); //causes bone errors right now
+    PrecacheModel("char_usa_raider_gear_flametank");
 }
 
 init_perk_fx() {
