@@ -1797,71 +1797,6 @@ weapon_cabinet_door_close( left_or_right )
 	}	
 }
 
-play_interact_sound(weapon_name)
-{
-	switch(weapon_name)
-	{
-		case "kar98k":
-				self thread maps\_sounds::crappy_weapon_sound();
-			break; 
-		case "m1carbine":
-				self thread maps\_sounds::pickup_semi_sound();
-			break;
-		case "thompson":
-				self thread maps\_sounds::pickup_smg_sound();
-			break;  
-		case "doublebarrel":
-				self thread maps\_sounds::pickup_semi_sound();
-			break;
-		case "bar":
-				self thread maps\_sounds::pickup_lmg_sound();
-			break;
-		case "shotgun":
-				self thread maps\_sounds::pickup_shotgun_sound();
-			break;
-		case "doublebarrel_sawed_grip":
-				self thread maps\_sounds::pickup_shotgun_sound();
-			break;
-		case "stielhandgranate":
-				self thread maps\_sounds::pickup_flamethrower_sound();
-			break;
-		case "no_money":
-				self thread maps\_sounds::no_money_sound();
-			break;
-	}
-}
-
-wall_buy_weapon_names(weapon_name)
-{
-	switch(weapon_name)
-	{
-		case "kar98k":
-		weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
-			break; 
-		case "m1carbine":
-		weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
-			break;
-		case "thompson":
-		weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
-			break;  
-		case "doublebarrel":
-		weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
-			break;
-		case "bar":
-		weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
-			break;
-		case "shotgun":
-		weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
-			break;
-		case "doublebarrel_sawed_grip":
-		weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
-			break;
-		case "stielhandgranate":
-		weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
-			break;
-	}
-}
-
 weapon_spawn_think()
 {
 	
@@ -1869,13 +1804,29 @@ weapon_spawn_think()
 	weapon_cost = get_weapon_cost( self.zombie_weapon_upgrade );
 	ammo_cost = get_ammo_cost( self.zombie_weapon_upgrade );
 	is_grenade = (WeaponType( self.zombie_weapon_upgrade ) == "grenade");
-	weaponNameWallBuy = undefined;
+
+	weaponNameWallBuy = wall_buy_weapon_names(weapon_name);
 
 	self.first_time_triggered = false;
 
+	wall_buy_weapon_names(weapon_name);
+
+	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, weapon_cost);
+
 	while(1)
-	{
-		self waittill( "trigger", player ); 		
+	{	
+		self setCursorHint( "HINT_NOICON" ); 
+
+		self waittill( "trigger", player );
+
+		//Intended outcome is for these hintstrings to be set before the user presses the use key but the code below executes after the player triggers the waittill
+		if( player.score >= weapon_cost )
+		{
+			wall_buy_weapon_names(weapon_name);
+			
+			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
+		}
+
 		// if not first time and they have the weapon give ammo
 
 		if(isDefined(player.is_drinking) && player.is_drinking)
@@ -1925,37 +1876,10 @@ weapon_spawn_think()
 				if( self.first_time_triggered == false )
 				{
 					model = getent( self.target, "targetname" ); 
-//					model show(); 
 					model thread weapon_show( player );
 					self.first_time_triggered = true;
 
-					switch(weapon_name)
-					{
-						case "kar98k":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
-							break; 
-						case "m1carbine":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
-							break;
-						case "thompson":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
-							break;  
-						case "doublebarrel":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
-							break;
-						case "bar":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
-							break;
-						case "shotgun":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
-							break;
-						case "doublebarrel_sawed_grip":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
-							break;
-						case "stielhandgranate":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
-							break;
-					}
+					wall_buy_weapon_names(weapon_name);
 				}
 			
 				player maps\_zombiemode_score::minus_to_player_score( weapon_cost ); 
@@ -1978,38 +1902,11 @@ weapon_spawn_think()
 			{
 				if( self.first_time_triggered == false )
 				{
-					model = getent( self.target, "targetname" ); 
-//					model show(); 
+					model = getent( self.target, "targetname" );
 					model thread weapon_show( player );
 					self.first_time_triggered = true;
 
-					switch(weapon_name)
-					{
-						case "kar98k":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
-							break; 
-						case "m1carbine":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
-							break;
-						case "thompson":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
-							break;  
-						case "doublebarrel":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
-							break;
-						case "bar":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
-							break;
-						case "shotgun":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
-							break;
-						case "doublebarrel_sawed_grip":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
-							break;
-						case "stielhandgranate":
-						weaponNameWallBuy = &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
-							break;
-					}
+					wall_buy_weapon_names(weapon_name);
 
 					self setCursorHint( "HINT_NOICON" ); 
 					
@@ -2035,23 +1932,65 @@ weapon_spawn_think()
 				player play_interact_sound("no_money");
 			}
 		}
+	}
+}
 
+wall_buy_weapon_names(weapon_name)
+{
+    switch (weapon_name)
+    {
+        case "kar98k":
+            return &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K";
+        case "m1carbine":
+            return &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
+        case "thompson":
+            return &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
+        case "doublebarrel":
+            return &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+        case "bar":
+            return &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
+        case "shotgun":
+            return &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
+        case "doublebarrel_sawed_grip":
+            return &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+        case "stielhandgranate":
+            return &"PROTOTYPE_ZOMBIE_WEAPON_STIELHANDGRANATE";
+        default:
+            return "";
+    }
+}
 
-		//Intended outcome is for these hintstrings to be set before the user presses the use key but the code below executes after the player triggers the waittill
-		if(player_has_weapon == true)
-		{
-			wall_buy_weapon_names(weapon_name);
-			
-			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
-		}
-		else if (player_has_weapon == false)
-		{
-			wall_buy_weapon_names(weapon_name);
-
-			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, weapon_cost);
-		}
-		
-		self setCursorHint( "HINT_NOICON" ); 
+play_interact_sound(weapon_name)
+{
+	switch(weapon_name)
+	{
+		case "kar98k":
+				self thread maps\_sounds::crappy_weapon_sound();
+			break; 
+		case "m1carbine":
+				self thread maps\_sounds::pickup_semi_sound();
+			break;
+		case "thompson":
+				self thread maps\_sounds::pickup_smg_sound();
+			break;  
+		case "doublebarrel":
+				self thread maps\_sounds::pickup_semi_sound();
+			break;
+		case "bar":
+				self thread maps\_sounds::pickup_lmg_sound();
+			break;
+		case "shotgun":
+				self thread maps\_sounds::pickup_shotgun_sound();
+			break;
+		case "doublebarrel_sawed_grip":
+				self thread maps\_sounds::pickup_shotgun_sound();
+			break;
+		case "stielhandgranate":
+				self thread maps\_sounds::pickup_flamethrower_sound();
+			break;
+		case "no_money":
+				self thread maps\_sounds::no_money_sound();
+			break;
 	}
 }
 
