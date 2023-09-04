@@ -4,6 +4,7 @@
 
 // TODO: Add more SFX that the EE uses, make the samantha figure spawn next to the m1 carbinet again being raised by a skeleton hand, interaction with it spawns a max ammo
 // TIP: Shoot the head of the Samantha figures to destroy them
+// Needs to randomise spawning five figures out of a possible eight
 
 init_hide_and_seek()
 {
@@ -123,24 +124,32 @@ handle_initial_samantha_figure()
 }
 
 spawn_samantha_figures(position, angles) {
+	level.samantha_figure_destroyed = 0;
+
     samantha_figure = spawn("script_model", position);
     samantha_figure.angles = angles;
     samantha_figure setModel("zmb_mdl_samantha_figure");
     samantha_figure playLoopSound("musicbox_loop");
+
+	if (level.samantha_figure_destroyed == 1) {
+		samantha_figure StopLoopSound(0.1);
+		playFX(level._effect["raygun_impact"], samantha_figure.origin);
+	}
+	
     samantha_figure solid();
     samantha_figure setCanDamage(true);
 
     thread rotate_samantha_figure(samantha_figure);
-    thread init_samantha_figure_timeout();
-    thread handle_samantha_figure_timeout(samantha_figure);
+    //thread init_samantha_figure_timeout();
+    //thread handle_samantha_figure_timeout(samantha_figure);
 
     return samantha_figure; // Return the spawned figure
 }
 
 handle_samantha_figures()
 {
+	level.last_samantha_figure_interacted = 0;
     level.samantha_figure_timed_out = 0;
-    level.hide_and_seek_done = 0;
 
     samantha_figure_positions = [];
     samantha_figure_positions[0] = (145, -528, 158);
@@ -162,61 +171,73 @@ handle_samantha_figures()
     samantha_figure_angles[6] = (0, 45, 0);
     samantha_figure_angles[7] = (0, 45, 0);
 
-    samantha_figures = [];
+    fifth_samantha_figure = undefined; // Initialize last_samantha_figure
 
-    for (i = 0; i < samantha_figure_positions.size; i++)
-    {
-        samantha_figure = spawn_samantha_figures(samantha_figure_positions[i], samantha_figure_angles[i]);
-        samantha_figures[i] = samantha_figure; // Store the spawned figure in the array
-    }
+	array_randomize(samantha_figure_positions); // need to randomise the contents of the array, currently doesn't work
 
-    while (1)
-    {
-        for (i = 0; i < samantha_figures.size; i++)
-        {
-            samantha_figure = samantha_figures[i];
+    spawn_samantha_figure_recursive(samantha_figure_positions, samantha_figure_angles, 0);
 
-			thread samantha_figure_damage(samantha_figure, samantha_figures);
-        }
+    // Check if the last figure is deleted
+    if (!isDefined(fifth_samantha_figure)) {
+		last_samantha_figure = spawn("script_model", (-15, -430, 10));
+		last_samantha_figure_trigger = spawn("trigger_radius", (last_samantha_figure.origin), 0, 64, 64);
+		last_samantha_figure.angles = (0, 45, 0);
+		last_samantha_figure setModel("zmb_mdl_samantha_figure");
+		last_samantha_figure solid();
+		thread rotate_samantha_figure(last_samantha_figure);
+		last_samantha_figure playLoopSound("musicbox_loop");
 
-        /*if (level.samantha_figure_shot == 1)
-        {
-            // Handle other actions when a figure is shot
-        }*/
+		if (level.last_samantha_figure_interacted == 1) {
+			last_samantha_figure StopLoopSound(0.1);
+			playFX(level._effect["raygun_impact"], last_samantha_figure.origin);
+		}
 
-        wait 0.05;
-    }
+		while(1)
+		{
+			players = GetPlayers();
+
+			if(IsDefined(last_samantha_figure_trigger))
+			{
+				for (i = 0; i < players.size; i++)
+				{																			   		   
+					if(players[i] IsTouching (last_samantha_figure_trigger) && players[i] UseButtonPressed())
+					{
+						playFX(level._effect["raygun_impact"], last_samantha_figure.origin);
+						last_samantha_figure delete();
+						last_samantha_figure_trigger delete();
+						level.last_samantha_figure_interacted = 1;
+						handle_last_samantha_figure();
+
+						break;
+					}
+				}
+			}
+			wait 0.05;
+		}
+	}
 }
 
-// This function needs fixing
-samantha_figure_damage(samantha_figure, samantha_figures)
+spawn_samantha_figure_recursive(samantha_figure_positions, samantha_figure_angles, index)
 {
-    samantha_figure waittill("damage", damage, attacker, direction_vec, point, type);
-    level.samantha_figure_shot = 1;
-    playFX(level._effect["raygun_impact"], samantha_figure.origin);
-    samantha_figure StopLoopSound(0.1);
+    if (index >= samantha_figure_positions.size) //No need for brackets in statements with only one line to execute
+        return; // Exit the recursion when all figures are spawned
 
-    // Find the index of the damaged Samantha figure in the array
-    for (i = 0; i < samantha_figures.size; i++)
-    {
-        if (samantha_figures[i] == samantha_figure)
-        {
-            // Delete the specific Samantha figure
-			while(isDefined(samantha_figure))
-			{
-				samantha_figure delete();
-			}
+    samantha_figure = spawn_samantha_figures(samantha_figure_positions[index], samantha_figure_angles[index]);
+	fifth_samantha_figure = samantha_figure;
 
-            // Remove the figure from the array using
-            samantha_figures = array_remove(samantha_figures, samantha_figure);
+	samantha_figure_damage(samantha_figure);
 
-            // Check if the 8th Samantha figure is deleted, then set hide_and_seek_done to 1
-            if (i == 7)
-                level.hide_and_seek_done = 1;
+    spawn_samantha_figure_recursive(samantha_figure_positions, samantha_figure_angles, index + 1); // Spawn the next figure in the recursion
+}
 
-            break; // Exit the loop since we found the figure
-        }
-    }
+samantha_figure_damage(samantha_figure)
+{
+	samantha_figure waittill("damage"); // Wait for the current figure to be damaged before spawning the next
+	while(isDefined(samantha_figure))
+	{
+		samantha_figure delete();
+		level.samantha_figure_destroyed = 1;
+	}
 }
 
 rotate_samantha_figure(samantha_figure)
@@ -238,7 +259,7 @@ handle_samantha_figure_timeout(samantha_figure)
 {
 	while(1)
 	{
-		if(level.samantha_figure_timed_out == 1 && level.hide_and_seek_done == 0){
+		if(level.samantha_figure_timed_out == 1){
 
 			while(isDefined(samantha_figure))
 			{
@@ -256,4 +277,27 @@ handle_samantha_figure_timeout(samantha_figure)
 		}
 		wait 0.05;
 	}
+}
+
+handle_last_samantha_figure()
+{
+	powerup_spawn = (-15, -420, 2);
+	players = GetPlayers();
+	for (i = 0; i < players.size; i++)
+	{
+		players[i] thread maps\_sounds::samanthas_lullaby_ee_track_sound();
+	}
+		
+	for ( i = 0; i < level.zombie_powerup_array.size; i++ )
+	{
+		if ( level.zombie_powerup_array[i] == "max_ammo" )
+		{
+			level.zombie_powerup_index = i;
+			break;
+		}
+	}
+	play_sound_2D( "bright_sting" );
+	level.zombie_vars["zombie_drop_item"] = 1;
+	level.powerup_drop_count = 0;
+	level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
 }
