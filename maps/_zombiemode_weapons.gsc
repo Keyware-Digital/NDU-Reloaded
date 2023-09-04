@@ -2048,6 +2048,12 @@ weapon_give( weapon )
 			current_weapon = undefined;
 		}
 
+		//if ( (isSubStr(weapon_string, "flamethrower") ) )
+		/*if ( current_weapon == "m2_flamethrower_zombie") 
+   		{
+				self thread flamethrower_swap();
+   		}*/
+
 		if( isDefined( current_weapon ) )
 		{
 			if( !( weapon == "fraggrenade" || weapon == "stielhandgranate" || weapon == "molotov" /*|| weapon == "zombie_cymbal_monkey"*/ ) )
@@ -2261,3 +2267,50 @@ upgrade_knuckle_crack_end(currentGun)
 	self SwitchToWeapon(switchToGun);
 	self GiveWeapon(currentGun);
 }
+
+//inspired by CoD WaW: Zombies Remastered 
+/*flamethrower_swap()
+{
+	primaryWeapons = self GetWeaponsListPrimaries(); 
+	current_weapon = undefined;
+
+	self endon( "death" ); 
+	self endon( "disconnect" ); 
+
+	while( 1 ) 
+	{
+		weapons = self GetWeaponsList(); 
+		self.has_flame_thrower = false; 
+		for( i = 0; i < weapons.size; i++ )
+		{
+			if ( current_weapon == "m2_flamethrower_zombie") 
+			//if( current_weapon(primaryweapons[i], "m2_flamethrower_zombie") )
+			{
+				self.has_flame_thrower = true; 
+			}
+		}
+
+		if( self.has_flame_thrower )
+		{
+			if( !isdefined( self.flamethrower_attached ) || !self.flamethrower_attached )
+			{
+				self attach( "char_usa_raider_gear_flametank", "j_spine4" ); 
+				self.flamethrower_attached = true; 
+			}
+		}
+		else if( !self.has_flame_thrower ) 
+		{
+			if( isdefined( self.flamethrower_attached ) && self.flamethrower_attached )
+			{
+				self detach( "char_usa_raider_gear_flametank", "j_spine4" ); 
+				self.flamethrower_attached = false;
+			}
+		}
+
+		if(!self.has_flame_thrower && !self maps\_laststand::player_is_in_laststand())
+		{
+			break;
+		}
+		wait( 0.2 ); 
+	}
+}*/
