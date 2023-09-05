@@ -1,6 +1,7 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
+#include maps\_hintstrings;
 
 //Share points amongst players, deliberately doesn't carry over between games, BO2 style bank system requires 100 points to withdraw
 
@@ -8,6 +9,7 @@ init_share_points() {
 
     withdrawCost = 100;
 	level.shared_points = 0;
+	test = "Hold ^3&&1 ^7to deposit 1000 points";
 
 	players = GetPlayers();
 
@@ -16,7 +18,7 @@ init_share_points() {
 	bank_deposit.angles = (0, -160, 0);		//weird angle to fit box better
 	bank_deposit setModel("zmb_mdl_cash_register");
 	bank_deposit solid();
-    bank_deposit_trigger setHintString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT"); // Would like to make this only appear when looking at the trigger but trigger_radius might make that impossible
+    bank_deposit_trigger _setHintString(test); // Would like to make this only appear when looking at the trigger but trigger_radius might make that impossible
 	bank_deposit_trigger setCursorHint("HINT_NOICON");
 
     bank_withdraw = spawn("script_model", (-36, 1015, 50)); 	//was (-15, 188, 50));

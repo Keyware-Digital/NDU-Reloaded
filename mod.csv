@@ -67,6 +67,7 @@ rawfile,vision/zombie_cosmodrome_divetonuke.vision
 rawfile,bik/prototype_main_menu.bik
 rawfile,bik/prototype_load.bik
 rawfile,mptype/nazi_zombie_heroes.gsc
+rawfile,maps/_hintstrings.gsc
 rawfile,maps/_explosive_barrels.gsc
 rawfile,maps/_callbackglobal.gsc
 rawfile,maps/_character_randomise.gsc

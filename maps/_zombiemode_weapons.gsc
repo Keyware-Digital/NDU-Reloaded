@@ -926,7 +926,7 @@ treasure_chest_weapon_spawn( chest, player )
         chest.boxlocked = true;
 		level.zombie_vars["enableFireSale"] = 0;
         model SetModel("zmb_mdl_padlock");
-		self thread maps\_sounds::mystery_box_lock_sound();
+		self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
 		wait 0.5;
 
 		//Would be cool to do a floaty thing here before you can unlock the padlock
