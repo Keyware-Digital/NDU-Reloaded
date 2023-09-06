@@ -1,7 +1,7 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
-#include maps\_sounds;
+//#include maps\_sounds;
 
 init()
 {
@@ -845,157 +845,217 @@ treasure_chest_ChooseWeightedRandomWeapon( player )
 	}
 }
  
-treasure_chest_weapon_spawn( chest, player )
+treasure_chest_weapon_spawn(chest, player)
 {
     assert(isDefined(player));
     // spawn the model
-    model = spawn( "script_model", self.origin ); 
-    model.angles = self.angles + ( 0, 90, 0 );
- 
+    model = spawn("script_model", self.origin);
+    model.angles = self.angles + (0, 90, 0);
+
     floatHeight = 40;
- 
-    //move it up
-	model moveto( model.origin + ( 0, 0, floatHeight ), 3, 2, 0.9 ); 
+	bobHeight = 5; // for the padlock anim
+
+    // move it up
+    model moveto(model.origin + (0, 0, floatHeight), 3, 2, 0.9);
 
     // rotation would go here
- 
+
     // make with the mario kart
-    modelname = undefined; 
-    rand = undefined; 
-    for( i = 0; i < 40; i++ )
+    modelname = undefined;
+    rand = undefined;
+    for (i = 0; i < 40; i++)
     {
-        rand = treasure_chest_ChooseRandomWeapon( player );
-        modelname = GetWeaponModel( rand );
-        model setmodel( modelname ); 
- 
-        if( i < 20 )
+        rand = treasure_chest_ChooseRandomWeapon(player);
+        modelname = GetWeaponModel(rand);
+        model setmodel(modelname);
+
+        if (i < 20)
         {
-            wait( 0.05 ); 
+            wait(0.05);
         }
-        else if( i < 30 )
+        else if (i < 30)
         {
-            wait( 0.1 ); 
+            wait(0.1);
         }
-        else if( i < 35 )
+        else if (i < 35)
         {
-            wait( 0.2 ); 
+            wait(0.2);
         }
-        else if( i < 38 )
+        else if (i < 38)
         {
-            wait( 0.3 ); 
+            wait(0.3);
         }
-        modelname = GetWeaponModel( rand );
-        model setmodel( modelname ); 
+        modelname = GetWeaponModel(rand);
+        model setmodel(modelname);
     }
 
-	if(rand == "molotov")
+    if (rand == "molotov")
     {
         player thread weapons_death_check();
     }
 
-    if(rand == "mine_bouncing_betty")
+    if (rand == "mine_bouncing_betty")
     {
         player thread weapons_death_check();
     }
 
-    if(rand == "zombie_bowie_flourish")
+    if (rand == "zombie_bowie_flourish")
     {
         player thread weapons_death_check();
     }
- 
-	//Padlock start
-	
+
+    // Padlock mk2 logic start
+
     chanceOfPadlock = RandomInt(100);
+	level.zombie_vars["display_haunting_fx"] = false;
 
-	//Teddy bear style chance of Padlock proc
+    // Teddy bear style chance of Padlock proc
 
-    if(level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
+    if (level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
     {
         chanceOfPadlock = chanceOfPadlock + 15;
     }
-    else if(level.chest_accessed >= 8 && level.chest_accessed < 13) //30% chance to get lock between pull 8 and 12
+    else if (level.chest_accessed >= 8 && level.chest_accessed < 13) // 30% chance to get lock between pull 8 and 12
     {
         chanceOfPadlock = chanceOfPadlock + 30;
     }
-    else if(level.chest_accessed >= 13) //50% chance to get lock after 12th pull
+    else if (level.chest_accessed >= 13) // 50% chance to get lock after the 12th pull
     {
         chanceOfPadlock = 50;
     }
 
-    if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
+    if (chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
     {
+		// WaW has a limit on how many cross-file calls can be made such as this one, 
+		// I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
+		// edit - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted. Please try it on your end,
         chest.boxlocked = true;
-		level.zombie_vars["enableFireSale"] = 0;
+        level.zombie_vars["enableFireSale"] = 0;
         model SetModel("zmb_mdl_padlock");
-		self thread maps\_sounds::mystery_box_lock_sound();		//Optimisation pass; have made player actions "player maps", and kept enviroment actions as "self thread". 
-		wait 0.5;												//Let me know if you want me to do this elsewhere
+        self thread maps\_sounds::mystery_box_lock_sound();  
+		wait 0.5;
 
-		//Would be cool to do a floaty thing here before you can unlock the padlock
+        // Start the padlock floaty animation on a separate thread
+        self thread padlock_floaty_animation(model, bobHeight);
 
-		//model moveto( model.origin + ( 0, 0, floatHeight ), 3, 2, 0.9 );
+		// Apply FX to the padlock
+		level.zombie_vars["display_haunting_fx"] = true;
+    	self thread padlock_fx_handler(model);
+	
+		// Start the padlock haunt loop sound
+		self thread maps\_sounds::mystery_box_haunt_sound();
 
-		players = GetPlayers();
+        players = GetPlayers();
 
-   		for (i = 0; i < players.size; i++) { 
-			players[i] thread maps\_sounds::crappy_weapon_sound();
-		}
-		
-		level.zombie_mystery_box_padlock = 1;
+        for (i = 0; i < players.size; i++)
+        {
+            players[i] thread maps\_sounds::crappy_weapon_sound();
+        }
+
+        level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
 
-		weapon_cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
-		
+        weapon_cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
+
         chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", weapon_cost);
 
         chest enable_trigger();
-        
-        while(1)
+
+        while (1)
         {
             chest waittill("trigger", player);
-            if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
-            {
+			if (player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
+			{
+				// stop the looping sound when unlocked
+				self notify("mystery_box_haunt_sound_finished");
+				// play remaining sounds
 				player thread maps\_sounds::mystery_box_unlock_sound();
-
-                player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
-                break;
-            }
-			else 
+				player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
+				// delete the FX from the padlock
+            	level.zombie_vars["display_haunting_fx"] = false;
+				break;
+			}
+			else
 			{
 				player play_interact_sound("no_money");
 			}
-            wait 0.05;
-        }
+			wait 0.05;
+		}
 
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
 
         model Delete();
-		level.zombie_mystery_box_padlock = 0;
+        level.zombie_mystery_box_padlock = 0;
         level.chest_accessed = 0;
-        self notify( "randomization_done" ); 
+        self notify("randomization_done");
         return;
     }
 
     level.chest_accessed++;
 
-	// Padlock end
+	// Padlock mk2 logic end
 
-	self notify( "randomization_done" );
+    self notify("randomization_done");
 
-    self.weapon_string = rand; // here's where the org get it's weapon type for the give function
- 
+    self.weapon_string = rand; // here's where the org get its weapon type for the give function
+
     model thread timer_til_despawn(floatHeight);
-    self waittill( "weapon_grabbed" );
- 
-    if( !chest.timedOut )
+    self waittill("weapon_grabbed");
+
+    if (!chest.timedOut)
     {
         model Delete();
     }
- 
+
     return rand;
 }
- 
-weapons_death_check() // numan - reset the betties var on death ( may be used for other offhand vars if needed )
+
+// Padlock floaty animation, needs fine-tuning
+// bugs: fx continually spawns, haunting_sound and fx do not delete after padlock is unlocked
+padlock_floaty_animation(model, bobHeight)
+{
+    while (1) // Infinite loop for continuous bobbing
+    {
+        if (isDefined(model)) // Check if the model is still valid
+        {
+            model moveto(model.origin + (0, 0, bobHeight), 3, 2, 0.9); // Move the padlock up
+            wait(1.15); // Wait for a moment at the top
+
+            if (isDefined(model)) // Check if the model is still valid
+            {
+                model moveto(model.origin - (0, 0, bobHeight), 3, 2, 0.9); // Move the padlock down
+                wait(1.15); // Wait for a moment at the bottom
+            }
+        }
+        else
+        {
+            break; // Exit the loop if the model is no longer valid
+        }
+    }
+}
+
+// Padlock fx
+padlock_fx_handler(model)
+{
+    while (1)
+    {
+        if (level.zombie_vars["display_haunting_fx"])
+        {
+            if (isDefined(model))
+            {
+                playFX(level._effect["powerup_on"], model.origin);
+            }
+        }
+        else
+        {
+            break; // Stop the loop when display_haunting_fx is set to false
+        }
+        wait(0.1);
+    }
+}
+
+weapons_death_check() // reset the betties var on death ( may be used for other offhand vars if needed )
 {
     self waittill_any( "fake_death", "death" );
  
@@ -1088,99 +1148,99 @@ treasure_chest_give_weapon( weapon_string )
 		//mystery box
 		//great
 		case "30cal_bipod":
-			self maps\_sounds::great_weapon_sound();
+		self thread maps\_sounds::great_weapon_sound();
 			break; 
 		case "dp28":
-			self maps\_sounds::great_weapon_sound();
+		self thread maps\_sounds::great_weapon_sound();
 			break;
 		case "mg42_bipod":
-			self maps\_sounds::great_weapon_sound();
+			self thread maps\_sounds::great_weapon_sound();
 			break;  
 		//wunderweps
 		case "ray_gun_mk1_v2":
-			self maps\_sounds::great_weapon_sound();
+			self thread maps\_sounds::great_weapon_sound();
 			break;
 		/*case "zombie_cymbal_monkey":
-			self maps\_sounds::great_weapon_sound();
+			self thread maps\_sounds::great_weapon_sound();
 			break;*/
 		//crappy
 		case "kar98k":
-			self maps\_sounds::crappy_weapon_sound();
+			self thread maps\_sounds::crappy_weapon_sound();
 			break;
 		case "mosin_rifle":
-			self maps\_sounds::crappy_weapon_sound();
+			self thread maps\_sounds::crappy_weapon_sound();
 			break;
 		case "springfield":
-			self maps\_sounds::crappy_weapon_sound();
+			self thread maps\_sounds::crappy_weapon_sound();
 			break;
 		case "molotov":
-			self maps\_sounds::crappy_weapon_sound();
+			self thread maps\_sounds::crappy_weapon_sound();
 			break;
 		//impartial
 		case "sw_357":
-			self maps\_sounds::no_money_sound();
+			self thread maps\_sounds::no_money_sound();
 			break;
 		//semi-auto
 		case "gewehr43":
-			self maps\_sounds::pickup_semi_sound();
+			self thread maps\_sounds::pickup_semi_sound();
 			break;
 		case "m1carbine":
-			self maps\_sounds::pickup_semi_sound();
+			self thread maps\_sounds::pickup_semi_sound();
 			break;
 		case "svt40":
-			self maps\_sounds::pickup_semi_sound();
+			self thread maps\_sounds::pickup_semi_sound();
 			break;
 		//automatic-rifle
 		case "bar":
-			self maps\_sounds::pickup_lmg_sound();
+			self thread maps\_sounds::pickup_lmg_sound();
 			break;
 		case "fg42_bipod":
-			self maps\_sounds::pickup_lmg_sound();
+			self thread maps\_sounds::pickup_lmg_sound();
 			break;
 		case "stg44":
-			self maps\_sounds::pickup_lmg_sound();
+			self thread maps\_sounds::pickup_lmg_sound();
 			break;
 		case "type99_lmg":
-			self maps\_sounds::pickup_lmg_sound();
+			self thread maps\_sounds::pickup_lmg_sound();
 		//smg
 		case "mp40":
-			self maps\_sounds::pickup_smg_sound();
+			self thread maps\_sounds::pickup_smg_sound();
 			break;
 		case "thompson":
-			self maps\_sounds::pickup_smg_sound();
+			self thread maps\_sounds::pickup_smg_sound();
 			break;
 		case "ppsh41":
-			self maps\_sounds::pickup_smg_sound();
+			self thread maps\_sounds::pickup_smg_sound();
 			break;
 		case "zombie_type100_smg":
-			self maps\_sounds::pickup_smg_sound();
+			self thread maps\_sounds::pickup_smg_sound();
 			break;
 		//shotgun
 		case "doublebarrel":
-			self maps\_sounds::pickup_shotgun_sound();
+			self thread maps\_sounds::pickup_shotgun_sound();
 			break;
 		case "doublebarrel_sawed_grip":
-			self maps\_sounds::pickup_shotgun_sound();
+			self thread maps\_sounds::pickup_shotgun_sound();
 			break;
 		case "shotgun":
-			self maps\_sounds::pickup_shotgun_sound();
+			self thread maps\_sounds::pickup_shotgun_sound();
 			break;
 		//misc
 		case "mine_bouncing_betty":
-			self maps\_sounds::pickup_betty_sound();
+			self thread maps\_sounds::pickup_betty_sound();
 			break;
 		case "m2_flamethrower_zombie":
-			self maps\_sounds::pickup_flamethrower_sound();
+			self thread maps\_sounds::pickup_flamethrower_sound();
 			break;
 		case "panzerschrek":
-			self maps\_sounds::pickup_panzerschrek_sound();
+			self thread maps\_sounds::pickup_panzerschrek_sound();
 			break;
 		case "m1garand_gl":
-			self maps\_sounds::pickup_panzerschrek_sound();
+			self thread maps\_sounds::pickup_panzerschrek_sound();
 			break;
 		//scoped
 		case "ptrs41_zombie":
-			self maps\_sounds::pickup_sniper_sound();
+			self thread maps\_sounds::pickup_sniper_sound();
 			break;
 	}
 	
@@ -1271,7 +1331,7 @@ weapon_cabinet_think()
     flag_wait("all_players_connected");
     if(!isDefined(level.cabinetthinkdone) || level.cabinetthinkdone == 0) // please for the love of god only do this once
 	{
-		all_ents = GetEntArray("script_model","classname"); // i really hate this way of doing it but im not good enough to see another way currently
+		all_ents = GetEntArray("script_model","classname"); // i really hate this way of doing it but im not good enough to see another way currently - Numan
 		for(i=0;i<all_ents.size;i++)
 		{
 			if(all_ents[i].model == "weapon_mp_kar98_scoped_rifle")
@@ -1963,7 +2023,8 @@ wall_buy_weapon_names(weapon_name)
 
 play_interact_sound(weapon_name)
 {
-	/*players = GetPlayers();
+	
+/*players = GetPlayers();
 
    	for (i = 0; i < players.size; i++) {*/
 

@@ -179,12 +179,24 @@ mystery_box_lock_sound() {
 }
 
 mystery_box_unlock_sound() {
+	wait 0.33;
 	mystery_box_unlock_sound = Spawn("script_origin", self.origin);
 	mystery_box_unlock_sound PlaySound("mystery_box_unlock", "mystery_box_unlock_sound_done");
 	mystery_box_unlock_sound waittill("mystery_box_unlock_sound_done");
 	mystery_box_unlock_sound Delete();
 
 	self notify("mystery_box_unlock_sound_finished");
+
+}
+
+mystery_box_haunt_sound() {
+	wait 0.33;
+	mystery_box_haunt_sound = Spawn("script_origin", self.origin);
+	mystery_box_haunt_sound PlaySound("mystery_box_haunt", "mystery_box_haunt_sound_done");
+	mystery_box_haunt_sound waittill("mystery_box_haunt_sound_done");
+	mystery_box_haunt_sound Delete();
+
+	self notify("mystery_box_haunt_sound_finished");
 
 }
 
