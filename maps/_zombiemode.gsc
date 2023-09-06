@@ -3,6 +3,7 @@
 #include common_scripts\utility;
 #include maps\_music;
 #include maps\_zombiemode_utility;
+//#include maps\_sounds;
 
 #using_animtree("generic_human");
 

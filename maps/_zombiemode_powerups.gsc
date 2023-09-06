@@ -4,6 +4,8 @@
 
 #include maps\_zombiemode_utility;
 
+//#include maps\_sounds;
+
 init() {
 
     init_powerup_vars();

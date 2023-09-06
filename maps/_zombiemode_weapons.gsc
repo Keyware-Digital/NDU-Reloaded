@@ -1,6 +1,7 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
+#include maps\_sounds;
 
 init()
 {
@@ -926,8 +927,8 @@ treasure_chest_weapon_spawn( chest, player )
         chest.boxlocked = true;
 		level.zombie_vars["enableFireSale"] = 0;
         model SetModel("zmb_mdl_padlock");
-		self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
-		wait 0.5;
+		self thread maps\_sounds::mystery_box_lock_sound();		//Optimisation pass; have made player actions "player maps", and kept enviroment actions as "self thread". 
+		wait 0.5;												//Let me know if you want me to do this elsewhere
 
 		//Would be cool to do a floaty thing here before you can unlock the padlock
 
@@ -1087,99 +1088,99 @@ treasure_chest_give_weapon( weapon_string )
 		//mystery box
 		//great
 		case "30cal_bipod":
-		self thread maps\_sounds::great_weapon_sound();
+			self maps\_sounds::great_weapon_sound();
 			break; 
 		case "dp28":
-		self thread maps\_sounds::great_weapon_sound();
+			self maps\_sounds::great_weapon_sound();
 			break;
 		case "mg42_bipod":
-			self thread maps\_sounds::great_weapon_sound();
+			self maps\_sounds::great_weapon_sound();
 			break;  
 		//wunderweps
 		case "ray_gun_mk1_v2":
-			self thread maps\_sounds::great_weapon_sound();
+			self maps\_sounds::great_weapon_sound();
 			break;
 		/*case "zombie_cymbal_monkey":
-			self thread maps\_sounds::great_weapon_sound();
+			self maps\_sounds::great_weapon_sound();
 			break;*/
 		//crappy
 		case "kar98k":
-			self thread maps\_sounds::crappy_weapon_sound();
+			self maps\_sounds::crappy_weapon_sound();
 			break;
 		case "mosin_rifle":
-			self thread maps\_sounds::crappy_weapon_sound();
+			self maps\_sounds::crappy_weapon_sound();
 			break;
 		case "springfield":
-			self thread maps\_sounds::crappy_weapon_sound();
+			self maps\_sounds::crappy_weapon_sound();
 			break;
 		case "molotov":
-			self thread maps\_sounds::crappy_weapon_sound();
+			self maps\_sounds::crappy_weapon_sound();
 			break;
 		//impartial
 		case "sw_357":
-			self thread maps\_sounds::no_money_sound();
+			self maps\_sounds::no_money_sound();
 			break;
 		//semi-auto
 		case "gewehr43":
-			self thread maps\_sounds::pickup_semi_sound();
+			self maps\_sounds::pickup_semi_sound();
 			break;
 		case "m1carbine":
-			self thread maps\_sounds::pickup_semi_sound();
+			self maps\_sounds::pickup_semi_sound();
 			break;
 		case "svt40":
-			self thread maps\_sounds::pickup_semi_sound();
+			self maps\_sounds::pickup_semi_sound();
 			break;
 		//automatic-rifle
 		case "bar":
-			self thread maps\_sounds::pickup_lmg_sound();
+			self maps\_sounds::pickup_lmg_sound();
 			break;
 		case "fg42_bipod":
-			self thread maps\_sounds::pickup_lmg_sound();
+			self maps\_sounds::pickup_lmg_sound();
 			break;
 		case "stg44":
-			self thread maps\_sounds::pickup_lmg_sound();
+			self maps\_sounds::pickup_lmg_sound();
 			break;
 		case "type99_lmg":
-			self thread maps\_sounds::pickup_lmg_sound();
+			self maps\_sounds::pickup_lmg_sound();
 		//smg
 		case "mp40":
-			self thread maps\_sounds::pickup_smg_sound();
+			self maps\_sounds::pickup_smg_sound();
 			break;
 		case "thompson":
-			self thread maps\_sounds::pickup_smg_sound();
+			self maps\_sounds::pickup_smg_sound();
 			break;
 		case "ppsh41":
-			self thread maps\_sounds::pickup_smg_sound();
+			self maps\_sounds::pickup_smg_sound();
 			break;
 		case "zombie_type100_smg":
-			self thread maps\_sounds::pickup_smg_sound();
+			self maps\_sounds::pickup_smg_sound();
 			break;
 		//shotgun
 		case "doublebarrel":
-			self thread maps\_sounds::pickup_shotgun_sound();
+			self maps\_sounds::pickup_shotgun_sound();
 			break;
 		case "doublebarrel_sawed_grip":
-			self thread maps\_sounds::pickup_shotgun_sound();
+			self maps\_sounds::pickup_shotgun_sound();
 			break;
 		case "shotgun":
-			self thread maps\_sounds::pickup_shotgun_sound();
+			self maps\_sounds::pickup_shotgun_sound();
 			break;
 		//misc
 		case "mine_bouncing_betty":
-			self thread maps\_sounds::pickup_betty_sound();
+			self maps\_sounds::pickup_betty_sound();
 			break;
 		case "m2_flamethrower_zombie":
-			self thread maps\_sounds::pickup_flamethrower_sound();
+			self maps\_sounds::pickup_flamethrower_sound();
 			break;
 		case "panzerschrek":
-			self thread maps\_sounds::pickup_panzerschrek_sound();
+			self maps\_sounds::pickup_panzerschrek_sound();
 			break;
 		case "m1garand_gl":
-			self thread maps\_sounds::pickup_panzerschrek_sound();
+			self maps\_sounds::pickup_panzerschrek_sound();
 			break;
 		//scoped
 		case "ptrs41_zombie":
-			self thread maps\_sounds::pickup_sniper_sound();
+			self maps\_sounds::pickup_sniper_sound();
 			break;
 	}
 	
@@ -1962,6 +1963,10 @@ wall_buy_weapon_names(weapon_name)
 
 play_interact_sound(weapon_name)
 {
+	/*players = GetPlayers();
+
+   	for (i = 0; i < players.size; i++) {*/
+
 	switch(weapon_name)
 	{
 		case "kar98k":
