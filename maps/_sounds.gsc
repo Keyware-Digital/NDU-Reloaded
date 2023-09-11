@@ -189,7 +189,7 @@ mystery_box_unlock_sound() {
 
 }
 
-mystery_box_haunt_sound() {
+/*mystery_box_haunt_sound() {
 	wait 0.33;
 	mystery_box_haunt_sound = Spawn("script_origin", self.origin);
 	mystery_box_haunt_sound PlaySound("mystery_box_haunt", "mystery_box_haunt_sound_done");
@@ -198,7 +198,7 @@ mystery_box_haunt_sound() {
 
 	self notify("mystery_box_haunt_sound_finished");
 
-}
+}*/
 
 cabinet_sound() {
 	cabinetSong = "cabinetbox_sting_" + RandomInt(3);

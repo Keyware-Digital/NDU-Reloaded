@@ -904,155 +904,110 @@ treasure_chest_weapon_spawn(chest, player)
         player thread weapons_death_check();
     }
 
-    // Padlock mk2 logic start
-
+	//Padlock mk2 start
+	
     chanceOfPadlock = RandomInt(100);
-	level.zombie_vars["display_haunting_fx"] = false;
 
-    // Teddy bear style chance of Padlock proc
+	//Teddy bear style chance of Padlock proc
 
-    if (level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
+    if(level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
     {
         chanceOfPadlock = chanceOfPadlock + 15;
     }
-    else if (level.chest_accessed >= 8 && level.chest_accessed < 13) // 30% chance to get lock between pull 8 and 12
+    else if(level.chest_accessed >= 8 && level.chest_accessed < 13) //30% chance to get lock between pull 8 and 12
     {
         chanceOfPadlock = chanceOfPadlock + 30;
     }
-    else if (level.chest_accessed >= 13) // 50% chance to get lock after the 12th pull
+    else if(level.chest_accessed >= 13) //50% chance to get lock after 12th pull
     {
         chanceOfPadlock = 50;
     }
 
-    if (chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
+    if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
     {
-		// WaW has a limit on how many cross-file calls can be made such as this one, 
-		// I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
-		// edit - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted. Please try it on your end,
         chest.boxlocked = true;
-        level.zombie_vars["enableFireSale"] = 0;
+		level.zombie_vars["enableFireSale"] = 0;
         model SetModel("zmb_mdl_padlock");
-        self thread maps\_sounds::mystery_box_lock_sound();  
-		wait 0.5;
+		self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
+		wait 0.5;											// edit - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted. Please try it on your end,
 
-        // Start the padlock floaty animation on a separate thread
-        self thread padlock_floaty_animation(model, bobHeight);
+		// rough notes
 
-		// Apply FX to the padlock
-		level.zombie_vars["display_haunting_fx"] = true;
-    	self thread padlock_fx_handler(model);
-	
-		// Start the padlock haunt loop sound
-		self thread maps\_sounds::mystery_box_haunt_sound();
+		// animate the padlock
+		//moveto(model.origin + (0, 0, bobHeight), 3, 2, 0.9); 
+		//rotateYaw(360, 10);
 
-        players = GetPlayers();
+		// attach fx to padlock
+		//fx_padlock = playFX("powerup_on", self.origin);
 
-        for (i = 0; i < players.size; i++)
-        {
-            players[i] thread maps\_sounds::crappy_weapon_sound();
-        }
+		// play the hauting sound
+		//self PlayLoopSound("mystery_box_haunt");
 
-        level.zombie_mystery_box_padlock = 1;
+		players = GetPlayers();
+
+   		for (i = 0; i < players.size; i++) { 
+			players[i] thread maps\_sounds::crappy_weapon_sound();
+		}
+		
+		level.zombie_mystery_box_padlock = 1;
         player maps\_zombiemode_score::add_to_player_score(950);
 
-        weapon_cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
-
+		weapon_cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
+		
         chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", weapon_cost);
 
         chest enable_trigger();
-
-        while (1)
+        
+        while(1)
         {
             chest waittill("trigger", player);
-			if (player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
-			{
-				// stop the looping sound when unlocked
-				self notify("mystery_box_haunt_sound_finished");
-				// play remaining sounds
+            if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
+            {
 				player thread maps\_sounds::mystery_box_unlock_sound();
-				player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
-				// delete the FX from the padlock
-            	level.zombie_vars["display_haunting_fx"] = false;
-				break;
-			}
-			else
+
+                player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
+
+				// Delete the FX
+            	//deleteFX();
+            
+           		// Delete the haunt sound
+          		// stopLoopSound(level.zmb_padlock_sound);
+                break;
+            }
+			else 
 			{
 				player play_interact_sound("no_money");
 			}
-			wait 0.05;
-		}
+            wait 0.05;
+        }
 
         level.zombie_vars["enableFireSale"] = 1;
         chest SetHintString("");
 
         model Delete();
-        level.zombie_mystery_box_padlock = 0;
+		level.zombie_mystery_box_padlock = 0;
         level.chest_accessed = 0;
-        self notify("randomization_done");
+        self notify( "randomization_done" ); 
         return;
     }
 
     level.chest_accessed++;
 
-	// Padlock mk2 logic end
+	// Padlock mk2 end
 
-    self notify("randomization_done");
+	self notify( "randomization_done" );
 
-    self.weapon_string = rand; // here's where the org get its weapon type for the give function
-
+    self.weapon_string = rand; // here's where the org get it's weapon type for the give function
+ 
     model thread timer_til_despawn(floatHeight);
-    self waittill("weapon_grabbed");
-
-    if (!chest.timedOut)
+    self waittill( "weapon_grabbed" );
+ 
+    if( !chest.timedOut )
     {
         model Delete();
     }
-
+ 
     return rand;
-}
-
-// Padlock floaty animation, needs fine-tuning
-// bugs: fx continually spawns, haunting_sound and fx do not delete after padlock is unlocked
-padlock_floaty_animation(model, bobHeight)
-{
-    while (1) // Infinite loop for continuous bobbing
-    {
-        if (isDefined(model)) // Check if the model is still valid
-        {
-            model moveto(model.origin + (0, 0, bobHeight), 3, 2, 0.9); // Move the padlock up
-            wait(1.15); // Wait for a moment at the top
-
-            if (isDefined(model)) // Check if the model is still valid
-            {
-                model moveto(model.origin - (0, 0, bobHeight), 3, 2, 0.9); // Move the padlock down
-                wait(1.15); // Wait for a moment at the bottom
-            }
-        }
-        else
-        {
-            break; // Exit the loop if the model is no longer valid
-        }
-    }
-}
-
-// Padlock fx
-padlock_fx_handler(model)
-{
-    while (1)
-    {
-        if (level.zombie_vars["display_haunting_fx"])
-        {
-            if (isDefined(model))
-            {
-                playFX(level._effect["powerup_on"], model.origin);
-            }
-        }
-        else
-        {
-            break; // Stop the loop when display_haunting_fx is set to false
-        }
-        wait(0.1);
-    }
 }
 
 weapons_death_check() // reset the betties var on death ( may be used for other offhand vars if needed )
