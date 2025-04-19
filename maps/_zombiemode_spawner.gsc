@@ -1444,184 +1444,174 @@ headshot_blood_fx()
 // gib limbs if enough firepower occurs
 zombie_gib_on_damage()
 {
-//	self endon( "death" ); 
+    while( 1 )
+    {
+        self waittill( "damage", amount, attacker, direction_vec, point, type ); 
 
-	while( 1 )
-	{
-		self waittill( "damage", amount, attacker, direction_vec, point, type ); 
+        if( !IsDefined( self ) )
+        {
+            return;
+        }
 
-		if( !isDefined( self ) )
-		{
-			return;
-		}
+        self thread maps\_zombiemode_perks::perks_zombie_hit_effect( amount, attacker, point, type );
 
-		self thread maps\_zombiemode_perks::perks_zombie_hit_effect(amount, attacker, point, type);
+        if( !self zombie_should_gib( amount, attacker, type ) )
+        {
+            continue; 
+        }
 
-		if( !self zombie_should_gib( amount, attacker, type ) )
-		{
-			continue; 
-		}
+        if( self head_should_gib( attacker, type, point ) && type != "MOD_BURNED" )
+        {
+            self zombie_head_gib( attacker );
+            if( IsDefined( attacker ) && IsPlayer( attacker ) && ( type == "MOD_RIFLE_BULLET" || type == "MOD_PISTOL_BULLET" ) )
+            {
+                if( !IsDefined( level.player_is_speaking ) )
+                {
+                    level.player_is_speaking = 0;
+                }
+                if( level.player_is_speaking != 1 && Distance( attacker.origin, self.origin ) > 450 && !level.zombie_vars["zombie_insta_kill"] && RandomInt( 100 ) < 25 )
+                {
+                    attacker thread maps\_sounds::headshot_sound();
+                }
+            }
+            continue;
+        }
 
-		if( self head_should_gib( attacker, type, point ) && type != "MOD_BURNED" )
-		{
-			self zombie_head_gib( attacker );
-			continue;
-		}
+        if( !self.gibbed )
+        {
+            if( self animscripts\utility::damageLocationIsAny( "head", "helmet", "neck" ) )
+            {
+                continue;
+            }
 
-		if( !self.gibbed )
-		{
-			// The head_should_gib() above checks for this, so we should not randomly gib if shot in the head
-			if( self animscripts\utility::damageLocationIsAny( "head", "helmet", "neck" ) )
-			{
-				continue;
-			}
+            refs = []; 
+            switch( self.damageLocation )
+            {
+                case "torso_upper":
+                case "torso_lower":
+                    refs[refs.size] = "guts"; 
+                    refs[refs.size] = "right_arm";
+                    break; 
 
-			refs = []; 
-			switch( self.damageLocation )
-			{
-				case "torso_upper":
-				case "torso_lower":
-					// HACK the torso that gets swapped for guts also removes the left arm
-					//  so we need to sometimes do another ref
-					refs[refs.size] = "guts"; 
-					refs[refs.size] = "right_arm";
-					break; 
-	
-				case "right_arm_upper":
-				case "right_arm_lower":
-				case "right_hand":
-					//if( isDefined( self.left_arm_gibbed ) )
-					//	refs[refs.size] = "no_arms"; 
-					//else
-					refs[refs.size] = "right_arm"; 
-	
-					//self.right_arm_gibbed = true; 
-					break; 
-	
-				case "left_arm_upper":
-				case "left_arm_lower":
-				case "left_hand":
-					//if( isDefined( self.right_arm_gibbed ) )
-					//	refs[refs.size] = "no_arms"; 
-					//else
-					refs[refs.size] = "left_arm"; 
-	
-					//self.left_arm_gibbed = true; 
-					break; 
-	
-				case "right_leg_upper":
-				case "right_leg_lower":
-				case "right_foot":
-					if( self.health <= 0 )
-					{
-						// Addition "right_leg" refs so that the no_legs happens less and is more rare
-						refs[refs.size] = "right_leg";
-						refs[refs.size] = "right_leg";
-						refs[refs.size] = "right_leg";
-						refs[refs.size] = "no_legs"; 
-					}
-					break; 
-	
-				case "left_leg_upper":
-				case "left_leg_lower":
-				case "left_foot":
-					if( self.health <= 0 )
-					{
-						// Addition "left_leg" refs so that the no_legs happens less and is more rare
-						refs[refs.size] = "left_leg";
-						refs[refs.size] = "left_leg";
-						refs[refs.size] = "left_leg";
-						refs[refs.size] = "no_legs";
-					}
-					break; 
-			default:
-				
-				if( self.damageLocation == "none" )
-				{
-					// SRS 9/7/2008: might be a nade or a projectile
-					if( type == "MOD_GRENADE" || type == "MOD_GRENADE_SPLASH" || type == "MOD_PROJECTILE" )
-					{
-						// ... in which case we have to derive the ref ourselves
-						refs = self derive_damage_refs( point );
-						break;
-					}
-				}
-				else
-				{
-					refs[refs.size] = "guts";
-					refs[refs.size] = "right_arm"; 
-					refs[refs.size] = "left_arm"; 
-					refs[refs.size] = "right_leg"; 
-					refs[refs.size] = "left_leg"; 
-					refs[refs.size] = "no_legs"; 
-					break; 
-				}
-			}
+                case "right_arm_upper":
+                case "right_arm_lower":
+                case "right_hand":
+                    refs[refs.size] = "right_arm"; 
+                    break; 
 
-			if( refs.size )
-			{
-				self.a.gib_ref = animscripts\death::get_random( refs ); 
-			
-				// Don't stand if a leg is gone
-				if( ( self.a.gib_ref == "no_legs" || self.a.gib_ref == "right_leg" || self.a.gib_ref == "left_leg" ) && self.health > 0 )
-				{
-					self.has_legs = false; 
-					self AllowedStances( "crouch" ); 
-										
-					which_anim = RandomInt( 3 ); 
-					
-					if( which_anim == 0 ) 
-					{
-						self.deathanim = %ai_zombie_crawl_death_v1;
-						self set_run_anim( "death3" );
-						self.run_combatanim = level.scr_anim["zombie"]["crawl1"];
-						self.crouchRunAnim = level.scr_anim["zombie"]["crawl1"];
-						self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl1"];
-					}
-					else if( which_anim == 1 ) 
-					{
-						self.deathanim = %ai_zombie_crawl_death_v2;
-						self set_run_anim( "death4" );
-						self.run_combatanim = level.scr_anim["zombie"]["crawl2"];
-						self.crouchRunAnim = level.scr_anim["zombie"]["crawl2"];
-						self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl2"];
-					}
-					else if( which_anim == 2 ) 
-					{
-						self.deathanim = %ai_zombie_crawl_death_v2;
-						self set_run_anim( "death4" );
-						self.run_combatanim = level.scr_anim["zombie"]["crawl3"];
-						self.crouchRunAnim = level.scr_anim["zombie"]["crawl3"];
-						self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl3"];
-					}
+                case "left_arm_upper":
+                case "left_arm_lower":
+                case "left_hand":
+                    refs[refs.size] = "left_arm"; 
+                    break; 
+
+                case "right_leg_upper":
+                case "right_leg_lower":
+                case "right_foot":
+                    if( self.health <= 0 )
+                    {
+                        refs[refs.size] = "right_leg";
+                        refs[refs.size] = "right_leg";
+                        refs[refs.size] = "right_leg";
+                        refs[refs.size] = "no_legs"; 
+                    }
+                    break; 
+
+                case "left_leg_upper":
+                case "left_leg_lower":
+                case "left_foot":
+                    if( self.health <= 0 )
+                    {
+                        refs[refs.size] = "left_leg";
+                        refs[refs.size] = "left_leg";
+                        refs[refs.size] = "left_leg";
+                        refs[refs.size] = "no_legs";
+                    }
+                    break; 
+
+                default:
+                    if( self.damageLocation == "none" )
+                    {
+                        if( type == "MOD_GRENADE" || type == "MOD_GRENADE_SPLASH" || type == "MOD_PROJECTILE" )
+                        {
+                            refs = self derive_damage_refs( point );
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        refs[refs.size] = "guts";
+                        refs[refs.size] = "right_arm"; 
+                        refs[refs.size] = "left_arm"; 
+                        refs[refs.size] = "right_leg"; 
+                        refs[refs.size] = "left_leg"; 
+                        refs[refs.size] = "no_legs"; 
+                        break; 
+                    }
+            }
+
+            if( refs.size )
+            {
+                self.a.gib_ref = animscripts\death::get_random( refs ); 
+            
+                // Don't stand if a leg is gone
+                if( ( self.a.gib_ref == "no_legs" || self.a.gib_ref == "right_leg" || self.a.gib_ref == "left_leg" ) && self.health > 0 )
+                {
+                    self.has_legs = false; 
+                    self AllowedStances( "crouch" ); 
+                                        
+                    which_anim = RandomInt( 3 ); // shouldn't this be 5?
+                    
+                    if( which_anim == 0 ) 
+                    {
+                        self.deathanim = %ai_zombie_crawl_death_v1;
+                        self set_run_anim( "death3" );
+                        self.run_combatanim = level.scr_anim["zombie"]["crawl1"];
+                        self.crouchRunAnim = level.scr_anim["zombie"]["crawl1"];
+                        self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl1"];
+                    }
+                    else if( which_anim == 1 ) 
+                    {
+                        self.deathanim = %ai_zombie_crawl_death_v2;
+                        self set_run_anim( "death4" );
+                        self.run_combatanim = level.scr_anim["zombie"]["crawl2"];
+                        self.crouchRunAnim = level.scr_anim["zombie"]["crawl2"];
+                        self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl2"];
+                    }
+                    else if( which_anim == 2 ) 
+                    {
+                        self.deathanim = %ai_zombie_crawl_death_v2;
+                        self set_run_anim( "death4" );
+                        self.run_combatanim = level.scr_anim["zombie"]["crawl3"];
+                        self.crouchRunAnim = level.scr_anim["zombie"]["crawl3"];
+                        self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl3"];
+                    }
                     else if( which_anim == 3 )
                     {
-                                        
-                    		self.deathanim = %ai_zombie_crawl_death_v2;
-                    		self set_run_anim( "death4" );
-                    		self.run_combatanim = level.scr_anim["zombie"]["crawl4"];
-                    		self.crouchRunAnim = level.scr_anim["zombie"]["crawl4"];
-                    		self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl4"];
+                        self.deathanim = %ai_zombie_crawl_death_v2;
+                        self set_run_anim( "death4" );
+                        self.run_combatanim = level.scr_anim["zombie"]["crawl4"];
+                        self.crouchRunAnim = level.scr_anim["zombie"]["crawl4"];
+                        self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl4"];
                     }
                     else if( which_anim == 4 )
                     {
-                            self.deathanim = %ai_zombie_crawl_death_v1;
-                            self set_run_anim( "death3" );
-                            self.run_combatanim = level.scr_anim["zombie"]["crawl5"];
-                            self.crouchRunAnim = level.scr_anim["zombie"]["crawl5"];
-                            self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl5"];
+                        self.deathanim = %ai_zombie_crawl_death_v1;
+                        self set_run_anim( "death3" );
+                        self.run_combatanim = level.scr_anim["zombie"]["crawl5"];
+                        self.crouchRunAnim = level.scr_anim["zombie"]["crawl5"];
+                        self.crouchrun_combatanim = level.scr_anim["zombie"]["crawl5"];
                     }
-					
-				}
-			}
+                }
+            }
 
-			if( self.health > 0 )
-			{
-				// force gibbing if the zombie is still alive
+            if( self.health > 0 )
+            {
+                // force gibbing if the zombie is still alive
 				self thread animscripts\death::do_gib();
-			}
-		}
-	}
+            }
+        }
+    }
 }
 
 zombie_should_gib( amount, attacker, type )
@@ -1819,18 +1809,31 @@ do_player_playdialog(player_index, sound_to_play, waittime, response)
 // Called from animscripts\death.gsc
 zombie_death_animscript()
 {
-	self reset_attack_spot();
+    self reset_attack_spot();
 
-	// If no_legs, then use the AI no-legs death
-	if( self.has_legs && isDefined( self.a.gib_ref ) && self.a.gib_ref == "no_legs" )
-	{
-		self.deathanim = %ai_gib_bothlegs_gib;
-	}
+    // If no_legs, then use the AI no-legs death
+    if( self.has_legs && IsDefined( self.a.gib_ref ) && self.a.gib_ref == "no_legs" )
+    {
+        self.deathanim = %ai_gib_bothlegs_gib;
+    }
 
-	self.grenadeAmmo = 0;
+    self.grenadeAmmo = 0;
 
-	// Give attacker points
-	level zombie_death_points( self.origin, self.damagemod, self.damagelocation, self.attacker );
+    // Give attacker points & explosive vox
+    if( IsDefined( self.attacker ) && IsPlayer( self.attacker ) )
+    {
+        if( !IsDefined( level.player_is_speaking ) )
+        {
+            level.player_is_speaking = 0;
+        }
+        if( level.player_is_speaking != 1 && ( self.damagemod == "MOD_GRENADE" || self.damagemod == "MOD_GRENADE_SPLASH" || self.damagemod == "MOD_PROJECTILE" || self.damagemod == "MOD_ZOMBIE_BETTY" ) && !level.zombie_vars["zombie_insta_kill"] && RandomInt( 100 ) < 25 )
+        {
+            self.attacker thread maps\_sounds::explosive_kill_sound();
+        }
+    }
+
+    	level zombie_death_points( self.origin, self.damagemod, self.damagelocation, self.attacker );
+
 
 	if( self.damagemod == "MOD_BURNED" )
 	{
@@ -2016,9 +2019,30 @@ zombie_flame_damage( mod, player )
 
 zombie_death_event( zombie )
 {
-	zombie waittill( "death" );
+    zombie waittill( "death" );
 	zombie thread zombie_eye_glow_stop();
+
+    if( IsDefined( zombie.attacker ) && IsPlayer( zombie.attacker ) && !IsDefined( zombie.attacker.killstreak_cooldown ) || zombie.attacker.killstreak_cooldown == false )
+    {
+        if( !IsDefined( level.player_is_speaking ) )
+        {
+            level.player_is_speaking = 0;
+        }
+        if( level.player_is_speaking != 1 && RandomInt( 100 ) < 40 )
+        {
+            zombie.attacker.killstreak_cooldown = true;
+            zombie.attacker thread maps\_sounds::killstreak_sound();
+            zombie.attacker thread killstreak_cooldown_reset();
+        }
+    }
 }
+
+killstreak_cooldown_reset()
+{
+    wait 5; // Limit frequency
+    self.killstreak_cooldown = false;
+}
+
 
 // this is where zombies go into attack mode, and need different attributes set up
 zombie_setup_attack_properties()

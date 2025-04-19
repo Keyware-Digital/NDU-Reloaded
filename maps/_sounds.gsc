@@ -189,16 +189,15 @@ mystery_box_unlock_sound() {
 
 }
 
-/*mystery_box_haunt_sound() {
+mystery_box_haunt_sound_loop()
+{
 	wait 0.33;
-	mystery_box_haunt_sound = Spawn("script_origin", self.origin);
-	mystery_box_haunt_sound PlaySound("mystery_box_haunt", "mystery_box_haunt_sound_done");
-	mystery_box_haunt_sound waittill("mystery_box_haunt_sound_done");
-	mystery_box_haunt_sound Delete();
-
-	self notify("mystery_box_haunt_sound_finished");
-
-}*/
+    haunt_sound = Spawn("script_origin", self.origin);
+    haunt_sound PlayLoopSound("mystery_box_haunt");
+    self waittill("stop_haunt_sound");
+    haunt_sound StopLoopSound();
+    haunt_sound Delete();
+}
 
 cabinet_sound() {
 	cabinetSong = "cabinetbox_sting_" + RandomInt(3);

@@ -1,7 +1,7 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
-//#include maps\_sounds;
+#include maps\_sounds;
 
 init()
 {
@@ -199,7 +199,7 @@ include_zombie_weapon( weapon_name, in_box, weighting_func )
 
 init_weapons()
 {
-	//Only guns that are wall buy guns require their true cost, every other gun needs to have zero cost to prevent errors and confusion
+	// Only guns that are wall buy guns require their true cost, every other gun needs to have zero cost to prevent errors and confusion
 	// NDU: Reloaded
 	add_zombie_weapon( "m1921_thompson", "", 0 );
 	add_zombie_weapon( "mine_bouncing_betty", "", 0 );
@@ -212,18 +212,20 @@ init_weapons()
 	add_zombie_weapon( "sten_mk5", "", 0 );
 	//add_zombie_weapon( "zombie_cymbal_monkey", &"ZOMBIE_WEAPON_SATCHEL_2000", 2000, 3 );
 	add_zombie_weapon( "zombie_bowie_flourish",	"", 0 );
-	add_zombie_weapon( "zombie_type100_smg", "", 0 );
 
 	// Other
 	//add_zombie_weapon( "death_hands", 						&"PROTOTYPE_ZOMBIE_DEATH_HANDS_10000",		10000 );
 	//add_zombie_weapon( "knuckle_crack_hands", 				&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
 
 	// Cut content
+	//add_zombie_weapon( "kar98k_bayonet", "", 0 );
+	//add_zombie_weapon( "mosin_rifle_bayonet", "", 0 );
 	//add_zombie_weapon( "springfield_scoped_zombie_upgraded", "", 0 );
 	//add_zombie_weapon( "tesla_gun", "", 0 );
 	//add_zombie_weapon( "walther_prototype", "", 0 );
 	// JP weapons, to be removed because don't really fit in Nacht's europe setting
-	add_zombie_weapon( "type99_lmg", "", 0 );
+	//add_zombie_weapon( "type99_lmg", "", 0 );
+	//add_zombie_weapon( "zombie_type100_smg", "", 0 );
 	
 	// Pistols
 	add_zombie_weapon( "colt", "", 0 );
@@ -235,9 +237,7 @@ init_weapons()
                                                         		
 	// Bolt Action                                      		
 	add_zombie_weapon( "kar98k", "", 200 );
-	add_zombie_weapon( "kar98k_bayonet", "", 0 );	//to remove
 	add_zombie_weapon( "mosin_rifle", "", 0 );
-	add_zombie_weapon( "mosin_rifle_bayonet", "", 0 );	//to remove
 	add_zombie_weapon( "springfield", "", 0 );
 	add_zombie_weapon( "springfield_bayonet", "", 0 );
 	add_zombie_weapon( "type99_rifle", "", 0 );
@@ -620,15 +620,15 @@ treasure_chest_think(rand)
 		case "tokarev":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_TOKAREV";
 		    break;
-		case "type99_lmg":
+		/*case "type99_lmg":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_TYPE_99";
-		    break;
+		    break;*/
 		case "zombie_bowie_flourish":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_BOWIE";
 		    break;
-		case "zombie_type100_smg":
+		/*case "zombie_type100_smg":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_TYPE_100";
-		    break;
+		    break;*/
 	}
 
 	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryBox);
@@ -903,111 +903,145 @@ treasure_chest_weapon_spawn(chest, player)
     {
         player thread weapons_death_check();
     }
+//Padlock mk2 start
 
-	//Padlock mk2 start
-	
-    chanceOfPadlock = RandomInt(100);
+chanceOfPadlock = RandomInt(100);
 
-	//Teddy bear style chance of Padlock proc
+//Teddy bear style chance of Padlock proc
+if(level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
+{
+    chanceOfPadlock = chanceOfPadlock + 15;
+}
+else if(level.chest_accessed >= 8 && level.chest_accessed < 13) //30% chance to get lock between pull 8 and 12
+{
+    chanceOfPadlock = chanceOfPadlock + 30;
+}
+else if(level.chest_accessed >= 13) //50% chance to get lock after 12th pull
+{
+    chanceOfPadlock = 50;
+}
 
-    if(level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
+if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
+{
+    chest.boxlocked = true;
+    level.zombie_vars["enableFireSale"] = 0;
+    model SetModel("zmb_mdl_padlock");
+	self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
+	wait 0.5;											// edit: - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted.
+
+    // Start padlock animations in a separate thread
+    model thread animate_padlock();
+
+    // Play the haunting sound
+    self thread mystery_box_haunt_sound_loop(); // Call the new looping sound function
+
+    wait 0.5; // Keep your original delay for timing
+
+    players = GetPlayers();
+    for (i = 0; i < players.size; i++)
     {
-        chanceOfPadlock = chanceOfPadlock + 15;
+        players[i] thread maps\_sounds::crappy_weapon_sound();
     }
-    else if(level.chest_accessed >= 8 && level.chest_accessed < 13) //30% chance to get lock between pull 8 and 12
+
+    level.zombie_mystery_box_padlock = 1;
+    player maps\_zombiemode_score::add_to_player_score(950);
+
+    weapon_cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
+    chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", weapon_cost);
+
+    chest enable_trigger();
+
+    while(1)
     {
-        chanceOfPadlock = chanceOfPadlock + 30;
-    }
-    else if(level.chest_accessed >= 13) //50% chance to get lock after 12th pull
-    {
-        chanceOfPadlock = 50;
-    }
-
-    if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
-    {
-        chest.boxlocked = true;
-		level.zombie_vars["enableFireSale"] = 0;
-        model SetModel("zmb_mdl_padlock");
-		self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
-		wait 0.5;											// edit - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted. Please try it on your end,
-
-		// rough notes
-
-		// animate the padlock
-		//moveto(model.origin + (0, 0, bobHeight), 3, 2, 0.9); 
-		//rotateYaw(360, 10);
-
-		// attach fx to padlock
-		//fx_padlock = playFX("powerup_on", self.origin);
-
-		// play the hauting sound
-		//self PlayLoopSound("mystery_box_haunt");
-
-		players = GetPlayers();
-
-   		for (i = 0; i < players.size; i++) { 
-			players[i] thread maps\_sounds::crappy_weapon_sound();
-		}
-		
-		level.zombie_mystery_box_padlock = 1;
-        player maps\_zombiemode_score::add_to_player_score(950);
-
-		weapon_cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
-		
-        chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", weapon_cost);
-
-        chest enable_trigger();
-        
-        while(1)
+        chest waittill("trigger", player);
+        if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
         {
-            chest waittill("trigger", player);
-            if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
-            {
-				player thread maps\_sounds::mystery_box_unlock_sound();
+            // Play the unlock sound
+            player thread maps\_sounds::mystery_box_unlock_sound();
+            // Wait for the unlock sound to complete (adjust duration if needed)
+            wait 0.2; // Typical duration for a short sound effect
+            // Stop the haunting sound
+            self notify("stop_haunt_sound");
 
-                player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
+            player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
 
-				// Delete the FX
-            	//deleteFX();
-            
-           		// Delete the haunt sound
-          		// stopLoopSound(level.zmb_padlock_sound);
-                break;
-            }
-			else 
-			{
-				player play_interact_sound("no_money");
-			}
-            wait 0.05;
+            // Notify animation thread to stop
+            model notify("stop_padlock_animation");
+
+            break;
         }
-
-        level.zombie_vars["enableFireSale"] = 1;
-        chest SetHintString("");
-
-        model Delete();
-		level.zombie_mystery_box_padlock = 0;
-        level.chest_accessed = 0;
-        self notify( "randomization_done" ); 
-        return;
+        else
+        {
+            player play_interact_sound("no_money");
+        }
+        wait 0.05;
     }
 
-    level.chest_accessed++;
+    level.zombie_vars["enableFireSale"] = 1;
+    chest SetHintString("");
 
-	// Padlock mk2 end
+    model Delete();
+    level.zombie_mystery_box_padlock = 0;
+    level.chest_accessed = 0;
+    self notify("randomization_done");
+    return;
+}
 
-	self notify( "randomization_done" );
+level.chest_accessed++;
 
-    self.weapon_string = rand; // here's where the org get it's weapon type for the give function
- 
-    model thread timer_til_despawn(floatHeight);
-    self waittill( "weapon_grabbed" );
- 
-    if( !chest.timedOut )
+// Padlock mk2 end
+
+self notify("randomization_done");
+
+self.weapon_string = rand; // here's where the org get it's weapon type for the give function
+
+model thread timer_til_despawn(floatHeight);
+self waittill("weapon_grabbed");
+
+if(!chest.timedOut)
+{
+    model Delete();
+}
+
+return rand;
+}
+
+// Function to handle padlock bobbing and rotation animations
+animate_padlock()
+{
+    self endon("stop_padlock_animation"); // Stop animations when notified
+    self endon("death"); // Stop if model is deleted
+
+    bobHeight = 5; // Distance to bob up and down
+    bobTime = 2; // Time for one full bob cycle (up and down)
+    rotationTime = 6; // Time for one 360-degree rotation (sped up from 10 to 6)
+
+    while(1)
     {
-        model Delete();
+        // Bob up
+        self moveto(self.origin + (0, 0, bobHeight), bobTime / 2, bobTime / 4, bobTime / 4);
+        wait(bobTime / 2);
+
+        // Bob down
+        self moveto(self.origin - (0, 0, bobHeight), bobTime / 2, bobTime / 4, bobTime / 4);
+        wait(bobTime / 2);
+
+        // Rotation runs concurrently in a separate thread
+        self thread rotate_padlock(rotationTime);
     }
- 
-    return rand;
+}
+
+// Function to handle continuous 360-degree rotation
+rotate_padlock(rotationTime)
+{
+    self endon("stop_padlock_animation");
+    self endon("death");
+
+    while(1)
+    {
+        self rotateYaw(360, rotationTime); // Rotate 360 degrees
+        wait(rotationTime);
+    }
 }
 
 weapons_death_check() // reset the betties var on death ( may be used for other offhand vars if needed )
@@ -1155,8 +1189,8 @@ treasure_chest_give_weapon( weapon_string )
 		case "stg44":
 			self thread maps\_sounds::pickup_lmg_sound();
 			break;
-		case "type99_lmg":
-			self thread maps\_sounds::pickup_lmg_sound();
+		/*case "type99_lmg":
+			self thread maps\_sounds::pickup_lmg_sound();*/
 		//smg
 		case "mp40":
 			self thread maps\_sounds::pickup_smg_sound();
@@ -1167,9 +1201,9 @@ treasure_chest_give_weapon( weapon_string )
 		case "ppsh41":
 			self thread maps\_sounds::pickup_smg_sound();
 			break;
-		case "zombie_type100_smg":
+		/*case "zombie_type100_smg":
 			self thread maps\_sounds::pickup_smg_sound();
-			break;
+			break;*/
 		//shotgun
 		case "doublebarrel":
 			self thread maps\_sounds::pickup_shotgun_sound();
@@ -1259,17 +1293,17 @@ weapon_cabinet_think()
 
 	level.cabinetguns = [];
 	level.cabinetguns[0] = "kar98k_scoped_zombie";						// default ndu
-	level.cabinetguns[1] = "kar98k_bayonet";	
-	level.cabinetguns[2] = "m1garand";		
-	level.cabinetguns[3] = "m1921_thompson";						
-	level.cabinetguns[4] = "mosin_rifle_bayonet";
-	level.cabinetguns[5] = "mosin_rifle_scoped_zombie";
-	level.cabinetguns[6] = "mp40_bigammo_mp";
-	level.cabinetguns[7] = "ppsh41_drum";
-	level.cabinetguns[8] = "springfield_scoped_zombie";
-	level.cabinetguns[9] = "sten_mk5";
-	/*level.cabinetguns[10] = "bloodhound";
-	level.cabinetguns[11] = "placeholder";*/
+	level.cabinetguns[1] = "m1garand";		
+	level.cabinetguns[2] = "m1921_thompson";						
+	level.cabinetguns[3] = "mosin_rifle_scoped_zombie";
+	level.cabinetguns[4] = "mp40_bigammo_mp";
+	level.cabinetguns[5] = "ppsh41_drum";
+	level.cabinetguns[6] = "springfield_scoped_zombie";
+	level.cabinetguns[7] = "sten_mk5";
+	/*level.cabinetguns[8] = "bloodhound";
+	level.cabinetguns[9] = "placeholder";*/
+	//level.cabinetguns[10] = "kar98k_bayonet";
+	//level.cabinetguns[11] = "mosin_rifle_bayonet";
 	randomnumb = undefined;
 	weaponNameMysteryCabinet = undefined;
 	
@@ -1405,18 +1439,18 @@ weapon_cabinet_think()
 		case "kar98k_scoped_zombie":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_SCOPED";
 			break; 
-		case "kar98k_bayonet":
+		/*case "kar98k_bayonet":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_BAYONET";
-			break;
+			break;*/
 		case "m1garand":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_M1_GARAND";
 			break;  
 		case "m1921_thompson":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_DRUM";
 			break;
-		case "mosin_rifle_bayonet":
+		/*case "mosin_rifle_bayonet":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_MOSIN_RIFLE_BAYONET";
-			break;
+			break;*/
 		case "mosin_rifle_scoped_zombie":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_MOSIN_RIFLE_SCOPED";
 			break;
@@ -1525,12 +1559,12 @@ weapon_cabinet_think()
 		player thread maps\_sounds::killstreak_sound();		
 	}
 
-	// Play the knucklecrack animation only if the stg44_pap is picked up
-	if(chosenweapon == "stg44_pap")
+	// Play the knucklecrack animation only if the stg44_pap is picked up (disabled for balance)
+	/* if(chosenweapon == "stg44_pap")
 	{
 		//IPrintLn("FAUX PAP ANIM A-GO!");
 		player thread do_knuckle_crack();
-	}
+	}*/
 	
 	play_sound_at_pos( "close_chest", self.origin );
 	for( i = 0; i < doors.size; i++ )
@@ -1720,17 +1754,17 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		case "kar98k_scoped_zombie":
 				player thread maps\_sounds::pickup_sniper_sound();
 			break;
+		/*case "kar98k_bayonet":
+				player thread maps\_sounds::crappy_weapon_sound();
+			break;*/
 		case "mosin_rifle_scoped_zombie":
 				player thread maps\_sounds::pickup_sniper_sound();
 			break;
+		/*case "mosin_rifle_bayonet":
+				player thread maps\_sounds::crappy_weapon_sound();
+			break;*/
 		case "springfield_scoped_zombie":
 				player thread maps\_sounds::pickup_sniper_sound();
-			break;
-		case "kar98k_bayonet":
-				player thread maps\_sounds::crappy_weapon_sound();
-			break;
-		case "mosin_rifle_bayonet":
-				player thread maps\_sounds::crappy_weapon_sound();
 			break;
 	}
 

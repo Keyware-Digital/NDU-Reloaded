@@ -2372,44 +2372,76 @@ setup_player_vars()
         }
     }
 }
-
 player_reload_sounds()
 {
-	self endon( "death" );
+    self endon( "death" );
+    self endon( "disconnect" );
 
-	while(1)
+    self.reload_cooldown = false;
+
+    while( 1 )
     {
-        if(level.player_is_speaking != 1) {
+        // Wait for reload to start
+        self waittill( "reload_start" );
+        wait 0.05; // Small delay to sync with reloading_monitor()
 
-	        zombies = getaiarray("axis");
-
-	        for(i=0;i<zombies.size;i++)
-	        {
-
-		        if (zombies[i].origin[2] < self.origin[2] + 80 && zombies[i].origin[2] > self.origin[2] - 80 && Distance(zombies[i].origin, self.origin) > 15 * 15)
-		        {
-			        level.zombies_are_close = 0;
-		        }
-		        else if (zombies[i].origin[2] < self.origin[2] + 80 && zombies[i].origin[2] > self.origin[2] - 80 && Distance(zombies[i].origin, self.origin) <= 15 * 15)
-		        {
-			        level.zombies_are_close = 1;
-		        }
-	        }
-
-	        if(self.reloading && get_enemy_count() + level.zombie_total >= 6 && level.zombies_are_close == 1) //Play reload vox if reloading and at least six zombies are positioned 225 inches (18.75 feet) or less from a player
-	        {
-			    level.player_is_speaking = 1;
-
-                self thread maps\_sounds::reload_vox_sound();
-
-                self waittill("reloading_sound_finished");
-			    level.player_is_speaking = 0;
-	        }
+        // Skip if weapon is filtered (handled in reloading_monitor, but double-check)
+        current_weapon = self GetCurrentWeapon();
+        if( IsDefined( level.filtered_weapon ) && level.filtered_weapon.size > 0 )
+        {
+            for( i = 0; i < level.filtered_weapon.size; i++ )
+            {
+                if( IsDefined( level.filtered_weapon[i] ) && current_weapon == level.filtered_weapon[i] )
+                {
+                    //IPrintLnBold("Reload sound skipped for filtered weapon: " + current_weapon); // Debug
+                    continue; // Skip to next reload event
+                }
+            }
         }
-        wait(0.05);
-	}
-}
 
+        // Only proceed if not in cooldown and not speaking
+        if( !IsDefined( level.player_is_speaking ) )
+        {
+            level.player_is_speaking = 0;
+        }
+        if( level.player_is_speaking != 1 && !self.reload_cooldown )
+        {
+            // Check for nearby zombies
+            zombies = GetAiArray( "axis" );
+            level.zombies_are_close = 0;
+            for( i = 0; i < zombies.size; i++ )
+            {
+                if( IsDefined( zombies[i] ) && IsAlive( zombies[i] ) )
+                {
+                    // Check height and distance (using Distance() and 225 inches)
+                    if( zombies[i].origin[2] < self.origin[2] + 80 && zombies[i].origin[2] > self.origin[2] - 80 && Distance( zombies[i].origin, self.origin ) <= 225 )
+                    {
+                        level.zombies_are_close = 1;
+                        break; // One close zombie is enough
+                    }
+                }
+            }
+
+            // Play sound if conditions are met
+            if( self.reloading && get_enemy_count() + level.zombie_total >= 6 && level.zombies_are_close == 1 )
+            {
+                //IPrintLnBold("Reload sound triggered: zombies close, " + (get_enemy_count() + level.zombie_total) + " total enemies"); // Debug
+                self.reload_cooldown = true;
+                level.player_is_speaking = 1;
+                self thread maps\_sounds::reload_vox_sound();
+                self waittill( "reloading_sound_finished" );
+                level.player_is_speaking = 0;
+                self thread reload_cooldown_reset();
+            }
+        }
+        wait 0.05; // Small wait to prevent tight looping
+    }
+}
+reload_cooldown_reset()
+{
+    wait 5; // Cooldown duration to cover reload animations
+    self.reload_cooldown = false;
+}
 player_no_ammo_sounds()
 {
 	self endon( "death" );

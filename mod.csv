@@ -324,11 +324,9 @@ xmodel,zombie_teddybear
 xmodel,static_berlin_ger_radio_d
 xmodel,collision_geo_32x32x32
 weapon,sp/dp28
-weapon,sp/kar98k_bayonet
 weapon,sp/m1921_thompson
 weapon,sp/mine_bouncing_betty
 weapon,sp/mosin_rifle
-weapon,sp/mosin_rifle_bayonet
 weapon,sp/mosin_rifle_scoped_zombie
 weapon,sp/mp40_bigammo_mp
 weapon,sp/ppsh41
@@ -339,10 +337,8 @@ weapon,sp/sten_mk5
 weapon,sp/stg44_pap
 weapon,sp/svt40
 weapon,sp/tokarev
-weapon,sp/type99_lmg
 weapon,sp/zombie_bowie_flourish
 weapon,sp/perks_a_cola
-weapon,sp/zombie_type100_smg
 weapon,sp/zombie_death_hands
 weapon,sp/zombie_knuckle_crack
 weapon,sp/molotov
