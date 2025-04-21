@@ -39,6 +39,7 @@ main() {
     maps\_zombiemode_perks::init();
     maps\_zombiemode_radio::init_radio();
 
+
     init_utility();
 
     // register a client system...
@@ -598,6 +599,7 @@ onPlayerSpawned() {
                 self thread player_lunge_knife_exert_sounds();
                 self thread player_throw_stielhandgranate_exert_sounds();
                 self thread player_throw_molotov_exert_sounds();
+                self thread player_swarm_monitor(); 
             }
         }
 
@@ -1863,6 +1865,7 @@ player_fake_death() {
     self AllowCrouch(false);
     self.ignoreme = true;
     self EnableInvulnerability();
+    self thread maps\_sounds::death_sound();
 
     wait(1);
     self FreezeControls(true);
@@ -2542,4 +2545,61 @@ player_throw_molotov_exert_sounds()
             level.player_is_speaking = 0;
         }
     }
+}
+
+// Monitors each player for swarm conditions (6+ zombies within 175 inches)
+player_swarm_monitor()
+{
+    self endon("death");
+    self endon("disconnect");
+
+    if (!IsDefined(self) || !IsPlayer(self))
+    {
+        return;
+    }
+
+    self.swarm_cooldown = false;
+
+    while (1)
+    {
+        if (!IsDefined(level.player_is_speaking))
+        {
+            level.player_is_speaking = 0;
+        }
+        if (level.player_is_speaking != 1 && !self.swarm_cooldown)
+        {
+            zombies = GetAiArray("axis");
+            zombies_nearby = 0;
+            for (i = 0; i < zombies.size; i++)
+            {
+                if (IsDefined(zombies[i]) && IsAlive(zombies[i]))
+                {
+                    if (zombies[i].origin[2] < self.origin[2] + 80 && 
+                        zombies[i].origin[2] > self.origin[2] - 80 && 
+                        Distance(zombies[i].origin, self.origin) <= 200)
+                    {
+                        zombies_nearby++;
+                    }
+                }
+            }
+
+            if (zombies_nearby >= 6)
+            {
+                self.swarm_cooldown = true;
+                level.player_is_speaking = 1;
+                self thread maps\_sounds::swarm_sound();
+                self waittill_notify_or_timeout("_swarm_sound_done", 5);
+                level.player_is_speaking = 0;
+                self thread swarm_cooldown_reset();
+            }
+        }
+        wait 0.5;
+    }
+}
+
+// Resets the swarm sound cooldown
+swarm_cooldown_reset()
+{
+    wait 5;
+    self.swarm_cooldown = false;
 }

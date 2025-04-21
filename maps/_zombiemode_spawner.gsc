@@ -25,6 +25,7 @@ init()
 	array_thread( zombies, ::add_spawn_function, ::zombie_spawn_init );
 	array_thread( zombies, ::add_spawn_function, ::zombie_rise );
 }
+
 init_risers()
 {
 	mn = getDvar("mapname");
@@ -583,100 +584,131 @@ tear_into_building()
 {
 	//chrisp - added this 
 	//checkpass = false;
-	
-	self endon( "death" ); 
+    self endon("death"); 
 
-	self zombie_history( "tear_into_building -> start" );
+    self zombie_history("tear_into_building -> start");
 
-	while( 1 )
-	{
-		if( isDefined( self.first_node.script_noteworthy ) )
-		{
-			if( self.first_node.script_noteworthy == "no_blocker" )
-			{
-				return;
-			}
-		}
+    while(1)
+    {
+        if(isDefined(self.first_node.script_noteworthy))
+        {
+            if(self.first_node.script_noteworthy == "no_blocker")
+            {
+                return;
+            }
+        }
 
-		if( !isDefined( self.first_node.target ) )
-		{
-			return;
-		}
+        if(!isDefined(self.first_node.target))
+        {
+            return;
+        }
 
-		if( all_chunks_destroyed( self.first_node.barrier_chunks ) )
-		{
-			self zombie_history( "tear_into_building -> all chunks destroyed" );
-		}
+        if(all_chunks_destroyed(self.first_node.barrier_chunks))
+        {
+            self zombie_history("tear_into_building -> all chunks destroyed");
+        }
 
-		// Pick a spot to tear down
-		if( !get_attack_spot( self.first_node ) )
-		{
-			self zombie_history( "tear_into_building -> Could not find an attack spot" );
-			wait( 0.5 );
-			continue;
-		}
+        // Pick a spot to tear down
+        if(!get_attack_spot(self.first_node))
+        {
+            self zombie_history("tear_into_building -> Could not find an attack spot");
+            wait(0.5);
+            continue;
+        }
 
-		self.goalradius = 4;
-		self SetGoalPos( self.attacking_spot, self.first_node.angles );
-		self waittill( "goal" );
+        self.goalradius = 4;
+        self SetGoalPos(self.attacking_spot, self.first_node.angles);
+        self waittill("goal");
 		//	MM- 05/09
 		//	If you wait for "orientdone", you NEED to also have a timeout.
 		//	Otherwise, zombies could get stuck waiting to do their facing.
-		self waittill_notify_or_timeout( "orientdone", 1 );
+        self waittill_notify_or_timeout("orientdone", 1);
 
-		self zombie_history( "tear_into_building -> Reach position and orientated" );		
+        self zombie_history("tear_into_building -> Reach position and orientated");  
 
 		// chrisp - do one final check to make sure that the boards are still torn down
-		// this *mostly* prevents the zombies from coming through the windows as you are boarding them up. 
-		if( all_chunks_destroyed( self.first_node.barrier_chunks ) )
-		{
-			self zombie_history( "tear_into_building -> all chunks destroyed" );
-			for( i = 0; i < self.first_node.attack_spots_taken.size; i++ )
-			{
-				self.first_node.attack_spots_taken[i] = false;
-			}
-			return;
-		}
+		// this *mostly* prevents the zombies from coming through the windows as you are boarding them up.       
 
-		// Now tear down boards
-		while( 1 )
-		{
-			chunk = get_closest_non_destroyed_chunk( self.origin, self.first_node.barrier_chunks );
-	
-			if( !isDefined( chunk ) )
-			{
-				for( i = 0; i < self.first_node.attack_spots_taken.size; i++ )
-				{
-					self.first_node.attack_spots_taken[i] = false;
-				}
-				return; 
-			}
+        // Check for blockers sound conditions
+        players = get_players();
+        zombies_at_window = 0;
+        ai = GetAiArray("axis");
+        for(i = 0; i < ai.size; i++)
+        {
+            if(isDefined(ai[i].attacking_node) && ai[i].attacking_node == self.first_node && ai[i] != self)
+            {
+                zombies_at_window++;
+            }
+        }
 
-			self zombie_history( "tear_into_building -> animating" );
+        // Include the current zombie in the count
+        zombies_at_window++;
 
-			tear_anim = get_tear_anim(chunk, self);
-			chunk.target_by_zombie = true;
-			self AnimScripted( "tear_anim", self.origin, self.first_node.angles, tear_anim );
-			self zombie_tear_notetracks( "tear_anim", chunk, self.first_node );
-			
-			//chris - adding new window attack & gesture animations ;)
-			attack = self should_attack_player_thru_boards();
-			if(isDefined(attack) && !attack && self.has_legs)
-			{
-				self do_a_taunt();
-			}					
-			//chrisp - fix the extra tear anim bug
-			if( all_chunks_destroyed( self.first_node.barrier_chunks ) )
-			{
-				for( i = 0; i < self.first_node.attack_spots_taken.size; i++ )
-				{
-					self.first_node.attack_spots_taken[i] = false;
-				}
-				return;
-			}	
-		}
-		self reset_attack_spot();
-	}		
+        if(zombies_at_window >= 2)
+        {
+            for(i = 0; i < players.size; i++)
+            {
+                if(!isDefined(level.player_is_speaking))
+                {
+                    level.player_is_speaking = 0;
+                }
+                if(level.player_is_speaking != 1 && DistanceSquared(players[i].origin, self.first_node.origin) <= 150 * 150)
+                {
+                    level.player_is_speaking = 1;
+                    players[i] thread maps\_sounds::blockers_sound();
+                    players[i] waittill("_blockers_sound_done");
+                    level.player_is_speaking = 0;
+                }
+            }
+        }
+
+        if(all_chunks_destroyed(self.first_node.barrier_chunks))
+        {
+            self zombie_history("tear_into_building -> all chunks destroyed");
+            for(i = 0; i < self.first_node.attack_spots_taken.size; i++)
+            {
+                self.first_node.attack_spots_taken[i] = false;
+            }
+            return;
+        }
+
+        // Now tear down boards
+        while(1)
+        {
+            chunk = get_closest_non_destroyed_chunk(self.origin, self.first_node.barrier_chunks);
+    
+            if(!isDefined(chunk))
+            {
+                for(i = 0; i < self.first_node.attack_spots_taken.size; i++)
+                {
+                    self.first_node.attack_spots_taken[i] = false;
+                }
+                return; 
+            }
+
+            self zombie_history("tear_into_building -> animating");
+
+            tear_anim = get_tear_anim(chunk, self);
+            chunk.target_by_zombie = true;
+            self AnimScripted("tear_anim", self.origin, self.first_node.angles, tear_anim);
+            self zombie_tear_notetracks("tear_anim", chunk, self.first_node);
+            
+            attack = self should_attack_player_thru_boards();
+            if(isDefined(attack) && !attack && self.has_legs)
+            {
+                self do_a_taunt();
+            }
+            if(all_chunks_destroyed(self.first_node.barrier_chunks))
+            {
+                for(i = 0; i < self.first_node.attack_spots_taken.size; i++)
+                {
+                    self.first_node.attack_spots_taken[i] = false;
+                }
+                return;
+            }    
+        }
+        self reset_attack_spot();
+    }        
 }
 /*------------------------------------
 checks to see if the zombie should 
@@ -1469,7 +1501,7 @@ zombie_gib_on_damage()
                 {
                     level.player_is_speaking = 0;
                 }
-                if( level.player_is_speaking != 1 && Distance( attacker.origin, self.origin ) > 450 && !level.zombie_vars["zombie_insta_kill"] && RandomInt( 100 ) < 25 )
+                if( level.player_is_speaking != 1 && Distance( attacker.origin, self.origin ) > 450 && !level.zombie_vars["zombie_insta_kill"] && RandomInt( 100 ) < 15 )	// was 25
                 {
                     attacker thread maps\_sounds::headshot_sound();
                 }
@@ -1826,7 +1858,7 @@ zombie_death_animscript()
         {
             level.player_is_speaking = 0;
         }
-        if( level.player_is_speaking != 1 && ( self.damagemod == "MOD_GRENADE" || self.damagemod == "MOD_GRENADE_SPLASH" || self.damagemod == "MOD_PROJECTILE" || self.damagemod == "MOD_ZOMBIE_BETTY" ) && !level.zombie_vars["zombie_insta_kill"] && RandomInt( 100 ) < 25 )
+        if( level.player_is_speaking != 1 && ( self.damagemod == "MOD_GRENADE" || self.damagemod == "MOD_GRENADE_SPLASH" || self.damagemod == "MOD_PROJECTILE" || self.damagemod == "MOD_ZOMBIE_BETTY" ) && !level.zombie_vars["zombie_insta_kill"] && RandomInt( 100 ) < 15 )	// was 25
         {
             self.attacker thread maps\_sounds::explosive_kill_sound();
         }
@@ -2016,19 +2048,26 @@ zombie_flame_damage( mod, player )
 	return false;
 }
 
-
-zombie_death_event( zombie )
+zombie_death_event(zombie)
 {
-    zombie waittill( "death" );
-	zombie thread zombie_eye_glow_stop();
+    zombie waittill("death");
+    zombie thread zombie_eye_glow_stop();
 
-    if( IsDefined( zombie.attacker ) && IsPlayer( zombie.attacker ) && !IsDefined( zombie.attacker.killstreak_cooldown ) || zombie.attacker.killstreak_cooldown == false )
+    // Check if attacker is defined and is a player
+    if(IsDefined(zombie.attacker) && IsPlayer(zombie.attacker))
     {
-        if( !IsDefined( level.player_is_speaking ) )
+        // Initialize killstreak_cooldown if undefined
+        if(!IsDefined(zombie.attacker.killstreak_cooldown))
+        {
+            zombie.attacker.killstreak_cooldown = false;
+        }
+
+        // Check speaking status and random chance
+        if(!IsDefined(level.player_is_speaking))
         {
             level.player_is_speaking = 0;
         }
-        if( level.player_is_speaking != 1 && RandomInt( 100 ) < 40 )
+        if(level.player_is_speaking != 1 && !zombie.attacker.killstreak_cooldown && RandomInt(100) < 15 ) // was 40
         {
             zombie.attacker.killstreak_cooldown = true;
             zombie.attacker thread maps\_sounds::killstreak_sound();
@@ -2042,7 +2081,6 @@ killstreak_cooldown_reset()
     wait 5; // Limit frequency
     self.killstreak_cooldown = false;
 }
-
 
 // this is where zombies go into attack mode, and need different attributes set up
 zombie_setup_attack_properties()
