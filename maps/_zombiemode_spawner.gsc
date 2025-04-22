@@ -2700,6 +2700,18 @@ wait time;
 self delete();
 }
 
+get_number_variants(aliasPrefix)
+{
+		for(i=0; i<100; i++)
+		{
+			if( !SoundExists( aliasPrefix + "_" + i) )
+			{
+				//iprintlnbold(aliasPrefix +"_" + i);
+				return i;
+			}
+		}
+}
+
 /*play_raygun_dialog(player_index)
 {
 		
@@ -2732,21 +2744,8 @@ self delete();
 			self.vox_kill_ray_available = self.vox_kill_ray;
 		}
 
-}*/
-
-get_number_variants(aliasPrefix)
-{
-		for(i=0; i<100; i++)
-		{
-			if( !SoundExists( aliasPrefix + "_" + i) )
-			{
-				//iprintlnbold(aliasPrefix +"_" + i);
-				return i;
-			}
-		}
 }
 
-/*
 play_death_vo(hit_location, player,mod,zombie)
 {
 	// CHRISP - adding some modifiers here so that it doens't play 100% of the time 

@@ -97,12 +97,32 @@ bowie_think()
 				bbPrint( "zombie_uses: playername %s playerscore %d round %d cost %d name %s x %f y %f z %f type weapon",
 						player.playername, player.score, level.round_number, cost, "bowie_knife", self.origin );
 
-				player give_bowie(); 
+                // Add level.player_is_speaking check
+                if( !IsDefined( level.player_is_speaking ) )
+                {
+                    level.player_is_speaking = 0;
+                }
+                if( level.player_is_speaking == 0 )
+                {
+                    level.player_is_speaking = 1;
+                    player give_bowie(); 
+                    level.player_is_speaking = 0;
+                }
 			}
 			else
 			{
 				play_sound_on_ent( "no_purchase" );
-				player thread maps\_zombiemode_perks::play_no_money_perk_dialog();
+                // Add level.player_is_speaking check
+                if( !IsDefined( level.player_is_speaking ) )
+                {
+                    level.player_is_speaking = 0;
+                }
+                if( level.player_is_speaking == 0 )
+                {
+                    level.player_is_speaking = 1;
+					player thread maps\_zombiemode_perks::play_no_money_perk_dialog();
+                    level.player_is_speaking = 0;
+                }
 			}
 		}
 	}

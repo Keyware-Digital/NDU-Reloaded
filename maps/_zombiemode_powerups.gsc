@@ -574,6 +574,7 @@ powerup_grab() {
                         break;
                     case "death_machine":
                         level thread death_machine_powerup(self);
+                        players[i] thread powerup_vo("death_machine");
                         break;
                     case "nuke":
                         level thread nuke_powerup(self);

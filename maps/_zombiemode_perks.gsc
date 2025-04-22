@@ -237,10 +237,13 @@ perk_hud_create(perk) {
     self.perk_hud[perk] = hud;
 }
 
-perk_hud_destroy(perk) {
-
-    self.perk_hud[perk] destroy_hud();
-    self.perk_hud[perk] = undefined;
+perk_hud_destroy(perk)
+{
+    if (isDefined(self.perk_hud) && isDefined(self.perk_hud[perk]))
+    {
+        self.perk_hud[perk] destroy_hud();
+        self.perk_hud[perk] = undefined;
+    }
 }
 
 play_no_money_perk_dialog() {
@@ -432,55 +435,50 @@ perks_zombie_hit_effect_check_health(health, attacker)
 	self.health = health;
 }
 
-solo_quickrevive() // numan solo revive function
+solo_quickrevive() // numan's solo revive function; edited
 {
     // gather some info
-
     self.inSoloRevive = true;
     self.firstPistol = level.player_specific_add_weapon[maps\_zombiemode_weapons::get_player_index(self)];
     self.currentWeapon = self GetCurrentWeapon();
     self.currentStance = self GetStance();
-    clipAmmo = undefined;
-    weaponAmmo = undefined;
+    clipAmmo = [];
+    weaponAmmo = [];
     lastStandAmmo = undefined;
     lastStandGun = undefined;
     lastStandClip = undefined;
 
-    playerweapons = self GetWeaponsList(); // returns an array of weapons and also weapons ammo
+    // Save weapons and ammo
+    playerweapons = self GetWeaponsList();
     for (i = 0; i < playerweapons.size; i++) {
         clipAmmo[i] = self GetWeaponAmmoClip(playerweapons[i]);
         weaponAmmo[i] = self GetWeaponAmmoStock(playerweapons[i]);
         wait 0.05;
     }
 
-	if (isDefined(self.muleLastWeapon))
-	{
-		self TakeWeapon(self.muleLastWeapon);
-	}
+    // Handle muleLastWeapon after saving ammo
+    if (isDefined(self.muleLastWeapon)) {
+        // Don’t take muleLastWeapon here; let restoration handle it
+    }
 
     if (self IsThrowingGrenade()) {
         self FreezeControls(true); // literally just to throw player's current grenade if they're stupid enough to play hot potato
         wait 0.05;
         self FreezeControls(false);
     }
-
     // start zombies targeting spawn struct instead. Rest is changed in zombiemode_spawner find_flesh() because we have to overwrite regular targeting.
-
     self.ignoreme = true;
-
     // put player in prone for now
-
     self AllowSprint(false);
     self AllowStand(false);
     self AllowCrouch(false);
     self SetStance("prone");
 
     self VisionSetNaked("laststand", 1);
-
     // if player has better downed gun, give it and check for ammo, then return it later
-
     self DisableWeaponCycling();
 
+    // Set last stand pistol
     if (self HasWeapon("ray_gun_mk1_v2")) {
         lastStandAmmo = 20;
         lastStandClip = 20;
@@ -504,7 +502,6 @@ solo_quickrevive() // numan solo revive function
     }
 
     self TakeAllWeapons();
-
     self GiveWeapon(lastStandGun);
     self SwitchToWeapon(lastStandGun);
     self SetWeaponAmmoClip(lastStandGun, lastStandClip);
@@ -524,7 +521,6 @@ solo_quickrevive() // numan solo revive function
     self.soloReviveProgressBar maps\_hud_util::updateBar(0.01, 1 / soloReviveTime);
 
     // wait for revive and play text
-
     self.revive_hud setText( &"GAME_REVIVING", " ", self);
     self maps\_laststand::revive_hud_show();
     self.revive_hud.alignX = "center";
@@ -543,21 +539,42 @@ solo_quickrevive() // numan solo revive function
         self maps\_laststand::revive_hud_hide();
     }
 
-    // revert everything
+    // Initialize muleCount if not set
+    if (!isDefined(self.muleCount)) {
+        if (!self HasPerk("specialty_extraammo")) {
+            self.muleCount = level.zombie_vars["mulekick_min_weapon_slots"];
+        } else {
+            self.muleCount = level.zombie_vars["mulekick_max_weapon_slots"];
+        }
+    }
 
+    // Restore weapons
     if (self.currentWeapon != lastStandGun) {
         self TakeAllWeapons();
     }
 
+    restoredWeapons = 0;
     for (i = 0; i < playerweapons.size; i++) {
+        if (!isDefined(playerweapons[i])) {
+            continue;
+        }
         if (weaponType(playerweapons[i]) == "grenade") {
             self GiveWeapon(playerweapons[i]);
-            self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
-        } else {
+            if (isDefined(clipAmmo[i])) {
+                self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
+            }
+        } else if (restoredWeapons < self.muleCount) {
             //IPrintLn(playerweapons[i]);
             self GiveWeapon(playerweapons[i]);
-            self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
-            self SetWeaponAmmoStock(playerweapons[i], weaponAmmo[i]);
+            if (isDefined(clipAmmo[i])) {
+                self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
+            } else {
+            }
+            if (isDefined(weaponAmmo[i])) {
+                self SetWeaponAmmoStock(playerweapons[i], weaponAmmo[i]);
+            } else {
+            }
+            restoredWeapons++;
         }
         wait 0.05;
     }
@@ -577,6 +594,12 @@ solo_quickrevive() // numan solo revive function
     self SetStance(self.currentStance);
 
     self.ignoreme = false;
+
+    if (!self HasPerk("specialty_extraammo")) {
+        self.muleLastWeapon = undefined;
+    }
+
+    self notify("player_revived"); // Notify for other scripts
 }
 
 mule_kick_function(old_weapon, new_weapon)

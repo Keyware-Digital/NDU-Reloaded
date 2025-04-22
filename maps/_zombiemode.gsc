@@ -2375,6 +2375,7 @@ setup_player_vars()
         }
     }
 }
+
 player_reload_sounds()
 {
     self endon( "death" );
@@ -2445,39 +2446,84 @@ reload_cooldown_reset()
     wait 5; // Cooldown duration to cover reload animations
     self.reload_cooldown = false;
 }
+
 player_no_ammo_sounds()
 {
-	self endon( "death" );
+    self endon("death");
+    self endon("disconnect");
 
-	while(1)
-	{
-        if(level.player_is_speaking == 0) {
+    self.no_ammo_cooldown = false;
 
-            current_weapon = self GetCurrentWeapon();
-            for ( i = 0; i < level.filtered_weapon.size; i++ )
+    while(1)
+    {
+        // Skip if in Last Stand
+        if(self maps\_laststand::player_is_in_laststand())
+        {
+            wait 0.5;
+            continue;
+        }
+
+        // Skip if on cooldown or speaking
+        if(self.no_ammo_cooldown || level.player_is_speaking == 1)
+        {
+            wait 0.5;
+            continue;
+        }
+
+        // Get current weapon
+        current_weapon = self GetCurrentWeapon();
+
+        // Skip invalid or filtered weapons
+        if(!IsDefined(current_weapon) || current_weapon == "none" || current_weapon == "zombie_perk_bottle_doubletap" || 
+           current_weapon == "zombie_perk_bottle_jugg" || current_weapon == "zombie_perk_bottle_revive" || 
+           current_weapon == "zombie_perk_bottle_sleight" || current_weapon == "mine_bouncing_betty" || 
+           current_weapon == "syrette" || current_weapon == "zombie_knuckle_crack" || current_weapon == "zombie_bowie_flourish")
+        {
+            wait 0.5;
+            continue;
+        }
+        if(IsDefined(level.filtered_weapon) && level.filtered_weapon.size > 0)
+        {
+            for(i = 0; i < level.filtered_weapon.size; i++)
             {
-                if ( current_weapon == level.filtered_weapon[i])
+                if(IsDefined(level.filtered_weapon[i]) && current_weapon == level.filtered_weapon[i])
                 {
-                    return;
+                    //IPrintLnBold("No ammo sound skipped for filtered weapon: " + current_weapon); // Debug
+                    wait 0.5;
+                    continue;
                 }
             }
-
-            self waittill("weapon_fired"); //Prevent the no ammo vox sound from playing if ammo is depleted other than from firing the weapon
-
-            totalCurrentWeaponAmmo = self GetAmmoCount(self GetCurrentWeapon()); //current clip + reserve ammo
-            if(totalCurrentWeaponAmmo == 0) {
-			    level.player_is_speaking = 1;
-
-                self thread maps\_sounds::no_ammo_vox();
-                self waittill("no_ammo_sound_finished");
-
-			    level.player_is_speaking = 0;
-                while(totalCurrentWeaponAmmo == self GetAmmoCount(self GetCurrentWeapon())) //Wait for the ammo to change to something other than what we caught during low ammo
-			        wait 0.1;
-            }
         }
-        wait(0.05);
-	}
+
+        // Check ammo count
+        totalCurrentWeaponAmmo = self GetAmmoCount(current_weapon);
+        if(totalCurrentWeaponAmmo == 0)
+        {
+            // Delay to confirm no ammo (handles weapon switches)
+            wait 2; // Matches Treyarch's delay
+            if(self GetCurrentWeapon() != current_weapon || self GetAmmoCount(current_weapon) != 0)
+            {
+                //IPrintLnBold("No ammo sound skipped: weapon changed or ammo restored"); // Debug
+                wait 0.5;
+                continue;
+            }
+
+            //IPrintLnBold("No ammo sound triggered for weapon: " + current_weapon); // Debug
+            self.no_ammo_cooldown = true;
+            level.player_is_speaking = 1;
+            self thread maps\_sounds::no_ammo_vox();
+            self waittill("no_ammo_sound_finished");
+            level.player_is_speaking = 0;
+            self thread no_ammo_cooldown_reset();
+        }
+
+        wait 0.5; // Check every 0.5 seconds
+    }
+}
+no_ammo_cooldown_reset()
+{
+    wait 20; // Matches Treyarch's cooldown
+    self.no_ammo_cooldown = false;
 }
 
 player_lunge_knife_exert_sounds()
@@ -2486,7 +2532,7 @@ player_lunge_knife_exert_sounds()
 
     while(1)
     {
-        wait (0.01); //was 1.25, moved "waits" to sounds.gsc.
+        wait (0.01); // was 1.25, moved "waits" to sounds.gsc.
 
         if(level.player_is_speaking == 0) {
             if(self IsMeleeing()) {
@@ -2596,7 +2642,6 @@ player_swarm_monitor()
         wait 0.5;
     }
 }
-
 // Resets the swarm sound cooldown
 swarm_cooldown_reset()
 {

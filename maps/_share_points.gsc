@@ -41,7 +41,7 @@ points_deposit(bank_deposit, bank_deposit_trigger, players) {
 
 	    if(is_player_valid(player) && player isTouching (bank_deposit_trigger) && player useButtonPressed() && player.score >= 1000) {
             bank_deposit thread maps\_sounds::cash_register_sound(); // Threaded so the rest of the code doesn't wait for the sound to finish playing
-			wait (0.5); // The delay between deposits
+			wait (0.25); // The delay between deposits, was 0.5
             player maps\_zombiemode_score::minus_to_player_score(1000);
             level.shared_points += 1000;
 	    }
@@ -66,7 +66,7 @@ points_withdraw(bank_withdraw, bank_withdraw_trigger, withdrawCost, players) {
         if(is_player_valid(player) && player isTouching (bank_withdraw_trigger) && player useButtonPressed() && level.shared_points > 0 && player.score >= 100) {
             player maps\_zombiemode_score::minus_to_player_score(withdrawCost);
             bank_withdraw thread maps\_sounds::cash_register_sound(); // Threaded so the rest of the code doesn't wait for the sound to finish playing
-			wait (0.5); // The delay between withdrawls
+			wait (0.25); // The delay between withdrawls, was 0.5
             player maps\_zombiemode_score::add_to_player_score(1000);
            	level.shared_points -= 1000;
         }

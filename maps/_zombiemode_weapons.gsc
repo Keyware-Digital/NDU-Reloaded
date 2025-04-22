@@ -535,7 +535,7 @@ treasure_chest_think(rand)
 
 	level thread treasure_chest_user_hint( self, user );
 
-	//Commence hintstring weapon name value switch for each weapon in the mystery box
+	// Commence hintstring weapon name value switch for each weapon in the mystery box
 
 	switch(weapon_spawn_org.weapon_string)
 	{
@@ -903,20 +903,20 @@ treasure_chest_weapon_spawn(chest, player)
     {
         player thread weapons_death_check();
     }
-//Padlock mk2 start
+// Padlock mk2 start
 
 chanceOfPadlock = RandomInt(100);
 
-//Teddy bear style chance of Padlock proc
+// Teddy bear style chance of Padlock proc
 if(level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
 {
     chanceOfPadlock = chanceOfPadlock + 15;
 }
-else if(level.chest_accessed >= 8 && level.chest_accessed < 13) //30% chance to get lock between pull 8 and 12
+else if(level.chest_accessed >= 8 && level.chest_accessed < 13) // 30% chance to get lock between pull 8 and 12
 {
     chanceOfPadlock = chanceOfPadlock + 30;
 }
-else if(level.chest_accessed >= 13) //50% chance to get lock after 12th pull
+else if(level.chest_accessed >= 13) // 50% chance to get lock after 12th pull
 {
     chanceOfPadlock = 50;
 }
@@ -1134,8 +1134,8 @@ treasure_chest_give_weapon( weapon_string )
 
 	switch(weapon_string)
 	{	
-		//mystery box
-		//great
+		// mystery box
+		// great
 		case "30cal_bipod":
 		self thread maps\_sounds::great_weapon_sound();
 			break; 
@@ -1145,14 +1145,14 @@ treasure_chest_give_weapon( weapon_string )
 		case "mg42_bipod":
 			self thread maps\_sounds::great_weapon_sound();
 			break;  
-		//wunderweps
+		// wunderweps
 		case "ray_gun_mk1_v2":
 			self thread maps\_sounds::great_weapon_sound();
 			break;
 		/*case "zombie_cymbal_monkey":
 			self thread maps\_sounds::great_weapon_sound();
 			break;*/
-		//crappy
+		// crappy
 		case "kar98k":
 			self thread maps\_sounds::crappy_weapon_sound();
 			break;
@@ -1165,11 +1165,11 @@ treasure_chest_give_weapon( weapon_string )
 		case "molotov":
 			self thread maps\_sounds::crappy_weapon_sound();
 			break;
-		//impartial
+		// impartial
 		case "sw_357":
 			self thread maps\_sounds::no_money_sound();
 			break;
-		//semi-auto
+		// semi-auto
 		case "gewehr43":
 			self thread maps\_sounds::pickup_semi_sound();
 			break;
@@ -1179,7 +1179,7 @@ treasure_chest_give_weapon( weapon_string )
 		case "svt40":
 			self thread maps\_sounds::pickup_semi_sound();
 			break;
-		//automatic-rifle
+		// automatic-rifle
 		case "bar":
 			self thread maps\_sounds::pickup_lmg_sound();
 			break;
@@ -1191,7 +1191,7 @@ treasure_chest_give_weapon( weapon_string )
 			break;
 		/*case "type99_lmg":
 			self thread maps\_sounds::pickup_lmg_sound();*/
-		//smg
+		// smg
 		case "mp40":
 			self thread maps\_sounds::pickup_smg_sound();
 			break;
@@ -1204,7 +1204,7 @@ treasure_chest_give_weapon( weapon_string )
 		/*case "zombie_type100_smg":
 			self thread maps\_sounds::pickup_smg_sound();
 			break;*/
-		//shotgun
+		// shotgun
 		case "doublebarrel":
 			self thread maps\_sounds::pickup_shotgun_sound();
 			break;
@@ -1214,7 +1214,7 @@ treasure_chest_give_weapon( weapon_string )
 		case "shotgun":
 			self thread maps\_sounds::pickup_shotgun_sound();
 			break;
-		//misc
+		// misc
 		case "mine_bouncing_betty":
 			self thread maps\_sounds::pickup_betty_sound();
 			break;
@@ -1227,7 +1227,7 @@ treasure_chest_give_weapon( weapon_string )
 		case "m1garand_gl":
 			self thread maps\_sounds::pickup_panzerschrek_sound();
 			break;
-		//scoped
+		// scoped
 		case "ptrs41_zombie":
 			self thread maps\_sounds::pickup_sniper_sound();
 			break;
@@ -1275,7 +1275,7 @@ treasure_chest_give_weapon( weapon_string )
 weapon_cabinet_think()
 {
 
-	weapon_cost = 1900;	//costs twice as much as the regular mystery box
+	weapon_cost = 1900;	// costs twice as much as the regular mystery box
 
 	if( isDefined( level.zombie_weapon_cabinet_cost ) )
 	{
@@ -1479,9 +1479,9 @@ weapon_cabinet_think()
 
 	// needs burp sound in animation file
 	
-	if(!isDefined(player.perknum) || player.perknum < 11)	//check if player has max perks
+	if(!isDefined(player.perknum) || player.perknum < 11)	// check if player has max perks
 	{
-		if(luckyNumCabinet <= 10)	//10 out of 100 chance to get a perk (make 100 to test perks)
+		if(luckyNumCabinet <= 100)	// 10 out of 100 chance to get a perk (make 100 to test perks)
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
@@ -1504,12 +1504,12 @@ weapon_cabinet_think()
 		}
 	}
 
-    if(!(player hasWeapon("stg44_pap")))	//check if player has the stg
+    if(!(player hasWeapon("stg44_pap")))	// check if player has the stg
     {
-		if(luckyNumCabinet <= 10)	//7.5 out of 100 chance to get a pap'd stg
+		if(luckyNumCabinet <= 10)	// 7.5 out of 100 chance to get a pap'd stg
 		{
         	weaponmodelstruct Hide();
-			weaponmodelstruct.angles = self.angles + ( -90,90,0 );	//so it gets displayed like the other cabinet weapons.
+			weaponmodelstruct.angles = self.angles + ( -90,90,0 );	// so it gets displayed like the other cabinet weapons.
         	wait 0.05;
         	weaponmodelstruct Show();
         	weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
@@ -1552,11 +1552,11 @@ weapon_cabinet_think()
 	// perks_a_cola vox has to be here otherwise it doesn't play
 	if(chosenweapon == "perks_a_cola")
 	{	
-		//Iprintln("Playing announcer vox");
-		//self thread maps\_sounds::raygun_stinger();
+		/*Iprintln("Playing announcer vox");
+		self thread maps\_sounds::raygun_stinger();
 		wait 3.0;	//wait 3 secs for drink anim to play
-		//IPrintLn("Playing test vox for [erks_a_cola");
-		player thread maps\_sounds::killstreak_sound();		
+		IPrintLn("Playing test vox for [perks_a_cola");
+		player thread maps\_sounds::killstreak_sound();*/
 	}
 
 	// Play the knucklecrack animation only if the stg44_pap is picked up (disabled for balance)
@@ -1646,15 +1646,10 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	self endon("weaponexpired");
 
 	// Let only the buyer take the weapon unless the buyer knifes the cabinet, pressing the use key and knifing needs to be done slowly or it'll break
-
 	level.buyer_gave_permission = 0;
 	level.attacker = undefined;
 	//player_name = "player";  // Enable for solo testing only
 	check_for_cabinet_damage = true;
-
-	// Define current_weapon and weapon_string variables for mule kick
-    /*current_weapon = undefined;
-    weapon_string = chosenweapon;*/
 
 	while(1)
 	{
@@ -1694,6 +1689,7 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 	}
 
 	self notify("weapontaken");
+    wait 0.05;
 
 	if(chosenweapon == "perks_a_cola")
 	{
@@ -1710,7 +1706,7 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		player AllowMelee( false );
 		wait 2.5;
 
-		//Force crouch stance when using perk bottle
+		// Force crouch stance when using perk bottle
 		if(player GetStance() == "prone" && player.is_drinking == 1)
 		{
 			player SetStance("crouch");
@@ -1727,11 +1723,30 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 		player EnableOffhandWeapons();
 		player EnableWeaponCycling();
 
+        // Add level.player_is_speaking check for perks_a_cola sound
+        if( !IsDefined( level.player_is_speaking ) )
+        {
+            level.player_is_speaking = 0;
+        }
+        if( level.player_is_speaking == 0 )
+        {
+            level.player_is_speaking = 1;
+            player thread maps\_sounds::killstreak_sound();
+            level.player_is_speaking = 0;
+        }
 		player thread maps\_zombiemode_perks::random_perk_powerup_think();
 		return;
 	}
 
-	switch(chosenweapon)
+    // Add level.player_is_speaking check for weapon-specific sounds
+    if( !IsDefined( level.player_is_speaking ) )
+    {
+        level.player_is_speaking = 0;
+    }
+    if( level.player_is_speaking == 0 )
+    {
+        level.player_is_speaking = 1;
+switch(chosenweapon)
 	{
 		case "stg44_pap":	
 				player thread maps\_sounds::great_weapon_sound();
@@ -1770,40 +1785,48 @@ takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 
 	if(chosenweapon == "stg44_pap")
 	{
-		self thread maps\_sounds::raygun_stinger_sound();
+        player thread maps\_sounds::raygun_stinger_sound();
 	}
+        level.player_is_speaking = 0;
+    }
 
-	// Test fix for mule kick, had no luck with this yet it worked on the mystery box. 
-	/*if (!isDefined(self) || !self HasPerk("specialty_extraammo")) {
-    self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
-    self.muleLastWeapon = undefined;
-	}
-	else {
-		self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
-	}*/
+    // Handle Mule Kick logic
+    current_weapon = undefined;
+    if (!player HasPerk("specialty_extraammo"))
+    {
+        player.muleCount = level.zombie_vars["mulekick_min_weapon_slots"];
+        player.muleLastWeapon = undefined;
+    }
+    else
+    {
+        player.muleCount = level.zombie_vars["mulekick_max_weapon_slots"];
+    }
 
-	plyweapons = player GetWeaponsListPrimaries();
-	//if( plyweapons.size >= self.MuleCount ) // he has two weapons
-	if(plyweapons.size >= 2)
-	{
-		if(player GetCurrentWeapon() == "mine_bouncing_betty")
-		{
-			player TakeWeapon(plyweapons[0]);
-		}
-		else
-		{
-			player TakeWeapon(player GetCurrentWeapon());
-		}
-	}
-	/*else if ( !isDefined(self.muleLastWeapon) )
-	{
-		current_weapon = self getCurrentWeapon();
-	}*/
+    plyweapons = player GetWeaponsListPrimaries();
+    if (plyweapons.size >= player.muleCount)
+    {
+        current_weapon = player GetCurrentWeapon();
+        if (current_weapon == "mine_bouncing_betty" || current_weapon == "zombie_bowie_flourish")
+        {
+            current_weapon = undefined;
+        }
+
+        if (isDefined(current_weapon))
+        {
+            player TakeWeapon(current_weapon);
+        }
+    }
+    else if (!isDefined(player.muleLastWeapon))
+    {
+        current_weapon = player GetCurrentWeapon();
+    }
 
 	self play_sound_on_ent("purchase");
 	player GiveWeapon(chosenweapon);
+    player GiveMaxAmmo(chosenweapon);
+
 	player SwitchToWeapon(chosenweapon);
-	//self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon_string);
+    player maps\_zombiemode_perks::mule_kick_function(current_weapon, chosenweapon);
 }
 
 fake_cabinet_entity_damage_recieved()
@@ -2012,10 +2035,13 @@ wall_buy_weapon_names(weapon_name)
 
 play_interact_sound(weapon_name)
 {
-	
-/*players = GetPlayers();
-
-   	for (i = 0; i < players.size; i++) {*/
+    if( !IsDefined( level.player_is_speaking ) )
+    {
+        level.player_is_speaking = 0;
+    }
+    if( level.player_is_speaking == 0 )
+    {
+        level.player_is_speaking = 1;
 
 	switch(weapon_name)
 	{
@@ -2046,6 +2072,8 @@ play_interact_sound(weapon_name)
 		case "no_money":
 				self thread maps\_sounds::no_money_sound();
 			break;
+        }
+        level.player_is_speaking = 0;
 	}
 }
 
@@ -2148,23 +2176,23 @@ weapon_give( weapon )
 
 ammo_give( weapon )
 {
-	//We assume before calling this function we already checked to see if the player has this weapon...
+	// We assume before calling this function we already checked to see if the player has this weapon...
 
-	//Should we give ammo to the player
+	// Should we give ammo to the player
 	give_ammo = false; 
 
-	defaultMagAmmo = WeaponClipSize(weapon); //default clip/mag size
+	defaultMagAmmo = WeaponClipSize(weapon); // default clip/mag size
 
-	defaultWeaponAmmo = WeaponMaxAmmo(weapon); //default reserve ammo
+	defaultWeaponAmmo = WeaponMaxAmmo(weapon); // default reserve ammo
 
-	totalCurrentWeaponAmmo = self GetAmmoCount(weapon); //current clip/mag + reserve ammo
+	totalCurrentWeaponAmmo = self GetAmmoCount(weapon); // current clip/mag + reserve ammo
 
-	//Check to see if ammo belongs to a primary weapon
+	// Check to see if ammo belongs to a primary weapon
 	if(weapon != "fraggrenade" && weapon != "stielhandgranate" && weapon != "molotov")
 	{
 		if( isDefined( weapon ) )  
 		{
-			//Compare player current weapon ammo, if equal to default weapon ammo then don't give ammo, else do
+			// Compare player current weapon ammo, if equal to default weapon ammo then don't give ammo, else do
 			if(totalCurrentWeaponAmmo == defaultMagAmmo + defaultWeaponAmmo)	
 			{
 				give_ammo = false; 
@@ -2178,10 +2206,10 @@ ammo_give( weapon )
 	}
 	else
 	{
-		//Ammo belongs to secondary weapon
+		// Ammo belongs to secondary weapon
 		if( self hasweapon( weapon ) )
 		{
-			//Check if the player has less than max stock, if no give ammo
+			// Check if the player has less than max stock, if no give ammo
 			if(totalCurrentWeaponAmmo == defaultMagAmmo + defaultWeaponAmmo)	
 			{
 				give_ammo = false; 
@@ -2223,7 +2251,7 @@ get_player_index(player)
 	return level.random_character_index[player.entity_num];
 }
 
-//we added the below function for reasons I forget
+// we added the below function for reasons I forget
 has_weapon_or_upgrade( weaponname )
 {
 	has_weapon = false;

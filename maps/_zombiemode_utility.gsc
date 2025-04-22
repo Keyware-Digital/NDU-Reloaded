@@ -1584,7 +1584,7 @@ do_player_vo(snd, variation_count)
 		level.player_is_speaking = 0;
 	}
 }
-player_killstreak_timer()
+/*player_killstreak_timer()
 {
 	if(getdvar ("zombie_kills") == "") 
 	{
@@ -1698,7 +1698,7 @@ do_player_killstreak_dialog(player_index, sound_to_play, waittime)
 		wait(waittime);		
 		level.player_is_speaking = 0;
 	}
-}
+}*/
 
 really_play_2D_sound(sound)
 {
@@ -1774,9 +1774,9 @@ setup_response_waittime( sound_to_play )
 	level waittill( "player_vox_done" );
 	level notify( "play_response_line" );
 }
-*/
 
-setup_response_line( player, index, response )
+
+/*setup_response_line( player, index, response )
 {
 	if(index == 0) //DEMPSEY: Hero Nikolai, Rival Richtofen
 	{
@@ -1838,7 +1838,7 @@ setup_rival_hero( player, hero, rival, response )
 			players[rival] create_and_play_responses( plr, "vox_riv_" + response, 0.25 );
 		}
 	}
-}
+}*/
 
 create_and_play_responses( player_index, dialog_category, waittime )
 {              	

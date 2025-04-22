@@ -144,6 +144,9 @@ PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sH
 	
 	// bleed out timer
 	self thread laststand_bleedout( GetDvarFloat( "player_lastStandBleedoutTime" ) );
+
+	// Trigger revive sound after 2 seconds, needs testing in co-op
+    self thread maps\_sounds::revive_sound();
 	
 	self notify( "player_downed" );
 }
@@ -151,7 +154,7 @@ PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sH
 
 laststand_allowed( sWeapon, sMeansOfDeath, sHitLoc )
 {
-	//MOD TK, loads of stuff will now send u into laststand
+	// fMOD TK, loads of stuff will now send u into laststand
 	if (   sMeansOfDeath != "MOD_PISTOL_BULLET" 
 		&& sMeansOfDeath != "MOD_RIFLE_BULLET"
 		&& sMeansOfDeath != "MOD_HEAD_SHOT"		
@@ -749,7 +752,7 @@ revive_do_revive( playerBeingRevived, reviverGun )
 }
 
 //test
-say_reviving_vo()
+/*say_reviving_vo()
 {
 	if( GetDvar( "zombiemode" ) == "1" || IsSubStr( level.script, "nazi_zombie_" ) ) // CODER_MOD (Austin 5/4/08): zombiemode loadout setup
 	{	
@@ -779,8 +782,7 @@ say_revived_vo()
 			}		
 		}	
 	}
-}
-
+}*/
 
 revive_success( reviver )
 {
@@ -810,7 +812,7 @@ revive_success( reviver )
 	
 	self.ignoreme = false;
 	
-	self thread say_revived_vo();
+	//self thread say_revived_vo();
 	
 	thread revive_completion_award_points();
 }
