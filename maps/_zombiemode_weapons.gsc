@@ -471,7 +471,7 @@ treasure_chest_think(rand)
 		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", weapon_cost);
 	}
 
-	// waittill someuses uses this
+    // waittill someone uses this
 	user = undefined;
 	while( 1 )
 	{
@@ -504,7 +504,7 @@ treasure_chest_think(rand)
 	weapon_spawn_org = getent( lid.target, "targetname" ); 
     weaponNameMysteryBox = undefined;
 	
-	//open the lid
+	// open the lid
 	lid thread treasure_chest_lid_open();
 	
 	// SRS 9/3/2008: added to help other functions know if we timed out on grabbing the item
@@ -524,6 +524,7 @@ treasure_chest_think(rand)
 	if(isDefined(self.boxlocked) && self.boxlocked) // Padlock stuff
     {
         self.boxlocked = false;
+        self SetVisibleToAll(); // Ensure visibility for padlock phase
         weapon_spawn_org notify("weapon_grabbed");
         lid thread treasure_chest_lid_close( self.timedOut );
 		wait 1;
@@ -531,11 +532,20 @@ treasure_chest_think(rand)
         return;
     }
 
-	self.grab_weapon_hint = true;
+    self.grab_weapon_hint = true;
+    
+    // Only hide hintstring if not in fire sale
+    if( !isDefined(level.zombie_vars["zombie_fire_sale"]) || !level.zombie_vars["zombie_fire_sale"] )
+    {
+        self SetVisibleToPlayer( user ); // Only user sees hintstring
+        level thread treasure_chest_user_hint( self, user ); // Control hintstring visibility
+    }
+    else
+    {
+        self SetVisibleToAll(); // All players see hintstring during fire sale
+    }
 
-	level thread treasure_chest_user_hint( self, user );
-
-	// Commence hintstring weapon name value switch for each weapon in the mystery box
+// Commence hintstring weapon name value switch for each weapon in the mystery box
 
 	switch(weapon_spawn_org.weapon_string)
 	{
@@ -637,7 +647,7 @@ treasure_chest_think(rand)
 	
 	self enable_trigger(); 
 	self thread treasure_chest_timeout();
-	
+    
 	// make sure the guy that spent the money gets the item
 	// SRS 9/3/2008: ...or item goes back into the box if we time out
 	while( 1 )
@@ -678,14 +688,14 @@ treasure_chest_think(rand)
 
 		wait 0.05; 
 	}
-
 	if(weapon_spawn_org.weapon_string != "zombie_bowie_flourish")
 	{
 		self.grab_weapon_hint = false;
-		weapon_spawn_org notify( "weapon_grabbed" );
-		lid thread treasure_chest_lid_close( self.timedOut );
-		self disable_trigger();
-		wait 3;
+   	 	weapon_spawn_org notify( "weapon_grabbed" );
+    	lid thread treasure_chest_lid_close( self.timedOut );
+    	self disable_trigger();
+    	self SetVisibleToAll(); // Reset visibility for all players
+    	wait 3;
 	}
 	self enable_trigger(); 	
 	self thread treasure_chest_think(); 
@@ -711,16 +721,31 @@ treasure_chest_user_hint( trigger, user )
 		{
 			if( players[i] == user )
 			{
+                trigger SetInvisibleToPlayer( players[i], false );
 				continue;
 			}
 
+            trigger SetInvisibleToPlayer( players[i], true );
 			if( DistanceSquared( players[i].origin, trigger.origin ) < dist )
 			{
 				players[i].ignoreTriggers = true;
 			}
+            else
+            {
+                players[i].ignoreTriggers = false;
+			}
 		}
 
+
 		wait( 0.1 );
+	}
+
+    // Reset visibility and ignoreTriggers for all players
+    players = GetPlayers();
+    for( i = 0; i < players.size; i++ )
+    {
+        trigger SetInvisibleToPlayer( players[i], false );
+        players[i].ignoreTriggers = false;
 	}
 }
 
@@ -904,7 +929,6 @@ treasure_chest_weapon_spawn(chest, player)
         player thread weapons_death_check();
     }
 // Padlock mk2 start
-
 chanceOfPadlock = RandomInt(100);
 
 // Teddy bear style chance of Padlock proc
@@ -926,16 +950,16 @@ if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zom
     chest.boxlocked = true;
     level.zombie_vars["enableFireSale"] = 0;
     model SetModel("zmb_mdl_padlock");
+    // TODO: Replace with red FX (e.g., level._effect["padlock_red"] = loadfx("misc/fx_zombie_padlock_red")) in the future
+    playfxontag(level._effect["powerup_on"], model, "tag_origin"); // Apply green powerup FX
 	self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
 	wait 0.5;											// edit: - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted.
 
     // Start padlock animations in a separate thread
-    model thread animate_padlock();
-
+	model thread animate_padlock();
     // Play the haunting sound
-    self thread mystery_box_haunt_sound_loop(); // Call the new looping sound function
-
-    wait 0.5; // Keep your original delay for timing
+	self thread mystery_box_haunt_sound_loop();
+    wait 0.5;
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++)
@@ -959,7 +983,7 @@ if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zom
             // Play the unlock sound
             player thread maps\_sounds::mystery_box_unlock_sound();
             // Wait for the unlock sound to complete (adjust duration if needed)
-            wait 0.2; // Typical duration for a short sound effect
+            wait 0.25; // Typical duration for a short sound effect
             // Stop the haunting sound
             self notify("stop_haunt_sound");
 
@@ -967,6 +991,7 @@ if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zom
 
             // Notify animation thread to stop
             model notify("stop_padlock_animation");
+            model MoveTo(model.origin - (0, 0, 20), 0.5); // Quick descent into box
 
             break;
         }
@@ -980,6 +1005,7 @@ if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zom
     level.zombie_vars["enableFireSale"] = 1;
     chest SetHintString("");
 
+    model Hide(); // Hide to stop FX and avoid linger
     model Delete();
     level.zombie_mystery_box_padlock = 0;
     level.chest_accessed = 0;
@@ -990,7 +1016,6 @@ if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zom
 level.chest_accessed++;
 
 // Padlock mk2 end
-
 self notify("randomization_done");
 
 self.weapon_string = rand; // here's where the org get it's weapon type for the give function
@@ -1014,7 +1039,7 @@ animate_padlock()
 
     bobHeight = 5; // Distance to bob up and down
     bobTime = 2; // Time for one full bob cycle (up and down)
-    rotationTime = 6; // Time for one 360-degree rotation (sped up from 10 to 6)
+    rotationTime = 5; // Time for one 360-degree rotation (sped up from 10 to 5)
 
     while(1)
     {
@@ -1266,6 +1291,12 @@ treasure_chest_give_weapon( weapon_string )
 	self GiveMaxAmmo( weapon_string );
 	self SwitchToWeapon( weapon_string );
 
+	// attach flame tank to players picking up a flamethrower
+	if ( (isSubStr(weapon_string, "flamethrower") ) )
+     {
+ 		self thread flamethrower_swap();
+     }
+
 	// mule kick check
 	//IPrintLn( "Does this playa have mulekick?" );
     self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon_string);
@@ -1274,8 +1305,7 @@ treasure_chest_give_weapon( weapon_string )
 // NDU: Reloaded's Mystery Box 2.0
 weapon_cabinet_think()
 {
-
-	weapon_cost = 1900;	// costs twice as much as the regular mystery box
+weapon_cost = 1900;	// costs twice as much as the regular mystery box
 
 	if( isDefined( level.zombie_weapon_cabinet_cost ) )
 	{
@@ -1316,7 +1346,6 @@ weapon_cabinet_think()
     //////////////////////// Horrible Script ////////////////////////
     /////////////////////////////////////////////////////////////////
 
-
     flag_wait("all_players_connected");
     if(!isDefined(level.cabinetthinkdone) || level.cabinetthinkdone == 0) // please for the love of god only do this once
 	{
@@ -1332,10 +1361,28 @@ weapon_cabinet_think()
 		level.cabinetthinkdone = 1;
 	}
 
-	/////////////////// Horrible Script Over ////////////////////////
+    /////////////////// Horrible Script Over ////////////////////////
 	/////////////////// You're safe for now /////////////////////////
-
+	
 	self waittill("trigger",player);
+    self.grab_weapon_hint = true;
+
+    for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
+    {
+        level.keep_ents[i] Show();
+        if(i == 0)
+        {
+            coord = -10;
+            self thread movecabinetguns(level.keep_ents[i],coord);
+        }
+        if(i == 1)
+        {
+            coord = 10;
+            self thread movecabinetguns(level.keep_ents[i],coord);
+        }
+    }
+
+self waittill("trigger",player);
 	self.grab_weapon_hint = true;
 
 	for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
@@ -1365,9 +1412,6 @@ weapon_cabinet_think()
     {
 		player maps\_zombiemode_score::minus_to_player_score(level.zombie_weapon_cabinet_cost);
 	}
-
-	plyweapons = player GetWeaponsListPrimaries();
-	level.cabinetguns = array_exclude(level.cabinetguns, plyweapons);
 
 	self SetHintString( "" ); 
 
@@ -1526,17 +1570,28 @@ weapon_cabinet_think()
 		}
     }
 
-	level thread treasure_chest_user_hint( self, player );
+    // Only hide hintstring if not in fire sale
+    if( !isDefined(level.zombie_vars["zombie_fire_sale"]) || !level.zombie_vars["zombie_fire_sale"] )
+    {
+        self SetVisibleToPlayer( player ); // Only player sees hintstring
+        	level thread treasure_chest_user_hint( self, player );
+    }
+    else
+    {
+        self SetVisibleToAll(); // All players see hintstring during fire sale
+    }
+
 	weaponmodelstruct MoveTo(self.origin - (20,0,6.5),10);
 
 	origin = self.origin;
-	
+    
 	self thread takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct);
 	self thread waitforexpire();
 
 	self waittill_any("weapontaken","weaponexpired");
 
 	self.grab_weapon_hint = false;
+    self SetVisibleToAll(); // Reset visibility for all players
 
 	self SetHintString( "" ); 
 
@@ -1552,11 +1607,11 @@ weapon_cabinet_think()
 	// perks_a_cola vox has to be here otherwise it doesn't play
 	if(chosenweapon == "perks_a_cola")
 	{	
-		/*Iprintln("Playing announcer vox");
-		self thread maps\_sounds::raygun_stinger();
+		//Iprintln("Playing announcer vox");
+		//self thread maps\_sounds::raygun_stinger();
 		wait 3.0;	//wait 3 secs for drink anim to play
-		IPrintLn("Playing test vox for [perks_a_cola");
-		player thread maps\_sounds::killstreak_sound();*/
+		//IPrintLn("Playing test vox for [perks_a_cola");
+		//player thread maps\_sounds::killstreak_sound();
 	}
 
 	// Play the knucklecrack animation only if the stg44_pap is picked up (disabled for balance)
@@ -2351,49 +2406,45 @@ upgrade_knuckle_crack_end(currentGun)
 	self GiveWeapon(currentGun);
 }
 
-//inspired by CoD WaW: Zombies Remastered 
-/*flamethrower_swap()
+// inspired by CoD WaW: Zombies Remastered, with thanks
+flamethrower_swap()
 {
-	primaryWeapons = self GetWeaponsListPrimaries(); 
-	current_weapon = undefined;
-
-	self endon( "death" ); 
-	self endon( "disconnect" ); 
-
-	while( 1 ) 
-	{
-		weapons = self GetWeaponsList(); 
-		self.has_flame_thrower = false; 
-		for( i = 0; i < weapons.size; i++ )
-		{
-			if ( current_weapon == "m2_flamethrower_zombie") 
-			//if( current_weapon(primaryweapons[i], "m2_flamethrower_zombie") )
-			{
-				self.has_flame_thrower = true; 
-			}
-		}
-
-		if( self.has_flame_thrower )
-		{
-			if( !isdefined( self.flamethrower_attached ) || !self.flamethrower_attached )
-			{
-				self attach( "char_usa_raider_gear_flametank", "j_spine4" ); 
-				self.flamethrower_attached = true; 
-			}
-		}
-		else if( !self.has_flame_thrower ) 
-		{
-			if( isdefined( self.flamethrower_attached ) && self.flamethrower_attached )
-			{
-				self detach( "char_usa_raider_gear_flametank", "j_spine4" ); 
-				self.flamethrower_attached = false;
-			}
-		}
-
-		if(!self.has_flame_thrower && !self maps\_laststand::player_is_in_laststand())
-		{
-			break;
-		}
-		wait( 0.2 ); 
-	}
-}*/
+ 	self endon( "death" ); 
+ 	self endon( "disconnect" ); 
+ 	
+ 	while( 1 ) 
+ 	{
+ 		weapons = self GetWeaponsList(); 
+ 		self.has_flame_thrower = false; 
+ 		for( i = 0; i < weapons.size; i++ )
+ 		{
+ 			if( isSubStr(weapons[i], "flamethrower") )
+ 			{
+ 				self.has_flame_thrower = true; 
+ 			}
+ 		}
+ 		
+ 		if( self.has_flame_thrower )
+ 		{
+ 			if( !isdefined( self.flamethrower_attached ) || !self.flamethrower_attached )
+ 			{
+ 				self attach( "char_usa_raider_gear_flametank", "j_spine4" ); 
+ 				self.flamethrower_attached = true; 
+ 			}
+ 		}
+ 		else if( !self.has_flame_thrower ) 
+ 		{
+ 			if( isdefined( self.flamethrower_attached ) && self.flamethrower_attached )
+ 			{
+ 				self detach( "char_usa_raider_gear_flametank", "j_spine4" ); 
+ 				self.flamethrower_attached = false;
+ 			}
+ 		}
+ 
+ 		if(!self.has_flame_thrower && !self maps\_laststand::player_is_in_laststand()) 
+ 		{
+ 			break;
+ 		}
+ 		wait( 0.2 ); 
+ 	}
+ }

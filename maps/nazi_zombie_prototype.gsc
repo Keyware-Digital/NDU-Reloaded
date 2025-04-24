@@ -17,7 +17,7 @@ main() {
     maps\_character_randomise::init();
     include_powerups();
     level thread fx();
-    //level thread dolphine_dive_fx();
+    //level thread dolphin_dive_fx();
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
@@ -53,8 +53,8 @@ fx() {
     level._effect["raygun_impact"] = loadFX("misc/fx_exp_raygun_impact");
 }
 
-/*dolphine_dive_fx() {
-    level._effect[ "dolphine_dive_land" ] = loadfx ( "" );
+/*dolphin_dive_fx() {
+    level._effect[ "dolphin_dive_land" ] = loadfx ( "" );
 }*/
 
 init_strings() {

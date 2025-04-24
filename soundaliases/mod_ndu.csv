@@ -302,3 +302,5 @@ weap_mp40_drum_fire_plr,,SFX\wpn\zmb_wpn_mp40_drum\fire\wpn_mp40_st_f.wav,,1,1,,
 gr_mp40_mag_out_plr,,SFX\wpn\zmb_wpn_mp40_drum\foley\gr_mp40_mag_out_plr.wav,,0.75,0.8,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,all_sp all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,,
 gr_mp40_mag_in_plr,,SFX\wpn\zmb_wpn_mp40_drum\foley\gr_mp40_mag_in_plr.wav,,0.75,0.8,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,all_sp all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,,
 gr_mp40_charge_plr,,SFX\wpn\zmb_wpn_mp40_drum\foley\gr_mp40_charge_plr.wav,,0.75,0.8,,,,,,,reload,,,,,,curve4,0.95,1.05,,2d,,,,,all_sp all_mp,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,,
+#G43_Fix
+gr_g43_slide_forward_plr,,SFX/Weapon/rifle/Gewehr43/foley/gr_g43_slide_forward.wav,,0.75,0.8,,,,,,,reload,,,,,,,0.95,1.05,,2d,,,,,ber1 ber3 see1 see2 oki3 audio_test_tuey firing_range hol1 hol2 hol3 ber3b living_battlefield all_mp sniper,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,

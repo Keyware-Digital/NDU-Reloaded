@@ -121,6 +121,7 @@ init_shaders() {
 init_models() {
     precachemodel("char_ger_honorgd_zomb_behead");
     precachemodel("char_ger_zombieeye");
+    PrecacheModel("char_usa_raider_gear_flametank");
     PrecacheModel("tag_origin");
     PrecacheModel("zombie_teddybear");
     PrecacheModel("collision_geo_32x32x32");
