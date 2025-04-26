@@ -461,9 +461,11 @@ treasure_chest_think(rand)
 	{
 		weapon_cost = level.zombie_treasure_chest_cost;
 	}
+
 	self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", weapon_cost);
 	self setCursorHint( "HINT_NOICON" );
 	self UseTriggerRequireLookAt();
+
 	if(isDefined(level.zombie_vars["zombie_fire_sale"]) && level.zombie_vars["zombie_fire_sale"])
 	{
 		self SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON", "&&1", weapon_cost);
@@ -496,7 +498,7 @@ treasure_chest_think(rand)
 		
 		wait 0.05;
 	}
-    
+	
 	// trigger_use->script_brushmodel lid->script_origin in radiant
 	lid = getent( self.target, "targetname" ); 
 	weapon_spawn_org = getent( lid.target, "targetname" ); 
@@ -504,6 +506,7 @@ treasure_chest_think(rand)
 	
 	// open the lid
 	lid thread treasure_chest_lid_open();
+	
 	// SRS 9/3/2008: added to help other functions know if we timed out on grabbing the item
 	self.timedOut = false;
 	
@@ -645,96 +648,57 @@ treasure_chest_think(rand)
 	self enable_trigger(); 
 	self thread treasure_chest_timeout();
     
-    // Initialize weapon_shared flag
-    self.weapon_shared = false;
+	// make sure the guy that spent the money gets the item
+	// SRS 9/3/2008: ...or item goes back into the box if we time out
+	while( 1 )
+	{
+		self waittill( "trigger", grabber ); 
 
-    // make sure the guy that spent the money gets the item
-    // SRS 9/3/2008: ...or item goes back into the box if we time out
-    while( 1 )
-    {
-        self waittill( "trigger", grabber ); 
+		if( grabber == user || grabber == level )
+		{
+			if( grabber == user && is_player_valid( user ) && user GetCurrentWeapon() != "mine_bouncing_betty" )
+			{
+				self notify( "user_grabbed_weapon" );
+				if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
+				{
+					if( !user HasPerk("specialty_altmelee") || user.has_bowie)
+					{
+						weapon_spawn_org notify("weapon_grabbed");
+						lid thread treasure_chest_lid_close( self.timedOut );
+						self.grab_weapon_hint = false;
+						self disable_trigger();
+						user maps\_zombiemode_bowie::give_bowie();
+						break;
+					}
+					break;
+				}
+				else
+				{
+					user thread treasure_chest_give_weapon( weapon_spawn_org.weapon_string );
+					break;
+				}
+			}
+			else if( grabber == level )
+			{
+				// it timed out
+				self.timedOut = true;
+				break;
+			}
+		}
 
-        if( grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared) || grabber == level )
-        {
-            if( (grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared)) && 
-                is_player_valid( grabber ) && grabber GetCurrentWeapon() != "mine_bouncing_betty" )
-            {
-                // Detect tap vs hold for the original player (user)
-                if(grabber == user && !(isDefined(self.weapon_shared) && self.weapon_shared))
-                {
-                    // Track how long the player holds the F key
-                    hold_time = 0;
-                    while(grabber UseButtonPressed() && hold_time < 1.0) // Hold for 1 second to share
-                    {
-                        hold_time += 0.05;
-                        wait 0.05;
-                    }
-
-                    if(hold_time >= 1.0) // Player held F for 1 second or more
-                    {
-                        // Apply powerup effect to weapon model using the stored model
-                        if(isDefined(self.weapon_model))
-                        {
-                            playfxontag(level._effect["powerup_on"], self.weapon_model, "tag_origin");
-                        }
-                        // Play sounds
-                        playsoundatposition("spawn_powerup", self.origin);
-                        // Mark weapon as shared
-                        self.weapon_shared = true;
-                        self SetVisibleToAll();
-                        continue; // Go back to waiting for another trigger
-                    }
-                    else
-                    {
-						// continue
-                    }
-                }
-
-                self notify( "user_grabbed_weapon" );
-                if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
-                {
-                    if( !grabber HasPerk("specialty_altmelee") || grabber.has_bowie)
-                    {
-                        weapon_spawn_org notify("weapon_grabbed");
-                        lid thread treasure_chest_lid_close( self.timedOut );
-                        self.grab_weapon_hint = false;
-                        self disable_trigger();
-                        grabber maps\_zombiemode_bowie::give_bowie();
-                        break;
-                    }
-                    break;
-                }
-                else
-                {
-                    grabber thread treasure_chest_give_weapon( weapon_spawn_org.weapon_string );
-                    break;
-                }
-            }
-            else if( grabber == level )
-            {
-                // it timed out
-                self.timedOut = true;
-                break;
-            }
-        }
-        else
-        {
-            self play_sound_on_ent("no_purchase"); // Comment out to avoid sound alias error
-        }
-
-        wait 0.05; 
-    }
-    if(weapon_spawn_org.weapon_string != "zombie_bowie_flourish")
-    {
-        self.grab_weapon_hint = false;
-        weapon_spawn_org notify( "weapon_grabbed" );
-        lid thread treasure_chest_lid_close( self.timedOut );
-        self disable_trigger();
-        self SetVisibleToAll(); // Reset visibility for all players
-        wait 3;
-    }
-    self enable_trigger();     
-    self thread treasure_chest_think(); 
+		wait 0.05; 
+	}
+	if(weapon_spawn_org.weapon_string != "zombie_bowie_flourish")
+	{
+		self.grab_weapon_hint = false;
+   	 	weapon_spawn_org notify( "weapon_grabbed" );
+    	lid thread treasure_chest_lid_close( self.timedOut );
+    	self disable_trigger();
+    	self SetVisibleToAll(); // Reset visibility for all players
+    	wait 3;
+	}
+	self enable_trigger(); 	
+	self thread treasure_chest_think(); 
 }
 
 treasure_chest_user_hint( trigger, user )
@@ -905,15 +869,13 @@ treasure_chest_ChooseWeightedRandomWeapon( player )
 		}
 	}
 }
+ 
 treasure_chest_weapon_spawn(chest, player)
 {
     assert(isDefined(player));
     // spawn the model
     model = spawn("script_model", self.origin);
     model.angles = self.angles + (0, 90, 0);
-
-    // Store the model in chest for later use in treasure_chest_think
-    chest.weapon_model = model;
 
     floatHeight = 40;
 	bobHeight = 5; // for the padlock anim
@@ -966,107 +928,107 @@ treasure_chest_weapon_spawn(chest, player)
     {
         player thread weapons_death_check();
     }
-	// Padlock mk2 start
-	chanceOfPadlock = RandomInt(100);
+// Padlock mk2 start
+chanceOfPadlock = RandomInt(100);
 
-	// Teddy bear style chance of Padlock proc
-	if(level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
-	{
-		chanceOfPadlock = chanceOfPadlock + 15;
-	}
-	else if(level.chest_accessed >= 8 && level.chest_accessed < 13) // 30% chance to get lock between pull 8 and 12
-	{
-		chanceOfPadlock = chanceOfPadlock + 30;
-	}
-	else if(level.chest_accessed >= 13) // 50% chance to get lock after 12th pull
-	{
-		chanceOfPadlock = 50;
-	}
+// Teddy bear style chance of Padlock proc
+if(level.chest_accessed >= 4 && level.chest_accessed < 8) // 15% chance to get lock between round 4 and 7
+{
+    chanceOfPadlock = chanceOfPadlock + 15;
+}
+else if(level.chest_accessed >= 8 && level.chest_accessed < 13) // 30% chance to get lock between pull 8 and 12
+{
+    chanceOfPadlock = chanceOfPadlock + 30;
+}
+else if(level.chest_accessed >= 13) // 50% chance to get lock after 12th pull
+{
+    chanceOfPadlock = 50;
+}
 
-	if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
-	{
-		chest.boxlocked = true;
-		level.zombie_vars["enableFireSale"] = 0;
-		model SetModel("zmb_mdl_padlock");
-		// TODO: Replace with red FX (e.g., level._effect["padlock_red"] = loadfx("misc/fx_zombie_padlock_red")) in the future
-		playfxontag(level._effect["powerup_on"], model, "tag_origin"); // Apply green powerup FX
-		self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
-		wait 0.5;											// edit: - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted.
+if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
+{
+    chest.boxlocked = true;
+    level.zombie_vars["enableFireSale"] = 0;
+    model SetModel("zmb_mdl_padlock");
+    // TODO: Replace with red FX (e.g., level._effect["padlock_red"] = loadfx("misc/fx_zombie_padlock_red")) in the future
+    playfxontag(level._effect["powerup_on"], model, "tag_origin"); // Apply green powerup FX
+	self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
+	wait 0.5;											// edit: - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted.
 
-		// Start padlock animations in a separate thread
-		model thread animate_padlock();
-		// Play the haunting sound
-		self thread mystery_box_haunt_sound_loop();
-		wait 0.5;
+    // Start padlock animations in a separate thread
+	model thread animate_padlock();
+    // Play the haunting sound
+	self thread mystery_box_haunt_sound_loop();
+    wait 0.5;
 
-		players = GetPlayers();
-		for (i = 0; i < players.size; i++)
-		{
-			players[i] thread maps\_sounds::crappy_weapon_sound();
-		}
+    players = GetPlayers();
+    for (i = 0; i < players.size; i++)
+    {
+        players[i] thread maps\_sounds::crappy_weapon_sound();
+    }
 
-		level.zombie_mystery_box_padlock = 1;
-		player maps\_zombiemode_score::add_to_player_score(950);
+    level.zombie_mystery_box_padlock = 1;
+    player maps\_zombiemode_score::add_to_player_score(950);
 
-		weapon_cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
-		chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", weapon_cost);
+    weapon_cost = level.zombie_vars["zombie_mystery_box_padlock_cost"];
+    chest SetHintString(&"PROTOTYPE_ZOMBIE_RANDOM_WEAPON_LOCKED", "&&1", weapon_cost);
 
-		chest enable_trigger();
+    chest enable_trigger();
 
-		while(1)
-		{
-			chest waittill("trigger", player);
-			if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
-			{
-				// Play the unlock sound
-				player thread maps\_sounds::mystery_box_unlock_sound();
-				// Wait for the unlock sound to complete (adjust duration if needed)
-				wait 0.25; // Typical duration for a short sound effect
-				// Stop the haunting sound
-				self notify("stop_haunt_sound");
+    while(1)
+    {
+        chest waittill("trigger", player);
+        if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
+        {
+            // Play the unlock sound
+            player thread maps\_sounds::mystery_box_unlock_sound();
+            // Wait for the unlock sound to complete (adjust duration if needed)
+            wait 0.25; // Typical duration for a short sound effect
+            // Stop the haunting sound
+            self notify("stop_haunt_sound");
 
-				player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
+            player maps\_zombiemode_score::minus_to_player_score(level.zombie_vars["zombie_mystery_box_padlock_cost"]);
 
-				// Notify animation thread to stop
-				model notify("stop_padlock_animation");
-				model MoveTo(model.origin - (0, 0, 20), 0.5); // Quick descent into box
+            // Notify animation thread to stop
+            model notify("stop_padlock_animation");
+            model MoveTo(model.origin - (0, 0, 20), 0.5); // Quick descent into box
 
-				break;
-			}
-			else
-			{
-				player play_interact_sound("no_money");
-			}
-			wait 0.05;
-		}
+            break;
+        }
+        else
+        {
+            player play_interact_sound("no_money");
+        }
+        wait 0.05;
+    }
 
-		level.zombie_vars["enableFireSale"] = 1;
-		chest SetHintString("");
+    level.zombie_vars["enableFireSale"] = 1;
+    chest SetHintString("");
 
-		model Hide(); // Hide to stop FX and avoid linger
-		model Delete();
-		level.zombie_mystery_box_padlock = 0;
-		level.chest_accessed = 0;
-		self notify("randomization_done");
-		return;
-	}
+    model Hide(); // Hide to stop FX and avoid linger
+    model Delete();
+    level.zombie_mystery_box_padlock = 0;
+    level.chest_accessed = 0;
+    self notify("randomization_done");
+    return;
+}
 
-	level.chest_accessed++;
+level.chest_accessed++;
 
-	// Padlock mk2 end
-	self notify("randomization_done");
+// Padlock mk2 end
+self notify("randomization_done");
 
-	self.weapon_string = rand; // here's where the org get it's weapon type for the give function
+self.weapon_string = rand; // here's where the org get it's weapon type for the give function
 
-	model thread timer_til_despawn(floatHeight);
-	self waittill("weapon_grabbed");
+model thread timer_til_despawn(floatHeight);
+self waittill("weapon_grabbed");
 
-	if(!chest.timedOut)
-	{
-		model Delete();
-	}
+if(!chest.timedOut)
+{
+    model Delete();
+}
 
-	return rand;
+return rand;
 }
 
 // Function to handle padlock bobbing and rotation animations
@@ -1401,8 +1363,26 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 
     /////////////////// Horrible Script Over ////////////////////////
 	/////////////////// You're safe for now /////////////////////////
-    
+	
 	self waittill("trigger",player);
+    self.grab_weapon_hint = true;
+
+    for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
+    {
+        level.keep_ents[i] Show();
+        if(i == 0)
+        {
+            coord = -10;
+            self thread movecabinetguns(level.keep_ents[i],coord);
+        }
+        if(i == 1)
+        {
+            coord = 10;
+            self thread movecabinetguns(level.keep_ents[i],coord);
+        }
+    }
+
+self waittill("trigger",player);
 	self.grab_weapon_hint = true;
 
 	for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
@@ -1594,117 +1574,74 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
     if( !isDefined(level.zombie_vars["zombie_fire_sale"]) || !level.zombie_vars["zombie_fire_sale"] )
     {
         self SetVisibleToPlayer( player ); // Only player sees hintstring
-        level thread treasure_chest_user_hint( self, player );
+        	level thread treasure_chest_user_hint( self, player );
     }
     else
     {
         self SetVisibleToAll(); // All players see hintstring during fire sale
     }
 
-    self.weapon_shared = false;
+	weaponmodelstruct MoveTo(self.origin - (20,0,6.5),10);
 
-    // Start slow retraction immediately
-    weaponmodelstruct MoveTo(self.origin - (20,0,6.5),12); // Match treasure chest 12-second timeout
-
+	origin = self.origin;
+    
+	self thread takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct);
 	self thread waitforexpire();
 
-    while(1)
-    {
-        self waittill("trigger", grabber);
+	self waittill_any("weapontaken","weaponexpired");
 
-        if(grabber == player || (isDefined(self.weapon_shared) && self.weapon_shared) || grabber == level)
-        {
-            if((grabber == player || (isDefined(self.weapon_shared) && self.weapon_shared)) && 
-               is_player_valid(grabber) && grabber GetCurrentWeapon() != "mine_bouncing_betty")
-            {
-                // Handle hold-to-share logic
-                if(grabber == player && !self.weapon_shared)
-                {
-                    hold_time = 0;
-                    while(grabber UseButtonPressed() && hold_time < 1.0)
-                    {
-                        hold_time += 0.05;
-                        wait 0.05;
-                    }
+	self.grab_weapon_hint = false;
+    self SetVisibleToAll(); // Reset visibility for all players
 
-                    if(hold_time >= 1.0)
-                    {
-                        if(isDefined(weaponmodelstruct))
-                        {
-                            weaponmodelstruct notify("stop_fx");
-                            playfxontag(level._effect["powerup_on"], weaponmodelstruct, "tag_origin");
-                            weaponmodelstruct MoveTo(self.origin - (0,0,6.5),0.1);
-                            weaponmodelstruct MoveTo(self.origin - (20,0,6.5),12);
-                        }
-                        playsoundatposition("spawn_powerup", self.origin);
-                        self.weapon_shared = true;
-                        self SetVisibleToAll();
-                        continue;
-                    }
-                }
-                // Take weapon or perk
-                if(isDefined(weaponmodelstruct))
-                {
-                    weaponmodelstruct notify("stop_fx");
-                }
-                self thread takenweapon(chosenweapon, grabber, weaponNameMysteryCabinet, weaponmodelstruct);
-                break;
-            }
-            else if(grabber == level)
-            {
-                // Timeout
-                self.timedOut = true;
-                break;
-            }
-        }
-        wait 0.05;
-    }
+	self SetHintString( "" ); 
 
-    // Cleanup
-    self.grab_weapon_hint = false;
-    self SetVisibleToAll();
-    self SetHintString("");
+	weaponmodelstruct Hide();
 
-    if(isDefined(weaponmodelstruct))
-    {
-        weaponmodelstruct notify("stop_fx");
-        weaponmodelstruct Hide();
-        weaponmodelstruct Delete();
-    }
+	if(isDefined(level.fake_cabinet_entity))
+	{
+		level.buyer_gave_permission = 0;
+		level.fake_cabinet_entity Hide();
+		level.fake_cabinet_entity Delete();
+	}
 
+	// perks_a_cola vox has to be here otherwise it doesn't play
+	if(chosenweapon == "perks_a_cola")
+	{	
+		//Iprintln("Playing announcer vox");
+		//self thread maps\_sounds::raygun_stinger();
+		wait 3.0;	//wait 3 secs for drink anim to play
+		//IPrintLn("Playing test vox for [perks_a_cola");
+		//player thread maps\_sounds::killstreak_sound();
+	}
+
+	// Play the knucklecrack animation only if the stg44_pap is picked up (disabled for balance)
+	/* if(chosenweapon == "stg44_pap")
+	{
+		//IPrintLn("FAUX PAP ANIM A-GO!");
+		player thread do_knuckle_crack();
+	}*/
+	
 	play_sound_at_pos( "close_chest", self.origin );
-
 	for( i = 0; i < doors.size; i++ )
 	{
-        if(isDefined(doors[i]))
-        {
-            if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
-            {
-                doors[i] thread weapon_cabinet_door_close( "left" ); 
-            }
-            else if( doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
-            {
-                doors[i] thread weapon_cabinet_door_close( "right" ); 
-            }
-        }
-    }
+		if( doors[i].model == "dest_test_cabinet_ldoor_dmg0" )
+		{
+			doors[i] thread weapon_cabinet_door_close( "left" ); 
+		}
+		else if( doors[i].model == "dest_test_cabinet_rdoor_dmg0" )
+		{
+			doors[i] thread weapon_cabinet_door_close( "right" ); 
+		}
+	}
 
-    // Wait for door animations and sound to complete
-    if(chosenweapon == "perks_a_cola")
-    {
-        wait 2.5; // Match exact drinking animation duration
-    }
-    else
-    {
-        wait 3;
-    }
+	self SetHintString("");
 
-    self disable_trigger();
-    self enable_trigger(); 
+	wait 3;
 	self thread weapon_cabinet_think();
 
 	chosenweapon = undefined;
 	weaponmodel = undefined;
+	weaponmodelstruct Delete();
 }
 
 movecabinetguns( cabinetmodel, coord)
@@ -1755,20 +1692,59 @@ cabinet_glowfx()
 waitforexpire()
 {
 	self endon("weapontaken");
-    wait 12; // Match treasure chest 12-second timeout
-    self notify("trigger", level);
+	wait 8;
+	self notify("weaponexpired");
 }
 
-takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct)
+takenweapon(chosenweapon, buyer, weaponNameMysteryCabinet, weaponmodelstruct)
 {
-    self notify("weapontaken");
-    wait 0.05;
+	self endon("weaponexpired");
 
-    if (isDefined(weaponmodelstruct))
-    {
-        weaponmodelstruct notify("stop_fx");
-        weaponmodelstruct Hide();
-    }
+	// Let only the buyer take the weapon unless the buyer knifes the cabinet, pressing the use key and knifing needs to be done slowly or it'll break
+	level.buyer_gave_permission = 0;
+	level.attacker = undefined;
+	//player_name = "player";  // Enable for solo testing only
+	check_for_cabinet_damage = true;
+
+	while(1)
+	{
+		self waittill("trigger", player);
+		
+		if (buyer != player) // Enable for live build
+		//if (player_name != player.playername) // Enable for solo testing only
+		{
+			if (level.buyer_gave_permission == 0)
+			{
+				self play_sound_on_ent("no_purchase");
+			}
+			//if (level.buyer_gave_permission == 1 && level.attacker != player) // Enable for live build
+			if (level.buyer_gave_permission == 1 && level.attacker == player) // Enable for solo testing only
+			{
+				break;
+			}
+			
+			if(check_for_cabinet_damage)
+			{
+				level.fake_cabinet_entity = spawn("script_model", self.origin);
+				level.fake_cabinet_entity setmodel("zombie_teddybear");  // Need to replace with a model that doesn't play fx and can be damaged, possibily make a custom model
+				//level.fake_cabinet_entity Hide(); // Enable for live build
+				level.fake_cabinet_entity Show(); // Enable for solo testing only
+				level.fake_cabinet_entity Solid();
+				level.fake_cabinet_entity setCanDamage(true);
+
+				thread fake_cabinet_entity_damage_recieved();
+
+				check_for_cabinet_damage = false;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	self notify("weapontaken");
+    wait 0.05;
 
 	if(chosenweapon == "perks_a_cola")
 	{
@@ -1900,11 +1876,29 @@ switch(chosenweapon)
         current_weapon = player GetCurrentWeapon();
     }
 
-    player play_sound_on_ent("purchase");
+	self play_sound_on_ent("purchase");
 	player GiveWeapon(chosenweapon);
     player GiveMaxAmmo(chosenweapon);
+
 	player SwitchToWeapon(chosenweapon);
     player maps\_zombiemode_perks::mule_kick_function(current_weapon, chosenweapon);
+}
+
+fake_cabinet_entity_damage_recieved()
+{
+	while(1)
+	{
+		level.fake_cabinet_entity waittill("damage", amount, attacker, direction_vec, point, type);
+
+		if(type == "MOD_MELEE" || type == "MOD_BAYONET")
+		{
+			level.buyer_gave_permission = 1;
+			level.fake_cabinet_entity Hide();
+			level.fake_cabinet_entity Delete();
+		}
+
+		level.attacker = attacker;
+	}
 }
 
 weapon_cabinet_door_open( left_or_right )

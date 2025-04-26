@@ -156,7 +156,7 @@ REFERENCE           ZOMBIE_WEAPON_STG_44_UPGRADED
 LANG_ENGLISH        "Spatz-446 b+"
 
 REFERENCE           ZOMBIE_TRADE_WEAPONS_BOX
-LANG_ENGLISH        "Hold ^3&&1 ^7for &&2 or Melee to share"
+LANG_ENGLISH        "Press ^3&&1 ^7for &&2 or ^3Hold ^7to share"
 
 REFERENCE           ZOMBIE_TRADE_WEAPONS_WALL_BUY
 LANG_ENGLISH        "Hold ^3&&1 ^7for &&2 [Cost: &&3]"
@@ -165,10 +165,10 @@ REFERENCE           ZOMBIE_WEAPON_COST_AMMO
 LANG_ENGLISH        "Hold ^3&&1 ^7for &&2 ammo [Cost: &&3]"
 
 REFERENCE           ZOMBIE_CABINET_OPEN
-LANG_ENGLISH        "Hold ^3&&1 ^7to Open Cabinet [Cost: &&2]"
+LANG_ENGLISH        "Press ^3&&1 ^7to Open Cabinet [Cost: &&2]"
 
 REFERENCE           ZOMBIE_RANDOM_WEAPON
-LANG_ENGLISH        "Hold ^3&&1 ^7for Mystery Box [Cost: &&2]"
+LANG_ENGLISH        "Press ^3&&1 ^7for Mystery Box [Cost: &&2]"
 
 REFERENCE           ZOMBIE_CASH_REGISTER_WITHDRAW
 LANG_ENGLISH        "Hold ^3&&1 ^7to withdraw 1000 points [Cost: &&2]"
