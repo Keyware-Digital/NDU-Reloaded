@@ -63,6 +63,7 @@ init_powerup_vars() {
 init_powerup_effects() {
 
     level._effect["powerup_on"] = loadfx("misc/fx_zombie_powerup_on");
+    level._effect["powerup_on_bad"] = loadfx("powerups/fx_zombie_powerup_on_bad");
     level._effect["powerup_grabbed"] = loadfx("misc/fx_zombie_powerup_grab");
     level._effect["powerup_grabbed_wave"] = loadfx("misc/fx_zombie_powerup_wave");
 }

@@ -488,7 +488,7 @@ treasure_chest_think(rand)
 			break; 
 		}
 		else 
-		{   //play the "no purchase" sound and have the player react.
+		{   // play the "no purchase" sound and have the player react.
 			self play_sound_on_ent("no_purchase");
 			wait 0.5;
 			user play_interact_sound("no_money");
@@ -648,6 +648,9 @@ treasure_chest_think(rand)
     // Initialize weapon_shared flag
     self.weapon_shared = false;
 
+    // Start monitoring melee button for sharing
+    self thread monitor_melee_share(user, undefined);
+
     // make sure the guy that spent the money gets the item
     // SRS 9/3/2008: ...or item goes back into the box if we time out
     while( 1 )
@@ -659,37 +662,6 @@ treasure_chest_think(rand)
             if( (grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared)) && 
                 is_player_valid( grabber ) && grabber GetCurrentWeapon() != "mine_bouncing_betty" )
             {
-                // Detect tap vs hold for the original player (user)
-                if(grabber == user && !(isDefined(self.weapon_shared) && self.weapon_shared))
-                {
-                    // Track how long the player holds the F key
-                    hold_time = 0;
-                    while(grabber UseButtonPressed() && hold_time < 1.0) // Hold for 1 second to share
-                    {
-                        hold_time += 0.05;
-                        wait 0.05;
-                    }
-
-                    if(hold_time >= 1.0) // Player held F for 1 second or more
-                    {
-                        // Apply powerup effect to weapon model using the stored model
-                        if(isDefined(self.weapon_model))
-                        {
-                            playfxontag(level._effect["powerup_on"], self.weapon_model, "tag_origin");
-                        }
-                        // Play sounds
-                        playsoundatposition("spawn_powerup", self.origin);
-                        // Mark weapon as shared
-                        self.weapon_shared = true;
-                        self SetVisibleToAll();
-                        continue; // Go back to waiting for another trigger
-                    }
-                    else
-                    {
-						// continue
-                    }
-                }
-
                 self notify( "user_grabbed_weapon" );
                 if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
                 {
@@ -700,13 +672,16 @@ treasure_chest_think(rand)
                         self.grab_weapon_hint = false;
                         self disable_trigger();
                         grabber maps\_zombiemode_bowie::give_bowie();
+                        self notify("weapon_interaction_done"); // Stop melee monitoring
                         break;
                     }
+                    self notify("weapon_interaction_done"); // Stop melee monitoring
                     break;
                 }
                 else
                 {
                     grabber thread treasure_chest_give_weapon( weapon_spawn_org.weapon_string );
+                    self notify("weapon_interaction_done"); // Stop melee monitoring
                     break;
                 }
             }
@@ -714,6 +689,7 @@ treasure_chest_think(rand)
             {
                 // it timed out
                 self.timedOut = true;
+                self notify("weapon_interaction_done"); // Stop melee monitoring
                 break;
             }
         }
@@ -988,8 +964,7 @@ treasure_chest_weapon_spawn(chest, player)
 		chest.boxlocked = true;
 		level.zombie_vars["enableFireSale"] = 0;
 		model SetModel("zmb_mdl_padlock");
-		// TODO: Replace with red FX (e.g., level._effect["padlock_red"] = loadfx("misc/fx_zombie_padlock_red")) in the future
-		playfxontag(level._effect["powerup_on"], model, "tag_origin"); // Apply green powerup FX
+		playfxontag(level._effect["powerup_on_bad"], model, "tag_origin"); // Apply red powerup FX
 		self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
 		wait 0.5;											// edit: - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted.
 
@@ -1603,10 +1578,13 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 
     self.weapon_shared = false;
 
+    // Start monitoring melee button for sharing
+    self thread monitor_melee_share(player, weaponmodelstruct);
+
     // Start slow retraction immediately
     weaponmodelstruct MoveTo(self.origin - (20,0,6.5),12); // Match treasure chest 12-second timeout
 
-	self thread waitforexpire();
+    self thread waitforexpire();
 
     while(1)
     {
@@ -1617,45 +1595,25 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
             if((grabber == player || (isDefined(self.weapon_shared) && self.weapon_shared)) && 
                is_player_valid(grabber) && grabber GetCurrentWeapon() != "mine_bouncing_betty")
             {
-                // Handle hold-to-share logic
-                if(grabber == player && !self.weapon_shared)
-                {
-                    hold_time = 0;
-                    while(grabber UseButtonPressed() && hold_time < 1.0)
-                    {
-                        hold_time += 0.05;
-                        wait 0.05;
-                    }
-
-                    if(hold_time >= 1.0)
-                    {
-                        if(isDefined(weaponmodelstruct))
-                        {
-                            weaponmodelstruct notify("stop_fx");
-                            playfxontag(level._effect["powerup_on"], weaponmodelstruct, "tag_origin");
-                            weaponmodelstruct MoveTo(self.origin - (0,0,6.5),0.1);
-                            weaponmodelstruct MoveTo(self.origin - (20,0,6.5),12);
-                        }
-                        playsoundatposition("spawn_powerup", self.origin);
-                        self.weapon_shared = true;
-                        self SetVisibleToAll();
-                        continue;
-                    }
-                }
-                // Take weapon or perk
                 if(isDefined(weaponmodelstruct))
                 {
                     weaponmodelstruct notify("stop_fx");
                 }
                 self thread takenweapon(chosenweapon, grabber, weaponNameMysteryCabinet, weaponmodelstruct);
+                self notify("weapon_interaction_done"); // Stop melee monitoring
                 break;
             }
             else if(grabber == level)
             {
                 // Timeout
                 self.timedOut = true;
+                self notify("weapon_interaction_done"); // Stop melee monitoring
                 break;
             }
+        }
+        else
+        {
+            self play_sound_on_ent("no_purchase"); // Comment out to avoid sound alias error
         }
         wait 0.05;
     }
@@ -2454,3 +2412,60 @@ flamethrower_swap()
  		wait( 0.2 ); 
  	}
  }
+
+// Monitors melee button press for sharing the weapon or perk
+monitor_melee_share(player, weaponmodelstruct)
+{
+    self endon("weapon_interaction_done");
+    self endon("weapon_grabbed");
+    self endon("user_grabbed_weapon"); // Include for mystery box compatibility
+
+    while(1)
+    {
+        if(player MeleeButtonPressed())
+        {
+            // Check if player is close to and generally facing the trigger
+            is_facing = false;
+            if(DistanceSquared(player.origin, self.origin) < 64*64)
+            {
+                // Get vector from player to trigger
+                to_trigger = VectorNormalize(self.origin - player.origin);
+                // Get player's forward vector
+                player_angles = player GetPlayerAngles();
+                forward = AnglesToForward(player_angles);
+                // Check if trigger is in player's FOV (dot product > 0.2)
+                dot = VectorDot(forward, to_trigger);
+                if(dot > 0.2) // Player's FOV includes the trigger (~156-degree cone)
+                {
+                    is_facing = true;
+                }
+            }
+
+            if(is_facing)
+            {
+                // Apply powerup effect to weapon model
+                if(isDefined(weaponmodelstruct))
+                {
+                    // Cabinet: Use weaponmodelstruct
+                    weaponmodelstruct notify("stop_fx");
+                    playfxontag(level._effect["powerup_on"], weaponmodelstruct, "tag_origin");
+                    weaponmodelstruct MoveTo(self.origin - (0,0,6.5),0.1); // Reset position
+                    weaponmodelstruct MoveTo(self.origin - (20,0,6.5),12); // Continue retraction
+                }
+                else if(isDefined(self.weapon_model))
+                {
+                    // Mystery box: Use self.weapon_model
+                    playfxontag(level._effect["powerup_on"], self.weapon_model, "tag_origin");
+                }
+                // Play sounds
+                playsoundatposition("spawn_powerup", self.origin);
+                // Mark weapon as shared
+                self.weapon_shared = true;
+                self SetVisibleToAll();
+                self notify("weapon_interaction_done"); // Stop monitoring
+                break;
+            }
+        }
+        wait 0.05; // Check every 0.05 seconds
+    }
+}
