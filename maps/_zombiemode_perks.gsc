@@ -246,7 +246,7 @@ perk_hud_destroy(perk)
     }
 }
 
-play_no_money_perk_dialog() {
+/*play_no_money_perk_dialog() {
 
     index = maps\_zombiemode_weapons::get_player_index(self);
 
@@ -269,7 +269,7 @@ play_no_money_perk_dialog() {
 
     self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
 
-}
+}*/
 
 phd_dive_damage(origin) {
     self thread maps\_sounds::phd_explosion_sound();

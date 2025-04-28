@@ -600,6 +600,7 @@ onPlayerSpawned() {
                 self thread player_lunge_knife_exert_sounds();
                 self thread player_throw_stielhandgranate_exert_sounds();
                 self thread player_throw_molotov_exert_sounds();
+                self thread player_friendly_fire_sound_monitor();
                 self thread player_swarm_monitor(); 
             }
         }
@@ -1711,7 +1712,7 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
         return;
     }
     
-    //Nade dmg fix
+    // Nade dmg fix
     if (sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH") {
         if (self.health > 75) {
             finalDamage = 75;
@@ -2372,7 +2373,7 @@ setup_player_vars()
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {
             players[i] setClientDvar("sv_cheats", 1);
-            players[i] maps\_zombiemode_score::add_to_player_score(100000); //comment out for default behaviour
+            //players[i] maps\_zombiemode_score::add_to_player_score(100000); //comment out for default behaviour
         }
     }
 }
@@ -2594,6 +2595,77 @@ player_throw_molotov_exert_sounds()
     }
 }
 
+player_friendly_fire_sound_monitor()
+{
+    self endon("death");
+    self endon("disconnect");
+
+    self.friendly_fire_sound_cooldown = false;
+
+    while (1)
+    {
+        // Wait for the player to fire their weapon
+        self waittill("weapon_fired");
+
+        // Skip if on cooldown or speaking
+        if (self.friendly_fire_sound_cooldown || level.player_is_speaking == 1)
+        {
+            wait(0.05);
+            continue;
+        }
+
+        // Skip if in last stand or a zombie
+        if (self maps\_laststand::player_is_in_laststand() || self.is_zombie)
+        {
+            wait(0.05);
+            continue;
+        }
+
+        // Filter out the crap
+        current_weapon = self GetCurrentWeapon();
+        if (!isDefined(current_weapon) || current_weapon == "none" || 
+            current_weapon == "zombie_perk_bottle_doubletap" || 
+            current_weapon == "zombie_perk_bottle_jugg" || 
+            current_weapon == "zombie_perk_bottle_revive" || 
+            current_weapon == "zombie_perk_bottle_sleight" || 
+            current_weapon == "mine_bouncing_betty" || 
+            current_weapon == "syrette" || 
+            current_weapon == "zombie_knuckle_crack" || 
+            current_weapon == "zombie_bowie_flourish")
+        {
+            wait(0.05);
+            continue;
+        }
+
+        // Perform a bullet trace to see what the player is aiming at
+        start = self GetEye();
+        end = start + (AnglesToForward(self GetPlayerAngles()) * 10000);
+        trace = BulletTrace(start, end, true, self);
+
+        // Check if the hit entity is a player, not the shooter, and a valid teammate
+        if (isDefined(trace["entity"]) && isPlayer(trace["entity"]) && trace["entity"] != self)
+        {
+            // Ensure the target is a teammate (not a zombie, not in last stand, on the same team)
+            if (!trace["entity"].is_zombie && !trace["entity"] maps\_laststand::player_is_in_laststand() && trace["entity"].team == self.team)
+            {
+                // Trigger the friendly fire sound on the TARGET player
+                self.friendly_fire_sound_cooldown = true;
+                trace["entity"] thread maps\_sounds::friendly_fire_sound();
+                // Wait for the target's sound to finish or timeout
+                trace["entity"] waittill_notify_or_timeout("_ff_sound_done", 5);
+                self thread friendly_fire_sound_cooldown_reset();
+            }
+        }
+
+        wait(0.05);
+    }
+}
+friendly_fire_sound_cooldown_reset()
+{
+    wait(2); // 2-second cooldown to prevent sound spam
+    self.friendly_fire_sound_cooldown = false;
+}
+
 // Monitors each player for swarm conditions (6+ zombies within 175 inches)
 player_swarm_monitor()
 {
@@ -2643,6 +2715,7 @@ player_swarm_monitor()
         wait 0.5;
     }
 }
+
 // Resets the swarm sound cooldown
 swarm_cooldown_reset()
 {

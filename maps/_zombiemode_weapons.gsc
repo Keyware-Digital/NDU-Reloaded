@@ -490,7 +490,6 @@ treasure_chest_think(rand)
 		else 
 		{   // play the "no purchase" sound and have the player react.
 			self play_sound_on_ent("no_purchase");
-			wait 0.5;
 			user play_interact_sound("no_money");
 		}
 		
@@ -693,11 +692,10 @@ treasure_chest_think(rand)
                 break;
             }
         }
-        else
+		else
         {
             self play_sound_on_ent("no_purchase"); // Comment out to avoid sound alias error
         }
-
         wait 0.05; 
     }
     if(weapon_spawn_org.weapon_string != "zombie_bowie_flourish")
@@ -1613,7 +1611,7 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
         }
         else
         {
-            self play_sound_on_ent("no_purchase"); // Comment out to avoid sound alias error
+            self play_sound_on_ent("no_purchase"); 
         }
         wait 0.05;
     }
@@ -1983,7 +1981,6 @@ weapon_spawn_think()
 			else
 			{
 				self play_sound_on_ent("no_purchase");
-
 				player play_interact_sound("no_money");
 			}
 		}
@@ -2020,12 +2017,12 @@ weapon_spawn_think()
 			else
 			{
 				self play_sound_on_ent( "no_purchase" );
-
 				player play_interact_sound("no_money");
 			}
 		}
 	}
 }
+
 
 wall_buy_weapon_names(weapon_name)
 {
@@ -2426,7 +2423,7 @@ monitor_melee_share(player, weaponmodelstruct)
         {
             // Check if player is close to and generally facing the trigger
             is_facing = false;
-            if(DistanceSquared(player.origin, self.origin) < 64*64)
+            if(DistanceSquared(player.origin, self.origin) < 80*80)	//was 64*64
             {
                 // Get vector from player to trigger
                 to_trigger = VectorNormalize(self.origin - player.origin);

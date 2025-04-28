@@ -418,6 +418,7 @@ pickup_nuke_sound() {
 }
 
 quip_sound() {
+	wait 4; // 2s after revive
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	quipSound = "_quip_" + RandomInt(3);
     quip_sound = Spawn("script_origin", self.origin);
@@ -535,13 +536,14 @@ no_purchase_sound() {
 }
 
 no_money_sound() {
-	wait 0.5;
+	wait 0.5;	// small delay after no purchase sound
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	momoneySound = "_nomoney_" + RandomInt(1);
     no_money_sound = Spawn("script_origin", self.origin);
 	no_money_sound PlaySound("plr_" + index + momoneySound, "nomoney_sound_done");
 	no_money_sound waittill("nomoney_sound_done");
 	no_money_sound Delete();
+	wait 0.5;	// small delay to alleviate spamming
 
 }
 

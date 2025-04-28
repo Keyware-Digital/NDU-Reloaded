@@ -1125,7 +1125,7 @@ flag_blocker()
 	AssertMsg( "flag blocker at " + self.origin + ", the type \"" + type + "\" is not recognized" );
 }
 
-play_no_money_purchase_dialog() {
+/*play_no_money_purchase_dialog() {
 
     index = maps\_zombiemode_weapons::get_player_index(self);
 
@@ -1149,4 +1149,4 @@ play_no_money_purchase_dialog() {
         self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
     }
 
-}
+}*/

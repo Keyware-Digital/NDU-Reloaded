@@ -120,7 +120,7 @@ bowie_think()
                 if( level.player_is_speaking == 0 )
                 {
                     level.player_is_speaking = 1;
-					player thread maps\_zombiemode_perks::play_no_money_perk_dialog();
+					//player thread maps\_zombiemode_perks::play_no_money_perk_dialog();
                     level.player_is_speaking = 0;
                 }
 			}

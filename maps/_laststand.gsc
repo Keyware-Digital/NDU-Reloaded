@@ -123,8 +123,39 @@ PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sH
 	}
 
 	//IPrintLn( self.playername + " is in mega last stand 2");	debug for dmg glitch
-
 	// vision set
+
+    // Check for self-downing via grenade, projectile, falling, or suicide
+    if (sMeansOfDeath == "MOD_SUICIDE" || sMeansOfDeath == "MOD_FALLING" || 
+        sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH" || 
+        sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || 
+        sWeapon == "stielhandgranate" || (isDefined(attacker) && attacker == self))
+    {
+        // Find a living teammate within 500 units to play the quip
+        players = get_players();
+        living_teammates = [];
+        for (i = 0; i < players.size; i++)
+        {
+            if (players[i] != self && !players[i] player_is_in_laststand() && 
+                !players[i].is_zombie && players[i].sessionstate != "spectator" && 
+                DistanceSquared(self.origin, players[i].origin) < 250000) // 500 units squared
+            {
+                living_teammates[living_teammates.size] = players[i];
+            }
+        }
+        if (living_teammates.size > 0)
+        {
+            quipper = living_teammates[RandomInt(living_teammates.size)]; // Random nearby teammate
+            quipper thread quip_sound_trigger();
+        }
+        else
+        {
+            // Fallback: Play quip on downed player if no teammates available
+            self thread quip_sound_trigger();
+        }
+    }
+
+
 	self VisionSetLastStand( "laststand", 1 );
 
 	self.health = 1;
@@ -658,22 +689,43 @@ revive_do_revive( playerBeingRevived, reviverGun )
 
 	timer = 0;
 	revived = false;
-	
+    
 	//CODER_MOD: TOMMYK 07/13/2008
 	playerBeingRevived.revivetrigger.beingRevived = 1;
-	playerBeingRevived.revive_hud setText( &"GAME_PLAYER_IS_REVIVING_YOU", self );
-	playerBeingRevived revive_hud_show();
+    playerBeingRevived.revivetrigger setHintString( "" );
 
-	playerBeingRevived.revive_hud.alignX = "center";
-	playerBeingRevived.revive_hud.alignY = "middle";
-	playerBeingRevived.revive_hud.horzAlign = "center";
-	playerBeingRevived.revive_hud.vertAlign = "bottom";
-	playerBeingRevived.revive_hud.y = -210;
-	
-	playerBeingRevived.revivetrigger setHintString( "" );
-	
-	playerBeingRevived startrevive( self );
+    // Reviver HUD: Progress bar and text
+    if ( !isdefined( self.reviveProgressBar ) )
+    {
+        self.reviveProgressBar = self createPrimaryProgressBar();
+    }
+    self.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
 
+    if ( !isdefined( self.reviveTextHud ) )
+    {
+        self.reviveTextHud = newclientHudElem( self );    
+    }
+    self.reviveTextHud.alignX = "center";
+    self.reviveTextHud.alignY = "middle";
+    self.reviveTextHud.horzAlign = "center";
+    self.reviveTextHud.vertAlign = "bottom";
+    self.reviveTextHud.y = -148;
+    if ( IsSplitScreen() )
+    {
+        self.reviveTextHud.y = -107;
+    }
+    self.reviveTextHud.foreground = true;
+    self.reviveTextHud.font = "default";
+    self.reviveTextHud.fontScale = 1.8;
+    self.reviveTextHud.alpha = 1;
+    self.reviveTextHud.color = ( 1.0, 1.0, 1.0 );
+    self.reviveTextHud setText( &"GAME_REVIVING" );
+
+    // Downed player HUD: Progress bar and reviving text
+    if ( !isdefined( playerBeingRevived.reviveProgressBar ) )
+    {
+        playerBeingRevived.reviveProgressBar = playerBeingRevived createPrimaryProgressBar();
+    }
 	playerBeingRevived.reviveProgressBar.alignX = "center";
 	playerBeingRevived.reviveProgressBar.alignY = "middle";
 	playerBeingRevived.reviveProgressBar.horzAlign = "center";
@@ -682,28 +734,23 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	
 	playerBeingRevived.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
 
-	if(!isdefined(playerBeingRevived.reviveProgressBar)) {
-		playerBeingRevived.reviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
-	}
+    playerBeingRevived.revive_hud setText( &"GAME_PLAYER_IS_REVIVING_YOU", self );
+    playerBeingRevived revive_hud_show();
 
-	if( !isdefined(self.reviveTextHud)) {
-		self.reviveTextHud = newclientHudElem( self );	
-	}
-	
+    playerBeingRevived.revive_hud.alignX = "center";
+    playerBeingRevived.revive_hud.alignY = "middle";
+    playerBeingRevived.revive_hud.horzAlign = "center";
+    playerBeingRevived.revive_hud.vertAlign = "bottom";
+    playerBeingRevived.revive_hud.y = -210;
+
+    playerBeingRevived startrevive( self );
+
 	self thread laststand_clean_up_on_disconnect( playerBeingRevived, reviverGun );
-	
-	self.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
-
-	self.reviveTextHud.alignX = "center";
-	self.reviveTextHud.alignY = "middle";
-	self.reviveTextHud.horzAlign = "center";
-	self.reviveTextHud.vertAlign = "bottom";
-	self.reviveTextHud.y = -210;
-	
+    
 	//chrisp - zombiemode addition for reviving vo
 	// cut , but leave the script just in case 
 	//self thread say_reviving_vo();
-	
+    
 	while( self is_reviving( playerBeingRevived ) )
 	{
 		wait( 0.05 );					
@@ -722,23 +769,26 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	if( isdefined( self.reviveProgressBar ) )
 	{
 		self.reviveProgressBar destroyElem();
+        self.reviveProgressBar = undefined;
 	}
 
 	if( isdefined( playerBeingRevived.reviveProgressBar ) )
 	{
-		playerBeingRevived.reviveProgressBar maps\_hud_util::destroyElem();
+        playerBeingRevived.reviveProgressBar destroyElem();
+        playerBeingRevived.reviveProgressBar = undefined;
 	}
-	
+    
 	if( isdefined( self.reviveTextHud ) )
 	{
 		self.reviveTextHud destroy();
+        self.reviveTextHud = undefined;
 	}
 
-	if( isdefined( self.revive_hud ) )
+    if ( isdefined( playerBeingRevived.revive_hud ) )
 	{
-		self revive_hud_hide();
+        playerBeingRevived revive_hud_hide();
 	}				
-	
+    
 	if ( !revived )
 	{
 		playerBeingRevived stoprevive( self );
@@ -751,7 +801,7 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	return revived;
 }
 
-//test
+// test
 /*say_reviving_vo()
 {
 	if( GetDvar( "zombiemode" ) == "1" || IsSubStr( level.script, "nazi_zombie_" ) ) // CODER_MOD (Austin 5/4/08): zombiemode loadout setup
@@ -1031,4 +1081,45 @@ revive_completion_award_points() {
     for (i = 0; i < players.size; i++) {
         players[i] maps\_zombiemode_score::add_to_player_score(points);
     }
+}
+
+quip_sound_trigger()
+{
+    self endon("disconnect");
+
+    // Skip if on sound cooldown
+    if (IsDefined(self.quip_sound_cooldown) && self.quip_sound_cooldown)
+    {
+        return;
+    }
+
+    self.quip_sound_cooldown = true;
+
+    // Skip if another player is speaking
+    if (level.player_is_speaking == 1)
+    {
+        self thread quip_sound_cooldown_reset();
+        return;
+    }
+
+    // Set speaking flag
+    level.player_is_speaking = 1;
+
+    // Play quip sound (delayed 4 seconds in sounds.gsc)
+    self thread maps\_sounds::quip_sound();
+
+    // Wait for quip to finish (assuming ~2 seconds)
+    wait 2;
+
+    // Clear speaking flag
+    level.player_is_speaking = 0;
+
+    // Reset cooldown
+    self thread quip_sound_cooldown_reset();
+}
+
+quip_sound_cooldown_reset()
+{
+    wait 2; // 2-second cooldown to prevent sound spam
+    self.quip_sound_cooldown = false;
 }
