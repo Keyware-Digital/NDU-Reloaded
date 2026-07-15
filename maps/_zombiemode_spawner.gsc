@@ -2053,25 +2053,51 @@ zombie_death_event(zombie)
     zombie waittill("death");
     zombie thread zombie_eye_glow_stop();
 
-    // Check if attacker is defined and is a player
-    if(IsDefined(zombie.attacker) && IsPlayer(zombie.attacker))
-    {
-        // Initialize killstreak_cooldown if undefined
-        if(!IsDefined(zombie.attacker.killstreak_cooldown))
-        {
-            zombie.attacker.killstreak_cooldown = false;
-        }
+    if( !IsDefined(zombie.attacker) || !IsPlayer(zombie.attacker) )
+        return;
 
-        // Check speaking status and random chance
-        if(!IsDefined(level.player_is_speaking))
+    player = zombie.attacker;
+    mod = zombie.damagemod;
+    hitloc = zombie.damagelocation;
+    weapon = zombie.damageweapon;
+
+    // Safety checks
+    if( !IsDefined(level.player_is_speaking) )
+        level.player_is_speaking = 0;
+
+    if( !IsDefined(player.killstreak_cooldown) )
+        player.killstreak_cooldown = false;
+
+    // ====================== Killstreak vox ======================
+    if( level.player_is_speaking != 1 && !player.killstreak_cooldown && RandomInt(100) < 15 )
+    {
+        player.killstreak_cooldown = true;
+        player thread maps\_sounds::killstreak_sound();
+        player thread killstreak_cooldown_reset();
+        return;
+    }
+
+    // ====================== Headshot kill vox ======================
+    if( (hitloc == "head" || hitloc == "helmet" || hitloc == "neck") &&
+        (mod == "MOD_RIFLE_BULLET" || mod == "MOD_PISTOL_BULLET") &&
+        !level.zombie_vars["zombie_insta_kill"] )
+    {
+        if( level.player_is_speaking != 1 && RandomInt(100) < 15 )   // 10% chance
         {
-            level.player_is_speaking = 0;
+            player thread maps\_sounds::headshot_sound();
+            return;
         }
-        if(level.player_is_speaking != 1 && !zombie.attacker.killstreak_cooldown && RandomInt(100) < 15 ) // was 40
+    }
+
+    // ====================== Explosive kill vox ======================
+    if( (mod == "MOD_GRENADE" || mod == "MOD_GRENADE_SPLASH" || 
+         mod == "MOD_PROJECTILE" || mod == "MOD_EXPLOSIVE" || mod == "MOD_ZOMBIE_BETTY") &&
+        !level.zombie_vars["zombie_insta_kill"] )
+    {
+        if( level.player_is_speaking != 1 && RandomInt(100) < 15 )
         {
-            zombie.attacker.killstreak_cooldown = true;
-            zombie.attacker thread maps\_sounds::killstreak_sound();
-            zombie.attacker thread killstreak_cooldown_reset();
+            player thread maps\_sounds::explosive_kill_sound();
+            return;
         }
     }
 }

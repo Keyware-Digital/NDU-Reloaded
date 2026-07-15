@@ -231,7 +231,7 @@ init_levelvars() {
     set_zombie_var("zombie_ai_per_player", 6);
 
     // Scoring
-    set_zombie_var("zombie_score_start", 500);
+    set_zombie_var("zombie_score_start", 25000);  // testing purposes (500)
     set_zombie_var("zombie_score_kill", 50);
     set_zombie_var("zombie_score_damage", 5);
     set_zombie_var("zombie_score_bonus_melee", 80);

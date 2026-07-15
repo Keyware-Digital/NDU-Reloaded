@@ -185,7 +185,7 @@ PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sH
 
 laststand_allowed( sWeapon, sMeansOfDeath, sHitLoc )
 {
-	// fMOD TK, loads of stuff will now send u into laststand
+	// MOD TK, loads of stuff will now send u into laststand
 	if (   sMeansOfDeath != "MOD_PISTOL_BULLET" 
 		&& sMeansOfDeath != "MOD_RIFLE_BULLET"
 		&& sMeansOfDeath != "MOD_HEAD_SHOT"		
