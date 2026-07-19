@@ -981,7 +981,8 @@ bonus_points_powerup(drop_item) {
 
     playersAlive = maps\_zombiemode::get_players_alive();
 
-    for(i = 0; i < playersAlive.size; i++) {
+    for(i = 0; i < playersAlive.size; i++) 
+    {
         playersAlive[i].score += 500 * level.zombie_vars["zombie_double_points"];
         playersAlive[i].score_total += 500 * level.zombie_vars["zombie_double_points"];
         playersAlive[i] maps\_zombiemode_score::set_player_score_hud();
@@ -990,10 +991,7 @@ bonus_points_powerup(drop_item) {
     wait(5);
 
     level.zombie_vars["zombie_bonus_points"] = 0;
-
 }
-
-
 
 fire_sale_powerup(drop_item) {
 
@@ -1157,12 +1155,14 @@ random_perk_on_hud(drop_item) {
     level thread time_remaining_on_random_perk_powerup();
 }
 
-bonus_points_on_hud(drop_item) {
-
-    self endon("disconnect");
+bonus_points_on_hud(drop_item) 
+{
+    // Changed from "self" to level to avoid disconnect issues
+    level endon("intermission");
 
     // check to see if this is on or not
-    if (level.zombie_vars["zombie_powerup_bonus_points_on"]) {
+    if (level.zombie_vars["zombie_powerup_bonus_points_on"]) 
+    {
         // reset the time and keep going
         level.zombie_vars["zombie_powerup_bonus_points_time"] = 5;
         return;

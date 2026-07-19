@@ -1363,6 +1363,9 @@ damage_over_time( dmg, delay, attacker )
 // SRS 9/2/2008: reordered checks, added ability to gib heads with airburst grenades
 head_should_gib( attacker, type, point )
 {
+	if( level.zombie_vars["zombie_insta_kill"] )
+    return true;
+
 	if ( is_german_build() )
 	{
 		return false;
@@ -1842,6 +1845,15 @@ do_player_playdialog(player_index, sound_to_play, waittime, response)
 zombie_death_animscript()
 {
     self reset_attack_spot();
+
+	if( level.zombie_vars["zombie_insta_kill"] && IsDefined(self.attacker) && IsPlayer(self.attacker) )
+    {
+        // Only do it on melee
+        if( self.damagemod == "MOD_MELEE" || self.damagemod == "MOD_UNKNOWN" )
+        {
+            self zombie_head_gib(self.attacker);
+        }
+    }
 
     // If no_legs, then use the AI no-legs death
     if( self.has_legs && IsDefined( self.a.gib_ref ) && self.a.gib_ref == "no_legs" )

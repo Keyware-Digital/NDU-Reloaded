@@ -1518,7 +1518,7 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 	
 	if(!isDefined(player.perknum) || player.perknum < 11)	// check if player has max perks
 	{
-		if(luckyNumCabinet <= 100)	// 10 out of 100 chance to get a perk (make 100 to test perks)
+		if(luckyNumCabinet <= 33)	// 10 out of 100 chance to get a perk (make 100 to test perks)
 		{
 			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
 			weaponmodelstruct Hide();
