@@ -546,40 +546,40 @@ treasure_chest_think(rand)
 	switch(weapon_spawn_org.weapon_string)
 	{
 		case "30cal_bipod":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_30_CAL_BIPOD";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break; 
 		case "bar":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_BAR";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		case "colt":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_COLT_45";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;  
 		case "dp28":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_DP_27";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		case "doublebarrel":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		case "doublebarrel_sawed_grip":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN_DOUBLE_BARRELED_SAWN_GRIP";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		case "fg42_bipod":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_FG_42_BIPOD";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		case "gewehr43":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GEWEHR_43";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		case "m1carbine":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M1_CARBINE";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 	        break;
 		case "m1garand_gl":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M1_GARAND_GL";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 	        break;
 		case "m2_flamethrower_zombie":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_M2_FLAMETHROWER";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "mg42_bipod":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_MG42_BIPOD";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "mine_bouncing_betty":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_S_MINE";
@@ -588,52 +588,52 @@ treasure_chest_think(rand)
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_MOLOTOV";
 		    break;
 		case "mosin_rifle":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_MOSIN_RIFLE";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "mp40":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_MP_40";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "panzerschrek":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_PANZERSCHREK";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "ppsh41":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_PPSH_41";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "ptrs41_zombie":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_PTRS_41";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "ray_gun_mk1_v2":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_RAY_GUN";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "shotgun":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SHOTGUN";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "springfield":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SPRINGFIELD";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "stg44":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_STG_44";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "svt40":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_SVT_40";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "sw_357":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_357_MAGNUM";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "thompson":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		case "tokarev":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_TOKAREV";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;
 		/*case "type99_lmg":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_TYPE_99";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;*/
 		case "zombie_bowie_flourish":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_BOWIE";
 		    break;
 		/*case "zombie_type100_smg":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_TYPE_100";
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		    break;*/
 	}
 
@@ -1474,34 +1474,34 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 	switch(chosenweapon)
 	{
 		case "kar98k_scoped_zombie":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_SCOPED";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break; 
 		/*case "kar98k_bayonet":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_KAR_98K_BAYONET";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;*/
 		case "m1garand":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_M1_GARAND";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;  
 		case "m1921_thompson":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_THOMPSON_DRUM";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		/*case "mosin_rifle_bayonet":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_MOSIN_RIFLE_BAYONET";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;*/
 		case "mosin_rifle_scoped_zombie":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_MOSIN_RIFLE_SCOPED";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		case "mp40_bigammo_mp":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_MP_40_MAG";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		case "ppsh41_drum":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_PPSH_41_DRUM";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
 		case "springfield_scoped_zombie":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_SPRINGFIELD_SCOPED";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		break;
 		case "sten_mk5":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_STEN";
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 		break;
 	}
 
@@ -1531,7 +1531,7 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 			switch(chosenweapon)
 			{
 				case "perks_a_cola":
-				weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_RANDOM_PERK_BOTTLE";
+				weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_RANDOM_PERK_BOTTLE";
 					break;
 			}
 
@@ -1555,7 +1555,7 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 			switch(chosenweapon)
 			{
 				case "stg44_pap":
-				weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_STG_44_UPGRADED";
+				weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 					break;
 			}
 
