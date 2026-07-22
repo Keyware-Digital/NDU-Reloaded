@@ -57,6 +57,44 @@ fx() {
     level._effect[ "dolphin_dive_land" ] = loadfx ( "" );
 }*/
 
+player_zombie_awareness()
+{
+	self endon("disconnect");
+	self endon("death");
+	
+	while(1)
+	{
+		wait(1);
+		
+		zombie = get_closest_ai(self.origin,"axis");
+		
+		if(!isDefined(zombie))
+		{
+			continue;
+		}
+		
+		dist = 200;
+		
+		switch(zombie.zombie_move_speed)
+		{
+			case "walk": dist = 200;break;
+			case "run": dist = 250; break;
+			case "sprint": dist = 275;break;
+		}
+		
+		if(distance2d(zombie.origin,self.origin) < dist)
+		{				
+			yaw = self animscripts\utility::GetYawToSpot(zombie.origin );
+			
+			//check to see if he's actually behind the player
+			if(yaw < -95 || yaw > 95)
+			{
+				zombie playsound ("behind_vocals");
+			}			
+		}		
+	}	
+}
+
 init_strings() {
     PrecacheString(&"PROTOTYPE_PLACE");
     PrecacheString(&"PROTOTYPE_REGION");
@@ -129,6 +167,7 @@ include_weapons() {
 
     // NDU: Reloaded (main box additions)
     include_weapon("dp28");
+    include_weapon("dp28_crude");   // powerup only, dm placeholder
     include_weapon("mine_bouncing_betty", /*true,*/::prototype_betty_weighting_func);
     include_weapon("mosin_rifle");
     include_weapon("ppsh41");
@@ -222,6 +261,7 @@ include_weapons() {
     level.limited_weapons["walther"] = 0;
     level.limited_weapons["tokarev"] = 0;
     level.limited_weapons["kar98k"] = 0;
+    level.limited_weapons["dp28_crude"] = 0;
     //level.limited_weapons["kar98k_bayonet"] = 0;
     level.limited_weapons["kar98k_scoped_zombie"] = 0;
     level.limited_weapons["m1921_thompson"] = 0;

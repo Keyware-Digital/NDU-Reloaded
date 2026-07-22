@@ -692,19 +692,24 @@ tear_into_building()
             chunk.target_by_zombie = true;
             self AnimScripted("tear_anim", self.origin, self.first_node.angles, tear_anim);
             self zombie_tear_notetracks("tear_anim", chunk, self.first_node);
-            
-            attack = self should_attack_player_thru_boards();
-            if(isDefined(attack) && !attack && self.has_legs)
-            {
-                self do_a_taunt();
-            }
-            if(all_chunks_destroyed(self.first_node.barrier_chunks))
-            {
-                for(i = 0; i < self.first_node.attack_spots_taken.size; i++)
-                {
-                    self.first_node.attack_spots_taken[i] = false;
-                }
-                return;
+			
+			//chris - adding new window attack & gesture animations ;)
+			if(level.script != "nazi_zombie_prototype")
+			{
+				attack = self should_attack_player_thru_boards();
+				if(isDefined(attack) && !attack)
+				{
+					self do_a_taunt();
+				}				
+			}
+			//chrisp - fix the extra tear anim bug
+			if( all_chunks_destroyed( self.first_node.barrier_chunks ) )
+			{
+				for( i = 0; i < self.first_node.attack_spots_taken.size; i++ )
+				{
+					self.first_node.attack_spots_taken[i] = false;
+				}
+				return;
             }    
         }
         self reset_attack_spot();
@@ -2064,7 +2069,7 @@ zombie_death_event(zombie)
 {
     zombie waittill("death");
     zombie thread zombie_eye_glow_stop();
-
+	playsoundatposition ("death_vocals", zombie.origin);
     if( !IsDefined(zombie.attacker) || !IsPlayer(zombie.attacker) )
         return;
 
@@ -2133,6 +2138,9 @@ zombie_setup_attack_properties()
 
 	self.pathEnemyFightDist = 64;
 	self.meleeAttackDist = 64;
+	
+	//try to prevent always turning towards the enemy
+	self.maxsightdistsqrd = 128 * 128;
 
 	// turn off transition anims
 	self.disableArrivals = true; 
@@ -2142,21 +2150,48 @@ zombie_setup_attack_properties()
 // the seeker logic for zombies
 find_flesh()
 {
-    self endon( "death" ); 
-    level endon( "intermission" );
+	self endon( "death" ); 
+	level endon( "intermission" );
 
-    if( level.intermission )
-    {
-        return;
-    }
+	if( level.intermission )
+	{
+		return;
+	}
 
-    self.ignore_player = undefined;
+	self.ignore_player = undefined;
 
-    self zombie_history( "find flesh -> start" );
+	self zombie_history( "find flesh -> start" );
 
-    self.goalradius = 32;
-    while( 1 )
-    {
+	self.goalradius = 32;
+	while( 1 )
+	{
+
+		// try to split the zombies up when the bunch up
+		// see if a bunch zombies are already near my current target; if there's a bunch
+		// and I'm still far enough away, ignore my current target and go after another one
+//		near_zombies = getaiarray("axis");
+//		same_enemy_count = 0;
+//		for (i = 0; i < near_zombies.size; i++)
+//		{
+//			if ( isdefined( near_zombies[i] ) && isalive( near_zombies[i] ) )
+//			{
+//				if ( isdefined( near_zombies[i].favoriteenemy ) && isdefined( self.favoriteenemy ) 
+//				&&	near_zombies[i].favoriteenemy == self.favoriteenemy )
+//				{
+//					if ( distancesquared( near_zombies[i].origin, self.favoriteenemy.origin ) < 225 * 225 
+//					&&	 distancesquared( near_zombies[i].origin, self.origin ) > 525 * 525)
+//					{
+//						same_enemy_count++;
+//					}
+//				}
+//			}
+//		}
+//		
+//		if (same_enemy_count > 12)
+//		{
+//			self.ignore_player = self.favoriteenemy;
+//		}
+		
         players = get_players();
         // If playing single player, never ignore the player
         
@@ -2264,6 +2299,8 @@ zombie_pathing()
 
 			self SetGoalPos( self.favoriteenemy.zombie_breadcrumbs[i] );
 			self waittill( "bad_path" );
+			
+			self jitter_enemies_bad_breadcrumbs( i );
 		}
 
 		self zombie_history( "find flesh -> no breadcrumbs to follow, bad_pathed out" );
@@ -2313,6 +2350,52 @@ zombie_pathing()
 		self zombie_history( "find flesh -> no favoriteenemy" );
 		debug_print( "NO FAVORITEENEMY!" );
 	}
+}
+
+jitter_enemies_bad_breadcrumbs( start_crumb )
+{
+	trace_distance = 35;
+	jitter_distance = 2;
+	
+	index = start_crumb;
+	
+	while (isdefined(self.favoriteenemy.zombie_breadcrumbs[ index + 1 ]))
+	{
+		current_crumb = self.favoriteenemy.zombie_breadcrumbs[ index ];
+		next_crumb = self.favoriteenemy.zombie_breadcrumbs[ index + 1 ];
+		
+		angles = vectortoangles(current_crumb - next_crumb);
+		
+		right = anglestoright(angles);
+		left = anglestoright(angles + (0,180,0));
+		
+		dist_pos = current_crumb + vectorScale( right, trace_distance );
+		
+		trace = bulletTrace( current_crumb, dist_pos, true, undefined );
+		vector = trace["position"];
+		
+		if (distance(vector, current_crumb) < 17 )
+		{
+			self.favoriteenemy.zombie_breadcrumbs[ index ] = current_crumb + vectorScale( left, jitter_distance );
+			continue;
+		}
+		
+		
+		// try the other side
+		dist_pos = current_crumb + vectorScale( left, trace_distance );
+		
+		trace = bulletTrace( current_crumb, dist_pos, true, undefined );
+		vector = trace["position"];
+		
+		if (distance(vector, current_crumb) < 17 )
+		{
+			self.favoriteenemy.zombie_breadcrumbs[ index ] = current_crumb + vectorScale( right, jitter_distance );
+			continue;
+		}
+		
+		index++;
+	}
+	
 }
 
 zombie_follow_enemy()
@@ -2498,10 +2581,6 @@ make_crawler()
 //		attacker.stats["zombie_gibs"]++;
 //	}
 }
-
-//
-// DEBUG
-//
 
 zombie_history( msg )
 {

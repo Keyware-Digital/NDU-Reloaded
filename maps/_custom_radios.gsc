@@ -146,7 +146,9 @@ handle_generic_radio_one_interaction(generic_radio_one)
                     play_sound_2D("bright_sting");
                     level.zombie_vars["zombie_drop_item"] = 1;
                     level.powerup_drop_count = 0;
-                    level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
+                    // give a free random powerup or perk to all players
+                    //level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
+                    level thread maps\_zombiemode_powerups::force_specific_powerup( "random_perk", powerup_spawn );
 
                     player_has_done_radio_ee_two = 1;
                     iPrintLn("Ray Gun Powerup EE complete!");

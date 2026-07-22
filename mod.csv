@@ -325,6 +325,7 @@ xmodel,zombie_teddybear
 xmodel,static_berlin_ger_radio_d
 xmodel,collision_geo_32x32x32
 weapon,sp/dp28
+weapon,sp/dp28_crude
 weapon,sp/m1921_thompson
 weapon,sp/mine_bouncing_betty
 weapon,sp/mosin_rifle

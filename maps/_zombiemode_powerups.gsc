@@ -19,6 +19,8 @@ init() {
     init_mystery_weapon_costs();
 
     thread watch_for_drop();
+
+    level.death_machine_weapon = "dp28_crude";
 }
 
 init_powerup_vars() {
@@ -293,6 +295,23 @@ powerup_hud_overlay()
 			break;
 		}
 	}
+}
+
+// hud helper function to get the number of active powerups
+get_active_global_powerup_count()
+{
+    count = 0;
+
+    if ( level.zombie_vars["zombie_powerup_double_points_on"] )   count++;
+    if ( level.zombie_vars["zombie_powerup_insta_kill_on"] )      count++;
+    if ( level.zombie_vars["zombie_powerup_max_ammo_on"] )        count++;
+    if ( level.zombie_vars["zombie_powerup_carpenter_on"] )       count++;
+    if ( level.zombie_vars["zombie_powerup_nuke_on"] )            count++;
+    if ( level.zombie_vars["zombie_powerup_random_perk_on"] )     count++;
+    if ( level.zombie_vars["zombie_powerup_bonus_points_on"] )    count++;
+    if ( level.zombie_vars["zombie_powerup_fire_sale_on"] )       count++;
+
+    return count;
 }
 
 powerup_shader_timer(timerName, booleanName)
@@ -574,7 +593,7 @@ powerup_grab() {
                         players[i] thread powerup_vo("carpenter");
                         break;
                     case "death_machine":
-                        level thread death_machine_powerup(self);
+                        players[i] thread death_machine_give(players[i]);
                         players[i] thread powerup_vo("death_machine");
                         break;
                     case "nuke":
@@ -883,13 +902,14 @@ get_closest_window_repair(windows) {
 
 death_machine_powerup(drop_item) {
 
-    level thread death_machine_on_hud(drop_item);
+    // legacy code to give to all players
+    /*level thread death_machine_on_hud(drop_item);
 
     level.zombie_vars["zombie_death_machine"] = 1;
 
     wait(5);
 
-    level.zombie_vars["zombie_death_machine"] = 0;
+    level.zombie_vars["zombie_death_machine"] = 0;*/
 
 }
 
@@ -1106,7 +1126,8 @@ carpenter_on_hud(drop_item) {
 
 death_machine_on_hud(drop_item) {
 
-    self endon("disconnect");
+   // legacy code to give to all players
+   /*self endon("disconnect");
 
     // check to see if this is on or not
     if (level.zombie_vars["zombie_powerup_death_machine_on"]) {
@@ -1118,7 +1139,83 @@ death_machine_on_hud(drop_item) {
     level.zombie_vars["zombie_powerup_death_machine_on"] = true;
 
     // set time remaining for death machine
-    level thread time_remaining_on_death_machine_powerup();
+    level thread time_remaining_on_death_machine_powerup();*/
+}
+
+death_machine_personal_hud()
+{
+    self endon("death");
+    self endon("disconnect");
+    self endon("bled_out");
+
+    if (!isDefined(self.death_machine_hud))
+    {
+        self.death_machine_hud = create_simple_hud(self);
+        self.death_machine_hud.foreground = true;
+        self.death_machine_hud.sort = 10;
+        self.death_machine_hud.hidewheninmenu = false;
+        self.death_machine_hud.alignX = "center";
+        self.death_machine_hud.alignY = "bottom";
+        self.death_machine_hud.horzAlign = "center";
+        self.death_machine_hud.vertAlign = "bottom";
+        self.death_machine_hud.y = -35;
+        self.death_machine_hud setshader("specialty_death_machine_zombies", 32, 32);
+    }
+
+    self.death_machine_hud.alpha = 1;
+
+    while (isDefined(self.death_machine_hud) && self.death_machine_timer > 0.5 && self.using_death_machine)
+    {
+        active = get_active_global_powerup_count();
+
+        // === Dynamic positioning ===
+        if (active == 0)
+            self.death_machine_hud.x = 0;
+        else if (active == 1)
+            self.death_machine_hud.x = 48;
+        else if (active == 2)
+            self.death_machine_hud.x = 72;
+        else if (active == 3)
+            self.death_machine_hud.x = 96;
+        else if (active == 4)
+            self.death_machine_hud.x = 120;
+        else if (active == 5)
+            self.death_machine_hud.x = 144;
+        else if (active == 6)
+            self.death_machine_hud.x = 168;
+        else if (active == 7)
+            self.death_machine_hud.x = 192;
+        else
+            self.death_machine_hud.x = 216; // fallback for 8+
+
+        // Blinking logic
+        if (self.death_machine_timer < 5)
+        {
+            self.death_machine_hud.alpha = 0;
+            wait 0.12;
+            if (isDefined(self.death_machine_hud))
+                self.death_machine_hud.alpha = 1;
+            wait 0.12;
+        }
+        else if (self.death_machine_timer < 10)
+        {
+            self.death_machine_hud.alpha = 0;
+            wait 0.22;
+            if (isDefined(self.death_machine_hud))
+                self.death_machine_hud.alpha = 1;
+            wait 0.2;
+        }
+
+        wait 0.05;
+    }
+
+    // Cleanup
+    if (isDefined(self.death_machine_hud))
+    {
+        self.death_machine_hud.alpha = 0;
+        self.death_machine_hud destroy();
+        self.death_machine_hud = undefined;
+    }
 }
 
 nuke_on_hud(drop_item) {
@@ -1315,7 +1412,7 @@ time_remaining_on_carpenter_powerup() {
 
 time_remaining_on_death_machine_powerup() {
 
-    level notify("zombie_powerup_timer");
+    /*level notify("zombie_powerup_timer");
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
@@ -1339,8 +1436,69 @@ time_remaining_on_death_machine_powerup() {
     }
 
     // remove the offset to make room for new powerups, reset timer for next time
-    level.zombie_vars["zombie_powerup_death_machine_time"] = 30;
+    level.zombie_vars["zombie_powerup_death_machine_time"] = 30;*/
 }
+
+death_machine_timer_think(prev_weapon)
+{
+    // Announce someone has collected the death machine to all players
+    players = GetPlayers();
+    for (j = 0; j < players.size; j++)
+    {
+        players[j] thread maps\_sounds::announcer_vox_death_machine_sound();
+    }
+
+    self endon("death");
+    self endon("disconnect");
+    self endon("bled_out");
+
+    // Wait until player is actually holding the death machine
+    wait 0.1;
+
+    while(self.death_machine_timer > 0)
+    {
+        if(self maps\_laststand::player_is_in_laststand())
+            break;
+
+        current_weapon = self GetCurrentWeapon();
+
+        // If player switched away from death machine, end powerup
+        if(current_weapon != level.death_machine_weapon)
+            break;
+
+        self.death_machine_timer -= 0.1;
+        wait 0.1;
+    }
+
+    players = GetPlayers();
+
+    for(i = 0; i < players.size; i++)
+    {
+        players[i] PlaySound("points_loop_off");
+    }
+
+    // === Cleanup  ===
+    self TakeWeapon(level.death_machine_weapon);
+    self EnableOffhandWeapons();
+    self EnableWeaponCycling();
+
+    // Switch back safely
+    if(isDefined(prev_weapon) && prev_weapon != "none" && self HasWeapon(prev_weapon))
+    {
+        self SwitchToWeapon(prev_weapon);
+    }
+    else
+    {
+        weapons = self GetWeaponsListPrimaries();
+        if(weapons.size > 0)
+            self SwitchToWeapon(weapons[0]);
+    }
+
+    self.using_death_machine = false;
+    self.is_drinking = undefined;
+    self.death_machine_timer = 0;
+}
+
 
 time_remaining_on_nuke_powerup() {
 
@@ -1469,4 +1627,64 @@ time_remaining_on_fire_sale_powerup() {
 
     // remove the offset to make room for new powerups, reset timer for next time
     level.zombie_vars["zombie_powerup_fire_sale_time"] = 30;
+}
+death_machine_give(player)
+{
+    if(!isDefined(player) || !IsPlayer(player) || player maps\_laststand::player_is_in_laststand())
+        return;
+
+    // Refresh if already active
+    if(isDefined(player.using_death_machine) && player.using_death_machine)
+    {
+        player.death_machine_timer = level.zombie_vars["zombie_powerup_death_machine_time"];
+        return;
+    }
+
+    player.using_death_machine = true;
+    player.death_machine_timer = level.zombie_vars["zombie_powerup_death_machine_time"];
+    player.is_drinking = 1;
+
+    prev_weapon = player GetCurrentWeapon();
+
+    player DisableOffhandWeapons();
+    player DisableWeaponCycling();
+
+    player GiveWeapon(level.death_machine_weapon);
+    // give max ammo for the dm (needs testing, but should be fine)
+    player SetWeaponAmmoClip(level.death_machine_weapon, WeaponClipSize(level.death_machine_weapon));
+    player GiveMaxAmmo(level.death_machine_weapon);
+    player SwitchToWeapon(level.death_machine_weapon);
+
+    wait 0.75;   // Increased slightly for reliable weapon switch
+
+    player thread death_machine_timer_think(prev_weapon);
+    player thread death_machine_personal_hud();
+}
+
+// forces a powerup to spawn (including the random perk bottle)
+force_specific_powerup( powerup_name, origin )
+{
+    if ( !isDefined( level.zombie_powerups[powerup_name] ) )
+    {
+        println( "^1[ERROR] Tried to force unknown powerup: " + powerup_name );
+        return;
+    }
+
+    powerup = spawn( "script_model", origin + (0, 0, 40) );
+
+    struct = level.zombie_powerups[powerup_name];
+
+    powerup SetModel( struct.model_name );
+    powerup.powerup_name = struct.powerup_name;
+    powerup.hint = struct.hint;
+
+    if ( isDefined( struct.fx ) )
+        powerup.fx = struct.fx;
+
+    playsoundatposition( "spawn_powerup", powerup.origin );
+    powerup PlayLoopSound( "spawn_powerup_loop" );
+
+    powerup thread powerup_wobble();
+    powerup thread powerup_timeout();
+    powerup thread powerup_grab();
 }

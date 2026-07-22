@@ -38,6 +38,9 @@ LANG_ENGLISH        "Sawn-Off Shotgun w/ Grip"
 REFERENCE           ZOMBIE_WEAPON_DP_27
 LANG_ENGLISH        "DP-27"
 
+REFERENCE           ZOMBIE_WEAPON_DP_27_CRUDE
+LANG_ENGLISH        "Crude Death Machine"
+
 REFERENCE           ZOMBIE_WEAPON_FG_42_BIPOD
 LANG_ENGLISH        "FG 42 w/ Bipod"
 

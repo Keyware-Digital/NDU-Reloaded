@@ -201,6 +201,7 @@ init_weapons()
 {
 	// Only guns that are wall buy guns require their true cost, every other gun needs to have zero cost to prevent errors and confusion
 	// NDU: Reloaded
+	add_zombie_weapon( "dp28_crude", "", 0 );
 	add_zombie_weapon( "m1921_thompson", "", 0 );
 	add_zombie_weapon( "mine_bouncing_betty", "", 0 );
 	add_zombie_weapon( "mp40_bigammo_mp", "", 0 );	
