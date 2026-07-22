@@ -12,12 +12,13 @@ isSprinting()
 	return false;
 }
 
-update_angles_origin(players_dolphin_dive)
+update_angles_origin(dive_model)
 {
-	while(isDefined(players_dolphin_dive))
-	{
-		players_dolphin_dive.origin = self.origin;
-		players_dolphin_dive.angles = self.angles;
+    self endon("disconnect");
+    while(isDefined(dive_model) && isDefined(self))
+    {
+        dive_model.origin = self.origin;
+        dive_model.angles = self.angles;
 		wait 0.01;
 	}
 }
@@ -57,50 +58,54 @@ setup_player_dolphin_dive()
 			current_weapon = self GetCurrentWeapon();
 			players_dolphin_dive = spawn("script_model", self.origin);
 
-			//players = GetPlayers();
+            player_char = level.random_character_index[self.entity_num];
 
-			for (i = 0; i < self.size; i++) {
-
-				switch(level.random_character_index[i])
-				{
-					case 0:
-					players_dolphin_dive setModel("char_usa_marine_player_body2_1");
-					players_dolphin_dive.headModel = "char_usa_marine_head4_2";
-					players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
-					players_dolphin_dive.hatModel = "char_usa_marine_helm1";
-					players_dolphin_dive attach(players_dolphin_dive.hatModel);
-					players_dolphin_dive.gearModel = "char_usa_raider_gear4";
-					players_dolphin_dive attach(players_dolphin_dive.gearModel);
-						break; 
-					case 1:
-            		players_dolphin_dive setModel("char_ger_hnrgd_player_body_hmg");
-					players_dolphin_dive.headModel = "char_ger_hnrgd_player_head_hmg";
-					players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
-						break;
-					case 2:
-            		players_dolphin_dive setModel("char_usa_marine_player_body2_1");
-					players_dolphin_dive.headModel = "char_usa_marine_head4_4";
-					players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
-					players_dolphin_dive.hatModel = "char_usa_raider_helm1";
-					players_dolphin_dive attach(players_dolphin_dive.hatModel);
-					players_dolphin_dive.gearModel = "char_usa_raider_gear3";
-					players_dolphin_dive attach(players_dolphin_dive.gearModel);
-						break;  
-					case 3:
-            		players_dolphin_dive setModel("char_rus_guard_player_body_smg");
-					players_dolphin_dive.headModel = "char_rus_guard_player_head_smg";
-					players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
-						break;
-				}
+            switch(player_char)
+            {
+                case 0:
+                    players_dolphin_dive setModel("char_usa_marine_player_body2_1");
+                    players_dolphin_dive.headModel = "char_usa_marine_head4_2";
+                    players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
+                    players_dolphin_dive.hatModel = "char_usa_marine_helm1";
+                    players_dolphin_dive attach(players_dolphin_dive.hatModel);
+                    players_dolphin_dive.gearModel = "char_usa_raider_gear4";
+                    players_dolphin_dive attach(players_dolphin_dive.gearModel);
+                    break;
+                case 1:
+                    players_dolphin_dive setModel("char_ger_hnrgd_player_body_hmg");
+                    players_dolphin_dive.headModel = "char_ger_hnrgd_player_head_hmg";
+                    players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
+                    break;
+                case 2:
+                    players_dolphin_dive setModel("char_usa_marine_player_body2_1");
+                    players_dolphin_dive.headModel = "char_usa_marine_head4_4";
+                    players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
+                    players_dolphin_dive.hatModel = "char_usa_raider_helm1";
+                    players_dolphin_dive attach(players_dolphin_dive.hatModel);
+                    players_dolphin_dive.gearModel = "char_usa_raider_gear3";
+                    players_dolphin_dive attach(players_dolphin_dive.gearModel);
+                    break;
+                case 3:
+                    players_dolphin_dive setModel("char_rus_guard_player_body_smg");
+                    players_dolphin_dive.headModel = "char_rus_guard_player_head_smg";
+                    players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
+                    break;
 			}
 
 			players_dolphin_dive hide();
-			players_dolphin_dive attach(GetWeaponModel(current_weapon), "tag_weapon_right");
-			if(getdvar("cg_thirdperson") == "0") {
-				players_dolphin_dive setInVisibleToPlayer(self);
-			}
-			else if(getdvar("cg_thirdperson") == "1") {
-				self SetInvisibleToPlayer(self);
+            weapon_model = GetWeaponModel(current_weapon);
+            if(isDefined(weapon_model) && weapon_model != "")
+            {
+                players_dolphin_dive attach(weapon_model, "tag_weapon_right");
+            }
+            if(getdvar("cg_thirdperson") == "0")
+            {
+                players_dolphin_dive SetInvisibleToPlayer(self);
+                //self show();
+            }
+            else if(getdvar("cg_thirdperson") == "1")
+            {
+                self SetInvisibleToPlayer(self);
 			}
 			self thread update_angles_origin(players_dolphin_dive);
 
