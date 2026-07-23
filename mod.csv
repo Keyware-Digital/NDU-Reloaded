@@ -57,11 +57,13 @@ material,mtl_zmb_pwr_up_insta_kill
 material,mtl_zmb_pwr_up_max_ammo
 material,mtl_zmb_pwr_up_nuke
 localize,prototype
+menufile,ui/prototype_briefing.menu
+menufile,ui/prototype_gamesetup_coop.menu
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_main.menu
-menufile,ui/prototype_briefing.menu
+menufile,ui/prototype_manage_friends.menu
+menufile,ui/prototype_manage_friends_ingame.menu
 menufile,ui/prototype_options_game_pc.menu
-menufile,ui/prototype_gamesetup_coop.menu
 rawfile,clientscripts/_callbacks.csc
 rawfile,vision/zombie_bo3.vision
 rawfile,vision/zombie_cosmodrome_divetonuke.vision

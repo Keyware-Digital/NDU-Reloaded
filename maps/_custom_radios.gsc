@@ -1,6 +1,7 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
+#include maps\_sounds;
 
 init_custom_radios()
 {
@@ -106,7 +107,7 @@ handle_generic_radio_one_interaction(generic_radio_one)
             current_weapon = player GetCurrentWeapon();
 
             PlayFX(level._effect["broken_radio_spark"], generic_radio_one.origin + (0,0,8));
-            player thread maps\_sounds::button_press_sound();
+            player thread button_press_sound();
 
             // EE 1
             if (player_has_done_radio_ee_one == 0 && current_weapon == "ray_gun_mk1_v2")
@@ -115,7 +116,7 @@ handle_generic_radio_one_interaction(generic_radio_one)
                 player.score += 500;
                 player.score_total += 500;
                 player maps\_zombiemode_score::set_player_score_hud();
-                player thread maps\_sounds::cash_register_sound();
+                player thread cash_register_sound();
                 player_has_done_radio_ee_one = 1;
                 //iPrintLn("Ray Gun score EE complete!");
                 break;
@@ -199,7 +200,7 @@ handle_generic_radio_one_interaction(generic_radio_one)
                 {
                     player_is_interacting_with_radio = 1;
                     iPrintLn("Playing ee track...");
-                    player thread maps\_sounds::radio_ee_track_sound();
+                    player thread radio_ee_track_sound();
                     player_has_done_radio_ee_four = 1;
                     break;
                 }

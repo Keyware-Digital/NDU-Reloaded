@@ -1,6 +1,7 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
+#include maps\_sounds;
 
 #using_animtree( "generic_human" ); 
 init()
@@ -2089,7 +2090,7 @@ zombie_death_event(zombie)
     if( level.player_is_speaking != 1 && !player.killstreak_cooldown && RandomInt(100) < 15 )
     {
         player.killstreak_cooldown = true;
-        player thread maps\_sounds::killstreak_sound();
+        player thread killstreak_sound();
         player thread killstreak_cooldown_reset();
         return;
     }
@@ -2101,7 +2102,7 @@ zombie_death_event(zombie)
     {
         if( level.player_is_speaking != 1 && RandomInt(100) < 15 )   // 10% chance
         {
-            player thread maps\_sounds::headshot_sound();
+            player thread headshot_sound();
             return;
         }
     }
@@ -2113,7 +2114,7 @@ zombie_death_event(zombie)
     {
         if( level.player_is_speaking != 1 && RandomInt(100) < 15 )
         {
-            player thread maps\_sounds::explosive_kill_sound();
+            player thread explosive_kill_sound();
             return;
         }
     }

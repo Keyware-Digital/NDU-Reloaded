@@ -2321,7 +2321,8 @@ setup_player_vars()
 
     players = GetPlayers();
 
-    for (i = 0; i < players.size; i++) {
+ for (i = 0; i < players.size; i++) 
+    {
         players[i] setClientDvar("player_lastStandBleedoutTime", 45);
         players[i] setClientDvar("player_hud_specialty_electric_cherry", 0);
         players[i] setClientDvar("player_hud_specialty_mule_kick", 0);
@@ -2354,23 +2355,11 @@ setup_player_vars()
 				break;
 		}
 
+        // New Network Portrait System
+        // Sets the correct player portrait based on what character they randomly spawned as
+        setDvar("plr" + num + "_hud_portrait", level.random_character_index[i]);
+        setDvar("plr" + num + "_active", 1);
 
-        //Sets the correct player portrait based on what character they randomly spawned as
-		switch(level.random_character_index[i])
-		{
-			case 0:
-            players[i] setClientDvar("plr_hud_portrait", 0);
-				break; 
-			case 1:
-            players[i] setClientDvar("plr_hud_portrait", 1);
-				break;
-			case 2:
-            players[i] setClientDvar("plr_hud_portrait", 2);
-				break;  
-			case 3:
-            players[i] setClientDvar("plr_hud_portrait", 3);
-				break;
-		}
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {

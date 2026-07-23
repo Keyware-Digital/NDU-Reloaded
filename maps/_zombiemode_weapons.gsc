@@ -1767,7 +1767,7 @@ takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct)
         if( level.player_is_speaking == 0 )
         {
             level.player_is_speaking = 1;
-            player thread maps\_sounds::killstreak_sound();
+            player thread killstreak_sound();
             level.player_is_speaking = 0;
         }
 		player thread maps\_zombiemode_perks::random_perk_powerup_think();
@@ -1821,7 +1821,7 @@ switch(chosenweapon)
 
 	if(chosenweapon == "stg44_pap")
 	{
-        player thread maps\_sounds::raygun_stinger_sound();
+        player thread raygun_stinger_sound();
 	}
         level.player_is_speaking = 0;
     }
