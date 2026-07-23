@@ -61,8 +61,6 @@ menufile,ui/prototype_briefing.menu
 menufile,ui/prototype_gamesetup_coop.menu
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_main.menu
-menufile,ui/prototype_manage_friends.menu
-menufile,ui/prototype_manage_friends_ingame.menu
 menufile,ui/prototype_options_game_pc.menu
 rawfile,clientscripts/_callbacks.csc
 rawfile,vision/zombie_bo3.vision
