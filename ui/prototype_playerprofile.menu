@@ -87,8 +87,8 @@
 
 		//#include "ui/overlaybg.inc"
 
-		BACKGROUND_BLACK_LETTERBOX_BLURWORLD_VIS( 0 , 0 )
-		OVERLAY_BACKGROUND_VIS( !menuisopen( "menu_xboxlive_barracks" ) )
+		//BACKGROUND_BLACK_LETTERBOX_BLURWORLD_VIS( 0 , 0 )
+		//OVERLAY_BACKGROUND_VIS( !menuisopen( "menu_xboxlive_barracks" ) )
 		CHOICE_OVERLAY_TITLE( "@MENU_SELECT_ONLINE_PROFILE" )
 
 #define BACK_ENABLE 0
