@@ -42,11 +42,11 @@
 		{
 			exec "party_editingsettings 0"
 			exec "updategamerprofile";			
-			exec "xupdatepartystate";			
+			exec "xupdatepartystate";
 		}
 		
 		//#include "ui/blurredbg.inc"
-		#include "ui/bg.inc"
+		//#include "ui/bg.inc"
 		#undef		BACK_ENABLE
 		#define 	BACK_ENABLE		0
 		#include "ui/navcontrols.inc"
@@ -63,25 +63,24 @@
 	#undef	CHOICE_DVAR_WIDTH_OFFSET
 	#define	CHOICE_DVAR_WIDTH_OFFSET 170
 		// server settings =========================================
-		CHOICE_DVARLIST_VIS( 		1, "@MENU_GAME_TYPE", "", ITEM_TYPE_MULTI, ownerdraw UI_NETGAMETYPE textaligny 20, execOnDvarStringValue "ui_netGametypeName" zom "set ui_hostOptions 0; set ui_hostOptionsEnabled 0;";, 1 )
-		CHOICE_DVAREDIT_VIS( 		2, "@MENU_SERVER_NAME", "sv_hostname", 20, 9, ;, 1 )
-		CHOICE_DVAREDIT_VIS( 		3, "@MENU_PASSWORD1", "g_password", 12, 9, ;, 1 )	//CHOICE_DVARYESNO( 10, "@MENU_FRIENDLY_INDICATORS", "scr_drawfriend", ; )
+		//CHOICE_DVARLIST_VIS( 		1, "@MENU_GAME_TYPE", "", ITEM_TYPE_MULTI, ownerdraw UI_NETGAMETYPE textaligny 20, execOnDvarStringValue "ui_netGametypeName" zom "set ui_hostOptions 0; set ui_hostOptionsEnabled 0;";, 1 )
+		CHOICE_DVAREDIT_VIS( 		1, "@MENU_SERVER_NAME", "sv_hostname", 20, 9, ;, 1 )
+		CHOICE_DVAREDIT_VIS( 		2, "@MENU_PASSWORD1", "g_password", 12, 9, ;, 1 )	//CHOICE_DVARYESNO( 10, "@MENU_FRIENDLY_INDICATORS", "scr_drawfriend", ; )
 		
 		
 	#undef	CHOICE_DVAR_WIDTH_OFFSET
 	#define	CHOICE_DVAR_WIDTH_OFFSET 60
 
 		CHOICE_SEPARATOR( CHOICE_SEP_1 )
-		CHOICE_DVAREDIT_NUMERIC( 	4, "@MENU_MAXIMUM_PLAYERS", "party_maxplayers", 3, ; )
-		CHOICE_DVAREDIT_NUMERIC( 	5, "@MENU_MINIMUM_PING", "sv_minping", 4, ; )
-		CHOICE_DVAREDIT_NUMERIC( 	6, "@MENU_MAXIMUM_PING", "sv_maxping", 4, ; )
-		CHOICE_DVARYESNO( 			7, "@MENU_VOICECHATCOLON", "sv_voice", ; )
-		//CHOICE_DVARYESNO( 			8, "@MPUI_PUNKBUSTERWITHCOLONANDTWOSPACES", "sv_punkbuster", ; )				
+		CHOICE_DVAREDIT_NUMERIC( 	3, "@MENU_MAXIMUM_PLAYERS", "party_maxplayers", 3, ; )
+		CHOICE_DVAREDIT_NUMERIC( 	4, "@MENU_MINIMUM_PING", "sv_minping", 4, ; )
+		CHOICE_DVAREDIT_NUMERIC( 	5, "@MENU_MAXIMUM_PING", "sv_maxping", 4, ; )
+		CHOICE_DVARYESNO( 			6, "@MENU_VOICECHATCOLON", "sv_voice", ; )
+		//CHOICE_DVARYESNO( 			7, "@MPUI_PUNKBUSTERWITHCOLONANDTWOSPACES", "sv_punkbuster", ; )
+		CHOICE_SEPARATOR( CHOICE_SEP_1 )
 
-		CHOICE_SEPARATOR( CHOICE_SEP_2 )
-
-		CHOICE_BUTTON_VIS( 			9, "@MENU_GAME_TYPE_SETTINGS", LOCAL_GAMERULES_ACTION, when( dvarString( ui_netGameType ) != 1 ) )
-		CHOICE_DBUTTON_VIS( 		9, "@MENU_GAME_TYPE_SETTINGS", when( dvarString( ui_netGameType ) == 1 ) )
+		//CHOICE_BUTTON_VIS( 			8, "@MENU_GAME_TYPE_SETTINGS", LOCAL_GAMERULES_ACTION, when( dvarString( ui_netGameType ) != 1 ) )
+		//CHOICE_DBUTTON_VIS( 		8, "@MENU_GAME_TYPE_SETTINGS", when( dvarString( ui_netGameType ) == 1 ) )
 			
 		// map selection ===========================================
 		

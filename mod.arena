@@ -1,5 +1,5 @@
 {
 	map			"nazi_zombie_prototype"
-	longname	"Nacht der Untoten"
+	longname	"MENU_LEVEL_ZOMBIE_PROTOTYPE"
 	gametype	"zom"
 }

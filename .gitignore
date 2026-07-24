@@ -15,9 +15,9 @@
 
 ### COD 5 MOD FILES ###
 
-mod.ff
-NDU-Reloaded.iwd
-NDU-Reloaded.files
+*.ff
+*.iwd
+*.files
 console.log
 weapons/sp/thompson_bigammo_mp (blap_blap)
 weapons/sp/sten_markv_type100stats

@@ -254,305 +254,285 @@
     // main_text will give main the focus and unlock all the controllers.
     // Having this menu do the devmap prevents main from getting focus.
 
-   menuDef
-   {
-	  name			credits_menu
-	  fullScreen		1				
-	  rect			0 0 640 480				// Size and position of the menu
-	  soundloop 		"music_mainmenu"
-	  focusColor		COLOR_FOCUSED	// Menu focus color for text and items
-	  visible 1
-	  onEsc  			{ close self; }
-      onOpen
-      {      
-    	setdvar sub_menu "1";
-		
-            menuDef
-            {
-               itemDef                                                      
-               {                                                         
-                  name         "character_bio_menu_1"
-                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM 
-                  forecolor      1 1 1 1
-                  style         WINDOW_STYLE_SHADER
-                  visible when   (localVarInt( ui_highlight ) == 15);
-                  
-               }
-               itemDef                                                      
-               {                                                         
-                  name         "character_bio_portrait_1"
-                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
-                  forecolor      1 1 1 1
-                  style         WINDOW_STYLE_SHADER
-                  background      "plr_0_character_bio_portrait"
-                  visible when   (localVarInt( ui_highlight ) == 1);
-                  
-               }
-               itemDef                                                      
-               {                                                         
-                  name         "character_bio_portrait_2"
-                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
-                  forecolor      1 1 1 1
-                  style         WINDOW_STYLE_SHADER
-                  background      "plr_1_character_bio_portrait"
-                  visible when   (localVarInt( ui_highlight ) == 2);     
-               }
-               itemDef                                                      
-               {                                                         
-                  name         "character_bio_portrait_3"
-                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
-                  forecolor      1 1 1 1
-                  style         WINDOW_STYLE_SHADER
-                  background      "plr_2_character_bio_portrait"
-                  visible when   (localVarInt( ui_highlight ) == 3);
-                  decoration
-               }
-               itemDef                                                      
-               {                                                         
-                  name         "character_bio_portrait_4"      
-                  rect         CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
-                  forecolor      1 1 1 1      
-                  style         WINDOW_STYLE_SHADER
-                  background      "plr_3_character_bio_portrait"
-                  visible when   (localVarInt( ui_highlight ) == 4);
-                  decoration
-               }
-		       itemDef 
-		       {
-			      name			back
-			      text			"@PLATFORM_BACK"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      forecolor		TEXTBUTTON_COLOR
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_PORTRAIT_X (CHARACTER_PORTRAIT_Y +190) 40 20 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
-			      textfont		CHOICE_TEXTFONT
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      textaligny		18
-			      visible			1
-				  action		{ close self; }
-		       }
-			   itemDef
-			   {
-				  style			WINDOW_STYLE_SHADER
-				  rect			0 64 640 1 HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_FULLSCREEN
-				  forecolor		0.5 0.5 0.5 0.65
-				  background		"menu_white_line_faded"
-				  visible			1
-				  decoration
-			   }
-			   itemDef
-			   {
-				  style			WINDOW_STYLE_SHADER
-				  rect			(CHARACTER_BIO_X -10) (CHARACTER_BIO_Y -35) 1 640 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-				  forecolor		0.5 0.5 0.5 0.65
-				  background		"menu_white_line_faded"
-				  visible when   (localVarInt( ui_highlight ) == 1 || localVarInt( ui_highlight ) == 2 || localVarInt( ui_highlight ) == 3 || localVarInt( ui_highlight ) == 4);
-				  decoration
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_1_paragraph_1"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_ONE"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 1);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_1_paragraph_2"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_TWO"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y +65) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 1);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_1_paragraph_3"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_THREE"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y +165) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 1);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_2_paragraph_1"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_ONE"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 2);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_2_paragraph_2"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_TWO"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y +80) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 2);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_2_paragraph_3"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_THREE"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y +160) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 2);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_3_paragraph_1"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_ONE"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 3);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_3_paragraph_2"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_TWO"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y +100) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 3);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_3_paragraph_3"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_THREE"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y +180) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 3);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_4_paragraph_1"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_ONE"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 4);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_4_paragraph_2"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_TWO"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y +85) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 4);
-			      decoration
-			      autowrapped
-			   }
-			   itemDef 
-			   {
-				  name			"character_bio_4_paragraph_3"
-				  text			"@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_THREE"
-			      type			1
-			      style			WINDOW_STYLE_FILLED
-			      textstyle		ITEM_TEXTSTYLE_SHADOWED
-			      rect			CHARACTER_BIO_X (CHARACTER_BIO_Y +185) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
-			      textfont		UI_FONT_NORMAL
-				  forecolor		0.7529 0.7647 0.7686 1
-			      textalign		ITEM_ALIGN_LEFT
-			      textscale		TEXTSIZE_SMALL
-			      visible when   (localVarInt( ui_highlight ) == 4);
-			      decoration
-			      autowrapped
-			   }
+   menuDef {
+     name credits_menu
+     fullScreen 1
+     rect 0 0 640 480
+     soundloop "music_mainmenu"
+     focusColor COLOR_FOCUSED
+     visible 1
 
-			   CHOICE_MENU_TITLE( "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TITLE" )
-			   CHOICE_BUTTON_VIS( 1, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_ONE", 1, when(dvarInt("sub_menu") == 1 ); )          
-			   CHOICE_BUTTON_VIS( 2, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_TWO", 1, when(dvarInt("sub_menu") == 1 ); )      
-			   CHOICE_BUTTON_VIS( 3, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_THREE", 1, when(dvarInt("sub_menu") == 1 ); )    
-			   CHOICE_BUTTON_VIS( 4, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_FOUR", 1, when(dvarInt("sub_menu") == 1 ); )
-               
-            }
-            
-      }
+     onOpen {
+       setdvar sub_menu "1";
+     }
+     onEsc {
+       close self;
+     }
+
+     itemDef {
+       name "character_bio_menu_1"
+       rect CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+       forecolor 1 1 1 1
+       style WINDOW_STYLE_SHADER
+       visible when(localVarInt(ui_highlight) == 15);
+
+     }
+     itemDef {
+       name "character_bio_portrait_1"
+       rect CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+       forecolor 1 1 1 1
+       style WINDOW_STYLE_SHADER
+       background "plr_0_character_bio_portrait"
+       visible when(localVarInt(ui_highlight) == 1);
+
+     }
+     itemDef {
+       name "character_bio_portrait_2"
+       rect CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+       forecolor 1 1 1 1
+       style WINDOW_STYLE_SHADER
+       background "plr_1_character_bio_portrait"
+       visible when(localVarInt(ui_highlight) == 2);
+     }
+     itemDef {
+       name "character_bio_portrait_3"
+       rect CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+       forecolor 1 1 1 1
+       style WINDOW_STYLE_SHADER
+       background "plr_2_character_bio_portrait"
+       visible when(localVarInt(ui_highlight) == 3);
+       decoration
+     }
+     itemDef {
+       name "character_bio_portrait_4"
+       rect CHARACTER_PORTRAIT_X CHARACTER_PORTRAIT_Y 128 128 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+       forecolor 1 1 1 1
+       style WINDOW_STYLE_SHADER
+       background "plr_3_character_bio_portrait"
+       visible when(localVarInt(ui_highlight) == 4);
+       decoration
+     }
+     itemDef {
+       name back
+       text "@PLATFORM_BACK"
+       type 1
+       style WINDOW_STYLE_FILLED
+       forecolor TEXTBUTTON_COLOR
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_PORTRAIT_X(CHARACTER_PORTRAIT_Y + 190) 40 20 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+       textfont CHOICE_TEXTFONT
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       textaligny 18
+       visible 1
+       action {
+         close self;
+       }
+     }
+     itemDef {
+       style WINDOW_STYLE_SHADER
+       rect 0 64 640 1 HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_FULLSCREEN
+       forecolor 0.5 0.5 0.5 0.65
+       background "menu_white_line_faded"
+       visible 1
+       decoration
+     }
+     itemDef {
+       style WINDOW_STYLE_SHADER
+       rect(CHARACTER_BIO_X - 10)(CHARACTER_BIO_Y - 35) 1 640 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       forecolor 0.5 0.5 0.5 0.65
+       background "menu_white_line_faded"
+       visible when(localVarInt(ui_highlight) == 1 || localVarInt(ui_highlight) == 2 || localVarInt(ui_highlight) == 3 || localVarInt(ui_highlight) == 4);
+       decoration
+     }
+     itemDef {
+       name "character_bio_1_paragraph_1"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_ONE"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 1);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_1_paragraph_2"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_TWO"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 65) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 1);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_1_paragraph_3"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_THREE"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 165) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 1);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_2_paragraph_1"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_ONE"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 2);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_2_paragraph_2"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_TWO"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 80) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 2);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_2_paragraph_3"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TWO_PARAGRAPH_THREE"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 160) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 2);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_3_paragraph_1"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_ONE"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 3);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_3_paragraph_2"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_TWO"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 100) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 3);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_3_paragraph_3"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_THREE_PARAGRAPH_THREE"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 180) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 3);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_4_paragraph_1"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_ONE"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X CHARACTER_BIO_Y 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 4);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_4_paragraph_2"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_TWO"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 85) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 4);
+       decoration
+       autowrapped
+     }
+     itemDef {
+       name "character_bio_4_paragraph_3"
+       text "@PROTOTYPE_ZOMBIE_CHARACTER_BIO_FOUR_PARAGRAPH_THREE"
+       type 1
+       style WINDOW_STYLE_FILLED
+       textstyle ITEM_TEXTSTYLE_SHADOWED
+       rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 185) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+       textfont UI_FONT_NORMAL
+       forecolor 0.7529 0.7647 0.7686 1
+       textalign ITEM_ALIGN_LEFT
+       textscale TEXTSIZE_SMALL
+       visible when(localVarInt(ui_highlight) == 4);
+       decoration
+       autowrapped
+     }
+
+     CHOICE_MENU_TITLE("@PROTOTYPE_ZOMBIE_CHARACTER_BIO_TITLE")
+     CHOICE_BUTTON_VIS(1, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_ONE", 1, when(dvarInt("sub_menu") == 1);)
+     CHOICE_BUTTON_VIS(2, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_TWO", 1, when(dvarInt("sub_menu") == 1);)
+     CHOICE_BUTTON_VIS(3, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_THREE", 1, when(dvarInt("sub_menu") == 1);)
+     CHOICE_BUTTON_VIS(4, "@PROTOTYPE_ZOMBIE_CHARACTER_NAME_FOUR", 1, when(dvarInt("sub_menu") == 1);)
+
+   }
 
 	#define LOCAL_ZOMBIE_RESET\
 		exec "set zombiemode 0";
@@ -561,7 +541,7 @@
 	#define LOCAL_NETWORK_RESET\
 		exec "set onlinegame 0; set systemlink 0";
 	#define SET_DEFAULT_MAP_AND_MODE\
-		exec "set ui_gametype cmp; set ui_mapname "FIRST_PLAYABLE_CAMPAIGN_LEVEL
+		exec "set ui_gametype zom; set ui_mapname nazi_zombie_prototype";
 	#define SET_ARCADE_MODE\
 		exec "set arcademode 1"; \
 		execOnDvarStringValue "ui_gametype" zom "set arcademode 0";
@@ -726,7 +706,7 @@
 			CHOICE_BUTTON_VIS( 4, "@PROTOTYPE_ZOMBIE_MENU_NETWORK", open menu_pc_friends;, when( !localvarBool( ui_hideBack ) ); )
 			CHOICE_NEWICON_VIS( 4, "specialty_new", when( hasinvites() || haspendingfriends() ); )
 			CHOICE_SEPARATOR_VIS( CHOICE_SEP_2, when( !localvarBool( ui_hideBack ) ); )
-			CHOICE_BUTTON( 5, "@PROTOTYPE_ZOMBIE_MENU_CHARACTER_BIO", open credits_menu; )
+			CHOICE_BUTTON_VIS( 5, "@PROTOTYPE_ZOMBIE_MENU_CHARACTER_BIO", open credits_menu;, when( !localvarBool( ui_hideBack ) ); )
 			CHOICE_BUTTON_VIS( 6, "@PROTOTYPE_ZOMBIE_MENU_OPTIONS", open options_new_pc;, when( !localvarBool( ui_hideBack ) ); )
 			CHOICE_SEPARATOR_VIS( CHOICE_SEP_3, when( !localvarBool( ui_hideBack ) ); )
 			CHOICE_BUTTON_VIS( 7, "@PROTOTYPE_ZOMBIE_MENU_EXIT", open quit_popmenu, when( !localvarBool( ui_hideBack ) ); )
@@ -932,7 +912,7 @@
 		}
 
 		// background
-		#include "ui/blurredbg.inc"
+		//#include "ui/blurredbg.inc"
 		#include "ui/navcontrols.inc"
 
 		CHOICE_MENU_TITLE( "@MENU_COOP_CAMPAIGN_CAP" )
@@ -1131,13 +1111,13 @@
 			CHOICE_HIGHLIGHT( 3, 1 )
 			CHOICE_BUTTON_FOCUS_VIS_NOHI_EX( 3, "@MENU_HOST_LAN_CAP", SETUP_ACTION_HOSTLAN, CLEARUIHINT;, ;, when( !localVarBool( ui_hideBack ) ), name hostlan )
 
-			CHOICE_BUTTON_BG( 4, when( !localVarBool( ui_hideBack ) ) )
-			CHOICE_HIGHLIGHT( 4, 1 )
-			CHOICE_BUTTON_FOCUS_VIS_NOHI_EX( 4, "@MENU_RANK_AND_CHALLENGES_CAP", SETUP_ACTION_CHALLENGES, CLEARUIHINT;, ;, when( !localVarBool( ui_hideBack ) ), name challenges )					
+			//CHOICE_BUTTON_BG( 4, when( !localVarBool( ui_hideBack ) ) )
+			//CHOICE_HIGHLIGHT( 4, 1 )
+			//CHOICE_BUTTON_FOCUS_VIS_NOHI_EX( 4, "@MENU_RANK_AND_CHALLENGES_CAP", SETUP_ACTION_CHALLENGES, CLEARUIHINT;, ;, when( !localVarBool( ui_hideBack ) ), name challenges )					
 			
-			CHOICE_BUTTON_BG( 5, when( !localVarBool( ui_hideBack ) ) )
-			CHOICE_HIGHLIGHT( 5, 1 )
-			CHOICE_BUTTON_FOCUS_VIS_NOHI_EX( 5, "@MENU_DEATHCARDS", SETUP_ACTION_COLLECTIBLES, CLEARUIHINT;, ;, when( !localVarBool( ui_hideBack ) ), name deathcards )					
+			//CHOICE_BUTTON_BG( 5, when( !localVarBool( ui_hideBack ) ) )
+			//CHOICE_HIGHLIGHT( 5, 1 )
+			//CHOICE_BUTTON_FOCUS_VIS_NOHI_EX( 5, "@MENU_DEATHCARDS", SETUP_ACTION_COLLECTIBLES, CLEARUIHINT;, ;, when( !localVarBool( ui_hideBack ) ), name deathcards )					
 
 			CHOICE_FOOTNOTE_VIS( "@MENU_GAME_EXPERIENCE_MAY_CHANGE", 40, 430, when( !localvarBool( ui_hideBack ) && !localvarBool( ui_inOverlay ) ) )
 		#endif // #ifdef PC
