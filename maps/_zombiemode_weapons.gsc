@@ -1,7 +1,8 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
-#include maps\_sounds;
+// tried to #include maps\_sounds & change calls to exclude maps\sounds:: 
+// it causes weird delays when using the mystery box & breaks stuff, so temporarily reverted.
 
 init()
 {
@@ -964,13 +965,13 @@ treasure_chest_weapon_spawn(chest, player)
 		level.zombie_vars["enableFireSale"] = 0;
 		model SetModel("zmb_mdl_padlock");
 		playfxontag(level._effect["powerup_on_bad"], model, "tag_origin"); // Apply red powerup FX
-		self thread maps\_sounds::mystery_box_lock_sound(); // WaW has a limit on how many cross-file calls can be made such as this one, I would suggest doing #include maps\_sounds at the top of the file and using the function directly instead
-		wait 0.5;											// edit: - I tried to do this and it caused significant delays when using the mystery box and broke other stuff, so temporarily reverted.
+		self thread maps\_sounds::mystery_box_lock_sound();
+		wait 0.5;											
 
 		// Start padlock animations in a separate thread
 		model thread animate_padlock();
 		// Play the haunting sound
-		self thread mystery_box_haunt_sound_loop();
+		self thread maps\_sounds::mystery_box_haunt_sound_loop();
 		wait 0.5;
 
 		players = GetPlayers();
@@ -1409,13 +1410,30 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 
 	self SetHintString( "" ); 
 
+	// ===== Cabinet Weapon Filter =====
+	filtered_cabinet = [];
+	for( i = 0; i < level.cabinetguns.size; i++ )
+	{
+		gun = level.cabinetguns[i];
+		if( !player has_weapon_or_upgrade( gun ) && !player HasWeapon( gun ) )
+		{
+			filtered_cabinet[filtered_cabinet.size] = gun;
+		}
+	}
+
+	if( filtered_cabinet.size == 0 )
+	{
+		filtered_cabinet = level.cabinetguns;
+	}
+	// === End Cabinet Weapon Filter ===
+
 	weaponmodelstruct = Spawn("script_model",(self.origin - (20,0,6.5)));
 	weaponmodelstruct RotateTo((-90,90,0),0.1);
 	weaponmodelstruct Hide();
 
 	wait 0.1;
 
-	weaponmodel = GetWeaponModel( level.cabinetguns[randomint(level.cabinetguns.size)] );
+	weaponmodel = GetWeaponModel( filtered_cabinet[RandomInt(filtered_cabinet.size)] );
 	weaponmodelstruct SetModel(weaponmodel);
 
 	weaponmodelstruct Show();
@@ -1442,11 +1460,9 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 	
 	for( i = 0; i < 40; i++ )
 	{
-
-		weaponmodel = GetWeaponModel( level.cabinetguns[randomint(level.cabinetguns.size)] );
+		randomnumb = filtered_cabinet[RandomInt(filtered_cabinet.size)];
+		weaponmodel = GetWeaponModel( randomnumb );
 		weaponmodelstruct SetModel(weaponmodel);
-
-		
 		if( i < 20 )
 		{
 			wait( 0.05 ); 
@@ -1463,23 +1479,18 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 		{
 			wait( 0.3 ); 
 		}
-
-		randomnumb = level.cabinetguns[randomint(level.cabinetguns.size)];
-		weaponmodel = GetWeaponModel( randomnumb );
-		weaponmodelstruct SetModel(weaponmodel);
-
 	}
 
-	chosenweapon = randomnumb;
+chosenweapon = randomnumb;
 
 	switch(chosenweapon)
 	{
-		case "kar98k_scoped_zombie":
-		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
-			break; 
 		/*case "kar98k_bayonet":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;*/
+		case "kar98k_scoped_zombie":
+		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
+			break; 
 		case "m1garand":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;  
@@ -1532,7 +1543,7 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 			switch(chosenweapon)
 			{
 				case "perks_a_cola":
-				weaponNameMysteryCabinet = &"PROTOTYPE_WEAPON_RANDOM_PERK_BOTTLE";
+				weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_RANDOM_PERK_BOTTLE";
 					break;
 			}
 
@@ -1767,10 +1778,13 @@ takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct)
         if( level.player_is_speaking == 0 )
         {
             level.player_is_speaking = 1;
-            player thread killstreak_sound();
+            player thread maps\_sounds::killstreak_sound();
             level.player_is_speaking = 0;
         }
 		player thread maps\_zombiemode_perks::random_perk_powerup_think();
+
+		// ensure random perk is not enabled after the player drinks a perk bottle
+		level.zombie_vars["enableRandomPerk"] = 0;
 		return;
 	}
 
@@ -1784,44 +1798,44 @@ takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct)
         level.player_is_speaking = 1;
 switch(chosenweapon)
 	{
-		case "stg44_pap":	
-				player thread maps\_sounds::great_weapon_sound();
-			break; 
-		case "m1garand":
-				player thread maps\_sounds::pickup_semi_sound();
-			break;  
-		case "ppsh41_drum":
-				player thread maps\_sounds::great_weapon_sound();
-			break;
-		case "mp40_bigammo_mp":
-				player thread maps\_sounds::pickup_smg_sound();
-			break;
-		case "m1921_thompson":
-				player thread maps\_sounds::pickup_smg_sound();
-			break;
-		case "sten_mk5":
-				player thread maps\_sounds::pickup_smg_sound();
-			break;
+		/*case "kar98k_bayonet":
+				player thread maps\_sounds::crappy_weapon_sound();
+			break;*/
 		case "kar98k_scoped_zombie":
 				player thread maps\_sounds::pickup_sniper_sound();
 			break;
-		/*case "kar98k_bayonet":
+		case "m1garand":
+				player thread maps\_sounds::pickup_semi_sound();
+			break;  
+		case "m1921_thompson":
+				player thread maps\_sounds::pickup_smg_sound();
+			break;
+		/*case "mosin_rifle_bayonet":
 				player thread maps\_sounds::crappy_weapon_sound();
 			break;*/
 		case "mosin_rifle_scoped_zombie":
 				player thread maps\_sounds::pickup_sniper_sound();
 			break;
-		/*case "mosin_rifle_bayonet":
-				player thread maps\_sounds::crappy_weapon_sound();
-			break;*/
+		case "mp40_bigammo_mp":
+				player thread maps\_sounds::pickup_smg_sound();
+			break;
+		case "ppsh41_drum":
+				player thread maps\_sounds::great_weapon_sound();
+			break;
 		case "springfield_scoped_zombie":
 				player thread maps\_sounds::pickup_sniper_sound();
 			break;
+		case "sten_mk5":
+				player thread maps\_sounds::pickup_smg_sound();
+			break;
+		case "stg44_pap":	
+				player thread maps\_sounds::great_weapon_sound();
+			break; 
 	}
 
 	if(chosenweapon == "stg44_pap")
 	{
-        player thread raygun_stinger_sound();
+        player thread maps\_sounds::raygun_stinger_sound();
 	}
         level.player_is_speaking = 0;
     }
