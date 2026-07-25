@@ -2398,21 +2398,7 @@ setup_player_vars()
         num = players[i].entity_num;
 
         //Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
-		switch(num)
-		{
-			case 0:
-            players[i] setClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[0]);
-				break; 
-			case 1:
-            players[i] setClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[1]);
-				break;
-			case 2:
-            players[i] setClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[2]);
-				break;  
-			case 3:
-            players[i] setClientDvar("cg_ScoresColor_Gamertag_" + i, level.character_colour[3]);
-				break;
-		}
+        players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
 
         // New Network Portrait System
         // Sets the correct player portrait based on what character they randomly spawned as

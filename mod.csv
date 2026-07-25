@@ -57,6 +57,9 @@ material,mtl_zmb_pwr_up_insta_kill
 material,mtl_zmb_pwr_up_max_ammo
 material,mtl_zmb_pwr_up_nuke
 localize,prototype
+menufile,ui/prototype_options_graphics_pc.menu
+menufile,ui/prototype_options_graphics_defaults.menu
+menufile,ui/prototype_options_sound_pc.menu
 menufile,ui/prototype_options_new_pc.menu
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_pc_joinchoosegamemode.menu
@@ -68,6 +71,8 @@ menufile,ui/prototype_options_game_pc.menu
 menufile,ui/prototype_pc_gamesetup_coop.menu
 menufile,ui/prototype_xboxlive_lobby.menu
 menufile,ui_mp/prototype_manage_friends.menu
+menufile,ui_mp/prototype_options_multi.menu
+menufile,ui_mp/prototype_options_voice.menu
 rawfile,clientscripts/_callbacks.csc
 rawfile,vision/zombie_bo3.vision
 rawfile,vision/zombie_cosmodrome_divetonuke.vision

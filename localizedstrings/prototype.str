@@ -201,40 +201,37 @@ REFERENCE           ZOMBIE_MENU_TITLE
 LANG_ENGLISH        "Nacht Der Untoten: Reloaded"
 
 REFERENCE           ZOMBIE_MENU_SOLO
-LANG_ENGLISH        "Play Solo"
+LANG_ENGLISH        "PLAY SOLO"
 
 REFERENCE           ZOMBIE_MENU_COOP
-LANG_ENGLISH        "Play Co-op"
-
-REFERENCE           ZOMBIE_MENU_PROFILE
-LANG_ENGLISH        "Select Online Profile"
+LANG_ENGLISH        "PLAY COOP"
 
 REFERENCE           ZOMBIE_MENU_NETWORK
-LANG_ENGLISH        "Friends/Invites"
+LANG_ENGLISH        "FRIENDS/INVITES"
 
 REFERENCE           ZOMBIE_MENU_CHARACTER_BIO
-LANG_ENGLISH        "Character Bios"
-
-REFERENCE           ZOMBIE_MENU_OPTIONS
-LANG_ENGLISH        "Options"
-
-REFERENCE           ZOMBIE_MENU_EXIT
-LANG_ENGLISH        "Quit"
-
-REFERENCE           ZOMBIE_CHARACTER_BIO_TITLE
 LANG_ENGLISH        "CHARACTER BIOS"
 
+REFERENCE           ZOMBIE_FULLSCREEN_BORDERLESS
+LANG_ENGLISH        "Fullscreen Borderless"
+
+REFERENCE           ZOMBIE_FIELD_OF_VIEW
+LANG_ENGLISH        "Field of View"
+
+REFERENCE           ZOMBIE_FRAME_RATE
+LANG_ENGLISH        "Frame Rate"
+
 REFERENCE           ZOMBIE_CHARACTER_NAME_ONE
-LANG_ENGLISH        "John Johnson"
+LANG_ENGLISH        "JOHN JOHNSON"
 
 REFERENCE           ZOMBIE_CHARACTER_NAME_TWO
-LANG_ENGLISH        "Siegfried Steiner"
+LANG_ENGLISH        "SIEGFRIED STEINER"
 
 REFERENCE           ZOMBIE_CHARACTER_NAME_THREE
-LANG_ENGLISH        "Theodore Jones"
+LANG_ENGLISH        "THEODORE JONES"
 
 REFERENCE           ZOMBIE_CHARACTER_NAME_FOUR
-LANG_ENGLISH        "Artyom Belinski"
+LANG_ENGLISH        "ARTYOM BELINSKI"
 
 REFERENCE           ZOMBIE_CHARACTER_BIO_ONE_PARAGRAPH_ONE
 LANG_ENGLISH        "Every war needs a soldier like John Johnson. A resourceful, tenacious soldier who thinks on their feet and is fiercely loyal to their unit."

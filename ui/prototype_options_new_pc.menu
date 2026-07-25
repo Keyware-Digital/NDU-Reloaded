@@ -91,8 +91,8 @@ menuDef
 #ifdef PC_INGAME
 		#define BACK_OPEN	close self; setLocalVarBool ui_inOverlay 0;
 #else
-		BACKGROUND_BLACK_LETTERBOX_BLURWORLD_VIS( 1 , 0 )
-		OVERLAY_BACKGROUND
+		//BACKGROUND_BLACK_LETTERBOX_BLURWORLD_VIS( 1 , 0 )
+		//OVERLAY_BACKGROUND
 		#define BACK_OPEN	close self; setLocalVarBool ui_inOverlay 0;
 #endif
 		#include "ui/navcontrols.inc"
