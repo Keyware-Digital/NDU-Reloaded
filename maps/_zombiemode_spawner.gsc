@@ -88,49 +88,39 @@ is_spawner_targeted_by_blocker( ent )
 // set up zombie walk cycles
 zombie_spawn_init()
 {
- 	if ( level.first_round )
-		{
-			if (randomInt(100) >= 25)
-			{
-				self.script_string = "riser";
-			}
-		}
- 	else if ( level.round_number < 3 )
-		{
-			if (randomInt(100) >= 40)
-			{
-				self.script_string = "riser";
-			}
-		}
- 	else if ( level.round_number < 4 )
-		{
-			if (randomInt(100) >= 55)
-			{
-				self.script_string = "riser";
-			}
-		}
- 	else if ( level.round_number < 5 )
-		{
-			if (randomInt(100) >= 70)
-			{
-				self.script_string = "riser";
-			}
-		}
- 	else if ( level.round_number < 6 )
-		{
-			if (randomInt(100) >= 85)
-			{
-				self.script_string = "riser";
-			}
-		}
+	if ( level.first_round )
+	{
+		if ( randomInt(100) >= 25 )	
+			self.script_string = "riser";
+	}
+	else if ( level.round_number < 3 )
+	{
+		if ( randomInt(100) >= 40 )	
+			self.script_string = "riser";
+	}
+	else if ( level.round_number < 4 )
+	{
+		if ( randomInt(100) >= 55 )	
+			self.script_string = "riser";
+	}
+	else if ( level.round_number < 5 )
+	{
+		if ( randomInt(100) >= 70 )	
+			self.script_string = "riser";
+	}
+	else if ( level.round_number < 6 )
+	{
+		if ( randomInt(100) >= 85 )
+			self.script_string = "riser";
+	}
 	else
-		if(randomInt(100) > 100)
-		{
-			if (randomInt(100) > 100)
-			{
-				self.script_string = "riser";
-			}
-		}
+		//if(randomInt(100) > 100)
+	{
+		
+		// Round 6+
+		if ( randomInt(100) >= 95 )	
+			self.script_string = "riser";
+	}
 
 	self.targetname = "zombie";
 	self.script_noteworthy = undefined;
@@ -227,19 +217,19 @@ set_zombie_run_cycle()
 	switch(self.zombie_move_speed)
 	{
 	case "walk":
-		var = randomintrange(1, 8);         
+		var = randomintrange(1, 8);          // walk1–walk8 (or 1,9 if you kept walk8)
 		self set_run_anim( "walk" + var );                         
-		self.run_combatanim = level.scr_anim["zombie"]["walk" + var];
+		self.run_combatanim = level.scr_anim[self.animname]["walk" + var];
 		break;
 	case "run":                                
-		var = randomintrange(1, 4);
+		var = randomintrange(1, 6);          // run1–run6
 		self set_run_anim( "run" + var );               
-		self.run_combatanim = level.scr_anim["zombie"]["run" + var];
+		self.run_combatanim = level.scr_anim[self.animname]["run" + var];
 		break;
 	case "sprint":                             
-		var = randomintrange(1, 8);
+		var = randomintrange(1, 4);          // sprint1–sprint4 only
 		self set_run_anim( "sprint" + var );                       
-		self.run_combatanim = level.scr_anim["zombie"]["sprint" + var];
+		self.run_combatanim = level.scr_anim[self.animname]["sprint" + var];
 		break;
 	}
 }
@@ -695,13 +685,13 @@ tear_into_building()
             self zombie_tear_notetracks("tear_anim", chunk, self.first_node);
 			
 			//chris - adding new window attack & gesture animations ;)
-			if(level.script != "nazi_zombie_prototype")
+			//if(level.script != "nazi_zombie_prototype")
 			{
 				attack = self should_attack_player_thru_boards();
-				if(isDefined(attack) && !attack)
+				if(isDefined(attack) && !attack && self.has_legs)
 				{
 					self do_a_taunt();
-				}				
+				}			
 			}
 			//chrisp - fix the extra tear anim bug
 			if( all_chunks_destroyed( self.first_node.barrier_chunks ) )
