@@ -997,9 +997,11 @@ bonus_points_powerup(drop_item) {
 
     level.zombie_vars["zombie_bonus_points"] = 1;
 
+    wait(0.1);
+
     playersAlive = maps\_zombiemode::get_players_alive();
 
-    for(i = 0; i < playersAlive.size; i++) 
+    for(i = 0; i < playersAlive.size; i++)
     {
         playersAlive[i].score += 500 * level.zombie_vars["zombie_double_points"];
         playersAlive[i].score_total += 500 * level.zombie_vars["zombie_double_points"];
@@ -1460,16 +1462,16 @@ death_machine_timer_think(prev_weapon)
 
         current_weapon = self GetCurrentWeapon();
 
-        // If player switched away from death machine, end powerup
-        if(current_weapon != level.death_machine_weapon)
+         // If player switched away from death machine, end powerup
+        if(current_weapon != level.death_machine_weapon && current_weapon != "none")
             break;
 
         self.death_machine_timer -= 0.1;
         wait 0.1;
     }
 
+    // Cleanup
     players = GetPlayers();
-
     for(i = 0; i < players.size; i++)
     {
         players[i] PlaySound("points_loop_off");
@@ -1496,7 +1498,6 @@ death_machine_timer_think(prev_weapon)
     self.is_drinking = undefined;
     self.death_machine_timer = 0;
 }
-
 
 time_remaining_on_nuke_powerup() {
 
@@ -1640,7 +1641,7 @@ death_machine_give(player)
 
     player.using_death_machine = true;
     player.death_machine_timer = level.zombie_vars["zombie_powerup_death_machine_time"];
-    player.is_drinking = 1;
+    //player.is_drinking = 1;   // debug
 
     prev_weapon = player GetCurrentWeapon();
 
