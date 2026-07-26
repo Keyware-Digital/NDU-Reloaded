@@ -230,11 +230,26 @@ LANG_ENGLISH        "8x"
 REFERENCE           MENU_16X
 LANG_ENGLISH        "16x"
 
+REFERENCE           MENU_ENABLE_EXTERNAL_CONSOLE
+LANG_ENGLISH        "External Console"
+
+REFERENCE           MENU_RESTART_REQUIRED
+LANG_ENGLISH        "Restart Required"
+
+REFERENCE           MENU_RESTART_REQUIRED_CONTENT
+LANG_ENGLISH        "Restarted needed in order to apply this setting."
+
 REFERENCE           MENU_FIELD_OF_VIEW
 LANG_ENGLISH        "Field of View"
 
+REFERENCE           MENU_MIN_FIELD_OF_VIEW
+LANG_ENGLISH        "ADS Field of View"
+
+REFERENCE           MENU_SCALE_FIELD_OF_VIEW
+LANG_ENGLISH        "Scale Field of View"
+
 REFERENCE           MENU_FRAME_RATE
-LANG_ENGLISH        "Frame Rate"
+LANG_ENGLISH        "Maximum FPS"
 
 REFERENCE           MENU_CHARACTER_NAME_ONE
 LANG_ENGLISH        "JOHN JOHNSON"

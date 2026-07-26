@@ -58,6 +58,7 @@ material,specialty_random_perk_zombies
 material,specialty_speed_cola_zombies
 material,specialty_stamin_up_zombies
 material,specialty_widows_wine_zombies
+menufile,ui/prototype_game_restart.menu
 menufile,ui/prototype_briefing.menu
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_main.menu
