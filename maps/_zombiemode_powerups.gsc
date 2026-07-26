@@ -624,8 +624,9 @@ powerup_grab() {
 				playsoundatposition("powerup_grabbed", self.origin);
 				self stoploopsound();
 
-				self delete();
-				self notify ("powerup_grabbed");
+                self delete();
+                self notify ("powerup_grabbed");
+                return;
             }
         }
         wait 0.1;
@@ -1441,18 +1442,11 @@ time_remaining_on_death_machine_powerup() {
 
 death_machine_timer_think(prev_weapon)
 {
-    // Announce someone has collected the death machine to all players
-    players = GetPlayers();
-    for (j = 0; j < players.size; j++)
-    {
-        players[j] thread maps\_sounds::announcer_vox_death_machine_sound();
-    }
-
     self endon("death");
     self endon("disconnect");
     self endon("bled_out");
+    self endon("end_death_machine"); 
 
-    // Wait until player is actually holding the death machine
     wait 0.1;
 
     while(self.death_machine_timer > 0)
@@ -1462,7 +1456,7 @@ death_machine_timer_think(prev_weapon)
 
         current_weapon = self GetCurrentWeapon();
 
-         // If player switched away from death machine, end powerup
+        // Early cancel by swapping away (BO3 style)
         if(current_weapon != level.death_machine_weapon && current_weapon != "none")
             break;
 
@@ -1477,12 +1471,13 @@ death_machine_timer_think(prev_weapon)
         players[i] PlaySound("points_loop_off");
     }
 
-    // === Cleanup  ===
-    self TakeWeapon(level.death_machine_weapon);
+    if (self HasWeapon(level.death_machine_weapon))
+        self TakeWeapon(level.death_machine_weapon);
+
     self EnableOffhandWeapons();
     self EnableWeaponCycling();
 
-    // Switch back safely
+     // Switch back safely
     if(isDefined(prev_weapon) && prev_weapon != "none" && self HasWeapon(prev_weapon))
     {
         self SwitchToWeapon(prev_weapon);
@@ -1632,16 +1627,12 @@ death_machine_give(player)
     if(!isDefined(player) || !IsPlayer(player) || player maps\_laststand::player_is_in_laststand())
         return;
 
-    // Refresh if already active
-    if(isDefined(player.using_death_machine) && player.using_death_machine)
-    {
-        player.death_machine_timer = level.zombie_vars["zombie_powerup_death_machine_time"];
-        return;
-    }
+    // Kill any previous instance cleanly
+    player notify("end_death_machine");
 
     player.using_death_machine = true;
     player.death_machine_timer = level.zombie_vars["zombie_powerup_death_machine_time"];
-    //player.is_drinking = 1;   // debug
+    player.is_drinking = 1;
 
     prev_weapon = player GetCurrentWeapon();
 
@@ -1649,12 +1640,38 @@ death_machine_give(player)
     player DisableWeaponCycling();
 
     player GiveWeapon(level.death_machine_weapon);
-    // give max ammo for the dm (needs testing, but should be fine)
     player SetWeaponAmmoClip(level.death_machine_weapon, WeaponClipSize(level.death_machine_weapon));
     player GiveMaxAmmo(level.death_machine_weapon);
     player SwitchToWeapon(level.death_machine_weapon);
 
-    wait 0.75;   // Increased slightly for reliable weapon switch
+    // Check if equipped, if not clean-up
+    timeout = 30;
+    while (player GetCurrentWeapon() != level.death_machine_weapon && timeout > 0)
+    {
+        wait 0.1;
+        timeout--;
+    }
+
+    if (player GetCurrentWeapon() != level.death_machine_weapon)
+    {
+        // Failed – clean up
+        player.using_death_machine = false;
+        player.death_machine_timer = 0;
+        player.is_drinking = undefined;
+        player EnableOffhandWeapons();
+        player EnableWeaponCycling();
+        return;
+    }
+
+    // Allow the player to swap away early (BO3 style)
+    player EnableWeaponCycling();
+
+    // Announce
+    players = GetPlayers();
+    for (j = 0; j < players.size; j++)
+    {
+        players[j] thread maps\_sounds::announcer_vox_death_machine_sound();
+    }
 
     player thread death_machine_timer_think(prev_weapon);
     player thread death_machine_personal_hud();

@@ -482,6 +482,13 @@ treasure_chest_think(rand)
 			wait( 0.1 );
 			continue;
 		}
+
+		// Block Death Machine / any drinking
+   		if( isDefined(user.is_drinking) && user.is_drinking )
+   		{
+        	wait( 0.1 );
+        	continue;
+    	}
 		
 		// make sure the user is a player, and that they can afford it
 		if( is_player_valid( user ) && user.score >= level.zombie_treasure_chest_cost )
@@ -991,6 +998,7 @@ treasure_chest_weapon_spawn(chest, player)
 		while(1)
 		{
 			chest waittill("trigger", player);
+
 			if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
 			{
 				// Play the unlock sound
@@ -1379,6 +1387,14 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
     
 	self waittill("trigger",player);
 	self.grab_weapon_hint = true;
+
+	// Block Death Machine / any drinking
+	if( isDefined(player.is_drinking) && player.is_drinking )
+	{
+		wait(0.1);
+		self thread weapon_cabinet_think();
+		return;
+	}
 
 	for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
     {

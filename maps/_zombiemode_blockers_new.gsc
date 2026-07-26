@@ -753,7 +753,6 @@ blocker_trigger_think()
 			play_sound_at_pos("purchase", self.origin);
 			}
 			
-	
 			self thread replace_chunk( chunk, has_perk );
 	
 			assert( isDefined( self.clip ) );
