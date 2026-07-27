@@ -237,7 +237,7 @@ REFERENCE           MENU_RESTART_REQUIRED
 LANG_ENGLISH        "Restart Required"
 
 REFERENCE           MENU_RESTART_REQUIRED_CONTENT
-LANG_ENGLISH        "Restarted needed in order to apply this setting."
+LANG_ENGLISH        "A restart is needed in order to apply this setting."
 
 REFERENCE           MENU_FIELD_OF_VIEW
 LANG_ENGLISH        "Field of View"
