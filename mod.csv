@@ -10,7 +10,6 @@ fx,weapon/muzzleflashes/fx_raygun_world
 localize,prototype
 font,customfont/bigFont,,
 font,customfont/boldFont,,
-font,customfont/consoleFont,,
 font,customfont/extraBigFont,,
 font,customfont/normalFont,,
 font,customfont/objectiveFont,,
