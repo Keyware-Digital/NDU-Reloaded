@@ -2198,14 +2198,17 @@ find_flesh()
             self.ignore_player = undefined;
         }
         
-        // solo revive functionality
-        structs = getstructarray( "initial_spawn_points", "targetname" ); 
-        while(isDefined(players[0].inSoloRevive) && players[0].inSoloRevive)
-        {
-            self SetGoalPos(structs[0].origin);
-            wait 0.5;
-        }
-        
+		// solo revive distraction 
+		if ( players.size == 1 )
+		{
+			self.ignore_player = undefined;
+			if ( isDefined( level.zombiegoto ) && level.is_solo_revive_distraction_active )
+			{
+				self SetGoalPos( level.zombiegoto.origin );
+				wait randomfloatrange( 1.0, 2.0 );
+				continue;
+			}
+		}
 
         player = get_closest_valid_player( self.origin, self.ignore_player ); 
 

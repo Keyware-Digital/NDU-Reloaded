@@ -1782,9 +1782,10 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
         }
     }
 
-    if (self HasPerk("specialty_quickrevive") && self.health < iDamage && players.size == 1) {
+    if (self HasPerk("specialty_quickrevive") && self.health <= iDamage && players.size == 1 && level.reviveUsesLeft > 0 )
+    {
         self notify("second_chance");
-        self thread maps\_zombiemode_perks::solo_quickrevive(); // custom solo revive function below
+        self thread maps\_zombiemode_perks::solo_quickrevive();
         return;
     }
 

@@ -1,12 +1,17 @@
 #include maps\_utility;
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
+#include maps\_hud_util;
 //#include maps\_sounds;
 
 init() {
     init_precache();
     init_perk_fx();
     init_perk_vars();
+
+    level.reviveUsesLeft = level.zombie_vars[ "quick_revive_solo_max_times" ];
+    level.is_solo_revive_distraction_active = false;
+    level.zombiegoto = undefined;
 
 }
 
@@ -46,6 +51,7 @@ init_perk_vars() {
 	set_zombie_var("deadshot_extra_breath_time", 5); //Deadshot extra breath time
 	set_zombie_var("mulekick_min_weapon_slots", 2); //Default weapon slots
 	set_zombie_var("mulekick_max_weapon_slots",	3); //Mule Kick weapon slots
+    set_zombie_var( "quick_revive_solo_max_times", 3 ); //Three revives solo only
 }
 
 random_perk_powerup_think() {
@@ -59,21 +65,23 @@ random_perk_powerup_think() {
     players = GetPlayers();
 
     for (i = 0; i < players.size; i++) {
-        if (players[i].perknum == 11) // Disable Random Perk if everyone has max perks
+        //if (players[i].perknum == 11) // old hardcoded perk limit
+        if ( isDefined( players[i].perkarray ) && players[i].perknum >= players[i].perkarray.size ) // Disable Random Perk if this player has max perks
         {
-            level.zombie_vars["enableRandomPerk"] = 0;     
+            level.zombie_vars["enableRandomPerk"] = 0;
         }
-        else if (players[i].perknum < 11 && level.zombie_vars["enableRandomPerk"] == 1)
+        //else if (players[i].perknum < 11 && level.zombie_vars["enableRandomPerk"] == 1)
+        else if ( isDefined( players[i].perkarray ) && players[i].perknum < players[i].perkarray.size && level.zombie_vars["enableRandomPerk"] == 1 )
         {
             level.zombie_vars["enableRandomPerk"] = 1;
         }
     }
 
-    if (self maps\_laststand::player_is_in_laststand() || self.perknum == 11) // Max perks
+    //if (self maps\_laststand::player_is_in_laststand() || self.perknum == 11) // Max perks
+    if ( self maps\_laststand::player_is_in_laststand() || ( isDefined( self.perkarray ) && self.perknum >= self.perkarray.size ) ) // Max perks
     {
         return;
     }
-
     if (self.perkarray[self.perknum] == "specialty_armorvest") {
         self.maxhealth = level.zombie_vars["juggernaut_health"];
     }
@@ -112,19 +120,28 @@ random_perk_powerup_think() {
     self.perknum++; // add 1 perk to counter
 }
 
-resetperkdefs() {
+resetperkdefs()
+{
     self.perkarray = [];
-    self.perkarray[0] = "specialty_armorvest";
-    self.perkarray[1] = "specialty_rof";
-    self.perkarray[2] = "specialty_fastreload";
-    self.perkarray[3] = "specialty_quickrevive";
-    self.perkarray[4] = "specialty_detectexplosive";
-    self.perkarray[5] = "specialty_longersprint";
-    self.perkarray[6] = "specialty_bulletaccuracy";
-    self.perkarray[7] = "specialty_explosivedamage";
-    self.perkarray[8] = "specialty_boost";
-    self.perkarray[9] = "specialty_extraammo";
-    self.perkarray[10] = "specialty_specialgrenade";
+    //self.perkarray[0] = "";
+    self.perkarray[ self.perkarray.size ] = "specialty_armorvest";
+    self.perkarray[ self.perkarray.size ] = "specialty_rof";
+    self.perkarray[ self.perkarray.size ] = "specialty_fastreload";
+
+    // Only include Quick Revive if solo uses are still available
+    if ( !( get_players().size == 1 && isDefined( level.reviveUsesLeft ) && level.reviveUsesLeft <= 0 ) )
+    {
+        self.perkarray[ self.perkarray.size ] = "specialty_quickrevive";
+    }
+
+    self.perkarray[ self.perkarray.size ] = "specialty_detectexplosive";
+    self.perkarray[ self.perkarray.size ] = "specialty_longersprint";
+    self.perkarray[ self.perkarray.size ] = "specialty_bulletaccuracy";
+    self.perkarray[ self.perkarray.size ] = "specialty_explosivedamage";
+    self.perkarray[ self.perkarray.size ] = "specialty_boost";
+    self.perkarray[ self.perkarray.size ] = "specialty_extraammo";
+    self.perkarray[ self.perkarray.size ] = "specialty_specialgrenade";
+
     self.perkarray = array_randomize(self.perkarray);
 
     self.perknum = 0;
@@ -435,10 +452,30 @@ perks_zombie_hit_effect_check_health(health, attacker)
 	self.health = health;
 }
 
-solo_quickrevive() // numan's solo revive function; edited
+solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
 {
-    // gather some info
+    self endon( "disconnect" );
+    self endon( "death" );
+
+    // Already in a solo revive or no uses left → just die
+    if ( isDefined( self.inSoloRevive ) || level.reviveUsesLeft <= 0 )
+    {
+        return;
+    }
+
     self.inSoloRevive = true;
+    level.is_solo_revive_distraction_active = true;
+
+    // Pull zombies away from user
+    structs = getstructarray( "initial_spawn_points", "targetname" );
+
+    // Create distraction entity
+    if ( !isDefined( level.zombiegoto ) )
+        level.zombiegoto = Spawn( "script_origin", structs[0].origin );
+    else
+        level.zombiegoto.origin = structs[0].origin;
+
+    // Save state
     self.firstPistol = level.player_specific_add_weapon[maps\_zombiemode_weapons::get_player_index(self)];
     self.currentWeapon = self GetCurrentWeapon();
     self.currentStance = self GetStance();
@@ -447,7 +484,6 @@ solo_quickrevive() // numan's solo revive function; edited
     lastStandAmmo = undefined;
     lastStandGun = undefined;
     lastStandClip = undefined;
-
     // Save weapons and ammo
     playerweapons = self GetWeaponsList();
     for (i = 0; i < playerweapons.size; i++) {
@@ -456,10 +492,10 @@ solo_quickrevive() // numan's solo revive function; edited
         wait 0.05;
     }
 
-    // Handle muleLastWeapon after saving ammo
-    if (isDefined(self.muleLastWeapon)) {
+    // Handle muleLastWeapon after saving ammo (may not need this)
+    /*if (isDefined(self.muleLastWeapon)) {
         // Don’t take muleLastWeapon here; let restoration handle it
-    }
+    }*/
 
     if (self IsThrowingGrenade()) {
         self FreezeControls(true); // literally just to throw player's current grenade if they're stupid enough to play hot potato
@@ -507,51 +543,76 @@ solo_quickrevive() // numan's solo revive function; edited
     self SetWeaponAmmoClip(lastStandGun, lastStandClip);
     self SetWeaponAmmoStock(lastStandGun, lastStandAmmo);
 
-    soloReviveTime = 10;
+// ===== PROGRESS BAR =====
+soloReviveTime = 10;
 
-    if (!isDefined(self.soloReviveProgressBar))
-        self.soloReviveProgressBar = self maps\_hud_util::createPrimaryProgressBar();
+// Kill any leftovers
+if ( isDefined( self.soloReviveProgressBar ) )
+{
+    self.soloReviveProgressBar destroyElem();
+    self.soloReviveProgressBar = undefined;
+}
+if ( isDefined( self.reviveProgressBar ) )
+{
+    self.reviveProgressBar destroyElem();
+    self.reviveProgressBar = undefined;
+}
 
-    self.soloReviveProgressBar.alignX = "center";
-    self.soloReviveProgressBar.alignY = "middle";
-    self.soloReviveProgressBar.horzAlign = "center";
-    self.soloReviveProgressBar.vertAlign = "bottom";
-    self.soloReviveProgressBar.y = -190;
+self.soloReviveProgressBar = self createPrimaryProgressBar();
 
-    self.soloReviveProgressBar maps\_hud_util::updateBar(0.01, 1 / soloReviveTime);
+// Parent (background)
+self.soloReviveProgressBar.alignX = "center";
+self.soloReviveProgressBar.alignY = "middle";
+self.soloReviveProgressBar.horzAlign = "center";
+self.soloReviveProgressBar.vertAlign = "bottom";
+self.soloReviveProgressBar.x = 0;
+self.soloReviveProgressBar.y = -150;
 
-    // wait for revive and play text
-    self.revive_hud setText( &"GAME_REVIVING", " ", self);
-    self maps\_laststand::revive_hud_show();
-    self.revive_hud.alignX = "center";
-    self.revive_hud.alignY = "middle";
-    self.revive_hud.horzAlign = "center";
-    self.revive_hud.vertAlign = "bottom";
-    self.revive_hud.y = -210;
+// Fill
+if ( isDefined( self.soloReviveProgressBar.bar ) )
+{
+    self.soloReviveProgressBar.bar.alignX = "center";
+    self.soloReviveProgressBar.bar.alignY = "middle";
+    self.soloReviveProgressBar.bar.horzAlign = "center";
+    self.soloReviveProgressBar.bar.vertAlign = "bottom";
+    self.soloReviveProgressBar.bar.x = 0;
+    self.soloReviveProgressBar.bar.y = -150;
+}
 
-    wait 10;
+self.soloReviveProgressBar updateBar( 0.01, 1 / soloReviveTime );
 
-    if (isDefined(self.soloReviveProgressBar)) {
-        self.soloReviveProgressBar maps\_hud_util::destroyElem();
-    }
+// wait for revive and play text
+self.revive_hud setText( &"GAME_REVIVING" );
+self maps\_laststand::revive_hud_show();
+self.revive_hud.alignX = "center";
+self.revive_hud.alignY = "middle";
+self.revive_hud.horzAlign = "center";
+self.revive_hud.vertAlign = "bottom";
+self.revive_hud.x = 0;
+self.revive_hud.y = -175;
 
-    if (isDefined(self.revive_hud)) {
-        self maps\_laststand::revive_hud_hide();
-    }
+wait( soloReviveTime );
+
+if ( isDefined( self.soloReviveProgressBar ) )
+{
+    self.soloReviveProgressBar destroyElem();
+    self.soloReviveProgressBar = undefined;
+}
+if ( isDefined( self.revive_hud ) )
+    self maps\_laststand::revive_hud_hide();
 
     // Initialize muleCount if not set
-    if (!isDefined(self.muleCount)) {
-        if (!self HasPerk("specialty_extraammo")) {
-            self.muleCount = level.zombie_vars["mulekick_min_weapon_slots"];
-        } else {
-            self.muleCount = level.zombie_vars["mulekick_max_weapon_slots"];
-        }
+    if ( !isDefined( self.muleCount ) )
+    {
+        if ( !self HasPerk( "specialty_extraammo" ) )
+            self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
+        else
+            self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
     }
 
     // Restore weapons
-    if (self.currentWeapon != lastStandGun) {
+    if ( self.currentWeapon != lastStandGun )
         self TakeAllWeapons();
-    }
 
     restoredWeapons = 0;
     for (i = 0; i < playerweapons.size; i++) {
@@ -582,8 +643,7 @@ solo_quickrevive() // numan's solo revive function; edited
     self SwitchToWeapon(self.currentWeapon);
     self EnableWeaponCycling();
 
-    self.inSoloRevive = undefined;
-
+    // Restore movement / vision
     self VisionSetNaked("zombie", 1);
 
     self AllowSprint(true);
@@ -595,11 +655,45 @@ solo_quickrevive() // numan's solo revive function; edited
 
     self.ignoreme = false;
 
-    if (!self HasPerk("specialty_extraammo")) {
+    if ( !self HasPerk( "specialty_extraammo" ) )
+    {
         self.muleLastWeapon = undefined;
     }
 
-    self notify("player_revived"); // Notify for other scripts
+    // ===== USE COUNTER =====
+    level.reviveUsesLeft--;
+
+    if ( level.reviveUsesLeft <= 0 )
+    {
+        // Permanently remove Quick Revive from the random pool
+        if ( isDefined( self.perkarray ) )
+        {
+            for ( i = 0; i < self.perkarray.size; i++ )
+            {
+                if ( self.perkarray[i] == "specialty_quickrevive" )
+                {
+                    self.perkarray = array_remove( self.perkarray, "specialty_quickrevive" );
+                    break;
+                }
+            }
+        }
+
+        // Only show this when uses are actually gone
+        self iPrintLnBold( "No more Solo Revives remaining!" );
+        self thread maps\_sounds::samantha_fail_sound();
+    }
+
+    self.inSoloRevive = undefined;
+    level.is_solo_revive_distraction_active = false;
+
+    if ( isDefined( level.zombiegoto ) )
+    {
+        level.zombiegoto delete();
+        level.zombiegoto = undefined;
+    }
+
+    self notify( "player_revived" ); // Notify for other scripts
+    self notify( "solo_revive_done" );
 }
 
 mule_kick_function(old_weapon, new_weapon)

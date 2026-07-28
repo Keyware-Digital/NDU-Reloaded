@@ -998,7 +998,8 @@ bonus_points_powerup(drop_item) {
 
     level.zombie_vars["zombie_bonus_points"] = 1;
 
-    wait(0.1);
+    wait( 0.05 );
+    wait_network_frame();
 
     playersAlive = maps\_zombiemode::get_players_alive();
 

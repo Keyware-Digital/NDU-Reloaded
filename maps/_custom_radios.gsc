@@ -77,8 +77,8 @@ handle_generic_radio_one_interaction(generic_radio_one)
     weapon_fired_count_stg = 0;        // Counts up-to 30 STG44 shots
 
     player_is_interacting_with_radio = 0;  // We don't want radio functions overlapping
-    player_has_done_radio_ee_one = 0;      
-    player_has_done_radio_ee_two = 0; 
+    player_has_done_radio_ee_one = 0;      // raygun free cash
+    player_has_done_radio_ee_two = 0;      // raygun free perk
     player_has_done_radio_ee_three = 1;    // stg44_pap 30 shots, disabled for now
     player_has_done_radio_ee_four = 1;     // scoped rifles, disabled for now, maybe add BO1 Dead Ops arcade music like the radio from the BO1 version of Nacht
 
@@ -128,7 +128,7 @@ handle_generic_radio_one_interaction(generic_radio_one)
                 player_is_interacting_with_radio = 1;
 
                 weapon_fired_count_raygun++;
-                iPrintLn(weapon_fired_count_raygun + " out of 5 Ray Gun shots done");
+                //iPrintLn(weapon_fired_count_raygun + " out of 5 Ray Gun shots done");
 
                 if (weapon_fired_count_raygun >= 5)
                 {
@@ -152,7 +152,7 @@ handle_generic_radio_one_interaction(generic_radio_one)
                     level thread maps\_zombiemode_powerups::force_specific_powerup( "random_perk", powerup_spawn );
 
                     player_has_done_radio_ee_two = 1;
-                    iPrintLn("Ray Gun Powerup EE complete!");
+                    //iPrintLn("Ray Gun Powerup EE complete!");
                     weapon_fired_count_raygun = 0;
                 }
                 break;

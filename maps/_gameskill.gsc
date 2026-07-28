@@ -1944,7 +1944,10 @@ fadeFunc( overlay, coverWarning, severity, mult, hud_scaleOnly )
 
 shouldShowCoverWarning()
 {
-	// Glocke: need to disable this for the Makin outro so adding in a level var
+    // // Glocke: need to disable this for the Makin outro so adding in a level var
+    if ( GetDvar( "zombiemode" ) == "1" || IsSubStr( level.script, "nazi_zombie_" ) )
+        return false;
+
 	if( isDefined(level.enable_cover_warning) )
 	{
 		return level.enable_cover_warning;
@@ -1957,6 +1960,10 @@ shouldShowCoverWarning()
 		return false;
 	
 	if ( level.missionfailed )
+		return false;
+
+    // Guard the missing function to stop buggy red flash
+    if ( !isDefined( maps\_load::map_is_early_in_the_game ) )
 		return false;
 	
 	if ( !maps\_load::map_is_early_in_the_game() )
