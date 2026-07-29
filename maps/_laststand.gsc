@@ -1089,32 +1089,12 @@ quip_sound_trigger()
 
     // Skip if on sound cooldown
     if (IsDefined(self.quip_sound_cooldown) && self.quip_sound_cooldown)
-    {
         return;
-    }
 
     self.quip_sound_cooldown = true;
 
-    // Skip if another player is speaking
-    if (level.player_is_speaking == 1)
-    {
-        self thread quip_sound_cooldown_reset();
-        return;
-    }
+    self thread maps\_sounds::player_vox_helper( maps\_sounds::quip_sound, "quip_sound_done", 6.0 );
 
-    // Set speaking flag
-    level.player_is_speaking = 1;
-
-    // Play quip sound (delayed 4 seconds in sounds.gsc)
-    self thread maps\_sounds::quip_sound();
-
-    // Wait for quip to finish (assuming ~2 seconds)
-    wait 2;
-
-    // Clear speaking flag
-    level.player_is_speaking = 0;
-
-    // Reset cooldown
     self thread quip_sound_cooldown_reset();
 }
 

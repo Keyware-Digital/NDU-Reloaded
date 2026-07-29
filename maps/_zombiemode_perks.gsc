@@ -78,44 +78,47 @@ random_perk_powerup_think() {
     }
 
     //if (self maps\_laststand::player_is_in_laststand() || self.perknum == 11) // Max perks
-    if ( self maps\_laststand::player_is_in_laststand() || ( isDefined( self.perkarray ) && self.perknum >= self.perkarray.size ) ) // Max perks
+    if ( self maps\_laststand::player_is_in_laststand() || !isDefined( self.perkarray ) || self.perknum >= self.perkarray.size ) // Max perks
     {
         return;
     }
-    if (self.perkarray[self.perknum] == "specialty_armorvest") {
+
+    perk = self.perkarray[self.perknum];
+
+    if (perk == "specialty_armorvest") {
         self.maxhealth = level.zombie_vars["juggernaut_health"];
     }
 
-    if (self.perkarray[self.perknum] == "specialty_fastreload") {
+    if (perk == "specialty_fastreload") {
         self setClientDvar("perk_weapReloadMultiplier", level.zombie_vars["speed_reload_rate"]);
     }
 
-    if (self.perkarray[self.perknum] == "specialty_longersprint") {
-		self.movementSpeed = level.zombie_vars["staminup_sprint_scale"];
+    if (perk == "specialty_longersprint") {
+        self.movementSpeed = level.zombie_vars["staminup_sprint_scale"];
         self setMoveSpeedScale(level.zombie_vars["staminup_sprint_scale"] );
-		self setClientDvar("player_sprintTime", level.zombie_vars["staminup_sprint_max_duration"]);
+        self setClientDvar("player_sprintTime", level.zombie_vars["staminup_sprint_max_duration"]);
     }
 
-    if (self.perkarray[self.perknum] == "specialty_explosivedamage") {
-		self setClientDvar("player_hud_specialty_electric_cherry", 1);
+    if (perk == "specialty_explosivedamage") {
+        self setClientDvar("player_hud_specialty_electric_cherry", 1);
     }
 
-    if (self.perkarray[self.perknum] == "specialty_bulletaccuracy") {
-		self setClientDvar("perk_weapSpreadMultiplier", level.zombie_vars["deadshot_spread_multiplier"]);
-		self SetPerk("specialty_holdbreath"); //Iron lungs
-		self setClientDvar("perk_extraBreath", level.zombie_vars["deadshot_extra_breath_time"]);
+    if (perk == "specialty_bulletaccuracy") {
+        self setClientDvar("perk_weapSpreadMultiplier", level.zombie_vars["deadshot_spread_multiplier"]);
+        self SetPerk("specialty_holdbreath"); //Iron lungs
+        self setClientDvar("perk_extraBreath", level.zombie_vars["deadshot_extra_breath_time"]);
     }
 
-    if(self.perkarray[self.perknum] == "specialty_extraammo") {
-		self.muleCount = level.zombie_vars["mulekick_max_weapon_slots"];
+    if(perk == "specialty_extraammo") {
+        self.muleCount = level.zombie_vars["mulekick_max_weapon_slots"];
         /*if (isDefined(self.muleLastWeapon))
-	    {				
-	        self GiveWeapon(self.muleLastWeapon);
-	    }*/
+        {				
+            self GiveWeapon(self.muleLastWeapon);
+        }*/
     }
 
-    self SetPerk(self.perkarray[self.perknum]);
-    self perk_hud_create(self.perkarray[self.perknum]);
+    self SetPerk(perk);
+    self perk_hud_create(perk);
 
     self.perknum++; // add 1 perk to counter
 }

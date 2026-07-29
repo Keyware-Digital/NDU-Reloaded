@@ -3,7 +3,7 @@
 #include common_scripts\utility;
 #include maps\_music;
 #include maps\_zombiemode_utility;
-//#include maps\_sounds;
+#include maps\_sounds;
 
 #using_animtree("generic_human");
 
@@ -1744,18 +1744,13 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
 
     players = GetPlayers();
 
-    if (isDefined(self.inSoloRevive)) {
+    if (isDefined(self.inSoloRevive))
+    {
         return;
-    }  
-
-    if(level.player_is_speaking != 1) {
-
-        level.player_is_speaking = 1;
-
-        self thread maps\_sounds::pain_vox_sound();
-
-        level.player_is_speaking = 0;
     }
+
+        self thread player_vox_helper( ::pain_vox_sound, "pain_exert_sound_done", 2.0 );
+
 
     if (self HasPerk("specialty_detectexplosive") &&
         (sMeansOfDeath == "MOD_GRENADE_SPLASH" ||
@@ -1930,7 +1925,14 @@ player_fake_death() {
     self AllowCrouch(false);
     self.ignoreme = true;
     self EnableInvulnerability();
-    self thread maps\_sounds::death_sound();
+    /*if(level.player_is_speaking != 1) 
+    {
+        level.player_is_speaking = 1;*/
+        // don't gate
+        self thread player_vox_helper( ::death_sound, "death_sound_done", 3.0 );
+        /*self waittill("death_sound_done");
+        level.player_is_speaking = 0;
+    }*/
 
     wait(1);
     self FreezeControls(true);
@@ -2443,12 +2445,8 @@ player_reload_sounds()
             }
         }
 
-        // Only proceed if not in cooldown and not speaking
-        if( !IsDefined( level.player_is_speaking ) )
-        {
-            level.player_is_speaking = 0;
-        }
-        if( level.player_is_speaking != 1 && !self.reload_cooldown )
+        // Only proceed if not in cooldown
+        if( !self.reload_cooldown )
         {
             // Check for nearby zombies
             zombies = GetAiArray( "axis" );
@@ -2471,16 +2469,14 @@ player_reload_sounds()
             {
                 //IPrintLnBold("Reload sound triggered: zombies close, " + (get_enemy_count() + level.zombie_total) + " total enemies"); // Debug
                 self.reload_cooldown = true;
-                level.player_is_speaking = 1;
-                self thread maps\_sounds::reload_vox_sound();
-                self waittill( "reloading_sound_finished" );
-                level.player_is_speaking = 0;
+                self thread player_vox_helper( ::reload_vox_sound, "reloading_sound_done" );
                 self thread reload_cooldown_reset();
             }
         }
         wait 0.05; // Small wait to prevent tight looping
     }
 }
+
 reload_cooldown_reset()
 {
     wait 5; // Cooldown duration to cover reload animations
@@ -2503,8 +2499,8 @@ player_no_ammo_sounds()
             continue;
         }
 
-        // Skip if on cooldown or speaking
-        if(self.no_ammo_cooldown || level.player_is_speaking == 1)
+        // Skip if on cooldown
+        if(self.no_ammo_cooldown)
         {
             wait 0.5;
             continue;
@@ -2550,16 +2546,14 @@ player_no_ammo_sounds()
 
             //IPrintLnBold("No ammo sound triggered for weapon: " + current_weapon); // Debug
             self.no_ammo_cooldown = true;
-            level.player_is_speaking = 1;
-            self thread maps\_sounds::no_ammo_vox();
-            self waittill("no_ammo_sound_finished");
-            level.player_is_speaking = 0;
+            self thread player_vox_helper( ::no_ammo_vox, "no_ammo_sound_done" );
             self thread no_ammo_cooldown_reset();
         }
 
         wait 0.5; // Check every 0.5 seconds
     }
 }
+
 no_ammo_cooldown_reset()
 {
     wait 20; // Matches Treyarch's cooldown
@@ -2574,18 +2568,11 @@ player_lunge_knife_exert_sounds()
     {
         wait (0.01); // was 1.25, moved "waits" to sounds.gsc.
 
-        if(level.player_is_speaking == 0) {
-            if(self IsMeleeing()) {
-
-                level.player_is_speaking = 1;
-
-                self thread maps\_sounds::melee_vox_sound();
-
-                self waittill("melee_sound_finished");
-
-                level.player_is_speaking = 0;
-            }
+        if(self IsMeleeing())
+        {
+            self thread player_vox_helper( ::melee_vox_sound, "melee_sound_done" );
         }
+
         wait(0.01);  //was 0.05, prevent sound from playing more than once during long knive lunges
     }
 }
@@ -2596,17 +2583,11 @@ player_throw_stielhandgranate_exert_sounds()
 
     while (1)
     {
-      	self waittill("grenade_fire", grenade, weaponName);
+          self waittill("grenade_fire", grenade, weaponName);
 
-        if (level.player_is_speaking == 0 && weaponName == "Stielhandgranate" && self IsThrowingGrenade()) //for some reason the game only accepts Stielhandgranate and not stielhandgranate, might have to capitalise others?
+        if (weaponName == "Stielhandgranate" && self IsThrowingGrenade()) //for some reason the game only accepts Stielhandgranate and not stielhandgranate, might have to capitalise others?
         {
-            level.player_is_speaking = 1;
-
-            self thread maps\_sounds::stielhandgranate_vox_sound();
-
-            self waittill("stielhandgranate_sound_finished");
-
-            level.player_is_speaking = 0;
+            self thread player_vox_helper( ::stielhandgranate_vox_sound, "stielhandgranate_sound_done" );
         }
         wait(0.05);
     }
@@ -2618,17 +2599,11 @@ player_throw_molotov_exert_sounds()
 
     while (1)
     {
-      	self waittill("grenade_fire", grenade2, weaponName);
+          self waittill("grenade_fire", grenade2, weaponName);
 
-        if (level.player_is_speaking == 0 && weaponName == "molotov" && self IsThrowingGrenade())
+        if (weaponName == "molotov" && self IsThrowingGrenade())
         {
-            level.player_is_speaking = 1;
-
-            self thread maps\_sounds::molotov_vox_sound();
-
-            self waittill("molotov_sound_finished");
-
-            level.player_is_speaking = 0;
+            self thread player_vox_helper( ::molotov_vox_sound, "molotov_sound_done" );
         }
     }
 }
@@ -2645,8 +2620,8 @@ player_friendly_fire_sound_monitor()
         // Wait for the player to fire their weapon
         self waittill("weapon_fired");
 
-        // Skip if on cooldown or speaking
-        if (self.friendly_fire_sound_cooldown || level.player_is_speaking == 1)
+        // Skip if on cooldown
+        if (self.friendly_fire_sound_cooldown)
         {
             wait(0.05);
             continue;
@@ -2688,9 +2663,9 @@ player_friendly_fire_sound_monitor()
             {
                 // Trigger the friendly fire sound on the TARGET player
                 self.friendly_fire_sound_cooldown = true;
-                trace["entity"] thread maps\_sounds::friendly_fire_sound();
                 // Wait for the target's sound to finish or timeout
-                trace["entity"] waittill_notify_or_timeout("_ff_sound_done", 5);
+                trace["entity"] thread player_vox_helper( ::friendly_fire_sound, "ff_sound_done" );
+
                 self thread friendly_fire_sound_cooldown_reset();
             }
         }
@@ -2698,6 +2673,7 @@ player_friendly_fire_sound_monitor()
         wait(0.05);
     }
 }
+
 friendly_fire_sound_cooldown_reset()
 {
     wait(2); // 2-second cooldown to prevent sound spam
@@ -2719,11 +2695,7 @@ player_swarm_monitor()
 
     while (1)
     {
-        if (!IsDefined(level.player_is_speaking))
-        {
-            level.player_is_speaking = 0;
-        }
-        if (level.player_is_speaking != 1 && !self.swarm_cooldown)
+        if (!self.swarm_cooldown)
         {
             zombies = GetAiArray("axis");
             zombies_nearby = 0;
@@ -2743,10 +2715,7 @@ player_swarm_monitor()
             if (zombies_nearby >= 6)
             {
                 self.swarm_cooldown = true;
-                level.player_is_speaking = 1;
-                self thread maps\_sounds::swarm_sound();
-                self waittill_notify_or_timeout("_swarm_sound_done", 5);
-                level.player_is_speaking = 0;
+                self thread player_vox_helper( ::swarm_sound, "swarm_sound_done" );
                 self thread swarm_cooldown_reset();
             }
         }

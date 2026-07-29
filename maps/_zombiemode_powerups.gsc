@@ -1,8 +1,7 @@
 #include maps\_utility;
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
-
-//#include maps\_sounds;
+#include maps\_sounds;
 
 init() {
 
@@ -606,12 +605,15 @@ powerup_grab() {
                         break;
                     case "random_perk":
                         level thread random_perk_powerup(self);
+                        //players[i] thread powerup_vo("bonus_points");
                         break;
                     case "bonus_points":
                         level thread bonus_points_powerup(self);
+                        players[i] thread powerup_vo("bonus_points");
                         break;
                     case "fire_sale":
                         level thread fire_sale_powerup(self);
+                        players[i] thread powerup_vo("fire_sale");
                         break;
                     default:
                         println("Unrecognized powerup.");
@@ -633,70 +635,55 @@ powerup_grab() {
     }
 }
 
-powerup_vo(type) {
-
+powerup_vo(type)
+{
     self endon("death");
     self endon("disconnect");
 
-    index = maps\_zombiemode_weapons::get_player_index(self);
-    sound = undefined;
-
-    if (!isDefined(level.player_is_speaking)) {
-        level.player_is_speaking = 0;
-    }
-
     wait(randomfloatrange(1, 2));
 
-    switch (type) {
+  switch (type) {
     case "bonus_points":
-        //wait 3;
-        self thread maps\_sounds::pickup_bonus_points_sound();
-        //sound = "plr_0_vox_powerup_carp_" + index + "";
-        break;
-    case "carpenter":
-        //wait 3;
-        self thread maps\_sounds::pickup_carpenter_sound();
-        //sound = "plr_0_vox_powerup_carp_" + index + "";
-        break;
-    case "death_machine":
-        //wait 3;
-        self thread maps\_sounds::pickup_death_machine_sound();
-        //sound = "plr_" + index + "_vox_powerup_insta_0";
-        break;
-    case "double_points":
-        //wait 3;
-        self thread maps\_sounds::pickup_doublepoints_sound();
-        //sound = "plr_" + index + "_vox_powerup_double_0";
-        break;
-    case "fire_sale":
-        //wait 3;
-        self thread maps\_sounds::pickup_firesale_sound();
-        //sound = "plr_" + index + "_vox_powerup_double_0";
-        break;
-    case "insta_kill":
-        //wait 3;
-        self thread maps\_sounds::pickup_insta_kill_sound();
-        //sound = "plr_" + index + "_vox_powerup_insta_0";
-        break;
-    case "max_ammo":
-        //wait 3;
-        self thread maps\_sounds::pickup_maxammo_sound();
-        //sound = "plr_" + index + "_vox_powerup_ammo_0";
-        break;
-    case "nuke":
-        //wait 3;
-        self thread maps\_sounds::pickup_nuke_sound();
-        //sound = "plr_" + index + "_vox_powerup_nuke_0";
-        break;
+            //wait 3;
+            self thread player_vox_helper( ::pickup_bonus_points_sound, "powerup_pickup_sound_done" );
+            //sound = "plr_0_vox_powerup_carp_" + index + "";
+            break;
+        case "carpenter":
+            //wait 3;
+            self thread player_vox_helper( ::pickup_carpenter_sound, "powerup_pickup_sound_done" );
+            //sound = "plr_0_vox_powerup_carp_" + index + "";
+            break;
+        case "death_machine":
+            //wait 3;
+            self thread player_vox_helper( ::pickup_death_machine_sound, "powerup_pickup_sound_done" );
+            //sound = "plr_" + index + "_vox_powerup_insta_0";
+            break;
+        case "double_points":
+            //wait 3;
+            self thread player_vox_helper( ::pickup_doublepoints_sound, "powerup_pickup_sound_done" );
+            //sound = "plr_" + index + "_vox_powerup_double_0";
+            break;
+        case "fire_sale":
+            //wait 3;
+            self thread player_vox_helper( ::pickup_firesale_sound, "powerup_pickup_sound_done" );
+            //sound = "plr_" + index + "_vox_powerup_double_0";
+            break;
+        case "insta_kill":
+            //wait 3;
+            self thread player_vox_helper( ::pickup_insta_kill_sound, "powerup_pickup_sound_done" );
+            //sound = "plr_" + index + "_vox_powerup_insta_0";
+            break;
+        case "max_ammo":
+            //wait 3;
+            self thread player_vox_helper( ::pickup_maxammo_sound, "powerup_pickup_sound_done" );
+            //sound = "plr_" + index + "_vox_powerup_ammo_0";
+            break;
+        case "nuke":
+            //wait 3;
+            self thread player_vox_helper( ::pickup_nuke_sound, "powerup_pickup_sound_done" );
+            //sound = "plr_" + index + "_vox_powerup_nuke_0";
+            break;
     }
-    //This keeps multiple voice overs from playing on the same player (both killstreaks and headshots).
-    if (level.player_is_speaking != 1 && isDefined(sound)) {
-        level.player_is_speaking = 1;
-        self PlaySound(sound, "sound_done");
-        self waittill("sound_done");
-        level.player_is_speaking = 0;
-    }
-
 }
 
 powerup_wobble() {
@@ -1299,7 +1286,7 @@ time_remaining_on_double_points_powerup() {
 
     for (i = 0; i < players.size; i++) {
         //players[i] PlaySound("dp_vox");
-        players[i] thread maps\_sounds::announcer_vox_double_points_sound();
+        players[i] thread announcer_vox_double_points_sound();
     }
 
     x2_ent = spawn("script_origin", (0, 0, 0));
@@ -1335,7 +1322,7 @@ time_remaining_on_insta_kill_powerup() {
     for (i = 0; i < players.size; i++) {
         //players[i] PlaySound("insta_kill");
         //players[i] PlaySound("insta_vox");
-        players[i] thread maps\_sounds::announcer_vox_insta_kill_sound();
+        players[i] thread announcer_vox_insta_kill_sound();
     }
 
     insta_kill_ent = spawn("script_origin", (0, 0, 0));
@@ -1369,7 +1356,7 @@ time_remaining_on_max_ammo_powerup() {
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
         //players[i] PlaySound("ma_vox");
-        players[i] thread maps\_sounds::announcer_vox_max_ammo_sound();
+        players[i] thread announcer_vox_max_ammo_sound();
     }
 
     // time it down!
@@ -1394,7 +1381,7 @@ time_remaining_on_carpenter_powerup() {
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
         //players[i] PlaySound("carp_vox");
-        players[i] thread maps\_sounds::announcer_vox_carpenter_sound();
+        players[i] thread announcer_vox_carpenter_sound();
     }
 
     // time it down!
@@ -1419,7 +1406,7 @@ time_remaining_on_death_machine_powerup() {
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
        //players[i] PlaySound("dm_vox");
-        players[i] thread maps\_sounds::announcer_vox_death_machine_sound();
+        players[i] thread announcer_vox_death_machine_sound();
     }
 
     // time it down!
@@ -1503,7 +1490,7 @@ time_remaining_on_nuke_powerup() {
     for (i = 0; i < players.size; i++) {
         players[i] PlaySound("nuke_flash");
         //players[i] PlaySound("nuke_vox");
-        players[i] thread maps\_sounds::announcer_vox_nuke_sound();
+        players[i] thread announcer_vox_nuke_sound();
     }
 
     // time it down!
@@ -1528,7 +1515,7 @@ time_remaining_on_bonus_points_powerup() {
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
         //players[i] PlaySound("bp_vox");
-        players[i] thread maps\_sounds::announcer_vox_bonus_points_sound();
+        players[i] thread announcer_vox_bonus_points_sound();
     }
 
     // time it down!
@@ -1577,7 +1564,7 @@ time_remaining_on_fire_sale_powerup() {
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
         //players[i] PlaySound("fs_vox");
-        players[i] thread maps\_sounds::announcer_vox_fire_sale_sound();
+        players[i] thread announcer_vox_fire_sale_sound();
         wait 1;
     }
 
@@ -1671,7 +1658,7 @@ death_machine_give(player)
     players = GetPlayers();
     for (j = 0; j < players.size; j++)
     {
-        players[j] thread maps\_sounds::announcer_vox_death_machine_sound();
+        players[j] thread announcer_vox_death_machine_sound();
     }
 
     player thread death_machine_timer_think(prev_weapon);

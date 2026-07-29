@@ -53,8 +53,8 @@ bouncing_betty_setup( player )
 
 betty_think()
 {
-	self.owner thread maps\_sounds::plant_mine_sound();
-    wait(2);
+    self.owner thread maps\_sounds::player_vox_helper( maps\_sounds::plant_mine_sound, "plant_mine_sound_done" );
+	wait(2);
     trigger = spawn("trigger_radius",self.origin,9,80,64);
     trigger waittill( "trigger" );
     trigger = trigger;
