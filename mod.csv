@@ -16,6 +16,7 @@ font,customfont/objectiveFont,,
 font,customfont/smallFont,,
 material,fonts/gamefonts2pc
 material,hud_grenade_german
+material,hud_zmb_points
 material,loadscreen_nazi_zombie_prototype
 material,logo_cod2
 material,mtl_zmb_mdl_button

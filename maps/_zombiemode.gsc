@@ -116,6 +116,7 @@ init_shaders() {
     PrecacheShader("hud_chalk_3");
     PrecacheShader("hud_chalk_4");
     PrecacheShader("hud_chalk_5");
+    PrecacheShader("hud_zmb_points");
 }
 
 init_models() {
@@ -227,7 +228,7 @@ init_levelvars() {
     set_zombie_var("zombie_health_increase", 100);
     set_zombie_var("zombie_health_increase_percent", 10, 100);
     set_zombie_var("zombie_health_start", 150);
-    set_zombie_var("zombie_max_ai", 24);
+    set_zombie_var("zombie_max_ai", 36);    // 24 default. we're raising to 32 as we've essentially made the game easier with our changes.
     set_zombie_var("zombie_ai_per_player", 6);
 
     // Scoring
@@ -987,7 +988,7 @@ round_spawning() {
     while (count < max) {
         spawn_point = level.enemy_spawns[RandomInt(level.enemy_spawns.size)];
 
-        while (get_enemy_count() > 31) {
+        while (get_enemy_count() > 36) { // was 31
             wait(0.05);
         }
 
