@@ -1,4 +1,4 @@
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 #include "ui_mp/common_macro.inc"
 
 #define CHOICE_X_START			30
@@ -7,7 +7,7 @@
 #define LOGO_START_X			-300
 #define LOGO_START_Y			-160
 
-#include "ui_mp/menustyle.inc"
+#include "ui_mp/prototype_menustyle.inc"
 #include "ui/choices_setup_common.menu"
 #include "ui/online_status.inc"
 

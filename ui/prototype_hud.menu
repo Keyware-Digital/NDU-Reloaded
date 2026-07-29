@@ -1,6 +1,6 @@
 // CONSOLE HUD - SP
 
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 
 #define HUD_ALPHA 0.65
 #define HUD_FOREGROUND_ALPHA 0.75

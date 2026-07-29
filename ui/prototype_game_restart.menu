@@ -1,4 +1,4 @@
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 #include "ui_mp/common_macro.inc"
 
 #define CHOICE_X_START			0
@@ -6,7 +6,7 @@
 
 #define CHOICE_GROUP			"apply_settings"
 
-#include "ui_mp/menustyle.inc"
+#include "ui_mp/prototype_menustyle.inc"
 #include "ui/choices_setup_common.menu"
 
 #include "ui_mp/popupstyle.inc"	

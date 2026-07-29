@@ -1,7 +1,7 @@
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 #include "ui_mp/common_macro.inc"
 #define OPTIONS_STYLE			1
-#include "ui_mp/menustyle.inc"
+#include "ui_mp/prototype_menustyle.inc"
 #include "ui/choices_setup_common.menu"
 
 #undef	CHOICE_SIZE_X
@@ -29,7 +29,7 @@
 			close options_graphics_defaults;		
 		}
 
-		#include "ui_mp/leftside_options.inc"
+		#include "ui_mp/prototype_leftside_options.inc"
 		
 		//CHOICE_SECTION_TITLE( 21, "@MENU_RESET_SYSTEM_DEFAULTS" )
 		

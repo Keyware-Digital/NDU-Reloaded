@@ -1,4 +1,4 @@
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 #include "ui_mp/common_macro.inc"
 
 #define CHOICE_X_START			30
@@ -12,7 +12,7 @@
 #define CHOICE_GROUP			"pc_gamesetup_coop"
 
 #define STYLE_PC	1
-#include "ui_mp/menustyle.inc"
+#include "ui_mp/prototype_menustyle.inc"
 
 #undef	CHOICE_SIZE_X
 #define CHOICE_SIZE_X			180

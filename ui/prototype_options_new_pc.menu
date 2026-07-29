@@ -1,7 +1,7 @@
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 #include "ui_mp/common_macro.inc"
 
-#include "ui_mp/menustyle.inc"
+#include "ui_mp/prototype_menustyle.inc"
 #include "ui/choices_setup_common.menu"
 
 //#include "ui/overlaybg.inc"
@@ -49,7 +49,7 @@
 		
 		#include "ui/navcontrols.inc"
 
-		#include "ui_mp/leftside_options.inc"
+		#include "ui_mp/prototype_leftside_options.inc"
 
 		#include "ui/safearea.menu"
 	}
@@ -97,7 +97,7 @@ menuDef
 #endif
 		#include "ui/navcontrols.inc"
 
-		#include "ui_mp/leftside_controls.inc"
+		#include "ui_mp/prototype_leftside_controls.inc"
 
 		#include "ui/safearea.menu"
 	}

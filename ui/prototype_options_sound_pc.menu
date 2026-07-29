@@ -1,8 +1,8 @@
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 #include "ui_mp/common_macro.inc"
 #define OPTIONS_STYLE			1
 #define CHOICE_ACTION_SOUND		"mouse_click_t"
-#include "ui_mp/menustyle.inc"
+#include "ui_mp/prototype_menustyle.inc"
 #include "ui/choices_setup_common.menu"
 
 {
@@ -46,7 +46,7 @@
 			close self;		
 		}
 
-		#include "ui_mp/leftside_options.inc"
+		#include "ui_mp/prototype_leftside_options.inc"
 		
 		CHOICE_SECTION_TITLE( 21, "@MENU_SOUND_CAP" )
 		

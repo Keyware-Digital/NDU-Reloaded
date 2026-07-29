@@ -1,4 +1,4 @@
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 
 #define ORIGIN_DIY_TITLE_HIDEF		42 300
 #define ORIGIN_DIY_FRAME_HIDEF		35 300

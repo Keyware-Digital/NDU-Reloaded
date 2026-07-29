@@ -1,4 +1,4 @@
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 
 #define CHOICE_SIZE_X			150
 #define CHOICE_SIZE_Y			22
@@ -15,7 +15,7 @@
 
 #define CHOICE_GROUP			"xboxlive_lobby"
 
-#include "ui_mp/menustyle.inc"
+#include "ui_mp/prototype_menustyle.inc"
 #include "ui/choices_setup_common.menu"
 #include "ui_mp/stats_info.inc"
 

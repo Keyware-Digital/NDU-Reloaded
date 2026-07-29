@@ -1,17 +1,15 @@
-#include "ui/menudef.h"
+#include "ui/prototype_menudef.h"
 #include "ui_mp/common_macro.inc"
 #include "ui/mission_select/missiondefs.menu"
 
-#ifdef PC
-    #define LOGO_START_X - 300
-    #define LOGO_START_Y - 160
-    #define CHARACTER_PORTRAIT_X 50
-    #define CHARACTER_PORTRAIT_Y - 225
-    #define CHARACTER_BIO_X - 350
-    #define CHARACTER_BIO_Y 100
-    #undef SIGNED_IN_RECT
-    #define SIGNED_IN_RECT - 350 60 250 15
-#endif
+#define LOGO_START_X - 300
+#define LOGO_START_Y - 160
+#define CHARACTER_PORTRAIT_X 50
+#define CHARACTER_PORTRAIT_Y - 225
+#define CHARACTER_BIO_X - 350
+#define CHARACTER_BIO_Y 100
+#undef SIGNED_IN_RECT
+#define SIGNED_IN_RECT - 350 60 250 15
 
 #define CHOICE_SIZE_X 150
 #define CHOICE_SIZE_Y 22
@@ -19,23 +17,19 @@
 #define CHOICE_X_START 0
 #define CHOICE_Y_START 120
 
-#ifdef PC
-    #undef CHOICE_Y_START
-    #define CHOICE_Y_START 50
-    #undef CHOICE_X_START
-    #define CHOICE_X_START 30
-#endif
+#undef CHOICE_Y_START
+#define CHOICE_Y_START 50
+#undef CHOICE_X_START
+#define CHOICE_X_START 30
 
 #define CHOICE_SEP_OFFSET_Y - 2
 
 #define CHOICE_GROUP "main"
 
-#ifdef PC
-    #undef CHOICE_SEP_1
-    #define CHOICE_SEP_1 2
-    #define CHOICE_SEP_2 4
-    #define CHOICE_SEP_3 6
-#endif
+#undef CHOICE_SEP_1
+#define CHOICE_SEP_1 2
+#define CHOICE_SEP_2 4
+#define CHOICE_SEP_3 6
 
 #define ARCADE_DESC_ORIGIN CHOICE_SIZE_X CHOICE_Y(5)
 #define CLEARUIHINT exec "set ui_hint_text @NULL_EMPTY"; hide "desc_arrow";
@@ -48,7 +42,7 @@ setdvar ui_skipMainLockout "0"\
 execnow "makeLocalClientActive;";\
 open main_text;
 
-#include "ui_mp/menustyle.inc"
+#include "ui_mp/prototype_menustyle.inc"
 #include "ui/choices_setup_common.menu"
 #include "ui/online_status.inc"
 
@@ -141,12 +135,15 @@ open main_text;
             style WINDOW_STYLE_FILLED
             forecolor TEXTBUTTON_COLOR
             textstyle ITEM_TEXTSTYLE_SHADOWED
-            rect CHARACTER_PORTRAIT_X(CHARACTER_PORTRAIT_Y + 190) 40 20 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+            rect -250 -26 40 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM
             textfont CHOICE_TEXTFONT
             textalign ITEM_ALIGN_LEFT
             textscale TEXTSIZE_SMALL
             textaligny 18
             visible 1
+            mouseEnter { 
+                play "mouse_over";
+            }
             action {
                 close self;
             }
@@ -203,7 +200,7 @@ open main_text;
             type 1
             style WINDOW_STYLE_FILLED
             textstyle ITEM_TEXTSTYLE_SHADOWED
-            rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 165) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+            rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 175) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
             textfont UI_FONT_NORMAL
             forecolor 0.7529 0.7647 0.7686 1
             textalign ITEM_ALIGN_LEFT
@@ -278,7 +275,7 @@ open main_text;
             type 1
             style WINDOW_STYLE_FILLED
             textstyle ITEM_TEXTSTYLE_SHADOWED
-            rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 100) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
+            rect CHARACTER_BIO_X(CHARACTER_BIO_Y + 105) 340 200 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
             textfont UI_FONT_NORMAL
             forecolor 0.7529 0.7647 0.7686 1
             textalign ITEM_ALIGN_LEFT
@@ -412,23 +409,19 @@ open main_text;
         }
 
         SIGNIN_STATUS
-        #ifdef PC
-            ONLINE_OFFLINE_BUTTON
-        #endif
+        ONLINE_OFFLINE_BUTTON
 
-        #ifdef PC
-            CHOICE_BUTTON_VIS(1, "@PROTOTYPE_MENU_SOLO", exec "map nazi_zombie_prototype";, when(!localvarBool(ui_hideBack));)
-            CHOICE_BUTTON_VIS(2, "@PROTOTYPE_MENU_COOP", open main_online; LOCAL_ZOMBIE_RESET, when(!localvarBool(ui_hideBack));)
-            CHOICE_SEPARATOR_VIS(CHOICE_SEP_1, when(!localvarBool(ui_hideBack));)
-            CHOICE_BUTTON_VIS(3, "@MENU_SELECT_ONLINE_PROFILE", execOnDvarIntValue dw_loggedin 0 "dwconnect"; setdvar ui_playerProfileAlreadyChosen 0; open player_profile, when(!localvarBool(ui_hideBack));)
-            CHOICE_BUTTON_VIS(4, "@PROTOTYPE_MENU_NETWORK", open menu_pc_friends;, when(!localvarBool(ui_hideBack));)
-            CHOICE_NEWICON_VIS(4, "specialty_new", when(hasinvites() || haspendingfriends());)
-            CHOICE_SEPARATOR_VIS(CHOICE_SEP_2, when(!localvarBool(ui_hideBack));)
-            CHOICE_BUTTON_VIS(5, "@PROTOTYPE_MENU_CHARACTER_BIO", open credits_menu;, when(!localvarBool(ui_hideBack));)
-            CHOICE_BUTTON_VIS(6, "@MENU_OPTIONS_CONTROLS_CAP", open options_new_pc;, when(!localvarBool(ui_hideBack));)
-            CHOICE_SEPARATOR_VIS(CHOICE_SEP_3, when(!localvarBool(ui_hideBack));)
-            CHOICE_BUTTON_VIS(7, "@MENU_QUIT", open quit_popmenu, when(!localvarBool(ui_hideBack));)
-        #endif
+        CHOICE_BUTTON_VIS(1, "@PROTOTYPE_MENU_SOLO", exec "map nazi_zombie_prototype";, when(!localvarBool(ui_hideBack));)
+        CHOICE_BUTTON_VIS(2, "@PROTOTYPE_MENU_COOP", open main_online; LOCAL_ZOMBIE_RESET, when(!localvarBool(ui_hideBack));)
+        CHOICE_SEPARATOR_VIS(CHOICE_SEP_1, when(!localvarBool(ui_hideBack));)
+        CHOICE_BUTTON_VIS(3, "@MENU_SELECT_ONLINE_PROFILE", execOnDvarIntValue dw_loggedin 0 "dwconnect"; setdvar ui_playerProfileAlreadyChosen 0; open player_profile, when(!localvarBool(ui_hideBack));)
+        CHOICE_BUTTON_VIS(4, "@PROTOTYPE_MENU_NETWORK", open menu_pc_friends;, when(!localvarBool(ui_hideBack));)
+        CHOICE_NEWICON_VIS(4, "specialty_new", when(hasinvites() || haspendingfriends());)
+        CHOICE_SEPARATOR_VIS(CHOICE_SEP_2, when(!localvarBool(ui_hideBack));)
+        CHOICE_BUTTON_VIS(5, "@PROTOTYPE_MENU_CHARACTER_BIO", open credits_menu;, when(!localvarBool(ui_hideBack));)
+        CHOICE_BUTTON_VIS(6, "@MENU_OPTIONS_CONTROLS_CAP", open options_new_pc;, when(!localvarBool(ui_hideBack));)
+        CHOICE_SEPARATOR_VIS(CHOICE_SEP_3, when(!localvarBool(ui_hideBack));)
+        CHOICE_BUTTON_VIS(7, "@MENU_QUIT", open quit_popmenu, when(!localvarBool(ui_hideBack));)
 
         #include "ui/safearea.menu"
 
@@ -466,16 +459,14 @@ open main_text;
 
         SIGNIN_STATUS
 
-        #ifdef PC
-            CHOICE_BUTTON_FOCUS_VIS_ADV(1, "@MENU_RESUMEGAME_CAP", open resume_popmenu; LOCAL_NETWORK_RESET; LOCAL_ZOMBIE_RESET, ;, ;, when(dvarbool(sv_saveGameAvailable) && !localvarBool(ui_hideBack)), dvarbool(sv_saveGameAvailable) && !localvarBool(ui_hideBack))
+        CHOICE_BUTTON_FOCUS_VIS_ADV(1, "@MENU_RESUMEGAME_CAP", open resume_popmenu; LOCAL_NETWORK_RESET; LOCAL_ZOMBIE_RESET, ;, ;, when(dvarbool(sv_saveGameAvailable) && !localvarBool(ui_hideBack)), dvarbool(sv_saveGameAvailable) && !localvarBool(ui_hideBack))
 
-            CHOICE_BUTTON_BG(2, when(!localvarBool(ui_hideBack));)
-            CHOICE_HIGHLIGHT(2, 1)
-            CHOICE_BUTTON_FOCUS_VIS_NOHI_EX(2, "@MENU_NEWGAME", open popmenu_newgame; LOCAL_NETWORK_RESET; LOCAL_ARCADE_RESET; LOCAL_ZOMBIE_RESET, ;, ;, when(!localvarBool(ui_hideBack) && !dvarBool(sv_saveGameAvailable));, name newgame)
-            CHOICE_BUTTON_FOCUS_VIS_NOHI_EX(2, "@MENU_NEWGAME", open popmenu_overwrite_warning; LOCAL_NETWORK_RESET; LOCAL_ARCADE_RESET; LOCAL_ZOMBIE_RESET, ;, ;, when(!localvarBool(ui_hideBack) && dvarBool(sv_saveGameAvailable));, name newgame)
+        CHOICE_BUTTON_BG(2, when(!localvarBool(ui_hideBack));)
+        CHOICE_HIGHLIGHT(2, 1)
+        CHOICE_BUTTON_FOCUS_VIS_NOHI_EX(2, "@MENU_NEWGAME", open popmenu_newgame; LOCAL_NETWORK_RESET; LOCAL_ARCADE_RESET; LOCAL_ZOMBIE_RESET, ;, ;, when(!localvarBool(ui_hideBack) && !dvarBool(sv_saveGameAvailable));, name newgame)
+        CHOICE_BUTTON_FOCUS_VIS_NOHI_EX(2, "@MENU_NEWGAME", open popmenu_overwrite_warning; LOCAL_NETWORK_RESET; LOCAL_ARCADE_RESET; LOCAL_ZOMBIE_RESET, ;, ;, when(!localvarBool(ui_hideBack) && dvarBool(sv_saveGameAvailable));, name newgame)
 
-            CHOICE_BUTTON_VIS(3, "@MENU_MISSION_SELECT", open levels; LOCAL_NETWORK_RESET; LOCAL_ZOMBIE_RESET, when(!localvarBool(ui_hideBack));)
-        #endif
+        CHOICE_BUTTON_VIS(3, "@MENU_MISSION_SELECT", open levels; LOCAL_NETWORK_RESET; LOCAL_ZOMBIE_RESET, when(!localvarBool(ui_hideBack));)
 
         #include "ui/safearea.menu"
     }
@@ -489,10 +480,7 @@ open main_text;
         onOpen {
             CLEARUIHINT
             LOCAL_ZOMBIE_RESET
-
-            #ifdef PC
-                setdvar dw_active 1
-            #endif
+            setdvar dw_active 1
             uiScript openmenuondvar ui_sp_unlock 1 "popmenu_sp_unlock";
         }
         #undef BACK_OPEN
@@ -530,44 +518,26 @@ open main_text;
         setdvar ui_lobbypopup "";\
         setdvar ui_lobbypopup_text "";
 
-        #ifdef PC
-            #define SETUP_ACTION_PUBLIC_GAME\
-            exec "sv_privateclients 1";\
-            exec "xstartpublicpartyhost";\
-            exec "updategamerprofile";\
-            open "menu_xboxlive_lobby";
+        #define SETUP_ACTION_PUBLIC_GAME\
+        exec "sv_privateclients 1";\
+        exec "xstartpublicpartyhost";\
+        exec "updategamerprofile";\
+        open "menu_xboxlive_lobby";
 
-            #define SETUP_ACTION_HOSTONLINE\
-            exec "systemlink 0";\
-            exec "splitscreen 0";\
-            exec "onlinegame 1";\
-            exec "XBOXLIVE_MP_CFG"; \
-            exec "party_maxplayers 4";\
-            exec "xblive_privatematch 0";\
-            exec "xblive_rankedmatch 0";\
-            exec "party_timerVisible 0";\
-            exec "xstartprivateparty";\
-            setdvar ui_mptype "0";\
-            SET_ARCADE_MODE\
-            SET_DEFAULT_MAP_AND_MODE\
-            SETUP_ACTION_PUBLIC_GAME
-        #else
-            #define SETUP_ACTION_XBOXLIVE\
-            exec "xsigninlive";\
-            exec "systemlink 0";\
-            exec "splitscreen 0";\
-            exec "onlinegame 1";\
-            exec "XBOXLIVE_MP_CFG"; \
-            exec "party_maxplayers 4";\
-            exec "xblive_privatematch 0";\
-            exec "xblive_rankedmatch 0";\
-            exec "party_timerVisible 0";\
-            exec "xstartprivateparty";\
-            setdvar ui_mptype "0";\
-            SETUP_ACTION_PUBLIC_GAME\
-            SETUP_ACTION_SUMMARY_RESET\
-            SET_DEFAULT_MAP_AND_MODE
-        #endif
+        #define SETUP_ACTION_HOSTONLINE\
+        exec "systemlink 0";\
+        exec "splitscreen 0";\
+        exec "onlinegame 1";\
+        exec "XBOXLIVE_MP_CFG"; \
+        exec "party_maxplayers 4";\
+        exec "xblive_privatematch 0";\
+        exec "xblive_rankedmatch 0";\
+        exec "party_timerVisible 0";\
+        exec "xstartprivateparty";\
+        setdvar ui_mptype "0";\
+        SET_ARCADE_MODE\
+        SET_DEFAULT_MAP_AND_MODE\
+        SETUP_ACTION_PUBLIC_GAME
 
         #define SETUP_ACTION_SYSTEMLINK\
         exec "xsignin";\
@@ -636,34 +606,32 @@ open main_text;
         SET_DEFAULT_MAP_AND_MODE\
         SETUP_ACTION_PUBLIC_GAME
 
-        #ifdef PC
-            #define SETUP_ACTION_CHALLENGES\
-                    statSetUsingTable(263, 1);\
-                    open menu_challenges
+        #define SETUP_ACTION_CHALLENGES\
+                statSetUsingTable(263, 1);\
+                open menu_challenges
 
-            #define SETUP_ACTION_COLLECTIBLES\
-            open menu_collectibles;
+        #define SETUP_ACTION_COLLECTIBLES\
+        open menu_collectibles;
 
-            #undef CHOICE_SEP_1
-            #define CHOICE_SEP_1 1
+        #undef CHOICE_SEP_1
+        #define CHOICE_SEP_1 1
 
-            #undef CHOICE_SEP_2
-            #define CHOICE_SEP_2 3
+        #undef CHOICE_SEP_2
+        #define CHOICE_SEP_2 3
 
-            CHOICE_BUTTON_BG(1, when(!localVarBool(ui_hideBack)))
-            CHOICE_HIGHLIGHT(1, 1)
-            CHOICE_BUTTON_FOCUS_VIS_NOHI_EX(1, "@MENU_FIND_GAME", SETUP_ACTION_GAMEBROWSER, CLEARUIHINT;, ;, when(!localVarBool(ui_hideBack)), name gamebrowser)
+        CHOICE_BUTTON_BG(1, when(!localVarBool(ui_hideBack)))
+        CHOICE_HIGHLIGHT(1, 1)
+        CHOICE_BUTTON_FOCUS_VIS_NOHI_EX(1, "@MENU_FIND_GAME", SETUP_ACTION_GAMEBROWSER, CLEARUIHINT;, ;, when(!localVarBool(ui_hideBack)), name gamebrowser)
 
-            CHOICE_BUTTON_FOCUS_VIS(2, "@MENU_HOST_ONLINE_CAP", SETUP_ACTION_HOSTONLINE, exec "set ui_hint_text @MPUI_DESC_HOST_ONLINE", CLEARUIHINT, when(!localVarBool(ui_hideBack) && dvarBool(dw_loggedin)))
-            CHOICE_BUTTON_FOCUS_VIS_NOHI(2, "", ;, exec "set ui_hint_text @MPUI_DESC_HOST_ONLINE_LOCKED", CLEARUIHINT, when(!localVarBool(ui_hideBack) && !dvarBool(dw_loggedin)))
-            CHOICE_DBUTTON_VIS(2, "@MENU_HOST_ONLINE_CAP", when(!localVarBool(ui_hideBack) && !dvarBool(dw_loggedin)))
+        CHOICE_BUTTON_FOCUS_VIS(2, "@MENU_HOST_ONLINE_CAP", SETUP_ACTION_HOSTONLINE, exec "set ui_hint_text @MPUI_DESC_HOST_ONLINE", CLEARUIHINT, when(!localVarBool(ui_hideBack) && dvarBool(dw_loggedin)))
+        CHOICE_BUTTON_FOCUS_VIS_NOHI(2, "", ;, exec "set ui_hint_text @MPUI_DESC_HOST_ONLINE_LOCKED", CLEARUIHINT, when(!localVarBool(ui_hideBack) && !dvarBool(dw_loggedin)))
+        CHOICE_DBUTTON_VIS(2, "@MENU_HOST_ONLINE_CAP", when(!localVarBool(ui_hideBack) && !dvarBool(dw_loggedin)))
 
-            CHOICE_BUTTON_BG(3, when(!localVarBool(ui_hideBack)))
-            CHOICE_HIGHLIGHT(3, 1)
-            CHOICE_BUTTON_FOCUS_VIS_NOHI_EX(3, "@MENU_HOST_LAN_CAP", SETUP_ACTION_HOSTLAN, CLEARUIHINT;, ;, when(!localVarBool(ui_hideBack)), name hostlan)
+        CHOICE_BUTTON_BG(3, when(!localVarBool(ui_hideBack)))
+        CHOICE_HIGHLIGHT(3, 1)
+        CHOICE_BUTTON_FOCUS_VIS_NOHI_EX(3, "@MENU_HOST_LAN_CAP", SETUP_ACTION_HOSTLAN, CLEARUIHINT;, ;, when(!localVarBool(ui_hideBack)), name hostlan)
 
-            CHOICE_FOOTNOTE_VIS("@MENU_GAME_EXPERIENCE_MAY_CHANGE", 40, 430, when(!localvarBool(ui_hideBack) && !localvarBool(ui_inOverlay)))
-        #endif
+        CHOICE_FOOTNOTE_VIS("@MENU_GAME_EXPERIENCE_MAY_CHANGE", 40, 430, when(!localvarBool(ui_hideBack) && !localvarBool(ui_inOverlay)))
 
         #include "ui/safearea.menu"
 
@@ -681,14 +649,12 @@ open main_text;
     #undef CHOICE_VERTICAL_ALIGN
     #define CHOICE_VERTICAL_ALIGN VERTICAL_ALIGN_TOP
 
-    #ifdef PC
-        #undef CHOICE_X_START
-        #define CHOICE_X_START 78
-        #undef CHOICE_Y_START
-        #define CHOICE_Y_START 230
-        #undef CHOICE_SIZE_X
-        #define CHOICE_SIZE_X 180
-    #endif
+    #undef CHOICE_X_START
+    #define CHOICE_X_START 78
+    #undef CHOICE_Y_START
+    #define CHOICE_Y_START 230
+    #undef CHOICE_SIZE_X
+    #define CHOICE_SIZE_X 180
 
     menuDef {
         CENTER_POPUP_SETUP_ONOPEN(resume_popmenu, 2, ;, ;, 1)
@@ -749,15 +715,13 @@ open main_text;
     #undef CHOICE_Y_START
     #define CHOICE_Y_START 230
 
-    #ifdef PC
-        menuDef {
-            CENTER_POPUP_SETUP_ONOPEN(multi_popmenu, 3, ;, ;, 1)
-            CHOICE_POPMENU_TITLE("@MENU_SWITCHTOMULTIPLAYER")
+    menuDef {
+        CENTER_POPUP_SETUP_ONOPEN(multi_popmenu, 3, ;, ;, 1)
+        CHOICE_POPMENU_TITLE("@MENU_SWITCHTOMULTIPLAYER")
 
-            CHOICE_BUTTON(2, "@MENU_YES", uiScript startMultiplayer; close self;)
-            CHOICE_BUTTON(3, "@MENU_NO", close self)
-        }
-    #endif
+        CHOICE_BUTTON(2, "@MENU_YES", uiScript startMultiplayer; close self;)
+        CHOICE_BUTTON(3, "@MENU_NO", close self)
+    }
 
     #define ONOPEN_OVERWRITE\
     setfocus "no";\
