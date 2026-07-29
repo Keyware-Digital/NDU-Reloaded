@@ -626,7 +626,7 @@ powerup_grab() {
 
                 self delete();
                 self notify ("powerup_grabbed");
-                return;
+                //return;
             }
         }
         wait 0.1;
