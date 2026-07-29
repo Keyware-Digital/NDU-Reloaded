@@ -1,8 +1,7 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
-// tried to #include maps\_sounds & change calls to exclude maps\sounds:: 
-// it causes weird delays when using the mystery box & breaks stuff, so temporarily reverted.
+#include maps\_sounds;
 
 init()
 {
@@ -972,19 +971,21 @@ treasure_chest_weapon_spawn(chest, player)
 		level.zombie_vars["enableFireSale"] = 0;
 		model SetModel("zmb_mdl_padlock");
 		playfxontag(level._effect["powerup_on_bad"], model, "tag_origin"); // Apply red powerup FX
-		self thread maps\_sounds::mystery_box_lock_sound();
+		self thread mystery_box_lock_sound();
 		wait 0.5;											
 
 		// Start padlock animations in a separate thread
 		model thread animate_padlock();
 		// Play the haunting sound
-		self thread maps\_sounds::mystery_box_haunt_sound_loop();
+		self thread mystery_box_haunt_sound_loop();
 		wait 0.5;
 
 		players = GetPlayers();
 		for (i = 0; i < players.size; i++)
 		{
-			players[i] thread maps\_sounds::crappy_weapon_sound();
+
+				players[i] thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+
 		}
 
 		level.zombie_mystery_box_padlock = 1;
@@ -1002,7 +1003,7 @@ treasure_chest_weapon_spawn(chest, player)
 			if(player.score >= level.zombie_vars["zombie_mystery_box_padlock_cost"])
 			{
 				// Play the unlock sound
-				player thread maps\_sounds::mystery_box_unlock_sound();
+				player thread mystery_box_unlock_sound();
 				// Wait for the unlock sound to complete (adjust duration if needed)
 				wait 0.25; // Typical duration for a short sound effect
 				// Stop the haunting sound
@@ -1167,118 +1168,17 @@ treasure_chest_give_weapon( weapon_string )
 
 	if(( weapon_string ==  "ray_gun_mk1_v2" ))
 	{
-		self thread maps\_sounds::raygun_stinger_sound();
+		self thread raygun_stinger_sound();
 	}
 
 	/*if(( weapon_string ==  "zombie_cymbal_monkey" ))
 	{
-		self thread maps\_sounds::raygun_stinger_sound();
+		self thread raygun_stinger_sound();
 	}*/
 
 	// Weapon VOX lines
 	// Add / remove weapons as you see fit...
 
-	switch(weapon_string)
-	{	
-		// mystery box
-		// great
-		case "30cal_bipod":
-		self thread maps\_sounds::great_weapon_sound();
-			break; 
-		case "dp28":
-		self thread maps\_sounds::great_weapon_sound();
-			break;
-		case "mg42_bipod":
-			self thread maps\_sounds::great_weapon_sound();
-			break;  
-		// wunderweps
-		case "ray_gun_mk1_v2":
-			self thread maps\_sounds::great_weapon_sound();
-			break;
-		/*case "zombie_cymbal_monkey":
-			self thread maps\_sounds::great_weapon_sound();
-			break;*/
-		// crappy
-		case "kar98k":
-			self thread maps\_sounds::crappy_weapon_sound();
-			break;
-		case "mosin_rifle":
-			self thread maps\_sounds::crappy_weapon_sound();
-			break;
-		case "springfield":
-			self thread maps\_sounds::crappy_weapon_sound();
-			break;
-		case "molotov":
-			self thread maps\_sounds::crappy_weapon_sound();
-			break;
-		// impartial
-		case "sw_357":
-			self thread maps\_sounds::no_money_sound();
-			break;
-		// semi-auto
-		case "gewehr43":
-			self thread maps\_sounds::pickup_semi_sound();
-			break;
-		case "m1carbine":
-			self thread maps\_sounds::pickup_semi_sound();
-			break;
-		case "svt40":
-			self thread maps\_sounds::pickup_semi_sound();
-			break;
-		// automatic-rifle
-		case "bar":
-			self thread maps\_sounds::pickup_lmg_sound();
-			break;
-		case "fg42_bipod":
-			self thread maps\_sounds::pickup_lmg_sound();
-			break;
-		case "stg44":
-			self thread maps\_sounds::pickup_lmg_sound();
-			break;
-		/*case "type99_lmg":
-			self thread maps\_sounds::pickup_lmg_sound();*/
-		// smg
-		case "mp40":
-			self thread maps\_sounds::pickup_smg_sound();
-			break;
-		case "thompson":
-			self thread maps\_sounds::pickup_smg_sound();
-			break;
-		case "ppsh41":
-			self thread maps\_sounds::pickup_smg_sound();
-			break;
-		/*case "zombie_type100_smg":
-			self thread maps\_sounds::pickup_smg_sound();
-			break;*/
-		// shotgun
-		case "doublebarrel":
-			self thread maps\_sounds::pickup_shotgun_sound();
-			break;
-		case "doublebarrel_sawed_grip":
-			self thread maps\_sounds::pickup_shotgun_sound();
-			break;
-		case "shotgun":
-			self thread maps\_sounds::pickup_shotgun_sound();
-			break;
-		// misc
-		case "mine_bouncing_betty":
-			self thread maps\_sounds::pickup_betty_sound();
-			break;
-		case "m2_flamethrower_zombie":
-			self thread maps\_sounds::pickup_flamethrower_sound();
-			break;
-		case "panzerschrek":
-			self thread maps\_sounds::pickup_panzerschrek_sound();
-			break;
-		case "m1garand_gl":
-			self thread maps\_sounds::pickup_panzerschrek_sound();
-			break;
-		// scoped
-		case "ptrs41_zombie":
-			self thread maps\_sounds::pickup_sniper_sound();
-			break;
-	}
-	
 	if( isDefined( primaryWeapons ) && !isDefined( current_weapon ) )
 	{
 		for( i = 0; i < primaryWeapons.size; i++ )
@@ -1294,7 +1194,7 @@ treasure_chest_give_weapon( weapon_string )
 			}
 		}
 	}
-	
+
 	if( weapon_string == "mine_bouncing_betty" )
 	{
 		self maps\_zombiemode_betty::bouncing_betty_setup( self );
@@ -1314,14 +1214,116 @@ treasure_chest_give_weapon( weapon_string )
 
 	// attach flame tank to players picking up a flamethrower
 	if ( (isSubStr(weapon_string, "flamethrower") ) )
-     {
- 		self thread flamethrower_swap();
-     }
+	{
+		self thread flamethrower_swap();
+	}
 
 	// mule kick check
-	//IPrintLn( "Does this playa have mulekick?" );
-    self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon_string);
-}
+	// IPrintLn( "Does this playa have mulekick?" );
+	self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon_string);
+
+	switch( weapon_string )
+	{
+		// great
+		case "30cal_bipod":
+			self thread player_vox_helper( ::great_weapon_sound, "weapon_vox_done" );
+			break; 
+		case "dp28":
+			self thread player_vox_helper( ::great_weapon_sound, "weapon_vox_done" );
+			break;
+		case "mg42_bipod":
+			self thread player_vox_helper( ::great_weapon_sound, "weapon_vox_done" );
+			break;  
+		// wunderweps
+		case "ray_gun_mk1_v2":
+			self thread player_vox_helper( ::great_weapon_sound, "weapon_vox_done" );
+			break;
+		/*case "zombie_cymbal_monkey":
+		self thread player_vox_helper( ::great_weapon_sound, "weapon_vox_done" );
+			break;*/
+		// crappy
+		case "kar98k":
+			self thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+			break;
+		case "mosin_rifle":
+			self thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+			break;
+		case "springfield":
+			self thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+			break;
+		case "molotov":
+			self thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+			break;
+		// impartial
+		case "sw_357":
+			self thread player_vox_helper( ::no_money_sound, "no_money_sound_done" );
+			break;
+		// semi-auto
+		case "gewehr43":
+			self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
+			break;
+		case "m1carbine":
+			self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
+			break;
+		case "svt40":
+			self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
+			break;
+		// automatic-rifle
+		case "bar":
+			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
+			break;
+		case "fg42_bipod":
+			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
+			break;
+		case "stg44":
+			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
+			break;
+		/*case "type99_lmg":
+			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );*/
+		// smg
+		case "mp40":
+			self thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
+			break;
+		case "thompson":
+			self thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
+			break;
+		case "ppsh41":
+			self thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
+			break;
+		/*case "zombie_type100_smg":
+			self thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
+			break;*/
+		// shotgun
+		case "doublebarrel":
+			self thread player_vox_helper( ::pickup_shotgun_sound, "weapon_vox_done" );
+			break;
+		case "doublebarrel_sawed_grip":
+			self thread player_vox_helper( ::pickup_shotgun_sound, "weapon_vox_done" );
+			break;
+		case "shotgun":
+			self thread player_vox_helper( ::pickup_shotgun_sound, "weapon_vox_done" );
+			break;
+		// misc
+		case "mine_bouncing_betty":
+			self thread player_vox_helper( ::pickup_betty_sound, "weapon_vox_done" );
+			break;
+		case "m2_flamethrower_zombie":
+			self thread player_vox_helper( ::pickup_flamethrower_sound, "weapon_vox_done" );
+			break;
+		case "panzerschrek":
+			self thread player_vox_helper( ::pickup_panzerschrek_sound, "weapon_vox_done" );
+			break;
+		case "m1garand_gl":
+			self thread player_vox_helper( ::pickup_panzerschrek_sound, "weapon_vox_done" );
+			break;
+		// scoped
+		case "ptrs41_zombie":
+			self thread player_vox_helper( ::pickup_sniper_sound, "weapon_vox_done" );
+			break;
+	}
+            return;
+    }
+
 
 // NDU: Reloaded's Mystery Box 2.0
 weapon_cabinet_think()
@@ -1470,7 +1472,7 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 
 	play_sound_at_pos( "open_chest", self.origin );
 
-	self thread maps\_sounds::cabinet_sound();
+	self thread cabinet_sound();
 
 	self thread cabinet_glowfx();
 	
@@ -1544,7 +1546,8 @@ chosenweapon = randomnumb;
 
 	// needs burp sound in animation file
 	
-	if(!isDefined(player.perknum) || player.perknum < 11)	// check if player has max perks
+	// if(!isDefined(player.perknum) || player.perknum < 11)	// check if player has max perks
+	if( !isDefined(player.perknum) || !isDefined(player.perkarray) || player.perknum < player.perkarray.size )
 	{
 		if(luckyNumCabinet <= 33)	// 10 out of 100 chance to get a perk (make 100 to test perks)
 		{
@@ -1564,7 +1567,8 @@ chosenweapon = randomnumb;
 			}
 
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
-			level.zombie_vars["enableRandomPerk"] = 1;
+			// disable to prevent RandomPerk briefly enterting the powerup array
+			//level.zombie_vars["enableRandomPerk"] = 1;
 
 		}
 	}
@@ -1786,74 +1790,20 @@ takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct)
 		player EnableOffhandWeapons();
 		player EnableWeaponCycling();
 
-        // Add level.player_is_speaking check for perks_a_cola sound
-        if( !IsDefined( level.player_is_speaking ) )
-        {
-            level.player_is_speaking = 0;
-        }
-        if( level.player_is_speaking == 0 )
-        {
-            level.player_is_speaking = 1;
-            player thread maps\_sounds::killstreak_sound();
-            level.player_is_speaking = 0;
-        }
-		player thread maps\_zombiemode_perks::random_perk_powerup_think();
+        // Perk VOX after the drink finishes
+        player thread player_vox_helper( ::killstreak_sound, "killstreak_sound_done" );
 
-		// ensure random perk is not enabled after the player drinks a perk bottle
-		level.zombie_vars["enableRandomPerk"] = 0;
-		return;
-	}
+        player thread maps\_zombiemode_perks::random_perk_powerup_think();
 
-    // Add level.player_is_speaking check for weapon-specific sounds
-    if( !IsDefined( level.player_is_speaking ) )
-    {
-        level.player_is_speaking = 0;
+        // ensure random perk is not enabled after the player drinks a perk bottle
+        //level.zombie_vars["enableRandomPerk"] = 0;
+        return;
     }
-    if( level.player_is_speaking == 0 )
-    {
-        level.player_is_speaking = 1;
-switch(chosenweapon)
-	{
-		/*case "kar98k_bayonet":
-				player thread maps\_sounds::crappy_weapon_sound();
-			break;*/
-		case "kar98k_scoped_zombie":
-				player thread maps\_sounds::pickup_sniper_sound();
-			break;
-		case "m1garand":
-				player thread maps\_sounds::pickup_semi_sound();
-			break;  
-		case "m1921_thompson":
-				player thread maps\_sounds::pickup_smg_sound();
-			break;
-		/*case "mosin_rifle_bayonet":
-				player thread maps\_sounds::crappy_weapon_sound();
-			break;*/
-		case "mosin_rifle_scoped_zombie":
-				player thread maps\_sounds::pickup_sniper_sound();
-			break;
-		case "mp40_bigammo_mp":
-				player thread maps\_sounds::pickup_smg_sound();
-			break;
-		case "ppsh41_drum":
-				player thread maps\_sounds::great_weapon_sound();
-			break;
-		case "springfield_scoped_zombie":
-				player thread maps\_sounds::pickup_sniper_sound();
-			break;
-		case "sten_mk5":
-				player thread maps\_sounds::pickup_smg_sound();
-			break;
-		case "stg44_pap":	
-				player thread maps\_sounds::great_weapon_sound();
-			break; 
-	}
 
-	if(chosenweapon == "stg44_pap")
-	{
-        player thread maps\_sounds::raygun_stinger_sound();
-	}
-        level.player_is_speaking = 0;
+    // Special stinger for PAP STG
+    if(chosenweapon == "stg44_pap")
+    {
+        player thread raygun_stinger_sound();
     }
 
     // Handle Mule Kick logic
@@ -1888,10 +1838,48 @@ switch(chosenweapon)
     }
 
     player play_sound_on_ent("purchase");
-	player GiveWeapon(chosenweapon);
+    player GiveWeapon(chosenweapon);
     player GiveMaxAmmo(chosenweapon);
-	player SwitchToWeapon(chosenweapon);
+    player SwitchToWeapon(chosenweapon);
     player maps\_zombiemode_perks::mule_kick_function(current_weapon, chosenweapon);
+
+    // Weapon VOX — AFTER the player has the gun
+	switch(chosenweapon)
+	{
+		/*case "kar98k_bayonet":
+				player thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+			break;*/
+		case "kar98k_scoped_zombie":
+				player thread player_vox_helper( ::pickup_sniper_sound, "weapon_vox_done" );
+			break;
+		case "m1garand":
+				player thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
+			break;  
+		case "m1921_thompson":
+				player thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
+			break;
+		/*case "mosin_rifle_bayonet":
+				player thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+			break;*/
+		case "mosin_rifle_scoped_zombie":
+				player thread player_vox_helper( ::pickup_sniper_sound, "weapon_vox_done" );
+			break;
+		case "mp40_bigammo_mp":
+				player thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
+			break;
+		case "ppsh41_drum":
+				player thread player_vox_helper( ::great_weapon_sound, "weapon_vox_done" );
+			break;
+		case "springfield_scoped_zombie":
+				player thread player_vox_helper( ::pickup_sniper_sound, "weapon_vox_done" );
+			break;
+		case "sten_mk5":
+				player thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
+			break;
+		case "stg44_pap":	
+				player thread player_vox_helper( ::great_weapon_sound, "weapon_vox_done" );
+			break; 
+    }
 }
 
 weapon_cabinet_door_open( left_or_right )
@@ -1930,23 +1918,24 @@ weapon_spawn_think()
 
 	self.first_time_triggered = false;
 
-	wall_buy_weapon_names(weapon_name);
+    self thread update_wallbuy_hintstring( weapon_name, weapon_cost, ammo_cost );
 
-	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, weapon_cost);
+    // old method of setting hintstring(s)
+    // self SetHintString( &"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, weapon_cost );
 
-	while(1)
-	{	
-		self setCursorHint( "HINT_NOICON" ); 
+    while( 1 )
+    {
+        self setCursorHint( "HINT_NOICON" );
+        self waittill( "trigger", player );
 
-		self waittill( "trigger", player );
-
-		// Update the wallbuy hintstring if the player has interacted with the wallbuy and the player has enough points
-		if( player.score >= weapon_cost )
-		{
-			wall_buy_weapon_names(weapon_name);
-			
-			self SetHintString(&"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost);
-		}
+        		// Update the wallbuy hintstring if the player has interacted with the wallbuy and the player has enough points
+        /*
+        if( player.score >= weapon_cost )
+        {
+            wall_buy_weapon_names( weapon_name );
+            self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost );
+        }
+        */
 
 		// if not first time and they have the weapon give ammo
 
@@ -2054,6 +2043,46 @@ weapon_spawn_think()
 	}
 }
 
+update_wallbuy_hintstring( weapon_name, weapon_cost, ammo_cost )
+{
+    weaponNameWallBuy = wall_buy_weapon_names( weapon_name );
+
+    while( 1 )
+    {
+        players = GetPlayers();
+        any_has = false;
+
+        for( i = 0; i < players.size; i++ )
+        {
+            // Same ownership test the buy logic already uses
+            weapons = players[i] GetWeaponsList();
+            if( isDefined( weapons ) )
+            {
+                for( j = 0; j < weapons.size; j++ )
+                {
+                    if( weapons[j] == weapon_name )
+                    {
+                        any_has = true;
+                        break;
+                    }
+                }
+            }
+            if( any_has )
+                break;
+        }
+
+        if( any_has )
+        {
+            self SetHintString( &"PROTOTYPE_ZOMBIE_WEAPON_COST_AMMO", "&&1", weaponNameWallBuy, ammo_cost );
+        }
+        else
+        {
+            self SetHintString( &"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_WALL_BUY", "&&1", weaponNameWallBuy, weapon_cost );
+        }
+
+        wait( 0.5 );
+    }
+}
 
 wall_buy_weapon_names(weapon_name)
 {
@@ -2082,46 +2111,37 @@ wall_buy_weapon_names(weapon_name)
 
 play_interact_sound(weapon_name)
 {
-    if( !IsDefined( level.player_is_speaking ) )
-    {
-        level.player_is_speaking = 0;
-    }
-    if( level.player_is_speaking == 0 )
-    {
-        level.player_is_speaking = 1;
 
-	switch(weapon_name)
-	{
-		case "kar98k":
-				self thread maps\_sounds::crappy_weapon_sound();
-			break; 
-		case "m1carbine":
-				self thread maps\_sounds::pickup_semi_sound();
+
+    switch(weapon_name)
+    {
+        case "kar98k":
+            self thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+            break; 
+        case "m1carbine":
+            self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
+            break;
+        case "thompson":
+            self thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
+            break;  
+        case "doublebarrel":
+            self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
+            break;
+        case "bar":
+            self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
+            break;
+        case "shotgun":
+			self thread player_vox_helper( ::pickup_shotgun_sound, "weapon_vox_done");
 			break;
-		case "thompson":
-				self thread maps\_sounds::pickup_smg_sound();
-			break;  
-		case "doublebarrel":
-				self thread maps\_sounds::pickup_semi_sound();
-			break;
-		case "bar":
-				self thread maps\_sounds::pickup_lmg_sound();
-			break;
-		case "shotgun":
-				self thread maps\_sounds::pickup_shotgun_sound();
-			break;
-		case "doublebarrel_sawed_grip":
-				self thread maps\_sounds::pickup_shotgun_sound();
-			break;
-		case "stielhandgranate":
-				self thread maps\_sounds::pickup_flamethrower_sound();
-			break;
+        case "doublebarrel_sawed_grip":
+            self thread player_vox_helper( ::pickup_shotgun_sound, "weapon_vox_done" );
+            break;
+        case "stielhandgranate":
+            self thread player_vox_helper( ::pickup_flamethrower_sound, "weapon_vox_done" );
 		case "no_money":
-				self thread maps\_sounds::no_money_sound();
-			break;
-        }
-        level.player_is_speaking = 0;
-	}
+			self thread player_vox_helper( ::no_money_sound, "no_money_sound_done" );
+            break;
+    }
 }
 
 weapon_show( player )
@@ -2271,7 +2291,7 @@ ammo_give( weapon )
 
 	if( give_ammo )
 	{
-		self thread maps\_sounds::cash_register_sound();
+		self thread cash_register_sound();
 		self GivemaxAmmo( weapon ); 
 		self SetWeaponAmmoClip( weapon, WeaponClipSize( weapon ) );
 		return true;

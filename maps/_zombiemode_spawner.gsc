@@ -638,20 +638,31 @@ tear_into_building()
         if(zombies_at_window >= 2)
         {
             for(i = 0; i < players.size; i++)
+    {
+        player = players[i];
+
+        if( !IsDefined( player.blockers_vox_cooldown ) )
+            player.blockers_vox_cooldown = false;
+
+        if( !player.blockers_vox_cooldown &&
+            DistanceSquared( player.origin, self.first_node.origin ) <= 150 * 150 )
+        {
+            // iprintlnbold( "^3Blockers check – player in range (zombies: " + zombies_at_window + ")" );
+
+            if( RandomInt(100) < 50 )		// 50% chance
             {
-                if(!isDefined(level.player_is_speaking))
-                {
-                    level.player_is_speaking = 0;
-                }
-                if(level.player_is_speaking != 1 && DistanceSquared(players[i].origin, self.first_node.origin) <= 150 * 150)
-                {
-                    level.player_is_speaking = 1;
-                    players[i] thread maps\_sounds::blockers_sound();
-                    players[i] waittill("_blockers_sound_done");
-                    level.player_is_speaking = 0;
-                }
+                player.blockers_vox_cooldown = true;
+                // iprintlnbold( "^2BLOCKERS VOX POP!" );
+                player thread player_vox_helper( ::blockers_sound, "blockers_sound_done" );
+                player thread blockers_vox_cooldown_reset();
+            }
+            else
+            {
+                // iprintlnbold( "^1Blockers rolled – missed (50%)" );
             }
         }
+    }
+}
 
         if(all_chunks_destroyed(self.first_node.barrier_chunks))
         {
@@ -1495,16 +1506,12 @@ zombie_gib_on_damage()
         {
             self zombie_head_gib( attacker );
             if( IsDefined( attacker ) && IsPlayer( attacker ) && ( type == "MOD_RIFLE_BULLET" || type == "MOD_PISTOL_BULLET" ) )
-            {
-                if( !IsDefined( level.player_is_speaking ) )
-                {
-                    level.player_is_speaking = 0;
-                }
-                if( level.player_is_speaking != 1 && Distance( attacker.origin, self.origin ) > 450 && !level.zombie_vars["zombie_insta_kill"] && RandomInt( 100 ) < 15 )	// was 25
-                {
-                    attacker thread maps\_sounds::headshot_sound();
-                }
-            }
+			{
+				if( RandomInt(100) < 10 )		// add the chance
+				{
+					attacker thread player_vox_helper( ::headshot_sound, "headshot_sound_done" );
+				}
+			}
             continue;
         }
 
@@ -1861,16 +1868,6 @@ zombie_death_animscript()
 
     // Give attacker points & explosive vox
     if( IsDefined( self.attacker ) && IsPlayer( self.attacker ) )
-    {
-        if( !IsDefined( level.player_is_speaking ) )
-        {
-            level.player_is_speaking = 0;
-        }
-        if( level.player_is_speaking != 1 && ( self.damagemod == "MOD_GRENADE" || self.damagemod == "MOD_GRENADE_SPLASH" || self.damagemod == "MOD_PROJECTILE" || self.damagemod == "MOD_ZOMBIE_BETTY" ) && !level.zombie_vars["zombie_insta_kill"] && RandomInt( 100 ) < 15 )	// was 25
-        {
-            self.attacker thread maps\_sounds::explosive_kill_sound();
-        }
-    }
 
     	level zombie_death_points( self.origin, self.damagemod, self.damagelocation, self.attacker );
 
@@ -2083,43 +2080,86 @@ zombie_death_event(zombie)
     if( !IsDefined(player.killstreak_cooldown) )
         player.killstreak_cooldown = false;
 
-    // ====================== Killstreak vox ======================
-    if( level.player_is_speaking != 1 && !player.killstreak_cooldown && RandomInt(100) < 15 )
+    // KILLSTREAK
+    if( !IsDefined(player.kill_times) )
+        player.kill_times = [];
+
+    current_time = GetTime();
+    player.kill_times[player.kill_times.size] = current_time;
+
+    // purge anything older than 3.5 seconds
+    window_ms = 3500;
+    fresh = [];
+    for( i = 0; i < player.kill_times.size; i++ )
     {
-        player.killstreak_cooldown = true;
-        player thread killstreak_sound();
-        player thread killstreak_cooldown_reset();
-        return;
+        if( current_time - player.kill_times[i] <= window_ms )
+            fresh[fresh.size] = player.kill_times[i];
+    }
+    player.kill_times = fresh;
+
+    // live counter
+    // iprintlnbold( "^3Killstreak: " + player.kill_times.size + " / 5" );
+
+    if( player.kill_times.size >= 5 && !player.killstreak_cooldown )
+    {
+        chance = 15;		// 15%
+        if( RandomInt(100) < chance )
+        {
+            player.killstreak_cooldown = true;
+            player.kill_times = [];
+            // iprintlnbold( "^2KILLSTREAK POP!" );
+            player thread player_vox_helper( ::killstreak_sound, "killstreak_sound_done" );
+            player thread killstreak_cooldown_reset();
+            return;
+        }
+        else
+        {
+            // iprintlnbold( "^1Killstreak rolled – missed (" + chance + "%)" );
+        }
     }
 
-    // ====================== Headshot kill vox ======================
+    // HEADSHOTS
     if( (hitloc == "head" || hitloc == "helmet" || hitloc == "neck") &&
         (mod == "MOD_RIFLE_BULLET" || mod == "MOD_PISTOL_BULLET") &&
         !level.zombie_vars["zombie_insta_kill"] )
     {
-        if( level.player_is_speaking != 1 && RandomInt(100) < 15 )   // 10% chance
+        if( RandomInt(100) < 10 )
         {
-            player thread headshot_sound();
+            // iprintlnbold( "^5HEADSHOT VOX" );
+            player thread player_vox_helper( ::headshot_sound, "headshot_sound_done" );
             return;
         }
     }
 
-    // ====================== Explosive kill vox ======================
-    if( (mod == "MOD_GRENADE" || mod == "MOD_GRENADE_SPLASH" || 
-         mod == "MOD_PROJECTILE" || mod == "MOD_EXPLOSIVE" || mod == "MOD_ZOMBIE_BETTY") &&
+    // EXPLOSIVE KILLS
+    if( (mod == "MOD_GRENADE" || mod == "MOD_GRENADE_SPLASH" ||
+         mod == "MOD_PROJECTILE" || mod == "MOD_EXPLOSIVE" ||
+         mod == "MOD_ZOMBIE_BETTY") &&
         !level.zombie_vars["zombie_insta_kill"] )
     {
-        if( level.player_is_speaking != 1 && RandomInt(100) < 15 )
+        // iprintlnbold( "^6Explosive kill detected (mod = " + mod + ")" );
+        if( RandomInt(100) < 10 )
         {
-            player thread explosive_kill_sound();
+            // iprintlnbold( "^2EXPLOSIVE VOX!" );
+            player thread player_vox_helper( ::explosive_kill_sound, "explosive_sound_done" );
             return;
+        }
+        else
+        {
+            // iprintlnbold( "^1Explosive rolled – missed" );
         }
     }
 }
 
+blockers_vox_cooldown_reset()
+{
+    wait 3;
+    self.blockers_vox_cooldown = false;
+}
+
 killstreak_cooldown_reset()
 {
-    wait 5; // Limit frequency
+    wait 7;
     self.killstreak_cooldown = false;
 }
 
