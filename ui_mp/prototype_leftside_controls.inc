@@ -17,7 +17,7 @@
 #endif
 
 #undef BACK_OPEN
-#define BACK_OPEN exec "wait";
+#define BACK_OPEN exec "wait"; open main_text;
 #include "ui_mp/navcontrols.inc"
 
 #undef CHOICE_X_START

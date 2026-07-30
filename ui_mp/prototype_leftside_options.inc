@@ -17,7 +17,7 @@
 #endif
 
 #undef BACK_OPEN
-#define BACK_OPEN exec "wait";
+#define BACK_OPEN exec "wait"; open main_text;
 #include "ui_mp/navcontrols.inc"
 
 #undef CHOICE_X_START
@@ -44,7 +44,7 @@ CHOICE_DBUTTON_VIS( 7, "@PLATFORM_DEFAULT_SYSTEM_SETTINGS_CAP", 1; )
 #else // #ifdef PC_INGAME
 CHOICE_BUTTON( 7, "@PLATFORM_DEFAULT_SYSTEM_SETTINGS_CAP", LOCAL_CLOSE_ALL open options_graphics_defaults )
 #endif // #ifdef PC_INGAME
-CHOICE_BUTTON( 9, "@MENU_CONTROLS_CAP", LOCAL_CLOSE_ALL open options_controls_new_pc; close options_new_pc )
+CHOICE_BUTTON( 9, "@MENU_CONTROLS_CAP", LOCAL_CLOSE_ALL open options_controls_new_pc; close options_new_pc; close main_text )
 
 #undef		CHOICE_SIZE_X
 #undef		CHOICE_SIZE_Y

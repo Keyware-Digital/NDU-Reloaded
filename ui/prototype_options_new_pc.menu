@@ -29,6 +29,7 @@
 			setLocalVarBool ui_inOverlay 0;
 			setdvar ui_showOnlineOfflineButton "1";
 			close self;
+			open main_text;
 		}
 		onClose
 		{
@@ -78,11 +79,12 @@ menuDef
 			setLocalVarBool ui_inOverlay 0;
 			setdvar ui_showOnlineOfflineButton "1";
 			close self;
+			open main_text;
 		}
 		onClose
 		{
 			setdvar invite_visible "1";
-			setLocalVarBool ui_hideBack 0;			
+			setLocalVarBool ui_hideBack 0;
 		}
 		
 		// ------------------  statics ------------------------
