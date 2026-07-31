@@ -8,6 +8,8 @@
 //#include "ui/overlaybg.inc"
 //#endif
 
+//Somewhere in this file or another mod menu file there is a comma that silently breaks the menu and makes the game default to the vanilla control menu
+
 #ifdef PC_INGAME
 	BACKGROUND_BLACK_LETTERBOX_BLURWORLD_VIS( 1 , 1 )
 	OVERLAY_BACKGROUND

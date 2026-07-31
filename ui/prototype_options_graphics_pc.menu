@@ -7,6 +7,8 @@
 #undef CHOICE_ACTION_SOUND
 #define CHOICE_ACTION_SOUND "mouse_click_t"
 
+//Window Mode UI option does not update if the user sets the real dvar in the console, Treyarch gets ui_ and real dvars to sync to prevent this behaviour but by default this only works with one dvar at a time, investigate custom macro
+
 {
 	menuDef
 	{
@@ -80,7 +82,7 @@
 		CHOICE_DDVARALTTEXT_VIS( 26, "@MENU_ANTIALIASING", "@PROTOTYPE_MENU_16X", when( dvarint(r_aasamples)==16 ) )
 #else
 		CHOICE_DVARENUMLIST_VIS( 22, "@MENU_VIDEO_MODE", ui_r_mode, r_mode, setLocalVarBool ui_showApply 1, when( dvarint(sv_running)==0 ); )
-		CHOICE_DVARFLOATLIST_VIS(23, "@PROTOTYPE_MENU_WINDOW_MODE", ui_window_mode, {"@PROTOTYPE_MENU_EXCLUSIVE_FULLSCREEN" 0 "@PROTOTYPE_MENU_BORDERLESS_FULLSCREEN" 1 "@PROTOTYPE_MENU_WINDOWED" 2 }, execOnDvarIntValue ui_window_mode 0 "seta ui_window_mode 0; set r_fullscreen 1; set r_noborder 0; set vid_xpos 0; set vid_ypos 0"; execOnDvarIntValue ui_window_mode 1 "seta ui_window_mode 1; set r_fullscreen 0; set r_noborder 1; set vid_xpos 0; set vid_ypos 0"; execOnDvarIntValue ui_window_mode 2 "seta ui_window_mode 2; set r_fullscreen 0; set r_noborder 0; set vid_xpos 0; set vid_ypos 0"; setLocalVarBool ui_showApply 1;, when((dvarint(sv_running)==0) || (localVarInt(ui_allow_graphic_change)==1));)
+		CHOICE_DVARFLOATLIST_VIS(23, "@PROTOTYPE_MENU_WINDOW_MODE", ui_r_window_mode, {"@PROTOTYPE_MENU_EXCLUSIVE_FULLSCREEN" 0 "@PROTOTYPE_MENU_BORDERLESS_FULLSCREEN" 1 "@PROTOTYPE_MENU_WINDOWED" 2 }, execOnDvarIntValue ui_r_window_mode 0 "seta ui_r_window_mode 0; set r_fullscreen 1; set r_noborder 0; set vid_xpos 0; set vid_ypos 0"; execOnDvarIntValue ui_r_window_mode 1 "seta ui_r_window_mode 1; set r_fullscreen 0; set r_noborder 1; set vid_xpos 0; set vid_ypos 0"; execOnDvarIntValue ui_r_window_mode 2 "seta ui_r_window_mode 2; set r_fullscreen 0; set r_noborder 0; set vid_xpos 0; set vid_ypos 0"; setLocalVarBool ui_showApply 1;, when((dvarint(sv_running)==0) || (localVarInt(ui_allow_graphic_change)==1));)
 		CHOICE_DVARENUMLIST_VIS( 24, "@MENU_SCREEN_REFRESH_RATE", ui_r_displayRefresh, r_displayRefresh, setLocalVarBool ui_showApply 1;, when( (dvarint(sv_running)==0) || ( localVarInt(ui_allow_graphic_change)==1 ) ); )
 		CHOICE_DVARSTRINGLIST_VIS( 25, "@MENU_ASPECT_RATIO", ui_r_aspectratio, { "@MENU_AUTO"; "auto"; "@MENU_STANDARD_4_3"; "standard"; "@MENU_WIDE_16_10"; "wide 16:10"; "@MENU_WIDE_16_9"; "wide 16:9" }, setLocalVarBool ui_showApply 1, when( (dvarint(sv_running)==0) || ( localVarInt(ui_allow_graphic_change)==1 ) ); )
 		CHOICE_DVARFLOATLIST_VIS( 26, "@MENU_ANTIALIASING", ui_r_aasamples, { "@MENU_OFF" 1 "@MENU_2X" 2 "@MENU_4X" 4 "@PROTOTYPE_MENU_8X" 8 "@PROTOTYPE_MENU_16X" 16 }, setLocalVarBool ui_showApply 1;, when( (dvarint(sv_running)==0) || ( localVarInt(ui_allow_graphic_change)==1 ) ); )
@@ -96,12 +98,13 @@
 		CHOICE_DDVARALTTEXT_VIS( 29, "@MENU_OPTIMIZE_FOR_DUAL_VIDEO_CARDS", "@MENU_NO", when( ( !dvarint(r_multiGpu) ) ) )
 #else
 		CHOICE_DVARYESNO_VIS( 28, "@MENU_SYNC_EVERY_FRAME", ui_r_vsync, setLocalVarBool ui_showApply 1, when( dvarint(sv_running)==0 ); )
+		CHOICE_DVARYESNO_VIS( 29, "@MENU_OPTIMIZE_FOR_DUAL_VIDEO_CARDS", r_multiGpu, ;, when( dvarint(sv_running)==0); )
 #endif
 
-		CHOICE_DVARYESNO( 29, "@MENU_OPTION_OCEAN_SIMILATION", r_gfxopt_water_simulation, ; )
-		CHOICE_DVARYESNO( 30, "@MENU_OPTION_DYNAMIC_FOLIAGE", r_gfxopt_dynamic_foliage, ; )
-		CHOICE_DVARYESNO( 31, "@MENU_OPTION_BULLET_IMPACTS", fx_marks, ; )
-		CHOICE_DVARFLOATLIST_VIS( 32, "@MENU_NUMBER_OF_CORPSES", ai_corpsecount, { "@MENU_TINY" 3 "@MENU_SMALL" 5 "@MENU_MEDIUM" 10 "@MENU_LARGE" 20 "@MENU_INSANE" 32 }, ;, when( !dvarint( ui_multiplayer ) ) )
+		CHOICE_DVARYESNO( 30, "@MENU_OPTION_OCEAN_SIMILATION", r_gfxopt_water_simulation, ; )
+		CHOICE_DVARYESNO( 31, "@MENU_OPTION_DYNAMIC_FOLIAGE", r_gfxopt_dynamic_foliage, ; )
+		CHOICE_DVARYESNO( 32, "@MENU_OPTION_BULLET_IMPACTS", fx_marks, ; )
+		CHOICE_DVARFLOATLIST_VIS( 33, "@MENU_NUMBER_OF_CORPSES", ai_corpsecount, { "@MENU_TINY" 3 "@MENU_SMALL" 5 "@MENU_MEDIUM" 10 "@MENU_LARGE" 20 "@MENU_INSANE" 32 }, ;, when( !dvarint( ui_multiplayer ) ) )
 
 		itemDef 
 		{
@@ -202,6 +205,15 @@
 			exec "setfromdvar ui_r_picmip_bump		r_picmip_bump";
 			exec "setfromdvar ui_r_picmip_spec		r_picmip_spec";
 			exec "setfromdvar ui_r_picmip_manual	r_picmip_manual";
+			exec "setfromdvar ui_r_distortion r_distortion";
+			exec "setfromdvar ui_r_dof_enable r_dof_enable";
+			exec "setfromdvar ui_r_glow_allowed r_glow_allowed";
+			exec "setfromdvar ui_r_motionblur_enable r_motionblur_enable";
+			exec "setfromdvar ui_sm_enable sm_enable";
+			exec "setfromdvar ui_r_specular r_specular";
+			exec "setfromdvar ui_r_zfeather r_zfeather";
+			exec "setfromdvar ui_r_depthPrepass r_depthPrepass";
+			exec "setfromdvar ui_r_dlightlimit r_dlightlimit";
 		}
 		onClose
 		{
@@ -225,13 +237,15 @@
 		CHOICE_DVARFLOATLIST_VIS( 26, "@MENU_NORMAL_MAP_RESOLUTION", ui_r_picmip_bump, { "@MENU_LOW" 3 "@MENU_NORMAL" 2 "@MENU_HIGH" 1 "@MENU_EXTRA" 0 }, setLocalVarBool ui_showApply 1, when( dvarint( ui_r_picmip_manual ) ) )
 		CHOICE_DVARFLOATLIST_VIS( 27, "@MENU_SPECULAR_MAP_RESOLUTION", ui_r_picmip_spec, { "@MENU_LOW" 3 "@MENU_NORMAL" 2 "@MENU_HIGH" 1 "@MENU_EXTRA" 0 }, setLocalVarBool ui_showApply 1, when( dvarint( ui_r_picmip_manual ) ) )
 
-		CHOICE_DVARYESNO( 29, "@PROTOTYPE_MENU_DISTORTION", r_distortion, ; )
-		CHOICE_DVARYESNO( 30, "@PROTOTYPE_MENU_DOF", r_dof_enable, ; )
-		CHOICE_DVARYESNO( 31, "@PROTOTYPE_MENU_BLOOM", r_glow_allowed, ; )
-		CHOICE_DVARYESNO( 32, "@PROTOTYPE_MENU_MOTION_BLUR", r_motionblur_enable, ; )
-		CHOICE_DVARYESNO( 33, "@MENU_SHADOWS", sm_enable, ; )
-		CHOICE_DVARYESNO( 34, "@MENU_SPECULAR_MAP", r_specular, ; )
-		CHOICE_DVARFLOATLIST( 35, "@MENU_NUMBER_OF_DYNAMIC_LIGHTS", r_dlightlimit, { "@MENU_OFF" 0 "@MENU_LOW" 2 "@MENU_NORMAL" 4 }, ; )
+		CHOICE_DVARYESNO( 28, "@PROTOTYPE_MENU_DISTORTION", ui_r_distortion, setLocalVarBool ui_showApply 1 ; )
+		CHOICE_DVARYESNO( 29, "@PROTOTYPE_MENU_DOF", ui_r_dof_enable, setLocalVarBool ui_showApply 1 ; )
+		CHOICE_DVARYESNO( 30, "@PROTOTYPE_MENU_BLOOM", ui_r_glow_allowed, setLocalVarBool ui_showApply 1 ; )
+		CHOICE_DVARYESNO( 31, "@PROTOTYPE_MENU_MOTION_BLUR", ui_r_motionblur_enable, setLocalVarBool ui_showApply 1 ; )
+		CHOICE_DVARYESNO( 32, "@MENU_SHADOWS", ui_sm_enable, setLocalVarBool ui_showApply 1 ; )
+		CHOICE_DVARYESNO( 33, "@MENU_SPECULAR_MAP", ui_r_specular, setLocalVarBool ui_showApply 1 ; )
+		CHOICE_DVARYESNO( 34, "@PROTOTYPE_MENU_SOFTEN_SMOKE_EDGES", ui_r_zfeather, setLocalVarBool ui_showApply 1 ; )
+		CHOICE_DVARYESNO( 35, "@PROTOTYPE_MENU_DEPTH_PREPASS", ui_r_depthPrepass, setLocalVarBool ui_showApply 1  ; )
+		CHOICE_DVARFLOATLIST( 36, "@MENU_NUMBER_OF_DYNAMIC_LIGHTS", ui_r_dlightlimit, { "@MENU_OFF" 0 "@MENU_LOW" 2 "@MENU_NORMAL" 4 }, setLocalVarBool ui_showApply 1 ; )
 
 		itemDef 
 		{
@@ -294,6 +308,16 @@
 			execnow "setfromdvar r_picmip_bump ui_r_picmip_bump";
 			execnow "setfromdvar r_picmip_spec ui_r_picmip_spec";
 			execnow "setfromdvar r_picmip_manual ui_r_picmip_manual";
+			execnow "setfromdvar r_distortion ui_r_distortion";
+			execnow "setfromdvar r_dof_enable ui_r_dof_enable";
+			execnow "setfromdvar r_glow_allowed ui_r_glow_allowed";
+			execnow "setfromdvar r_motionblur_enable ui_r_motionblur_enable";
+			execnow "setfromdvar sm_enable ui_sm_enable";
+			execnow "setfromdvar r_specular ui_r_specular";
+			execnow "setfromdvar r_zfeather ui_r_zfeather";
+			execnow "setfromdvar r_depthPrepass ui_r_depthPrepass";
+			execnow "setfromdvar r_dlightlimit ui_r_dlightlimit";
+			
 			exec "wait; wait; r_applyPicmip";
 			close apply_picmip_popmenu;
 			open options_graphics;
