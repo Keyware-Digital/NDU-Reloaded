@@ -8,11 +8,9 @@
 //#include "ui/overlaybg.inc"
 //#endif
 
-//Somewhere in this file or another mod menu file there is a comma that silently breaks the menu and makes the game default to the vanilla control menu
-
 #ifdef PC_INGAME
-	BACKGROUND_BLACK_LETTERBOX_BLURWORLD_VIS( 1 , 1 )
-	OVERLAY_BACKGROUND
+	//BACKGROUND_BLACK_LETTERBOX_BLURWORLD_VIS( 1 , 1 )
+	//OVERLAY_BACKGROUND
 	CHOICE_MENU_TITLE( "@MENU_CONTROLS_CAP" )
 #else
 	CHOICE_OVERLAY_TITLE( "@MENU_CONTROLS_CAP" )
@@ -41,8 +39,7 @@ CHOICE_BUTTON( 4, "@MENU_INTERACT_CAP", LOCAL_CLOSE_ALL open options_misc )
 CHOICE_BUTTON_VIS( 5, "@MENU_MULTIPLAYER_CONTROLS_CAP", LOCAL_CLOSE_ALL open controls_multi, when( dvarbool( ui_multiplayer ) ) )
 CHOICE_BUTTON_VIS( 5, "@MENU_COOPERATIVE_CONTROLS_CAP", LOCAL_CLOSE_ALL open options_coop, when( !dvarbool( ui_multiplayer ) ); )
 CHOICE_BUTTON( 6, "@MENU_SET_DEFAULT_CONTROLS_CAP", open options_control_defaults )		
-CHOICE_BUTTON( 9, "@MENU_OPTIONS_CAP", LOCAL_CLOSE_ALL open options_new_pc; close options_controls_new_pc )
-
+CHOICE_BUTTON( 9, "@MENU_OPTIONS_CAP", LOCAL_CLOSE_ALL open options_new_pc; close options_controls_new_pc; setLocalVarBool ui_hideBack 1; )
 
 
 

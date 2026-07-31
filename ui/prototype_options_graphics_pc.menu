@@ -245,7 +245,7 @@
 		CHOICE_DVARYESNO( 33, "@MENU_SPECULAR_MAP", ui_r_specular, setLocalVarBool ui_showApply 1 ; )
 		CHOICE_DVARYESNO( 34, "@PROTOTYPE_MENU_SOFTEN_SMOKE_EDGES", ui_r_zfeather, setLocalVarBool ui_showApply 1 ; )
 		CHOICE_DVARYESNO( 35, "@PROTOTYPE_MENU_DEPTH_PREPASS", ui_r_depthPrepass, setLocalVarBool ui_showApply 1  ; )
-		CHOICE_DVARFLOATLIST( 36, "@MENU_NUMBER_OF_DYNAMIC_LIGHTS", ui_r_dlightlimit, { "@MENU_OFF" 0 "@MENU_LOW" 2 "@MENU_NORMAL" 4 }, setLocalVarBool ui_showApply 1 ; )
+		CHOICE_DVARFLOATLIST( 36, "@MENU_NUMBER_OF_DYNAMIC_LIGHTS", ui_r_dlightlimit, { "@PROTOTYPE_MENU_0" 0 "@PROTOTYPE_MENU_2" 2 "@PROTOTYPE_MENU_4" 4 }, setLocalVarBool ui_showApply 1 ; )
 
 		itemDef 
 		{

@@ -75,6 +75,11 @@ menufile,ui/prototype_options_graphics_defaults.menu
 menufile,ui/prototype_options_graphics_pc.menu
 menufile,ui/prototype_options_new_pc.menu
 menufile,ui/prototype_options_sound_pc.menu
+menufile,ui/prototype_options_look_pc.menu
+menufile,ui/prototype_options_move_pc.menu
+menufile,ui/prototype_options_misc_pc.menu
+menufile,ui/prototype_options_shoot_pc.menu
+menufile,ui/prototype_options_coop_pc.menu
 menufile,ui/prototype_pc_gamesetup_coop.menu
 menufile,ui/prototype_pc_joinchoosegamemode.menu
 menufile,ui/prototype_playerprofile.menu
