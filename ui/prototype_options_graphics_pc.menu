@@ -55,7 +55,8 @@
 		}
 		onESC
 		{
-			close self;
+			close options_graphics;
+			open options_new_pc;
 		}
 		
 		#include "ui_mp/prototype_leftside_options.inc"
@@ -215,8 +216,8 @@
 
 		onESC
 		{
-			close self;
-			//open options_graphics;
+			close options_graphics_texture;
+			open options_new_pc;
 		}
 		
 		#include "ui_mp/prototype_leftside_options.inc"

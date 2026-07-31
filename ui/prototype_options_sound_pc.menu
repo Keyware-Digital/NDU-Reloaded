@@ -37,13 +37,13 @@
 			exec "setfromdvar ui_snd_khz		snd_khz";
 			exec "setfromdvar ui_outputConfig	snd_outputConfiguration";
 		}
+		onESC 
+		{ 
+			close options_sound;
+		}
 		onClose
 		{
 			setLocalVarBool ui_hideBack 1;
-		}
-		onESC 
-		{ 
-			close self;		
 		}
 
 		#include "ui_mp/prototype_leftside_options.inc"

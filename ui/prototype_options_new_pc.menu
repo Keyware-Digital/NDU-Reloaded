@@ -28,8 +28,7 @@
 		{	
 			setLocalVarBool ui_inOverlay 0;
 			setdvar ui_showOnlineOfflineButton "1";
-			close self;
-			open main_text;
+			close options_new_pc;
 		}
 		onClose
 		{
@@ -78,8 +77,7 @@ menuDef
 		{	
 			setLocalVarBool ui_inOverlay 0;
 			setdvar ui_showOnlineOfflineButton "1";
-			close self;
-			open main_text;
+			close options_controls_new_pc;
 		}
 		onClose
 		{
