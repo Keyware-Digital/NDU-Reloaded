@@ -96,18 +96,12 @@
 		CHOICE_DDVARALTTEXT_VIS( 29, "@MENU_OPTIMIZE_FOR_DUAL_VIDEO_CARDS", "@MENU_NO", when( ( !dvarint(r_multiGpu) ) ) )
 #else
 		CHOICE_DVARYESNO_VIS( 28, "@MENU_SYNC_EVERY_FRAME", ui_r_vsync, setLocalVarBool ui_showApply 1, when( dvarint(sv_running)==0 ); )
-		CHOICE_DVARYESNO_VIS( 29, "@MENU_OPTIMIZE_FOR_DUAL_VIDEO_CARDS", r_multiGpu, ;, when( dvarint(sv_running)==0); )
 #endif
-		
-		CHOICE_DVARYESNO( 30, "@MENU_SHADOWS", sm_enable, ; )
-		CHOICE_DVARYESNO( 31, "@MENU_SPECULAR_MAP", r_specular, ; )
-		//CHOICE_DVARFLOATLIST( 30, "@MENU_NUMBER_OF_DYNAMIC_LIGHTS", r_dlightlimit, { "@MENU_OFF" 0 "@MENU_LOW" 2 "@MENU_NORMAL" 4 }, ; )
-		CHOICE_DVARYESNO( 32, "@MENU_OPTION_OCEAN_SIMILATION", r_gfxopt_water_simulation, ; )
-		CHOICE_DVARYESNO( 33, "@MENU_OPTION_DYNAMIC_FOLIAGE", r_gfxopt_dynamic_foliage, ; )
-		CHOICE_DVARYESNO( 34, "@MENU_OPTION_BULLET_IMPACTS", fx_marks, ; )
-		CHOICE_DVARFLOATLIST_VIS( 35, "@MENU_NUMBER_OF_CORPSES", ai_corpsecount, { "@MENU_TINY" 3 "@MENU_SMALL" 5 "@MENU_MEDIUM" 10 "@MENU_LARGE" 20 "@MENU_INSANE" 32 }, ;, when( !dvarint( ui_multiplayer ) ) )
 
-		//CHOICE_BUTTON( 34, "@MENU_TEXTURE_SETTINGS", close self; open options_graphics_texture )
+		CHOICE_DVARYESNO( 29, "@MENU_OPTION_OCEAN_SIMILATION", r_gfxopt_water_simulation, ; )
+		CHOICE_DVARYESNO( 30, "@MENU_OPTION_DYNAMIC_FOLIAGE", r_gfxopt_dynamic_foliage, ; )
+		CHOICE_DVARYESNO( 31, "@MENU_OPTION_BULLET_IMPACTS", fx_marks, ; )
+		CHOICE_DVARFLOATLIST_VIS( 32, "@MENU_NUMBER_OF_CORPSES", ai_corpsecount, { "@MENU_TINY" 3 "@MENU_SMALL" 5 "@MENU_MEDIUM" 10 "@MENU_LARGE" 20 "@MENU_INSANE" 32 }, ;, when( !dvarint( ui_multiplayer ) ) )
 
 		itemDef 
 		{
@@ -222,7 +216,7 @@
 		
 		#include "ui_mp/prototype_leftside_options.inc"
 		
-		CHOICE_SECTION_TITLE( 21, "@MENU_TEXTURE_SETTINGS_CAP" )
+		CHOICE_SECTION_TITLE( 21, "@PROTOTYPE_MENU_ADVANCED_GRAPHICS" )
 
 		CHOICE_DVARSTRINGLIST( 22, "@MENU_TEXTURE_MIPMAPS", r_texFilterMipMode, { "@MENU_AUTOMATIC"; "Unchanged"; "@MENU_BILINEAR"; "Force Bilinear"; "@MENU_TRILINEAR"; "Force Trilinear" }, setLocalVarBool ui_showApply 1 )
 		CHOICE_DVARSLIDER( 23, "@MENU_TEXTURE_ANISOTROPY", r_texFilterAnisoMin, 1, 1, 16, setLocalVarBool ui_showApply 1 )
@@ -230,6 +224,14 @@
 		CHOICE_DVARFLOATLIST_VIS( 25, "@MENU_TEXTURE_RESOLUTION", ui_r_picmip, { "@MENU_LOW" 3 "@MENU_NORMAL" 2 "@MENU_HIGH" 1 "@MENU_EXTRA" 0 }, setLocalVarBool ui_showApply 1, when( dvarint( ui_r_picmip_manual ) ) )
 		CHOICE_DVARFLOATLIST_VIS( 26, "@MENU_NORMAL_MAP_RESOLUTION", ui_r_picmip_bump, { "@MENU_LOW" 3 "@MENU_NORMAL" 2 "@MENU_HIGH" 1 "@MENU_EXTRA" 0 }, setLocalVarBool ui_showApply 1, when( dvarint( ui_r_picmip_manual ) ) )
 		CHOICE_DVARFLOATLIST_VIS( 27, "@MENU_SPECULAR_MAP_RESOLUTION", ui_r_picmip_spec, { "@MENU_LOW" 3 "@MENU_NORMAL" 2 "@MENU_HIGH" 1 "@MENU_EXTRA" 0 }, setLocalVarBool ui_showApply 1, when( dvarint( ui_r_picmip_manual ) ) )
+
+		CHOICE_DVARYESNO( 29, "@PROTOTYPE_MENU_DISTORTION", r_distortion, ; )
+		CHOICE_DVARYESNO( 30, "@PROTOTYPE_MENU_DOF", r_dof_enable, ; )
+		CHOICE_DVARYESNO( 31, "@PROTOTYPE_MENU_BLOOM", r_glow_allowed, ; )
+		CHOICE_DVARYESNO( 32, "@PROTOTYPE_MENU_MOTION_BLUR", r_motionblur_enable, ; )
+		CHOICE_DVARYESNO( 33, "@MENU_SHADOWS", sm_enable, ; )
+		CHOICE_DVARYESNO( 34, "@MENU_SPECULAR_MAP", r_specular, ; )
+		CHOICE_DVARFLOATLIST( 35, "@MENU_NUMBER_OF_DYNAMIC_LIGHTS", r_dlightlimit, { "@MENU_OFF" 0 "@MENU_LOW" 2 "@MENU_NORMAL" 4 }, ; )
 
 		itemDef 
 		{
