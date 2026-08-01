@@ -70,6 +70,21 @@ menuDef
 		visible 		when( !localvarBool( ui_hideBack ) );
 		decoration
 	}
+
+	itemDef {
+		rect (LOGO_START_X) (LOGO_START_Y + 85) 256 64 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+		text "Mod logo will replace mod title and logo above"
+		type 1
+		style WINDOW_STYLE_FILLED
+		textstyle ITEM_TEXTSTYLE_SHADOWED
+		textfont UI_FONT_NORMAL
+		forecolor 0.7529 0.7647 0.7686 1
+		textalign ITEM_ALIGN_LEFT
+		textscale TEXTSIZE_DEFAULT
+		visible when(!localVarBool(ui_hideBack));
+		decoration
+	}
+	
 #endif //PC_INGAME
 
 
@@ -363,7 +378,7 @@ menuDef
 #undef  CHOICE_GROUP
 #define CHOICE_GROUP			"friend_popup"
 
-#include "ui_mp/popupstyle.inc"	
+#include "ui_mp/prototype_popupstyle.inc"	
 #include "ui/choices_setup_popmenu.menu"
 	
 #undef CHOICE_SIZE_X

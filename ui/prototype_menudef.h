@@ -47,7 +47,7 @@
 #define FONTSCALE_LOBBY		0.26 // <--Slate // 0.3010 <-- Slate Compressed // 0.3750 // <-- COD4 CONDUIT ITC small
 #define FONTSCALE_NORMAL	0.3810//0.35897//0.4583
 #define FONTSCALE_BOLD		0.5476//0.4583
-#define FONTSCALE_BIG		0.5476//0.5833
+#define FONTSCALE_BIG		0.3010//0.5833
 #define FONTSCALE_EXTRABIG	1//1.0000
 
 // new settings

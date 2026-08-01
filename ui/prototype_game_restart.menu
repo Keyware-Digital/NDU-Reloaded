@@ -9,7 +9,7 @@
 #include "ui_mp/prototype_menustyle.inc"
 #include "ui/choices_setup_common.menu"
 
-#include "ui_mp/popupstyle.inc"	
+#include "ui_mp/prototype_popupstyle.inc"	
 #include "ui/choices_setup_popmenu.menu"
 
 #undef CHOICE_SIZE_X

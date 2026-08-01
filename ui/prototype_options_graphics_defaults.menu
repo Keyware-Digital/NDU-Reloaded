@@ -52,7 +52,7 @@
 #undef	CHOICE_TEXT_OFFSET_X
 #define CHOICE_TEXT_OFFSET_X		CHOICE_SIZE_Y
 
-#include "ui_mp/popupstyle.inc"
+#include "ui_mp/prototype_popupstyle.inc"
 #include "ui/choices_setup_popmenu.menu"
 
 	menuDef

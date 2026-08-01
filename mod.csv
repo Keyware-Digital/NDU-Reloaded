@@ -66,10 +66,17 @@ material,specialty_random_perk_zombies
 material,specialty_speed_cola_zombies
 material,specialty_stamin_up_zombies
 material,specialty_widows_wine_zombies
+menufile,ui/prototype_filter.menu
+menufile,ui/prototype_options_control_defaults.menu
+menufile,ui/prototype_popup_ingame.menu
+menufile,ui/prototype_popup_leavegame.menu
+menufile,ui/prototype_error.menu
+menufile,ui/prototype_quit.menu
 menufile,ui/prototype_game_restart.menu
 menufile,ui/prototype_briefing.menu
 menufile,ui/prototype_hud.menu
 menufile,ui/prototype_main.menu
+menufile,ui/prototype_objective_info.menu
 menufile,ui/prototype_options_game_pc.menu
 menufile,ui/prototype_options_graphics_defaults.menu
 menufile,ui/prototype_options_graphics_pc.menu

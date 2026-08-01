@@ -493,7 +493,7 @@
 	#define FINDGAME_POPUP_X		(0)
 	#define FINDGAME_POPUP_Y		(22)
 
-	#include "ui_mp/popupstyle.inc"
+	#include "ui_mp/prototype_popupstyle.inc"
 	#include "ui/choices_setup_popmenu.menu"
 
 	#define CAC_POPUP_X		(0)

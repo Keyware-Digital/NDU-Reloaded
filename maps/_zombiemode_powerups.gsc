@@ -1465,6 +1465,9 @@ death_machine_timer_think(prev_weapon)
     self EnableOffhandWeapons();
     self EnableWeaponCycling();
 
+    self setClientDvar("hide_reload_hud", 0);
+    self setClientDvar("ammocounterhide", 0);
+
      // Switch back safely
     if(isDefined(prev_weapon) && prev_weapon != "none" && self HasWeapon(prev_weapon))
     {
@@ -1630,6 +1633,10 @@ death_machine_give(player)
     player GiveWeapon(level.death_machine_weapon);
     player SetWeaponAmmoClip(level.death_machine_weapon, WeaponClipSize(level.death_machine_weapon));
     player GiveMaxAmmo(level.death_machine_weapon);
+
+    player setClientDvar("hide_reload_hud", 1);
+	player setClientDvar("ammocounterhide", 1);
+    
     player SwitchToWeapon(level.death_machine_weapon);
 
     // Check if equipped, if not clean-up
