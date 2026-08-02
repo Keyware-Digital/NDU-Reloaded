@@ -1131,16 +1131,18 @@ treasure_chest_give_weapon( weapon_string )
 	primaryWeapons = self GetWeaponsListPrimaries(); 
 	current_weapon = undefined; 
 
-	if( !self HasPerk("specialty_extraammo")) {
-		self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
-		self.muleLastWeapon = undefined;
-	}
-	else {
-		self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
-	}
+    if( !self HasPerk("specialty_extraammo") )
+    {
+        self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
+        self.muleLastWeapon = undefined;
+    }
+    else
+    {
+        self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
+    }
 
 	// This should never be true for the first time.
-	if( primaryWeapons.size >= self.MuleCount ) // he has two weapons
+	if( primaryWeapons.size >= self.muleCount )	// he has two weapons
 	{
 		current_weapon = self getCurrentWeapon(); // get his current weapon
 
@@ -2189,7 +2191,7 @@ weapon_give( weapon )
 	}
 
 	// This should never be true for the first time.
-	if( primaryWeapons.size >= self.MuleCount ) // he has two weapons
+	if( primaryWeapons.size >= self.muleCount ) // he has two weapons
 	{
 		current_weapon = self getCurrentWeapon(); // get his current weapon
 

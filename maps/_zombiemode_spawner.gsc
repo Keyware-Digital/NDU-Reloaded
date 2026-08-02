@@ -88,7 +88,7 @@ is_spawner_targeted_by_blocker( ent )
 // set up zombie walk cycles
 zombie_spawn_init()
 {
-	if ( level.first_round )
+	/*if ( level.first_round )
 	{
 		if ( randomInt(100) >= 25 )	
 			self.script_string = "riser";
@@ -120,8 +120,10 @@ zombie_spawn_init()
 		// Round 6+
 		if ( randomInt(100) >= 95 )	
 			self.script_string = "riser";
-	}
+	}*/
 
+	// Force every zombie to rise from the ground
+	self.script_string = "riser";
 	self.targetname = "zombie";
 	self.script_noteworthy = undefined;
 	self.animname = "zombie"; 		

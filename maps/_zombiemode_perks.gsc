@@ -339,31 +339,35 @@ phd_dive_vision() {
 
 player_switch_weapon_watcher()
 {
-	self endon( "disconnect" );
+    self endon( "disconnect" );
 
-	while(1)
-	{
-		self waittill( "weapon_change_complete" );		
-		
-		if (self hasPerk("specialty_extraammo"))
-		{
-			if (isDefined(self.perk_hud["specialty_extraammo"]))
-			{
-				current_weapon = self getCurrentWeapon();
-		
-				if (isDefined(self.muleLastWeapon) && current_weapon == self.muleLastWeapon)
-				{
-					self.perk_hud["specialty_extraammo"] setShader("specialty_mule_kick_glow_zombies", 24, 24);
-                    self setClientDvar("player_hud_specialty_mule_kick", 1);
-				}
-				else
-				{
-					self.perk_hud["specialty_extraammo"] setShader("specialty_mule_kick_zombies", 24, 24);
-                    self setClientDvar("player_hud_specialty_mule_kick", 0);
-				}
-			}
-		}
-	}
+    while(1)
+    {
+        wait 0.1;
+
+        if( !self hasPerk("specialty_extraammo") || !isDefined(self.perk_hud["specialty_extraammo"]) )
+        {
+            self setClientDvar("player_hud_specialty_mule_kick", 0);
+            continue;
+        }
+
+        primaries = self GetWeaponsListPrimaries();
+        current   = self getCurrentWeapon();
+
+        // only glow when we actually have exactly 3 primaries AND we are holding the tracked mule gun
+        if( primaries.size == level.zombie_vars["mulekick_max_weapon_slots"]
+         && isDefined(self.muleLastWeapon)
+         && current == self.muleLastWeapon )
+        {
+            self.perk_hud["specialty_extraammo"] setShader("specialty_mule_kick_glow_zombies", 24, 24);
+            self setClientDvar("player_hud_specialty_mule_kick", 1);
+        }
+        else
+        {
+            self.perk_hud["specialty_extraammo"] setShader("specialty_mule_kick_zombies", 24, 24);
+            self setClientDvar("player_hud_specialty_mule_kick", 0);
+        }
+    }
 }
 
 //Fixed ugly bug while holding and/or cooking the grenade
@@ -487,9 +491,11 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
     lastStandAmmo = undefined;
     lastStandGun = undefined;
     lastStandClip = undefined;
+
     // Save weapons and ammo
     playerweapons = self GetWeaponsList();
-    for (i = 0; i < playerweapons.size; i++) {
+    for (i = 0; i < playerweapons.size; i++)
+    {
         clipAmmo[i] = self GetWeaponAmmoClip(playerweapons[i]);
         weaponAmmo[i] = self GetWeaponAmmoStock(playerweapons[i]);
         wait 0.05;
@@ -507,6 +513,7 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
     }
     // start zombies targeting spawn struct instead. Rest is changed in zombiemode_spawner find_flesh() because we have to overwrite regular targeting.
     self.ignoreme = true;
+
     // put player in prone for now
     self AllowSprint(false);
     self AllowStand(false);
@@ -518,23 +525,32 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
     self DisableWeaponCycling();
 
     // Set last stand pistol
-    if (self HasWeapon("ray_gun_mk1_v2")) {
+    if (self HasWeapon("ray_gun_mk1_v2"))
+    {
         lastStandAmmo = 20;
         lastStandClip = 20;
         lastStandGun = "ray_gun_mk1_v2";
-    } else if (self HasWeapon("sw_357")) {
+    }
+    else if (self HasWeapon("sw_357"))
+    {
         lastStandAmmo = 18;
         lastStandClip = 6;
         lastStandGun = "sw_357";
-    } else if (self HasWeapon("walther") || self.firstPistol == "walther") {
+    }
+    else if (self HasWeapon("walther") || self.firstPistol == "walther")
+    {
         lastStandAmmo = 24;
         lastStandClip = 8;
         lastStandGun = "walther";
-    } else if (self HasWeapon("tokarev") || self.firstPistol == "tokarev") {
+    }
+    else if (self HasWeapon("tokarev") || self.firstPistol == "tokarev")
+    {
         lastStandAmmo = 24;
         lastStandClip = 8;
         lastStandGun = "tokarev";
-    } else {
+    }
+    else
+    {
         lastStandAmmo = 24;
         lastStandClip = 8;
         lastStandGun = "colt";
@@ -546,63 +562,63 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
     self SetWeaponAmmoClip(lastStandGun, lastStandClip);
     self SetWeaponAmmoStock(lastStandGun, lastStandAmmo);
 
-// ===== PROGRESS BAR =====
-soloReviveTime = 10;
+    // ===== PROGRESS BAR =====
+    soloReviveTime = 10;
 
-// Kill any leftovers
-if ( isDefined( self.soloReviveProgressBar ) )
-{
-    self.soloReviveProgressBar destroyElem();
-    self.soloReviveProgressBar = undefined;
-}
-if ( isDefined( self.reviveProgressBar ) )
-{
-    self.reviveProgressBar destroyElem();
-    self.reviveProgressBar = undefined;
-}
+    // Kill any leftovers
+    if ( isDefined( self.soloReviveProgressBar ) )
+    {
+        self.soloReviveProgressBar destroyElem();
+        self.soloReviveProgressBar = undefined;
+    }
+    if ( isDefined( self.reviveProgressBar ) )
+    {
+        self.reviveProgressBar destroyElem();
+        self.reviveProgressBar = undefined;
+    }
 
-self.soloReviveProgressBar = self createPrimaryProgressBar();
+    self.soloReviveProgressBar = self createPrimaryProgressBar();
 
-// Parent (background)
-self.soloReviveProgressBar.alignX = "center";
-self.soloReviveProgressBar.alignY = "middle";
-self.soloReviveProgressBar.horzAlign = "center";
-self.soloReviveProgressBar.vertAlign = "bottom";
-self.soloReviveProgressBar.x = 0;
-self.soloReviveProgressBar.y = -150;
+    // Parent (background)
+    self.soloReviveProgressBar.alignX = "center";
+    self.soloReviveProgressBar.alignY = "middle";
+    self.soloReviveProgressBar.horzAlign = "center";
+    self.soloReviveProgressBar.vertAlign = "bottom";
+    self.soloReviveProgressBar.x = 0;
+    self.soloReviveProgressBar.y = -150;
 
-// Fill
-if ( isDefined( self.soloReviveProgressBar.bar ) )
-{
-    self.soloReviveProgressBar.bar.alignX = "center";
-    self.soloReviveProgressBar.bar.alignY = "middle";
-    self.soloReviveProgressBar.bar.horzAlign = "center";
-    self.soloReviveProgressBar.bar.vertAlign = "bottom";
-    self.soloReviveProgressBar.bar.x = 0;
-    self.soloReviveProgressBar.bar.y = -150;
-}
+    // Fill
+    if ( isDefined( self.soloReviveProgressBar.bar ) )
+    {
+        self.soloReviveProgressBar.bar.alignX = "center";
+        self.soloReviveProgressBar.bar.alignY = "middle";
+        self.soloReviveProgressBar.bar.horzAlign = "center";
+        self.soloReviveProgressBar.bar.vertAlign = "bottom";
+        self.soloReviveProgressBar.bar.x = 0;
+        self.soloReviveProgressBar.bar.y = -150;
+    }
 
-self.soloReviveProgressBar updateBar( 0.01, 1 / soloReviveTime );
+    self.soloReviveProgressBar updateBar( 0.01, 1 / soloReviveTime );
 
-// wait for revive and play text
-self.revive_hud setText( &"GAME_REVIVING" );
-self maps\_laststand::revive_hud_show();
-self.revive_hud.alignX = "center";
-self.revive_hud.alignY = "middle";
-self.revive_hud.horzAlign = "center";
-self.revive_hud.vertAlign = "bottom";
-self.revive_hud.x = 0;
-self.revive_hud.y = -175;
+    // wait for revive and play text
+    self.revive_hud setText( &"GAME_REVIVING" );
+    self maps\_laststand::revive_hud_show();
+    self.revive_hud.alignX = "center";
+    self.revive_hud.alignY = "middle";
+    self.revive_hud.horzAlign = "center";
+    self.revive_hud.vertAlign = "bottom";
+    self.revive_hud.x = 0;
+    self.revive_hud.y = -175;
 
-wait( soloReviveTime );
+    wait( soloReviveTime );
 
-if ( isDefined( self.soloReviveProgressBar ) )
-{
-    self.soloReviveProgressBar destroyElem();
-    self.soloReviveProgressBar = undefined;
-}
-if ( isDefined( self.revive_hud ) )
-    self maps\_laststand::revive_hud_hide();
+    if ( isDefined( self.soloReviveProgressBar ) )
+    {
+        self.soloReviveProgressBar destroyElem();
+        self.soloReviveProgressBar = undefined;
+    }
+    if ( isDefined( self.revive_hud ) )
+        self maps\_laststand::revive_hud_hide();
 
     // Initialize muleCount if not set
     if ( !isDefined( self.muleCount ) )
@@ -618,32 +634,49 @@ if ( isDefined( self.revive_hud ) )
         self TakeAllWeapons();
 
     restoredWeapons = 0;
-    for (i = 0; i < playerweapons.size; i++) {
-        if (!isDefined(playerweapons[i])) {
+    for (i = 0; i < playerweapons.size; i++)
+    {
+        if (!isDefined(playerweapons[i]))
             continue;
-        }
-        if (weaponType(playerweapons[i]) == "grenade") {
+
+        if (weaponType(playerweapons[i]) == "grenade")
+        {
             self GiveWeapon(playerweapons[i]);
-            if (isDefined(clipAmmo[i])) {
+            if (isDefined(clipAmmo[i]))
                 self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
-            }
-        } else if (restoredWeapons < self.muleCount) {
+        }
+        else if (restoredWeapons < self.muleCount)
+        {
             //IPrintLn(playerweapons[i]);
             self GiveWeapon(playerweapons[i]);
-            if (isDefined(clipAmmo[i])) {
+            if (isDefined(clipAmmo[i]))
                 self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
-            } else {
-            }
-            if (isDefined(weaponAmmo[i])) {
+            if (isDefined(weaponAmmo[i]))
                 self SetWeaponAmmoStock(playerweapons[i], weaponAmmo[i]);
-            } else {
-            }
             restoredWeapons++;
         }
         wait 0.05;
     }
 
+    // Try original weapon first
     self SwitchToWeapon(self.currentWeapon);
+
+    // guarantee a real weapon is equipped after revive
+    wait 0.1;
+    curr = self GetCurrentWeapon();
+    if ( curr == "none" || curr == "" || !self HasWeapon( curr ) )
+    {
+        primaries = self GetWeaponsListPrimaries();
+        if ( primaries.size > 0 )
+            self SwitchToWeapon( primaries[0] );
+        else
+        {
+            all = self GetWeaponsList();
+            if ( all.size > 0 )
+                self SwitchToWeapon( all[0] );
+        }
+    }
+
     self EnableWeaponCycling();
 
     // Restore movement / vision
@@ -653,7 +686,6 @@ if ( isDefined( self.revive_hud ) )
     self AllowStand(true);
     self AllowCrouch(true);
     self SetStance("stand");
-
     self SetStance(self.currentStance);
 
     self.ignoreme = false;
@@ -695,7 +727,7 @@ if ( isDefined( self.revive_hud ) )
         level.zombiegoto = undefined;
     }
 
-    self notify( "player_revived" ); // Notify for other scripts
+    self notify( "player_revived" );
     self notify( "solo_revive_done" );
 }
 
