@@ -580,6 +580,9 @@ treasure_chest_think(rand)
 		case "m1carbine":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 	        break;
+		case "m1garand":
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
+	        break;
 		case "m1garand_gl":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 	        break;
@@ -1327,6 +1330,9 @@ treasure_chest_give_weapon( weapon_string )
 		case "panzerschrek":
 			self thread player_vox_helper( ::pickup_panzerschrek_sound, "weapon_vox_done" );
 			break;
+		case "m1garand":
+			self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
+			break;
 		case "m1garand_gl":
 			self thread player_vox_helper( ::pickup_panzerschrek_sound, "weapon_vox_done" );
 			break;
@@ -1360,7 +1366,7 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 
 	level.cabinetguns = [];
 	level.cabinetguns[0] = "kar98k_scoped_zombie";						// default ndu
-	level.cabinetguns[1] = "m1garand";		
+	level.cabinetguns[1] = "colt";										// placeholder
 	level.cabinetguns[2] = "m1921_thompson";						
 	level.cabinetguns[3] = "mosin_rifle_scoped_zombie";
 	level.cabinetguns[4] = "mp40_bigammo_mp";
@@ -1523,7 +1529,7 @@ chosenweapon = randomnumb;
 		case "kar98k_scoped_zombie":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break; 
-		case "m1garand":
+		case "colt":
 		weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;  
 		case "m1921_thompson":
@@ -1587,27 +1593,29 @@ chosenweapon = randomnumb;
 		}
 	}
 
-    if(!(player hasWeapon("stg44_pap")))	// check if player has the stg
-    {
-		if(luckyNumCabinet <= 10)	// 7.5 out of 100 chance to get a pap'd stg
+	// Sam EE check before stg44_pap can be obtained
+    //if(!(player hasWeapon("stg44_pap")))	// check if player has the stg
+	if( isDefined( level.samantha_ee_completed ) && level.samantha_ee_completed && !(player hasWeapon("stg44_pap")) )
+	{
+		if(luckyNumCabinet <= 10)	// keep your original chance
 		{
-        	weaponmodelstruct Hide();
-			weaponmodelstruct.angles = self.angles + ( -90,90,0 );	// so it gets displayed like the other cabinet weapons.
-        	wait 0.05;
-        	weaponmodelstruct Show();
-        	weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
-        	chosenweapon = "stg44_pap";
+			weaponmodelstruct Hide();
+			weaponmodelstruct.angles = self.angles + ( -90,90,0 );
+			wait 0.05;
+			weaponmodelstruct Show();
+			weaponmodelstruct SetModel(GetWeaponModel( "stg44_pap" ));
+			chosenweapon = "stg44_pap";
 
 			switch(chosenweapon)
 			{
 				case "stg44_pap":
-				weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
+					weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 					break;
 			}
 
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
 		}
-    }
+	}
 
     // Only hide hintstring if not in fire sale
     if( !isDefined(level.zombie_vars["zombie_fire_sale"]) || !level.zombie_vars["zombie_fire_sale"] )
@@ -1866,8 +1874,8 @@ takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct)
 		case "kar98k_scoped_zombie":
 				player thread player_vox_helper( ::pickup_sniper_sound, "weapon_vox_done" );
 			break;
-		case "m1garand":
-				player thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
+		case "colt":
+				player thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
 			break;  
 		case "m1921_thompson":
 				player thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );

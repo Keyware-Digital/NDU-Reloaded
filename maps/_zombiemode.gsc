@@ -2404,9 +2404,23 @@ setup_player_vars()
         // Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
         players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
 
-        // New Network Portrait System
-        // Sets the correct player portrait based on what character they randomly spawned as
-        players[i] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[i]);
+        // OLD portrait method (local client only – this is what you asked to restore)
+        switch(level.random_character_index[i])
+        {
+            case 0:
+                players[i] setClientDvar("plr_hud_portrait", 0);
+                break; 
+            case 1:
+                players[i] setClientDvar("plr_hud_portrait", 1);
+                break;
+            case 2:
+                players[i] setClientDvar("plr_hud_portrait", 2);
+                break;  
+            case 3:
+                players[i] setClientDvar("plr_hud_portrait", 3);
+                break;
+        }
+
         players[i] setClientDvar("plr" + num + "_active", 1);
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats

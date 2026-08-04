@@ -73,140 +73,263 @@ handle_monty_radio_interaction(monty_radio, monty_radio_trigger)
 // currently only the ray gun ee works
 handle_generic_radio_one_interaction(generic_radio_one)
 {
-    weapon_fired_count_raygun = 0;     // Counts up-to 5 Ray Gun shots
+    //weapon_fired_count_raygun = 0;     // Counts up-to 5 Ray Gun shots
     weapon_fired_count_stg = 0;        // Counts up-to 30 STG44 shots
+    player_is_interacting_with_radio = 0;
 
-    player_is_interacting_with_radio = 0;  // We don't want radio functions overlapping
-    player_has_done_radio_ee_one = 0;      // raygun free cash
-    player_has_done_radio_ee_two = 0;      // raygun free perk
-    player_has_done_radio_ee_three = 1;    // stg44_pap 30 shots, disabled for now
-    player_has_done_radio_ee_four = 1;     // scoped rifles, disabled for now, maybe add BO1 Dead Ops arcade music like the radio from the BO1 version of Nacht
+    level.player_has_done_radio_ee_one   = 0;
+    level.player_has_done_radio_ee_two   = 0;
+    level.player_has_done_radio_ee_three = 1;
+    level.player_has_done_radio_ee_four  = 1;
 
     level.radioEETrackIndex = 1;
+
+    // Morse SOS state
+    level.morse_progress            = 0;
+    level.morse_last_hit_time       = 0;
+    level.morse_current_group_count = 0;
+    level.morse_generation          = 0;
+    level.morse_radio               = generic_radio_one;
+    level.morse_on_cooldown         = false; 
+
+    //iPrintLnBold("^3Morse SOS system initialized");
     
     while (1)
     {
         generic_radio_one waittill ("damage", damage, attacker, direction_vec, point, type);
 
-        player_is_interacting_with_radio = 0;
-
         if (!isDefined(attacker) || !isPlayer(attacker))
         {
-            wait 0.1;
+            wait 0.05;
             continue;
         }
 
-        players = GetPlayers();
+        player = attacker;
+        current_weapon = player GetCurrentWeapon();
 
-        for (i = 0; i < players.size; i++) 
+        PlayFX(level._effect["broken_radio_spark"], generic_radio_one.origin + (0,0,8));
+        player thread button_press_sound();
+
+        // EE 1
+        if (level.player_has_done_radio_ee_one == 0 && current_weapon == "ray_gun_mk1_v2")
         {
-            if (players[i] != attacker)
+            player.score += 500;
+            player.score_total += 500;
+            player maps\_zombiemode_score::set_player_score_hud();
+            player thread cash_register_sound();
+            level.player_has_done_radio_ee_one = 1;
+            //iPrintLnBold("^2EE1 complete - 500 points");
+            wait 0.05;
+            continue;
+        }
+
+        // EE 2 
+         if (level.player_has_done_radio_ee_two == 0 && current_weapon == "ray_gun_mk1_v2" && !level.morse_on_cooldown)
+        {
+            current_time = GetTime();
+
+            // 666 ms window, plus creepy lore :)
+            if (!isDefined(level.morse_last_hit_time) || level.morse_last_hit_time == 0 || (current_time - level.morse_last_hit_time) > 666)
+            {
+                level.morse_current_group_count = 1;
+                //iPrintLn("^5New signal group started");
+            }
+            else
+            {
+                level.morse_current_group_count++;
+                //iPrintLn("^5Same group - hit count now: " + level.morse_current_group_count);
+            }
+
+            level.morse_last_hit_time = current_time;
+            level.morse_generation++;
+
+           //iPrintLn("Generation: " + level.morse_generation + " | Progress: " + level.morse_progress + "/9");
+
+            thread morse_group_timeout(level.morse_generation, player);
+            wait 0.05;
+            continue;
+        }
+
+        // EE 3 (disabled for now)
+        if (level.player_has_done_radio_ee_three == 0 && current_weapon == "stg44_pap")
+        {
+            player_is_interacting_with_radio = 1;
+
+            weapon_fired_count_stg++;
+           //iPrintLn(weapon_fired_count_stg + " out of 30 STG44 shots done");
+
+            if (weapon_fired_count_stg >= 30)
+            {
+                powerup_spawn = (740.611, 907.825, 11.0648);       
+
+                for (k = 0; k < level.zombie_powerup_array.size; k++)
+                {
+                    if (level.zombie_powerup_array[k] == "random_powerup")
+                    {
+                        level.zombie_powerup_index = k;
+                        break;
+                    }
+                }
+
+                play_sound_2D("bright_sting");
+                level.zombie_vars["zombie_drop_item"] = 1;
+                level.powerup_drop_count = 0;
+                level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
+
+                level.player_has_done_radio_ee_three = 1;
+                //iPrintLn("STG44 EE complete!");
+                weapon_fired_count_stg = 0;
+            }
+            wait 0.05;
+            continue;
+        }
+
+        // EE 4 (disabled for now)
+        if (level.player_has_done_radio_ee_four == 0)
+        {
+            if (current_weapon == "springfield_scoped_zombie" || 
+                current_weapon == "kar98k_scoped_zombie" || 
+                current_weapon == "mosin_rifle_scoped_zombie")
+            {
+                player_is_interacting_with_radio = 1;
+                //iPrintLn("Playing ee track...");
+                player thread radio_ee_track_sound();
+                level.player_has_done_radio_ee_four = 1;
+                wait 0.05;
                 continue;
-
-            player = players[i];
-            current_weapon = player GetCurrentWeapon();
-
-            PlayFX(level._effect["broken_radio_spark"], generic_radio_one.origin + (0,0,8));
-            player thread button_press_sound();
-
-            // EE 1
-            if (player_has_done_radio_ee_one == 0 && current_weapon == "ray_gun_mk1_v2")
-            {
-                player_is_interacting_with_radio = 1;
-                player.score += 500;
-                player.score_total += 500;
-                player maps\_zombiemode_score::set_player_score_hud();
-                player thread cash_register_sound();
-                player_has_done_radio_ee_one = 1;
-                //iPrintLn("Ray Gun score EE complete!");
-                break;
             }
+        }
 
-            // EE 2
-            if (player_has_done_radio_ee_two == 0 && current_weapon == "ray_gun_mk1_v2")
+        wait 0.05;
+    }
+}
+
+morse_group_timeout(gen, player)
+{
+    wait 0.55;
+
+    if (level.morse_generation != gen)
+        return;
+
+    if (level.morse_current_group_count <= 0)
+        return;
+
+    count = level.morse_current_group_count;
+    level.morse_current_group_count = 0;
+
+    // 1-2 hits = DOT, 3+ hits = DASH
+    is_dot = (count <= 2);
+
+    /*if (is_dot)
+        iPrintLnBold("^3Detected: DOT  (hits: " + count + ")");
+    else
+        iPrintLnBold("^3Detected: DASH (hits: " + count + ")");*/
+
+    expected_dot = (level.morse_progress < 3 || level.morse_progress >= 6);
+
+    /*if (expected_dot)
+        iPrintLn("Expected: DOT");
+    else
+        iPrintLn("Expected: DASH");*/
+
+    if ((is_dot && expected_dot) || (!is_dot && !expected_dot))
+    {
+        // ===== SUCCESS =====
+        level.morse_progress++;
+        //iPrintLnBold("^2CORRECT! Progress: " + level.morse_progress + "/9");
+
+        if (level.morse_progress == 1)
+        {
+            level.morse_radio playLoopSound("radio_loop");
+            //iPrintLnBold("^5RADIO LOOP STARTED");
+        }
+
+        // Every successful signal
+        playsoundatposition("radio_hit", level.morse_radio.origin);
+
+        if (level.morse_progress >= 9)
+        {
+            //iPrintLnBold("^2^2^2 SOS COMPLETE!");
+
+            // Stop the static loop
+            level.morse_radio StopLoopSound(0.1);
+            //iPrintLnBold("^5RADIO LOOP STOPPED");
+
+            // Final success feedback + reward
+            play_sound_2D("bright_sting");
+            player thread player_vox_helper( ::pickup_bonus_points_sound, "powerup_pickup_sound_done" );
+
+            powerup_spawn = (740.611, 907.825, 11.0648);
+
+            for (k = 0; k < level.zombie_powerup_array.size; k++)
             {
-                player_is_interacting_with_radio = 1;
-
-                weapon_fired_count_raygun++;
-                //iPrintLn(weapon_fired_count_raygun + " out of 5 Ray Gun shots done");
-
-                if (weapon_fired_count_raygun >= 5)
+                if (level.zombie_powerup_array[k] == "random_powerup")
                 {
-                    powerup_spawn = (740.611, 907.825, 11.0648);       
-
-                    // Samantha-style powerup drop (more reliable)
-                    for (k = 0; k < level.zombie_powerup_array.size; k++)
-                    {
-                        if (level.zombie_powerup_array[k] == "random_powerup")
-                        {
-                            level.zombie_powerup_index = k;
-                            break;
-                        }
-                    }
-
-                    play_sound_2D("bright_sting");
-                    level.zombie_vars["zombie_drop_item"] = 1;
-                    level.powerup_drop_count = 0;
-                    // give a free random powerup or perk to all players
-                    //level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
-                    level thread maps\_zombiemode_powerups::force_specific_powerup( "random_perk", powerup_spawn );
-
-                    player_has_done_radio_ee_two = 1;
-                    //iPrintLn("Ray Gun Powerup EE complete!");
-                    weapon_fired_count_raygun = 0;
-                }
-                break;
-            }
-
-            // EE 3 (disabled for now)
-            if (player_has_done_radio_ee_three == 0 && current_weapon == "stg44_pap")
-            {
-                player_is_interacting_with_radio = 1;
-
-                weapon_fired_count_stg++;
-                iPrintLn(weapon_fired_count_stg + " out of 30 STG44 shots done");
-
-                if (weapon_fired_count_stg >= 30)
-                {
-                    powerup_spawn = (740.611, 907.825, 11.0648);       
-
-                    for (k = 0; k < level.zombie_powerup_array.size; k++)
-                    {
-                        if (level.zombie_powerup_array[k] == "random_powerup")
-                        {
-                            level.zombie_powerup_index = k;
-                            break;
-                        }
-                    }
-
-                    play_sound_2D("bright_sting");
-                    level.zombie_vars["zombie_drop_item"] = 1;
-                    level.powerup_drop_count = 0;
-                    level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
-
-                    player_has_done_radio_ee_three = 1;
-                    iPrintLn("STG44 EE complete!");
-                    weapon_fired_count_stg = 0;
-                }
-                break;
-            }
-
-            // EE 4 (disabled for now)
-            if (player_has_done_radio_ee_four == 0)
-            {
-                if (current_weapon == "springfield_scoped_zombie" || 
-                    current_weapon == "kar98k_scoped_zombie" || 
-                    current_weapon == "mosin_rifle_scoped_zombie")
-                {
-                    player_is_interacting_with_radio = 1;
-                    iPrintLn("Playing ee track...");
-                    player thread radio_ee_track_sound();
-                    player_has_done_radio_ee_four = 1;
+                    level.zombie_powerup_index = k;
                     break;
                 }
             }
+
+            level.zombie_vars["zombie_drop_item"] = 1;
+            level.powerup_drop_count = 0;
+            level thread maps\_zombiemode_powerups::force_specific_powerup("random_perk", powerup_spawn);
+
+            level.player_has_done_radio_ee_two = 1;
+            level.morse_progress = 0;
+            return;
         }
-        
-        wait 0.50;
     }
+    else
+    {
+        // ===== FAIL =====
+        level.morse_progress = 0;
+        //iPrintLnBold("^1WRONG SIGNAL - reset to 0");
+
+        level.morse_radio StopLoopSound(0.1);
+        //iPrintLnBold("^5RADIO LOOP STOPPED");
+        playsoundatposition("radio_fail", level.morse_radio.origin);
+
+        if (isDefined(player) && isPlayer(player))
+            player thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+
+        // Start 3 second cooldown
+        level.morse_on_cooldown = true;
+        thread morse_cooldown_timer();
+    }
+
+    if (level.morse_progress > 0 && level.morse_progress < 9)
+        thread morse_sequence_idle_timeout(gen, player);
+}
+
+morse_sequence_idle_timeout(gen, player)
+{
+    wait 5.0;
+
+    if (level.morse_generation == gen && level.morse_progress > 0 && level.morse_progress < 9)
+    {
+        level.morse_progress = 0;
+
+        if (isDefined(level.morse_radio))
+            level.morse_radio StopLoopSound(0.1);
+
+        //iPrintLnBold("^1IDLE TIMEOUT - sequence reset");
+
+        playsoundatposition("radio_fail", level.morse_radio.origin);
+
+        if (isDefined(player) && isPlayer(player))
+            player thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
+
+        // Start the 3 second cooldown
+        level.morse_on_cooldown = true;
+        thread morse_cooldown_timer();
+    }
+}
+
+morse_cooldown_timer()
+{
+    wait 3.0;
+
+    level.morse_on_cooldown = false;
+
+    playsoundatposition("radio_ready", level.morse_radio.origin);
 }

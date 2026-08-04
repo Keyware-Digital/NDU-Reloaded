@@ -1384,17 +1384,21 @@ death_machine_timer_think( prev_weapon )
     self EnableOffhandWeapons();
     self EnableWeaponCycling();
 
-    self setClientDvar("hide_reload_hud", 0);
+    // mirroring bo3 (you can see wep. name in bo3)
+    // self setClientDvar("hide_reload_hud", 0);
     self setClientDvar("ammocounterhide", 0);
 
     // Switch back safely
-    if ( isDefined( prev_weapon ) && prev_weapon != "none" && self HasWeapon( prev_weapon ) )
-        self SwitchToWeapon( prev_weapon );
-    else
+    if ( !self maps\_laststand::player_is_in_laststand() )
     {
-        weapons = self GetWeaponsListPrimaries();
-        if ( weapons.size > 0 )
-            self SwitchToWeapon( weapons[0] );
+        if ( isDefined( prev_weapon ) && prev_weapon != "none" && self HasWeapon( prev_weapon ) )
+            self SwitchToWeapon( prev_weapon );
+        else
+        {
+            weapons = self GetWeaponsListPrimaries();
+            if ( weapons.size > 0 )
+                self SwitchToWeapon( weapons[0] );
+        }
     }
 
     self.using_death_machine = false;
@@ -1554,8 +1558,9 @@ death_machine_give( player )
     //player SetWeaponAmmoClip( level.death_machine_weapon, WeaponClipSize( level.death_machine_weapon ) );
     //player GiveMaxAmmo( level.death_machine_weapon );
 
+    // mirroring bo3 (you can see wep. name in bo3)
     player setClientDvar("hide_reload_hud", 1);
-	player setClientDvar("ammocounterhide", 1);
+	// player setClientDvar("ammocounterhide", 1);
 
     player SwitchToWeapon( level.death_machine_weapon );
 
@@ -1581,6 +1586,29 @@ death_machine_give( player )
     player EnableWeaponCycling();
 
     player thread death_machine_timer_think( prev_weapon );
+    player thread death_machine_cleanup();
+}
+
+death_machine_cleanup()
+{
+    self endon( "disconnect" );
+    self endon( "end_death_machine" );
+
+    self waittill_any( "player_downed", "fake_death", "death", "bled_out", "second_chance" );
+
+    self notify( "end_death_machine" );     // kill the timer thread if still alive
+
+    if ( self HasWeapon( level.death_machine_weapon ) )
+        self TakeWeapon( level.death_machine_weapon );
+
+    self.using_death_machine = false;
+    self.is_drinking = undefined;
+
+    self setClientDvar( "ammocounterhide", 0 );
+
+    if ( isDefined( level.zombie_vars["zombie_powerup_death_machine_on"] ) && level.zombie_vars["zombie_powerup_death_machine_on"] )
+        level.zombie_vars["zombie_powerup_death_machine_time"] = 0;
+
 }
 
 // forces a powerup to spawn (including the random perk bottle)
