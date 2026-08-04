@@ -2,50 +2,63 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 #include maps\_anim;
+
 #using_animtree("animations");
 
-isSprinting()
-{
+is_sprinting() {
 	v = self GetVelocity();
 	if( v[0] >= 170 || v[1] >= 170 || v[0] <= 170 - 170 * 2 || v[1] <= 170 - 170 * 2 )
 		return true;
 	return false;
 }
 
-update_angles_origin(dive_model)
-{
+update_angles_origin(dive_model) {
     self endon("disconnect");
-    while(isDefined(dive_model) && isDefined(self))
-    {
+    while(isDefined(dive_model) && isDefined(self)) {
         dive_model.origin = self.origin;
         dive_model.angles = self.angles;
 		wait 0.01;
 	}
 }
 
-getSurface()
-{
+get_surface() {
 	return self.origin[2];
 }
 
-setup_player_dolphin_dive()
-{
+//Prevent screen judder and animation glitches when holding +forward during a dive, also simulates exhaustion after diving
+freeze_player_input() {
+	self FreezeControls(true);
 
+	//if this delay is too much then reduce it, too much reduction results in animation glitches between dive_land and prone states
+	//I found 0.5 to be a good sweet spot
+	wait(0.5);
+	
+	self FreezeControls(false);
+}
+
+fake_model_timed_delete(players_dolphin_dive) {
+	wait(0.5);
+
+	players_dolphin_dive Delete();
+
+	self show();
+}
+
+setup_player_dolphin_dive() {
 	self.is_diving = false;
 	self.can_flop = false;
 	dolphin_dive_anim_start = %zmb_player_dolphin_dive_prone;
 	dolphin_dive_anim_land = %zmb_player_dolphin_dive_land;
 	
-	while(1)
-	{
+	while(1) {
 		angles = self GetPlayerAngles();
 		angles = (0,angles[1],0);
 
-		self.oldSurface = self getSurface();
+		self.oldSurface = self get_surface();
 
 		minFall = level.zombie_vars[ "phd_minimum_fall" ];
                 
-		if( self getStance() == "crouch" && self isSprinting() && self isOnGround() && !self IsMeleeing() && !self.is_diving && !self maps\_laststand::player_is_in_laststand() /*&& !self.being_revived*/ && !level.intermission /*&& !self.is_melee_galva*/) // commented out variables that don't exist yet (causes undefined errors)
+		if( self getStance() == "crouch" && self is_sprinting() && self isOnGround() && !self IsMeleeing() && !self.is_diving && !self maps\_laststand::player_is_in_laststand() /*&& !self.being_revived*/ && !level.intermission /*&& !self.is_melee_galva*/) // commented out variables that don't exist yet (causes undefined errors)
 		{
 			self setStance("prone");
 			
@@ -60,8 +73,7 @@ setup_player_dolphin_dive()
 
             player_char = level.random_character_index[self.entity_num];
 
-            switch(player_char)
-            {
+            switch(player_char) {
                 case 0:
                     players_dolphin_dive setModel("char_usa_marine_player_body2_1");
                     players_dolphin_dive.headModel = "char_usa_marine_head4_2";
@@ -94,19 +106,18 @@ setup_player_dolphin_dive()
 
 			players_dolphin_dive hide();
             weapon_model = GetWeaponModel(current_weapon);
-            if(isDefined(weapon_model) && weapon_model != "")
-            {
+			
+            if(isDefined(weapon_model) && weapon_model != "") {
                 players_dolphin_dive attach(weapon_model, "tag_weapon_right");
             }
-            if(getdvar("cg_thirdperson") == "0")
-            {
+
+            if(getdvar("cg_thirdperson") == "0") {
                 players_dolphin_dive SetInvisibleToPlayer(self);
-                //self show();
             }
-            else if(getdvar("cg_thirdperson") == "1")
-            {
+            else if(getdvar("cg_thirdperson") == "1") {
                 self SetInvisibleToPlayer(self);
 			}
+
 			self thread update_angles_origin(players_dolphin_dive);
 
 			self thread maps\_sounds::dolphin_dive_launch_sound();
@@ -127,11 +138,9 @@ setup_player_dolphin_dive()
 			self AllowCrouch(false);
 			self DisableOffhandWeapons();
 			self DisableWeaponCycling();
-			//disable weapons so you can't dive and shoot (like bo1/2)
 			self DisableWeapons();
 			
-			for(l = 0; l < 5; l++)
-			{
+			for(l = 0; l < 5; l++) {
 				self SetVelocity((run_velocity * 1.3) + AnglesToUp(angles) * 400);
 				wait 0.05;
 			}
@@ -141,35 +150,38 @@ setup_player_dolphin_dive()
 
 			wait 0.1;
 
-			while( !self IsOnGround() )
-			{	
+			while( !self IsOnGround() ) {	
 				if( self HasPerk("specialty_detectexplosive") && self GetVelocity()[2] <= -363)
 					self.can_flop = true;
 
 				wait 0.05;
 			}
-			self SetVelocity(AnglesToForward(angles) * 450);
-			self setStance("prone");
+
 			players_dolphin_dive UseAnimTree(#animtree);
 			players_dolphin_dive setAnim(dolphin_dive_anim_land);
 
 			self thread maps\_sounds::dolphin_dive_land_sound();
 
+			self SetVelocity(AnglesToForward(angles) * 450);
+
+			//do this again to play the prone anim for a smoother transition
+			self setStance("prone");
+
+			self thread freeze_player_input();
+
 			wait 0.05;
 
-			self.newSurface = self getSurface() + 0.007;
+			self.newSurface = self get_surface() + 0.007;
 			actualFall = self.oldSurface - self.newSurface;
 
-			if (self HasPerk("specialty_detectexplosive") && self.oldSurface > self.newSurface && minFall < actualFall)
-			{
+			if (self HasPerk("specialty_detectexplosive") && self.oldSurface > self.newSurface && minFall < actualFall) {
 					origin = self.origin;
 					maps\_zombiemode_perks::phd_dive_damage(origin);
-					self.oldSurface = self getSurface();
+					self.oldSurface = self get_surface();
 					//wait 0.2;	
 			}
 
-			if( self.can_flop )
-			{
+			if( self.can_flop ) {
 				self.can_flop = false;
 			}
 			
@@ -185,25 +197,25 @@ setup_player_dolphin_dive()
 			self AllowCrouch(true);
 			self EnableOffhandWeapons();
 			self EnableWeaponCycling();
-			//give back weapons
 			self EnableWeapons();
-			players_dolphin_dive Delete();
-			self show();
+
+			self thread fake_model_timed_delete(players_dolphin_dive);
 
 			self.is_diving = false;
 
+			origin = self GetEye() + (AnglesToForward(self GetPlayerAngles()) * 3.25);
+
+			PlayFX(level._effect["rise_dust"], origin);
+
 			// Wait until the player stands up before allowing a new dive
-            while( self getStance() != "stand" )
-            {
+            while( self getStance() != "stand" ) {
                 wait 0.05;
             }
             // Short buffer to ensure dive cycle stability
             wait 0.05;
 
-			if( self IsOnGround() )
-			{
-				self.oldSurface = self getSurface();
-				//playfxOnTag(level._effect[ "dolphine_dive_land" ], self.origin + (0, 0, 50));
+			if( self IsOnGround() ) {
+				self.oldSurface = self get_surface();
 			}
 
         }

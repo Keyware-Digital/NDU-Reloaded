@@ -1941,22 +1941,22 @@ zombie_damage( mod, hit_location, hit_origin, player )
 
 	if ( mod == "MOD_GRENADE" || mod == "MOD_GRENADE_SPLASH" )
 	{
-
 		damage = level.round_number + randomint( 100, 500 );
 
-        // Elemental Pop – 15% more nade damage
-        if ( isDefined( player ) && isAlive( player ) && player hasPerk( "specialty_explosivedamage" ) )
-            damage = int( damage * 1.15 );
+		// Elemental Pop – 15% more nade damage
+		if ( isDefined( player ) && isAlive( player ) && player hasPerk( "specialty_explosivedamage" ) )
+			damage = int( damage * 1.15 );
 
-		if ( isDefined( player ) && isalive( player ) )
+		if ( isDefined( player ) && isAlive( player ) )
 		{
-			self DoDamage( level.round_number + randomint( 100, 500 ), self.origin, player);
+			self DoDamage( damage, self.origin, player );		// ← uses the boosted value
 		}
 		else
 		{
-			self DoDamage( level.round_number + randomint( 100, 500 ), self.origin, undefined );
+			self DoDamage( damage, self.origin, undefined );	// ← uses the boosted value
 		}
 	}
+
 	else if( mod == "MOD_PROJECTILE" || mod == "MOD_EXPLOSIVE" || mod == "MOD_PROJECTILE_SPLASH" || mod == "MOD_PROJECTILE_SPLASH")
 	{
 		if ( isDefined( player ) && isalive( player ) )

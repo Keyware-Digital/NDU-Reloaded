@@ -173,6 +173,18 @@
 		//#include "ui_mp/overlaybg.inc"
 		//BACKGROUND_BLACK_LETTERBOX_BLURWORLD( 1.0 )
 		//OVERLAY_BACKGROUND
+
+		itemDef
+		{
+			name "background"
+			rect 0 0 640 480
+			visible 1
+			decoration
+			style WINDOW_STYLE_FILLED
+			backcolor 0 0 0 0.65
+			background		"menu_background_coop_blurred"
+		}
+
 #endif
 
 		// "Paused" text
@@ -519,7 +531,7 @@
 		focusColor		COLOR_FOCUSED
 		visible			when	( dvarBool( zombiemode ) && HAS_INGAME_MAP );
 
-		#include "ui_mp/common_macro.inc"
+		#include "ui_mp/prototype_common_macro.inc"
 		PREPROC_SHADER_DRAW_ALIGNED( PAUSESCREEN_ZOMBIE_MAP_RECT, 0 0, "menu_map_"+dvarString(mapname), 1 1 1 1, 0, 0, 0 0 0 0 visible when( 1 ); ) 
 		
 		/*

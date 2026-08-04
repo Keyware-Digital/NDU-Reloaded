@@ -18,7 +18,8 @@ material,fonts/gamefonts2pc
 material,hud_grenade_german
 material,hud_zmb_points
 material,loadscreen_zombie1
-material,logo_cod2
+material,loadscreen_zombie1_mini
+material,logo_ndu
 material,mtl_zmb_mdl_button
 material,mtl_zmb_mdl_cash_register
 material,mtl_zmb_mdl_padlock
@@ -66,6 +67,8 @@ material,specialty_random_perk_zombies
 material,specialty_speed_cola_zombies
 material,specialty_stamin_up_zombies
 material,specialty_widows_wine_zombies
+menufile,ui_mp/prototype_cdkey.menu
+menufile,ui_mp/prototype_password.menu
 menufile,ui/prototype_filter.menu
 menufile,ui/prototype_options_control_defaults.menu
 menufile,ui/prototype_popup_ingame.menu
@@ -114,7 +117,7 @@ rawfile,maps/_sounds.gsc
 rawfile,maps/_zombiemode.gsc
 rawfile,maps/_zombiemode_achievement.gsc
 rawfile,maps/_zombiemode_betty.gsc
-rawfile,maps/_zombiemode_blockers.gsc
+rawfile,maps/_zombiemode_blockers_new.gsc
 rawfile,maps/_zombiemode_bowie.gsc
 rawfile,maps/_zombiemode_perks.gsc
 rawfile,maps/_zombiemode_powerups.gsc
@@ -355,3 +358,4 @@ xmodel,zmb_pwr_up_max_ammo
 xmodel,zmb_pwr_up_nuke
 xmodel,zmb_pwr_up_perks_a_cola_world
 xmodel,zombie_teddybear
+stringtable,mp/mapinfo.csv

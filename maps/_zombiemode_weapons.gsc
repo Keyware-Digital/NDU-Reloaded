@@ -1131,18 +1131,16 @@ treasure_chest_give_weapon( weapon_string )
 	primaryWeapons = self GetWeaponsListPrimaries(); 
 	current_weapon = undefined; 
 
-    if( !self HasPerk("specialty_extraammo") )
-    {
-        self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
-        self.muleLastWeapon = undefined;
-    }
-    else
-    {
-        self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
-    }
+	if( !self HasPerk("specialty_extraammo")) {
+		self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
+		self.muleLastWeapon = undefined;
+	}
+	else {
+		self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
+	}
 
 	// This should never be true for the first time.
-	if( primaryWeapons.size >= self.muleCount )	// he has two weapons
+	if( primaryWeapons.size >= self.muleCount ) // he has two weapons
 	{
 		current_weapon = self getCurrentWeapon(); // get his current weapon
 
@@ -1222,7 +1220,7 @@ treasure_chest_give_weapon( weapon_string )
 
 	// mule kick check
 	// IPrintLn( "Does this playa have mulekick?" );
-	self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon_string);
+	self maps\_zombiemode_perks::mule_kick_think(current_weapon, weapon_string);
 
 	switch( weapon_string )
 	{
@@ -1843,7 +1841,7 @@ takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct)
     player GiveWeapon(chosenweapon);
     player GiveMaxAmmo(chosenweapon);
     player SwitchToWeapon(chosenweapon);
-    player maps\_zombiemode_perks::mule_kick_function(current_weapon, chosenweapon);
+    player maps\_zombiemode_perks::mule_kick_think(current_weapon, chosenweapon);
 
     // Weapon VOX — AFTER the player has the gun
 	switch(chosenweapon)
@@ -2239,7 +2237,7 @@ weapon_give( weapon )
 	self GiveWeapon( weapon, 0 ); 
 	self GiveMaxAmmo( weapon ); 
 	self SwitchToWeapon( weapon ); 
-	self maps\_zombiemode_perks::mule_kick_function(current_weapon, weapon);
+	self maps\_zombiemode_perks::mule_kick_think(current_weapon, weapon);
 
 }
 

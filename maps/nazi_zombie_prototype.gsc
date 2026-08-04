@@ -121,12 +121,7 @@ intro_screen() {
         level.intro_hud[i].horzAlign = "left";
         level.intro_hud[i].vertAlign = "bottom";
         level.intro_hud[i].foreground = true;
-
-        if (level.splitscreen && !level.hidef) {
-            level.intro_hud[i].fontScale = 2.75;
-        } else {
-            level.intro_hud[i].fontScale = 1.75;
-        }
+        level.intro_hud[i].fontScale = 1;
         level.intro_hud[i].alpha = 0.0;
         level.intro_hud[i].color = (1, 1, 1);
         level.intro_hud[i].inuse = false;

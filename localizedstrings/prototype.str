@@ -260,6 +260,9 @@ LANG_ENGLISH        "ADS Field of View"
 REFERENCE           MENU_SCALE_FIELD_OF_VIEW
 LANG_ENGLISH        "Scale Field of View"
 
+REFERENCE           MENU_FOV_INFO
+LANG_ENGLISH        "Setting FOV values higher than the defaults may cause visual artifacts and glitchy viewmodel animations."
+
 REFERENCE           MENU_FRAME_RATE
 LANG_ENGLISH        "Maximum FPS"
 
@@ -274,6 +277,9 @@ LANG_ENGLISH        "Bloom"
 
 REFERENCE           MENU_MOTION_BLUR
 LANG_ENGLISH        "Motion Blur"
+
+REFERENCE           MENU_CHANGE_STANCE
+LANG_ENGLISH        "Change Stance"
 
 REFERENCE           MENU_SOFTEN_SMOKE_EDGES
 LANG_ENGLISH        "Soften Smoke Edges"

@@ -367,7 +367,6 @@ menuDef
 	fullScreen		0
 	visible when 	( !ui_active() && dvarint( ui_hud_hardcore ) == 0 && dvarBool( miniscoreboardhide ) == 0 && dvarBool( hud_missionFailed ) == 0 && dvarint( arcademode ) == 1 || dvarint( zombiemode ) == 1 );
 
-	// ===================== Z$ ICONS =====================
 itemDef
 {
     name			"zmb_points_icon0"
@@ -409,14 +408,13 @@ itemDef
     decoration
 }
 
-    // ===================== PLAYER 0 =====================
     itemDef
     {
         name 			"player0Portrait"
         rect			70 -35 24 24
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr0_hud_portrait") == 0 && dvarInt("plr0_active") == 1 )
         decoration
     }
@@ -426,7 +424,7 @@ itemDef
         rect			70 -35 24 24
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr0_hud_portrait") == 1 && dvarInt("plr0_active") == 1 )
         decoration
     }
@@ -436,7 +434,7 @@ itemDef
         rect			70 -35 24 24
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr0_hud_portrait") == 2 && dvarInt("plr0_active") == 1 )
         decoration
     }
@@ -446,19 +444,18 @@ itemDef
         rect			70 -35 24 24
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr0_hud_portrait") == 3 && dvarInt("plr0_active") == 1 )
         decoration
     }
 
-    // ===================== PLAYER 1 =====================
     itemDef
     {
         name 			"player1Portrait"
         rect			95 -35 24 24
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr1_hud_portrait") == 0 && dvarInt("plr1_active") == 1 )
         decoration
     }
@@ -468,7 +465,7 @@ itemDef
         rect			95 -35 24 24
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr1_hud_portrait") == 1 && dvarInt("plr1_active") == 1 )
         decoration
     }
@@ -478,7 +475,7 @@ itemDef
         rect			95 -35 24 24
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr1_hud_portrait") == 2 && dvarInt("plr1_active") == 1 )
         decoration
     }
@@ -488,19 +485,18 @@ itemDef
         rect			95 -35 24 24
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr1_hud_portrait") == 3 && dvarInt("plr1_active") == 1 )
         decoration
     }
 
-    // ===================== PLAYER 2 =====================
     itemDef
     {
         name 			"player2Portrait"
         rect			120 -35 24 24
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr2_hud_portrait") == 0 && dvarInt("plr2_active") == 1 )
         decoration
     }
@@ -510,7 +506,7 @@ itemDef
         rect			120 -35 24 24
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr2_hud_portrait") == 1 && dvarInt("plr2_active") == 1 )
         decoration
     }
@@ -520,7 +516,7 @@ itemDef
         rect			120 -35 24 24
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr2_hud_portrait") == 2 && dvarInt("plr2_active") == 1 )
         decoration
     }
@@ -530,19 +526,18 @@ itemDef
         rect			120 -35 24 24
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr2_hud_portrait") == 3 && dvarInt("plr2_active") == 1 )
         decoration
     }
 
-    // ===================== PLAYER 3 =====================
     itemDef
     {
         name 			"player3Portrait"
         rect			145 -35 24 24
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr3_hud_portrait") == 0 && dvarInt("plr3_active") == 1 )
         decoration
     }
@@ -552,7 +547,7 @@ itemDef
         rect			145 -35 24 24
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr3_hud_portrait") == 1 && dvarInt("plr3_active") == 1 )
         decoration
     }
@@ -562,7 +557,7 @@ itemDef
         rect			145 -35 24 24
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr3_hud_portrait") == 2 && dvarInt("plr3_active") == 1 )
         decoration
     }
@@ -572,7 +567,7 @@ itemDef
         rect			145 -35 24 24
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
-        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
+        style WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr3_hud_portrait") == 3 && dvarInt("plr3_active") == 1 )
         decoration
     }

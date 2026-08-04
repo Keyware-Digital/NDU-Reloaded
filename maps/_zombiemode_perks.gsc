@@ -29,12 +29,12 @@ init_precache() {
     PrecacheShader("specialty_mule_kick_glow_zombies");
     PrecacheShader("specialty_widows_wine_zombies");
     PrecacheItem( "zombie_knuckle_crack" );
-   // PrecacheItem( "zombie_death_hands" ); //causes bone errors right now
+   //PrecacheItem( "zombie_death_hands" ); // causes bone errors right now
     PrecacheModel("char_usa_raider_gear_flametank");
 }
 
 init_perk_fx() {
-    level._effect["fx_zmb_phdflopper_exp"] = loadfx ("maps/zombie/fx_zmb_phdflopper_exp");
+    level._effect["phdflopper_explosion"] = loadfx ("maps/zombie/fx_zmb_phdflopper_exp");
 
 }
 
@@ -162,7 +162,7 @@ death_check() {
         self perk_hud_destroy(self.perkarray[i]);
     }
 
-	self UnsetPerk("specialty_holdbreath"); //Iron lungs (part of Deadshot Daiquiri)
+	self UnsetPerk("specialty_holdbreath"); // Iron lungs (part of Deadshot Daiquiri)
 	self setClientDvar("player_sprintTime", 4);
 	self setClientDvar("perk_weapSpreadMultiplier", 0.65);
     self setClientDvar("player_hud_specialty_electric_cherry", 0);
@@ -293,7 +293,7 @@ perk_hud_destroy(perk)
 
 phd_dive_damage(origin) {
     self thread maps\_sounds::phd_explosion_sound();
-	playFx( level._effect["fx_zmb_phdflopper_exp"], self.origin + ( 0, 0, 50 ));
+	playFx( level._effect["phdflopper_explosion"], self.origin + ( 0, 0, 50 ));
 	
     self thread phd_dive_vision();
 		
@@ -331,9 +331,9 @@ phd_dive_damage(origin) {
 
 phd_dive_vision() {
 
-    self VisionSetNaked("zombie_cosmodrome_divetonuke", 1);
-    wait 1.5;
-    self VisionSetNaked("zombie", 1);
+    self VisionSetNaked("zombie_cosmodrome_divetonuke", 0.1); //important, do not change
+    wait 2.5; //important do not change
+    self VisionSetNaked("zombie_bo3", 1); //fade-in over x seconds to default mod vision, lower this if you want a quicker d2n vision effect
 
 }
 
@@ -341,36 +341,51 @@ player_switch_weapon_watcher()
 {
     self endon( "disconnect" );
 
-    while(1)
+    //self iPrintLnBold( "^1Mule watcher started" );
+
+    self mule_kick_update_hud();
+
+    while ( 1 )
     {
-        wait 0.1;
-
-        if( !self hasPerk("specialty_extraammo") || !isDefined(self.perk_hud["specialty_extraammo"]) )
-        {
-            self setClientDvar("player_hud_specialty_mule_kick", 0);
-            continue;
-        }
-
-        primaries = self GetWeaponsListPrimaries();
-        current   = self getCurrentWeapon();
-
-        // only glow when we actually have exactly 3 primaries AND we are holding the tracked mule gun
-        if( primaries.size == level.zombie_vars["mulekick_max_weapon_slots"]
-         && isDefined(self.muleLastWeapon)
-         && current == self.muleLastWeapon )
-        {
-            self.perk_hud["specialty_extraammo"] setShader("specialty_mule_kick_glow_zombies", 24, 24);
-            self setClientDvar("player_hud_specialty_mule_kick", 1);
-        }
-        else
-        {
-            self.perk_hud["specialty_extraammo"] setShader("specialty_mule_kick_zombies", 24, 24);
-            self setClientDvar("player_hud_specialty_mule_kick", 0);
-        }
+        self waittill( "weapon_change" );
+        //self iPrintLnBold( "^1weapon change complete" );
+        self mule_kick_update_hud();
     }
 }
 
-//Fixed ugly bug while holding and/or cooking the grenade
+mule_kick_update_hud()
+{
+    if ( !isDefined( self.perk_hud ) 
+      || !isDefined( self.perk_hud[ "specialty_extraammo" ] ) 
+      || !self hasPerk( "specialty_extraammo" ) )
+    {
+        self setClientDvar( "player_hud_specialty_mule_kick", 0 );
+
+        // Only touch the hud element if it actually exists
+        if ( isDefined( self.perk_hud ) && isDefined( self.perk_hud[ "specialty_extraammo" ] ) )
+            self.perk_hud[ "specialty_extraammo" ] setShader( "specialty_mule_kick_zombies", 24, 24 );
+
+        return;
+    }
+
+    primaries = self GetWeaponsListPrimaries();
+    current   = self getCurrentWeapon();
+
+    if ( primaries.size == level.zombie_vars[ "mulekick_max_weapon_slots" ]
+      && isDefined( self.muleLastWeapon )
+      && current == self.muleLastWeapon )
+    {
+        self.perk_hud[ "specialty_extraammo" ] setShader( "specialty_mule_kick_glow_zombies", 24, 24 );
+        self setClientDvar( "player_hud_specialty_mule_kick", 1 );
+    }
+    else
+    {
+        self.perk_hud[ "specialty_extraammo" ] setShader( "specialty_mule_kick_zombies", 24, 24 );
+        self setClientDvar( "player_hud_specialty_mule_kick", 0 );
+    }
+}
+
+// Fixed ugly bug while holding and/or cooking the grenade
 player_cook_grenade_watcher()
 {
 	self endon( "disconnect" ); 
@@ -415,7 +430,6 @@ player_cook_grenade_watcher()
 		}
 	}
 }
-
 
 perks_zombie_hit_effect(amount, attacker, point, mod)
 {
@@ -494,8 +508,7 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
 
     // Save weapons and ammo
     playerweapons = self GetWeaponsList();
-    for (i = 0; i < playerweapons.size; i++)
-    {
+    for (i = 0; i < playerweapons.size; i++) {
         clipAmmo[i] = self GetWeaponAmmoClip(playerweapons[i]);
         weaponAmmo[i] = self GetWeaponAmmoStock(playerweapons[i]);
         wait 0.05;
@@ -503,7 +516,7 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
 
     // Handle muleLastWeapon after saving ammo (may not need this)
     /*if (isDefined(self.muleLastWeapon)) {
-        // Don’t take muleLastWeapon here; let restoration handle it
+        // Don't take muleLastWeapon here; let restoration handle it
     }*/
 
     if (self IsThrowingGrenade()) {
@@ -525,32 +538,23 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
     self DisableWeaponCycling();
 
     // Set last stand pistol
-    if (self HasWeapon("ray_gun_mk1_v2"))
-    {
+    if (self HasWeapon("ray_gun_mk1_v2")) {
         lastStandAmmo = 20;
         lastStandClip = 20;
         lastStandGun = "ray_gun_mk1_v2";
-    }
-    else if (self HasWeapon("sw_357"))
-    {
+    } else if (self HasWeapon("sw_357")) {
         lastStandAmmo = 18;
         lastStandClip = 6;
         lastStandGun = "sw_357";
-    }
-    else if (self HasWeapon("walther") || self.firstPistol == "walther")
-    {
+    } else if (self HasWeapon("walther") || self.firstPistol == "walther") {
         lastStandAmmo = 24;
         lastStandClip = 8;
         lastStandGun = "walther";
-    }
-    else if (self HasWeapon("tokarev") || self.firstPistol == "tokarev")
-    {
+    } else if (self HasWeapon("tokarev") || self.firstPistol == "tokarev") {
         lastStandAmmo = 24;
         lastStandClip = 8;
         lastStandGun = "tokarev";
-    }
-    else
-    {
+    } else {
         lastStandAmmo = 24;
         lastStandClip = 8;
         lastStandGun = "colt";
@@ -634,25 +638,26 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
         self TakeAllWeapons();
 
     restoredWeapons = 0;
-    for (i = 0; i < playerweapons.size; i++)
-    {
-        if (!isDefined(playerweapons[i]))
+    for (i = 0; i < playerweapons.size; i++) {
+        if (!isDefined(playerweapons[i])) {
             continue;
-
-        if (weaponType(playerweapons[i]) == "grenade")
-        {
-            self GiveWeapon(playerweapons[i]);
-            if (isDefined(clipAmmo[i]))
-                self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
         }
-        else if (restoredWeapons < self.muleCount)
-        {
+        if (weaponType(playerweapons[i]) == "grenade") {
+            self GiveWeapon(playerweapons[i]);
+            if (isDefined(clipAmmo[i])) {
+                self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
+            }
+        } else if (restoredWeapons < self.muleCount) {
             //IPrintLn(playerweapons[i]);
             self GiveWeapon(playerweapons[i]);
-            if (isDefined(clipAmmo[i]))
+            if (isDefined(clipAmmo[i])) {
                 self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
-            if (isDefined(weaponAmmo[i]))
+            } else {
+            }
+            if (isDefined(weaponAmmo[i])) {
                 self SetWeaponAmmoStock(playerweapons[i], weaponAmmo[i]);
+            } else {
+            }
             restoredWeapons++;
         }
         wait 0.05;
@@ -680,7 +685,7 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
     self EnableWeaponCycling();
 
     // Restore movement / vision
-    self VisionSetNaked("zombie", 1);
+    self VisionSetNaked("zombie_bo3", 1);
 
     self AllowSprint(true);
     self AllowStand(true);
@@ -731,7 +736,7 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
     self notify( "solo_revive_done" );
 }
 
-mule_kick_function(old_weapon, new_weapon)
+mule_kick_think(old_weapon, new_weapon)
 {	
 	if (!self hasperk("specialty_extraammo") )
 	{

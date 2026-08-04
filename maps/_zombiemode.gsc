@@ -285,6 +285,7 @@ init_fx() {
     level._effect["rise_burst"] = LoadFx("maps/zombie/fx_mp_zombie_hand_dirt_burst");
     level._effect["rise_billow"] = LoadFx("maps/zombie/fx_mp_zombie_body_dirt_billowing");
     level._effect["rise_dust"] = LoadFx("maps/zombie/fx_mp_zombie_body_dust_falling");
+
     // Flamethrower
     level._effect["character_fire_pain_sm"] = loadfx("env/fire/fx_fire_player_sm_1sec");
     level._effect["character_fire_death_sm"] = loadfx("env/fire/fx_fire_player_md");
@@ -1009,73 +1010,6 @@ round_spawning() {
         //		level waittill( "forever" );
     }
 }
-
-//bo3 style end of round points rewards, probably should be xp instead
-/* round_completion_award_points() {
-    maxPoints = 50 * level.round_number;
-    
-    if(maxPoints >= 1000)
-    {
-        maxPoints = 1000;
-    }
-
-    level.round_completion_award_points_text = [];
-
-    for (i = 0; i < 4; i++) {
-        level.round_completion_award_points_text[i] = newHudElem();
-        level.round_completion_award_points_text[i].x = 0;
-        level.round_completion_award_points_text[i].y = 0;
-        level.round_completion_award_points_text[i].alignX = "center";
-        level.round_completion_award_points_text[i].alignY = "middle";
-        level.round_completion_award_points_text[i].horzAlign = "center";
-        level.round_completion_award_points_text[i].vertAlign = "middle";
-        level.round_completion_award_points_text[i].foreground = true;
-        level.round_completion_award_points_text[i].alpha = 1;
-    }
-
-    level.round_completion_award_points_text[0].y = 0;
-    level.round_completion_award_points_text[1].y = 15;
-    level.round_completion_award_points_text[0].x = -15;
-    level.round_completion_award_points_text[1].x = 0;
-
-    for (i = 0; i < 4; i++) {
-    level.round_completion_award_points_text[i].fontScale = 1.75;
-    }
-
-    wait(0.05);
-
-    for (i = 0; i < 4; i++) {
-    level.round_completion_award_points_text[i].fontScale = 3.5;
-    }
-
-    level.round_completion_award_points_text[0] setText("+" + maxPoints);
-    
-    wait(0.05);
-
-    for (i = 0; i < 4; i++) {
-    level.round_completion_award_points_text[i].fontScale = 1.75;
-    }
-
-    level.round_completion_award_points_text[1] setText("Survived"); // Add to localised strings like the rest
-
-    for (i = 0; i < 4; i++) {
-        level.round_completion_award_points_text[i] fadeOverTime(1);
-        level.round_completion_award_points_text[i].alpha = 0;
-        wait(0.75);
-    }
-
-    wait(0.25);
-
-    for (i = 0; i < 4; i++) {
-        level.round_completion_award_points_text[i] destroy();
-    }
-
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i] maps\_zombiemode_score::add_to_player_score(maxPoints);
-    }
-}*/
 
 round_text(text) {
     if (level.first_round) {

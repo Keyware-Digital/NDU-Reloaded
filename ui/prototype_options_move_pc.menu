@@ -1,5 +1,5 @@
 #include "ui/prototype_menudef.h"
-#include "ui_mp/common_macro.inc"
+#include "ui_mp/prototype_common_macro.inc"
 #define OPTIONS_STYLE			1
 
 #define 	CHOICE_SEP_1		25
@@ -74,7 +74,7 @@
 				
 		CHOICE_SEPARATOR( CHOICE_SEP_2 )
 		
-		CHOICE_BIND( 33, "@PLATFORM_CHANGE_STANCE", "+stance", ; )
+		CHOICE_BIND( 33, "@PROTOTYPE_MENU_CHANGE_STANCE", "+stance", ; )
 		CHOICE_BIND( 34, "@MENU_STRAFE", "+strafe", ; )
 		//CHOICE_BIND( 35, "@MENU_SPRINT", "+sprint", ; )
 		

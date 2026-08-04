@@ -1,5 +1,5 @@
 #include "ui/prototype_menudef.h"
-#include "ui_mp/common_macro.inc"
+#include "ui_mp/prototype_common_macro.inc"
 
 #define CHOICE_X_START			-360
 #define CHOICE_Y_START			76
@@ -111,7 +111,7 @@
 			textscale 			CHOICE_TEXTSIZE
 			elementtype 		LISTBOX_TEXT
 			feeder 				FEEDER_PLAYER_PROFILES
-			textalignx 			6
+			textalignx 			3
 			textaligny 			0
 			forecolor 			1 1 1 0.9
 			focusColor			1 1 1 0.9
@@ -161,7 +161,7 @@
 			textstyle ITEM_TEXTSTYLE_SHADOWED
 			rect -125 280 60 20 HORIZONTAL_ALIGN_CENTER CHOICE_VERTICAL_ALIGN
 			textalign ITEM_ALIGN_CENTER
-			textscale .33
+			textscale TEXTSIZE_DEFAULT
 			textaligny 15
 			forecolor CHOICE_TEXTCOLOR
 			visible MENU_TRUE
@@ -188,7 +188,7 @@
 			textstyle ITEM_TEXTSTYLE_SHADOWED
 			rect -65 280 60 20 HORIZONTAL_ALIGN_CENTER CHOICE_VERTICAL_ALIGN
 			textalign ITEM_ALIGN_CENTER
-			textscale .33
+			textscale TEXTSIZE_DEFAULT
 			textaligny 15
 			forecolor CHOICE_TEXTCOLOR
 			visible MENU_TRUE
@@ -213,7 +213,7 @@
 			textstyle ITEM_TEXTSTYLE_SHADOWED
 			rect -5 280 60 20 HORIZONTAL_ALIGN_CENTER CHOICE_VERTICAL_ALIGN
 			textalign ITEM_ALIGN_CENTER
-			textscale .33
+			textscale TEXTSIZE_DEFAULT
 			textaligny 15
 			forecolor CHOICE_TEXTCOLOR
 			visible MENU_TRUE
@@ -238,7 +238,7 @@
 			textstyle ITEM_TEXTSTYLE_SHADOWED
 			rect 55 280 60 20 HORIZONTAL_ALIGN_CENTER CHOICE_VERTICAL_ALIGN
 			textalign ITEM_ALIGN_CENTER
-			textscale .33
+			textscale TEXTSIZE_DEFAULT
 			textaligny 15
 			forecolor CHOICE_TEXTCOLOR
 			visible when( dvarBool( ui_multiplayer ) )
@@ -257,7 +257,7 @@
 			textstyle ITEM_TEXTSTYLE_SHADOWED
 			rect 55 280 60 20 HORIZONTAL_ALIGN_CENTER CHOICE_VERTICAL_ALIGN
 			textalign ITEM_ALIGN_CENTER
-			textscale .33
+			textscale TEXTSIZE_DEFAULT
 			textaligny 15
 			forecolor CHOICE_TEXTCOLOR
 			visible when( dvarString( com_playerProfile ) == dvarString( ui_playerProfileSelected ) && !dvarBool( ui_multiplayer ) )
@@ -276,7 +276,7 @@
 			textstyle ITEM_TEXTSTYLE_SHADOWED
 			rect 55 280 60 20 HORIZONTAL_ALIGN_CENTER CHOICE_VERTICAL_ALIGN
 			textalign ITEM_ALIGN_CENTER
-			textscale .33
+			textscale TEXTSIZE_DEFAULT
 			textaligny 15
 			forecolor COLOR_DISABLED
 			visible when( dvarString( com_playerProfile ) != dvarString( ui_playerProfileSelected ) && !dvarBool( ui_multiplayer ) )

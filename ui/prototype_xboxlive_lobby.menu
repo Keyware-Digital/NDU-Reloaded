@@ -70,7 +70,7 @@
 			setFocus lobbyList; \
 		}
 
-#include "ui_mp/common_macro.inc"
+#include "ui_mp/prototype_common_macro.inc"
 
 {
 	menuDef
@@ -188,12 +188,12 @@
 
 		// ----------------------------map images------------------------------------
 		#include "ui_mp/game_info.inc"
-		#define MAPIMAGE tableLookup( "maps/mapsTable.csv", 0, dvarString( ui_mapname ), 4 )
-		#define MAPNAME tableLookup( "maps/mapstable.csv", 0, dvarString( ui_mapname ), 3 )
+		#define MAPIMAGE tableLookup("mp/mapinfo.csv", 0, dvarString(ui_mapname), 2)
+		#define MAPNAME tableLookup("mp/mapinfo.csv", 0, dvarString(ui_mapname), 1)
 		#define GAMETYPENAME_WITH_SCORING tableLookup( "maps/gametypesTable.csv", 0, dvarString( ui_gametype ), 1 )
 		#define GAMETYPENAME_WITHOUT_SCORING tableLookup( "maps/gametypesTable.csv", 0, dvarString( ui_gametype ), 3 )	
-		GAME_INFO_VETO_COOP( MAPIMAGE, "@" + MAPNAME, "@" + GAMETYPENAME_WITH_SCORING, dvarbool( arcademode ) || dvarbool( zombiemode ) )
-		GAME_INFO_VETO_COOP( MAPIMAGE, "@" + MAPNAME, "@" + GAMETYPENAME_WITHOUT_SCORING, !dvarbool( arcademode ) && !dvarbool( zombiemode ) )
+		GAME_INFO_VETO_COOP( MAPIMAGE, "@" + "MAPNAME", "@" + GAMETYPENAME_WITH_SCORING, dvarbool( arcademode ) || dvarbool( zombiemode ) )
+		GAME_INFO_VETO_COOP( MAPIMAGE, "@" + "MAPNAME", "@" + GAMETYPENAME_WITHOUT_SCORING, !dvarbool( arcademode ) && !dvarbool( zombiemode ) )
 		
 		
 		//=========================================================
@@ -483,7 +483,7 @@
 		#include "ui/safearea.menu"
 		#include "ui/popup_background.inc"
 #ifdef PC
-		PREPROC_LOBBY_CHAT( -340, 230, 330, 160, 0.24, ITEM_ALIGN_MIDDLE_LEFT, 0.7 0.7 0.7 1 )
+		PREPROC_LOBBY_CHAT( -340, 240, 330, 160, (TEXTSIZE_DEFAULT), ITEM_ALIGN_MIDDLE_LEFT, 0.7 0.7 0.7 1 )
 #endif // #ifdef PC
 	}
 	

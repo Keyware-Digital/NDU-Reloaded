@@ -1550,12 +1550,14 @@ death_machine_give( player )
     player DisableWeaponCycling();
 
     player GiveWeapon( level.death_machine_weapon );
-    player SetWeaponAmmoClip( level.death_machine_weapon, WeaponClipSize( level.death_machine_weapon ) );
-    player GiveMaxAmmo( level.death_machine_weapon );
-    player SwitchToWeapon( level.death_machine_weapon );
+    //temp death machine sets infinite ammo in the weapon file
+    //player SetWeaponAmmoClip( level.death_machine_weapon, WeaponClipSize( level.death_machine_weapon ) );
+    //player GiveMaxAmmo( level.death_machine_weapon );
 
     player setClientDvar("hide_reload_hud", 1);
 	player setClientDvar("ammocounterhide", 1);
+
+    player SwitchToWeapon( level.death_machine_weapon );
 
     // Check if equipped, if not clean-up
     timeout = 30;
