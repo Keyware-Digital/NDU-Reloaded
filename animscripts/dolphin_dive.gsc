@@ -25,17 +25,6 @@ get_surface() {
 	return self.origin[2];
 }
 
-//Prevent screen judder and animation glitches when holding +forward during a dive, also simulates exhaustion after diving
-freeze_player_input() {
-	self FreezeControls(true);
-
-	//if this delay is too much then reduce it, too much reduction results in animation glitches between dive_land and prone states
-	//I found 0.5 to be a good sweet spot
-	wait(0.5);
-	
-	self FreezeControls(false);
-}
-
 fake_model_timed_delete(players_dolphin_dive) {
 	wait(0.5);
 
@@ -161,13 +150,13 @@ setup_player_dolphin_dive() {
 			players_dolphin_dive setAnim(dolphin_dive_anim_land);
 
 			self thread maps\_sounds::dolphin_dive_land_sound();
-
+			
+			//code below might be a problem
 			self SetVelocity(AnglesToForward(angles) * 450);
 
-			//do this again to play the prone anim for a smoother transition
-			self setStance("prone");
+			//self setStance("prone");
 
-			self thread freeze_player_input();
+			self SetVelocity((0, 0, 0));
 
 			wait 0.05;
 

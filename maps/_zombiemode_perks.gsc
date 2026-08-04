@@ -331,9 +331,9 @@ phd_dive_damage(origin) {
 
 phd_dive_vision() {
 
-    self VisionSetNaked("zombie_cosmodrome_divetonuke", 0.1); //important, do not change
-    wait 2.5; //important do not change
-    self VisionSetNaked("zombie_bo3", 1); //fade-in over x seconds to default mod vision, lower this if you want a quicker d2n vision effect
+    self VisionSetNaked("zombie_cosmodrome_divetonuke", 0.1); //important, do not change, fade-in time
+    wait 1.5; //change time between visions, can change
+    self VisionSetNaked("zombie_bo3", 1); //important do not change, fade-in time
 
 }
 
