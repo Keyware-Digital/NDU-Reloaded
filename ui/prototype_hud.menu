@@ -367,6 +367,7 @@ menuDef
 	fullScreen		0
 	visible when 	( !ui_active() && dvarint( ui_hud_hardcore ) == 0 && dvarBool( miniscoreboardhide ) == 0 && dvarBool( hud_missionFailed ) == 0 && dvarint( arcademode ) == 1 || dvarint( zombiemode ) == 1 );
 
+    // Money icons
 itemDef
 {
     name			"zmb_points_icon0"
@@ -408,6 +409,7 @@ itemDef
     decoration
 }
 
+    // Portraits
     itemDef
     {
         name 			"player0Portrait"
@@ -455,7 +457,7 @@ itemDef
         rect			95 -35 24 24
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr1_hud_portrait") == 0 && dvarInt("plr1_active") == 1 )
         decoration
     }
@@ -465,7 +467,7 @@ itemDef
         rect			95 -35 24 24
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr1_hud_portrait") == 1 && dvarInt("plr1_active") == 1 )
         decoration
     }
@@ -475,7 +477,7 @@ itemDef
         rect			95 -35 24 24
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr1_hud_portrait") == 2 && dvarInt("plr1_active") == 1 )
         decoration
     }
@@ -485,7 +487,7 @@ itemDef
         rect			95 -35 24 24
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr1_hud_portrait") == 3 && dvarInt("plr1_active") == 1 )
         decoration
     }
@@ -496,7 +498,7 @@ itemDef
         rect			120 -35 24 24
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr2_hud_portrait") == 0 && dvarInt("plr2_active") == 1 )
         decoration
     }
@@ -506,7 +508,7 @@ itemDef
         rect			120 -35 24 24
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr2_hud_portrait") == 1 && dvarInt("plr2_active") == 1 )
         decoration
     }
@@ -516,7 +518,7 @@ itemDef
         rect			120 -35 24 24
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr2_hud_portrait") == 2 && dvarInt("plr2_active") == 1 )
         decoration
     }
@@ -526,7 +528,7 @@ itemDef
         rect			120 -35 24 24
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr2_hud_portrait") == 3 && dvarInt("plr2_active") == 1 )
         decoration
     }
@@ -537,7 +539,7 @@ itemDef
         rect			145 -35 24 24
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr3_hud_portrait") == 0 && dvarInt("plr3_active") == 1 )
         decoration
     }
@@ -547,7 +549,7 @@ itemDef
         rect			145 -35 24 24
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr3_hud_portrait") == 1 && dvarInt("plr3_active") == 1 )
         decoration
     }
@@ -557,7 +559,7 @@ itemDef
         rect			145 -35 24 24
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr3_hud_portrait") == 2 && dvarInt("plr3_active") == 1 )
         decoration
     }
@@ -567,7 +569,7 @@ itemDef
         rect			145 -35 24 24
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
-        style WINDOW_STYLE_SHADER
+        style			WINDOW_STYLE_SHADER
         visible			when( dvarInt("plr3_hud_portrait") == 3 && dvarInt("plr3_active") == 1 )
         decoration
     }

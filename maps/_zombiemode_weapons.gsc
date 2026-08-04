@@ -721,50 +721,62 @@ treasure_chest_think(rand)
 
 treasure_chest_user_hint( trigger, user )
 {
-	dist = 128 * 128;
-	while( 1 )
-	{
-		if( !isDefined( trigger ) )
-		{
-			break;
-		}
+    dist = 128 * 128;
 
-		if( trigger.grab_weapon_hint )
-		{
-			break;
-		}
+    while( 1 )
+    {
+        if( !isDefined( trigger ) || !isDefined( trigger.grab_weapon_hint ) || !trigger.grab_weapon_hint )
+        {
+            break;
+        }
 
-		players = GetPlayers();
-		for( i = 0; i < players.size; i++ )
-		{
-			if( players[i] == user )
-			{
+        // Once the weapon has been shared, everyone can see + use it
+        if( isDefined( trigger.weapon_shared ) && trigger.weapon_shared )
+        {
+            trigger SetVisibleToAll();
+
+            players = GetPlayers();
+            for( i = 0; i < players.size; i++ )
+            {
+                players[i].ignoreTriggers = false;
+            }
+
+            wait( 0.1 );
+            continue;
+        }
+
+        // Not shared yet so only the original buyer sees the hintstring
+        players = GetPlayers();
+        for( i = 0; i < players.size; i++ )
+        {
+            if( players[i] == user )
+            {
                 trigger SetInvisibleToPlayer( players[i], false );
-				continue;
-			}
+                continue;
+            }
 
             trigger SetInvisibleToPlayer( players[i], true );
-			if( DistanceSquared( players[i].origin, trigger.origin ) < dist )
-			{
-				players[i].ignoreTriggers = true;
-			}
+
+            if( DistanceSquared( players[i].origin, trigger.origin ) < dist )
+            {
+                players[i].ignoreTriggers = true;
+            }
             else
             {
                 players[i].ignoreTriggers = false;
-			}
-		}
+            }
+        }
 
+        wait( 0.1 );
+    }
 
-		wait( 0.1 );
-	}
-
-    // Reset visibility and ignoreTriggers for all players
+    // Cleanup after the interaction ends
     players = GetPlayers();
     for( i = 0; i < players.size; i++ )
     {
         trigger SetInvisibleToPlayer( players[i], false );
         players[i].ignoreTriggers = false;
-	}
+    }
 }
 
 treasure_chest_timeout()
@@ -1131,16 +1143,18 @@ treasure_chest_give_weapon( weapon_string )
 	primaryWeapons = self GetWeaponsListPrimaries(); 
 	current_weapon = undefined; 
 
-	if( !self HasPerk("specialty_extraammo")) {
-		self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
-		self.muleLastWeapon = undefined;
-	}
-	else {
-		self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
-	}
+    if( !self HasPerk("specialty_extraammo") )
+    {
+        self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
+        self.muleLastWeapon = undefined;
+    }
+    else
+    {
+        self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
+    }
 
 	// This should never be true for the first time.
-	if( primaryWeapons.size >= self.muleCount ) // he has two weapons
+	if( primaryWeapons.size >= self.muleCount )	// he has two weapons
 	{
 		current_weapon = self getCurrentWeapon(); // get his current weapon
 
