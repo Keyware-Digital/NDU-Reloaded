@@ -639,11 +639,20 @@ undone_ee_track_sound() {
     undone_ee_track_sound Delete();
 }
 
+coalescence_sound() {
+	coalescence_sound = Spawn("script_origin", self.origin);
+	coalescence_sound PlaySound("coalescence", "coalescence_sound_done");
+	coalescence_sound waittill("coalescence_sound_done");
+	coalescence_sound Delete();
+}
+
 monty_dialogue_sound() {
     monty_dialogue_sound = Spawn("script_origin", self.origin);
     monty_dialogue_sound PlaySound("monty_dialogue", "monty_dialogue_sound_done");
     monty_dialogue_sound waittill("monty_dialogue_sound_done");
     monty_dialogue_sound Delete();	
+
+    self coalescence_sound();
 }
 
 button_press_sound() {

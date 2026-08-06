@@ -9,15 +9,15 @@ init_custom_radios()
 	level.monty_radio_interacted = 0;
 	monty_radio_finished = 0;
 
-	//monty radio 1
-    monty_radio = spawn("script_model", (320, 175, 25));	//default bo3 origin (280, 158, 0));
-	monty_radio_trigger = spawn("trigger_radius", (monty_radio.origin), 0, 20, 20);		//was 0, 10, 10)
+	// monty radio 1
+    monty_radio = spawn("script_model", (320, 175, 25));	// default bo3 origin (280, 158, 0));
+	monty_radio_trigger = spawn("trigger_radius", (monty_radio.origin), 0, 20, 20);		// was 0, 10, 10)
 	monty_radio.angles = (0, 180, 0);	//was (0, 90, 0);
 	monty_radio solid();
 	monty_radio setModel("static_berlin_ger_radio_d");
 	monty_radio playLoopSound("radio_static");
 
-	//generic radio 1
+	// generic radio 1
 	generic_radio_one = spawn("script_model", (75, 1100, 0));
 	generic_radio_one.angles = (0, 270, 0);
 	generic_radio_one solid();
