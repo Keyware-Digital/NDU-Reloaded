@@ -12,6 +12,7 @@ self attach(self.gearModel);
 
 precache()
 {
+precacheModel("char_usa_marine_player_body2_1");
 precacheModel("char_usa_marine_head4_4");
 precacheModel("char_usa_raider_helm1");
 precacheModel("char_usa_raider_gear3");
