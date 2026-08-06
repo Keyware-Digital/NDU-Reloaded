@@ -554,6 +554,10 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
         lastStandAmmo = 24;
         lastStandClip = 8;
         lastStandGun = "tokarev";
+    } else if (self HasWeapon("colt_wet") || self.firstPistol == "colt_wet") {
+        lastStandAmmo = 24;
+        lastStandClip = 8;
+        lastStandGun = "colt_wet";
     } else {
         lastStandAmmo = 24;
         lastStandClip = 8;

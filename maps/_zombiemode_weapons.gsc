@@ -230,6 +230,7 @@ init_weapons()
 	
 	// Pistols
 	add_zombie_weapon( "colt", "", 0 );
+	add_zombie_weapon( "colt_wet", "", 0 );
 	add_zombie_weapon( "colt_dirty_harry", "", 0 );
 	add_zombie_weapon( "nambu", "", 0 );
 	add_zombie_weapon( "sw_357", "", 0 );

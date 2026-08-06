@@ -196,6 +196,7 @@ include_weapons() {
 
     // Pistols
     include_weapon("colt");     //for Americans
+    include_weapon("colt_wet");
     //include_weapon("colt_dirty_harry");
     include_weapon("walther");  //for German
     include_weapon("sw_357");
@@ -253,6 +254,7 @@ include_weapons() {
 
     // Weapon limiter
     level.limited_weapons["colt"] = 0;
+    level.limited_weapons["colt_wet"] = 0;
     level.limited_weapons["walther"] = 0;
     level.limited_weapons["tokarev"] = 0;
     level.limited_weapons["kar98k"] = 0;

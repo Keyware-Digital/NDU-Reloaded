@@ -137,6 +137,7 @@ sound,mod_ndu_ee,,all_sp
 sound,mod_ndu_menu_music,,all_sp
 sound,mod_ndu_powerup,,all_sp
 sound,mod_ndu_vox,,all_sp
+weapon,sp/colt_wet
 weapon,sp/dp28
 weapon,sp/dp28_crude
 weapon,sp/m1921_thompson
@@ -333,6 +334,7 @@ xmodel,char_rus_guard_player_body_smg
 xmodel,char_rus_guard_player_head_smg
 xmodel,char_usa_marine_helm1
 xmodel,char_usa_marine_player_body2_1
+xmodel,char_usa_marine_player_wet_body2_1
 xmodel,char_usa_marine_head4_2
 xmodel,char_usa_raider_gear4
 xmodel,char_usa_raider_gear_flametank
@@ -345,6 +347,8 @@ xmodel,viewmodel_rus_guard_arms
 xmodel,viewmodel_rus_guard_player
 xmodel,viewmodel_usa_marine_arms
 xmodel,viewmodel_usa_marine_player
+xmodel,viewmodel_usa_marinewet_arms
+xmodel,viewmodel_usa_marinewet_player
 xmodel,zmb_mdl_button
 xmodel,zmb_mdl_cash_register
 xmodel,zmb_mdl_padlock

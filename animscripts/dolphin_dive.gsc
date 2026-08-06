@@ -64,7 +64,7 @@ setup_player_dolphin_dive() {
 
             switch(player_char) {
                 case 0:
-                    players_dolphin_dive setModel("char_usa_marine_player_body2_1");
+                    players_dolphin_dive setModel("char_usa_marine_player_wet_body2_1");
                     players_dolphin_dive.headModel = "char_usa_marine_head4_2";
                     players_dolphin_dive attach(players_dolphin_dive.headModel, "", true);
                     players_dolphin_dive.hatModel = "char_usa_marine_helm1";

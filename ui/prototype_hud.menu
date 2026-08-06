@@ -415,7 +415,7 @@ menuDef
         rect			70 -35 24 24
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
-        ownerdraw		WINDOW_STYLE_SHADER
+        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
         visible			when(dvarInt("plr_hud_portrait") == 0)
         decoration
     }
@@ -425,7 +425,7 @@ menuDef
         rect			70 -35 24 24
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
-        ownerdraw		WINDOW_STYLE_SHADER
+        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
         visible			when(dvarInt("plr_hud_portrait") == 1)
         decoration
     }
@@ -435,7 +435,7 @@ menuDef
         rect			70 -35 24 24
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
-        ownerdraw		WINDOW_STYLE_SHADER
+        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
         visible			when(dvarInt("plr_hud_portrait") == 2)
         decoration
     }
@@ -445,7 +445,7 @@ menuDef
         rect			70 -35 24 24
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
-        ownerdraw		WINDOW_STYLE_SHADER
+        ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
         visible			when(dvarInt("plr_hud_portrait") == 3)
         decoration
     }
