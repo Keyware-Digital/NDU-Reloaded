@@ -62,7 +62,7 @@
 			style			WINDOW_STYLE_FILLED
 			rect			FULLSCREEN_WIDE
 			backcolor		1 1 1 1
-			visible			0
+			visible			when( !dvarbool(onlinegame) && !dvarbool(systemlink) )
 			background		cinematic
 			ownerdraw		UI_CINEMATIC
 			decoration

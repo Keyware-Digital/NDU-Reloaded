@@ -660,6 +660,17 @@ samantha_start_sound() {
     samantha_start_sound Delete();
 }
 
+samantha_musicbox_sound_loop(samantha_figure)
+{
+    samantha_music_box_sound = Spawn("script_origin", self.origin);
+    samantha_music_box_sound PlayLoopSound("musicbox_loop");
+
+    samantha_figure waittill("stop_musicbox_sound");
+
+    samantha_music_box_sound StopLoopSound();
+    samantha_music_box_sound Delete();
+}
+
 samantha_fail_sound() {
     samantha_fail_sound = Spawn("script_origin", self.origin);
     samantha_fail_sound PlaySound("samantha_fail", "samantha_fail_sound_done");

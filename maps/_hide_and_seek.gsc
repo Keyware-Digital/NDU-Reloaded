@@ -129,10 +129,10 @@ spawn_samantha_figures(position, angles) {
     samantha_figure = spawn("script_model", position);
     samantha_figure.angles = angles;
     samantha_figure setModel("zmb_mdl_samantha_figure");
-    samantha_figure playLoopSound("musicbox_loop");
+
+	samantha_figure thread maps\_sounds::samantha_musicbox_sound_loop(samantha_figure);
 
 	if (level.samantha_figure_destroyed == 1) {
-		samantha_figure StopLoopSound(0.1);
 		playFX(level._effect["raygun_impact"], samantha_figure.origin);
 	}
 	
@@ -140,8 +140,8 @@ spawn_samantha_figures(position, angles) {
     samantha_figure setCanDamage(true);
 
     thread rotate_samantha_figure(samantha_figure);
-    //thread init_samantha_figure_timeout();
-    //thread handle_samantha_figure_timeout(samantha_figure);
+    samantha_figure thread init_samantha_figure_timeout();
+    thread handle_samantha_figure_timeout(samantha_figure);
 
     return samantha_figure; // Return the spawned figure
 }
@@ -171,24 +171,36 @@ handle_samantha_figures()
     samantha_figure_angles[6] = (0, 45, 0);
     samantha_figure_angles[7] = (0, 45, 0);
 
-    fifth_samantha_figure = undefined; // Initialize last_samantha_figure
+    eigth_samantha_figure = undefined; // Initialize last_samantha_figure
 
-	array_randomize(samantha_figure_positions); // need to randomise the contents of the array, currently doesn't work
+	samantha_figure_indexes = [];
 
-    spawn_samantha_figure_recursive(samantha_figure_positions, samantha_figure_angles, 0);
+	for(i = 0; i < samantha_figure_positions.size; i++)
+	{
+		samantha_figure_indexes[i] = i;
+	}
+
+	samantha_figure_indexes = array_randomize(samantha_figure_indexes);
+
+	spawn_samantha_figure_recursive(samantha_figure_indexes, samantha_figure_positions, samantha_figure_angles, 0);
 
     // Check if the last figure is deleted
-    if (!isDefined(fifth_samantha_figure)) {
+    if (!isDefined(eigth_samantha_figure)) {
 		last_samantha_figure = spawn("script_model", (-15, -430, 10));
 		last_samantha_figure_trigger = spawn("trigger_radius", (last_samantha_figure.origin), 0, 64, 64);
 		last_samantha_figure.angles = (0, 45, 0);
 		last_samantha_figure setModel("zmb_mdl_samantha_figure");
 		last_samantha_figure solid();
 		thread rotate_samantha_figure(last_samantha_figure);
-		last_samantha_figure playLoopSound("musicbox_loop");
+
+		players = GetPlayers();
+
+		for (i = 0; i < players.size; i++)
+		{
+			players[i] maps\_sounds::samantha_musicbox_sound_loop();
+		}
 
 		if (level.last_samantha_figure_interacted == 1) {
-			last_samantha_figure StopLoopSound(0.1);
 			playFX(level._effect["raygun_impact"], last_samantha_figure.origin);
 		}
 
@@ -217,66 +229,75 @@ handle_samantha_figures()
 	}
 }
 
-spawn_samantha_figure_recursive(samantha_figure_positions, samantha_figure_angles, index)
+spawn_samantha_figure_recursive(indexes, positions, angles, index)
 {
-    if (index >= samantha_figure_positions.size) //No need for brackets in statements with only one line to execute
-        return; // Exit the recursion when all figures are spawned
+    if(index >= indexes.size) {
+        return;
+	}
 
-    samantha_figure = spawn_samantha_figures(samantha_figure_positions[index], samantha_figure_angles[index]);
-	fifth_samantha_figure = samantha_figure;
+    random_index = indexes[index];
 
-	samantha_figure_damage(samantha_figure);
+    samantha_figure = spawn_samantha_figures(
+        positions[random_index],
+        angles[random_index]
+    );
 
-    spawn_samantha_figure_recursive(samantha_figure_positions, samantha_figure_angles, index + 1); // Spawn the next figure in the recursion
+	eigth_samantha_figure = samantha_figure;
+
+    samantha_figure_damage(samantha_figure);
+
+    spawn_samantha_figure_recursive(indexes, positions, angles, index + 1);
 }
 
 samantha_figure_damage(samantha_figure)
 {
-	samantha_figure waittill("damage"); // Wait for the current figure to be damaged before spawning the next
+	samantha_figure waittill("damage");
+	
 	while(isDefined(samantha_figure))
 	{
+		samantha_figure notify("stop_musicbox_sound");
+
+		playFX(level._effect["raygun_impact"], samantha_figure.origin);
+
 		samantha_figure delete();
+
 		level.samantha_figure_destroyed = 1;
 	}
 }
 
 rotate_samantha_figure(samantha_figure)
 {
+	samantha_figure endon("stop_rotating");
+
 	while(isDefined(samantha_figure))
 	{
-		samantha_figure rotateYaw(360, 10);
-		wait(0.5);
+		samantha_figure rotateYaw(5, 0.1);
+		wait(0.1);
 	}
 }
 
 init_samantha_figure_timeout()
 {
-	wait(60); // Give the player one minute to destroy all samantha figures
-	level.samantha_figure_timed_out = 1;
+	wait(60);
+
+	self notify("samantha_timeout");
 }
 
 handle_samantha_figure_timeout(samantha_figure)
 {
-	while(1)
-	{
-		if(level.samantha_figure_timed_out == 1){
+    samantha_figure waittill("samantha_timeout");
 
-			while(isDefined(samantha_figure))
-			{
-				samantha_figure Delete();
-			}
-			
-			players = GetPlayers();
+    if(isDefined(samantha_figure))
+    {
+		samantha_figure notify("stop_rotating");
 
-			for (i = 0; i < players.size; i++)
-			{
-				players[i] maps\_sounds::samantha_fail_sound();
-			}
-			
-			handle_initial_samantha_figure(); // If the player has failed to destroy all samantha figures, reset back to this step
-		}
-		wait 0.05;
-	}
+        samantha_figure notify("stop_musicbox_sound");
+		samantha_figure maps\_sounds::samantha_fail_sound();
+		playFX(level._effect["raygun_impact"], samantha_figure.origin);
+        samantha_figure delete();
+
+		handle_initial_samantha_figure();
+    }
 }
 
 handle_last_samantha_figure()

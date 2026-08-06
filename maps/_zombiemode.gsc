@@ -642,7 +642,7 @@ onPlayerSpawned() {
         self waittill("spawned_player");
 
         self setClientDvars("cg_thirdPerson", "0",
-            "cg_fov", getdvar("cg_fov"),
+            "cg_fov", getdvar("ui_cg_fov"),
             "cg_thirdPersonAngle", "0");
 
         self SetDepthOfField(0, 0, 512, 4000, 4, 0);
@@ -1010,73 +1010,6 @@ round_spawning() {
     }
 }
 
-//bo3 style end of round points rewards, probably should be xp instead
-/* round_completion_award_points() {
-    maxPoints = 50 * level.round_number;
-    
-    if(maxPoints >= 1000)
-    {
-        maxPoints = 1000;
-    }
-
-    level.round_completion_award_points_text = [];
-
-    for (i = 0; i < 4; i++) {
-        level.round_completion_award_points_text[i] = newHudElem();
-        level.round_completion_award_points_text[i].x = 0;
-        level.round_completion_award_points_text[i].y = 0;
-        level.round_completion_award_points_text[i].alignX = "center";
-        level.round_completion_award_points_text[i].alignY = "middle";
-        level.round_completion_award_points_text[i].horzAlign = "center";
-        level.round_completion_award_points_text[i].vertAlign = "middle";
-        level.round_completion_award_points_text[i].foreground = true;
-        level.round_completion_award_points_text[i].alpha = 1;
-    }
-
-    level.round_completion_award_points_text[0].y = 0;
-    level.round_completion_award_points_text[1].y = 15;
-    level.round_completion_award_points_text[0].x = -15;
-    level.round_completion_award_points_text[1].x = 0;
-
-    for (i = 0; i < 4; i++) {
-    level.round_completion_award_points_text[i].fontScale = 1.75;
-    }
-
-    wait(0.05);
-
-    for (i = 0; i < 4; i++) {
-    level.round_completion_award_points_text[i].fontScale = 3.5;
-    }
-
-    level.round_completion_award_points_text[0] setText("+" + maxPoints);
-    
-    wait(0.05);
-
-    for (i = 0; i < 4; i++) {
-    level.round_completion_award_points_text[i].fontScale = 1.75;
-    }
-
-    level.round_completion_award_points_text[1] setText("Survived"); // Add to localised strings like the rest
-
-    for (i = 0; i < 4; i++) {
-        level.round_completion_award_points_text[i] fadeOverTime(1);
-        level.round_completion_award_points_text[i].alpha = 0;
-        wait(0.75);
-    }
-
-    wait(0.25);
-
-    for (i = 0; i < 4; i++) {
-        level.round_completion_award_points_text[i] destroy();
-    }
-
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i] maps\_zombiemode_score::add_to_player_score(maxPoints);
-    }
-}*/
-
 round_text(text) {
     if (level.first_round) {
         intro = true;
@@ -1346,7 +1279,6 @@ round_think() {
         level thread round_spawning();
 
         round_wait();
-        //level thread round_completion_award_points();
 
         level.first_round = false;
 
@@ -2404,23 +2336,9 @@ setup_player_vars()
         // Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
         players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
 
-        // OLD portrait method (local client only – this is what you asked to restore)
-        switch(level.random_character_index[i])
-        {
-            case 0:
-                players[i] setClientDvar("plr_hud_portrait", 0);
-                break; 
-            case 1:
-                players[i] setClientDvar("plr_hud_portrait", 1);
-                break;
-            case 2:
-                players[i] setClientDvar("plr_hud_portrait", 2);
-                break;  
-            case 3:
-                players[i] setClientDvar("plr_hud_portrait", 3);
-                break;
-        }
-
+        // New Network Portrait System
+        // Sets the correct player portrait based on what character they randomly spawned as
+        players[i] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[i]);
         players[i] setClientDvar("plr" + num + "_active", 1);
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats

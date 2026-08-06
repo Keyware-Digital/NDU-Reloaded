@@ -35,10 +35,13 @@
 			setLocalVarBool ui_hideBack 1;
 
 			uiScript getLanguage;
+
+			exec "seta ui_cg_fov 65";
 		}
 		onClose
 		{
 			setLocalVarBool ui_hideBack 1;
+			exec "setfromdvar ui_cg_fov cg_fov";
 		}
 		onESC
 		{ 

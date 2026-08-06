@@ -359,7 +359,7 @@ open main_text;
     #define LOCAL_NETWORK_RESET\
     exec "set onlinegame 0; set systemlink 0";
     #define SET_DEFAULT_MAP_AND_MODE \
-          exec "set ui_gametype zom; set ui_mapname nazi_zombie_prototype";
+          exec "set ui_gametype zom; set ui_netgametype 1; set ui_netgametypename zom; set ui_mapname nazi_zombie_prototype";
 
     #define SET_ARCADE_MODE\
     exec "set arcademode 1";\
@@ -393,8 +393,6 @@ open main_text;
             execnow "ui_cinematic prototype_main_menu 3"
             setdvar ui_showOnlineOfflineButton "1";
         }
-
-        #include "ui/prototype_bg.inc"
 
         itemDef {
             rect LOGO_START_X LOGO_START_Y 320 128 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM

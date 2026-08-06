@@ -320,7 +320,7 @@
 			
 			exec "wait; wait; r_applyPicmip";
 			close apply_picmip_popmenu;
-			open options_graphics;
+			open options_graphics_texture;
 		}
 		
 		// background black frame
