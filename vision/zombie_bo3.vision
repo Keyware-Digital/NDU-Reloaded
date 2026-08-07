@@ -1,4 +1,4 @@
-r_reviveFX_enable							"0"
+r_reviveFX_enable "0"
 
 r_glow "1"
 r_glowRadius0 "7"

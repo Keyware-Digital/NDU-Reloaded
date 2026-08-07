@@ -1,6 +1,8 @@
 #include maps\_utility; 
 #include common_scripts\utility; 
 #include maps\_zombiemode_utility; 
+#include maps\_zombiemode_spawner;
+
 #using_animtree( "generic_human" );
 
 init()
@@ -27,6 +29,12 @@ init_blockers()
 	// DOORS ----------------------------------------------------------------------------- //
 	zombie_doors = GetEntArray( "zombie_door", "targetname" ); 
 
+	for(i = 0; i < zombie_doors.size; i++) {
+		if(isDefined(zombie_doors[i].target) && zombie_doors[i].target == "auto34") {
+			zombie_doors[i].riser_unlock = "mystery_box";
+		}
+	}
+
 	for( i = 0; i < zombie_doors.size; i++ )
 	{
 		zombie_doors[i] thread door_init(); 
@@ -35,6 +43,19 @@ init_blockers()
 	// DEBRIS ---------------------------------------------------------------------------- //
 	zombie_debris = GetEntArray( "zombie_debris", "targetname" ); 
 	zombie_debris_sewer = GetEntArray( "zombie_debris_sewer", "targetname" );
+
+	for(i = 0; i < zombie_debris.size; i++) {
+		if(isDefined(zombie_debris[i].target) && zombie_debris[i].target == "upstairs_blocker") {
+			zombie_debris[i].riser_unlock = "upstairs";
+		}
+	}
+
+	for(i = 0; i < zombie_debris.size; i++) {
+		if(isDefined(zombie_debris[i].target) && (zombie_debris[i].target == "upstairs_blocker" || zombie_debris[i].target == "upstairs_blocker2")) {
+			zombie_debris[i].riser_unlock = "upstairs";
+		}
+	}
+
 	for( i = 0; i < zombie_debris.size; i++ )
 	{
 		zombie_debris[i] thread debris_init(); 
@@ -259,8 +280,12 @@ door_think()
 		if( isDefined( self.script_flag ) )
 		{
 			flag_set( self.script_flag );
-		}				
-		
+		}
+
+		if(isDefined(self.riser_unlock)) {
+			level thread unlock_riser_spots(self.riser_unlock);
+		}
+
 		// get all trigs, we might want a trigger on both sides
 		// of some junk sometimes
 		all_trigs = getentarray( self.target, "target" ); 
@@ -423,6 +448,10 @@ debris_think()
 				}
 
 				play_sound_at_pos( "purchase", self.origin );
+
+				if(isDefined(self.riser_unlock)) {
+					level thread unlock_riser_spots(self.riser_unlock);
+				}
 	
 				move_ent = undefined;
 				clip = undefined;
