@@ -44,12 +44,6 @@ init_blockers()
 	zombie_debris_sewer = GetEntArray( "zombie_debris_sewer", "targetname" );
 
 	for(i = 0; i < zombie_debris.size; i++) {
-		if(isDefined(zombie_debris[i].target) && zombie_debris[i].target == "upstairs_blocker") {
-			zombie_debris[i].riser_unlock = "upstairs";
-		}
-	}
-
-	for(i = 0; i < zombie_debris.size; i++) {
 		if(isDefined(zombie_debris[i].target) && (zombie_debris[i].target == "upstairs_blocker" || zombie_debris[i].target == "upstairs_blocker2")) {
 			zombie_debris[i].riser_unlock = "upstairs";
 		}

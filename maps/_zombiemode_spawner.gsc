@@ -28,9 +28,7 @@ init()
 	array_thread( zombies, ::add_spawn_function, ::zombie_rise );
 }
 
-init_risers()
-{
-
+init_risers() {
 	level.riser_spot = [];
 	level.riser_spot[0] = spawnstruct();
 	level.riser_spot[0].origin = (-444,283,-9);
@@ -61,7 +59,6 @@ init_risers()
 	level.riser_spot[4].targetname = "zombie_rise";
 	level.riser_spot[4].script_noteworthy = "riser_door";
 	level.riser_spot[4].locked = false;
-
 
 	level.riser_spot[5] = spawnstruct();
 	level.riser_spot[5].origin = (708, 1371, -9);
