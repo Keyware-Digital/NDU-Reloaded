@@ -2315,6 +2315,14 @@ setup_player_vars()
 {
 
     players = GetPlayers();
+    
+    for (i = 0; i < players.size; i++)
+    {
+        for (slot = 0; slot < 4; slot++)
+        {
+            players[i] setClientDvar("plr" + slot + "_active", 0);
+        }
+    }
 
  for (i = 0; i < players.size; i++) 
     {
@@ -2337,10 +2345,12 @@ setup_player_vars()
         // Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
         players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
 
-        // New Network Portrait System
-        // Sets the correct player portrait based on what character they randomly spawned as
-        players[i] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[num]);
-        players[i] setClientDvar("plr" + num + "_active", 1);
+
+        for (j = 0; j < players.size; j++)
+        {
+            players[j] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[num]);
+            players[j] setClientDvar("plr" + num + "_active", 1);
+        }
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {

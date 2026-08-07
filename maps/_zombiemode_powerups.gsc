@@ -1560,7 +1560,10 @@ death_machine_give( player )
 
     // mirroring bo3 (you can see wep. name in bo3)
     player setClientDvar("hide_reload_hud", 1);
+    //hides ammo + weapon name
 	// player setClientDvar("ammocounterhide", 1);
+    //only hides ammo
+    player setClientDvar("hide_only_ammo_hud", 1);
 
     player SwitchToWeapon( level.death_machine_weapon );
 
@@ -1604,7 +1607,10 @@ death_machine_cleanup()
     self.using_death_machine = false;
     self.is_drinking = undefined;
 
-    self setClientDvar( "ammocounterhide", 0 );
+    //only shows ammo + weapon name
+    //self setClientDvar( "ammocounterhide", 0 );
+    //shows ammo only
+    self setClientDvar("hide_only_ammo_hud", 0);
 
     if ( isDefined( level.zombie_vars["zombie_powerup_death_machine_on"] ) && level.zombie_vars["zombie_powerup_death_machine_on"] )
         level.zombie_vars["zombie_powerup_death_machine_time"] = 0;
