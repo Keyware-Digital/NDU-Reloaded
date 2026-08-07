@@ -621,7 +621,7 @@ onPlayerConnect_clientDvars() {
         "hud_showStance", "0",
         "cg_thirdPerson", "0",
         "cg_thirdPersonAngle", "0",
-        "cg_fov", getdvar("cg_fov"),
+        "cg_fov", getdvar("ui_cg_fov"),
         "cg_thirdPersonAngle", "0",
         "ammoCounterHide", "0",
         "miniscoreboardhide", "0",
@@ -798,13 +798,13 @@ spectator_toggle_3rd_person() {
 set_third_person(value) {
     if (value) {
         self setClientDvars("cg_thirdPerson", "1",
-            "cg_fov", getdvar("cg_fov"),
+            "cg_fov", getdvar("ui_cg_fov"),
             "cg_thirdPersonAngle", "354");
 
         self setDepthOfField(0, 128, 512, 4000, 6, 1.8);
     } else {
         self setClientDvars("cg_thirdPerson", "0",
-            "cg_fov", getdvar("cg_fov"), 
+            "cg_fov", getdvar("ui_cg_fov"), 
             "cg_thirdPersonAngle", "0");
 
         self setDepthOfField(0, 0, 512, 4000, 4, 0);
@@ -2148,7 +2148,7 @@ intermission() {
     for (i = 0; i < players.size; i++) {
         setClientsysstate("levelNotify", "zi", players[i]); // Tell clientscripts we're in zombie intermission
 
-        players[i] setClientDvars("cg_thirdPerson", "0" , "cg_fov", getdvar("cg_fov") );
+        players[i] setClientDvars("cg_thirdPerson", "0" , "cg_fov", getdvar("ui_cg_fov") );
 
         players[i].health = 100; // This is needed so the player view doesn't get stuck
         players[i] thread player_intermission();
@@ -2328,6 +2328,7 @@ setup_player_vars()
         players[i] setClientDvar("r_lodBiasSkinned", -1000);
         players[i] setClientDvar("r_lodScaleRigid", 1);
         players[i] setClientDvar("r_lodScaleSkinned", 1);
+
         // disable sv_cheats immediately afterwards so players can't use vars that are flagged as cheats
         players[i] setClientDvar("sv_cheats", 0);
 
@@ -2338,7 +2339,7 @@ setup_player_vars()
 
         // New Network Portrait System
         // Sets the correct player portrait based on what character they randomly spawned as
-        players[i] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[i]);
+        players[i] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[num]);
         players[i] setClientDvar("plr" + num + "_active", 1);
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats

@@ -21,6 +21,7 @@ init()
 			zombies[i].locked_spawner = true;
 		}
 	}
+	
 	init_risers();
 	
 	array_thread( zombies, ::add_spawn_function, ::zombie_spawn_init );
@@ -29,38 +30,60 @@ init()
 
 init_risers()
 {
-	mn = getDvar("mapname");
-	switch(mn)
-	{
-		case "nazi_zombie_prototype":
-			level.riser_spot = [];
-			level.riser_spot[0] = spawnstruct();
-			level.riser_spot[0].origin = (-518,292,-12);
-			level.riser_spot[0].targetname = "zombie_rise";
-			level.riser_spot[0].script_noteworthy = "riser_door";
-	
-			level.riser_spot[1] = spawnstruct();
-			level.riser_spot[1].origin = (-584,-141,-10);
-			level.riser_spot[1].targetname = "zombie_rise";
-			level.riser_spot[1].script_noteworthy = "riser_door";
-	
-			level.riser_spot[2] = spawnstruct();
-			level.riser_spot[2].origin = (-504,-880,-26);
-			level.riser_spot[2].targetname = "zombie_rise";
-			level.riser_spot[2].script_noteworthy = "riser_door";
-	
-			level.riser_spot[3] = spawnstruct();
-			level.riser_spot[3].origin = (223,-1177,3);
-			level.riser_spot[3].targetname = "zombie_rise";
-			level.riser_spot[3].script_noteworthy = "riser_door";
-			
-			level.riser_spot[4] = spawnstruct();
-			level.riser_spot[4].origin = (442,-399,-13);
-			level.riser_spot[4].targetname = "zombie_rise";
-			level.riser_spot[4].script_noteworthy = "riser_door";
-			break;
-	}
+	/// These risers should be added to add_new_zombie_spawners somehow, this would only unlock them when the blockers are bought, currently they're enabled at round 1 which causes bugs
+	/// FIRST 5 ARE SPAWN ROOM
+
+	level.riser_spot = [];
+	level.riser_spot[0] = spawnstruct();
+	level.riser_spot[0].origin = (-444,283,-9);
+	level.riser_spot[0].targetname = "zombie_rise";
+	level.riser_spot[0].script_noteworthy = "riser_door";
+
+	level.riser_spot[1] = spawnstruct();
+	level.riser_spot[1].origin = (-625, 7, -7);
+	level.riser_spot[1].targetname = "zombie_rise";
+	level.riser_spot[1].script_noteworthy = "riser_door";
+
+	level.riser_spot[2] = spawnstruct();
+	level.riser_spot[2].origin = (-691,-1115, 2);
+	level.riser_spot[2].targetname = "zombie_rise";
+	level.riser_spot[2].script_noteworthy = "riser_door";
+
+	level.riser_spot[3] = spawnstruct();
+	level.riser_spot[3].origin = (396,-1347, 7);
+	level.riser_spot[3].targetname = "zombie_rise";
+	level.riser_spot[3].script_noteworthy = "riser_door";
+
+	level.riser_spot[4] = spawnstruct();
+	level.riser_spot[4].origin = (765,-398, -4);
+	level.riser_spot[4].targetname = "zombie_rise";
+	level.riser_spot[4].script_noteworthy = "riser_door";
+
+	/// MYSTERY BOX ROOM
+
+	level.riser_spot[5] = spawnstruct();
+	level.riser_spot[5].origin = (687,335, 17);
+	level.riser_spot[5].targetname = "zombie_rise";
+	level.riser_spot[5].script_noteworthy = "riser_door";
+
+	level.riser_spot[6] = spawnstruct();
+	level.riser_spot[6].origin = (1288, 759, -10);
+	level.riser_spot[6].targetname = "zombie_rise";
+	level.riser_spot[6].script_noteworthy = "riser_door";
+
+	/// UPSTAIRS ROOM
+
+	level.riser_spot[7] = spawnstruct();
+	level.riser_spot[7].origin = (1002, 1470, 132);
+	level.riser_spot[7].targetname = "zombie_rise";
+	level.riser_spot[7].script_noteworthy = "riser_door";
+
+	level.riser_spot[8] = spawnstruct();
+	level.riser_spot[8].origin = (72, 1550, 152);
+	level.riser_spot[8].targetname = "zombie_rise";
+	level.riser_spot[8].script_noteworthy = "riser_door";
 }
+
 is_spawner_targeted_by_blocker( ent )
 {
 	if( isDefined( ent.targetname ) )

@@ -14,6 +14,9 @@ font,customfont/extraBigFont,,
 font,customfont/normalFont,,
 font,customfont/objectiveFont,,
 font,customfont/smallFont,,
+material,ascend_chalk_c
+material,help_chalk_c
+material,salvation_chalk_c
 material,fonts/gamefonts2pc
 material,hud_grenade_german
 material,hud_zmb_points

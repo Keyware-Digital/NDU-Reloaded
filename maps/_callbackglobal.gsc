@@ -499,7 +499,7 @@ reset_clientdvars()
 	self setClientDvars( "compass", "1",
 						 "hud_showStance", "1",
 						 "cg_thirdPerson", "0",
-						 "cg_fov", getdvar("cg_fov"),
+						 "cg_fov", getdvar("ui_cg_fov"),
 						 "cg_thirdPersonAngle", "0",
 						 "ammoCounterHide", "0",
 						 "miniscoreboardhide", "0",
