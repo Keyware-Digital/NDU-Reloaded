@@ -1,7 +1,6 @@
 #include maps\_utility; 
 #include common_scripts\utility; 
-#include maps\_zombiemode_utility; 
-#include maps\_zombiemode_spawner;
+#include maps\_zombiemode_utility;
 
 #using_animtree( "generic_human" );
 
@@ -283,7 +282,7 @@ door_think()
 		}
 
 		if(isDefined(self.riser_unlock)) {
-			level thread unlock_riser_spots(self.riser_unlock);
+			level thread maps\_zombiemode_spawner::unlock_riser_spots(self.riser_unlock);
 		}
 
 		// get all trigs, we might want a trigger on both sides
@@ -450,7 +449,7 @@ debris_think()
 				play_sound_at_pos( "purchase", self.origin );
 
 				if(isDefined(self.riser_unlock)) {
-					level thread unlock_riser_spots(self.riser_unlock);
+					level thread maps\_zombiemode_spawner::unlock_riser_spots(self.riser_unlock);
 				}
 	
 				move_ent = undefined;
