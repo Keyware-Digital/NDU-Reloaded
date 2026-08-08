@@ -163,11 +163,11 @@ include_weapons() {
     // NDU: Reloaded (main box additions)
     include_weapon("dp28");
     include_weapon("dp28_crude");   // powerup only, dm placeholder
-    include_weapon("mine_bouncing_betty", /*true,*/::prototype_betty_weighting_func);
+    include_weapon( "mine_bouncing_betty", true, ::prototype_betty_weighting_func );
     include_weapon("mosin_rifle");
     include_weapon("ppsh41");
     include_weapon("svt40");
-    include_weapon("zombie_bowie_flourish", /*true,*/::prototype_bowie_weighting_func);
+    include_weapon( "zombie_bowie_flourish", true, ::prototype_bowie_weighting_func );
     //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func);
     
     // Weapon cabinet only additions	
@@ -250,7 +250,7 @@ include_weapons() {
     include_weapon("panzerschrek");
 
     // Special
-    include_weapon("ray_gun_mk1_v2", /*true,*/::prototype_ray_gun_weighting_func);
+    include_weapon( "ray_gun_mk1_v2", true, ::prototype_ray_gun_weighting_func );
 
     // Weapon limiter
     level.limited_weapons["colt"] = 0;

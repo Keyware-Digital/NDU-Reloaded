@@ -878,31 +878,67 @@ treasure_chest_ChooseWeightedRandomWeapon( player )
 
 	// Filter out any weapons the player already has
 	filtered = [];
+
+
 	for( i = 0; i < keys.size; i++ )
 	{
-		if( !get_is_in_box( keys[i] ) )
-		{
+        weapon = keys[i];
+
+        // Must be allowed in the box
+        // (handles both correct bools and the old broken function-pointer case)
+        if( !isDefined( level.zombie_include_weapons[weapon] ) )
 			continue;
-		}
-		
-		if( player has_weapon_or_upgrade( keys[i] ) )
-		{
+
+        // Player already has it (or its upgrade)
+		if( player has_weapon_or_upgrade( weapon ) )
+			continue;
+
+        // === Limited weapons (flamer, etc.) ===
+        if( isDefined( level.limited_weapons ) && isDefined( level.limited_weapons[weapon] ) )
+        {
+            count = 0;
+            players = GetPlayers();
+            for( p = 0; p < players.size; p++ )
+            {
+                if( players[p] HasWeapon( weapon ) )
+                    count++;
+            }
+
+            if( count >= level.limited_weapons[weapon] )
 			continue;
 		}
 
-		if( !isDefined( keys[i] ) )
-		{
-			continue;
-		}
+        // === Player-specific flags ===
+        if( weapon == "molotov" && isDefined( player.has_molotovs ) && player.has_molotovs )
+            continue;
 
-		num_entries = [[ level.weapon_weighting_funcs[keys[i]] ]]();
-		
+        if( weapon == "mine_bouncing_betty" && isDefined( player.has_betties ) && player.has_betties )
+            continue;
+
+        if( weapon == "zombie_bowie_flourish" && isDefined( player.has_bowie ) && player.has_bowie )
+            continue;
+
+        // Apply weighting (safe even if the func was previously stored in the wrong place)
+        weight_func = level.weapon_weighting_funcs[weapon];
+        if( !isDefined( weight_func ) )
+            weight_func = ::prototype_weighting_func;
+
+        num_entries = [[ weight_func ]]();
+
 		for( j = 0; j < num_entries; j++ )
 		{
-			filtered[filtered.size] = keys[i];
+            filtered[filtered.size] = weapon;
 		}
-	}
+    }
+
+    if( filtered.size == 0 )
+    {
+        return treasure_chest_ChooseRandomWeapon( player );
+    }
+
+    return filtered[ RandomInt( filtered.size ) ];
 }
+
 treasure_chest_weapon_spawn(chest, player)
 {
     assert(isDefined(player));
@@ -926,7 +962,8 @@ treasure_chest_weapon_spawn(chest, player)
     rand = undefined;
     for (i = 0; i < 40; i++)
     {
-        rand = treasure_chest_ChooseRandomWeapon(player);
+        //rand = treasure_chest_ChooseRandomWeapon(player);
+		rand = treasure_chest_ChooseWeightedRandomWeapon(player);
         modelname = GetWeaponModel(rand);
         model setmodel(modelname);
 
@@ -988,13 +1025,13 @@ treasure_chest_weapon_spawn(chest, player)
 		model SetModel("zmb_mdl_padlock");
 		playfxontag(level._effect["powerup_on_bad"], model, "tag_origin"); // Apply red powerup FX
 		self thread mystery_box_lock_sound();
-		wait 0.5;											
+		wait 0.25;											
 
 		// Start padlock animations in a separate thread
 		model thread animate_padlock();
 		// Play the haunting sound
 		self thread mystery_box_haunt_sound_loop();
-		wait 0.5;
+		wait 0.25;
 
 		players = GetPlayers();
 		for (i = 0; i < players.size; i++)
@@ -1021,7 +1058,7 @@ treasure_chest_weapon_spawn(chest, player)
 				// Play the unlock sound
 				player thread mystery_box_unlock_sound();
 				// Wait for the unlock sound to complete (adjust duration if needed)
-				wait 0.25; // Typical duration for a short sound effect
+				wait 0.25;
 				// Stop the haunting sound
 				self notify("stop_haunt_sound");
 
@@ -1029,7 +1066,9 @@ treasure_chest_weapon_spawn(chest, player)
 
 				// Notify animation thread to stop
 				model notify("stop_padlock_animation");
-				model MoveTo(model.origin - (0, 0, 20), 0.5); // Quick descent into box
+				//model MoveTo(model.origin - (0, 0, 20), 0.5);
+				model MoveTo( model.origin - (0, 0, 40), 0.6, 0.2, 0.2 );	// descend back into the box
+    			wait 0.65;
 
 				break;
 			}
@@ -1052,8 +1091,16 @@ treasure_chest_weapon_spawn(chest, player)
 	}
 
 	level.chest_accessed++;
-
 	// Padlock mk2 end
+
+	// Raygun weighting reset
+	level.pulls_since_last_ray_gun++;
+
+	if( rand == "ray_gun_mk1_v2" )
+	{
+		level.pulls_since_last_ray_gun = 0;
+	}
+
 	self notify("randomization_done");
 
 	self.weapon_string = rand; // here's where the org get it's weapon type for the give function
