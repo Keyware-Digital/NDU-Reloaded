@@ -1283,6 +1283,9 @@ treasure_chest_give_weapon( weapon_string )
 		case "m1carbine":
 			self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
 			break;
+		case "m1garand":
+			self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
+			break;
 		case "svt40":
 			self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
 			break;
@@ -1302,10 +1305,10 @@ treasure_chest_give_weapon( weapon_string )
 		case "mp40":
 			self thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
 			break;
-		case "thompson":
-			self thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
-			break;
 		case "ppsh41":
+			self thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
+			break;	
+		case "thompson":
 			self thread player_vox_helper( ::pickup_smg_sound, "weapon_vox_done" );
 			break;
 		/*case "zombie_type100_smg":
@@ -1330,9 +1333,6 @@ treasure_chest_give_weapon( weapon_string )
 			break;
 		case "panzerschrek":
 			self thread player_vox_helper( ::pickup_panzerschrek_sound, "weapon_vox_done" );
-			break;
-		case "m1garand":
-			self thread player_vox_helper( ::pickup_semi_sound, "weapon_vox_done" );
 			break;
 		case "m1garand_gl":
 			self thread player_vox_helper( ::pickup_panzerschrek_sound, "weapon_vox_done" );
