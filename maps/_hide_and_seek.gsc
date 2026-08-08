@@ -216,6 +216,7 @@ handle_samantha_figures()
 						level.last_samantha_figure_interacted = 1;
 						handle_last_samantha_figure();
 						level.samantha_ee_completed = true;
+						play_sound_2D("bright_sting");
 						//iprintln("StG44 now available in the cabinet!");
 
 						break;
