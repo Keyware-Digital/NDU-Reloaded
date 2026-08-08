@@ -31,65 +31,65 @@ init()
 init_risers() {
 	level.riser_spot = [];
 	level.riser_spot[0] = spawnstruct();
-	level.riser_spot[0].origin = (-444,283,-9);
+	level.riser_spot[0].origin = (-920, 501, -1);
 	level.riser_spot[0].targetname = "zombie_rise";
 	level.riser_spot[0].script_noteworthy = "riser_door";
 	level.riser_spot[0].locked = false;
 
 	level.riser_spot[1] = spawnstruct();
-	level.riser_spot[1].origin = (-625, 7, -7);
+	level.riser_spot[1].origin = (-588, -105, -7);
 	level.riser_spot[1].targetname = "zombie_rise";
 	level.riser_spot[1].script_noteworthy = "riser_door";
 	level.riser_spot[1].locked = false;
 
 	level.riser_spot[2] = spawnstruct();
-	level.riser_spot[2].origin = (-691,-1115, 2);
+	level.riser_spot[2].origin = (-654,-1133, -17);
 	level.riser_spot[2].targetname = "zombie_rise";
 	level.riser_spot[2].script_noteworthy = "riser_door";
 	level.riser_spot[2].locked = false;
 
 	level.riser_spot[3] = spawnstruct();
-	level.riser_spot[3].origin = (396,-1347, 7);
+	level.riser_spot[3].origin = (480,-1382, 11);
 	level.riser_spot[3].targetname = "zombie_rise";
 	level.riser_spot[3].script_noteworthy = "riser_door";
 	level.riser_spot[3].locked = false;
 
 	level.riser_spot[4] = spawnstruct();
-	level.riser_spot[4].origin = (765,-398, -4);
+	level.riser_spot[4].origin = (566,-330, -12);
 	level.riser_spot[4].targetname = "zombie_rise";
 	level.riser_spot[4].script_noteworthy = "riser_door";
 	level.riser_spot[4].locked = false;
 
 	level.riser_spot[5] = spawnstruct();
-	level.riser_spot[5].origin = (708, 1371, -9);
+	level.riser_spot[5].origin = (695, 282, 7);
 	level.riser_spot[5].targetname = "zombie_rise";
 	level.riser_spot[5].script_noteworthy = "riser_door";
 	level.riser_spot[5].locked = true;
 	level.riser_spot[5].unlock_group = "mystery_box";
 
 	level.riser_spot[6] = spawnstruct();
-	level.riser_spot[6].origin = (687,335, 17);
+	level.riser_spot[6].origin = (1518, 587, -23);
 	level.riser_spot[6].targetname = "zombie_rise";
 	level.riser_spot[6].script_noteworthy = "riser_door";
 	level.riser_spot[6].locked = true;
 	level.riser_spot[6].unlock_group = "mystery_box";
 
 	level.riser_spot[7] = spawnstruct();
-	level.riser_spot[7].origin = (1288, 759, -10);
+	level.riser_spot[7].origin = (688, 1359, -7);
 	level.riser_spot[7].targetname = "zombie_rise";
 	level.riser_spot[7].script_noteworthy = "riser_door";
 	level.riser_spot[7].locked = true;
 	level.riser_spot[7].unlock_group = "mystery_box";
 
 	level.riser_spot[8] = spawnstruct();
-	level.riser_spot[8].origin = (1002, 1470, 132);
+	level.riser_spot[8].origin = (1147, 1326, 143);
 	level.riser_spot[8].targetname = "zombie_rise";
 	level.riser_spot[8].script_noteworthy = "riser_door";
 	level.riser_spot[8].locked = true;
 	level.riser_spot[8].unlock_group = "upstairs";
 
 	level.riser_spot[9] = spawnstruct();
-	level.riser_spot[9].origin = (72, 1550, 152);
+	level.riser_spot[9].origin = (-15, 2072, 152);
 	level.riser_spot[9].targetname = "zombie_rise";
 	level.riser_spot[9].script_noteworthy = "riser_door";
 	level.riser_spot[9].locked = true;

@@ -1385,8 +1385,7 @@ death_machine_timer_think( prev_weapon )
     self EnableWeaponCycling();
 
     // mirroring bo3 (you can see wep. name in bo3)
-    // self setClientDvar("hide_reload_hud", 0);
-    self setClientDvar("ammocounterhide", 0);
+    self setClientDvar("hide_only_ammo_hud", 0);
 
     // Switch back safely
     if ( !self maps\_laststand::player_is_in_laststand() )
@@ -1559,9 +1558,7 @@ death_machine_give( player )
     //player GiveMaxAmmo( level.death_machine_weapon );
 
     // mirroring bo3 (you can see wep. name in bo3)
-    player setClientDvar("hide_reload_hud", 1);
     //hides ammo + weapon name
-	// player setClientDvar("ammocounterhide", 1);
     //only hides ammo
     player setClientDvar("hide_only_ammo_hud", 1);
 
@@ -1608,7 +1605,6 @@ death_machine_cleanup()
     self.is_drinking = undefined;
 
     //only shows ammo + weapon name
-    //self setClientDvar( "ammocounterhide", 0 );
     //shows ammo only
     self setClientDvar("hide_only_ammo_hud", 0);
 

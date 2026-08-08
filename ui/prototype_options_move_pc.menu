@@ -74,6 +74,7 @@
 				
 		CHOICE_SEPARATOR( CHOICE_SEP_2 )
 		
+		//check vanilla file for differences
 		CHOICE_BIND( 33, "@PROTOTYPE_MENU_CHANGE_STANCE", "+stance", ; )
 		CHOICE_BIND( 34, "@MENU_STRAFE", "+strafe", ; )
 		//CHOICE_BIND( 35, "@MENU_SPRINT", "+sprint", ; )

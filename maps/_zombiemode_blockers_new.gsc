@@ -30,7 +30,8 @@ init_blockers()
 
 	for(i = 0; i < zombie_doors.size; i++) {
 		if(isDefined(zombie_doors[i].target) && zombie_doors[i].target == "auto34") {
-			zombie_doors[i].riser_unlock = "mystery_box";
+			zombie_doors[i].riser_unlock = [];
+			zombie_doors[i].riser_unlock[0] = "mystery_box";
 		}
 	}
 
@@ -44,8 +45,15 @@ init_blockers()
 	zombie_debris_sewer = GetEntArray( "zombie_debris_sewer", "targetname" );
 
 	for(i = 0; i < zombie_debris.size; i++) {
-		if(isDefined(zombie_debris[i].target) && (zombie_debris[i].target == "upstairs_blocker" || zombie_debris[i].target == "upstairs_blocker2")) {
-			zombie_debris[i].riser_unlock = "upstairs";
+		if(isDefined(zombie_debris[i].target) && (zombie_debris[i].target == "upstairs_blocker")) {
+			zombie_debris[i].riser_unlock = [];
+			zombie_debris[i].riser_unlock[0] = "upstairs";
+		}
+
+		if(isDefined(zombie_debris[i].target) && (zombie_debris[i].target == "upstairs_blocker2")) {
+			zombie_debris[i].riser_unlock = [];
+			zombie_debris[i].riser_unlock[0] = "upstairs";
+			zombie_debris[i].riser_unlock[1] = "mystery_box";
 		}
 	}
 
@@ -276,7 +284,9 @@ door_think()
 		}
 
 		if(isDefined(self.riser_unlock)) {
-			level thread maps\_zombiemode_spawner::unlock_riser_spots(self.riser_unlock);
+			for(j = 0; j < self.riser_unlock.size; j++) {
+				level thread maps\_zombiemode_spawner::unlock_riser_spots(self.riser_unlock[j]);
+			}
 		}
 
 		// get all trigs, we might want a trigger on both sides
@@ -443,7 +453,9 @@ debris_think()
 				play_sound_at_pos( "purchase", self.origin );
 
 				if(isDefined(self.riser_unlock)) {
-					level thread maps\_zombiemode_spawner::unlock_riser_spots(self.riser_unlock);
+					for(j = 0; j < self.riser_unlock.size; j++) {
+						level thread maps\_zombiemode_spawner::unlock_riser_spots(self.riser_unlock[j]);
+					}
 				}
 	
 				move_ent = undefined;
