@@ -192,13 +192,7 @@ handle_samantha_figures()
 		last_samantha_figure setModel("zmb_mdl_samantha_figure");
 		last_samantha_figure solid();
 		thread rotate_samantha_figure(last_samantha_figure);
-
-		players = GetPlayers();
-
-		for (i = 0; i < players.size; i++)
-		{
-			players[i] maps\_sounds::samantha_musicbox_sound_loop();
-		}
+		last_samantha_figure thread maps\_sounds::samantha_musicbox_sound_loop(last_samantha_figure);
 
 		if (level.last_samantha_figure_interacted == 1) {
 			playFX(level._effect["raygun_impact"], last_samantha_figure.origin);
@@ -217,8 +211,12 @@ handle_samantha_figures()
 						playFX(level._effect["raygun_impact"], last_samantha_figure.origin);
 						last_samantha_figure delete();
 						last_samantha_figure_trigger delete();
+						last_samantha_figure notify("stop_musicbox_sound");
+    					last_samantha_figure notify("stop_rotating");
 						level.last_samantha_figure_interacted = 1;
 						handle_last_samantha_figure();
+						level.samantha_ee_completed = true;
+						//iprintln("StG44 now available in the cabinet!");
 
 						break;
 					}

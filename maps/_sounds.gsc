@@ -715,21 +715,20 @@ player_vox_helper(sound_func, notify_str, timeout)
     if (!IsDefined(timeout))
         timeout = 4.0;
 
-    if (!IsDefined(level.player_is_speaking))
-        level.player_is_speaking = 0;
+    if (!IsDefined(self.player_is_speaking))
+        self.player_is_speaking = 0;
 
-    if (level.player_is_speaking == 1)
+    if (self.player_is_speaking == 1)
         return;
 
-    level.player_is_speaking = 1;
+    self.player_is_speaking = 1;
 
     self thread [[sound_func]]();
 
-    // Manual timeout
     self thread player_vox_timeout(timeout, notify_str);
     self waittill(notify_str);
 
-    level.player_is_speaking = 0;
+    self.player_is_speaking = 0;
 }
 
 player_vox_timeout(timeout, notify_str)
