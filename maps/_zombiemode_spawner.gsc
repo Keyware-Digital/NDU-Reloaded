@@ -319,6 +319,7 @@ zombie_think()
 		self.do_rise = 1;
 		//self notify("do_rise");
 		self waittill("risen", rise_struct_string );
+		wait_network_frame();
 	}
 	else
 	{

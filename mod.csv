@@ -108,6 +108,8 @@ rawfile,animtrees/animations.atr
 rawfile,animtrees/generic_human.atr
 rawfile,bik/prototype_main_menu.bik
 rawfile,clientscripts/_callbacks.csc
+rawfile,clientscripts/nazi_zombie_prototype.csc
+rawfile,clientscripts/_field_of_view.csc
 rawfile,maps/_callbackglobal.gsc
 rawfile,maps/_character_randomise.gsc
 rawfile,maps/_custom_radios.gsc

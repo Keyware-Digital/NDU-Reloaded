@@ -1839,7 +1839,7 @@ menuDef
 			textfont			UI_FONT_DEFAULT
 			textstyle			ITEM_TEXTSTYLE_SHADOWEDMORE
 			textalign			ITEM_ALIGN_TOP_LEFT
-			textscale			0.36
+			textscale			TEXTSIZE_SMALL
 			forecolor			1 1 1 1
 			visible				1
 		}
@@ -1861,7 +1861,7 @@ menuDef
 			textfont			UI_FONT_BOLD
 			textstyle			ITEM_TEXTSTYLE_SHADOWED
 			textalign			ITEM_ALIGN_TOP_CENTER
-			textscale			0.417
+			textscale			TEXTSIZE_SMALL
 			visible				1
 		}
 	}
@@ -1883,7 +1883,7 @@ menuDef
 			textstyle			ITEM_TEXTSTYLE_SHADOWED
 			textalign			ITEM_ALIGN_TOP_CENTER
 			forecolor			1 1 1 1
-			textscale			0.38
+			textscale			TEXTSIZE_SMALL
 			visible				1
 		}
 	}
@@ -1905,7 +1905,7 @@ menuDef
 			textstyle			ITEM_TEXTSTYLE_SHADOWED
 			textalign			ITEM_ALIGN_TOP_CENTER
 			forecolor			1 1 1 0
-			textscale			0.38
+			textscale			TEXTSIZE_SMALL
 			visible				1
 		}
 	}

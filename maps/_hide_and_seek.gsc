@@ -2,12 +2,10 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 
-// TODO: Add more SFX that the EE uses, make the samantha figure spawn next to the m1 carbinet again being raised by a skeleton hand, interaction with it spawns a max ammo
+// TODO: Add more SFX that the EE uses, make the samantha figure spawn next to the m1 carbine again being raised by a skeleton hand, interaction with it spawns a max ammo
 // TIP: Shoot the head of the Samantha figures to destroy them
-// Needs to randomise spawning five figures out of a possible eight
 
-init_hide_and_seek()
-{
+init_hide_and_seek() {
 	level.buttons_interacted = 0;
 	button_step_done = 0;
 
@@ -48,12 +46,9 @@ init_hide_and_seek()
 
 	players = GetPlayers();
 
-	while (1) // Infinite loop to keep the script running
-	{
-		if (button_step_done == 0 && level.buttons_interacted == 4)
-		{
-			for (i = 0; i < players.size; i++)
-			{
+	while (1) {
+		if (button_step_done == 0 && level.buttons_interacted == 4) {
+			for (i = 0; i < players.size; i++) {
 				players[i] maps\_sounds::samantha_start_sound();
 			}
 
@@ -66,18 +61,13 @@ init_hide_and_seek()
 	}
 }
 
-handle_button(button, button_trigger)
-{
-	while(1)
-	{
+handle_button(button, button_trigger) {
+	while(1) {
 		players = GetPlayers();
 
-		if(IsDefined(button_trigger))
-		{
-			for (i = 0; i < players.size; i++)
-			{																			   		   
-				if(players[i] IsTouching (button_trigger) && players[i] UseButtonPressed())
-				{		
+		if(IsDefined(button_trigger)) {
+			for (i = 0; i < players.size; i++) {																			   		   
+				if(players[i] IsTouching (button_trigger) && players[i] UseButtonPressed()) {		
 					button thread maps\_sounds::button_press_sound();
 
 					level.buttons_interacted++;
@@ -92,24 +82,19 @@ handle_button(button, button_trigger)
 	}
 }
 
-handle_initial_samantha_figure()
-{
+handle_initial_samantha_figure() {
 	initial_samantha_figure = spawn("script_model", (-15, -430, 2));
 	initial_samantha_figure_trigger = spawn("trigger_radius", (initial_samantha_figure.origin), 0, 64, 64);
 	initial_samantha_figure.angles = (0, 90, -90);
 	initial_samantha_figure setModel("zmb_mdl_samantha_figure");
 	initial_samantha_figure solid();
 
-	while(1)
-	{
+	while(1) {
 		players = GetPlayers();
 
-		if(IsDefined(initial_samantha_figure_trigger))
-		{
-			for (i = 0; i < players.size; i++)
-			{																			   		   
-				if(players[i] IsTouching (initial_samantha_figure_trigger) && players[i] UseButtonPressed())
-				{
+		if(IsDefined(initial_samantha_figure_trigger)) {
+			for (i = 0; i < players.size; i++) {																			   		   
+				if(players[i] IsTouching (initial_samantha_figure_trigger) && players[i] UseButtonPressed()) {
 					playFX(level._effect["raygun_impact"], initial_samantha_figure.origin);
 					initial_samantha_figure delete();
 					initial_samantha_figure_trigger delete();
@@ -146,8 +131,7 @@ spawn_samantha_figures(position, angles) {
     return samantha_figure; // Return the spawned figure
 }
 
-handle_samantha_figures()
-{
+handle_samantha_figures() {
 	level.last_samantha_figure_interacted = 0;
     level.samantha_figure_timed_out = 0;
 
@@ -171,12 +155,11 @@ handle_samantha_figures()
     samantha_figure_angles[6] = (0, 45, 0);
     samantha_figure_angles[7] = (0, 45, 0);
 
-    eigth_samantha_figure = undefined; // Initialize last_samantha_figure
+    last_samantha_figure_check = undefined; // Initialize last_samantha_figure
 
 	samantha_figure_indexes = [];
 
-	for(i = 0; i < samantha_figure_positions.size; i++)
-	{
+	for(i = 0; i < samantha_figure_positions.size; i++) {
 		samantha_figure_indexes[i] = i;
 	}
 
@@ -185,36 +168,30 @@ handle_samantha_figures()
 	spawn_samantha_figure_recursive(samantha_figure_indexes, samantha_figure_positions, samantha_figure_angles, 0);
 
     // Check if the last figure is deleted
-    if (!isDefined(eigth_samantha_figure)) {
+    if (!isDefined(last_samantha_figure_check)) {
 		last_samantha_figure = spawn("script_model", (-15, -430, 10));
 		last_samantha_figure_trigger = spawn("trigger_radius", (last_samantha_figure.origin), 0, 64, 64);
 		last_samantha_figure.angles = (0, 45, 0);
 		last_samantha_figure setModel("zmb_mdl_samantha_figure");
 		last_samantha_figure solid();
-		thread rotate_samantha_figure(last_samantha_figure);
-		last_samantha_figure thread maps\_sounds::samantha_musicbox_sound_loop(last_samantha_figure);
 
 		if (level.last_samantha_figure_interacted == 1) {
 			playFX(level._effect["raygun_impact"], last_samantha_figure.origin);
 		}
 
-		while(1)
-		{
+		while(1) {
 			players = GetPlayers();
 
-			if(IsDefined(last_samantha_figure_trigger))
-			{
-				for (i = 0; i < players.size; i++)
-				{																			   		   
-					if(players[i] IsTouching (last_samantha_figure_trigger) && players[i] UseButtonPressed())
-					{
+			if(IsDefined(last_samantha_figure_trigger)) {
+				for (i = 0; i < players.size; i++) {																			   		   
+					if(players[i] IsTouching (last_samantha_figure_trigger) && players[i] UseButtonPressed()) {
 						playFX(level._effect["raygun_impact"], last_samantha_figure.origin);
 						last_samantha_figure delete();
 						last_samantha_figure_trigger delete();
-						last_samantha_figure notify("stop_musicbox_sound");
-    					last_samantha_figure notify("stop_rotating");
+						//last_samantha_figure notify("stop_musicbox_sound");
+    					//last_samantha_figure notify("stop_rotating");
 						level.last_samantha_figure_interacted = 1;
-						handle_last_samantha_figure();
+						handle_samantha_ee_reward();
 						level.samantha_ee_completed = true;
 						play_sound_2D("bright_sting");
 						//iprintln("StG44 now available in the cabinet!");
@@ -228,8 +205,7 @@ handle_samantha_figures()
 	}
 }
 
-spawn_samantha_figure_recursive(indexes, positions, angles, index)
-{
+spawn_samantha_figure_recursive(indexes, positions, angles, index) {
     if(index >= indexes.size) {
         return;
 	}
@@ -241,19 +217,17 @@ spawn_samantha_figure_recursive(indexes, positions, angles, index)
         angles[random_index]
     );
 
-	eigth_samantha_figure = samantha_figure;
+	last_samantha_figure_check = samantha_figure;
 
     samantha_figure_damage(samantha_figure);
 
     spawn_samantha_figure_recursive(indexes, positions, angles, index + 1);
 }
 
-samantha_figure_damage(samantha_figure)
-{
+samantha_figure_damage(samantha_figure) {
 	samantha_figure waittill("damage");
 	
-	while(isDefined(samantha_figure))
-	{
+	while(isDefined(samantha_figure)) {
 		samantha_figure notify("stop_musicbox_sound");
 
 		playFX(level._effect["raygun_impact"], samantha_figure.origin);
@@ -264,30 +238,25 @@ samantha_figure_damage(samantha_figure)
 	}
 }
 
-rotate_samantha_figure(samantha_figure)
-{
+rotate_samantha_figure(samantha_figure) {
 	samantha_figure endon("stop_rotating");
 
-	while(isDefined(samantha_figure))
-	{
+	while(isDefined(samantha_figure)) {
 		samantha_figure rotateYaw(5, 0.1);
 		wait(0.1);
 	}
 }
 
-init_samantha_figure_timeout()
-{
+init_samantha_figure_timeout() {
 	wait(60);
 
 	self notify("samantha_timeout");
 }
 
-handle_samantha_figure_timeout(samantha_figure)
-{
+handle_samantha_figure_timeout(samantha_figure) {
     samantha_figure waittill("samantha_timeout");
 
-    if(isDefined(samantha_figure))
-    {
+    if(isDefined(samantha_figure)) {
 		samantha_figure notify("stop_rotating");
 
         samantha_figure notify("stop_musicbox_sound");
@@ -299,25 +268,25 @@ handle_samantha_figure_timeout(samantha_figure)
     }
 }
 
-handle_last_samantha_figure()
-{
+handle_samantha_ee_reward() {
 	powerup_spawn = (-15, -420, 2);
 	players = GetPlayers();
-	for (i = 0; i < players.size; i++)
-	{
+	for (i = 0; i < players.size; i++) {
 		players[i] thread maps\_sounds::samanthas_lullaby_ee_track_sound();
 	}
 		
-	for ( i = 0; i < level.zombie_powerup_array.size; i++ )
-	{
-		if ( level.zombie_powerup_array[i] == "max_ammo" )
-		{
+	for ( i = 0; i < level.zombie_powerup_array.size; i++ ) {
+		if ( level.zombie_powerup_array[i] == "max_ammo" ) {
 			level.zombie_powerup_index = i;
 			break;
 		}
 	}
-	play_sound_2D( "bright_sting" );
+
+	play_sound_2D("bright_sting");
+
 	level.zombie_vars["zombie_drop_item"] = 1;
+
 	level.powerup_drop_count = 0;
+
 	level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
 }

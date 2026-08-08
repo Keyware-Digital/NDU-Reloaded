@@ -611,6 +611,7 @@ onPlayerConnect() {
 }
 
 onPlayerConnect_clientDvars() {
+
     self setClientDvars("cg_deadChatWithDead", "1",
         "cg_deadChatWithTeam", "1",
         "cg_deadHearTeamLiving", "1",
@@ -621,11 +622,12 @@ onPlayerConnect_clientDvars() {
         "hud_showStance", "0",
         "cg_thirdPerson", "0",
         "cg_thirdPersonAngle", "0",
-        "cg_fov", getdvar("ui_cg_fov"),
         "cg_thirdPersonAngle", "0",
         "ammoCounterHide", "0",
         "miniscoreboardhide", "0",
         "ui_hud_hardcore", "0");
+
+    level clientNotify ("set_client_fov");
 
     self SetDepthOfField(0, 0, 512, 4000, 4, 0);
 }
@@ -641,9 +643,9 @@ onPlayerSpawned() {
     while (1) {
         self waittill("spawned_player");
 
-        self setClientDvars("cg_thirdPerson", "0",
-            "cg_fov", getdvar("ui_cg_fov"),
-            "cg_thirdPersonAngle", "0");
+        self setClientDvars("cg_thirdPerson", "0", "cg_thirdPersonAngle", "0");
+
+        level clientNotify ("set_client_fov");
 
         self SetDepthOfField(0, 0, 512, 4000, 4, 0);
 
@@ -796,16 +798,17 @@ spectator_toggle_3rd_person() {
 }
 
 set_third_person(value) {
+
     if (value) {
-        self setClientDvars("cg_thirdPerson", "1",
-            "cg_fov", getdvar("ui_cg_fov"),
-            "cg_thirdPersonAngle", "354");
+        self setClientDvars("cg_thirdPerson", "1", "cg_thirdPersonAngle", "354");
+
+        level clientNotify ("set_client_fov");
 
         self setDepthOfField(0, 128, 512, 4000, 6, 1.8);
     } else {
-        self setClientDvars("cg_thirdPerson", "0",
-            "cg_fov", getdvar("ui_cg_fov"), 
-            "cg_thirdPersonAngle", "0");
+        self setClientDvars("cg_thirdPerson", "0", "cg_thirdPersonAngle", "0");
+
+        level clientNotify ("set_client_fov");
 
         self setDepthOfField(0, 0, 512, 4000, 4, 0);
     }
@@ -2148,7 +2151,9 @@ intermission() {
     for (i = 0; i < players.size; i++) {
         setClientsysstate("levelNotify", "zi", players[i]); // Tell clientscripts we're in zombie intermission
 
-        players[i] setClientDvars("cg_thirdPerson", "0" , "cg_fov", getdvar("ui_cg_fov") );
+        players[i] setClientDvar("cg_thirdPerson", "0");
+
+        level clientNotify ("set_client_fov");
 
         players[i].health = 100; // This is needed so the player view doesn't get stuck
         players[i] thread player_intermission();
@@ -2315,17 +2320,8 @@ setup_player_vars()
 {
 
     players = GetPlayers();
-    
-    for (i = 0; i < players.size; i++)
-    {
-        for (slot = 0; slot < 4; slot++)
-        {
-            players[i] setClientDvar("plr" + slot + "_active", 0);
-        }
-    }
 
- for (i = 0; i < players.size; i++) 
-    {
+    for (i = 0; i < players.size; i++) {
         players[i] setClientDvar("player_lastStandBleedoutTime", 45);
         players[i] setClientDvar("player_hud_specialty_electric_cherry", 0);
         players[i] setClientDvar("player_hud_specialty_mule_kick", 0);
