@@ -143,6 +143,7 @@ init_strings() {
     PrecacheString( &"ZOMBIE_GAME_OVER");
     PrecacheString( &"ZOMBIE_SURVIVED_ROUND");
     PrecacheString( &"ZOMBIE_SURVIVED_ROUNDS");
+    PrecacheString( &"PROTOTYPE_ZOMBIE_SURVIVED_REWARD");
 
     add_zombie_hint("undefined", &"ZOMBIE_UNDEFINED");
 
@@ -232,7 +233,7 @@ init_levelvars() {
     set_zombie_var("zombie_ai_per_player", 6);
 
     // Scoring
-    set_zombie_var("zombie_score_start", 25000);  // testing purposes (500)
+    set_zombie_var("zombie_score_start", 500);
     set_zombie_var("zombie_score_kill", 50);
     set_zombie_var("zombie_score_damage", 5);
     set_zombie_var("zombie_score_bonus_melee", 80);
@@ -829,10 +830,8 @@ spectators_respawn() {
     while (1) {
         players = GetPlayers();
         for (i = 0; i < players.size; i++) {
-            if (players[i].sessionstate == "spectator") {
-                players[i][
-                    [level.spawnPlayer]
-                ]();
+            if (players[i].sessionstate == "spectator") { 
+                players[i][[level.spawnPlayer]]();
             }
         }
 
@@ -1010,6 +1009,66 @@ round_spawning() {
 
         // TESTING! Only 1 Zombie for testing
         //		level waittill( "forever" );
+    }
+}
+
+
+//award points for now, later this will be level xp
+round_completion_award_points() {
+    maxPoints = 50 * level.round_number;
+    
+    if(maxPoints >= 1000)
+    {
+        maxPoints = 1000;
+    }
+
+    level.round_completion_award_points_text = [];
+
+    for (i = 0; i < 2; i++) {
+        level.round_completion_award_points_text[i] = newHudElem();
+        level.round_completion_award_points_text[i].x = 0;
+        level.round_completion_award_points_text[i].y = 0;
+        level.round_completion_award_points_text[i].alignX = "center";
+        level.round_completion_award_points_text[i].alignY = "middle";
+        level.round_completion_award_points_text[i].horzAlign = "center";
+        level.round_completion_award_points_text[i].vertAlign = "middle";
+        level.round_completion_award_points_text[i].foreground = true;
+        level.round_completion_award_points_text[i].alpha = 1;
+    }
+
+    level.round_completion_award_points_text[0].y = 0;
+    level.round_completion_award_points_text[1].y = 15;
+    level.round_completion_award_points_text[0].x = -15;
+    level.round_completion_award_points_text[1].x = 0;
+
+    wait(0.05);
+
+    level.round_completion_award_points_text[0].fontScale = 1.4;
+
+    level.round_completion_award_points_text[0] setText("+" + maxPoints);
+    
+    wait(0.05);
+
+    level.round_completion_award_points_text[0].fontScale = 1;
+
+    level.round_completion_award_points_text[1] setText(&"PROTOTYPE_ZOMBIE_SURVIVED_REWARD");
+
+    for (i = 0; i < 2; i++) {
+        level.round_completion_award_points_text[i] fadeOverTime(1);
+        level.round_completion_award_points_text[i].alpha = 0;
+        wait(0.75);
+    }
+
+    wait(0.25);
+
+    for (i = 0; i < 2; i++) {
+        level.round_completion_award_points_text[i] destroy();
+    }
+
+    players = GetPlayers();
+
+    for (i = 0; i < players.size; i++) {
+        players[i] maps\_zombiemode_score::add_to_player_score(maxPoints);
     }
 }
 
@@ -1282,6 +1341,8 @@ round_think() {
         level thread round_spawning();
 
         round_wait();
+
+        level thread round_completion_award_points();
 
         level.first_round = false;
 
@@ -2341,17 +2402,13 @@ setup_player_vars()
         // Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
         players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
 
-
-        for (j = 0; j < players.size; j++)
-        {
-            players[j] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[num]);
-            players[j] setClientDvar("plr" + num + "_active", 1);
-        }
+        players[i] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[num]);
+        players[i] setClientDvar("plr" + num + "_active", 1);
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {
             players[i] setClientDvar("sv_cheats", 1);
-            //players[i] maps\_zombiemode_score::add_to_player_score(100000); //comment out for default behaviour
+            players[i] maps\_zombiemode_score::add_to_player_score(100000); //comment out for default behaviour
         }
     }
 }

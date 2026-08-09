@@ -35,7 +35,7 @@ material,mtl_zmb_mdl_samantha_figure_metal_01
 material,mtl_zmb_mdl_samantha_figure_metal_02
 material,mtl_zmb_pwr_up_bonus_points
 material,mtl_zmb_pwr_up_carpenter
-material,mtl_zmb_pwr_up_death_machine
+material,mtl_zmb_pwr_up_dm
 material,mtl_zmb_pwr_up_double_points
 material,mtl_zmb_pwr_up_fire_sale
 material,mtl_zmb_pwr_up_insta_kill
@@ -52,7 +52,7 @@ material,plr_3_hud_portrait
 material,specialty_bonus_points_zombies
 material,specialty_carpenter_zombies
 material,specialty_deadshot_daiquiri_zombies
-material,specialty_death_machine_zombies
+material,specialty_dm_zombies
 material,specialty_double_points_zombies
 material,specialty_double_tap_zombies
 material,specialty_electric_cherry_zombies
@@ -360,7 +360,7 @@ xmodel,zmb_mdl_padlock
 xmodel,zmb_mdl_samantha_figure
 xmodel,zmb_pwr_up_bonus_points
 xmodel,zmb_pwr_up_carpenter
-xmodel,zmb_pwr_up_death_machine
+xmodel,zmb_pwr_up_dm
 xmodel,zmb_pwr_up_double_points
 xmodel,zmb_pwr_up_fire_sale
 xmodel,zmb_pwr_up_insta_kill

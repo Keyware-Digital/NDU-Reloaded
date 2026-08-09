@@ -73,7 +73,7 @@ init_precache() {
     PrecacheShader("specialty_insta_kill_zombies");
     PrecacheShader("specialty_max_ammo_zombies");
     PrecacheShader("specialty_carpenter_zombies");
-    PrecacheShader("specialty_death_machine_zombies");
+    PrecacheShader("specialty_dm_zombies");
     PrecacheShader("specialty_nuke_zombies");
     PrecacheShader("specialty_random_perk_zombies");
     PrecacheShader("specialty_bonus_points_zombies");
@@ -87,7 +87,7 @@ init_powerups() {
     add_zombie_powerup("insta_kill", "zmb_pwr_up_insta_kill", &"ZOMBIE_POWER_UP_INSTA_KILL");
     add_zombie_powerup("max_ammo", "zmb_pwr_up_max_ammo", &"ZOMBIE_POWER_UP_MAX_AMMO");
     add_zombie_powerup("carpenter", "zmb_pwr_up_carpenter", &"ZOMBIE_POWER_UP_CARPENTER");
-    add_zombie_powerup("death_machine", "zmb_pwr_up_death_machine", &"ZOMBIE_POWER_UP_DEATH_MACHINE");
+    add_zombie_powerup("death_machine", "zmb_pwr_up_dm", &"ZOMBIE_POWER_UP_DEATH_MACHINE");
 	add_zombie_powerup("nuke", "zmb_pwr_up_nuke", &"ZOMBIE_POWER_UP_NUKE", "misc/fx_zombie_mini_nuke_hotness");
     add_zombie_powerup("bonus_points", "zmb_pwr_up_bonus_points", &"ZOMBIE_POWER_UP_BONUS_POINTS");
 	add_zombie_powerup("random_perk", "zmb_pwr_up_perks_a_cola_world", &"ZOMBIE_POWER_UP_RANDOM_PERK");
@@ -136,7 +136,7 @@ powerup_hud_overlay()
 	level.powerup_hud[1] setshader("specialty_insta_kill_zombies", icon_size, icon_size);
 	level.powerup_hud[2] setshader("specialty_max_ammo_zombies", icon_size, icon_size);
 	level.powerup_hud[3] setshader("specialty_carpenter_zombies", icon_size, icon_size);
-	level.powerup_hud[4] setshader("specialty_death_machine_zombies", icon_size, icon_size);
+	level.powerup_hud[4] setshader("specialty_dm_zombies", icon_size, icon_size);
 	level.powerup_hud[5] setshader("specialty_nuke_zombies", icon_size, icon_size);
 	level.powerup_hud[6] setshader("specialty_random_perk_zombies", icon_size, icon_size);
 	level.powerup_hud[7] setshader("specialty_bonus_points_zombies", icon_size, icon_size);

@@ -200,6 +200,12 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to Open Door [Cost: &&2]"
 REFERENCE           GAME_BUTTON_TO_REVIVE_PLAYER
 LANG_ENGLISH        "Hold ^3&&1 ^7to Revive"
 
+REFERENCE           ZOMBIE_REVIVE_REWARD
+LANG_ENGLISH        "Revived"
+
+REFERENCE           ZOMBIE_SURVIVED_REWARD
+LANG_ENGLISH        "Survived"
+
 REFERENCE           MENU_GAMEMODE
 LANG_ENGLISH        "Zombies on"
 

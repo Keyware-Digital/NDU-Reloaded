@@ -9,6 +9,7 @@ init()
 	precachestring( &"GAME_PLAYER_NEEDS_TO_BE_REVIVED" );
 	precachestring( &"GAME_PLAYER_IS_REVIVING_YOU" );	
 	precachestring( &"GAME_REVIVING" );
+	precachestring( &"PROTOTYPE_ZOMBIE_REVIVE_REWARD" );
 
 	if( !IsDefined( level.laststandpistol ) )
 	{
@@ -863,6 +864,8 @@ revive_success( reviver )
 	self.ignoreme = false;
 	
 	//self thread say_revived_vo();
+
+	thread revive_completion_award_points();
 }
 
 revive_force_revive( reviver )
@@ -1016,6 +1019,61 @@ mission_failed_during_laststand( dead_player )
 		}
 	}
 	missionfailed();
+}
+
+//bo3 style revive points rewards, will add to player level xp instead
+revive_completion_award_points() {
+	
+    points = 250;
+    
+    self.revive_completion_award_points_text = [];
+
+    for (i = 0; i < 2; i++) {
+        self.revive_completion_award_points_text[i] = newHudElem();
+        self.revive_completion_award_points_text[i].x = 0;
+        self.revive_completion_award_points_text[i].y = 0;
+        self.revive_completion_award_points_text[i].alignX = "center";
+        self.revive_completion_award_points_text[i].alignY = "middle";
+        self.revive_completion_award_points_text[i].horzAlign = "center";
+        self.revive_completion_award_points_text[i].vertAlign = "middle";
+        self.revive_completion_award_points_text[i].foreground = true;
+        self.revive_completion_award_points_text[i].alpha = 1;
+    }
+
+    self.revive_completion_award_points_text[0].y = 0;
+    self.revive_completion_award_points_text[1].y = 15;
+    self.revive_completion_award_points_text[0].x = -15;
+    self.revive_completion_award_points_text[1].x = 0;
+
+    wait(0.05);
+
+    self.revive_completion_award_points_text[0].fontScale = 1.4;
+
+    self.revive_completion_award_points_text[0] setText("+" + points);
+    
+    wait(0.05);
+
+    self.revive_completion_award_points_text[0].fontScale = 1;
+
+    self.revive_completion_award_points_text[1] setText(&"PROTOTYPE_ZOMBIE_REVIVE_REWARD");
+
+    for (i = 0; i < 2; i++) {
+        self.revive_completion_award_points_text[i] fadeOverTime(1);
+        self.revive_completion_award_points_text[i].alpha = 0;
+        wait(0.75);
+    }
+
+    wait(0.25);
+
+    for (i = 0; i < 2; i++) {
+        self.revive_completion_award_points_text[i] destroy();
+    }
+
+    players = GetPlayers();
+
+    for (i = 0; i < players.size; i++) {
+        players[i] maps\_zombiemode_score::add_to_player_score(points);
+    }
 }
 
 quip_sound_trigger()
