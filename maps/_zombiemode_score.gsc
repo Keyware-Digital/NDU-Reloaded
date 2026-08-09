@@ -109,7 +109,7 @@ player_reduce_points( event, mod, hit_location )
 			break; 
 
 		case "downed":
-			percent = level.zombie_vars["penalty_downed_percent"];;
+			percent = level.zombie_vars["penalty_downed_percent"];
 			points = self.score * percent;
 			break; 
 	

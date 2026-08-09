@@ -366,41 +366,44 @@ menuDef
 	rect			-103 -71 0 0 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
 	fullScreen		0
 	visible when 	( !ui_active() && dvarint( ui_hud_hardcore ) == 0 && dvarBool( miniscoreboardhide ) == 0 && dvarBool( hud_missionFailed ) == 0 && dvarint( arcademode ) == 1 || dvarint( zombiemode ) == 1 );
-    // Money / Z$ icons
+
     itemDef
     {
         name			"zmb_points_icon0"
-        rect			-65 -35 24 24 // left: -65 -35 24 24 // right: 47 -35 24 24 
+        rect			-65 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
         visible			when( dvarInt("plr0_active") == 1 )
         decoration
     }
+
     itemDef
     {
         name			"zmb_points_icon1"
-        rect			-40 -70 24 24
+        rect			-65 -54 20 20
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
         visible			when( dvarInt("plr1_active") == 1 )
         decoration
     }
+
     itemDef
     {
         name			"zmb_points_icon2"
-        rect			-15 -105 24 24
+        rect			-65 -76 20 20
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
         visible			when( dvarInt("plr2_active") == 1 )
         decoration
     }
+
     itemDef
     {
         name			"zmb_points_icon3"
-        rect			10 -140 24 24
+        rect			-65 -100 20 20
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
@@ -410,158 +413,173 @@ menuDef
 
     itemDef
     {
-        name 			"playerPortrait_player0_char0"
-        rect			70 -35 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player0_char0"
+        rect			70 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr0_active") == 1 && dvarInt("plr0_hud_portrait") == 0)
         decoration
     }
+	
     itemDef
     {
-        name 			"playerPortrait_player0_char1"
-        rect			70 -35 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player0_char1"
+        rect			70 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr0_active") == 1 && dvarInt("plr0_hud_portrait") == 1)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player0_char2"
-        rect			70 -35 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player0_char2"
+        rect			70 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr0_active") == 1 && dvarInt("plr0_hud_portrait") == 2)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player0_char3"
-        rect			70 -35 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player0_char3"
+        rect			70 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr0_active") == 1 && dvarInt("plr0_hud_portrait") == 3)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player1_char_0"
-        rect			70 -70 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player1_char_0"
+        rect			70 -54 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr1_active") == 1 && dvarInt("plr1_hud_portrait") == 0)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player1_char_1"
-        rect			70 -70 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player1_char_1"
+        rect			70 -54 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr1_active") == 1 && dvarInt("plr1_hud_portrait") == 1)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player1_char_2"
-        rect			70 -70 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player1_char_2"
+        rect			70 -54 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr1_active") == 1 && dvarInt("plr1_hud_portrait") == 2)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player1_char_3"
-        rect			70 -70 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player1_char_3"
+        rect			70 -54 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr1_active") == 1 && dvarInt("plr1_hud_portrait") == 3)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player2_char_0"
-        rect			70 -105 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player2_char_0"
+        rect			70 -76 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr2_active") == 1 && dvarInt("plr2_hud_portrait") == 0)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player2_char_1"
-        rect			70 -105 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player2_char_1"
+        rect			70 -76 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr2_active") == 1 && dvarInt("plr2_hud_portrait") == 1)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player2_char_2"
-        rect			70 -105 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player2_char_2"
+        rect			70 -76 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr2_active") == 1 && dvarInt("plr2_hud_portrait") == 2)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player2_char_3"
-        rect			70 -105 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player2_char_3"
+        rect			70 -76 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr2_active") == 1 && dvarInt("plr2_hud_portrait") == 3)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player3_char_0"
-        rect			70 -140 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player3_char_0"
+        rect			70 -100 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr3_active") == 1 && dvarInt("plr3_hud_portrait") == 0)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player3_char_1"
-        rect			70 -140 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player3_char_1"
+        rect			70 -100 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr3_active") == 1 && dvarInt("plr3_hud_portrait") == 1)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player3_char_2"
-        rect			70 -140 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player3_char_2"
+        rect			70 -100 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
         style		WINDOW_STYLE_SHADER
         visible			when(dvarInt("plr3_active") == 1 && dvarInt("plr3_hud_portrait") == 2)
         decoration
     }
+
     itemDef
     {
-        name 			"playerPortrait_player3_char_3"
-        rect			70 -140 24 24 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        name 			"player_portrait_player3_char_3"
+        rect			70 -100 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
         style		WINDOW_STYLE_SHADER

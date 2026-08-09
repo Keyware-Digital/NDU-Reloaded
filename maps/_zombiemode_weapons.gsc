@@ -1268,7 +1268,7 @@ treasure_chest_give_weapon( weapon_string )
 
 	if( weapon_string == "zombie_bowie_flourish" )
 	{
-		self maps\_zombiemode_bowie::bowie_think( self );
+		self maps\_zombiemode_bowie::bowie_think();
 		return;
 	}
 
