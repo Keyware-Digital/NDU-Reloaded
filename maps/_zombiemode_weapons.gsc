@@ -668,10 +668,10 @@ treasure_chest_think(rand)
     {
         self waittill( "trigger", grabber ); 
 
-        if( grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared) || grabber == level )
-        {
-            if( (grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared)) && 
-                is_player_valid( grabber ) && grabber GetCurrentWeapon() != "mine_bouncing_betty" )
+	if( grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared) || grabber == level || !is_player_valid( user ) )
+	{
+		if( (grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared) || !is_player_valid( user )) && 
+			is_player_valid( grabber ) && grabber GetCurrentWeapon() != "mine_bouncing_betty" )
             {
                 self notify( "user_grabbed_weapon" );
                 if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
@@ -732,6 +732,17 @@ treasure_chest_user_hint( trigger, user )
         if( !isDefined( trigger ) || !isDefined( trigger.grab_weapon_hint ) || !trigger.grab_weapon_hint )
         {
             break;
+        }
+
+		// Safety check to ensure the user is still valid
+        if( !is_player_valid( user ) )
+        {
+            trigger SetVisibleToAll();
+            players = GetPlayers();
+            for( i = 0; i < players.size; i++ )
+                players[i].ignoreTriggers = false;
+            wait 0.1;
+            continue;
         }
 
         // Once the weapon has been shared, everyone can see + use it
@@ -2584,6 +2595,6 @@ monitor_melee_share(player, weaponmodelstruct)
                 break;
             }
         }
-        wait 0.05; // Check every 0.05 seconds
+        wait 0.05;
     }
 }
