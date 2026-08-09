@@ -151,10 +151,9 @@ setup_player_dolphin_dive() {
 
 			self thread maps\_sounds::dolphin_dive_land_sound();
 			
-			//code below might be a problem
-			//self SetVelocity(AnglesToForward(angles) * 450);
+			self SetVelocity(AnglesToForward(angles) * 450);
 
-			//self setStance("prone");
+			self setStance("prone");
 
 			self SetVelocity((0, 0, 0));
 
