@@ -2572,16 +2572,25 @@ player_lunge_knife_exert_sounds()
 {
     self endon( "death" );
 
-    while(1)
+    while ( 1 )
     {
-        wait (0.01); // was 1.25, moved "waits" to sounds.gsc.
-
-        if(self IsMeleeing())
+        if ( self IsMeleeing() )
         {
+            if ( isDefined( self.player_is_speaking ) && self.player_is_speaking )
+            {
+                self.player_is_speaking = 0;
+                self notify( "melee_sound_done" ); 
+                self notify( "active_melee_vox" );
+            }
+
+            // still go through the helper so the global speaking system stays intact
             self thread player_vox_helper( ::melee_vox_sound, "melee_sound_done" );
+
+            while ( self IsMeleeing() )
+                wait 0.05;
         }
 
-        wait(0.01);  //was 0.05, prevent sound from playing more than once during long knive lunges
+        wait 0.05;
     }
 }
 

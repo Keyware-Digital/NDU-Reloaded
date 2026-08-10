@@ -376,7 +376,8 @@ mule_kick_update_hud()
       && current == self.muleLastWeapon )
     {
         self.perk_hud[ "specialty_extraammo" ] setShader( "specialty_mule_kick_glow_zombies", 24, 24 );
-        self setClientDvar( "player_hud_specialty_mule_kick", 1 );
+        self setClientDvar( "player_hud_specialty_mule_kick", 0 );
+        //self setClientDvar( "player_hud_specialty_mule_kick", 1 );
     }
     else
     {
@@ -385,7 +386,7 @@ mule_kick_update_hud()
     }
 }
 
-// Fixed ugly bug while holding and/or cooking the grenade
+// Fixed nasty bug while holding and/or cooking the grenade
 player_cook_grenade_watcher()
 {
 	self endon( "disconnect" ); 

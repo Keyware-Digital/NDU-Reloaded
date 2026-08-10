@@ -82,17 +82,29 @@ death_sound() {
     
 }
 
-melee_vox_sound() {
-    index = maps\_zombiemode_weapons::get_player_index(self);
-    meleeSound = "_knife_exert_" + RandomInt(3);
-    melee_vox_sound = Spawn("script_origin", self.origin);
-	melee_vox_sound PlaySound("plr_" + index + meleeSound, "knife_exert_sound_done");
-	melee_vox_sound waittill("knife_exert_sound_done");
-	melee_vox_sound Delete();
-	wait 0.55;	//cool down to prevent duplicate sounds on knife lunges
+melee_vox_sound()
+{
+    self notify( "active_melee_vox" );
+    self endon( "active_melee_vox" );
+    self endon( "death" );
 
-	self notify("melee_sound_done");
+    if ( isDefined( self.melee_vox_ent ) )
+    {
+        self.melee_vox_ent Delete();
+        self.melee_vox_ent = undefined;
+    }
 
+    index = maps\_zombiemode_weapons::get_player_index( self );
+    meleeSound = "_knife_exert_" + RandomInt( 3 );
+
+    self.melee_vox_ent = Spawn( "script_origin", self.origin );
+    self.melee_vox_ent PlaySound( "plr_" + index + meleeSound, "knife_exert_sound_done" );
+    self.melee_vox_ent waittill( "knife_exert_sound_done" );
+    self.melee_vox_ent Delete();
+    self.melee_vox_ent = undefined;
+	//wait 0.55;	//cool down to prevent duplicate sounds on knife lunges
+
+    self notify( "melee_sound_done" );
 }
 
 stielhandgranate_vox_sound() {
