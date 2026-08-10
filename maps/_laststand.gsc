@@ -1046,11 +1046,11 @@ revive_completion_award_points() {
 
     level.revive_completion_award_points_text[1] setText(&"PROTOTYPE_ZOMBIE_REVIVE_REWARD");
 
-    wait(0.25);
+    wait(0.1);
 
     level.revive_completion_award_points_text[0].fontScale = 1.4;
     
-    wait(0.25);
+    wait(0.1);
 
     level.revive_completion_award_points_text[0].fontScale = 1;
 

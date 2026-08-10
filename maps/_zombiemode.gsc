@@ -1048,11 +1048,11 @@ round_completion_award_points() {
 
     level.round_completion_award_points_text[1] setText(&"PROTOTYPE_ZOMBIE_SURVIVED_REWARD");
 
-    wait(0.25);
+    wait(0.1);
 
     level.round_completion_award_points_text[0].fontScale = 1.4;
     
-    wait(0.25);
+    wait(0.1);
 
     level.round_completion_award_points_text[0].fontScale = 1;
 
@@ -1133,7 +1133,7 @@ round_start() {
     //level thread bunker_ui(); 
 
     level.chalk_hud1 = create_chalk_hud();
-    level.chalk_hud2 = create_chalk_hud(64);
+    level.chalk_hud2 = create_chalk_hud(59);
 
     //	level waittill( "introscreen_done" );
 
@@ -1154,7 +1154,7 @@ create_chalk_hud(x) {
     hud.x = x;
     hud.alpha = 0;
 
-    hud SetShader("hud_chalk_1", 64, 64);
+    hud SetShader("hud_chalk_1", 48, 48);
 
     return hud;
 }
@@ -1173,7 +1173,7 @@ chalk_one_up() {
         round.alignY = "bottom";
         round.horzAlign = "center";
         round.vertAlign = "bottom";
-        round.fontscale = 16;
+        round.fontscale = 8;
         round.color = (1, 1, 1);
 		round.x = 0;
 		round.y = -265;
@@ -1192,7 +1192,7 @@ chalk_one_up() {
     hud = undefined;
     if (level.round_number < 6 || level.round_number > 10) {
         hud = level.chalk_hud1;
-        hud.fontscale = 32;
+        hud.fontscale = 24;
     } else if (level.round_number < 11) {
         hud = level.chalk_hud2;
     }
@@ -1202,7 +1202,7 @@ chalk_one_up() {
 		hud.alpha = 0;
 		hud.horzAlign = "center";
 		hud.x = -5;
-		hud.y = -200;
+		hud.y = -210;
 	}
 
     hud FadeOverTime(0.5);
@@ -1241,7 +1241,7 @@ chalk_one_up() {
         level notify("intro_hud_done");
         hud MoveOverTime(1.75);
         hud.horzAlign = "left";
-        //		hud.x = 0;
+        hud.x = 7.5;
         hud.y = 0;
         wait(2);
 
@@ -1249,9 +1249,9 @@ chalk_one_up() {
     }
 
     if (level.round_number > 10) {} else if (level.round_number > 5) {
-        hud SetShader("hud_chalk_" + (level.round_number - 5), 64, 64);
+        hud SetShader("hud_chalk_" + (level.round_number - 5), 48, 48);
     } else if (level.round_number > 1) {
-        hud SetShader("hud_chalk_" + level.round_number, 64, 64);
+        hud SetShader("hud_chalk_" + level.round_number, 48, 48);
     }
 
     //	ReportMTU(level.round_number);	// In network debug instrumented builds, causes network spike report to generate.
