@@ -1041,17 +1041,17 @@ round_completion_award_points() {
     level.round_completion_award_points_text[0].x = -15;
     level.round_completion_award_points_text[1].x = 0;
 
-    wait(0.05);
-
-    level.round_completion_award_points_text[0].fontScale = 1.4;
-
     level.round_completion_award_points_text[0] setText("+" + maxPoints);
-    
-    wait(0.05);
-
-    level.round_completion_award_points_text[0].fontScale = 1;
 
     level.round_completion_award_points_text[1] setText(&"PROTOTYPE_ZOMBIE_SURVIVED_REWARD");
+
+    wait(0.25);
+
+    level.round_completion_award_points_text[0].fontScale = 1.4;
+    
+    wait(0.25);
+
+    level.round_completion_award_points_text[0].fontScale = 1;
 
     for (i = 0; i < 2; i++) {
         level.round_completion_award_points_text[i] fadeOverTime(1);
@@ -2407,13 +2407,13 @@ setup_player_vars()
 
         num = players[i].entity_num;
 
-        // Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
-        players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
-
         for (j = 0; j < players.size; j++) {
             players[j] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[num]);
             players[j] setClientDvar("plr" + num + "_active", 1);
         }
+
+        // Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
+        players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {

@@ -1042,17 +1042,17 @@ revive_completion_award_points() {
     self.revive_completion_award_points_text[0].x = -15;
     self.revive_completion_award_points_text[1].x = 0;
 
-    wait(0.05);
+    level.revive_completion_award_points_text[0] setText("+" + points);
 
-    self.revive_completion_award_points_text[0].fontScale = 1.4;
+    level.revive_completion_award_points_text[1] setText(&"PROTOTYPE_ZOMBIE_REVIVE_REWARD");
 
-    self.revive_completion_award_points_text[0] setText("+" + points);
+    wait(0.25);
+
+    level.revive_completion_award_points_text[0].fontScale = 1.4;
     
-    wait(0.05);
+    wait(0.25);
 
-    self.revive_completion_award_points_text[0].fontScale = 1;
-
-    self.revive_completion_award_points_text[1] setText(&"PROTOTYPE_ZOMBIE_REVIVE_REWARD");
+    level.revive_completion_award_points_text[0].fontScale = 1;
 
     for (i = 0; i < 2; i++) {
         self.revive_completion_award_points_text[i] fadeOverTime(1);
