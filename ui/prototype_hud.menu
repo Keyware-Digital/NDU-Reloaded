@@ -370,7 +370,7 @@ menuDef
     itemDef
     {
         name			"zmb_points_icon0"
-        rect			-65 -31 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			-65 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
@@ -381,7 +381,7 @@ menuDef
     itemDef
     {
         name			"zmb_points_icon1"
-        rect			-65 -53 20 20
+        rect			-65 -54 20 20
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
@@ -392,7 +392,7 @@ menuDef
     itemDef
     {
         name			"zmb_points_icon2"
-        rect			-65 -75 20 20
+        rect			-65 -76 20 20
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
@@ -403,7 +403,7 @@ menuDef
     itemDef
     {
         name			"zmb_points_icon3"
-        rect			-65 -99 20 20
+        rect			-65 -100 20 20
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
@@ -414,7 +414,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player0_char0"
-        rect			65 -31 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -425,7 +425,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player0_char1"
-        rect			65 -31 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -436,7 +436,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player0_char2"
-        rect			65 -31 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -447,7 +447,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player0_char3"
-        rect			65 -31 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -32 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -458,7 +458,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player1_char_0"
-        rect			65 -53 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -54 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -469,7 +469,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player1_char_1"
-        rect			65 -53 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -54 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -480,7 +480,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player1_char_2"
-        rect			65 -53 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -54 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -491,7 +491,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player1_char_3"
-        rect			65 -53 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -54 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -502,7 +502,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player2_char_0"
-        rect			65 -75 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -76 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -513,7 +513,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player2_char_1"
-        rect			65 -75 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -76 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -524,7 +524,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player2_char_2"
-        rect			65 -75 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -76 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -535,7 +535,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player2_char_3"
-        rect			65 -75 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -76 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -546,7 +546,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player3_char_0"
-        rect			65 -99 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -100 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_0_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -557,7 +557,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player3_char_1"
-        rect			65 -99 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -100 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_1_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -568,7 +568,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player3_char_2"
-        rect			65 -99 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -100 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_2_hud_portrait"
         style		WINDOW_STYLE_SHADER
@@ -579,7 +579,7 @@ menuDef
     itemDef
     {
         name 			"player_portrait_player3_char_3"
-        rect			65 -99 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			65 -100 20 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         forecolor		1 1 1 1
         background		"plr_3_hud_portrait"
         style		WINDOW_STYLE_SHADER
