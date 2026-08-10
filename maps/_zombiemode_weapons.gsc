@@ -664,63 +664,64 @@ treasure_chest_think(rand)
 
     // make sure the guy that spent the money gets the item
     // SRS 9/3/2008: ...or item goes back into the box if we time out
-    while( 1 )
-    {
-        self waittill( "trigger", grabber ); 
-
-	if( grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared) || grabber == level || !is_player_valid( user ) )
+	while( 1 )
 	{
-		if( (grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared) || !is_player_valid( user )) && 
-			is_player_valid( grabber ) && grabber GetCurrentWeapon() != "mine_bouncing_betty" )
-            {
-                self notify( "user_grabbed_weapon" );
-                if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
-                {
-                    if( !grabber HasPerk("specialty_altmelee") || grabber.has_bowie)
-                    {
-                        weapon_spawn_org notify("weapon_grabbed");
-                        lid thread treasure_chest_lid_close( self.timedOut );
-                        self.grab_weapon_hint = false;
-                        self disable_trigger();
-                        grabber maps\_zombiemode_bowie::give_bowie();
-                        self notify("weapon_interaction_done"); // Stop melee monitoring
-                        break;
-                    }
-                    self notify("weapon_interaction_done"); // Stop melee monitoring
-                    break;
-                }
-                else
-                {
-                    grabber thread treasure_chest_give_weapon( weapon_spawn_org.weapon_string );
-                    self notify("weapon_interaction_done"); // Stop melee monitoring
-                    break;
-                }
-            }
-            else if( grabber == level )
-            {
-                // it timed out
-                self.timedOut = true;
-                self notify("weapon_interaction_done"); // Stop melee monitoring
-                break;
-            }
-        }
+		self waittill( "trigger", grabber ); 
+
+		if( grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared) || grabber == level )
+		{
+			if( (grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared)) && 
+				is_player_valid( grabber ) && grabber GetCurrentWeapon() != "mine_bouncing_betty" )
+			{
+				self notify( "user_grabbed_weapon" );
+				if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
+				{
+					if( !grabber HasPerk("specialty_altmelee") || grabber.has_bowie )
+					{
+						weapon_spawn_org notify("weapon_grabbed");
+						lid thread treasure_chest_lid_close( self.timedOut );
+						self.grab_weapon_hint = false;
+						self disable_trigger();
+						grabber maps\_zombiemode_bowie::give_bowie();
+						self notify("weapon_interaction_done"); // Stops melee monitoring
+						break;
+					}
+					self notify("weapon_interaction_done"); 
+					break;
+				}
+				else
+				{
+					grabber thread treasure_chest_give_weapon( weapon_spawn_org.weapon_string );
+					self notify("weapon_interaction_done"); 
+					break;
+				}
+			}
+			else if( grabber == level )
+			{
+				// it timed out
+				self.timedOut = true;
+				self notify("weapon_interaction_done"); 
+				break;
+			}
+		}
 		else
-        {
-            self play_sound_on_ent("no_purchase"); // Comment out to avoid sound alias error
-        }
-        wait 0.05; 
-    }
-    if(weapon_spawn_org.weapon_string != "zombie_bowie_flourish")
-    {
-        self.grab_weapon_hint = false;
-        weapon_spawn_org notify( "weapon_grabbed" );
-        lid thread treasure_chest_lid_close( self.timedOut );
-        self disable_trigger();
-        self SetVisibleToAll(); // Reset visibility for all players
-        wait 3;
-    }
-    self enable_trigger();     
-    self thread treasure_chest_think(); 
+		{
+			self play_sound_on_ent("no_purchase"); // Comment out to avoid sound alias error
+		}
+		wait 0.05; 
+	}
+
+	if( weapon_spawn_org.weapon_string != "zombie_bowie_flourish" )
+	{
+		self.grab_weapon_hint = false;
+		weapon_spawn_org notify( "weapon_grabbed" );
+		lid thread treasure_chest_lid_close( self.timedOut );
+		self disable_trigger();
+		self SetVisibleToAll(); // Reset visibility for all players
+		wait 3;
+	}
+	self enable_trigger();     
+	self thread treasure_chest_think(); 
 }
 
 treasure_chest_user_hint( trigger, user )
@@ -734,17 +735,6 @@ treasure_chest_user_hint( trigger, user )
             break;
         }
 
-		// Safety check to ensure the user is still valid
-        if( !is_player_valid( user ) )
-        {
-            trigger SetVisibleToAll();
-            players = GetPlayers();
-            for( i = 0; i < players.size; i++ )
-                players[i].ignoreTriggers = false;
-            wait 0.1;
-            continue;
-        }
-
         // Once the weapon has been shared, everyone can see + use it
         if( isDefined( trigger.weapon_shared ) && trigger.weapon_shared )
         {
@@ -755,7 +745,6 @@ treasure_chest_user_hint( trigger, user )
             {
                 players[i].ignoreTriggers = false;
             }
-
             wait( 0.1 );
             continue;
         }
@@ -764,33 +753,37 @@ treasure_chest_user_hint( trigger, user )
         players = GetPlayers();
         for( i = 0; i < players.size; i++ )
         {
-            if( players[i] == user )
+            if( isDefined( user ) && isDefined( players[i] ) && players[i] == user )
             {
                 trigger SetInvisibleToPlayer( players[i], false );
-                continue;
-            }
-
-            trigger SetInvisibleToPlayer( players[i], true );
-
-            if( DistanceSquared( players[i].origin, trigger.origin ) < dist )
-            {
-                players[i].ignoreTriggers = true;
             }
             else
             {
-                players[i].ignoreTriggers = false;
+                trigger SetInvisibleToPlayer( players[i], true );
+
+                if( isDefined( players[i] ) && DistanceSquared( players[i].origin, trigger.origin ) < dist )
+                {
+                    players[i].ignoreTriggers = true;
+                }
+                else if( isDefined( players[i] ) )
+                {
+                    players[i].ignoreTriggers = false;
+                }
             }
         }
 
         wait( 0.1 );
     }
 
-    // Cleanup after the interaction ends
+	// Cleanup after the interaction ends
     players = GetPlayers();
     for( i = 0; i < players.size; i++ )
     {
-        trigger SetInvisibleToPlayer( players[i], false );
-        players[i].ignoreTriggers = false;
+        if( isDefined( players[i] ) )
+        {
+            trigger SetInvisibleToPlayer( players[i], false );
+            players[i].ignoreTriggers = false;
+        }
     }
 }
 

@@ -228,32 +228,30 @@ laststand_take_player_weapons()
 
 	self.weaponAmmo = [];
 
+    // Character-specific default first
+    player_index = maps\_zombiemode_weapons::get_player_index( self );
+    if ( IsDefined( level.player_specific_laststand_pistol ) && IsDefined( level.player_specific_laststand_pistol[ player_index ] ) )
+    {
+        self.laststandpistol = level.player_specific_laststand_pistol[ player_index ];
+    }
+
 	for( i = 0; i < self.weaponInventory.size; i++ )
 	{
 		weapon = self.weaponInventory[i];
 
 		if(WeaponClass(weapon) == "pistol")
 		{
-			if(weapon == "ray_gun_mk1_v2")
-			{
-				self.laststandpistol = "ray_gun_mk1_v2";
-			}
-			else if(weapon == "sw_357")
-			{
-				self.laststandpistol = "sw_357";
-			}
-			else if(weapon == "walther")
-			{
-				self.laststandpistol = "walther";
-			}
-			else if(weapon == "tokarev")
-			{
-				self.laststandpistol = "tokarev";
-			}
-			else if(weapon == "colt")
-			{
-				self.laststandpistol = "colt";
-			}
+            // Strict priority only for the better pistols (Ray > .357)
+            if(weapon == "ray_gun_mk1_v2")
+            {
+                self.laststandpistol = "ray_gun_mk1_v2";
+            }
+            else if(weapon == "sw_357" && self.laststandpistol != "ray_gun_mk1_v2")
+            {
+                self.laststandpistol = "sw_357";
+            }
+            // Do NOT re-set walther / tokarev / colt / colt_wet —
+            // the character-specific default already handled it.
 		}
 		
 		switch( weapon )
@@ -287,7 +285,6 @@ laststand_take_player_weapons()
 		self.laststandpistol = "colt_dirty_harry";
 	}
 }
-
 
 // self = a player
 laststand_giveback_player_weapons()
