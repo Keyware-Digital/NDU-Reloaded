@@ -2382,6 +2382,14 @@ setup_player_vars()
 
     players = GetPlayers();
 
+    for (i = 0; i < players.size; i++)
+    {
+        for (id = 0; id < 4; id++)
+        {
+            players[i] setClientDvar("plr" + id + "_active", 0);
+        }
+    }
+
     for (i = 0; i < players.size; i++) {
         players[i] setClientDvar("player_lastStandBleedoutTime", 45);
         players[i] setClientDvar("player_hud_specialty_electric_cherry", 0);
@@ -2402,8 +2410,10 @@ setup_player_vars()
         // Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
         players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
 
-        players[i] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[num]);
-        players[i] setClientDvar("plr" + num + "_active", 1);
+        for (j = 0; j < players.size; j++) {
+            players[j] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[num]);
+            players[j] setClientDvar("plr" + num + "_active", 1);
+        }
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {
