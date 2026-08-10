@@ -42,7 +42,7 @@ setup_player_dolphin_dive() {
 	level.dirt_shader = "overlay_screen_dirt";
 
 	level.dirt_fade_time = 0.35;
-	level.dirt_time = 2;
+	level.dirt_time = 1;
 	
 	thread setup_dirt_overlay();
 	
