@@ -38,6 +38,13 @@ setup_player_dolphin_dive() {
 	self.can_flop = false;
 	dolphin_dive_anim_start = %zmb_player_dolphin_dive_prone;
 	dolphin_dive_anim_land = %zmb_player_dolphin_dive_land;
+
+	level.dirt_shader = "overlay_screen_dirt";
+
+	level.dirt_fade_time = 0.35;
+	level.dirt_time = 2;
+	
+	thread setup_dirt_overlay();
 	
 	while(1) {
 		angles = self GetPlayerAngles();
@@ -191,9 +198,11 @@ setup_player_dolphin_dive() {
 
 			self.is_diving = false;
 
-			origin = self GetEye() + (AnglesToForward(self GetPlayerAngles()) * 3.25);
+			//origin = self GetEye() + (AnglesToForward(self GetPlayerAngles()) * 3.25);
 
-			PlayFX(level._effect["rise_dust"], origin);
+			self thread player_dirt_overlay();
+
+			PlayFXOnTag(level._effect[ "dive_dust" ], self, "J_SpineLower" );
 
 			// Wait until the player stands up before allowing a new dive
             while( self getStance() != "stand" ) {
@@ -209,4 +218,42 @@ setup_player_dolphin_dive() {
         }
 	    wait 0.05;
 	}
+}
+
+setup_dirt_overlay()
+{	
+	flag_wait( "all_players_connected" );
+	players = GetPlayers();
+	
+	for( i = 0; i < players.size; i++ )
+	{
+		players[i].dirt_hud = create_simple_hud(players[i]);
+		players[i].dirt_hud.x = 0; 
+		players[i].dirt_hud.y = 0; 
+		players[i].dirt_hud.horzAlign = "fullscreen"; 
+		players[i].dirt_hud.vertAlign = "fullscreen"; 
+		players[i].dirt_hud.foreground = true;
+		players[i].dirt_hud.alpha = 0;
+		players[i].dirt_hud SetShader( level.dirt_shader, 640, 480 );
+		players[i].dirt_hud.sort = 1;
+	}
+}
+
+player_dirt_overlay() {
+	//notify and endon is needed to immediately repeat the overlay on dive instead of waiting for the dirt overlay to finish
+	//use this trick to make player melee grunt sounds more responsive 
+	self notify("active_dirt_overlay");
+	self endon("active_dirt_overlay");
+
+	self.dirt_hud setShader(level.dirt_shader, 640, 480);
+
+	self.dirt_hud FadeOverTime(level.dirt_fade_time);
+
+	self.dirt_hud.alpha = 0.75;
+
+	wait( level.dirt_time );
+
+	self.dirt_hud FadeOverTime(level.dirt_fade_time);
+
+	self.dirt_hud.alpha = 0;
 }

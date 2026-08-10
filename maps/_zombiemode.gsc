@@ -117,6 +117,7 @@ init_shaders() {
     PrecacheShader("hud_chalk_4");
     PrecacheShader("hud_chalk_5");
     PrecacheShader("hud_zmb_points");
+    PrecacheShader("overlay_screen_dirt");
 }
 
 init_models() {
@@ -286,6 +287,8 @@ init_fx() {
     level._effect["rise_burst"] = LoadFx("maps/zombie/fx_mp_zombie_hand_dirt_burst");
     level._effect["rise_billow"] = LoadFx("maps/zombie/fx_mp_zombie_body_dirt_billowing");
     level._effect["rise_dust"] = LoadFx("maps/zombie/fx_mp_zombie_body_dust_falling");
+    level._effect["dive_dust"] = LoadFx("maps/zombie/fx_dust_impact_body");
+
     // Flamethrower
     level._effect["character_fire_pain_sm"] = loadfx("env/fire/fx_fire_player_sm_1sec");
     level._effect["character_fire_death_sm"] = loadfx("env/fire/fx_fire_player_md");
