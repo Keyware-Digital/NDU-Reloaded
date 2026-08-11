@@ -309,8 +309,6 @@ set_player_score_hud( init )
 // Creates a hudelem used for the points awarded/taken away
 create_highlight_hud( x, y, value )
 {
-	font_size = 8; 
-
 	if( IsSplitScreen() )
 	{
 		hud = NewClientHudElem( self );
@@ -326,7 +324,7 @@ create_highlight_hud( x, y, value )
 	hud.sort = 0; 
 	hud.x = x; 
 	hud.y = y; 
-	hud.fontScale = font_size; 
+	hud.fontScale = 1; 
 	hud.alignX = "right"; 
 	hud.alignY = "middle"; 
 	hud.horzAlign = "right";
