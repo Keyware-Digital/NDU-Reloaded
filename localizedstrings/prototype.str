@@ -206,8 +206,14 @@ LANG_ENGLISH        "Revived"
 REFERENCE           ZOMBIE_SURVIVED_REWARD
 LANG_ENGLISH        "Survived"
 
-REFERENCE           MENU_GAMEMODE
-LANG_ENGLISH        "Zombies on"
+REFERENCE           GAMEMODE
+LANG_ENGLISH        "Zombies"
+
+REFERENCE           MENU_SKIP
+LANG_ENGLISH        "Press ^3[LEFT MOUSE] ^7to skip"
+
+REFERENCE           MENU_PREPOSITION
+LANG_ENGLISH        "on"
 
 REFERENCE           MENU_SOLO
 LANG_ENGLISH        "PLAY SOLO"

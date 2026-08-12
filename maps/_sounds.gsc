@@ -692,6 +692,13 @@ samantha_musicbox_sound_loop(samantha_figure)
     samantha_music_box_sound Delete();
 }
 
+samantha_disappear_sound() {
+    samantha_disappear_sound = Spawn("script_origin", self.origin);
+    samantha_disappear_sound PlaySound("samantha_disappear", "samantha_disappear_sound_done");
+    samantha_disappear_sound waittill("samantha_disappear_sound_done");
+    samantha_disappear_sound Delete();
+}
+
 samantha_fail_sound() {
     samantha_fail_sound = Spawn("script_origin", self.origin);
     samantha_fail_sound PlaySound("samantha_fail", "samantha_fail_sound_done");
@@ -716,7 +723,6 @@ radio_ee_track_sound() {
     level.radioEETrackIndex++;
 
     radio_ee_track_sound = Spawn("script_origin", self.origin);
-    radio_ee_track_sound PlaySound(radioEeTrackSound);
     radio_ee_track_sound PlaySound(radioEeTrackSound, "radio_ee_track_sound_done");
     radio_ee_track_sound waittill("radio_ee_track_sound_done");
     radio_ee_track_sound Delete();

@@ -1,5 +1,5 @@
 //xanim,o_monkey_bomb
-fx,maps/zombie/fx_dust_impact_body
+fx,maps/zombie/fx_dust_impact_plume_med
 fx,maps/zombie/fx_mp_zombie_body_dirt_billowing
 fx,maps/zombie/fx_mp_zombie_body_dust_falling
 fx,maps/zombie/fx_mp_zombie_hand_dirt_burst
@@ -72,6 +72,8 @@ material,specialty_random_perk_zombies
 material,specialty_speed_cola_zombies
 material,specialty_stamin_up_zombies
 material,specialty_widows_wine_zombies
+menufile,ui/prototype_pregame.menu
+menufile,ui/prototype_connect.menu
 menufile,ui/prototype_vid_restart_pc.menu
 menufile,ui/prototype_filter.menu
 menufile,ui/prototype_options_control_defaults.menu
@@ -372,3 +374,6 @@ xmodel,zmb_pwr_up_perks_a_cola_world
 xmodel,zombie_teddybear
 stringtable,mp/gametypeinfo.csv
 stringtable,mp/mapinfo.csv
+stringtable,maps/didyouknow_coop.csv
+stringtable,maps/gametypestable.csv
+stringtable,maps/mapstable.csv

@@ -95,6 +95,7 @@ handle_initial_samantha_figure() {
 		if(IsDefined(initial_samantha_figure_trigger)) {
 			for (i = 0; i < players.size; i++) {																			   		   
 				if(players[i] IsTouching (initial_samantha_figure_trigger) && players[i] UseButtonPressed()) {
+					initial_samantha_figure thread maps\_sounds::samantha_disappear_sound();
 					playFX(level._effect["raygun_impact"], initial_samantha_figure.origin);
 					initial_samantha_figure delete();
 					initial_samantha_figure_trigger delete();
@@ -116,10 +117,6 @@ spawn_samantha_figures(position, angles) {
     samantha_figure setModel("zmb_mdl_samantha_figure");
 
 	samantha_figure thread maps\_sounds::samantha_musicbox_sound_loop(samantha_figure);
-
-	if (level.samantha_figure_destroyed == 1) {
-		playFX(level._effect["raygun_impact"], samantha_figure.origin);
-	}
 	
     samantha_figure solid();
     samantha_figure setCanDamage(true);
@@ -174,10 +171,8 @@ handle_samantha_figures() {
 		last_samantha_figure.angles = (0, 45, 0);
 		last_samantha_figure setModel("zmb_mdl_samantha_figure");
 		last_samantha_figure solid();
-
-		if (level.last_samantha_figure_interacted == 1) {
-			playFX(level._effect["raygun_impact"], last_samantha_figure.origin);
-		}
+		thread rotate_samantha_figure(last_samantha_figure);
+		last_samantha_figure thread maps\_sounds::samantha_musicbox_sound_loop(last_samantha_figure);
 
 		while(1) {
 			players = GetPlayers();
@@ -186,14 +181,13 @@ handle_samantha_figures() {
 				for (i = 0; i < players.size; i++) {																			   		   
 					if(players[i] IsTouching (last_samantha_figure_trigger) && players[i] UseButtonPressed()) {
 						playFX(level._effect["raygun_impact"], last_samantha_figure.origin);
+						last_samantha_figure notify("stop_musicbox_sound");
+    					last_samantha_figure notify("stop_rotating");
 						last_samantha_figure delete();
 						last_samantha_figure_trigger delete();
-						//last_samantha_figure notify("stop_musicbox_sound");
-    					//last_samantha_figure notify("stop_rotating");
 						level.last_samantha_figure_interacted = 1;
 						handle_samantha_ee_reward();
 						level.samantha_ee_completed = true;
-						play_sound_2D("bright_sting");
 						//iprintln("StG44 now available in the cabinet!");
 
 						break;
@@ -229,8 +223,9 @@ samantha_figure_damage(samantha_figure) {
 	
 	while(isDefined(samantha_figure)) {
 		samantha_figure notify("stop_musicbox_sound");
-
+		samantha_figure thread maps\_sounds::samantha_disappear_sound();
 		playFX(level._effect["raygun_impact"], samantha_figure.origin);
+		samantha_figure notify("stop_rotating");
 
 		samantha_figure delete();
 
@@ -257,11 +252,10 @@ handle_samantha_figure_timeout(samantha_figure) {
     samantha_figure waittill("samantha_timeout");
 
     if(isDefined(samantha_figure)) {
-		samantha_figure notify("stop_rotating");
-
         samantha_figure notify("stop_musicbox_sound");
 		samantha_figure maps\_sounds::samantha_fail_sound();
 		playFX(level._effect["raygun_impact"], samantha_figure.origin);
+		samantha_figure notify("stop_rotating");
         samantha_figure delete();
 
 		handle_initial_samantha_figure();
@@ -281,8 +275,6 @@ handle_samantha_ee_reward() {
 			break;
 		}
 	}
-
-	play_sound_2D("bright_sting");
 
 	level.zombie_vars["zombie_drop_item"] = 1;
 

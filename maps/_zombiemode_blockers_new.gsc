@@ -867,108 +867,102 @@ rebuild_barrier_reward_reset()
 
 remove_chunk( chunk, node, destroy_immediately )
 {
-    chunk play_sound_on_ent( "break_barrier_piece" );
-    
-    chunk NotSolid();
+	EarthQuake(RandomFloatRange(0.1, 0.15), 0.7, chunk.origin, 200);
 
-    //if ( isDefined( destroy_immediately ) && destroy_immediately)
-    //{
-    //	chunk.destroyed = true;
-    //}
-    //
-    fx = "wood_chunk_destory";
-    if( isDefined( self.script_fxid ) )
-    {
-        fx = self.script_fxid;
-    }
+	chunk play_sound_on_ent( "break_barrier_piece" );
+	
+	chunk NotSolid();
 
-    playfx( level._effect[fx], chunk.origin ); 
-    //playfx( level._effect[fx], chunk.origin + ( randomint( 20 ), randomint( 20 ), randomint( 10 ) ) ); 
-    //playfx( level._effect[fx], chunk.origin + ( randomint( 40 ), randomint( 40 ), randomint( 20 ) ) ); 
+	//if ( isDefined( destroy_immediately ) && destroy_immediately)
+	//{
+	//	chunk.destroyed = true;
+	//}
+	//
+	fx = "wood_chunk_destory";
+	if( isDefined( self.script_fxid ) )
+	{
+		fx = self.script_fxid;
+	}
 
-	// fire earthquake + mark destroyed immediately on the "board" notetrack
-    chunk.destroyed = true;
-    chunk.target_by_zombie = undefined;
-    chunk.mid_repair = undefined;
-    chunk notify( "destroyed" );
+	playfx( level._effect[fx], chunk.origin ); 
+	//playfx( level._effect[fx], chunk.origin + ( randomint( 20 ), randomint( 20 ), randomint( 10 ) ) ); 
+	//playfx( level._effect[fx], chunk.origin + ( randomint( 40 ), randomint( 40 ), randomint( 20 ) ) ); 
 
-    if( all_chunks_destroyed( node.barrier_chunks ) )
-    {
-        EarthQuake( randomfloatrange( 0.5, 0.8 ), 0.5, chunk.origin, 300 ); 
-    
-        if( isDefined( node.clip ) )
-        {
-            node.clip ConnectPaths(); 
-            wait( 0.05 ); 
-            node.clip disable_trigger(); 
-        }
-        else
-        {
-            for( i = 0; i < node.barrier_chunks.size; i++ )
-            {
-                node.barrier_chunks[i] ConnectPaths(); 
-            }
-        }
-    }
-    else
-    {
-        EarthQuake( RandomFloatRange( 0.1, 0.15 ), 0.2, chunk.origin, 200 ); 
-    }
-    // === end fix ===
-
-    if( isDefined( chunk.script_moveoverride ) && chunk.script_moveoverride )
-    {
-        chunk Hide();
-    }
-    else
-    {
+	if( isDefined( chunk.script_moveoverride ) && chunk.script_moveoverride )
+	{
+		chunk Hide();
+	}
+	else
+	{
 //		angles = node.angles +( 0, 180, 0 );
 //		force = AnglesToForward( angles + ( -60, 0, 0 ) ) * ( 200 + RandomInt( 100 ) ); 
 //		chunk PhysicsLaunch( chunk.origin, force );
-    
-        ent = Spawn( "script_origin", chunk.origin ); 
-        ent.angles = node.angles +( 0, 180, 0 );
-        dist = 100 + RandomInt( 100 );
-        dest = ent.origin + ( AnglesToForward( ent.angles ) * dist );
-        trace = BulletTrace( dest + ( 0, 0, 16 ), dest + ( 0, 0, -200 ), false, undefined );
+	
+		ent = Spawn( "script_origin", chunk.origin ); 
+		ent.angles = node.angles +( 0, 180, 0 );
+		dist = 100 + RandomInt( 100 );
+		dest = ent.origin + ( AnglesToForward( ent.angles ) * dist );
+		trace = BulletTrace( dest + ( 0, 0, 16 ), dest + ( 0, 0, -200 ), false, undefined );
 
-        if( trace["fraction"] == 1 )
-        {
-            dest = dest + ( 0, 0, -200 );
-        }
-        else
-        {
-            dest = trace["position"];
-        }
-    
+		if( trace["fraction"] == 1 )
+		{
+			dest = dest + ( 0, 0, -200 );
+		}
+		else
+		{
+			dest = trace["position"];
+		}
+	
 //		time = 1; 
-        chunk LinkTo( ent ); 
+		chunk LinkTo( ent ); 
 
-        time = ent fake_physicslaunch( dest, 200 + RandomInt( 100 ) );
+		time = ent fake_physicslaunch( dest, 200 + RandomInt( 100 ) );
 
 //		forward = AnglesToForward( ent.angles + ( -60, 0, 0 ) ) * power ); 
 //		ent MoveGravity( forward, time ); 
 
-        if( RandomInt( 100 ) > 40 )
-        {
-            ent RotatePitch( 180, time * 0.5 );
-        }
-        else
-        {
-            ent RotatePitch( 90, time, time * 0.5 ); 
-        }
-        wait( time );
+		if( RandomInt( 100 ) > 40 )
+		{
+			ent RotatePitch( 180, time * 0.5 );
+		}
+		else
+		{
+			ent RotatePitch( 90, time, time * 0.5 ); 
+		}
+		wait( time );
 
-        chunk Hide();
-    
-        wait( 1 );
-        ent Delete(); 
-    }
+		chunk Hide();
+	
+		wait( 1 );
+		ent Delete(); 
+	}
 
-    //if (isDefined( destroy_immediately ) && destroy_immediately)
-    //{
-    //	return;
-    //}
+	//if (isDefined( destroy_immediately ) && destroy_immediately)
+	//{
+	//	return;
+	//}
+
+	chunk.destroyed = true;
+	chunk.target_by_zombie = undefined;
+	chunk.mid_repair = undefined;
+	chunk notify( "destroyed" );
+
+	if( all_chunks_destroyed( node.barrier_chunks ) )
+	{
+		if( isDefined( node.clip ) )
+		{
+			node.clip ConnectPaths(); 
+			wait( 0.05 ); 
+			node.clip disable_trigger(); 
+		}
+		else
+		{
+			for( i = 0; i < node.barrier_chunks.size; i++ )
+			{
+				node.barrier_chunks[i] ConnectPaths(); 
+			}
+		}
+	}
 }
 
 replace_chunk( chunk, has_perk, via_powerup )
@@ -1056,7 +1050,7 @@ replace_chunk( chunk, has_perk, via_powerup )
 	assert( chunk.mid_repair == true );
 	chunk.mid_repair = undefined;
 
-	EarthQuake( RandomFloatRange( 0.1, 0.15 ), 0.7, chunk.origin, 200 ); 
+	EarthQuake(RandomFloatRange(0.1, 0.15), 0.7, chunk.origin, 200); 
 	sound = "barrier_rebuild_slam";
 	if( isDefined( self.script_ender ) )
 	{

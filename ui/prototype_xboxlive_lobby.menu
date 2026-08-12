@@ -189,12 +189,13 @@
 		// ----------------------------map images------------------------------------
 		#include "ui_mp/prototype_game_info.inc"
 
-		#define MAPIMAGE tableLookup("mp/mapinfo.csv", 0, dvarString(ui_mapname), 2)
-		#define MAPNAME tableLookup("mp/mapinfo.csv", 0, dvarString(ui_mapname), 1)
-		#define GAMETYPENAME_WITH_SCORING tableLookup( "mp/gametypeinfo.csv", 0, dvarString( ui_gametype ), 1 )
-		#define GAMETYPENAME_WITHOUT_SCORING tableLookup( "mp/gametypeinfo.csv", 0, dvarString( ui_gametype ), 3 )	
-		GAME_INFO_VETO_COOP( MAPIMAGE, "@" + MAPNAME, "@" + GAMETYPENAME_WITH_SCORING, dvarbool( arcademode ) || dvarbool( zombiemode ) )
-		GAME_INFO_VETO_COOP( MAPIMAGE, "@" + MAPNAME, "@" + GAMETYPENAME_WITHOUT_SCORING, !dvarbool( arcademode ) && !dvarbool( zombiemode ) )
+		#define MAPIMAGE tableLookup("maps/mapstable.csv", 0, dvarString(ui_mapname), 4)
+		#define MAPNAME tableLookup("maps/mapstable.csv", 0, dvarString(ui_mapname), 3)
+		#define GAMETYPENAME_WITH_SCORING tableLookup( "maps/gametypestable.csv", 0, dvarString( ui_gametype ), 1)
+		#define GAMETYPENAME_WITHOUT_SCORING tableLookup( "maps/gametypestable.csv", 0, dvarString( ui_gametype ), 3)
+		#define PREPOSITION tableLookup( "maps/gametypestable.csv", 0, dvarString( ui_gametype ), 8)
+		GAME_INFO_VETO_COOP( MAPIMAGE, "@" + MAPNAME, "@" + GAMETYPENAME_WITH_SCORING, "@" + PREPOSITION, dvarbool( arcademode ) || dvarbool( zombiemode ) )
+		GAME_INFO_VETO_COOP( MAPIMAGE, "@" + MAPNAME, "@" + GAMETYPENAME_WITHOUT_SCORING, "@" + PREPOSITION, !dvarbool( arcademode ) && !dvarbool( zombiemode ) )
 
 		//=========================================================
 		//===================== MENU SELECTION ====================

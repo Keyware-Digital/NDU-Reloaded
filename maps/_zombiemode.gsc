@@ -287,7 +287,7 @@ init_fx() {
     level._effect["rise_burst"] = LoadFx("maps/zombie/fx_mp_zombie_hand_dirt_burst");
     level._effect["rise_billow"] = LoadFx("maps/zombie/fx_mp_zombie_body_dirt_billowing");
     level._effect["rise_dust"] = LoadFx("maps/zombie/fx_mp_zombie_body_dust_falling");
-    level._effect["dive_dust"] = LoadFx("maps/zombie/fx_dust_impact_body");
+    level._effect["dive_dust"] = LoadFx("maps/zombie/fx_dust_impact_plume_med");
 
     // Flamethrower
     level._effect["character_fire_pain_sm"] = loadfx("env/fire/fx_fire_player_sm_1sec");
@@ -2410,13 +2410,13 @@ setup_player_vars()
 
         num = players[i].entity_num;
 
+        // Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
+        players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
+
         for (j = 0; j < players.size; j++) {
             players[j] setClientDvar("plr" + num + "_hud_portrait", level.random_character_index[num]);
             players[j] setClientDvar("plr" + num + "_active", 1);
         }
-
-        // Assign a colour to a player based on their player number, in solo this is zero so the colour will always be white like in BO3
-        players[i] setClientDvar("cg_ScoresColor_Gamertag_" + num, level.character_colour[num]);
 
         // enable sv_cheats for developers for testing purposes, this enables the use of vars flagged as cheats
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {

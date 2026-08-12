@@ -157,10 +157,17 @@ setup_player_dolphin_dive() {
 			players_dolphin_dive setAnim(dolphin_dive_anim_land);
 
 			self thread maps\_sounds::dolphin_dive_land_sound();
+
+			//BO1 STYLE SCREEN SHAKE ON DIVE LAND
+			EarthQuake(RandomFloatRange(0.30, 0.40), 0.45, self.origin, 16);
+
+			self thread player_dirt_overlay();
+
+			PlayFXOnTag(level._effect[ "dive_dust" ], self, "j_spinelower");
 			
 			self SetVelocity(AnglesToForward(angles) * 450);
 
-			self setStance("prone");
+			//self setStance("prone");
 
 			self SetVelocity((0, 0, 0));
 
@@ -199,10 +206,6 @@ setup_player_dolphin_dive() {
 			self.is_diving = false;
 
 			//origin = self GetEye() + (AnglesToForward(self GetPlayerAngles()) * 3.25);
-
-			self thread player_dirt_overlay();
-
-			PlayFXOnTag(level._effect[ "dive_dust" ], self, "J_SpineLower" );
 
 			// Wait until the player stands up before allowing a new dive
             while( self getStance() != "stand" ) {
