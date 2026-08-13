@@ -73,7 +73,6 @@ material,specialty_speed_cola_zombies
 material,specialty_stamin_up_zombies
 material,specialty_widows_wine_zombies
 menufile,ui/prototype_pregame.menu
-menufile,ui/prototype_connect.menu
 menufile,ui/prototype_vid_restart_pc.menu
 menufile,ui/prototype_filter.menu
 menufile,ui/prototype_options_control_defaults.menu
