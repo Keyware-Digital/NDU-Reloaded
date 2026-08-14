@@ -1,0 +1,9 @@
+name,file,platform,sequence,vol_min,vol_max,dist_min,dist_max,limit_count,limit_type,entity_limit_count,entity_limit_type,bus,volume_min_falloff_curve,volumefalloffcurve,reverb_send,dist_reverb_max,reverb_min_falloff_curve,reverb_falloff_curve,pitch_min,pitch_max,randomize_type,spatialized,type,probability,loop,masterslave,loadspec,subtitle,compression,secondaryaliasname,chainaliasname,startdelay,speakermap,lfe percentage,center percentage,envelop_min,envelop_max,envelop percentage,occlusion_level,occlusion_wet_dry,real_delay,distance_lpf,move_type,move_time,min_priority,max_priority,min_priority_threshold,max_priority_threshold,,isbig
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+music_mainmenu,mus\mainmenu\cod_zombies.wav,,1,1,1,,,,,,,music,,,0,,,,,,,2d,,0.16,looping,,all_sp,,,,,,music_all,,,,,,0,,,,,,100,100,0.25,1,,
+music_mainmenu,mus\mainmenu\damned_bo1.wav,,2,1,1,,,,,,,music,,,0,,,,,,,2d,,0.16,looping,,all_sp,,,,,,music_all,,,,,,0,,,,,,100,100,0.25,1,,
+music_mainmenu,mus\mainmenu\damned_bo2.wav,,3,1,1,,,,,,,music,,,0,,,,,,,2d,,0.16,looping,,all_sp,,,,,,music_all,,,,,,0,,,,,,100,100,0.25,1,,
+music_mainmenu,mus\mainmenu\damned_bo3.wav,,4,1,1,,,,,,,music,,,0,,,,,,,2d,,0.16,looping,,all_sp,,,,,,music_all,,,,,,0,,,,,,100,100,0.25,1,,
+music_mainmenu,mus\mainmenu\damned_bo4.wav,,5,1,1,,,,,,,music,,,0,,,,,,,2d,,0.16,looping,,all_sp,,,,,,music_all,,,,,,0,,,,,,100,100,0.25,1,,
+music_mainmenu,mus\mainmenu\damned_bo5.wav,,6,1,1,,,,,,,music,,,0,,,,,,,2d,,0.16,looping,,all_sp,,,,,,music_all,,,,,,0,,,,,,100,100,0.25,1,,
+music_loadscreen,mus\loadscreen\zombie_prototype_load.wav,,,1,1,,,,,,,music,,,0,,,,,,,2d,,,looping,,all_sp,,,,,,music_all,,,,,,0,,,,,,100,100,0.25,1,,

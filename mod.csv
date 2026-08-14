@@ -142,7 +142,7 @@ rawfile,vision/zombie_bo3.vision
 rawfile,vision/zombie_cosmodrome_divetonuke.vision
 sound,mod_ndu,,all_sp
 sound,mod_ndu_ee,,all_sp
-sound,mod_ndu_menu_music,,all_sp
+sound,mod_ndu_music,,all_sp
 sound,mod_ndu_powerup,,all_sp
 sound,mod_ndu_vox,,all_sp
 weapon,sp/colt_wet
@@ -371,8 +371,6 @@ xmodel,zmb_pwr_up_max_ammo
 xmodel,zmb_pwr_up_nuke
 xmodel,zmb_pwr_up_perks_a_cola_world
 xmodel,zombie_teddybear
-stringtable,mp/gametypeinfo.csv
-stringtable,mp/mapinfo.csv
 stringtable,maps/didyouknow_coop.csv
 stringtable,maps/gametypestable.csv
 stringtable,maps/mapstable.csv

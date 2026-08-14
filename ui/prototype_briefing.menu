@@ -18,6 +18,7 @@
 		fullScreen		0
 		rect			0 0 640 480
 		focusColor		COLOR_FOCUSED
+		soundloop "music_loadscreen"
 		backcolor		0 0 0 0
 		visible			1
 #ifdef NOT_DEVELOPMENT
