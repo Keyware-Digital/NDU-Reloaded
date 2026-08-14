@@ -28,9 +28,8 @@ init_precache() {
     PrecacheShader("specialty_mule_kick_zombies");
     PrecacheShader("specialty_mule_kick_glow_zombies");
     PrecacheShader("specialty_widows_wine_zombies");
-    PrecacheItem( "zombie_knuckle_crack" );
-   //PrecacheItem( "zombie_death_hands" ); // causes bone errors right now
     PrecacheModel("char_usa_raider_gear_flametank");
+    PrecacheItem( "zombie_knuckle_crack" );
 }
 
 init_perk_fx() {

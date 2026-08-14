@@ -181,8 +181,8 @@ include_weapons() {
     include_weapon("stg44_pap");    // "b" variant of pap StG, 4-round burst.
 
     // Other
-    //include_weapon("death_hands");
-    //include_weapon("knuckle_crack_hands");
+    //include_weapon("zombie_death_hands");
+    //include_weapon("zombie_knuckle_crack");
 
     // Cut content
     //include_weapon("kar98k_bayonet");
@@ -273,7 +273,7 @@ include_weapons() {
     level.limited_weapons["springfield_scoped_zombie"] = 0;
     level.limited_weapons["sten_mk5"] = 0;
     level.limited_weapons["stg44_pap"] = 0;
-    //level.limited_weapons["death_hands"] = 0;
+    //level.limited_weapons["zombie_death_hands"] = 0;
     //level.limited_weapons["knuckle_crack_hands"] = 0;
 }
 

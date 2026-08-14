@@ -77,6 +77,12 @@ bowie_think()
 			continue;
 		}
 
+		if( is_dying_or_intermission() )
+		{
+			wait( 0.1 );
+			continue;
+		}
+
 		player_has_bowie = player HasPerk( "specialty_altmelee" ); 
 
 		if( !player_has_bowie )

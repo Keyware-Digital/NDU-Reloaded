@@ -121,16 +121,17 @@ init_shaders() {
 }
 
 init_models() {
-    precachemodel("char_ger_honorgd_zomb_behead");
-    precachemodel("char_ger_zombieeye");
+    PrecacheModel("char_ger_honorgd_zomb_behead");
+    PrecacheModel("char_ger_zombieeye");
     PrecacheModel("char_usa_raider_gear_flametank");
-    PrecacheModel("tag_origin");
-    PrecacheModel("zombie_teddybear");
     PrecacheModel("collision_geo_32x32x32");
     PrecacheModel("static_berlin_ger_radio_d");
+    PrecacheModel("tag_origin");
     PrecacheModel("zmb_mdl_samantha_figure");
     PrecacheModel("zmb_mdl_button");
     PrecacheModel("zmb_mdl_cash_register");
+    PrecacheItem( "zombie_death_hands" );
+    PrecacheModel("zombie_teddybear");
 }
 
 init_shellshocks() {
@@ -206,6 +207,7 @@ init_levelvars() {
     level.intermission = false;
     level.zombie_total = 0;
     level.no_laststandmissionfail = true;
+    level.dying = false;
 
     level.zombie_vars = [];
 
@@ -577,16 +579,22 @@ players_playing() {
 // NETWORK SECTION ====================================================================== //
 //
 
-watchGrenadeThrow() {
+watchGrenadeThrow()
+{
     self endon("disconnect");
     self endon("death");
 
-    while (1) {
+    self waittill("spawned_player");
+
+    while(1)
+    {
         self waittill("grenade_fire", grenade);
 
-        if (isDefined(grenade)) {
-            if (self maps\_laststand::player_is_in_laststand()) {
-                //wait(0.05);
+        if(isDefined(grenade))
+        {
+            if(self maps\_laststand::player_is_in_laststand() || level.dying == true)
+            {
+                wait(0.05);
                 grenade delete();
             }
         }
@@ -824,10 +832,16 @@ spectators_respawn() {
     if (!isDefined(level.zombie_vars["spectators_respawn"]) || !level.zombie_vars["spectators_respawn"]) {
         return;
     }
+    
 
     if (!isDefined(level.custom_spawnPlayer)) {
         // Custom spawn call for when they respawn from spectator
         level.custom_spawnPlayer = ::spectator_respawn;
+    }
+
+    if( (isDefined(level.intermission) && level.intermission == true) || (isDefined(level.dying) && level.dying == true) )
+    {
+        return;
     }
 
     while (1) {
@@ -1750,6 +1764,10 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
 
         self thread player_vox_helper( ::pain_vox_sound, "pain_exert_sound_done", 2.0 );
 
+    if (isDefined(level.dying) && level.dying)
+    {
+        return;
+    }
 
     if (self HasPerk("specialty_detectexplosive") &&
         (sMeansOfDeath == "MOD_GRENADE_SPLASH" ||
@@ -1915,15 +1933,26 @@ update_leaderboards() {
     nazizombies_upload_highscore();
 }
 
-player_fake_death() {
+player_fake_death()
+{
+    level.dying = true;		// flag used by grenade watch / damage systems
+
+    level notify("fake_death");
+    self notify("fake_death");
+
     self TakeAllWeapons();
-    //self GiveWeapon(bo2_deathhands);
-    //self GiveMaxAmmo(bo2_deathhands);
-    //self SwitchToWeapon(bo2_deathhands);
+
+    self AllowSprint(false);
     self AllowStand(false);
     self AllowCrouch(false);
+    self AllowProne(true);
+    self AllowLean(false);
+    self AllowMelee(false);
+    self AllowAds(false);
+
     self.ignoreme = true;
     self EnableInvulnerability();
+
     /*if(level.player_is_speaking != 1) 
     {
         level.player_is_speaking = 1;*/
@@ -1932,8 +1961,14 @@ player_fake_death() {
         /*self waittill("death_sound_done");
         level.player_is_speaking = 0;
     }*/
+    self setactionslot(1,""); 
+    self setactionslot(4,""); 
+    self GiveWeapon("zombie_death_hands");
+    self SwitchToWeapon("zombie_death_hands");
 
     wait(1);
+    
+    self SetStance("prone");
     self FreezeControls(true);
 }
 
@@ -2521,7 +2556,8 @@ player_no_ammo_sounds()
         if(!IsDefined(current_weapon) || current_weapon == "none" || current_weapon == "zombie_perk_bottle_doubletap" || 
            current_weapon == "zombie_perk_bottle_jugg" || current_weapon == "zombie_perk_bottle_revive" || 
            current_weapon == "zombie_perk_bottle_sleight" || current_weapon == "mine_bouncing_betty" || 
-           current_weapon == "syrette" || current_weapon == "zombie_knuckle_crack" || current_weapon == "zombie_bowie_flourish")
+           current_weapon == "syrette" || current_weapon == "zombie_knuckle_crack" || current_weapon == "zombie_bowie_flourish" ||
+           current_weapon == "zombie_death_hands")
         {
             wait 0.5;
             continue;
@@ -2660,8 +2696,10 @@ player_friendly_fire_sound_monitor()
             current_weapon == "zombie_perk_bottle_sleight" || 
             current_weapon == "mine_bouncing_betty" || 
             current_weapon == "syrette" || 
-            current_weapon == "zombie_knuckle_crack" || 
-            current_weapon == "zombie_bowie_flourish")
+            current_weapon == "zombie_bowie_flourish" ||
+            current_weapon == "zombie_death_hands" ||
+            current_weapon == "zombie_knuckle_crack")
+
         {
             wait(0.05);
             continue;

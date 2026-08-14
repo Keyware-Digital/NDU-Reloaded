@@ -442,15 +442,15 @@ init_models_and_variables_loadout()
 		set_player_specific_interactive_hands(2, "viewmodel_usa_marine_player");
 		set_player_specific_interactive_hands(3, "viewmodel_rus_guard_player");
 
-		/*set_player_specific_death_hands(0, "death_hands");
-		set_player_specific_death_hands(1, "death_hands");
-		set_player_specific_death_hands(2, "death_hands");
-		set_player_specific_death_hands(3, "death_hands");
+		/*set_player_specific_zombie_death_hands(0, "zombie_death_hands");
+		set_player_specific_zombie_death_hands(1, "zombie_death_hands");
+		set_player_specific_zombie_death_hands(2, "zombie_death_hands");
+		set_player_specific_zombie_death_hands(3, "zombie_death_hands");*/
 
-		set_player_specific_knuckle_crack_hands(0, "knuckle_crack_hands");
-		set_player_specific_knuckle_crack_hands(1, "knuckle_crack_hands");
-		set_player_specific_knuckle_crack_hands(2, "knuckle_crack_hands");
-		set_player_specific_knuckle_crack_hands(3, "knuckle_crack_hands");*/
+		/*set_player_specific_zombie_knuckle_crack(0, "zombie_knuckle_crack");
+		set_player_specific_zombie_knuckle_crack(1, "zombie_knuckle_crack");
+		set_player_specific_zombie_knuckle_crack(2, "zombie_knuckle_crack");
+		set_player_specific_zombie_knuckle_crack(3, "zombie_knuckle_crack");*/
 
 		level.campaign = "american";
 		return;
@@ -573,14 +573,14 @@ set_laststand_pistol( weapon )
 	level.laststandpistol = weapon;
 }
 
-/*set_death_hands( weapon )
+/*zombie_death_hands( weapon )
 {
-	level.death_hands = weapon;
-}
+	level.zombie_death_hands = weapon;
+}*/
 
-set_knuckle_crack_hands( weapon )
+/*set_zombie_knuckle_crack( weapon )
 {
-	level.knuckle_crack_hands = weapon;
+	level._crack = weapon;
 }*/
 
 give_loadout(wait_for_switch_weapon)
@@ -766,9 +766,9 @@ give_model( class )
 			self give_player_specific_laststand_pistol();
 			self give_player_specific_viewmodel();
 			//level waittill("condition_goes_here");
-			//self give_player_specific_death_hands();
+			//self give_player_specific_zombie_death_hands();
 			//level waittill("condition_goes_here");
-			//self give_player_specific_knuckle_crack_hands();  
+			//self give_player_specific_zombie_knuckle_crack();  
             return;
 	}
 	else
@@ -970,48 +970,48 @@ level.player_specific_interactive_hands[num] = name;
 PrecacheModel(name);
 }
 
-/*set_player_specific_death_hands(num, name)
+/*set_player_specific_zombie_death_hands(num, name)
 {
-if(!isDefined(level.player_specific_death_hands))
-         level.player_specific_death_hands = [];
-level.player_specific_death_hands[num] = name;
+if(!isDefined(level.player_specific_zombie_death_hands))
+         level.player_specific_zombie_death_hands = [];
+level.player_specific_zombie_death_hands[num] = name;
 PrecacheModel(name);
 IPrintLn("death anim");
 }
 
-give_player_specific_death_hands()
+give_player_specific_zombie_death_hands()
 {
-if(isDefined(level.player_specific_death_hands) && isDefined(level.player_specific_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+if(isDefined(level.player_specific_zombie_death_hands) && isDefined(level.player_specific_zombie_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
 {
-         self SetViewModel(level.player_specific_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
+         self SetViewModel(level.player_specific_zombie_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
 		 IPrintLn("death anim");
 }
-else if(isDefined(level.death_hands))
+else if(isDefined(level.zombie_death_hands))
 {
-         self SetViewModel(level.death_hands);
+         self SetViewModel(level.zombie_death_hands);
 		 IPrintLn("death anim");
 }
-}
+}*/
 
-set_player_specific_knuckle_crack_hands(num, name)
+/*set_player_specific_zombie_knuckle_crack(num, name)
 {
-if(!isDefined(level.player_specific_knuckle_crack_hands))
-         level.player_specific_knuckle_crack_hands = [];
-level.player_specific_knuckle_crack_hands[num] = name;
+if(!isDefined(level.player_specific_zombie_knuckle_crack))
+         level.player_specific_zombie_knuckle_crack = [];
+level.player_specific_zombie_knuckle_crack[num] = name;
 PrecacheModel(name);
 IPrintLn("death anim");
 }
 
-give_player_specific_knuckle_crack_hands()
+give_player_specific_zombie_knuckle_crack()
 {
-if(isDefined(level.player_specific_knuckle_crack_hands) && isDefined(level.player_specific_knuckle_crack_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
+if(isDefined(level.player_specific_zombie_knuckle_crack) && isDefined(level.player_specific_zombie_knuckle_crack[ maps\_zombiemode_weapons::get_player_index( self ) ]))
 {
-         self SetViewModel(level.player_specific_knuckle_crack_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
+         self SetViewModel(level.player_specific_zombie_knuckle_crack[ maps\_zombiemode_weapons::get_player_index( self ) ]);
 		 IPrintLn("death anim");
 }
-else if(isDefined(level.knuckle_crack_hands))
+else if(isDefined(level.zombie_knuckle_crack))
 {
-         self SetViewModel(level.knuckle_crack_hands);
+         self SetViewModel(level.zombie_knuckle_crack);
 		 IPrintLn("death anim");
 }
 }*/

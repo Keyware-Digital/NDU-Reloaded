@@ -1892,9 +1892,9 @@ do_player_playdialog(player_index, sound_to_play, waittime, response)
 		self waittill("sound_done" + sound_to_play);
 		wait(waittime);		
 		level.player_is_speaking = 0;
-		/*if( isDefined( response ) )
+		/*if( isDefined( response ) && !is_dying_or_intermission() )
 		{
-			level thread setup_response_line( self, index, response ); 
+			// level thread setup_response_line(...);
 		}*/
 	}
 }

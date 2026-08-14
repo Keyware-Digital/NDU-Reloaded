@@ -215,8 +215,8 @@ init_weapons()
 	add_zombie_weapon( "zombie_bowie_flourish",	"", 0 );
 
 	// Other
-	//add_zombie_weapon( "death_hands", 						&"PROTOTYPE_ZOMBIE_DEATH_HANDS_10000",		10000 );
-	//add_zombie_weapon( "knuckle_crack_hands", 				&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
+	//add_zombie_weapon( "zombie_death_hands", 						&"PROTOTYPE_ZOMBIE_DEATH_HANDS_10000",		10000 );
+	//add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE_KNUCKLE_CRACK_10000",	10000 );
 
 	// Cut content
 	//add_zombie_weapon( "kar98k_bayonet", "", 0 );
@@ -477,7 +477,7 @@ treasure_chest_think(rand)
 	{
 		self waittill( "trigger", user ); 
 
-		if( user in_revive_trigger() )
+		if( user in_revive_trigger() || is_dying_or_intermission() )
 		{
 			wait( 0.1 );
 			continue;
@@ -670,8 +670,9 @@ treasure_chest_think(rand)
 
 		if( grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared) || grabber == level )
 		{
-			if( (grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared)) && 
-				is_player_valid( grabber ) && grabber GetCurrentWeapon() != "mine_bouncing_betty" )
+		if( (grabber == user || (isDefined(self.weapon_shared) && self.weapon_shared)) && 
+			is_player_valid( grabber ) && grabber GetCurrentWeapon() != "mine_bouncing_betty" &&
+			!is_dying_or_intermission() )
 			{
 				self notify( "user_grabbed_weapon" );
 				if(weapon_spawn_org.weapon_string == "zombie_bowie_flourish")
@@ -1462,6 +1463,13 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 	self waittill("trigger",player);
 	self.grab_weapon_hint = true;
 
+	if( is_dying_or_intermission() )
+	{
+		wait( 0.1 );
+		self thread weapon_cabinet_think();
+		return;
+	}
+
 	// Block Death Machine / any drinking
 	if( isDefined(player.is_drinking) && player.is_drinking )
 	{
@@ -2025,7 +2033,7 @@ weapon_spawn_think()
 			continue;
 		}
 
-		if( player in_revive_trigger() )
+		if( player in_revive_trigger() || is_dying_or_intermission() )
 		{
 			wait( 0.1 );
 			continue;

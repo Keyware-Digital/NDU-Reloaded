@@ -1,5 +1,6 @@
 #include maps\_utility;
 #include maps\_hud_util;
+//#include maps\_zombiemode_utility;
 
 init()
 {
@@ -621,6 +622,10 @@ can_revive( revivee )
 
 	if ( self player_is_in_laststand() )
 		return false;
+
+	// longer way of doing this as we don't call zombiemode_utility.gsc in laststand.gsc
+    if( (isDefined(level.dying) && level.dying) || (isDefined(level.intermission) && level.intermission) )
+        return false;
 		
 	if( !isDefined( revivee.revivetrigger ) )
 		return false;

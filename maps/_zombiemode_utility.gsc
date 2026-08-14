@@ -1584,6 +1584,18 @@ do_player_vo(snd, variation_count)
 		level.player_is_speaking = 0;
 	}
 }
+
+// Returns true if the game is ending / player is in the death hands animation
+is_dying_or_intermission()
+{
+    if ( isDefined( level.dying ) && level.dying )
+        return true;
+
+    if ( isDefined( level.intermission ) && level.intermission )
+        return true;
+
+    return false;
+}
 /*player_killstreak_timer()
 {
 	if(getdvar ("zombie_kills") == "") 
