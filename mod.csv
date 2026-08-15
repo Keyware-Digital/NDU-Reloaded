@@ -334,10 +334,6 @@ xanim,ai_zombie_window_attack_arm_L_out
 xanim,ai_zombie_window_attack_arm_R_out
 xanim,zmb_player_dolphin_dive_land
 xanim,zmb_player_dolphin_dive_prone
-//xanim,zmb_view_hands_death_action
-//xanim,zmb_view_hands_death_idle
-xanim,viewmodel_bare_hands_z_death_idle
-xanim,viewmodel_bare_hands_death_by_zomb
 xmodel,char_ger_hnrgd_player_body_cqb
 xmodel,char_ger_hnrgd_player_body_hmg
 xmodel,char_ger_hnrgd_player_head_cqb

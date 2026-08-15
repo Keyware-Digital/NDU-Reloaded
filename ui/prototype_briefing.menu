@@ -18,14 +18,13 @@
 		fullScreen		0
 		rect			0 0 640 480
 		focusColor		COLOR_FOCUSED
-		soundloop "music_loadscreen"
 		backcolor		0 0 0 0
 		visible			1
-#ifdef NOT_DEVELOPMENT
-		onEsc{ }
-#else
-		onEsc{ close self; }
-#endif // #ifdef NOT_DEVELOPMENT
+		#ifdef NOT_DEVELOPMENT
+				onEsc{ }
+		#else
+				onEsc{ close self; }
+		#endif // #ifdef NOT_DEVELOPMENT
 
 		// background
 		itemDef 
@@ -114,8 +113,8 @@
 
 		#include "ui/safearea.menu"
 
-#define LOADBAR_IMAGE_XSIZE 192
-#define LOADBAR_IMAGE_YSIZE 48
+		#define LOADBAR_IMAGE_XSIZE 192
+		#define LOADBAR_IMAGE_YSIZE 48
 
 		// LoadBar for Solo and Splitscreen
 
@@ -125,7 +124,7 @@
 			style			WINDOW_STYLE_LOADBAR
 			rect			-120 444 240 2 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_FULLSCREEN
 			forecolor		1 1 1 1
-	 		background		"menu_white_line_faded_big"
+			background		"menu_white_line_faded_big"
 			visible			when( iscinematicfinished() != 1 && !dvarbool( onlinegame ) && !dvarbool( systemlink ) )
 			decoration
 		}
@@ -137,7 +136,7 @@
 			style			WINDOW_STYLE_FILLED
 			rect			-120 444 240 1 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_FULLSCREEN
 			backcolor		0.4 0.4 0.4 0.4
-	 		background		"menu_white_line_faded_big"
+			background		"menu_white_line_faded_big"
 			visible			when( iscinematicfinished() != 1 && !dvarbool( onlinegame ) && !dvarbool( systemlink ) )
 			decoration
 		}
@@ -149,7 +148,7 @@
 			style			WINDOW_STYLE_LOADBAR
 			rect			-260 259 240 2 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			forecolor		1 1 1 1
-	 		background		"menu_white_line_faded_big"
+			background		"menu_white_line_faded_big"
 			visible			when( dvarbool( onlinegame ) || dvarbool( systemlink ) )
 			decoration
 		}
@@ -161,7 +160,7 @@
 			style			WINDOW_STYLE_FILLED
 			rect			-260 259 240 1 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP
 			backcolor		0.4 0.4 0.4 0.4
-	 		background		"menu_white_line_faded_big"
+			background		"menu_white_line_faded_big"
 			visible			when( dvarbool( onlinegame ) || dvarbool( systemlink ) )
 			decoration
 		}
@@ -254,4 +253,3 @@
 		}
 	}
 }
-
