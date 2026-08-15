@@ -310,25 +310,31 @@ init_anims() {
 	level.scr_anim["zombie"]["walk2"] 	= %ai_zombie_walk_v2;
 	level.scr_anim["zombie"]["walk3"] 	= %ai_zombie_walk_v3;
 	level.scr_anim["zombie"]["walk4"] 	= %ai_zombie_walk_v4;
+    level.scr_anim["zombie"]["walk5"] 	= %ai_zombie_walk_v6;
+    level.scr_anim["zombie"]["walk6"] 	= %ai_zombie_walk_v7;
+    level.scr_anim["zombie"]["walk7"] 	= %ai_zombie_walk_v8;
+    level.scr_anim["zombie"]["walk8"] 	= %ai_zombie_walk_v9;
     // Old NDU anims
     /*level.scr_anim["zombie"]["walk5"] = % ai_zombie_walk_v7;
     level.scr_anim["zombie"]["walk6"] = % ai_zombie_walk_v8;
     level.scr_anim["zombie"]["walk7"] = % ai_zombie_walk_v9;*/
 
-	level.scr_anim["zombie"]["run1"] 	= %ai_zombie_walk_fast_v1;
+    level.scr_anim["zombie"]["run1"] 	= %ai_zombie_walk_fast_v1;
 	level.scr_anim["zombie"]["run2"] 	= %ai_zombie_walk_fast_v2;
 	level.scr_anim["zombie"]["run3"] 	= %ai_zombie_walk_fast_v3;
 	level.scr_anim["zombie"]["run4"] 	= %ai_zombie_run_v2;
 	level.scr_anim["zombie"]["run5"] 	= %ai_zombie_run_v4;
-	level.scr_anim["zombie"]["run6"] 	= %ai_zombie_run_v3;
     // Old NDU anim
+    //level.scr_anim["zombie"]["run4"] 	= %ai_zombie_run_v1;
+    //level.scr_anim["zombie"]["run6"] 	= %ai_zombie_run_v4;
     //level.scr_anim["zombie"]["run7"] 	= %ai_zombie_run_v1;
 
 	level.scr_anim["zombie"]["sprint1"] = %ai_zombie_sprint_v1;
 	level.scr_anim["zombie"]["sprint2"] = %ai_zombie_sprint_v2;
-	level.scr_anim["zombie"]["sprint3"] = %ai_zombie_sprint_v3;
-	level.scr_anim["zombie"]["sprint4"] = %ai_zombie_sprint_v5;
+    level.scr_anim["zombie"]["sprint3"] = %ai_zombie_sprint_v4;
+    level.scr_anim["zombie"]["sprint4"] = %ai_zombie_sprint_v5;
     // Old NDU anims
+    //level.scr_anim["zombie"]["sprint3"] = %ai_zombie_sprint_v3; 
     //level.scr_anim["zombie"]["sprint5"] = % ai_zombie_sprint_v2;
     /*level.scr_anim["zombie"]["sprint6"] = % ai_zombie_sprint_v1;
     level.scr_anim["zombie"]["sprint7"] = % ai_zombie_sprint_v2;
@@ -354,12 +360,10 @@ init_anims() {
 	level.scr_anim["zombie"]["crawl4"] 	= %ai_zombie_crawl_v3;
 	level.scr_anim["zombie"]["crawl5"] 	= %ai_zombie_crawl_v4;
 	level.scr_anim["zombie"]["crawl6"] 	= %ai_zombie_crawl_v5;
+    // Crawl hand/sprint
 	level.scr_anim["zombie"]["crawl_hand_1"] = %ai_zombie_walk_on_hands_a;
 	level.scr_anim["zombie"]["crawl_hand_2"] = %ai_zombie_walk_on_hands_b;
 
-
-
-	
 	level.scr_anim["zombie"]["crawl_sprint1"] 	= %ai_zombie_crawl_sprint;
 	level.scr_anim["zombie"]["crawl_sprint2"] 	= %ai_zombie_crawl_sprint_1;
 	level.scr_anim["zombie"]["crawl_sprint3"] 	= %ai_zombie_crawl_sprint_2;
@@ -389,26 +393,20 @@ init_anims() {
 	level._zombie_melee["zombie"][4]				= %ai_zombie_attack_v1;
 	level._zombie_melee["zombie"][5]				= %ai_zombie_attack_v4;
 	level._zombie_melee["zombie"][6]				= %ai_zombie_attack_v6;	
-	level._zombie_run_melee["zombie"][0]				=	%ai_zombie_run_attack_v1;
-	level._zombie_run_melee["zombie"][1]				=	%ai_zombie_run_attack_v2;
-	level._zombie_run_melee["zombie"][2]				=	%ai_zombie_run_attack_v3;
-	level.scr_anim["zombie"]["walk5"] 	= %ai_zombie_walk_v6;
-	level.scr_anim["zombie"]["walk6"] 	= %ai_zombie_walk_v7;
-	level.scr_anim["zombie"]["walk7"] 	= %ai_zombie_walk_v8;
-	level.scr_anim["zombie"]["walk8"] 	= %ai_zombie_walk_v9;
-
-	if( isDefined( level.zombie_anim_override ) )
-	{
-		[[ level.zombie_anim_override ]]();
-	}
+	level._zombie_run_melee["zombie"][0]			=	%ai_zombie_run_attack_v1;
+	level._zombie_run_melee["zombie"][1]			=	%ai_zombie_run_attack_v2;
+	level._zombie_run_melee["zombie"][2]			=	%ai_zombie_run_attack_v3;
 
 	level._zombie_walk_melee["zombie"][0]			= %ai_zombie_walk_attack_v1;
 	level._zombie_walk_melee["zombie"][1]			= %ai_zombie_walk_attack_v2;
 	level._zombie_walk_melee["zombie"][2]			= %ai_zombie_walk_attack_v3;
 	level._zombie_walk_melee["zombie"][3]			= %ai_zombie_walk_attack_v4;
 
-    level._zombie_run_melee["zombie"][0] = % ai_zombie_attack_forward_v2;
-    level._zombie_sprint_melee["zombie"][0] = % ai_zombie_walk_attack_v4;
+	if( isDefined( level.zombie_anim_override ) )
+	{
+		[[ level.zombie_anim_override ]]();
+	}
+
     // melee in crawl
     if (!isDefined(level._zombie_melee_crawl)) {
         level._zombie_melee_crawl = [];
@@ -416,7 +414,8 @@ init_anims() {
     level._zombie_melee_crawl["zombie"] = [];
     level._zombie_melee_crawl["zombie"][0] = % ai_zombie_attack_crawl;
     level._zombie_melee_crawl["zombie"][1] = % ai_zombie_attack_crawl_lunge;
-    level._zombie_melee_crawl["zombie"][2] = %ai_zombie_crawl_attack_A;
+    // Old NDU anim
+    //level._zombie_melee_crawl["zombie"][2] = %ai_zombie_crawl_attack_A;
 
     if (!isDefined(level._zombie_stumpy_melee)) {
         level._zombie_stumpy_melee = [];
@@ -443,7 +442,7 @@ init_anims() {
     level._zombie_tesla_crawl_death["zombie"][0] = % ai_zombie_tesla_crawl_death_a;
     level._zombie_tesla_crawl_death["zombie"][1] = % ai_zombie_tesla_crawl_death_b;
 
-	// deaths
+    // legacy dazed deaths
     if (!isDefined(level._zombie_deaths)) {
         level._zombie_deaths = [];
     }
@@ -495,7 +494,7 @@ init_anims() {
     level._zombie_rise_death_anims["zombie"][2]["out"][0] = % ai_zombie_traverse_ground_v2_death_high;
     level._zombie_rise_death_anims["zombie"][2]["out"][1] = % ai_zombie_traverse_ground_v2_death_high_alt;
 	
-    //taunts
+    // taunts
     if (!isDefined(level._zombie_run_taunt))
     {
         level._zombie_run_taunt = [];
@@ -506,27 +505,39 @@ init_anims() {
     }
     level._zombie_run_taunt["zombie"] = [];
     level._zombie_board_taunt["zombie"] = [];
-	
-	//level._zombie_taunt["zombie"][0] = %ai_zombie_taunts_1;
-	//level._zombie_taunt["zombie"][1] = %ai_zombie_taunts_4;
-	//level._zombie_taunt["zombie"][2] = %ai_zombie_taunts_5b;
-	//level._zombie_taunt["zombie"][3] = %ai_zombie_taunts_5c;
-	//level._zombie_taunt["zombie"][4] = %ai_zombie_taunts_5d;
-	//level._zombie_taunt["zombie"][5] = %ai_zombie_taunts_5e;
-	//level._zombie_taunt["zombie"][6] = %ai_zombie_taunts_5f;
-	//level._zombie_taunt["zombie"][7] = %ai_zombie_taunts_7;
-	//level._zombie_taunt["zombie"][8] = %ai_zombie_taunts_9;
-	//level._zombie_taunt["zombie"][8] = %ai_zombie_taunts_11;
-	//level._zombie_taunt["zombie"][8] = %ai_zombie_taunts_12;
-	
-	level._zombie_board_taunt["zombie"][0] = %ai_zombie_taunts_4;
-	level._zombie_board_taunt["zombie"][1] = %ai_zombie_taunts_7;
-	level._zombie_board_taunt["zombie"][2] = %ai_zombie_taunts_9;
-    level._zombie_board_taunt["zombie"][3] = % ai_zombie_taunts_5b;
-    level._zombie_board_taunt["zombie"][4] = % ai_zombie_taunts_5c;
-    level._zombie_board_taunt["zombie"][5] = % ai_zombie_taunts_5d;
-    level._zombie_board_taunt["zombie"][6] = % ai_zombie_taunts_5e;
-    level._zombie_board_taunt["zombie"][7] = % ai_zombie_taunts_5f;
+    
+    level._zombie_taunt = [];
+    level._zombie_taunt[0] = %ai_zombie_taunts_1;
+    level._zombie_taunt[1] = %ai_zombie_taunts_2;
+    level._zombie_taunt[2] = %ai_zombie_taunts_3;
+    level._zombie_taunt[3] = %ai_zombie_taunts_4;
+    level._zombie_taunt[4] = %ai_zombie_taunts_5;
+    level._zombie_taunt[5] = %ai_zombie_taunts_6;
+    level._zombie_taunt[6] = %ai_zombie_taunts_7;
+    level._zombie_taunt[7] = %ai_zombie_taunts_8;
+    level._zombie_taunt[8] = %ai_zombie_taunts_9;
+    
+    //level._zombie_taunt["zombie"][0] = %ai_zombie_taunts_1;
+    //level._zombie_taunt["zombie"][1] = %ai_zombie_taunts_4;
+    //level._zombie_taunt["zombie"][2] = %ai_zombie_taunts_5b;
+    //level._zombie_taunt["zombie"][3] = %ai_zombie_taunts_5c;
+    //level._zombie_taunt["zombie"][4] = %ai_zombie_taunts_5d;
+    //level._zombie_taunt["zombie"][5] = %ai_zombie_taunts_5e;
+    //level._zombie_taunt["zombie"][6] = %ai_zombie_taunts_5f;
+    //level._zombie_taunt["zombie"][7] = %ai_zombie_taunts_7;
+    //level._zombie_taunt["zombie"][8] = %ai_zombie_taunts_9;
+    //level._zombie_taunt["zombie"][8] = %ai_zombie_taunts_11;
+    //level._zombie_taunt["zombie"][8] = %ai_zombie_taunts_12;
+    
+    level._zombie_board_taunt["zombie"][0] = %ai_zombie_taunts_4;
+    level._zombie_board_taunt["zombie"][1] = %ai_zombie_taunts_7;
+    level._zombie_board_taunt["zombie"][2] = %ai_zombie_taunts_9;
+    // old ndu taunts
+    //level._zombie_board_taunt["zombie"][3] = % ai_zombie_taunts_5b;
+    //level._zombie_board_taunt["zombie"][4] = % ai_zombie_taunts_5c;
+    //level._zombie_board_taunt["zombie"][5] = % ai_zombie_taunts_5d;
+    //level._zombie_board_taunt["zombie"][6] = % ai_zombie_taunts_5e;
+    //level._zombie_board_taunt["zombie"][7] = % ai_zombie_taunts_5f;
 }
 
 // Initialize any animscript related variables
