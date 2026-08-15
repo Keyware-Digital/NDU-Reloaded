@@ -105,6 +105,7 @@ menufile,ui_mp/prototype_options_voice.menu
 menufile,ui_mp/prototype_xboxlive_partyended.menu
 menufile,ui_mp/prototype_cdkey.menu
 menufile,ui_mp/prototype_password.menu
+rawfile,animscripts/dodge.gsc
 rawfile,animscripts/dolphin_dive.gsc
 rawfile,animscripts/walking_anim.gsc
 rawfile,animtrees/animations.atr
@@ -332,8 +333,17 @@ xanim,ai_zombie_walk_v8
 xanim,ai_zombie_walk_v9
 xanim,ai_zombie_window_attack_arm_L_out
 xanim,ai_zombie_window_attack_arm_R_out
+xanim,ai_zombie_roll_a
+xanim,ai_zombie_roll_b
+xanim,ai_zombie_roll_c
+xanim,ai_zombie_sidestep_left_a
+xanim,ai_zombie_sidestep_left_b
+xanim,ai_zombie_sidestep_right_a
+xanim,ai_zombie_sidestep_right_b
 xanim,zmb_player_dolphin_dive_land
 xanim,zmb_player_dolphin_dive_prone
+xanim,zmb_view_hands_death_action
+xanim,zmb_view_hands_death_idle
 xmodel,char_ger_hnrgd_player_body_cqb
 xmodel,char_ger_hnrgd_player_body_hmg
 xmodel,char_ger_hnrgd_player_head_cqb

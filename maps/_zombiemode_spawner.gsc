@@ -234,6 +234,8 @@ zombie_spawn_init()
 	self zombie_history( "zombie_spawn_init -> Spawned = " + self.origin );
 
 	self thread zombie_testing();
+	self thread animscripts\dodge::init();
+	self.dodge_allowed = false;
 
 	self notify( "zombie_init_done" );
 }
@@ -494,6 +496,7 @@ zombie_goto_entrance( node, endon_bad_path )
 
 	// Guy should get to goal and tear into building until all barrier chunks are gone
 	self tear_into_building();
+	self.dodge_allowed = true;
 		
 	//REMOVED THIS, WAS CAUSING ISSUES
 	if(isDefined(self.first_node.clip))

@@ -393,9 +393,9 @@ init_anims() {
 	level._zombie_melee["zombie"][4]				= %ai_zombie_attack_v1;
 	level._zombie_melee["zombie"][5]				= %ai_zombie_attack_v4;
 	level._zombie_melee["zombie"][6]				= %ai_zombie_attack_v6;	
-	level._zombie_run_melee["zombie"][0]			=	%ai_zombie_run_attack_v1;
-	level._zombie_run_melee["zombie"][1]			=	%ai_zombie_run_attack_v2;
-	level._zombie_run_melee["zombie"][2]			=	%ai_zombie_run_attack_v3;
+	level._zombie_run_melee["zombie"][0]			= %ai_zombie_run_attack_v1;
+	level._zombie_run_melee["zombie"][1]			= %ai_zombie_run_attack_v2;
+	level._zombie_run_melee["zombie"][2]			= %ai_zombie_run_attack_v3;
 
 	level._zombie_walk_melee["zombie"][0]			= %ai_zombie_walk_attack_v1;
 	level._zombie_walk_melee["zombie"][1]			= %ai_zombie_walk_attack_v2;
@@ -538,6 +538,17 @@ init_anims() {
     //level._zombie_board_taunt["zombie"][5] = % ai_zombie_taunts_5d;
     //level._zombie_board_taunt["zombie"][6] = % ai_zombie_taunts_5e;
     //level._zombie_board_taunt["zombie"][7] = % ai_zombie_taunts_5f;
+
+    // evasive manoeuvres
+    // rolls
+    level.scr_anim["zombie"]["roll_a"] 			    = %ai_zombie_roll_a;
+    level.scr_anim["zombie"]["roll_b"] 			    = %ai_zombie_roll_b;
+    level.scr_anim["zombie"]["roll_c"] 			    = %ai_zombie_roll_c;
+    // sidesteps
+    level.scr_anim["zombie"]["sidestep_left_a"] 	= %ai_zombie_sidestep_left_a;
+    level.scr_anim["zombie"]["sidestep_left_b"] 	= %ai_zombie_sidestep_left_b;
+    level.scr_anim["zombie"]["sidestep_right_a"]    = %ai_zombie_sidestep_right_a;
+    level.scr_anim["zombie"]["sidestep_right_b"]    = %ai_zombie_sidestep_right_b;
 }
 
 // Initialize any animscript related variables
