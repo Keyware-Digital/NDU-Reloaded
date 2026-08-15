@@ -2585,7 +2585,7 @@ player_no_ammo_sounds()
 
 no_ammo_cooldown_reset()
 {
-    wait 20; // Matches Treyarch's cooldown
+    wait 20;
     self.no_ammo_cooldown = false;
 }
 
@@ -2684,7 +2684,6 @@ player_friendly_fire_sound_monitor()
             current_weapon == "zombie_bowie_flourish" ||
             current_weapon == "zombie_death_hands" ||
             current_weapon == "zombie_knuckle_crack")
-
         {
             wait(0.05);
             continue;
@@ -2701,12 +2700,17 @@ player_friendly_fire_sound_monitor()
             // Ensure the target is a teammate (not a zombie, not in last stand, on the same team)
             if (!trace["entity"].is_zombie && !trace["entity"] maps\_laststand::player_is_in_laststand() && trace["entity"].team == self.team)
             {
-                // Trigger the friendly fire sound on the TARGET player
-                self.friendly_fire_sound_cooldown = true;
-                // Wait for the target's sound to finish or timeout
-                trace["entity"] thread player_vox_helper( ::friendly_fire_sound, "ff_sound_done" );
+                // 50% chance to play the sound
+                chance = 50;    // was 66%
+                if (RandomInt(100) < chance)
+                {
+                    // Trigger the friendly fire sound on the TARGET player
+                    self.friendly_fire_sound_cooldown = true;
+                    // Wait for the target's sound to finish or timeout
+                    trace["entity"] thread player_vox_helper( ::friendly_fire_sound, "ff_sound_done" );
 
-                self thread friendly_fire_sound_cooldown_reset();
+                    self thread friendly_fire_sound_cooldown_reset();
+                }
             }
         }
 
@@ -2716,7 +2720,7 @@ player_friendly_fire_sound_monitor()
 
 friendly_fire_sound_cooldown_reset()
 {
-    wait(2); // 2-second cooldown to prevent sound spam
+    wait(2);
     self.friendly_fire_sound_cooldown = false;
 }
 

@@ -1025,7 +1025,7 @@ mission_failed_during_laststand( dead_player )
 	missionfailed();
 }
 
-//bo3 style revive points rewards, will add to player level xp instead
+// bo3 style revive points rewards, will add to player level xp instead
 revive_completion_award_points() {
 	
     points = 250;
