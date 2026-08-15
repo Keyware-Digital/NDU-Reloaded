@@ -1384,6 +1384,17 @@ zombie_head_gib( attacker )
 		{
 			// SRS 9/2/2008: wet em up
 			self thread headshot_blood_fx();
+
+			//we don't need to add functions to scripts if they already exist elsewhere, if they don't need editing just call them instead
+			//apply this ethos throughout the mod
+			//additionally, files that we have not edited and exist in the vanilla map fast file should be removed from the mod as the game will load them from the vanilla map fast file instead
+			self animscripts\death::helmetPop();
+
+			if(isdefined(self.hatModel)) {
+				self detach(self.hatModel, ""); 
+				self.hatModel = undefined;
+			}
+
 			self play_sound_on_ent( "zombie_head_gib" );
 			
 			self Detach( model, "", true ); 

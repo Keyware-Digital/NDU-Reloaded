@@ -1,6 +1,5 @@
-main()
-{
-	codescripts\character::setModelFromArray(xmodelalias\char_ger_honorgd_bodyalias::main());
+main() {
+	codescripts\character::setModelFromArray(xmodelalias\char_ger_honorgd_bodyzalias::main());
 	self.headModel = codescripts\character::randomElement(xmodelalias\char_ger_honorgd_zombieheadalias::main());
 	self attach(self.headModel, "", true);
 	self.hatModel = codescripts\character::randomElement(xmodelalias\char_ger_honorgd_helmalias::main());
@@ -27,9 +26,8 @@ main()
 	self.gibSpawnTag4 = "J_Knee_LE";
 }
 
-precache()
-{
-	codescripts\character::precacheModelArray(xmodelalias\char_ger_honorgd_bodyalias::main());
+precache() {
+	codescripts\character::precacheModelArray(xmodelalias\char_ger_honorgd_bodyzalias::main());
 	codescripts\character::precacheModelArray(xmodelalias\char_ger_honorgd_zombieheadalias::main());
 	codescripts\character::precacheModelArray(xmodelalias\char_ger_honorgd_helmalias::main());
 	codescripts\character::precacheModelArray(xmodelalias\char_ger_honorgd_gearalias::main());

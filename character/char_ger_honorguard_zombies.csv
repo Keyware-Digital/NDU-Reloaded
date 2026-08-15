@@ -14,5 +14,6 @@ xmodel,char_ger_honorgd_body1_g_rarmspawn
 xmodel,char_ger_honorgd_body1_g_larmspawn
 xmodel,char_ger_honorgd_body1_g_rlegspawn
 xmodel,char_ger_honorgd_body1_g_llegspawn
+xmodelalias,char_ger_honorgd_headalias
 xmodelalias,char_ger_honorgd_helmalias
 xmodelalias,char_ger_honorgd_gearalias

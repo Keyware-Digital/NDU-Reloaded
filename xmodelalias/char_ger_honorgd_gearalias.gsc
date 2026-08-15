@@ -1,5 +1,4 @@
-main()
-{
+main() {
 	a[0] = "char_ger_honorgd_gear1";
 	a[1] = "char_ger_honorgd_gear2";
 	a[2] = "char_ger_honorgd_gear3";
