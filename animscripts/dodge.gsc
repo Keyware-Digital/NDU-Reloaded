@@ -116,23 +116,22 @@ dodge( player )
         return;
     }
 
-    // Room/geo check
-    endPos = get_dodge_end_pos( anim_name );
-
-    if( !IsDefined( endPos ) || !self mayMoveToPoint( endPos ) )
+    // Proper Treyarch-style room/geo check
+    if( !self mayMoveToPoint( self getAnimEndPos( anime ) ) )
     {
         self.dodge_animating = false;
         self.dodge_cooldown  = false;
         return;
     }
 
+    // Only lock the player once we know the dodge will actually play
     if( isDefined( player ) && IsAlive( player ) )
     {
         player.dodge_global_cooldown = true;
         player thread dodge_global_cooldown_reset();
     }
 
-    // Direction memory
+    // Direction memory (rolls ignored)
     if( isSubStr( anim_name, "left" ) )
         self.a.steppedDir--;
     else if( isSubStr( anim_name, "right" ) )
@@ -165,34 +164,6 @@ dodge( player )
     // Per-zombie hard cooldown to mitigate spam
     wait( 1 );  // was 5, primarily using interval instead
     self.dodge_cooldown = false;
-}
-
-get_dodge_end_pos( anim_name )
-{
-    anime = level.scr_anim["zombie"][anim_name];
-
-    if( IsDefined( anime ) )
-    {
-        delta = getMoveDelta( anime, 0, 1 );
-        if( IsDefined( delta ) )
-        {
-            endPos = self localToWorldCoords( delta );
-            if( IsDefined( endPos ) )
-                return endPos;
-        }
-    }
-
-    // fallback
-    side_dist    = 60;
-    forward_dist = 80;
-
-    if( isSubStr( anim_name, "left" ) )
-        return self.origin + ( AnglesToRight( self.angles ) * (side_dist * -1) );
-
-    if( isSubStr( anim_name, "right" ) )
-        return self.origin + ( AnglesToRight( self.angles ) * side_dist );
-
-    return self.origin + ( AnglesToForward( self.angles ) * forward_dist );
 }
 
 pick_dodge_anim()

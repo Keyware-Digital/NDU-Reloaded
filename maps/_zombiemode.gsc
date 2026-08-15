@@ -232,7 +232,7 @@ init_levelvars() {
     set_zombie_var("zombie_health_increase", 100);
     set_zombie_var("zombie_health_increase_percent", 10, 100);
     set_zombie_var("zombie_health_start", 150);
-    set_zombie_var("zombie_max_ai", 36);    // 24 default. we're raising to 32 as we've essentially made the game easier with our changes.
+    set_zombie_var("zombie_max_ai", 36);    // 24 default. we're raising to 32-36 as we've essentially made the game easier with our changes.
     set_zombie_var("zombie_ai_per_player", 6);
 
     // Scoring

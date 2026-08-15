@@ -1585,6 +1585,23 @@ do_player_vo(snd, variation_count)
 	}
 }
 
+// dodge-related enhancements
+getAnimEndPos( theanim )
+{
+	moveDelta = getMoveDelta( theanim, 0, 1 );
+	return self localToWorldCoords( moveDelta );
+}
+
+isValidEnemy( enemy )
+{
+	if ( !IsDefined( enemy ) )
+	{
+		return false;
+	}
+	
+	return true;
+}
+
 // Returns true if the game is ending / player is in the death hands animation
 is_dying_or_intermission()
 {
