@@ -1942,14 +1942,10 @@ player_fake_death()
     self.ignoreme = true;
     self EnableInvulnerability();
 
-    /*if(level.player_is_speaking != 1) 
-    {
-        level.player_is_speaking = 1;*/
-        // don't gate
-        self thread player_vox_helper( ::death_sound, "death_sound_done", 3.0 );
-        /*self waittill("death_sound_done");
-        level.player_is_speaking = 0;
-    }*/
+    // don't gate
+    // self thread player_vox_helper( ::death_sound, "death_sound_done", 3.0 );
+    self thread death_sound();
+
     self setactionslot(1,""); 
     self setactionslot(4,""); 
     self GiveWeapon("zombie_death_hands");
