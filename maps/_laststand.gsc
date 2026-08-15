@@ -265,6 +265,7 @@ laststand_take_player_weapons()
 		case "zombie_perk_bottle_jugg":
 		case "zombie_perk_bottle_sleight":
 		case "zombie_bowie_flourish":
+		case "zombie_death_hands":
 		case "zombie_knuckle_crack":
 			self.lastActiveWeapon = "none";
 			continue;
@@ -308,6 +309,7 @@ laststand_giveback_player_weapons()
 		case "zombie_perk_bottle_jugg":
 		case "zombie_perk_bottle_sleight":
 		case "zombie_bowie_flourish":
+		case "zombie_death_hands":
 		case "zombie_knuckle_crack":
 			continue;
 		}

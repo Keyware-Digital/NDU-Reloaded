@@ -442,11 +442,6 @@ init_models_and_variables_loadout()
 		set_player_specific_interactive_hands(2, "viewmodel_usa_marine_player");
 		set_player_specific_interactive_hands(3, "viewmodel_rus_guard_player");
 
-		/*set_player_specific_zombie_death_hands(0, "zombie_death_hands");
-		set_player_specific_zombie_death_hands(1, "zombie_death_hands");
-		set_player_specific_zombie_death_hands(2, "zombie_death_hands");
-		set_player_specific_zombie_death_hands(3, "zombie_death_hands");*/
-
 		/*set_player_specific_zombie_knuckle_crack(0, "zombie_knuckle_crack");
 		set_player_specific_zombie_knuckle_crack(1, "zombie_knuckle_crack");
 		set_player_specific_zombie_knuckle_crack(2, "zombie_knuckle_crack");
@@ -572,11 +567,6 @@ set_laststand_pistol( weapon )
 {
 	level.laststandpistol = weapon;
 }
-
-/*zombie_death_hands( weapon )
-{
-	level.zombie_death_hands = weapon;
-}*/
 
 /*set_zombie_knuckle_crack( weapon )
 {
@@ -765,8 +755,6 @@ give_model( class )
 			self give_player_specific_switch_weapon();
 			self give_player_specific_laststand_pistol();
 			self give_player_specific_viewmodel();
-			//level waittill("condition_goes_here");
-			//self give_player_specific_zombie_death_hands();
 			//level waittill("condition_goes_here");
 			//self give_player_specific_zombie_knuckle_crack();  
             return;
@@ -969,29 +957,6 @@ if(!isDefined(level.player_specific_interactive_hands))
 level.player_specific_interactive_hands[num] = name;
 PrecacheModel(name);
 }
-
-/*set_player_specific_zombie_death_hands(num, name)
-{
-if(!isDefined(level.player_specific_zombie_death_hands))
-         level.player_specific_zombie_death_hands = [];
-level.player_specific_zombie_death_hands[num] = name;
-PrecacheModel(name);
-IPrintLn("death anim");
-}
-
-give_player_specific_zombie_death_hands()
-{
-if(isDefined(level.player_specific_zombie_death_hands) && isDefined(level.player_specific_zombie_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]))
-{
-         self SetViewModel(level.player_specific_zombie_death_hands[ maps\_zombiemode_weapons::get_player_index( self ) ]);
-		 IPrintLn("death anim");
-}
-else if(isDefined(level.zombie_death_hands))
-{
-         self SetViewModel(level.zombie_death_hands);
-		 IPrintLn("death anim");
-}
-}*/
 
 /*set_player_specific_zombie_knuckle_crack(num, name)
 {
