@@ -4,129 +4,230 @@
 
 #using_animtree( "generic_human" );
 
-
 init()
 {
-	self endon( "death" );
-	level endon( "intermission" );
+    self endon( "death" );
+    level endon( "intermission" );
 
-	self.dodge_cooldown = false;
-	self.dodge_animating = false;
+    self.dodge_cooldown     = false;
+    self.dodge_animating    = false;
+    self.a.steppedDir       = 0;
+    self.a.lastSideStepTime = 0;
 
-	//IPrintLnBold( "^2DODGE MONITOR STARTED" );
+    if( !isDefined( level.dodge_settings_inited ) )
+    {
+        level.MIN_DODGE_DIST_SQ       = 48 * 48;
+        level.MAX_DODGE_DIST_SQ       = 1500 * 1500; // was 1200 * 1200
+        level.DODGE_REACTION_INTERVAL = 1500;   // was 1600
+        level.dodge_settings_inited   = true;
+    }
 
-	while( 1 )
-	{
-		wait( 0.1 );
+    while( 1 )
+    {
+        if( self.dodge_cooldown || self.dodge_animating )
+        {
+            wait( 0.35 );
+            continue;
+        }
 
-		if( self.dodge_cooldown )
-			continue;
+        // Do not dodge while underground.
+        if( !IsAlive( self ) || !self.has_legs || ( isDefined( self.in_the_ground ) && self.in_the_ground ) )
+        {
+            wait( 0.45 );
+            continue;
+        }
 
-		if( self.dodge_animating )
-			continue;
+        // Zombie must have breached its entrance / barrier.
+        if( !isDefined( self.dodge_allowed ) || !self.dodge_allowed )
+        {
+            wait( 0.45 );
+            continue;
+        }
 
-		if( !self.has_legs )
-			continue;
+        if( GetTime() - self.a.lastSideStepTime < level.DODGE_REACTION_INTERVAL )
+        {
+            wait( 0.15 );
+            continue;
+        }
 
-		// Do not dodge while underground.
-		if( isDefined( self.in_the_ground ) && self.in_the_ground )
-			continue;
+        players = GetPlayers();
 
-		// Zombie must have breached its entrance / barrier.
-		if( !isDefined( self.dodge_allowed ) || !self.dodge_allowed )
-			continue;
+        for( i = 0; i < players.size; i++ )
+        {
+            player = players[i];
 
-		players = GetPlayers();
+            if( !isDefined( player ) || !IsAlive( player ) )
+                continue;
 
-		for( i = 0; i < players.size; i++ )
-		{
-			player = players[i];
+            if( player maps\_laststand::player_is_in_laststand() )
+                continue;
 
-			if( !isDefined( player ) || !IsAlive( player ) )
-				continue;
+            // Must actually be ADS.
+            if( !player AdsButtonPressed() )
+                continue;
 
-			if( player maps\_laststand::player_is_in_laststand() )
-				continue;
+            // Prevent several zombies from dodging from the same ADS sweep.
+            if( isDefined( player.dodge_global_cooldown ) && player.dodge_global_cooldown )
+                continue;
 
-			// Must actually be ADS.
-			if( !player AdsButtonPressed() )
-				continue;
+            start = player GetEye();
+            end   = start + ( AnglesToForward( player GetPlayerAngles() ) * 10000 );
+            trace = BulletTrace( start, end, true, player );
 
-			// Prevent several zombies from dodging from the same ADS sweep.
-			if( isDefined( player.dodge_global_cooldown ) && player.dodge_global_cooldown )
-				continue;
+            // Did the player's ADS trace actually hit this zombie?
+            if( !isDefined( trace["entity"] ) || trace["entity"] != self )
+                continue;
 
-			// Use the same proven ADS trace already used elsewhere in the codebase.
-			start = player GetEye();
-			end = start + (AnglesToForward( player GetPlayerAngles() ) * 10000);
+            distSq = DistanceSquared( self.origin, player.origin );
+            if( distSq < level.MIN_DODGE_DIST_SQ || distSq > level.MAX_DODGE_DIST_SQ )
+                continue;
 
-			trace = BulletTrace( start, end, true, player );
+            // 4% chance
+            if( RandomInt( 100 ) >= 4 ) // was 3%
+                continue;
 
-			// Did the player's ADS trace actually hit this zombie?
-			if( isDefined( trace["entity"] ) && trace["entity"] == self )
-			{
-				// 3% chance.
-				if( RandomInt( 100 ) < 3 )
-				{
-					// Short global cooldown for this player.
-					player.dodge_global_cooldown = true;
-					player thread dodge_global_cooldown_reset();
+            // IMPORTANT: only set global AFTER we know the dodge will actually play!
+            self thread dodge( player );
+            break;
+        }
 
-					self thread dodge();
-					break;
-				}
-			}
-		}
-	}
+        wait( 0.1 );
+    }
 }
 
-dodge()
+dodge( player )
 {
     self endon( "death" );
 
-    if( self.dodge_cooldown || self.dodge_animating )
+    if( !IsAlive( self ) || self.dodge_cooldown || self.dodge_animating )
         return;
 
-    self.dodge_cooldown = true;
-    self.dodge_animating = true;
+    self.dodge_cooldown     = true;
+    self.dodge_animating    = true;
+    self.a.lastSideStepTime = GetTime();
 
-    anims = [];
+    anim_name = pick_dodge_anim();
+    anime     = level.scr_anim["zombie"][anim_name];
 
-	// rolls disabled as they're a bit cursed in WaW
-    //anims[anims.size] = "roll_a";
-    //anims[anims.size] = "roll_b";
-    //anims[anims.size] = "roll_c";
-    anims[anims.size] = "sidestep_left_a";
-    anims[anims.size] = "sidestep_left_b";
-    anims[anims.size] = "sidestep_right_a";
-    anims[anims.size] = "sidestep_right_b";
+    if( !IsDefined( anime ) )
+    {
+        self.dodge_animating = false;
+        self.dodge_cooldown  = false;
+        return;
+    }
 
-    anim_name = anims[RandomInt(anims.size)];
-    anime = level.scr_anim["zombie"][anim_name];
+    // Room/geo check
+    endPos = get_dodge_end_pos( anim_name );
 
-    // IPrintLnBold( "^3ZOMBIE DODGE: " + anim_name );
+    if( !IsDefined( endPos ) || !self mayMoveToPoint( endPos ) )
+    {
+        self.dodge_animating = false;
+        self.dodge_cooldown  = false;
+        return;
+    }
+
+    if( isDefined( player ) && IsAlive( player ) )
+    {
+        player.dodge_global_cooldown = true;
+        player thread dodge_global_cooldown_reset();
+    }
+
+    // Direction memory
+    if( isSubStr( anim_name, "left" ) )
+        self.a.steppedDir--;
+    else if( isSubStr( anim_name, "right" ) )
+        self.a.steppedDir++;
 
     self thread maps\_sounds::zombie_dodge_sound();
-    // wait( 0.05 );
+
+    if( !IsAlive( self ) )
+    {
+        self.dodge_animating = false;
+        self.dodge_cooldown  = false;
+        return;
+    }
+
+    self AnimMode( "gravity", false );
+    self OrientMode( "face angle", self.angles[1] );
 
     self AnimScripted( "zombie_dodge", self.origin, self.angles, anime );
 
     wait( GetAnimLength( anime ) );
 
+    if( IsAlive( self ) )
+    {
+        self AnimMode( "none", false );
+        self OrientMode( "face default" );
+    }
+
     self.dodge_animating = false;
 
-    // Per-zombie cooldown.
-    wait( 7 );
-
+    // Per-zombie hard cooldown to mitigate spam
+    wait( 1 );  // was 5, primarily using interval instead
     self.dodge_cooldown = false;
+}
+
+get_dodge_end_pos( anim_name )
+{
+    anime = level.scr_anim["zombie"][anim_name];
+
+    if( IsDefined( anime ) )
+    {
+        delta = getMoveDelta( anime, 0, 1 );
+        if( IsDefined( delta ) )
+        {
+            endPos = self localToWorldCoords( delta );
+            if( IsDefined( endPos ) )
+                return endPos;
+        }
+    }
+
+    // fallback
+    side_dist    = 60;
+    forward_dist = 80;
+
+    if( isSubStr( anim_name, "left" ) )
+        return self.origin + ( AnglesToRight( self.angles ) * (side_dist * -1) );
+
+    if( isSubStr( anim_name, "right" ) )
+        return self.origin + ( AnglesToRight( self.angles ) * side_dist );
+
+    return self.origin + ( AnglesToForward( self.angles ) * forward_dist );
+}
+
+pick_dodge_anim()
+{
+    if( self.a.steppedDir < 0 )
+    {
+        anims = [];
+        anims[anims.size] = "sidestep_right_a";
+        anims[anims.size] = "sidestep_right_b";
+        return anims[ RandomInt( anims.size ) ];
+    }
+    else if( self.a.steppedDir > 0 )
+    {
+        anims = [];
+        anims[anims.size] = "sidestep_left_a";
+        anims[anims.size] = "sidestep_left_b";
+        return anims[ RandomInt( anims.size ) ];
+    }
+
+    anims = [];
+    anims[anims.size] = "roll_a";
+    anims[anims.size] = "roll_b";
+    anims[anims.size] = "roll_c";
+    anims[anims.size] = "sidestep_left_a";
+    anims[anims.size] = "sidestep_left_b";
+    anims[anims.size] = "sidestep_right_a";
+    anims[anims.size] = "sidestep_right_b";
+    return anims[ RandomInt( anims.size ) ];
 }
 
 dodge_global_cooldown_reset()
 {
-	self endon( "death" );
-	self endon( "disconnect" );
+    self endon( "death" );
+    self endon( "disconnect" );
 
-	wait( 1 );
-
-	self.dodge_global_cooldown = false;
+    wait( 1 );
+    self.dodge_global_cooldown = false;
 }

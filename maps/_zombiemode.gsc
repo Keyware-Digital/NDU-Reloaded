@@ -2723,49 +2723,56 @@ friendly_fire_sound_cooldown_reset()
 // Monitors each player for swarm conditions (6+ zombies within 175 inches)
 player_swarm_monitor()
 {
-    self endon("death");
-    self endon("disconnect");
+    self endon( "death" );
+    self endon( "disconnect" );
 
-    if (!IsDefined(self) || !IsPlayer(self))
-    {
+    if( !IsDefined( self ) || !IsPlayer( self ) )
         return;
-    }
 
     self.swarm_cooldown = false;
 
-    while (1)
+    while( 1 )
     {
-        if (!self.swarm_cooldown)
+        if( !self.swarm_cooldown )
         {
-            zombies = GetAiArray("axis");
+            zombies = GetAiArray( "axis" );
             zombies_nearby = 0;
-            for (i = 0; i < zombies.size; i++)
+
+            for( i = 0; i < zombies.size; i++ )
             {
-                if (IsDefined(zombies[i]) && IsAlive(zombies[i]))
+                zombie = zombies[i];
+                if( !IsDefined( zombie ) || !IsAlive( zombie ) )
+                    continue;
+
+                if( zombie.origin[2] < self.origin[2] + 80 &&
+                    zombie.origin[2] > self.origin[2] - 80 &&
+                    Distance( zombie.origin, self.origin ) <= 200 )
                 {
-                    if (zombies[i].origin[2] < self.origin[2] + 80 && 
-                        zombies[i].origin[2] > self.origin[2] - 80 && 
-                        Distance(zombies[i].origin, self.origin) <= 200)
-                    {
-                        zombies_nearby++;
-                    }
+                    zombies_nearby++;
                 }
             }
 
-            if (zombies_nearby >= 6)
+            if( zombies_nearby >= 6 )
             {
-                self.swarm_cooldown = true;
-                self thread player_vox_helper( ::swarm_sound, "swarm_sound_done" );
-                self thread swarm_cooldown_reset();
+                // 50% chance
+                chance = 50;    // was 33%
+
+                if( RandomInt( 100 ) < chance )
+                {
+                    self.swarm_cooldown = true;
+                    self thread player_vox_helper( ::swarm_sound, "swarm_sound_done" );
+                    self thread swarm_cooldown_reset();
+                }
             }
         }
-        wait 0.5;
+
+        wait( 0.5 );
     }
 }
 
 // Resets the swarm sound cooldown
 swarm_cooldown_reset()
 {
-    wait 5;
+    wait( 7 );          // was 5
     self.swarm_cooldown = false;
 }
