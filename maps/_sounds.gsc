@@ -756,10 +756,10 @@ player_vox_timeout(timeout, notify_str)
     self notify(notify_str);
 }
 
-zombie_taunt_sound()
+zombie_dodge_sound()
 {
     taunt_sound = Spawn( "script_origin", self.origin );
-    taunt_sound PlaySound( "zombie_groan_monkey", "zombie_taunt_sound_done" );
-    taunt_sound waittill( "zombie_taunt_sound_done" );
+    taunt_sound PlaySound( "zombie_groan_dodge", "zombie_dodge_sound_done" );
+    taunt_sound waittill( "zombie_dodge_sound_done" );
     taunt_sound Delete();
 }

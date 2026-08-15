@@ -263,6 +263,7 @@ handle_samantha_figure_timeout(samantha_figure) {
 }
 
 handle_samantha_ee_reward() {
+	//play_sound_2D("bright_sting");
 	powerup_spawn = (-15, -420, 2);
 	players = GetPlayers();
 	for (i = 0; i < players.size; i++) {

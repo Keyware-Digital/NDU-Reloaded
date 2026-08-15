@@ -92,7 +92,7 @@ dodge()
 
     anims = [];
 
-	// rolls disabled as they're a bit buggy in WaW
+	// rolls disabled as they're a bit cursed in WaW
     //anims[anims.size] = "roll_a";
     //anims[anims.size] = "roll_b";
     //anims[anims.size] = "roll_c";
@@ -106,7 +106,7 @@ dodge()
 
     // IPrintLnBold( "^3ZOMBIE DODGE: " + anim_name );
 
-    self thread maps\_sounds::zombie_taunt_sound();
+    self thread maps\_sounds::zombie_dodge_sound();
     // wait( 0.05 );
 
     self AnimScripted( "zombie_dodge", self.origin, self.angles, anime );
