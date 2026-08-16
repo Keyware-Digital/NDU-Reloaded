@@ -36,6 +36,7 @@ bouncing_betty_setup( player )
 	self thread bouncing_betty_watch();
 	
 	player.has_betties = 1;
+	player thread maps\_sounds::player_vox_helper( maps\_sounds::pickup_betty_sound, "weapon_vox_done" );
 
 	current_weapon = self GetCurrentWeapon();
 
