@@ -1023,7 +1023,7 @@ treasure_chest_weapon_spawn(chest, player)
 	}
 	else if(level.chest_accessed >= 13) // 50% chance to get lock after 12th pull
 	{
-		chanceOfPadlock = 50;
+		chanceOfPadlock = chanceOfPadlock + 50;
 	}
 
 	if(chanceOfPadlock >= 100 && level.chest_accessed > 3 && !level.zombie_vars["zombie_fire_sale"])
@@ -1380,9 +1380,6 @@ treasure_chest_give_weapon( weapon_string )
 			self thread player_vox_helper( ::pickup_shotgun_sound, "weapon_vox_done" );
 			break;
 		// misc
-		case "mine_bouncing_betty":
-			self thread player_vox_helper( ::pickup_betty_sound, "weapon_vox_done" );
-			break;
 		case "m2_flamethrower_zombie":
 			self thread player_vox_helper( ::pickup_flamethrower_sound, "weapon_vox_done" );
 			break;
