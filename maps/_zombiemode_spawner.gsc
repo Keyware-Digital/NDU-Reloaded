@@ -3,7 +3,11 @@
 #include maps\_zombiemode_utility;
 #include maps\_sounds;
 
-#using_animtree( "generic_human" ); 
+#using_animtree("generic_human");
+
+//potential achievement system using challenges menu
+//if all_chunks_destroyed is false and has been false for the first 3 rounds, award "I said we’re CLOSED!" achievement
+
 init()
 {
 	level.zombie_move_speed = 1; 

@@ -105,6 +105,7 @@ menufile,ui_mp/prototype_options_voice.menu
 menufile,ui_mp/prototype_xboxlive_partyended.menu
 menufile,ui_mp/prototype_cdkey.menu
 menufile,ui_mp/prototype_password.menu
+menufile,ui_mp/prototype_mods.menu
 rawfile,animscripts/dodge.gsc
 rawfile,animscripts/dolphin_dive.gsc
 rawfile,animscripts/walking_anim.gsc

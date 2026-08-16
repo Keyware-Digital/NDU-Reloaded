@@ -415,7 +415,8 @@ open main_text;
         CHOICE_BUTTON_VIS(5, "@PROTOTYPE_MENU_CHARACTER_BIO", open credits_menu;, when(!localvarBool(ui_hideBack));)
         CHOICE_BUTTON_VIS(6, "@MENU_OPTIONS_CONTROLS_CAP", open options_new_pc;, when(!localvarBool(ui_hideBack));)
         CHOICE_SEPARATOR_VIS(CHOICE_SEP_3, when(!localvarBool(ui_hideBack));)
-        CHOICE_BUTTON_VIS(7, "@MENU_QUIT", open quit_popmenu, when(!localvarBool(ui_hideBack));)
+        CHOICE_BUTTON_VIS(7, "@MENU_MODS", open mods_menu;, when(!localvarBool(ui_hideBack)))
+        CHOICE_BUTTON_VIS(8, "@MENU_QUIT", open quit_popmenu, when(!localvarBool(ui_hideBack));)
 
         #include "ui/safearea.menu"
 
