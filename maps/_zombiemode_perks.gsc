@@ -546,6 +546,10 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
         lastStandAmmo = 18;
         lastStandClip = 6;
         lastStandGun = "sw_357";
+    /*} else if (self HasWeapon("bloodhound") || self.firstPistol == "bloodhound") {
+        lastStandAmmo = 24;
+        lastStandClip = 8;
+        lastStandGun = "bloodhound";*/
     } else if (self HasWeapon("walther") || self.firstPistol == "walther") {
         lastStandAmmo = 24;
         lastStandClip = 8;
@@ -554,6 +558,10 @@ solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
         lastStandAmmo = 24;
         lastStandClip = 8;
         lastStandGun = "tokarev";
+    /*} else if (self HasWeapon("mauser_c96") || self.firstPistol == "mauser_c96") {
+        lastStandAmmo = 24;
+        lastStandClip = 8;
+        lastStandGun = "mauser_c96";*/
     } else if (self HasWeapon("colt_wet") || self.firstPistol == "colt_wet") {
         lastStandAmmo = 24;
         lastStandClip = 8;

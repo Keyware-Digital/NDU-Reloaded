@@ -201,9 +201,12 @@ init_weapons()
 {
 	// Only guns that are wall buy guns require their true cost, every other gun needs to have zero cost to prevent errors and confusion
 	// NDU: Reloaded
+	//add_zombie_weapon( "bloodhound", "", 0 );
 	add_zombie_weapon( "dp28_crude", "", 0 );
+	//add_zombie_weapon( "mauser_c96", "", 0 );
 	add_zombie_weapon( "m1921_thompson", "", 0 );
 	add_zombie_weapon( "mine_bouncing_betty", "", 0 );
+	//add_zombie_weapon( "mp40_bo3", "", 0 );	
 	add_zombie_weapon( "mp40_bigammo_mp", "", 0 );	
 	add_zombie_weapon( "ppsh41", "", 0 );
 	add_zombie_weapon( "ppsh41_drum", "", 0 );
@@ -1253,7 +1256,7 @@ treasure_chest_give_weapon( weapon_string )
 	{
 		for( i = 0; i < primaryWeapons.size; i++ )
 		{
-			if( primaryWeapons[i] == "colt" || primaryWeapons[i] == "walther" || primaryWeapons[i] == "tokarev" )
+			if( primaryWeapons[i] == "colt" || primaryWeapons[i] == "walther" || primaryWeapons[i] == "tokarev" ) // || primaryWeapons[i] == "bloodhound" || primaryWeapons[i] == "mauser_c96" )
 			{
 				continue; 
 			}
@@ -1419,17 +1422,16 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 
 	level.cabinetguns = [];
 	level.cabinetguns[0] = "kar98k_scoped_zombie";						// default ndu
-	level.cabinetguns[1] = "colt";										// placeholder
+	level.cabinetguns[1] = "colt";										// placeholder for bloodhound
 	level.cabinetguns[2] = "m1921_thompson";						
 	level.cabinetguns[3] = "mosin_rifle_scoped_zombie";
 	level.cabinetguns[4] = "mp40_bigammo_mp";
 	level.cabinetguns[5] = "ppsh41_drum";
 	level.cabinetguns[6] = "springfield_scoped_zombie";
 	level.cabinetguns[7] = "sten_mk5";
-	/*level.cabinetguns[8] = "bloodhound";
-	level.cabinetguns[9] = "placeholder";*/
-	//level.cabinetguns[10] = "kar98k_bayonet";
-	//level.cabinetguns[11] = "mosin_rifle_bayonet";
+	/*level.cabinetguns[8] = "placeholder";
+	level.cabinetguns[9] = "kar98k_bayonet";
+	level.cabinetguns[10] = "mosin_rifle_bayonet";*/
 	randomnumb = undefined;
 	weaponNameMysteryCabinet = undefined;
 	
@@ -2303,7 +2305,7 @@ weapon_give( weapon )
 	{
 		for( i = 0; i < primaryWeapons.size; i++ )
 		{
-			if(primaryWeapons[i] == "colt" || primaryWeapons[i] == "walther" || primaryWeapons[i] == "tokarev")
+			if(primaryWeapons[i] == "colt" || primaryWeapons[i] == "walther" || primaryWeapons[i] == "tokarev" ) // || primaryWeapons[i] == "bloodhound || primaryWeapons[i] == "mauser_c96 ")
 			{
 				continue; 
 			}
