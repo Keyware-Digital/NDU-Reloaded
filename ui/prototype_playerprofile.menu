@@ -71,6 +71,7 @@
 			uiScript openPlayerProfileOpenCallback
 
 			setfocus profilelist;
+			setLocalVarBool ui_hideBack 1;
 			setLocalVarBool ui_inOverlay 1;
 		}
 		onClose
@@ -79,6 +80,7 @@
 			setdvar ui_separator_show "1";
 			setdvar ui_version_show "1";
 			setdvar ui_showOnlineOfflineButton "1";
+			setLocalVarBool ui_hideBack 0;
 			setLocalVarBool ui_inOverlay 0;
 			//open main_text;
 		}
