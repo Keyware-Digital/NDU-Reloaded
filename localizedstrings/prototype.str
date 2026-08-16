@@ -197,7 +197,7 @@ LANG_ENGLISH        "Hold ^3&&1 ^7to Clear Debris [Cost: &&2]"
 REFERENCE           ZOMBIE_BUTTON_BUY_OPEN_DOOR
 LANG_ENGLISH        "Hold ^3&&1 ^7to Open Door [Cost: &&2]"
 
-REFERENCE           PROTOTYPE_GAME_BUTTON_TO_REVIVE_PLAYER
+REFERENCE           GAME_BUTTON_TO_REVIVE_PLAYER
 LANG_ENGLISH        "Hold ^3&&1 ^7to Revive"
 
 REFERENCE           ZOMBIE_REVIVE_REWARD
