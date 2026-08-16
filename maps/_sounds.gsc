@@ -58,16 +58,60 @@ announcer_vox_nuke_sound() {
 	pickup_nuke_sound Delete();
 }
 
-pain_vox_sound() {
-    index = maps\_zombiemode_weapons::get_player_index(self);
-    painSound = "_pain_exert_" + RandomInt(8);
-    pain_vox_sound = Spawn("script_origin", self.origin);
-	pain_vox_sound PlaySound("plr_" + index + painSound, "pain_exert_sound_done");
-    pain_vox_sound waittill("pain_exert_sound_done");
-	pain_vox_sound Delete();
-	
-	self notify("pain_exert_sound_done");
-    
+blockers_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	blockersSound = "_blockers_" + RandomInt(5);
+    blockers_sound = Spawn("script_origin", self.origin);
+	blockers_sound  PlaySound("plr_" + index + blockersSound, "blockers_sound_done");
+	blockers_sound  waittill("blockers_sound_done");
+	blockers_sound  Delete();
+
+	self notify("blockers_sound_done");
+
+}
+
+button_press_sound() {
+    hide_and_seek_ee_track_sound = Spawn("script_origin", self.origin);
+    hide_and_seek_ee_track_sound PlaySound("button_press", "button_press_sound_done");
+    hide_and_seek_ee_track_sound waittill("button_press_sound_done");
+    hide_and_seek_ee_track_sound Delete();
+}
+
+cabinet_sound() {
+	cabinetSong = "cabinetbox_sting_" + RandomInt(3);
+	cabinet_sound = Spawn("script_origin", self.origin);
+	cabinet_sound PlaySound(cabinetSong, "cabinetbox_sting_sound_done");
+	cabinet_sound waittill("cabinetbox_sting_sound_done");
+	cabinet_sound Delete();
+
+}
+
+cash_register_sound() {
+    chash_register_sound = Spawn("script_origin", self.origin);
+	chash_register_sound PlaySound("cha_ching", "cha_ching_sound_done");
+	chash_register_sound waittill("cha_ching_sound_done");
+	chash_register_sound Delete();
+
+}
+
+coalescence_sound() {
+	coalescence_sound = Spawn("script_origin", self.origin);
+	coalescence_sound PlaySound("coalescence", "coalescence_sound_done");
+	coalescence_sound waittill("coalescence_sound_done");
+	coalescence_sound Delete();
+}
+
+crappy_weapon_sound() {
+	wait 0.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	crappyweaponSound = "_negative_" + RandomInt(3);
+    crappy_weapon_sound = Spawn("script_origin", self.origin);
+	crappy_weapon_sound PlaySound("plr_" + index + crappyweaponSound, "negative_sound_done");
+	crappy_weapon_sound waittill("negative_sound_done");
+	crappy_weapon_sound Delete();
+
+	self notify("weapon_vox_done");
+
 }
 
 death_sound() {
@@ -79,6 +123,100 @@ death_sound() {
 	death_sound Delete();
 
 	self notify("death_sound_done");
+    
+}
+
+dolphin_dive_launch_sound() {
+    index = maps\_zombiemode_weapons::get_player_index(self);
+	launch = "_launch_exert_" + RandomInt(6);
+	launch_sound = Spawn("script_origin", self.origin);
+    launch_sound PlaySound("plr_" + index + launch, "launch_exert_sound_done");
+	launch_sound waittill("launch_exert_sound_done");
+	launch_sound Delete();
+
+	self notify("dolphin_dive_launch_sound_done");
+
+}
+
+dolphin_dive_land_sound() {
+	land = "_land_exert_" + RandomInt(6);
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	land_sound = Spawn("script_origin", self.origin);
+    land_sound PlaySound( "plr_" + index + land, "land_exert_sound_done");
+	land_sound waittill("land_exert_sound_done");
+	land_sound Delete();
+
+	self notify("dolphin_dive_land_sound_done");
+
+}
+
+explosive_kill_sound() {
+    index = maps\_zombiemode_weapons::get_player_index(self);
+    explosivekillSound = "_explosive_" + RandomInt(5);
+    explosive_kill_sound = Spawn("script_origin", self.origin);
+    explosive_kill_sound PlaySound("plr_" + index + explosivekillSound, "explosive_sound_done");
+    explosive_kill_sound waittill("explosive_sound_done");
+    explosive_kill_sound Delete();
+    
+     self notify("explosive_sound_done");
+
+}
+
+friendly_fire_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	friendlyfireSound = "_ff_" + RandomInt(3);
+    friendly_fire_sound = Spawn("script_origin", self.origin);
+	friendly_fire_sound PlaySound("plr_" + index + friendlyfireSound, "ff_sound_done");
+	friendly_fire_sound waittill("ff_sound_done");
+	friendly_fire_sound Delete();
+
+	self notify("ff_sound_done");
+
+}
+
+great_weapon_sound() {
+	wait 0.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	greatweaponSound = "_positive_" + RandomInt(3);
+    great_weapon_sound = Spawn("script_origin", self.origin);
+	great_weapon_sound PlaySound("plr_" + index + greatweaponSound, "positive_sound_done");
+	great_weapon_sound waittill("positive_sound_done");
+	great_weapon_sound Delete();
+
+	self notify("weapon_vox_done");
+
+}
+
+headshot_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	headshotSound = "_headshot_" + RandomInt(5);
+    headshot_sound = Spawn("script_origin", self.origin);
+	headshot_sound PlaySound("plr_" + index + headshotSound, "headshot_sound_done");
+	headshot_sound waittill("headshot_sound_done");
+	headshot_sound Delete();
+
+	self notify("headshot_sound_done");
+
+}
+
+killstreak_sound() {
+	//wait 0.125;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	killstreakSound = "_killstreak_" + RandomInt(3);
+    killstreak_sound = Spawn("script_origin", self.origin);
+	killstreak_sound PlaySound("plr_" + index + killstreakSound, "killstreak_sound_done");
+	killstreak_sound waittill("killstreak_sound_done");
+	killstreak_sound Delete();
+
+	self notify("killstreak_sound_done");
+
+}
+
+lightning_sound() {
+    lightning_sound = Spawn("script_origin", self.origin);
+	lightning_sound PlaySound("lightning_1", "lightning_1_sound_done");
+	lightning_sound waittill("lightning_1_sound_done");
+	lightning_sound Delete();
     
 }
 
@@ -107,18 +245,6 @@ melee_vox_sound()
     self notify( "melee_sound_done" );
 }
 
-stielhandgranate_vox_sound() {
-    index = maps\_zombiemode_weapons::get_player_index(self);
-    stielhandgranateSound = "_stielhandgranate_exert_" + RandomInt(6);
-    stielhandgranate_vox_sound = Spawn("script_origin", self.origin);
-	stielhandgranate_vox_sound PlaySound("plr_" + index + stielhandgranateSound, "stielhandgranate_exert_sound_done");
-	stielhandgranate_vox_sound waittill("stielhandgranate_exert_sound_done");
-	stielhandgranate_vox_sound Delete();
-
-	self notify("stielhandgranate_sound_done");
-
-}
-
 molotov_vox_sound() {
     index = maps\_zombiemode_weapons::get_player_index(self);
     molotovSound = "_molotov_exert_" + RandomInt(3);
@@ -131,61 +257,24 @@ molotov_vox_sound() {
 
 }
 
-reload_vox_sound() {
-    index = maps\_zombiemode_weapons::get_player_index(self);
-    reloadSound = "_vox_reload_" + RandomInt(2);
-    reload_vox_sound = Spawn("script_origin", self.origin);
-	reload_vox_sound PlaySound("plr_" + index + reloadSound, "vox_reload_sound_done");
-	reload_vox_sound waittill("vox_reload_sound_done");
-	reload_vox_sound Delete();
 
-	self notify("reloading_sound_done");
+monty_dialogue_sound() {
+    monty_dialogue_sound = Spawn("script_origin", self.origin);
+    monty_dialogue_sound PlaySound("monty_dialogue", "monty_dialogue_sound_done");
+    monty_dialogue_sound waittill("monty_dialogue_sound_done");
+    monty_dialogue_sound Delete();	
 
+    self coalescence_sound();
 }
 
-no_ammo_vox() {
-    index = maps\_zombiemode_weapons::get_player_index(self);
-    noAmmoSound = "_no_ammo";
-    no_ammo_vox_sound = Spawn("script_origin", self.origin);
-	no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "no_ammo_sound_done");
-	no_ammo_vox_sound waittill("no_ammo_sound_done");
-	no_ammo_vox_sound Delete();
-
-	self notify("no_ammo_sound_done");
-	
-}
-
-dolphin_dive_launch_sound() {
-    index = maps\_zombiemode_weapons::get_player_index(self);
-	launch = "_launch_exert_" + RandomInt(6);
-	launch_sound = Spawn("script_origin", self.origin);
-    launch_sound PlaySound("plr_" + index + launch, "launch_exert_sound_done");
-	launch_sound waittill("launch_exert_sound_done");
-	launch_sound Delete();
-
-	self notify("dolphin_dive_launch_sound_done");
-
-}
-
-dolphin_dive_land_sound() {
-	land = "_land_exert_" + RandomInt(6);
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	land_sound = Spawn("script_origin", self.origin);
-    land_sound PlaySound( "plr_" + index + land, "land_exert_sound_done");
-	land_sound waittill("land_exert_sound_done");
-	land_sound Delete();
-
-	self notify("dolphin_dive_land_sound_done");
-
-}
-
-phd_explosion_sound() {
-    explosion = "explode_" + RandomInt(3);
-    explosion_sound = Spawn("script_origin", self.origin);
-    explosion_sound PlaySound(explosion, "explode_sound_done");
-    explosion_sound waittill("explode_sound_done");
-	explosion_sound Delete();
-
+mystery_box_haunt_sound_loop()
+{
+    wait 0.33;
+	haunt_sound = Spawn("script_origin", self.origin);
+    haunt_sound PlayLoopSound("mystery_box_haunt");
+    self waittill("stop_haunt_sound");
+    haunt_sound StopLoopSound();
+    haunt_sound Delete();
 }
 
 mystery_box_lock_sound() {
@@ -209,56 +298,162 @@ mystery_box_unlock_sound() {
 
 }
 
-mystery_box_haunt_sound_loop()
-{
-    wait 0.33;
-	haunt_sound = Spawn("script_origin", self.origin);
-    haunt_sound PlayLoopSound("mystery_box_haunt");
-    self waittill("stop_haunt_sound");
-    haunt_sound StopLoopSound();
-    haunt_sound Delete();
+no_ammo_vox() {
+    index = maps\_zombiemode_weapons::get_player_index(self);
+    noAmmoSound = "_no_ammo";
+    no_ammo_vox_sound = Spawn("script_origin", self.origin);
+	no_ammo_vox_sound PlaySound("plr_" + index + noAmmoSound, "no_ammo_sound_done");
+	no_ammo_vox_sound waittill("no_ammo_sound_done");
+	no_ammo_vox_sound Delete();
+
+	self notify("no_ammo_sound_done");
+	
 }
 
-cabinet_sound() {
-	cabinetSong = "cabinetbox_sting_" + RandomInt(3);
-	cabinet_sound = Spawn("script_origin", self.origin);
-	cabinet_sound PlaySound(cabinetSong, "cabinetbox_sting_sound_done");
-	cabinet_sound waittill("cabinetbox_sting_sound_done");
-	cabinet_sound Delete();
-
-}
-
-raygun_stinger_sound() {
-    good_stinger_sound = Spawn("script_origin", self.origin);
-	good_stinger_sound PlaySound("raygun_stinger", "raygun_stinger_sound_done");
-	good_stinger_sound waittill("sound_done");
-	good_stinger_sound Delete();
-
-}
-
-great_weapon_sound() {
-	wait 0.66;
+no_money_sound() {
+	wait 0.5;	// small delay after no purchase sound
 	index = maps\_zombiemode_weapons::get_player_index(self);
-	greatweaponSound = "_positive_" + RandomInt(3);
-    great_weapon_sound = Spawn("script_origin", self.origin);
-	great_weapon_sound PlaySound("plr_" + index + greatweaponSound, "positive_sound_done");
-	great_weapon_sound waittill("positive_sound_done");
-	great_weapon_sound Delete();
+	momoneySound = "_nomoney_" + RandomInt(1);
+    no_money_sound = Spawn("script_origin", self.origin);
+	no_money_sound PlaySound("plr_" + index + momoneySound, "nomoney_sound_done");
+	no_money_sound waittill("nomoney_sound_done");
+	no_money_sound Delete();
+	wait 0.5;	// small delay to alleviate spamming
 
-	self notify("weapon_vox_done");
+	self notify( "no_money_sound_done" );
 
 }
 
-crappy_weapon_sound() {
-	wait 0.66;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	crappyweaponSound = "_negative_" + RandomInt(3);
-    crappy_weapon_sound = Spawn("script_origin", self.origin);
-	crappy_weapon_sound PlaySound("plr_" + index + crappyweaponSound, "negative_sound_done");
-	crappy_weapon_sound waittill("negative_sound_done");
-	crappy_weapon_sound Delete();
+no_purchase_sound() {
+    no_purchase_sound = Spawn("script_origin", self.origin);
+	no_purchase_sound PlaySound("no_purchase", "no_purchase_sound_done");
+	no_purchase_sound waittill("no_purchase_sound_done");
+	no_purchase_sound Delete();
 
-	self notify("weapon_vox_done");
+}
+
+pain_vox_sound() {
+    index = maps\_zombiemode_weapons::get_player_index(self);
+    painSound = "_pain_exert_" + RandomInt(8);
+    pain_vox_sound = Spawn("script_origin", self.origin);
+	pain_vox_sound PlaySound("plr_" + index + painSound, "pain_exert_sound_done");
+    pain_vox_sound waittill("pain_exert_sound_done");
+	pain_vox_sound Delete();
+	
+	self notify("pain_exert_sound_done");
+    
+}
+
+phd_explosion_sound() {
+    explosion = "explode_" + RandomInt(3);
+    explosion_sound = Spawn("script_origin", self.origin);
+    explosion_sound PlaySound(explosion, "explode_sound_done");
+    explosion_sound waittill("explode_sound_done");
+	explosion_sound Delete();
+
+}
+
+pickup_bonus_points_sound() {
+	wait 1.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupbonuspointsSound = "_points_" + RandomInt(1);
+    pickup_bonus_points_sound = Spawn("script_origin", self.origin);
+	pickup_bonus_points_sound PlaySound("plr_" + index + pickupbonuspointsSound, "bonus_points_sound_done");
+	pickup_bonus_points_sound waittill("bonus_points_sound_done");
+	pickup_bonus_points_sound Delete();
+
+	self notify("powerup_pickup_sound_done");
+
+}
+
+pickup_carpenter_sound() {
+	wait 1.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupcarpenterSound = "_repair_" + RandomInt(1);
+    pickup_carpenter_sound = Spawn("script_origin", self.origin);
+	pickup_carpenter_sound PlaySound("plr_" + index + pickupcarpenterSound, "repair_sound_done");
+	pickup_carpenter_sound waittill("repair_sound_done");
+	pickup_carpenter_sound Delete();
+
+	self notify("powerup_pickup_sound_done");
+
+}
+
+pickup_death_machine_sound() {
+	wait 1.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupdeathmachineSound = "_instakill_" + RandomInt(1);
+    pickup_death_machine_sound = Spawn("script_origin", self.origin);
+	pickup_death_machine_sound PlaySound("plr_" + index + pickupdeathmachineSound, "instakill_sound_done");
+	pickup_death_machine_sound waittill("instakill_sound_done");
+	pickup_death_machine_sound Delete();
+
+	self notify("powerup_pickup_sound_done");
+
+}
+
+pickup_doublepoints_sound() {
+	wait 1.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupdoublepointsSound = "_points_" + RandomInt(1);
+    pickup_doublepoints_sound = Spawn("script_origin", self.origin);
+	pickup_doublepoints_sound PlaySound("plr_" + index + pickupdoublepointsSound, "double_points_sound_done");
+	pickup_doublepoints_sound waittill("double_points_sound_done");
+	pickup_doublepoints_sound Delete();
+
+	self notify("powerup_pickup_sound_done");
+
+}
+
+pickup_firesale_sound() {
+	wait 1.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupfiresaleSound = "_points_" + RandomInt(1);
+    pickup_firesale_sound = Spawn("script_origin", self.origin);
+	pickup_firesale_sound PlaySound("plr_" + index + pickupfiresaleSound, "fs_sound_done");
+	pickup_firesale_sound waittill("fs_sound_done");
+	pickup_firesale_sound Delete();
+
+	self notify("powerup_pickup_sound_done");
+
+}
+
+pickup_insta_kill_sound() {
+	wait 1.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupinstakillSound = "_instakill_" + RandomInt(1);
+    pickup_insta_kill_sound = Spawn("script_origin", self.origin);
+	pickup_insta_kill_sound PlaySound("plr_" + index + pickupinstakillSound, "instakill_sound_done");
+	pickup_insta_kill_sound waittill("instakill_sound_done");
+	pickup_insta_kill_sound Delete();
+
+	self notify("powerup_pickup_sound_done");
+
+}
+
+pickup_maxammo_sound() {
+	wait 1.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupmaxammoSound = "_maxammo_" + RandomInt(1);
+    pickup_maxammo_sound = Spawn("script_origin", self.origin);
+	pickup_maxammo_sound PlaySound("plr_" + index + pickupmaxammoSound, "maxammo_sound_done");
+	pickup_maxammo_sound waittill("maxammo_sound_done");
+	pickup_maxammo_sound Delete();
+
+	self notify("powerup_pickup_sound_done");
+
+}
+
+pickup_nuke_sound() {
+	wait 1.66;
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	pickupnukeSound = "_nuke_" + RandomInt(1);
+    pickup_nuke_sound = Spawn("script_origin", self.origin);
+	pickup_nuke_sound PlaySound("plr_" + index + pickupnukeSound, "nuke_sound_done");
+	pickup_nuke_sound waittill("nuke_sound_done");
+	pickup_nuke_sound Delete();
+
+	self notify("powerup_pickup_sound_done");
 
 }
 
@@ -379,107 +574,24 @@ pickup_sniper_sound() {
 
 }
 
-pickup_bonus_points_sound() {
-	wait 1.66;
+plant_mine_sound() {
+	wait 0.33;
 	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupbonuspointsSound = "_points_" + RandomInt(1);
-    pickup_bonus_points_sound = Spawn("script_origin", self.origin);
-	pickup_bonus_points_sound PlaySound("plr_" + index + pickupbonuspointsSound, "bonus_points_sound_done");
-	pickup_bonus_points_sound waittill("bonus_points_sound_done");
-	pickup_bonus_points_sound Delete();
+	plantmineSound = "_plantmine_" + RandomInt(4);
+    plant_mine_sound = Spawn("script_origin", self.origin);
+	plant_mine_sound PlaySound("plr_" + index + plantmineSound, "plant_mine_sound_done");
+	plant_mine_sound waittill("plant_mine_sound_done");
+	plant_mine_sound Delete();
 
-	self notify("powerup_pickup_sound_done");
+	self notify("plant_mine_sound_done");
 
 }
 
-pickup_carpenter_sound() {
-	wait 1.66;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupcarpenterSound = "_repair_" + RandomInt(1);
-    pickup_carpenter_sound = Spawn("script_origin", self.origin);
-	pickup_carpenter_sound PlaySound("plr_" + index + pickupcarpenterSound, "repair_sound_done");
-	pickup_carpenter_sound waittill("repair_sound_done");
-	pickup_carpenter_sound Delete();
-
-	self notify("powerup_pickup_sound_done");
-
-}
-
-pickup_death_machine_sound() {
-	wait 1.66;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupdeathmachineSound = "_instakill_" + RandomInt(1);
-    pickup_death_machine_sound = Spawn("script_origin", self.origin);
-	pickup_death_machine_sound PlaySound("plr_" + index + pickupdeathmachineSound, "instakill_sound_done");
-	pickup_death_machine_sound waittill("instakill_sound_done");
-	pickup_death_machine_sound Delete();
-
-	self notify("powerup_pickup_sound_done");
-
-}
-
-pickup_doublepoints_sound() {
-	wait 1.66;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupdoublepointsSound = "_points_" + RandomInt(1);
-    pickup_doublepoints_sound = Spawn("script_origin", self.origin);
-	pickup_doublepoints_sound PlaySound("plr_" + index + pickupdoublepointsSound, "double_points_sound_done");
-	pickup_doublepoints_sound waittill("double_points_sound_done");
-	pickup_doublepoints_sound Delete();
-
-	self notify("powerup_pickup_sound_done");
-
-}
-
-pickup_firesale_sound() {
-	wait 1.66;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupfiresaleSound = "_points_" + RandomInt(1);
-    pickup_firesale_sound = Spawn("script_origin", self.origin);
-	pickup_firesale_sound PlaySound("plr_" + index + pickupfiresaleSound, "fs_sound_done");
-	pickup_firesale_sound waittill("fs_sound_done");
-	pickup_firesale_sound Delete();
-
-	self notify("powerup_pickup_sound_done");
-
-}
-
-pickup_insta_kill_sound() {
-	wait 1.66;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupinstakillSound = "_instakill_" + RandomInt(1);
-    pickup_insta_kill_sound = Spawn("script_origin", self.origin);
-	pickup_insta_kill_sound PlaySound("plr_" + index + pickupinstakillSound, "instakill_sound_done");
-	pickup_insta_kill_sound waittill("instakill_sound_done");
-	pickup_insta_kill_sound Delete();
-
-	self notify("powerup_pickup_sound_done");
-
-}
-
-pickup_maxammo_sound() {
-	wait 1.66;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupmaxammoSound = "_maxammo_" + RandomInt(1);
-    pickup_maxammo_sound = Spawn("script_origin", self.origin);
-	pickup_maxammo_sound PlaySound("plr_" + index + pickupmaxammoSound, "maxammo_sound_done");
-	pickup_maxammo_sound waittill("maxammo_sound_done");
-	pickup_maxammo_sound Delete();
-
-	self notify("powerup_pickup_sound_done");
-
-}
-
-pickup_nuke_sound() {
-	wait 1.66;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	pickupnukeSound = "_nuke_" + RandomInt(1);
-    pickup_nuke_sound = Spawn("script_origin", self.origin);
-	pickup_nuke_sound PlaySound("plr_" + index + pickupnukeSound, "nuke_sound_done");
-	pickup_nuke_sound waittill("nuke_sound_done");
-	pickup_nuke_sound Delete();
-
-	self notify("powerup_pickup_sound_done");
+purchase_sound() {
+    purchase_sound = Spawn("script_origin", self.origin);
+	purchase_sound PlaySound("purchase", "purchase_sound_done");
+	purchase_sound waittill("purchase_sound_done");
+	purchase_sound Delete();
 
 }
 
@@ -496,62 +608,38 @@ quip_sound() {
 
 }
 
-blockers_sound() {
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	blockersSound = "_blockers_" + RandomInt(5);
-    blockers_sound = Spawn("script_origin", self.origin);
-	blockers_sound  PlaySound("plr_" + index + blockersSound, "blockers_sound_done");
-	blockers_sound  waittill("blockers_sound_done");
-	blockers_sound  Delete();
+radio_ee_track_sound() {
+    if (level.radioEETrackIndex >= 10) {
+        // If all tracks have been played, reset the index
+        level.radioEETrackIndex = 1;
+    }
 
-	self notify("blockers_sound_done");
+    radioEeTrackSound = "radio_ee_track_" + level.radioEETrackIndex;
+    level.radioEETrackIndex++;
+
+    radio_ee_track_sound = Spawn("script_origin", self.origin);
+    radio_ee_track_sound PlaySound(radioEeTrackSound, "radio_ee_track_sound_done");
+    radio_ee_track_sound waittill("radio_ee_track_sound_done");
+    radio_ee_track_sound Delete();
+}
+
+raygun_stinger_sound() {
+    good_stinger_sound = Spawn("script_origin", self.origin);
+	good_stinger_sound PlaySound("raygun_stinger", "raygun_stinger_sound_done");
+	good_stinger_sound waittill("sound_done");
+	good_stinger_sound Delete();
 
 }
 
-explosive_kill_sound() {
- index = maps\_zombiemode_weapons::get_player_index(self);
- explosivekillSound = "_explosive_" + RandomInt(5);
- explosive_kill_sound = Spawn("script_origin", self.origin);
- explosive_kill_sound PlaySound("plr_" + index + explosivekillSound, "explosive_sound_done");
- explosive_kill_sound waittill("explosive_sound_done");
- explosive_kill_sound Delete();
- self notify("explosive_sound_done");
-}
+reload_vox_sound() {
+    index = maps\_zombiemode_weapons::get_player_index(self);
+    reloadSound = "_vox_reload_" + RandomInt(2);
+    reload_vox_sound = Spawn("script_origin", self.origin);
+	reload_vox_sound PlaySound("plr_" + index + reloadSound, "vox_reload_sound_done");
+	reload_vox_sound waittill("vox_reload_sound_done");
+	reload_vox_sound Delete();
 
-killstreak_sound() {
-	//wait 0.125;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	killstreakSound = "_killstreak_" + RandomInt(3);
-    killstreak_sound = Spawn("script_origin", self.origin);
-	killstreak_sound PlaySound("plr_" + index + killstreakSound, "killstreak_sound_done");
-	killstreak_sound waittill("killstreak_sound_done");
-	killstreak_sound Delete();
-
-	self notify("killstreak_sound_done");
-
-}
-
-friendly_fire_sound() {
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	friendlyfireSound = "_ff_" + RandomInt(3);
-    friendly_fire_sound = Spawn("script_origin", self.origin);
-	friendly_fire_sound PlaySound("plr_" + index + friendlyfireSound, "ff_sound_done");
-	friendly_fire_sound waittill("ff_sound_done");
-	friendly_fire_sound Delete();
-
-	self notify("ff_sound_done");
-
-}
-
-headshot_sound() {
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	headshotSound = "_headshot_" + RandomInt(5);
-    headshot_sound = Spawn("script_origin", self.origin);
-	headshot_sound PlaySound("plr_" + index + headshotSound, "headshot_sound_done");
-	headshot_sound waittill("headshot_sound_done");
-	headshot_sound Delete();
-
-	self notify("headshot_sound_done");
+	self notify("reloading_sound_done");
 
 }
 
@@ -566,130 +654,11 @@ revive_sound() {
 
 }
 
-swarm_sound() {
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	swarmSound = "_swarm_" + RandomInt(4);
-    swarm_sound = Spawn("script_origin", self.origin);
-	swarm_sound PlaySound("plr_" + index + swarmSound, "swarm_sound_done");
-	swarm_sound waittill("swarm_sound_done");
-	swarm_sound Delete();
-
-	self notify("swarm_sound_done");
-
-}
-
-plant_mine_sound() {
-	wait 0.33;
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	plantmineSound = "_plantmine_" + RandomInt(4);
-    plant_mine_sound = Spawn("script_origin", self.origin);
-	plant_mine_sound PlaySound("plr_" + index + plantmineSound, "plant_mine_sound_done");
-	plant_mine_sound waittill("plant_mine_sound_done");
-	plant_mine_sound Delete();
-
-	self notify("plant_mine_sound_done");
-
-}
-
-cash_register_sound() {
-    chash_register_sound = Spawn("script_origin", self.origin);
-	chash_register_sound PlaySound("cha_ching", "cha_ching_sound_done");
-	chash_register_sound waittill("cha_ching_sound_done");
-	chash_register_sound Delete();
-
-}
-
-purchase_sound() {
-    purchase_sound = Spawn("script_origin", self.origin);
-	purchase_sound PlaySound("purchase", "purchase_sound_done");
-	purchase_sound waittill("purchase_sound_done");
-	purchase_sound Delete();
-
-}
-
-no_purchase_sound() {
-    no_purchase_sound = Spawn("script_origin", self.origin);
-	no_purchase_sound PlaySound("no_purchase", "no_purchase_sound_done");
-	no_purchase_sound waittill("no_purchase_sound_done");
-	no_purchase_sound Delete();
-
-}
-
-no_money_sound() {
-	wait 0.5;	// small delay after no purchase sound
-	index = maps\_zombiemode_weapons::get_player_index(self);
-	momoneySound = "_nomoney_" + RandomInt(1);
-    no_money_sound = Spawn("script_origin", self.origin);
-	no_money_sound PlaySound("plr_" + index + momoneySound, "nomoney_sound_done");
-	no_money_sound waittill("nomoney_sound_done");
-	no_money_sound Delete();
-	wait 0.5;	// small delay to alleviate spamming
-
-	self notify( "no_money_sound_done" );
-
-}
-
-lightning_sound() {
-    lightning_sound = Spawn("script_origin", self.origin);
-	lightning_sound PlaySound("lightning_1", "lightning_1_sound_done");
-	lightning_sound waittill("lightning_1_sound_done");
-	lightning_sound Delete();
-    
-}
-
 sam_start_ee_vox_sound() {
     sam_start_ee_vox_sound = Spawn("script_origin", self.origin);
     sam_start_ee_vox_sound PlaySound("sam_fly_laugh", "sam_fly_laugh_sound_done");
     sam_start_ee_vox_sound waittill("sam_fly_laugh_sound_done");
     sam_start_ee_vox_sound Delete();
-}
-
-undone_ee_track_sound() {
-    undone_ee_track_sound = Spawn("script_origin", self.origin);
-    undone_ee_track_sound PlaySound("undone", "undone_ee_track_sound_done");
-    undone_ee_track_sound waittill("undone_ee_track_sound_done");
-    undone_ee_track_sound Delete();
-}
-
-coalescence_sound() {
-	coalescence_sound = Spawn("script_origin", self.origin);
-	coalescence_sound PlaySound("coalescence", "coalescence_sound_done");
-	coalescence_sound waittill("coalescence_sound_done");
-	coalescence_sound Delete();
-}
-
-monty_dialogue_sound() {
-    monty_dialogue_sound = Spawn("script_origin", self.origin);
-    monty_dialogue_sound PlaySound("monty_dialogue", "monty_dialogue_sound_done");
-    monty_dialogue_sound waittill("monty_dialogue_sound_done");
-    monty_dialogue_sound Delete();	
-
-    self coalescence_sound();
-}
-
-button_press_sound() {
-    hide_and_seek_ee_track_sound = Spawn("script_origin", self.origin);
-    hide_and_seek_ee_track_sound PlaySound("button_press", "button_press_sound_done");
-    hide_and_seek_ee_track_sound waittill("button_press_sound_done");
-    hide_and_seek_ee_track_sound Delete();
-}
-
-samantha_start_sound() {
-    samantha_start_sound = Spawn("script_origin", self.origin);
-    samantha_start_sound PlaySound("samantha_start", "samantha_start_sound_done");
-    samantha_start_sound waittill("samantha_start_sound_done");
-    samantha_start_sound Delete();
-}
-
-samantha_musicbox_sound_loop(samantha_figure)
-{
-    samantha_music_box_sound = Spawn("script_origin", self.origin);
-    samantha_music_box_sound PlayLoopSound("musicbox_loop");
-
-    samantha_figure waittill("stop_musicbox_sound");
-
-    samantha_music_box_sound StopLoopSound();
-    samantha_music_box_sound Delete();
 }
 
 samantha_disappear_sound() {
@@ -706,6 +675,24 @@ samantha_fail_sound() {
     samantha_fail_sound Delete();
 }
 
+samantha_musicbox_sound_loop(samantha_figure)
+{
+    samantha_music_box_sound = Spawn("script_origin", self.origin);
+    samantha_music_box_sound PlayLoopSound("musicbox_loop");
+
+    samantha_figure waittill("stop_musicbox_sound");
+
+    samantha_music_box_sound StopLoopSound();
+    samantha_music_box_sound Delete();
+}
+
+samantha_start_sound() {
+    samantha_start_sound = Spawn("script_origin", self.origin);
+    samantha_start_sound PlaySound("samantha_start", "samantha_start_sound_done");
+    samantha_start_sound waittill("samantha_start_sound_done");
+    samantha_start_sound Delete();
+}
+
 samanthas_lullaby_ee_track_sound() {
     samanthas_lullaby_ee_track_sound = Spawn("script_origin", self.origin);
     samanthas_lullaby_ee_track_sound PlaySound("samanthas_lullaby", "samanthas_lullaby_ee_track_sound_done");
@@ -713,19 +700,59 @@ samanthas_lullaby_ee_track_sound() {
     samanthas_lullaby_ee_track_sound Delete();
 }
 
-radio_ee_track_sound() {
-    if (level.radioEETrackIndex >= 10) {
-        // If all tracks have been played, reset the index
-        level.radioEETrackIndex = 1;
-    }
+stielhandgranate_vox_sound() {
+    index = maps\_zombiemode_weapons::get_player_index(self);
+    stielhandgranateSound = "_stielhandgranate_exert_" + RandomInt(6);
+    stielhandgranate_vox_sound = Spawn("script_origin", self.origin);
+	stielhandgranate_vox_sound PlaySound("plr_" + index + stielhandgranateSound, "stielhandgranate_exert_sound_done");
+	stielhandgranate_vox_sound waittill("stielhandgranate_exert_sound_done");
+	stielhandgranate_vox_sound Delete();
 
-    radioEeTrackSound = "radio_ee_track_" + level.radioEETrackIndex;
-    level.radioEETrackIndex++;
+	self notify("stielhandgranate_sound_done");
 
-    radio_ee_track_sound = Spawn("script_origin", self.origin);
-    radio_ee_track_sound PlaySound(radioEeTrackSound, "radio_ee_track_sound_done");
-    radio_ee_track_sound waittill("radio_ee_track_sound_done");
-    radio_ee_track_sound Delete();
+}
+
+swarm_sound() {
+	index = maps\_zombiemode_weapons::get_player_index(self);
+	swarmSound = "_swarm_" + RandomInt(4);
+    swarm_sound = Spawn("script_origin", self.origin);
+	swarm_sound PlaySound("plr_" + index + swarmSound, "swarm_sound_done");
+	swarm_sound waittill("swarm_sound_done");
+	swarm_sound Delete();
+
+	self notify("swarm_sound_done");
+
+}
+
+undone_ee_track_sound() {
+    undone_ee_track_sound = Spawn("script_origin", self.origin);
+    undone_ee_track_sound PlaySound("undone", "undone_ee_track_sound_done");
+    undone_ee_track_sound waittill("undone_ee_track_sound_done");
+    undone_ee_track_sound Delete();
+}
+
+weather_lightning_sound()
+{
+    weather_lightning_sound = Spawn("script_origin", self.origin);
+    weather_lightning_sound PlaySound("weather_lightning", "weather_lightning_sound_done");
+    weather_lightning_sound waittill("weather_lightning_sound_done");
+    weather_lightning_sound Delete();
+}
+
+weather_thunder_sound()
+{
+    weather_thunder_sound = Spawn("script_origin", self.origin);
+    weather_thunder_sound PlaySound("weather_thunder", "weather_thunder_sound_done");
+    weather_thunder_sound waittill("weather_thunder_sound_done");
+    weather_thunder_sound Delete();
+}
+
+zombie_dodge_sound()
+{
+    taunt_sound = Spawn( "script_origin", self.origin );
+    taunt_sound PlaySound( "zombie_groan_dodge", "zombie_dodge_sound_done" );
+    taunt_sound waittill( "zombie_dodge_sound_done" );
+    taunt_sound Delete();
 }
 
 player_vox_helper(sound_func, notify_str, timeout)
@@ -754,12 +781,4 @@ player_vox_timeout(timeout, notify_str)
     self endon(notify_str);
     wait(timeout);
     self notify(notify_str);
-}
-
-zombie_dodge_sound()
-{
-    taunt_sound = Spawn( "script_origin", self.origin );
-    taunt_sound PlaySound( "zombie_groan_dodge", "zombie_dodge_sound_done" );
-    taunt_sound waittill( "zombie_dodge_sound_done" );
-    taunt_sound Delete();
 }

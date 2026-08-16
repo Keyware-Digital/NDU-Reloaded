@@ -2864,7 +2864,7 @@ zombie_rise_fx(zombie)
 {
 	self thread zombie_rise_dust_fx(zombie);
 	self thread zombie_rise_burst_fx();
-    spawnSound = "zombie_spawn_" + RandomInt(2);
+    spawnSound = "zombie_spawn";
 	zombie PlaySound(spawnSound);
 	zombie endon("death");
 	self endon("stop_zombie_rise_fx");

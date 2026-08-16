@@ -44,6 +44,7 @@ main() {
     //level thread health_show();
 
     level thread filtered_weapons();
+    //level thread weather_system();
 
 }
 
@@ -444,3 +445,36 @@ reloading_monitor()
         self.reloading = false; // Reset after reload completes
     }
 }
+
+// random lightning + thunder throughout the map
+/*weather_system()
+{
+    level endon("intermission");
+    flag_wait("all_players_connected");
+    
+    wait(25);   // short settle time for testing
+
+    while(1)
+    {
+        wait(RandomFloatRange(90, 180));
+
+        if(RandomInt(100) < 40)
+        {
+            players = get_players();
+            if(players.size < 1)
+                continue;
+
+            // Lightning first
+            //iprintln("Weather system: Lightning sequence triggered.");
+            players[0] thread maps\_sounds::weather_lightning_sound();
+
+            // Small random delay before the thunder boom
+            wait(RandomFloatRange(0.4, 1.8));
+
+            // Then thunder
+            //iprintln("Weather system: Thunder sequence triggered.");
+            players[0] thread maps\_sounds::weather_thunder_sound();
+        }
+    }
+}*/
+
