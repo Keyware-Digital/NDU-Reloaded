@@ -382,8 +382,6 @@ xmodel,zmb_pwr_up_max_ammo
 xmodel,zmb_pwr_up_nuke
 xmodel,zmb_pwr_up_perks_a_cola_world
 xmodel,zombie_teddybear
-xmodelalias,char_ger_honorgd_bodyzalias
-xmodelalias,char_ger_honorgd2_bodyzalias
 xmodelalias,char_ger_honorgd_headalias
 xmodelalias,char_ger_honorgd_gearalias
 xmodelalias,char_ger_honorgd_helmalias
