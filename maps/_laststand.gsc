@@ -704,6 +704,24 @@ revive_do_revive( playerBeingRevived, reviverGun )
     {
         self.reviveProgressBar = self createPrimaryProgressBar();
     }
+
+	self.reviveProgressBar.alignX     = "center";
+	self.reviveProgressBar.alignY     = "middle";
+	self.reviveProgressBar.horzAlign  = "center";
+	self.reviveProgressBar.vertAlign  = "bottom";
+	self.reviveProgressBar.x          = 0;
+	self.reviveProgressBar.y          = -148; 
+
+	if ( isDefined( self.reviveProgressBar.bar ) )
+	{
+		self.reviveProgressBar.bar.alignX     = "center";
+		self.reviveProgressBar.bar.alignY     = "middle";
+		self.reviveProgressBar.bar.horzAlign  = "center";
+		self.reviveProgressBar.bar.vertAlign  = "bottom";
+		self.reviveProgressBar.bar.x          = 0;
+		self.reviveProgressBar.bar.y          = -148;
+	}
+
     self.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
 
     if ( !isdefined( self.reviveTextHud ) )
@@ -714,11 +732,11 @@ revive_do_revive( playerBeingRevived, reviverGun )
     self.reviveTextHud.alignY = "middle";
     self.reviveTextHud.horzAlign = "center";
     self.reviveTextHud.vertAlign = "bottom";
-    self.reviveTextHud.y = -148;
-    if ( IsSplitScreen() )
-    {
-        self.reviveTextHud.y = -107;
-    }
+	self.reviveTextHud.y          = -175;
+	if ( IsSplitScreen() )
+	{
+		self.reviveTextHud.y = -134;
+	}
     self.reviveTextHud.foreground = true;
     self.reviveTextHud.font = "default";
     self.reviveTextHud.fontScale = 1.8;
@@ -726,17 +744,30 @@ revive_do_revive( playerBeingRevived, reviverGun )
     self.reviveTextHud.color = ( 1.0, 1.0, 1.0 );
     self.reviveTextHud setText( &"GAME_REVIVING" );
 
+
     // Downed player HUD: Progress bar and reviving text
     if ( !isdefined( playerBeingRevived.reviveProgressBar ) )
     {
         playerBeingRevived.reviveProgressBar = playerBeingRevived createPrimaryProgressBar();
     }
+
 	playerBeingRevived.reviveProgressBar.alignX = "center";
 	playerBeingRevived.reviveProgressBar.alignY = "middle";
 	playerBeingRevived.reviveProgressBar.horzAlign = "center";
 	playerBeingRevived.reviveProgressBar.vertAlign = "bottom";
-	playerBeingRevived.reviveProgressBar.y = -190;
-	
+	playerBeingRevived.reviveProgressBar.x          = 0;
+	playerBeingRevived.reviveProgressBar.y          = -190;
+
+	if ( isDefined( playerBeingRevived.reviveProgressBar.bar ) )
+	{
+		playerBeingRevived.reviveProgressBar.bar.alignX     = "center";
+		playerBeingRevived.reviveProgressBar.bar.alignY     = "middle";
+		playerBeingRevived.reviveProgressBar.bar.horzAlign  = "center";
+		playerBeingRevived.reviveProgressBar.bar.vertAlign  = "bottom";
+		playerBeingRevived.reviveProgressBar.bar.x          = 0;
+		playerBeingRevived.reviveProgressBar.bar.y          = -190;
+	}
+
 	playerBeingRevived.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
 
     playerBeingRevived.revive_hud setText( &"GAME_PLAYER_IS_REVIVING_YOU", self );

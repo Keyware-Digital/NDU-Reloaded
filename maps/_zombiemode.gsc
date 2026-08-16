@@ -333,6 +333,7 @@ init_anims() {
 	level.scr_anim["zombie"]["sprint2"] = %ai_zombie_sprint_v2;
     level.scr_anim["zombie"]["sprint3"] = %ai_zombie_sprint_v4;
     level.scr_anim["zombie"]["sprint4"] = %ai_zombie_sprint_v5;
+    //level.scr_anim["zombie"]["sprint5"] = %ai_zombie_sprint_w_object_5; // super sprinters from Verruckt
     // Old NDU anims
     //level.scr_anim["zombie"]["sprint3"] = %ai_zombie_sprint_v3; 
     //level.scr_anim["zombie"]["sprint5"] = % ai_zombie_sprint_v2;
