@@ -700,29 +700,30 @@ revive_do_revive( playerBeingRevived, reviverGun )
     playerBeingRevived.revivetrigger setHintString( "" );
 
     // Reviver HUD: Progress bar and text
-    if ( !isdefined( self.reviveProgressBar ) )
-    {
-        self.reviveProgressBar = self createPrimaryProgressBar();
-    }
+	if ( !isdefined( self.reviveProgressBar ) )
+	self.reviveProgressBar = self createPrimaryProgressBar();
 
-	self.reviveProgressBar.alignX     = "center";
-	self.reviveProgressBar.alignY     = "middle";
-	self.reviveProgressBar.horzAlign  = "center";
-	self.reviveProgressBar.vertAlign  = "bottom";
-	self.reviveProgressBar.x          = 0;
-	self.reviveProgressBar.y          = -148; 
+	self.reviveProgressBar.alignX = "center";
+	self.reviveProgressBar.alignY = "middle";
+	self.reviveProgressBar.horzAlign = "center";
+	self.reviveProgressBar.vertAlign = "bottom";
+	self.reviveProgressBar.x = 0;
+	self.reviveProgressBar.y = -148;
 
-	if ( isDefined( self.reviveProgressBar.bar ) )
-	{
-		self.reviveProgressBar.bar.alignX     = "center";
-		self.reviveProgressBar.bar.alignY     = "middle";
-		self.reviveProgressBar.bar.horzAlign  = "center";
-		self.reviveProgressBar.bar.vertAlign  = "bottom";
-		self.reviveProgressBar.bar.x          = 0;
-		self.reviveProgressBar.bar.y          = -148;
-	}
+	self.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
 
-    self.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
+
+	if ( !isdefined( playerBeingRevived.reviveProgressBar ) )
+	playerBeingRevived.reviveProgressBar = playerBeingRevived createPrimaryProgressBar();
+
+	playerBeingRevived.reviveProgressBar.alignX = "center";
+	playerBeingRevived.reviveProgressBar.alignY = "middle";
+	playerBeingRevived.reviveProgressBar.horzAlign = "center";
+	playerBeingRevived.reviveProgressBar.vertAlign = "bottom";
+	playerBeingRevived.reviveProgressBar.x = 0;
+	playerBeingRevived.reviveProgressBar.y = -190;
+
+	playerBeingRevived.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
 
     if ( !isdefined( self.reviveTextHud ) )
     {
@@ -782,7 +783,6 @@ revive_do_revive( playerBeingRevived, reviverGun )
     playerBeingRevived startrevive( self );
 
 	self thread laststand_clean_up_on_disconnect( playerBeingRevived, reviverGun );
-    
 	//chrisp - zombiemode addition for reviving vo
 	// cut , but leave the script just in case 
 	//self thread say_reviving_vo();
@@ -1057,13 +1057,14 @@ mission_failed_during_laststand( dead_player )
 }
 
 // bo3 style revive points rewards, will add to player level xp instead
-revive_completion_award_points() {
-	
+revive_completion_award_points()
+{
     points = 250;
-    
+
     self.revive_completion_award_points_text = [];
 
-    for (i = 0; i < 2; i++) {
+    for ( i = 0; i < 2; i++ )
+    {
         self.revive_completion_award_points_text[i] = newHudElem();
         self.revive_completion_award_points_text[i].x = 0;
         self.revive_completion_award_points_text[i].y = 0;
@@ -1080,34 +1081,35 @@ revive_completion_award_points() {
     self.revive_completion_award_points_text[0].x = -15;
     self.revive_completion_award_points_text[1].x = 0;
 
-    level.revive_completion_award_points_text[0] setText("+" + points);
+    self.revive_completion_award_points_text[0] setText( "+" + points );
+    self.revive_completion_award_points_text[1] setText( &"PROTOTYPE_ZOMBIE_REVIVE_REWARD" );
 
-    level.revive_completion_award_points_text[1] setText(&"PROTOTYPE_ZOMBIE_REVIVE_REWARD");
+    wait( 0.1 );
 
-    wait(0.1);
+    self.revive_completion_award_points_text[0].fontScale = 1.4;
 
-    level.revive_completion_award_points_text[0].fontScale = 1.4;
-    
-    wait(0.1);
+    wait( 0.1 );
 
-    level.revive_completion_award_points_text[0].fontScale = 1;
+    self.revive_completion_award_points_text[0].fontScale = 1;
 
-    for (i = 0; i < 2; i++) {
-        self.revive_completion_award_points_text[i] fadeOverTime(1);
+    for ( i = 0; i < 2; i++ )
+    {
+        self.revive_completion_award_points_text[i] fadeOverTime( 1 );
         self.revive_completion_award_points_text[i].alpha = 0;
-        wait(0.75);
+        wait( 0.75 );
     }
 
-    wait(0.25);
+    wait( 0.25 );
 
-    for (i = 0; i < 2; i++) {
+    for ( i = 0; i < 2; i++ )
+    {
         self.revive_completion_award_points_text[i] destroy();
     }
 
-    players = GetPlayers();
-
-    for (i = 0; i < players.size; i++) {
-        players[i] maps\_zombiemode_score::add_to_player_score(points);
+    players = get_players();
+    for ( i = 0; i < players.size; i++ )
+    {
+        players[i] maps\_zombiemode_score::add_to_player_score( points );
     }
 }
 
