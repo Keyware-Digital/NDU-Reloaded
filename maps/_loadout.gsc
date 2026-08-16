@@ -415,7 +415,22 @@ init_models_and_variables_loadout()
 	}
 	else if( GetDvar( "zombiemode" ) == "1" || IsSubStr( level.script, "nazi_zombie_" ) || level.script == "zombie_test_map" ) // CODER_MOD (Austin 5/4/08): zombiemode loadout setup
 	{
+		
 		// Zombiemode loadout. If you aren't making a zombie map then you can define your level.script and add a check above.
+		// 50/50 for German only
+		/*if( randomInt( 2 ) == 0 )
+		{
+			set_player_specific_add_weapon(1, "mauser_c96");
+			set_player_specific_switch_weapon(1, "mauser_c96");
+			set_player_specific_laststand_pistol(1, "mauser_c96");
+		}
+		else
+		{
+			set_player_specific_add_weapon(1, "walther");
+			set_player_specific_switch_weapon(1, "walther");
+			set_player_specific_laststand_pistol(1, "walther");
+		}*/
+
 		set_player_specific_add_weapon(0, "colt_wet" );
 		set_player_specific_add_weapon(1, "walther");
 		set_player_specific_add_weapon(2, "colt" );

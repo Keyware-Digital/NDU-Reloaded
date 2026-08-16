@@ -163,15 +163,18 @@ include_weapons() {
 
     // NDU: Reloaded (main box additions)
     include_weapon("dp28");
-    include_weapon("dp28_crude");   // powerup only, dm placeholder
+    include_weapon("dp28_crude");   // powerup only, dm placeholder for MG08
     include_weapon( "mine_bouncing_betty", true, ::prototype_betty_weighting_func );
+    //include_weapon("mauser_c96");
     include_weapon("mosin_rifle");
+    //include_weapon("mp40_bo3");
     include_weapon("ppsh41");
     include_weapon("svt40");
     include_weapon( "zombie_bowie_flourish", true, ::prototype_bowie_weighting_func );
     //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func);
     
     // Weapon cabinet only additions	
+    //include_weapon("bloodhound");
     include_Weapon("m1921_thompson");
     include_weapon("mosin_rifle_scoped_zombie");
     include_weapon("mp40_bigammo_mp");
@@ -256,6 +259,7 @@ include_weapons() {
     // Weapon limiter
     level.limited_weapons["colt"] = 0;
     level.limited_weapons["colt_wet"] = 0;
+    //level.limited_weapons["mauser_c96"] = 0;
     level.limited_weapons["walther"] = 0;
     level.limited_weapons["tokarev"] = 0;
     level.limited_weapons["kar98k"] = 0;

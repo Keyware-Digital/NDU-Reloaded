@@ -26,6 +26,9 @@ LANG_ENGLISH        "M1919 BAR w/ Bipod"
 REFERENCE           ZOMBIE_WEAPON_BOWIE
 LANG_ENGLISH        "Bowie Knife"
 
+REFERENCE           ZOMBIE_WEAPON_BLOODHOUND
+LANG_ENGLISH        "Bloodhound"
+
 REFERENCE           ZOMBIE_WEAPON_COLT_45
 LANG_ENGLISH        "M1911A1 'Government'"
 
@@ -73,6 +76,9 @@ LANG_ENGLISH        "M1 Garand w/ Grenade Launcher"
 
 REFERENCE           ZOMBIE_WEAPON_M7_LAUNCHER
 LANG_ENGLISH        "M1 Garand w/ Grenade Launcher"
+
+REFERENCE           ZOMBIE_WEAPON_MAUSER_C96
+LANG_ENGLISH        "Mauser C96"
 
 REFERENCE           ZOMBIE_WEAPON_MG42_BIPOD
 LANG_ENGLISH        "MG 42 w/ Bipod"
