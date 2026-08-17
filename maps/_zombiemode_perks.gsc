@@ -41,7 +41,7 @@ set_zombie_var("deadshot_extra_breath_time", 5); //Deadshot extra breath time
 set_zombie_var("deadshot_spread_multiplier", 0.4225); //Deadshot hip fire reduction
 set_zombie_var("doubletap_fire_rate", 0.75); //Double taps fire multiplier, 0.0 to 1.0
 set_zombie_var("juggernaut_health", 200); //Juggernaut health of player
-set_zombie_var("melee_macchiato_multiplier", 1.66); // Melee Macchiato damage multiplier
+set_zombie_var("melee_macchiato_multiplier", 1.75); // Melee Macchiato damage multiplier, was 1.66
 set_zombie_var("mulekick_max_weapon_slots", 3); //Mule Kick weapon slots
 set_zombie_var("mulekick_min_weapon_slots", 2); //Default weapon slots
 set_zombie_var("phd_dive_damage", 5000); //PHD fall damage on zombies

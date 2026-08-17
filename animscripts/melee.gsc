@@ -724,14 +724,11 @@ pick_zombie_melee_anim( zombie_guy )
 				melee_anim = random(anims);
 				break;
 				
-			case "run":	
+			case "run":			
+			case "sprint":
 				anims = array_combine(level._zombie_melee[zombie_guy.animname],level._zombie_run_melee[zombie_guy.animname]);
 				melee_anim = random(anims);
-				break;				
-			case "sprint":
-				anims = array_combine(level._zombie_melee[zombie_guy.animname],level._zombie_sprint_melee[zombie_guy.animname]);
-				melee_anim = random(anims);
-				break;		
+				break;			
 		}
 	}
 	else if(zombie_guy.a.gib_ref == "no_legs")
