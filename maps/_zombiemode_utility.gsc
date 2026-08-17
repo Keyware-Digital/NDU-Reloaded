@@ -4,7 +4,7 @@
 init_utility()
 {
 //	level thread edge_fog_start(); 
-
+//	level thread cheat_score(); 
 //	level thread hudelem_count(); 
 }
 

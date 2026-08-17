@@ -3168,24 +3168,6 @@ play_death_vo(hit_location, player,mod,zombie)
 		}
 	}
 	
-	//Explosive Kills
-	if((mod == "MOD_GRENADE_SPLASH" || mod == "MOD_GRENADE") && level.zombie_vars["zombie_insta_kill"] == 0 )
-	{
-		//Plays explosion dialog
-		if( zombie.damageweapon	== "zombie_cymbal_monkey" )
-		{
-			plr = "plr_" + index + "_";
-			player create_and_play_dialog( plr, "vox_kill_monkey", 0.25 );
-			return;
-		}
-		else
-		{
-			plr = "plr_" + index + "_";
-			player play_explosion_dialog(plr);
-			return;
-		}
-	}
-	
 	if( mod == "MOD_PROJECTILE")
 	{	
 		//Plays explosion dialog

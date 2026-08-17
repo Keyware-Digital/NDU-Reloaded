@@ -25,6 +25,7 @@ player_add_points( event, mod, hit_location )
 		case "death":
 			points = level.zombie_vars["zombie_score_kill"]; 
 			points += player_add_points_kill_bonus( mod, hit_location ); 
+			// allows insta melee kill to always gain 130 score
 			if (level.zombie_vars["zombie_powerup_insta_kill_on"] && mod == "MOD_UNKNOWN" )
 			{
 				points = points + 80;
