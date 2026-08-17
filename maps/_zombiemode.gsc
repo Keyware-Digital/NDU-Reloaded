@@ -2407,13 +2407,13 @@ setup_player_vars()
 
     players = GetPlayers();
 
-    for (i = 0; i < players.size; i++)
+    /*for (i = 0; i < players.size; i++)
     {
         for (id = 0; id < 4; id++)
         {
             players[i] setClientDvar("plr" + id + "_active", 0);
         }
-    }
+    }*/
 
     for (i = 0; i < players.size; i++) {
         players[i] setClientDvar("player_lastStandBleedoutTime", 45);
