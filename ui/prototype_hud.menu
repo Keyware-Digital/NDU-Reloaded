@@ -370,7 +370,7 @@ menuDef
     itemDef
     {
         name			"zmb_points_icon0"
-        rect			-65 -32 16 16 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			-65 -30 16 16 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
@@ -381,7 +381,7 @@ menuDef
     itemDef
     {
         name			"zmb_points_icon1"
-        rect			-65 -54 16 16 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			-65 -52 16 16 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
@@ -392,7 +392,7 @@ menuDef
     itemDef
     {
         name			"zmb_points_icon2"
-        rect			-65 -76 16 16 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			-65 -74 16 16 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
@@ -403,7 +403,7 @@ menuDef
     itemDef
     {
         name			"zmb_points_icon3"
-        rect			-65 -100 16 16 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+        rect			-65 -98 16 16 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
         style			WINDOW_STYLE_SHADER
         background		"hud_zmb_points"
         forecolor		1 1 1 1
