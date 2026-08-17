@@ -196,9 +196,11 @@ pick_dodge_anim()
 
 dodge_global_cooldown_reset()
 {
-    self endon( "death" );
+    //self endon( "death" );  // disabled so bleed-out cannot leave the flag stuck
     self endon( "disconnect" );
 
     wait( 1 );
-    self.dodge_global_cooldown = false;
+
+    if( isDefined( self ) )
+        self.dodge_global_cooldown = false;
 }

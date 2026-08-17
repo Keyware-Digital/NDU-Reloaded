@@ -130,7 +130,6 @@ init_models() {
     PrecacheModel("zmb_mdl_samantha_figure");
     PrecacheModel("zmb_mdl_button");
     PrecacheModel("zmb_mdl_cash_register");
-    PrecacheItem( "zombie_death_hands" );
     PrecacheModel("zombie_teddybear");
 }
 
@@ -634,6 +633,7 @@ onPlayerConnect() {
         player thread onPlayerDisconnect();
 
         player thread watchGrenadeThrow();
+        player thread maps\_zombiemode_molotov::track_molotov(); 
 
         player.score = level.zombie_vars["zombie_score_start"];
         player.score_total = player.score;
