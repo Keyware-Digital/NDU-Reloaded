@@ -20,7 +20,7 @@ init_precache() {
     PrecacheShader("specialty_electric_cherry_zombies");
     PrecacheShader("specialty_elemental_pop_zombies");
     PrecacheShader("specialty_juggernaut_zombies");
-    //PrecacheShader("specialty_melee_macchiato_zombies");
+    PrecacheShader("specialty_melee_macchiato_zombies");
     PrecacheShader("specialty_mule_kick_zombies");
     PrecacheShader("specialty_mule_kick_glow_zombies");
     PrecacheShader("specialty_phd_zombies");
@@ -30,7 +30,6 @@ init_precache() {
     //PrecacheShader("specialty_tombstone_zombies");
     //PrecacheShader("specialty_vulture_aid_zombies");
     PrecacheShader("specialty_widows_wine_zombies");
-    PrecacheModel("char_usa_raider_gear_flametank");
 }
 
 init_perk_fx() {
@@ -43,7 +42,7 @@ set_zombie_var("deadshot_extra_breath_time", 5); //Deadshot extra breath time
 set_zombie_var("deadshot_spread_multiplier", 0.4225); //Deadshot hip fire reduction
 set_zombie_var("doubletap_fire_rate", 0.75); //Double taps fire multiplier, 0.0 to 1.0
 set_zombie_var("juggernaut_health", 200); //Juggernaut health of player
-set_zombie_var("melee_macchiato_multiplier", 1.30); // Melee Macchiato damage multiplier
+set_zombie_var("melee_macchiato_multiplier", 1.66); // Melee Macchiato damage multiplier
 set_zombie_var("mulekick_max_weapon_slots", 3); //Mule Kick weapon slots
 set_zombie_var("mulekick_min_weapon_slots", 2); //Default weapon slots
 set_zombie_var("phd_dive_damage", 5000); //PHD fall damage on zombies
@@ -128,15 +127,20 @@ resetperkdefs()
 {
     self.perkarray = [];
     //self.perkarray[0] = "";
-    self.perkarray[ self.perkarray.size ] = "specialty_armorvest";
-    self.perkarray[ self.perkarray.size ] = "specialty_boost";
-    self.perkarray[ self.perkarray.size ] = "specialty_bulletaccuracy";
-    self.perkarray[ self.perkarray.size ] = "specialty_detectexplosive";
-    self.perkarray[ self.perkarray.size ] = "specialty_explosivedamage";
-    self.perkarray[ self.perkarray.size ] = "specialty_extraammo";
-    self.perkarray[ self.perkarray.size ] = "specialty_fastreload";
-    self.perkarray[ self.perkarray.size ] = "specialty_longersprint";
-    //self.perkarray[ self.perkarray.size ] = "specialty_melee_macchiato_zombies";
+    self.perkarray[ self.perkarray.size ] = "specialty_armorvest";          // Juggernog
+    self.perkarray[ self.perkarray.size ] = "specialty_boost";              // Electric Cherry
+    self.perkarray[ self.perkarray.size ] = "specialty_bulletaccuracy";     // Deadshot Daiquiri
+    self.perkarray[ self.perkarray.size ] = "specialty_detectexplosive";    // PhD Flopper
+    self.perkarray[ self.perkarray.size ] = "specialty_explosivedamage";    // Elemental Pop
+    self.perkarray[ self.perkarray.size ] = "specialty_extraammo";          // Mule Kick
+    self.perkarray[ self.perkarray.size ] = "specialty_fastreload";         // Speed Cola
+    self.perkarray[ self.perkarray.size ] = "specialty_longersprint";       // Stamin-Up
+    self.perkarray[ self.perkarray.size ] = "specialty_ordinance";          // Melee Macchiato
+    self.perkarray[ self.perkarray.size ] = "specialty_quickrevive";        // Quick Revive
+    //self.perkarray[ self.perkarray.size ] = "specialty_recon";            // Vulture Aid
+    self.perkarray[ self.perkarray.size ] = "specialty_rof";                // Double Tap
+    //self.perkarray[ self.perkarray.size ] = "specialty_shades";           // Tombstone
+    self.perkarray[ self.perkarray.size ] = "specialty_specialgrenade";     // Widows Wine
 
     // Only include Quick Revive if solo uses are still available
     if ( !( get_players().size == 1 && isDefined( level.reviveUsesLeft ) && level.reviveUsesLeft <= 0 ) )
@@ -195,52 +199,53 @@ perk_hud_create(perk) {
 
     shader = "";
 
-    switch (perk) {
-    case "specialty_armorvest":
-        shader = "specialty_juggernaut_zombies";
-        break;
-    case "specialty_boost":
-        shader = "specialty_electric_cherry_zombies";
-        break;
-    case "specialty_bulletaccuracy":
-        shader = "specialty_deadshot_daiquiri_zombies";
-        break;
-    case "specialty_detectexplosive":
-        shader = "specialty_phd_zombies";
-        break;
-    case "specialty_explosivedamage":
-        shader = "specialty_elemental_pop_zombies";
-        break;
-    case "specialty_extraammo":
-        shader = "specialty_mule_kick_zombies";
-        break;
-    case "specialty_fastreload":
-        shader = "specialty_speed_cola_zombies";
-        break;
-    case "specialty_longersprint":
-        shader = "specialty_stamin_up_zombies";
-        break;
-    /*case "specialty_melee_macchiato_zombies":
-        shader = "specialty_melee_macchiato_zombies";
-        break;*/
-    case "specialty_quickrevive":
-        shader = "specialty_quick_revive_zombies";
-        break;
-    case "specialty_rof":
-        shader = "specialty_double_tap_zombies";
-        break;
-    case "specialty_specialgrenade":
-        shader = "specialty_widows_wine_zombies";
-        break;
-    /*case "specialty_tombstone_zombies":
-        shader = "specialty_tombstone_zombies";
-        break;
-    case "specialty_vulture_aid_zombies":
-        shader = "specialty_vulture_aid_zombies";
-        break;*/
-    default:
-        shader = "";
-        break;
+    switch (perk)
+    {
+        case "specialty_armorvest":
+            shader = "specialty_juggernaut_zombies";
+            break;
+        case "specialty_boost":
+            shader = "specialty_electric_cherry_zombies";
+            break;
+        case "specialty_bulletaccuracy":
+            shader = "specialty_deadshot_daiquiri_zombies";
+            break;
+        case "specialty_detectexplosive":
+            shader = "specialty_phd_zombies";
+            break;
+        case "specialty_explosivedamage":
+            shader = "specialty_elemental_pop_zombies";
+            break;
+        case "specialty_extraammo":
+            shader = "specialty_mule_kick_zombies";
+            break;
+        case "specialty_fastreload":
+            shader = "specialty_speed_cola_zombies";
+            break;
+        case "specialty_longersprint":
+            shader = "specialty_stamin_up_zombies";
+            break;
+        case "specialty_ordinance":
+            shader = "specialty_melee_macchiato_zombies";
+            break;
+        case "specialty_quickrevive":
+            shader = "specialty_quick_revive_zombies";
+            break;
+        /*case "specialty_recon":
+            shader = "specialty_vulture_aid_zombies";
+            break;*/
+        case "specialty_rof":
+            shader = "specialty_double_tap_zombies";
+            break;
+        /*case "specialty_shades":
+            shader = "specialty_tombstone_zombies";
+            break;*/
+        case "specialty_specialgrenade":
+            shader = "specialty_widows_wine_zombies";
+            break;
+        default:
+            shader = "";
+            break;
     }
 
     hud = create_simple_hud(self);
@@ -416,16 +421,17 @@ perks_zombie_hit_effect(amount, attacker, point, mod)
 		return;
 	}
 
-    /*// Melee macchiato logic
-    if ( mod == "MOD_MELEE" && attacker hasPerk( "specialty_melee_macchiato_zombies" ) )
+    // Melee Macchiato logic (now using specialty_ordinance)
+    if (mod == "MOD_MELEE" && attacker hasPerk("specialty_ordinance"))
     {
-        extra = int( amount * ( level.zombie_vars["melee_macchiato_multiplier"] - 1.0 ) );
-        if ( extra > 0 )
+        extra = int(amount * (level.zombie_vars["melee_macchiato_multiplier"] - 1.0));
+        if (extra > 0)
         {
-            self DoDamage( extra, point, attacker );
+            self DoDamage(extra, point, attacker);
+            //attacker iPrintLnBold("^2Melee Macchiato: +" + extra + " bonus damage");
         }
         return;
-    }*/
+    }
 
     // Double Tap logic
 	hitLocation = self.damageLocation;
