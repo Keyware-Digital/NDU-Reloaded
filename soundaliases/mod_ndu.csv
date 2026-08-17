@@ -336,6 +336,16 @@ zombie_groan_dodge,,SFX\Levels\zombie\new_zombie_vox\taunt\taunt_03.wav,20,1,1,1
 zombie_groan_dodge,,SFX\Levels\zombie\new_zombie_vox\taunt\taunt_04.wav,21,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
 zombie_groan_dodge,,SFX\Levels\zombie\new_zombie_vox\taunt\taunt_05.wav,22,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
 zombie_groan_dodge,,SFX\Levels\zombie\new_zombie_vox\taunt\taunt_06.wav,23,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_00.wav,1,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_01.wav,2,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_02.wav,3,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_03.wav,4,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_04.wav,5,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_05.wav,6,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_06.wav,7,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_07.wav,8,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_08.wav,9,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
+zombie_groan_follow,,voiceovers\zombie\monkey\groan\groan_09.wav,10,1,1,150,1500,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #EE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 meteor_loop,,SFX\Levels\nazi_zombie_sumpf\meteor\meteor_loop.wav,,0.5,0.5,50,600,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,3d,,,looping,,,,,,,,,,,,,,0.3,,,,,,5,10,0.1,1,,,1
@@ -363,5 +373,5 @@ gr_mp40_charge_plr,,SFX\wpn\zmb_wpn_mp40_drum\foley\gr_mp40_charge_plr.wav,,0.75
 gr_g43_slide_forward_plr,,SFX/Weapon/rifle/Gewehr43/foley/gr_g43_slide_forward.wav,,0.75,0.8,,,,,,,reload,,,,,,,0.95,1.05,,2d,,,,,ber1 ber3 see1 see2 oki3 audio_test_tuey firing_range hol1 hol2 hol3 ber3b living_battlefield all_mp sniper,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #BO3 FX ENHANCEMENTS,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-weather_lightning,,SFX\Levels\amb\weather\thunder\flash\lf_##.wav,,0.66,0.75,50,2500,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,3d,,,,,,,,,,,,,,,,,0.25,,,,,,5,10,0.1,1,,,1
-weather_thunder,,SFX\Levels\amb\weather\thunder\medium\dt_##.wav,,0.75,0.95,50,2500,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,3d,,,,,,,,,,,,,,,,,0.25,,,,,,5,10,0.1,1,,,1
+weather_lightning,,SFX\Levels\amb\weather\thunder\flash\lf_##.wav,,0.66,0.71,50,2500,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,2d,,,,,,,,,,,,,,,,,0.25,,,,,,5,10,0.1,1,,,1
+weather_thunder,,SFX\Levels\amb\weather\thunder\medium\dt_##.wav,,0.71,0.87,50,2500,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,2d,,,,,,,,,,,,,,,,,0.25,,,,,,5,10,0.1,1,,,1

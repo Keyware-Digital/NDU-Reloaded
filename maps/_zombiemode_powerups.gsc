@@ -1461,7 +1461,7 @@ time_remaining_on_random_perk_powerup() {
 
     players = GetPlayers();
     for (i = 0; i < players.size; i++) {
-        players[i] PlaySound("rp_vox");
+        players[i] thread announcer_vox_random_perk_sound();
     }
 
     // time it down!

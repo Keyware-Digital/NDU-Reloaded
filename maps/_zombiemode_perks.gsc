@@ -12,24 +12,25 @@ init() {
     level.reviveUsesLeft = level.zombie_vars[ "quick_revive_solo_max_times" ];
     level.is_solo_revive_distraction_active = false;
     level.zombiegoto = undefined;
-
 }
 
 init_precache() {
-    PrecacheShader("specialty_juggernaut_zombies");
-    PrecacheShader("specialty_speed_cola_zombies");
-    PrecacheShader("specialty_double_tap_zombies");
-    PrecacheShader("specialty_quick_revive_zombies");
-    PrecacheShader("specialty_phd_zombies");
     PrecacheShader("specialty_deadshot_daiquiri_zombies");
-    PrecacheShader("specialty_elemental_pop_zombies");
-    PrecacheShader("specialty_stamin_up_zombies");
+    PrecacheShader("specialty_double_tap_zombies");
     PrecacheShader("specialty_electric_cherry_zombies");
+    PrecacheShader("specialty_elemental_pop_zombies");
+    PrecacheShader("specialty_juggernaut_zombies");
+    //PrecacheShader("specialty_melee_macchiato_zombies");
     PrecacheShader("specialty_mule_kick_zombies");
     PrecacheShader("specialty_mule_kick_glow_zombies");
+    PrecacheShader("specialty_phd_zombies");
+    PrecacheShader("specialty_quick_revive_zombies");
+    PrecacheShader("specialty_speed_cola_zombies");
+    PrecacheShader("specialty_stamin_up_zombies");
+    //PrecacheShader("specialty_tombstone_zombies");
+    //PrecacheShader("specialty_vulture_aid_zombies");
     PrecacheShader("specialty_widows_wine_zombies");
     PrecacheModel("char_usa_raider_gear_flametank");
-    PrecacheItem( "zombie_knuckle_crack" );
 }
 
 init_perk_fx() {
@@ -38,19 +39,20 @@ init_perk_fx() {
 }
 
 init_perk_vars() {
-	set_zombie_var("phd_max_range", 185); //PHD damage range
-	set_zombie_var("phd_dive_damage", 5000); //PHD fall damage on zombies
-    set_zombie_var("phd_minimum_fall", 20); //Minimum fall height required to activate PHD, 20 stops small height inclines from activating PHD
-    set_zombie_var("staminup_sprint_scale", 1.07); //Leightweight
-    set_zombie_var("staminup_sprint_max_duration", 8); //Marathon
-    set_zombie_var("doubletap_fire_rate", 0.75); //Double taps fire multiplier, 0.0 to 1.0
-    set_zombie_var("speed_reload_rate", 0.5); //Speed cola reload multiplier, 0.0 to 1.0
-    set_zombie_var("juggernaut_health", 200); //Juggernaut health of player
-	set_zombie_var("deadshot_spread_multiplier", 0.4225); //Deadshot hip fire reduction
-	set_zombie_var("deadshot_extra_breath_time", 5); //Deadshot extra breath time
-	set_zombie_var("mulekick_min_weapon_slots", 2); //Default weapon slots
-	set_zombie_var("mulekick_max_weapon_slots",	3); //Mule Kick weapon slots
-    set_zombie_var( "quick_revive_solo_max_times", 3 ); //Three revives solo only
+set_zombie_var("deadshot_extra_breath_time", 5); //Deadshot extra breath time
+set_zombie_var("deadshot_spread_multiplier", 0.4225); //Deadshot hip fire reduction
+set_zombie_var("doubletap_fire_rate", 0.75); //Double taps fire multiplier, 0.0 to 1.0
+set_zombie_var("juggernaut_health", 200); //Juggernaut health of player
+set_zombie_var("melee_macchiato_multiplier", 1.30); // Melee Macchiato damage multiplier
+set_zombie_var("mulekick_max_weapon_slots", 3); //Mule Kick weapon slots
+set_zombie_var("mulekick_min_weapon_slots", 2); //Default weapon slots
+set_zombie_var("phd_dive_damage", 5000); //PHD fall damage on zombies
+set_zombie_var("phd_max_range", 185); //PHD damage range
+set_zombie_var("phd_minimum_fall", 20); //Minimum fall height required to activate PHD, 20 stops small height inclines from activating PHD
+set_zombie_var("quick_revive_solo_max_times", 3); //Three revives solo only
+set_zombie_var("speed_reload_rate", 0.5); //Speed cola reload multiplier, 0.0 to 1.0
+set_zombie_var("staminup_sprint_max_duration", 8); //Marathon
+set_zombie_var("staminup_sprint_scale", 1.07); //Lightweight
 }
 
 random_perk_powerup_think() {
@@ -127,8 +129,14 @@ resetperkdefs()
     self.perkarray = [];
     //self.perkarray[0] = "";
     self.perkarray[ self.perkarray.size ] = "specialty_armorvest";
-    self.perkarray[ self.perkarray.size ] = "specialty_rof";
+    self.perkarray[ self.perkarray.size ] = "specialty_boost";
+    self.perkarray[ self.perkarray.size ] = "specialty_bulletaccuracy";
+    self.perkarray[ self.perkarray.size ] = "specialty_detectexplosive";
+    self.perkarray[ self.perkarray.size ] = "specialty_explosivedamage";
+    self.perkarray[ self.perkarray.size ] = "specialty_extraammo";
     self.perkarray[ self.perkarray.size ] = "specialty_fastreload";
+    self.perkarray[ self.perkarray.size ] = "specialty_longersprint";
+    //self.perkarray[ self.perkarray.size ] = "specialty_melee_macchiato_zombies";
 
     // Only include Quick Revive if solo uses are still available
     if ( !( get_players().size == 1 && isDefined( level.reviveUsesLeft ) && level.reviveUsesLeft <= 0 ) )
@@ -136,13 +144,10 @@ resetperkdefs()
         self.perkarray[ self.perkarray.size ] = "specialty_quickrevive";
     }
 
-    self.perkarray[ self.perkarray.size ] = "specialty_detectexplosive";
-    self.perkarray[ self.perkarray.size ] = "specialty_longersprint";
-    self.perkarray[ self.perkarray.size ] = "specialty_bulletaccuracy";
-    self.perkarray[ self.perkarray.size ] = "specialty_explosivedamage";
-    self.perkarray[ self.perkarray.size ] = "specialty_boost";
-    self.perkarray[ self.perkarray.size ] = "specialty_extraammo";
+    self.perkarray[ self.perkarray.size ] = "specialty_rof";
     self.perkarray[ self.perkarray.size ] = "specialty_specialgrenade";
+    //self.perkarray[ self.perkarray.size ] = "specialty_tombstone_zombies";
+    //self.perkarray[ self.perkarray.size ] = "specialty_vulture_aid_zombies";
 
     self.perkarray = array_randomize(self.perkarray);
 
@@ -194,47 +199,45 @@ perk_hud_create(perk) {
     case "specialty_armorvest":
         shader = "specialty_juggernaut_zombies";
         break;
-
-    case "specialty_quickrevive":
-        shader = "specialty_quick_revive_zombies";
-        break;
-
-    case "specialty_fastreload":
-        shader = "specialty_speed_cola_zombies";
-        break;
-
-    case "specialty_rof":
-        shader = "specialty_double_tap_zombies";
-        break;
-
-    case "specialty_detectexplosive":
-        shader = "specialty_phd_zombies";
-        break;
-
-    case "specialty_longersprint":
-        shader = "specialty_stamin_up_zombies";
-        break;
-
-    case "specialty_bulletaccuracy":
-        shader = "specialty_deadshot_daiquiri_zombies";
-        break;
-
-    case "specialty_explosivedamage":
-        shader = "specialty_elemental_pop_zombies";
-        break;
-
     case "specialty_boost":
         shader = "specialty_electric_cherry_zombies";
         break;
-
+    case "specialty_bulletaccuracy":
+        shader = "specialty_deadshot_daiquiri_zombies";
+        break;
+    case "specialty_detectexplosive":
+        shader = "specialty_phd_zombies";
+        break;
+    case "specialty_explosivedamage":
+        shader = "specialty_elemental_pop_zombies";
+        break;
     case "specialty_extraammo":
         shader = "specialty_mule_kick_zombies";
         break;
-
+    case "specialty_fastreload":
+        shader = "specialty_speed_cola_zombies";
+        break;
+    case "specialty_longersprint":
+        shader = "specialty_stamin_up_zombies";
+        break;
+    /*case "specialty_melee_macchiato_zombies":
+        shader = "specialty_melee_macchiato_zombies";
+        break;*/
+    case "specialty_quickrevive":
+        shader = "specialty_quick_revive_zombies";
+        break;
+    case "specialty_rof":
+        shader = "specialty_double_tap_zombies";
+        break;
     case "specialty_specialgrenade":
         shader = "specialty_widows_wine_zombies";
         break;
-
+    /*case "specialty_tombstone_zombies":
+        shader = "specialty_tombstone_zombies";
+        break;
+    case "specialty_vulture_aid_zombies":
+        shader = "specialty_vulture_aid_zombies";
+        break;*/
     default:
         shader = "";
         break;
@@ -264,31 +267,6 @@ perk_hud_destroy(perk)
         self.perk_hud[perk] = undefined;
     }
 }
-
-/*play_no_money_perk_dialog() {
-
-    index = maps\_zombiemode_weapons::get_player_index(self);
-
-    player_index = "plr_" + index + "_";
-    if (!isDefined(self.vox_nomoney_perk)) {
-        num_variants = maps\_zombiemode_spawner::get_number_variants(player_index + "vox_nomoney_perk");
-        self.vox_nomoney_perk = [];
-        for (i = 0; i < num_variants; i++) {
-            self.vox_nomoney_perk[self.vox_nomoney_perk.size] = "vox_nomoney_perk_" + i;
-        }
-        self.vox_nomoney_perk_available = self.vox_nomoney_perk;
-    }
-    sound_to_play = random(self.vox_nomoney_perk_available);
-
-    self.vox_nomoney_perk_available = array_remove(self.vox_nomoney_perk_available, sound_to_play);
-
-    if (self.vox_nomoney_perk_available.size < 1) {
-        self.vox_nomoney_perk_available = self.vox_nomoney_perk;
-    }
-
-    self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, 0.25);
-
-}*/
 
 phd_dive_damage(origin) {
     self thread maps\_sounds::phd_explosion_sound();
@@ -438,6 +416,18 @@ perks_zombie_hit_effect(amount, attacker, point, mod)
 		return;
 	}
 
+    /*// Melee macchiato logic
+    if ( mod == "MOD_MELEE" && attacker hasPerk( "specialty_melee_macchiato_zombies" ) )
+    {
+        extra = int( amount * ( level.zombie_vars["melee_macchiato_multiplier"] - 1.0 ) );
+        if ( extra > 0 )
+        {
+            self DoDamage( extra, point, attacker );
+        }
+        return;
+    }*/
+
+    // Double Tap logic
 	hitLocation = self.damageLocation;
 	health = self.health;
 
@@ -471,281 +461,6 @@ perks_zombie_hit_effect_check_health(health, attacker)
 	
 	// instead of doing damage and being inaccurate about the scoring the health is decreased instead
 	self.health = health;
-}
-
-solo_quickrevive() // heavily reworked solo revive function, inspired by Numan's
-{
-    self endon( "disconnect" );
-    self endon( "death" );
-
-    // Already in a solo revive or no uses left → just die
-    if ( isDefined( self.inSoloRevive ) || level.reviveUsesLeft <= 0 )
-    {
-        return;
-    }
-
-    self.inSoloRevive = true;
-    level.is_solo_revive_distraction_active = true;
-
-    // Pull zombies away from user
-    structs = getstructarray( "initial_spawn_points", "targetname" );
-
-    // Create distraction entity
-    if ( !isDefined( level.zombiegoto ) )
-        level.zombiegoto = Spawn( "script_origin", structs[0].origin );
-    else
-        level.zombiegoto.origin = structs[0].origin;
-
-    // Save state
-    self.firstPistol = level.player_specific_add_weapon[maps\_zombiemode_weapons::get_player_index(self)];
-    self.currentWeapon = self GetCurrentWeapon();
-    self.currentStance = self GetStance();
-    clipAmmo = [];
-    weaponAmmo = [];
-    lastStandAmmo = undefined;
-    lastStandGun = undefined;
-    lastStandClip = undefined;
-
-    // Save weapons and ammo
-    playerweapons = self GetWeaponsList();
-    for (i = 0; i < playerweapons.size; i++) {
-        clipAmmo[i] = self GetWeaponAmmoClip(playerweapons[i]);
-        weaponAmmo[i] = self GetWeaponAmmoStock(playerweapons[i]);
-        wait 0.05;
-    }
-
-    // Handle muleLastWeapon after saving ammo (may not need this)
-    /*if (isDefined(self.muleLastWeapon)) {
-        // Don't take muleLastWeapon here; let restoration handle it
-    }*/
-
-    if (self IsThrowingGrenade()) {
-        self FreezeControls(true); // literally just to throw player's current grenade if they're stupid enough to play hot potato
-        wait 0.05;
-        self FreezeControls(false);
-    }
-    // start zombies targeting spawn struct instead. Rest is changed in zombiemode_spawner find_flesh() because we have to overwrite regular targeting.
-    self.ignoreme = true;
-
-    // put player in prone for now
-    self AllowSprint(false);
-    self AllowStand(false);
-    self AllowCrouch(false);
-    self SetStance("prone");
-
-    self VisionSetNaked("laststand", 1);
-    // if player has better downed gun, give it and check for ammo, then return it later
-    self DisableWeaponCycling();
-
-    // Set last stand pistol
-    if (self HasWeapon("ray_gun_mk1_v2")) {
-        lastStandAmmo = 20;
-        lastStandClip = 20;
-        lastStandGun = "ray_gun_mk1_v2";
-    } else if (self HasWeapon("sw_357")) {
-        lastStandAmmo = 18;
-        lastStandClip = 6;
-        lastStandGun = "sw_357";
-    /*} else if (self HasWeapon("bloodhound") || self.firstPistol == "bloodhound") {
-        lastStandAmmo = 24;
-        lastStandClip = 8;
-        lastStandGun = "bloodhound";*/
-    } else if (self HasWeapon("walther") || self.firstPistol == "walther") {
-        lastStandAmmo = 24;
-        lastStandClip = 8;
-        lastStandGun = "walther";
-    } else if (self HasWeapon("tokarev") || self.firstPistol == "tokarev") {
-        lastStandAmmo = 24;
-        lastStandClip = 8;
-        lastStandGun = "tokarev";
-    /*} else if (self HasWeapon("mauser_c96") || self.firstPistol == "mauser_c96") {
-        lastStandAmmo = 24;
-        lastStandClip = 8;
-        lastStandGun = "mauser_c96";*/
-    } else if (self HasWeapon("colt_wet") || self.firstPistol == "colt_wet") {
-        lastStandAmmo = 24;
-        lastStandClip = 8;
-        lastStandGun = "colt_wet";
-    } else {
-        lastStandAmmo = 24;
-        lastStandClip = 8;
-        lastStandGun = "colt";
-    }
-
-    self TakeAllWeapons();
-    self GiveWeapon(lastStandGun);
-    self SwitchToWeapon(lastStandGun);
-    self SetWeaponAmmoClip(lastStandGun, lastStandClip);
-    self SetWeaponAmmoStock(lastStandGun, lastStandAmmo);
-
-    // ===== PROGRESS BAR =====
-    soloReviveTime = 10;
-
-    // Kill any leftovers
-    if ( isDefined( self.soloReviveProgressBar ) )
-    {
-        self.soloReviveProgressBar destroyElem();
-        self.soloReviveProgressBar = undefined;
-    }
-    if ( isDefined( self.reviveProgressBar ) )
-    {
-        self.reviveProgressBar destroyElem();
-        self.reviveProgressBar = undefined;
-    }
-
-    self.soloReviveProgressBar = self createPrimaryProgressBar();
-
-    // Parent (background)
-    self.soloReviveProgressBar.alignX = "center";
-    self.soloReviveProgressBar.alignY = "middle";
-    self.soloReviveProgressBar.horzAlign = "center";
-    self.soloReviveProgressBar.vertAlign = "bottom";
-    self.soloReviveProgressBar.x = 0;
-    self.soloReviveProgressBar.y = -150;
-
-    // Fill
-    if ( isDefined( self.soloReviveProgressBar.bar ) )
-    {
-        self.soloReviveProgressBar.bar.alignX = "center";
-        self.soloReviveProgressBar.bar.alignY = "middle";
-        self.soloReviveProgressBar.bar.horzAlign = "center";
-        self.soloReviveProgressBar.bar.vertAlign = "bottom";
-        self.soloReviveProgressBar.bar.x = 0;
-        self.soloReviveProgressBar.bar.y = -150;
-    }
-
-    self.soloReviveProgressBar updateBar( 0.01, 1 / soloReviveTime );
-
-    // wait for revive and play text
-    self.revive_hud setText( &"GAME_REVIVING" );
-    self maps\_laststand::revive_hud_show();
-    self.revive_hud.alignX = "center";
-    self.revive_hud.alignY = "middle";
-    self.revive_hud.horzAlign = "center";
-    self.revive_hud.vertAlign = "bottom";
-    self.revive_hud.x = 0;
-    self.revive_hud.y = -175;
-
-    wait( soloReviveTime );
-
-    if ( isDefined( self.soloReviveProgressBar ) )
-    {
-        self.soloReviveProgressBar destroyElem();
-        self.soloReviveProgressBar = undefined;
-    }
-    if ( isDefined( self.revive_hud ) )
-        self maps\_laststand::revive_hud_hide();
-
-    // Initialize muleCount if not set
-    if ( !isDefined( self.muleCount ) )
-    {
-        if ( !self HasPerk( "specialty_extraammo" ) )
-            self.muleCount = level.zombie_vars[ "mulekick_min_weapon_slots" ];
-        else
-            self.muleCount = level.zombie_vars[ "mulekick_max_weapon_slots" ];
-    }
-
-    // Restore weapons
-    if ( self.currentWeapon != lastStandGun )
-        self TakeAllWeapons();
-
-    restoredWeapons = 0;
-    for (i = 0; i < playerweapons.size; i++) {
-        if (!isDefined(playerweapons[i])) {
-            continue;
-        }
-        if (weaponType(playerweapons[i]) == "grenade") {
-            self GiveWeapon(playerweapons[i]);
-            if (isDefined(clipAmmo[i])) {
-                self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
-            }
-        } else if (restoredWeapons < self.muleCount) {
-            //IPrintLn(playerweapons[i]);
-            self GiveWeapon(playerweapons[i]);
-            if (isDefined(clipAmmo[i])) {
-                self SetWeaponAmmoClip(playerweapons[i], clipAmmo[i]);
-            } else {
-            }
-            if (isDefined(weaponAmmo[i])) {
-                self SetWeaponAmmoStock(playerweapons[i], weaponAmmo[i]);
-            } else {
-            }
-            restoredWeapons++;
-        }
-        wait 0.05;
-    }
-
-    // Try original weapon first
-    self SwitchToWeapon(self.currentWeapon);
-
-    // guarantee a real weapon is equipped after revive
-    wait 0.1;
-    curr = self GetCurrentWeapon();
-    if ( curr == "none" || curr == "" || !self HasWeapon( curr ) )
-    {
-        primaries = self GetWeaponsListPrimaries();
-        if ( primaries.size > 0 )
-            self SwitchToWeapon( primaries[0] );
-        else
-        {
-            all = self GetWeaponsList();
-            if ( all.size > 0 )
-                self SwitchToWeapon( all[0] );
-        }
-    }
-
-    self EnableWeaponCycling();
-
-    // Restore movement / vision
-    self VisionSetNaked("zombie_bo3", 1);
-
-    self AllowSprint(true);
-    self AllowStand(true);
-    self AllowCrouch(true);
-    self SetStance("stand");
-    self SetStance(self.currentStance);
-
-    self.ignoreme = false;
-
-    if ( !self HasPerk( "specialty_extraammo" ) )
-    {
-        self.muleLastWeapon = undefined;
-    }
-
-    // ===== USE COUNTER =====
-    level.reviveUsesLeft--;
-
-    if ( level.reviveUsesLeft <= 0 )
-    {
-        // Permanently remove Quick Revive from the random pool
-        if ( isDefined( self.perkarray ) )
-        {
-            for ( i = 0; i < self.perkarray.size; i++ )
-            {
-                if ( self.perkarray[i] == "specialty_quickrevive" )
-                {
-                    self.perkarray = array_remove( self.perkarray, "specialty_quickrevive" );
-                    break;
-                }
-            }
-        }
-
-        // Only show this when uses are actually gone
-        self iPrintLnBold( "No more Solo Revives remaining!" );
-        self thread maps\_sounds::samantha_fail_sound();
-    }
-
-    self.inSoloRevive = undefined;
-    level.is_solo_revive_distraction_active = false;
-
-    if ( isDefined( level.zombiegoto ) )
-    {
-        level.zombiegoto delete();
-        level.zombiegoto = undefined;
-    }
-
-    self notify( "player_revived" );
-    self notify( "solo_revive_done" );
 }
 
 mule_kick_think(old_weapon, new_weapon)

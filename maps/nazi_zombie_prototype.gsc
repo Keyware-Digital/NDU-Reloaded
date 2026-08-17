@@ -44,7 +44,7 @@ main() {
     //level thread health_show();
 
     level thread filtered_weapons();
-    //level thread weather_system();
+    level thread weather_system();
 
 }
 
@@ -171,6 +171,7 @@ include_weapons() {
     include_weapon("ppsh41");
     include_weapon("svt40");
     include_weapon( "zombie_bowie_flourish", true, ::prototype_bowie_weighting_func );
+    include_weapon("zombie_colt_upgraded");
     //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func);
     
     // Weapon cabinet only additions	
@@ -278,6 +279,7 @@ include_weapons() {
     level.limited_weapons["springfield_scoped_zombie"] = 0;
     level.limited_weapons["sten_mk5"] = 0;
     level.limited_weapons["stg44_pap"] = 0;
+    level.limited_weapons["zombie_colt_upgraded"] = 0;
     //level.limited_weapons["zombie_death_hands"] = 0;
     //level.limited_weapons["knuckle_crack_hands"] = 0;
 }
@@ -450,8 +452,8 @@ reloading_monitor()
     }
 }
 
-// random lightning + thunder throughout the map
-/*weather_system()
+// BO3 style random lightning + thunder throughout the map
+weather_system()
 {
     level endon("intermission");
     flag_wait("all_players_connected");
@@ -468,17 +470,44 @@ reloading_monitor()
             if(players.size < 1)
                 continue;
 
-            // Lightning first
+            // Lightning first + quick white flash
             //iprintln("Weather system: Lightning sequence triggered.");
             players[0] thread maps\_sounds::weather_lightning_sound();
+            level thread lightning_flash();   // <--- ONLY on lightning
 
             // Small random delay before the thunder boom
             wait(RandomFloatRange(0.4, 1.8));
 
-            // Then thunder
+            // Then thunder (NO flash)
             //iprintln("Weather system: Thunder sequence triggered.");
             players[0] thread maps\_sounds::weather_thunder_sound();
         }
     }
-}*/
+}
 
+// disable if annoying
+lightning_flash()
+{
+    fadetowhite = newhudelem();
+
+    fadetowhite.x = 0; 
+    fadetowhite.y = 0; 
+    fadetowhite.alpha = 0; 
+
+    fadetowhite.horzAlign = "fullscreen"; 
+    fadetowhite.vertAlign = "fullscreen"; 
+    fadetowhite.foreground = true; 
+    fadetowhite SetShader( "white", 640, 480 ); 
+
+    // Instant bright flash
+    fadetowhite FadeOverTime( 0.05 );
+    fadetowhite.alpha = 0.85;
+
+    wait( 0.08 );           // hold the bright flash for a tiny moment
+
+    fadetowhite FadeOverTime( 0.12 );
+    fadetowhite.alpha = 0;
+
+    wait( 0.15 );
+    fadetowhite destroy();
+}

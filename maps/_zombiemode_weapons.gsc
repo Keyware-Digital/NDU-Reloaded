@@ -214,6 +214,7 @@ init_weapons()
 	add_zombie_weapon( "springfield_scoped_zombie", "", 0 );
 	add_zombie_weapon( "stg44_pap", "", 0, 6 ); 
 	add_zombie_weapon( "sten_mk5", "", 0 );
+	add_zombie_weapon( "zombie_colt_upgraded", "", 0 );
 	//add_zombie_weapon( "zombie_cymbal_monkey", &"ZOMBIE_WEAPON_SATCHEL_2000", 2000, 3 );
 	add_zombie_weapon( "zombie_bowie_flourish",	"", 0 );
 
@@ -2056,7 +2057,7 @@ weapon_spawn_think()
 
 		grenadeMax = WeaponMaxAmmo( "stielhandgranate" );
 
-		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		// Trebor's wallbuy nade fix
+		if(is_grenade && player GetWeaponAmmoClip("stielhandgranate") >= grenadeMax)		// wallbuy nade fix
         {
             continue;
 		}

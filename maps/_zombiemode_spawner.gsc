@@ -2303,28 +2303,52 @@ find_flesh()
 //		}
 		
         players = get_players();
-        // If playing single player, never ignore the player
-        
+		// If playing single player, never ignore the player
         if( players.size == 1 )
         {
             self.ignore_player = undefined;
         }
-        
-		// solo revive distraction 
-		if ( players.size == 1 )
-		{
-			self.ignore_player = undefined;
-			if ( isDefined( level.zombiegoto ) && level.is_solo_revive_distraction_active )
+
+        // solo revive distraction 
+        if ( players.size == 1 && isDefined( level.zombiegoto ) && level.is_solo_revive_distraction_active )
+        {
+            self notify( "zombie_acquire_enemy" );
+            self.favoriteenemy = undefined;
+            self.ignore_player = undefined;
+            self.ignoreall = true;
+
+			// zombies start chanting as they wander off
+			if ( !isDefined( self.follow_sound_playing ) )
 			{
-				self SetGoalPos( level.zombiegoto.origin );
-				wait randomfloatrange( 1.0, 2.0 );
-				continue;
+				self thread zombie_follow_sound_loop();
 			}
-		}
+
+            self SetGoalPos( level.zombiegoto.origin );
+            self.goalradius = 64;
+
+            wait randomfloatrange( 1.0, 2.0 );
+            continue;
+        }
+
+        // POI support
+        poi = get_zombie_point_of_interest( self.origin );
+
+        if ( isDefined( poi ) )
+        {
+            self notify( "zombie_acquire_enemy" );
+            self.favoriteenemy = undefined;
+            self.ignore_player = undefined;
+            self.ignoreall = true;
+
+            self SetGoalPos( poi[0] );
+            self.goalradius = 64;
+
+            wait 0.5;
+            continue;
+        }
 
         player = get_closest_valid_player( self.origin, self.ignore_player ); 
 
-        
         if( !isDefined( player ) )
         {
             self zombie_history( "find flesh -> can't find player, continue" );

@@ -38,7 +38,8 @@ main() {
     maps\_zombiemode_powerups::init();
     maps\_zombiemode_perks::init();
     maps\_zombiemode_radio::init_radio();
-
+    maps\_zombiemode_hands::init();
+    maps\_zombiemode_solo_revive::init();
 
     init_utility();
 
@@ -109,8 +110,8 @@ testing_spawner_bug() {
 }
 
 init_shaders() {
-    precacheshader("nazi_intro");
-    precacheshader("zombie_intro");
+    PrecacheShader("nazi_intro");
+    PrecacheShader("zombie_intro");
     PrecacheShader("hud_chalk_1");
     PrecacheShader("hud_chalk_2");
     PrecacheShader("hud_chalk_3");
@@ -127,9 +128,9 @@ init_models() {
     PrecacheModel("collision_geo_32x32x32");
     PrecacheModel("static_berlin_ger_radio_d");
     PrecacheModel("tag_origin");
-    PrecacheModel("zmb_mdl_samantha_figure");
     PrecacheModel("zmb_mdl_button");
     PrecacheModel("zmb_mdl_cash_register");
+    PrecacheModel("zmb_mdl_samantha_figure");
     PrecacheModel("zombie_teddybear");
 }
 
@@ -1821,7 +1822,7 @@ player_damage_override(eInflictor, eAttacker, iDamage, iDFlags, sMeansOfDeath, s
     if (self HasPerk("specialty_quickrevive") && self.health <= iDamage && players.size == 1 && level.reviveUsesLeft > 0 )
     {
         self notify("second_chance");
-        self thread maps\_zombiemode_perks::solo_quickrevive();
+        self thread maps\_zombiemode_solo_revive::solo_quickrevive();
         return;
     }
 

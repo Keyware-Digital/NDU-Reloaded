@@ -242,17 +242,21 @@ laststand_take_player_weapons()
 
 		if(WeaponClass(weapon) == "pistol")
 		{
-            // Strict priority only for the better pistols (Ray > .357)
-            if(weapon == "ray_gun_mk1_v2")
-            {
-                self.laststandpistol = "ray_gun_mk1_v2";
-            }
-            else if(weapon == "sw_357" && self.laststandpistol != "ray_gun_mk1_v2")
-            {
-                self.laststandpistol = "sw_357";
-            }
-            // Do NOT re-set walther / tokarev / colt / colt_wet —
-            // the character-specific default already handled it.
+			// Strict priority only for the better pistols (Ray > Bloodhound > .357)
+			if(weapon == "ray_gun_mk1_v2")
+			{
+				self.laststandpistol = "ray_gun_mk1_v2";
+			}
+			/*else if(weapon == "bloodhound" && self.laststandpistol != "ray_gun_mk1_v2")
+			{
+				self.laststandpistol = "bloodhound";
+			}*/
+			else if(weapon == "sw_357" && self.laststandpistol != "ray_gun_mk1_v2")
+			{
+				self.laststandpistol = "sw_357";
+			}
+			// Do NOT re-set walther / tokarev / colt / colt_wet —
+			// the character-specific default already handled it.
 		}
 		
 		switch( weapon )
@@ -710,9 +714,21 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	self.reviveProgressBar.x = 0;
 	self.reviveProgressBar.y = -148;
 
+    // Fill bar
+    if ( isDefined( self.reviveProgressBar.bar ) )
+    {
+        self.reviveProgressBar.bar.alignX = "left";
+        self.reviveProgressBar.bar.alignY = "middle";
+        self.reviveProgressBar.bar.horzAlign = "center";
+        self.reviveProgressBar.bar.vertAlign = "bottom";
+        self.reviveProgressBar.bar.x = -60;
+        self.reviveProgressBar.bar.y = -148;
+    }
+
 	self.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
 
 
+    // downed player progress bar
 	if ( !isdefined( playerBeingRevived.reviveProgressBar ) )
 	playerBeingRevived.reviveProgressBar = playerBeingRevived createPrimaryProgressBar();
 
@@ -723,8 +739,21 @@ revive_do_revive( playerBeingRevived, reviverGun )
 	playerBeingRevived.reviveProgressBar.x = 0;
 	playerBeingRevived.reviveProgressBar.y = -190;
 
+    // Fill bar
+    if ( isDefined( playerBeingRevived.reviveProgressBar.bar ) )
+    {
+        playerBeingRevived.reviveProgressBar.bar.alignX = "left";
+        playerBeingRevived.reviveProgressBar.bar.alignY = "middle";
+        playerBeingRevived.reviveProgressBar.bar.horzAlign = "center";
+        playerBeingRevived.reviveProgressBar.bar.vertAlign = "bottom";
+        playerBeingRevived.reviveProgressBar.bar.x = -60;
+        playerBeingRevived.reviveProgressBar.bar.y = -190;
+    }
+
 	playerBeingRevived.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
 
+
+    // Reviver text HUD
     if ( !isdefined( self.reviveTextHud ) )
     {
         self.reviveTextHud = newclientHudElem( self );    
@@ -746,31 +775,7 @@ revive_do_revive( playerBeingRevived, reviverGun )
     self.reviveTextHud setText( &"GAME_REVIVING" );
 
 
-    // Downed player HUD: Progress bar and reviving text
-    if ( !isdefined( playerBeingRevived.reviveProgressBar ) )
-    {
-        playerBeingRevived.reviveProgressBar = playerBeingRevived createPrimaryProgressBar();
-    }
-
-	playerBeingRevived.reviveProgressBar.alignX = "center";
-	playerBeingRevived.reviveProgressBar.alignY = "middle";
-	playerBeingRevived.reviveProgressBar.horzAlign = "center";
-	playerBeingRevived.reviveProgressBar.vertAlign = "bottom";
-	playerBeingRevived.reviveProgressBar.x          = 0;
-	playerBeingRevived.reviveProgressBar.y          = -190;
-
-	if ( isDefined( playerBeingRevived.reviveProgressBar.bar ) )
-	{
-		playerBeingRevived.reviveProgressBar.bar.alignX     = "center";
-		playerBeingRevived.reviveProgressBar.bar.alignY     = "middle";
-		playerBeingRevived.reviveProgressBar.bar.horzAlign  = "center";
-		playerBeingRevived.reviveProgressBar.bar.vertAlign  = "bottom";
-		playerBeingRevived.reviveProgressBar.bar.x          = 0;
-		playerBeingRevived.reviveProgressBar.bar.y          = -190;
-	}
-
-	playerBeingRevived.reviveProgressBar updateBar( 0.01, 1 / reviveTime );
-
+    // Downed player text
     playerBeingRevived.revive_hud setText( &"GAME_PLAYER_IS_REVIVING_YOU", self );
     playerBeingRevived revive_hud_show();
 
