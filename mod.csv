@@ -175,6 +175,7 @@ weapon,sp/zombie_bowie_flourish
 weapon,sp/zombie_colt_upgraded
 weapon,sp/zombie_death_hands
 weapon,sp/zombie_knuckle_crack
+weapon,sp/zombie_punch_melee
 xanim,ai_zombie_attack_crawl
 xanim,ai_zombie_attack_crawl_lunge
 xanim,ai_zombie_attack_forward_v1
