@@ -503,7 +503,7 @@ lightning_flash()
     fadetowhite FadeOverTime( 0.05 );
     fadetowhite.alpha = 0.85;
 
-    wait( 0.08 );           // hold the bright flash for a tiny moment
+    wait( 0.07 );           // hold the bright flash for a tiny moment, was 0.08
 
     fadetowhite FadeOverTime( 0.12 );
     fadetowhite.alpha = 0;
