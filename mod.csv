@@ -114,6 +114,7 @@ rawfile,animtrees/generic_human.atr
 rawfile,bik/prototype_main_menu.bik
 rawfile,clientscripts/_callbacks.csc
 rawfile,clientscripts/_field_of_view.csc
+rawfile,clientscripts/nazi_zombie_prototype_amb.csc
 rawfile,clientscripts/nazi_zombie_prototype.csc
 rawfile,maps/_callbackglobal.gsc
 rawfile,maps/_character_randomise.gsc
@@ -146,6 +147,7 @@ sound,mod_ndu,,all_sp
 sound,mod_ndu_ee,,all_sp
 sound,mod_ndu_music,,all_sp
 sound,mod_ndu_powerup,,all_sp
+sound,mod_ndu_radio,,all_sp
 sound,mod_ndu_vox,,all_sp
 stringtable,maps/didyouknow_coop.csv
 stringtable,maps/gametypestable.csv
