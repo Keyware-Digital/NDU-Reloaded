@@ -268,22 +268,9 @@ solo_quickrevive()
 
     if ( level.reviveUsesLeft <= 0 )
     {
-        // Permanently remove Quick Revive from the random pool
-        if ( isDefined( self.perkarray ) )
-        {
-            for ( i = 0; i < self.perkarray.size; i++ )
-            {
-                if ( self.perkarray[i] == "specialty_quickrevive" )
-                {
-                    self.perkarray = array_remove( self.perkarray, "specialty_quickrevive" );
-                    break;
-                }
-            }
-        }
-
         // Only show this when uses are actually gone
-        self iPrintLnBold( "No more Solo Revives remaining!" );
         self thread maps\_sounds::samantha_fail_sound();
+        self iPrintLnBold( "No more Solo Revives remaining!" );
     }
 
     self.inSoloRevive = undefined;

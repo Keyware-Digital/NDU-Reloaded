@@ -11,7 +11,6 @@ init() {
 
     level.reviveUsesLeft = level.zombie_vars[ "quick_revive_solo_max_times" ];
     level.is_solo_revive_distraction_active = false;
-    level.zombiegoto = undefined;
 }
 
 init_precache() {
@@ -136,7 +135,6 @@ resetperkdefs()
     self.perkarray[ self.perkarray.size ] = "specialty_fastreload";         // Speed Cola
     self.perkarray[ self.perkarray.size ] = "specialty_longersprint";       // Stamin-Up
     self.perkarray[ self.perkarray.size ] = "specialty_ordinance";          // Melee Macchiato
-    self.perkarray[ self.perkarray.size ] = "specialty_quickrevive";        // Quick Revive
     //self.perkarray[ self.perkarray.size ] = "specialty_recon";            // Vulture Aid
     self.perkarray[ self.perkarray.size ] = "specialty_rof";                // Double Tap
     //self.perkarray[ self.perkarray.size ] = "specialty_shades";           // Tombstone
@@ -147,11 +145,6 @@ resetperkdefs()
     {
         self.perkarray[ self.perkarray.size ] = "specialty_quickrevive";
     }
-
-    self.perkarray[ self.perkarray.size ] = "specialty_rof";
-    self.perkarray[ self.perkarray.size ] = "specialty_specialgrenade";
-    //self.perkarray[ self.perkarray.size ] = "specialty_tombstone_zombies";
-    //self.perkarray[ self.perkarray.size ] = "specialty_vulture_aid_zombies";
 
     self.perkarray = array_randomize(self.perkarray);
 
