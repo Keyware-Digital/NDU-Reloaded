@@ -338,7 +338,6 @@ quip_sound_trigger()
     self thread quip_sound_cooldown_reset();
 }
 
-
 reload_cooldown_reset()
 {
     wait 5;
