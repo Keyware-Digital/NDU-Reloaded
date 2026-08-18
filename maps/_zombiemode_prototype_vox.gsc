@@ -323,6 +323,22 @@ player_throw_stielhandgranate_exert_sounds()
     }
 }
 
+quip_sound_trigger()
+{
+    self endon("disconnect");
+
+    // Skip if on sound cooldown
+    if (IsDefined(self.quip_sound_cooldown) && self.quip_sound_cooldown)
+        return;
+
+    self.quip_sound_cooldown = true;
+
+    self thread maps\_sounds::player_vox_helper( maps\_sounds::quip_sound, "quip_sound_done", 6.0 );
+
+    self thread quip_sound_cooldown_reset();
+}
+
+
 reload_cooldown_reset()
 {
     wait 5;
@@ -333,4 +349,10 @@ swarm_cooldown_reset()
 {
     wait 7;
     self.swarm_cooldown = false;
+}
+
+quip_sound_cooldown_reset()
+{
+    wait 2; // 2-second cooldown to prevent sound spam
+    self.quip_sound_cooldown = false;
 }

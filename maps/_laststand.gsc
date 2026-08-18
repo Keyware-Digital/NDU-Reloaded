@@ -148,12 +148,12 @@ PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sH
         if (living_teammates.size > 0)
         {
             quipper = living_teammates[RandomInt(living_teammates.size)]; // Random nearby teammate
-            quipper thread quip_sound_trigger();
+            quipper thread maps\_zombiemode_prototype_vox::quip_sound_trigger();
         }
         else
         {
             // Fallback: Play quip on downed player if no teammates available
-            self thread quip_sound_trigger();
+            self thread maps\_zombiemode_prototype_vox::quip_sound_trigger();
         }
     }
 
@@ -1118,25 +1118,4 @@ revive_completion_award_points()
     {
         players[i] maps\_zombiemode_score::add_to_player_score( points );
     }
-}
-
-quip_sound_trigger()
-{
-    self endon("disconnect");
-
-    // Skip if on sound cooldown
-    if (IsDefined(self.quip_sound_cooldown) && self.quip_sound_cooldown)
-        return;
-
-    self.quip_sound_cooldown = true;
-
-    self thread maps\_sounds::player_vox_helper( maps\_sounds::quip_sound, "quip_sound_done", 6.0 );
-
-    self thread quip_sound_cooldown_reset();
-}
-
-quip_sound_cooldown_reset()
-{
-    wait 2; // 2-second cooldown to prevent sound spam
-    self.quip_sound_cooldown = false;
 }
