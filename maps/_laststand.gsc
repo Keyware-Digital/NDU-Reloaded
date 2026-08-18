@@ -271,6 +271,7 @@ laststand_take_player_weapons()
 		case "zombie_bowie_flourish":
 		case "zombie_death_hands":
 		case "zombie_knuckle_crack":
+		case "zombie_punch_melee":
 			self.lastActiveWeapon = "none";
 			continue;
 		}
@@ -315,6 +316,7 @@ laststand_giveback_player_weapons()
 		case "zombie_bowie_flourish":
 		case "zombie_death_hands":
 		case "zombie_knuckle_crack":
+		case "zombie_punch_melee":
 			continue;
 		}
 

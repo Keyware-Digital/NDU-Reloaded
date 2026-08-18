@@ -188,6 +188,7 @@ include_weapons() {
     // Other
     //include_weapon("zombie_death_hands");
     //include_weapon("zombie_knuckle_crack");
+    //include_weapon("zombie_punch_melee");
 
     // Cut content
     //include_weapon("kar98k_bayonet");

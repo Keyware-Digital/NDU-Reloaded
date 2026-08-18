@@ -108,7 +108,7 @@ molotov_burn_damage( player )
         if( ticks_left <= 0 )
             break;
 
-        wait( RandomFloatRange( 1.0, 3.0 ) );
+        wait( RandomFloatRange( 1.0, 2.33 ) );  // was 3.0
     }
 
     self.molotov_flamed = undefined;

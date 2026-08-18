@@ -6,6 +6,7 @@ init()
 {
 	PrecacheItem( "zombie_death_hands" );
     PrecacheItem( "zombie_knuckle_crack" );
+    PreCacheItem( "zombie_punch_melee");
 }
 
 do_knuckle_crack()

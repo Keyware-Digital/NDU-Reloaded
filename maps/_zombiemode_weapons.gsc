@@ -221,6 +221,7 @@ init_weapons()
 	// Other
 	//add_zombie_weapon( "zombie_death_hands", 						&"PROTOTYPE_ZOMBIE_DEATH_HANDS_10000",		10000 );
 	//add_zombie_weapon( "zombie_knuckle_crack", 					&"PROTOTYPE_ZOMBIE__10000",	10000 );
+	//add_zombie_weapon( "zombie_punch_melee", 					&"PROTOTYPE_ZOMBIE__10000",	10000 );
 
 	// Cut content
 	//add_zombie_weapon( "kar98k_bayonet", "", 0 );
@@ -387,20 +388,55 @@ init_weapon_upgrade()
 	}
 }
 
-// weapon cabinets which open on use 
-// V2
+// NDR Revamped Weapon Cabinet (v3)
+// No more rubbish, random kar98k_scoped for an exorbitant price!
 init_weapon_cabinet()
 {
     // the triggers which are targeted at doors
     level.weapon_cabs = GetEntArray( "weapon_cabinet_use", "targetname" ); 
-    
+
     for( i = 0; i < level.weapon_cabs.size; i++ )
     {
         level.weapon_cabs[i] setCursorHint( "HINT_NOICON" ); 
         level.weapon_cabs[i] UseTriggerRequireLookAt();
     }
-    level.keep_ents = [];
+
+    assign_cabinet_display_models( "weapon_mp_kar98_scoped_rifle", 128 );
+
     array_thread( level.weapon_cabs, ::weapon_cabinet_think ); 
+}
+
+assign_cabinet_display_models( model_name, search_radius )  // search_radius is ignored now
+{
+    if( !IsDefined( level.weapon_cabs ) || level.weapon_cabs.size == 0 )
+    {
+        return;
+    }
+
+    all_ents = GetEntArray( "script_model", "classname" );
+
+    candidates = [];
+    for( i = 0; i < all_ents.size; i++ )
+    {
+        if( all_ents[i].model == model_name )
+        {
+            candidates[candidates.size] = all_ents[i];
+        }
+    }
+
+    cab = level.weapon_cabs[0];
+    cab.cabinet_gun_models = [];
+
+    for( i = 0; i < candidates.size && cab.cabinet_gun_models.size < 2; i++ )
+    {
+        candidates[i].claimed_by_cabinet = cab;
+        cab.cabinet_gun_models[cab.cabinet_gun_models.size] = candidates[i];
+    }
+
+    if( cab.cabinet_gun_models.size < 2 )
+    {
+        IPrintLnBold( "^1WARNING: weapon cabinet found only " + cab.cabinet_gun_models.size + " display model(s)." );
+    }
 }
 
 // returns the trigger hint string for the given weapon
@@ -1438,27 +1474,6 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
     {
         doors[i] NotSolid();
     }
-
-    //////////////////////// Horrible Script ////////////////////////
-    /////////////////////////////////////////////////////////////////
-
-    flag_wait("all_players_connected");
-    if(!isDefined(level.cabinetthinkdone) || level.cabinetthinkdone == 0) // please for the love of god only do this once
-	{
-		all_ents = GetEntArray("script_model","classname"); // i really hate this way of doing it but im not good enough to see another way currently - Numan
-		for(i=0;i<all_ents.size;i++)
-		{
-			if(all_ents[i].model == "weapon_mp_kar98_scoped_rifle")
-			{
-				level.keep_ents = array_insert(level.keep_ents,all_ents[i],level.keep_ents.size);
-			}
-			wait 0.05;
-		}
-		level.cabinetthinkdone = 1;
-	}
-
-    /////////////////// Horrible Script Over ////////////////////////
-	/////////////////// You're safe for now /////////////////////////
     
 	self waittill("trigger",player);
 	self.grab_weapon_hint = true;
@@ -1478,19 +1493,15 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 		return;
 	}
 
-	for(i=0;i<level.keep_ents.size;i++) // do cool floaty thing to both models
+    for( i = 0; i < self.cabinet_gun_models.size; i++ ) // do cool floaty thing to both models
     {
-        level.keep_ents[i] Show();
-        if(i == 0)
-        {
-            coord = -10;
-            self thread movecabinetguns(level.keep_ents[i],coord);
-        }
-        if(i == 1)
+        self.cabinet_gun_models[i] Show();
+        coord = -10;
+        if( i == 1 )
         {
             coord = 10;
-            self thread movecabinetguns(level.keep_ents[i],coord);
         }
+        self thread movecabinetguns( self.cabinet_gun_models[i], coord );
     }
 
 	if(player.score < level.zombie_weapon_cabinet_cost)
@@ -1617,9 +1628,9 @@ chosenweapon = randomnumb;
 
 	self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
 
-	for(i=0;i<level.keep_ents.size;i++)
+    for( i = 0; i < self.cabinet_gun_models.size; i++ )
     {
-        level.keep_ents[i] Hide();
+        self.cabinet_gun_models[i] Hide();
     }
 
 	luckyNumCabinet = RandomInt(100);
