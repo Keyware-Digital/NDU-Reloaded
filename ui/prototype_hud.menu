@@ -617,7 +617,7 @@ menuDef
 			rect			(WEAPINFO_X +111) (WEAPINFO_Y +36) 1 1
 			forecolor		1 1 1 HUD_ALPHA
 			ownerdraw		CG_PLAYER_WEAPON_AMMO_CLIP_GRAPHIC
-			visible			1
+			visible			when(dvarInt("hide_only_ammo_hud") == 0)
 			decoration
 		}
 
