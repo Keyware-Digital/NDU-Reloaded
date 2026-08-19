@@ -178,6 +178,7 @@ init_sounds() {
 
     // Head gib
     add_sound("zombie_head_gib", "zombie_head_gib");
+    add_sound("bullet_impact_headshot_helmet", "bullet_impact_headshot_helmet");
 
     // Blockers
     add_sound("rebuild_barrier_piece", "repair_boards");

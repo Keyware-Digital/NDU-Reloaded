@@ -288,6 +288,7 @@ macchiato_wallhit,,SFX\wpn\zmb_wpn_punch\zmb_wpn_punch_wall.wav,,1,1,,,,,,,full_
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #Zombies,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 zombie_spawn,,SFX\Levels\zombie\maps\asylum\dirt_spawn_##,,1,1,250,2000,3,priority,,,full_vol,,curve4,,2250,,curve2,1,1,,3d,,,,,,,,,,,,,,,,,,,,,,,40,60,0.25,1,,,
+zombie_impact_helmet,,SFX\projectile\bullet\headshot\helmet_##,,1,1,2000,4000,,,3,reject,full_vol,,curve4,0.7,6000,,,0.9,1.08,,3d,,,,,all_mp all_sp,,,,,,,,,,,,0.1,,no,no,,,50,90,0.15,0.65
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 amb_vocals,,SFX\Levels\zombie\new_zombie_vox\ambient_##,,0.35,0.65,50,1850,4,priority,1,reject,voice,,curve3,0.8,4000,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
 board_vocals,,SFX\Levels\zombie\new_zombie_vox\attack_##,,0.5,0.6,150,1000,3,priority,1,reject,voice,,curve3,0.8,3500,,curve1,1,1.1,,3d,,,,0.7,,,,,,,,,,,,,0.5,,,,,,10,25,0.25,1,,,
@@ -377,5 +378,5 @@ gr_mp40_charge_plr,,SFX\wpn\zmb_wpn_mp40_drum\foley\gr_mp40_charge_plr.wav,,0.75
 gr_g43_slide_forward_plr,,SFX/Weapon/rifle/Gewehr43/foley/gr_g43_slide_forward.wav,,0.75,0.8,,,,,,,reload,,,,,,,0.95,1.05,,2d,,,,,ber1 ber3 see1 see2 oki3 audio_test_tuey firing_range hol1 hol2 hol3 ber3b living_battlefield all_mp sniper,,,,,,,,0.5,,,,,,,,,,80,95,0.55,1,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 #BO3 FX ENHANCEMENTS,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-weather_lightning,,SFX\Levels\amb\weather\thunder\flash\lf_##.wav,,0.66,0.71,50,2500,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,2d,,,,,,,,,,,,,,,,,0.25,,,,,,5,10,0.1,1,,,1
-weather_thunder,,SFX\Levels\amb\weather\thunder\medium\dt_##.wav,,0.71,0.87,50,2500,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,2d,,,,,,,,,,,,,,,,,0.25,,,,,,5,10,0.1,1,,,1
+weather_lightning,,SFX\Levels\amb\weather\thunder\flash\lf_##.wav,,0.66,0.71,50,2500,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,3d,,,,,,,,,,,,,,,,,0.25,,,,,,5,10,0.1,1,,,1
+weather_thunder,,SFX\Levels\amb\weather\thunder\medium\dt_##.wav,,0.71,0.87,50,2500,,,,,full_vol,,curve3,,,,curve2,0.85,1.05,pitch,3d,,,,,,,,,,,,,,,,,0.25,,,,,,5,10,0.1,1,,,1

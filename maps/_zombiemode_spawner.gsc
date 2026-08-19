@@ -30,6 +30,7 @@ init()
 
 	array_thread( zombies, ::add_spawn_function, ::zombie_spawn_init );
 	array_thread( zombies, ::add_spawn_function, ::zombie_rise );
+	array_thread(zombies, ::add_spawn_function, maps\_zombiemode::round_spawn_failsafe);
 }
 
 init_risers() {
@@ -1022,6 +1023,7 @@ crash_into_building()
 		self reset_attack_spot();
 	}		
 }
+
 reset_attack_spot()
 {
 	if( isDefined( self.attacking_node ) )
@@ -1422,14 +1424,22 @@ zombie_head_gib( attacker )
 			//we don't need to add functions to scripts if they already exist elsewhere, if they don't need editing just call them instead
 			//apply this ethos throughout the mod
 			//additionally, files that we have not edited and exist in the vanilla map fast file should be removed from the mod as the game will load them from the vanilla map fast file instead
-			self animscripts\death::helmetPop();
 
-			if(isdefined(self.hatModel)) {
+			if(isDefined(self.hatmodel) && (self.hatmodel == "char_ger_wermacht_helm1")) {
 				self detach(self.hatModel, ""); 
 				self.hatModel = undefined;
+				self play_sound_on_ent( "bullet_impact_headshot_helmet" );
 			}
-
-			self play_sound_on_ent( "zombie_head_gib" );
+			else if(isDefined(self.hatModel)) {
+				self detach(self.hatModel, ""); 
+				self.hatModel = undefined;
+				self play_sound_on_ent( "zombie_head_gib" );
+			}
+			else {
+				self play_sound_on_ent( "zombie_head_gib" );
+			}
+	
+			self animscripts\death::helmetPop();
 			
 			self Detach( model, "", true ); 
 			self Attach( "char_ger_honorgd_zomb_behead", "", true ); 
