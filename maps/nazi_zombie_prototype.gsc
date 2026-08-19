@@ -22,6 +22,7 @@ main() {
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
 	array_thread(GetPlayers(), ::reloading_monitor);
+    array_thread(GetPlayers(), ::player_zombie_awareness);
     thread maps\_explosive_barrels::init_explosive_barrels();
     thread maps\_custom_radios::init_custom_radios();
     thread maps\_hide_and_seek::init_hide_and_seek();
