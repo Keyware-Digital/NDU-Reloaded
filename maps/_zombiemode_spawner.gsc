@@ -1452,7 +1452,7 @@ get_tear_anim( chunk, zombo )
 }
 
 
-zombie_head_gib( attacker )
+zombie_head_gib( attacker )zombie_head_gib( attacker )
 {
 	if( isDefined( self.head_gibbed ) && self.head_gibbed )
 	{
@@ -1474,14 +1474,22 @@ zombie_head_gib( attacker )
 			//we don't need to add functions to scripts if they already exist elsewhere, if they don't need editing just call them instead
 			//apply this ethos throughout the mod
 			//additionally, files that we have not edited and exist in the vanilla map fast file should be removed from the mod as the game will load them from the vanilla map fast file instead
-			self animscripts\death::helmetPop();
 
-			if(isdefined(self.hatModel)) {
+			if(isDefined(self.hatmodel) && (self.hatmodel == "char_ger_wermacht_helm1")) {
 				self detach(self.hatModel, ""); 
 				self.hatModel = undefined;
+				self play_sound_on_ent( "bullet_impact_headshot_helmet" );
 			}
-
-			self play_sound_on_ent( "zombie_head_gib" );
+			else if(isDefined(self.hatModel)) {
+				self detach(self.hatModel, ""); 
+				self.hatModel = undefined;
+				self play_sound_on_ent( "zombie_head_gib" );
+			}
+			else {
+				self play_sound_on_ent( "zombie_head_gib" );
+			}
+	
+			self animscripts\death::helmetPop();
 			
 			self Detach( model, "", true ); 
 			self Attach( "char_ger_honorgd_zomb_behead", "", true ); 
@@ -2048,7 +2056,7 @@ damage_on_fire( player )
 		}
 		else if( level.round_number < 9 )
 		{
-			dmg = level.zombie_health * RandomFloatRange( 0.15, 0.25 );
+			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.2 ); // 10% - 20%
 		}
 		else if( level.round_number < 11 )
 		{

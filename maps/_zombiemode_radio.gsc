@@ -1,7 +1,6 @@
 #include maps\_utility; 
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
-#include maps\_zombiemode_powerups;
 
 init_radio()
 {
@@ -12,13 +11,15 @@ init_radio()
 	radios = getentarray("kzmb","targetname");
 	
 	// no radios, return
-	if (!isDefined(radios) || !radios.size)
+	if (!isdefined(radios) || !radios.size)
 	{
 		return;
 	}
 	
 	array_thread(radios, ::zombie_radio_play );
 }
+
+
 
 zombie_radio_play()
 {
