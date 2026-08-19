@@ -11,8 +11,16 @@ init_utility()
 get_enemy_count()
 {
 	enemies = [];
-	enemies = GetAiArray( "axis" );
-	return enemies.size;
+	valid_enemies = [];
+	enemies = GetAiSpeciesArray( "axis", "all" );
+	for( i = 0; i < enemies.size; i++ )
+	{
+		if( enemies[i].animname != "boss_zombie" )
+		{
+			valid_enemies = array_add( valid_enemies, enemies[i] );
+		}
+	}
+	return valid_enemies.size;
 }
 
 spawn_zombie( spawner, target_name ) 
@@ -841,7 +849,6 @@ enable_trigger()
 //	}
 //}
 
-
 //chris_p - fix bug with this not being an ent array!
 in_playable_area()
 {
@@ -1559,7 +1566,8 @@ float_print3d( msg, time )
 	}
 #/
 }
-do_player_vo(snd, variation_count)
+
+/*do_player_vo(snd, variation_count)
 {
 
 	
@@ -1577,42 +1585,13 @@ do_player_vo(snd, variation_count)
 	if (level.player_is_speaking == 0)
 	{	
 		level.player_is_speaking = 1;
-		self playsound(sound, "vox_sound_done");			
-		self waittill("vox_sound_done");
+		self playsound(sound, "sound_done");			
+		self waittill("sound_done");
 		//This ensures that there is at least 3 seconds waittime before playing another VO.
 		wait(2);
 		level.player_is_speaking = 0;
 	}
-}
-
-// dodge-related enhancements
-getAnimEndPos( theanim )
-{
-	moveDelta = getMoveDelta( theanim, 0, 1 );
-	return self localToWorldCoords( moveDelta );
-}
-
-isValidEnemy( enemy )
-{
-	if ( !IsDefined( enemy ) )
-	{
-		return false;
-	}
-	
-	return true;
-}
-
-// Returns true if the game is ending / player is in the death hands animation
-is_dying_or_intermission()
-{
-    if ( isDefined( level.dying ) && level.dying )
-        return true;
-
-    if ( isDefined( level.intermission ) && level.intermission )
-        return true;
-
-    return false;
-}
+}*/
 /*player_killstreak_timer()
 {
 	if(getdvar ("zombie_kills") == "") 
@@ -1645,8 +1624,9 @@ is_dying_or_intermission()
 		}
 	}	
 
-}
-timer_actual(kills, time)
+}*/
+
+/*timer_actual(kills, time)
 {
 
 	timer = gettime() + (time * 1000);
@@ -1677,8 +1657,9 @@ timer_actual(kills, time)
 //	iprintlnbold ("Timer Is Out, Resetting Kills and Time");
 	self.killcounter = 0;
 	self.timerIsrunning = 0;
-}
-play_killstreak_dialog()
+}*/
+
+/*play_killstreak_dialog()
 {
 		index = maps\_zombiemode_weapons::get_player_index(self);
 		player_index = "plr_" + index + "_";	
@@ -1712,8 +1693,9 @@ play_killstreak_dialog()
 		}
 		//This ensures that there is at least 3 seconds waittime before playing another VO.
 
-}
-do_player_killstreak_dialog(player_index, sound_to_play, waittime)
+}*/
+
+/*do_player_killstreak_dialog(player_index, sound_to_play, waittime)
 {
 	if(!isDefined(level.player_is_speaking))
 	{
@@ -1728,6 +1710,19 @@ do_player_killstreak_dialog(player_index, sound_to_play, waittime)
 		level.player_is_speaking = 0;
 	}
 }*/
+
+is_magic_bullet_shield_enabled( ent )
+{
+	if( !IsDefined( ent ) )
+		return false;
+
+	return ( IsDefined( ent.magic_bullet_shield ) && ent.magic_bullet_shield == true );
+}
+
+enemy_is_dog()
+{
+	return ( self.type == "dog" );
+}
 
 really_play_2D_sound(sound)
 {
@@ -1764,7 +1759,7 @@ play_sound_2D(sound)
 	
 }
 
-create_and_play_dialog( player_index, dialog_category, waittime, response )
+/*create_and_play_dialog( player_index, dialog_category, waittime, response )
 {              
 	if( !isDefined ( self.sound_dialog ) )
 	{
@@ -1795,7 +1790,7 @@ create_and_play_dialog( player_index, dialog_category, waittime, response )
 
 	sound_to_play = dialog_category + "_" + variation;
 	self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, waittime, response);
-}
+}*/
 
 /*
 setup_response_waittime( sound_to_play )
@@ -1803,6 +1798,7 @@ setup_response_waittime( sound_to_play )
 	level waittill( "player_vox_done" );
 	level notify( "play_response_line" );
 }
+*/
 
 
 /*setup_response_line( player, index, response )
@@ -1869,7 +1865,7 @@ setup_rival_hero( player, hero, rival, response )
 	}
 }*/
 
-create_and_play_responses( player_index, dialog_category, waittime )
+/*create_and_play_responses( player_index, dialog_category, waittime )
 {              	
 	if( !isDefined ( self.sound_dialog ) )
 	{
@@ -1900,7 +1896,7 @@ create_and_play_responses( player_index, dialog_category, waittime )
 
 	sound_to_play = dialog_category + "_" + variation;
 	self maps\_zombiemode_spawner::do_player_playdialog(player_index, sound_to_play, waittime);
-}
+}*/
 
 include_weapon( weapon_name, in_box, weighting_func )
 {
@@ -1936,3 +1932,33 @@ remove_mod_from_methodofdeath( mod )
 	
 	return modName;
 }
+
+// dodge-related enhancements
+getAnimEndPos( theanim )
+{
+	moveDelta = getMoveDelta( theanim, 0, 1 );
+	return self localToWorldCoords( moveDelta );
+}
+
+isValidEnemy( enemy )
+{
+	if ( !isDefined( enemy ) )
+	{
+		return false;
+	}
+	
+	return true;
+}
+
+// Returns true if the game is ending / player is in the death hands animation
+is_dying_or_intermission()
+{
+    if ( isDefined( level.dying ) && level.dying )
+        return true;
+
+    if ( isDefined( level.intermission ) && level.intermission )
+        return true;
+
+    return false;
+}
+

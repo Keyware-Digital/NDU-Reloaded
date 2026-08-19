@@ -1452,7 +1452,7 @@ get_tear_anim( chunk, zombo )
 }
 
 
-zombie_head_gib( attacker )zombie_head_gib( attacker )
+zombie_head_gib( attacker )
 {
 	if( isDefined( self.head_gibbed ) && self.head_gibbed )
 	{
