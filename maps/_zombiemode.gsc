@@ -38,7 +38,7 @@ main() {
     maps\_zombiemode_powerups::init();
     maps\_zombiemode_perks::init();
     maps\_zombiemode_prototype_vox::init();
-    maps\_zombiemode_radio::init_radio();
+    maps\_zombiemode_radio::init();
     maps\_zombiemode_hands::init();
     maps\_zombiemode_solo_revive::init();
 

@@ -1183,12 +1183,14 @@ play_sound_on_ent( ref )
 {
 	if( isDefined( self.script_soundalias ) )
 	{
+		iPrintLn(self.script_soundalias);
 		self PlaySound( self.script_soundalias ); 
 		return;
 	}
 
 	if( isDefined( self.script_sound ) )
 	{
+		iPrintLn(self.script_sound);
 		ref = self.script_sound; 
 	}
 
@@ -1203,6 +1205,7 @@ play_sound_on_ent( ref )
 		return; 
 	}
 
+	iPrintLn(level.zombie_sounds[ref]);
 	self PlaySound( level.zombie_sounds[ref] ); 
 }
 
