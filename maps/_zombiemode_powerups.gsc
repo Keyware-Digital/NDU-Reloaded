@@ -828,7 +828,7 @@ carpenter_powerup(origin, drop_item) {
     carp_ent PlayLoopSound("carp_loop");
 
     while (true) {
-        windows = get_closest_window_repair(window_boards);
+        windows = get_closest_window_repair(window_boards, origin);
         if (!isDefined(windows)) {
             carp_ent StopLoopSound(1);
             carp_ent PlaySound("carp_end", "sound_done");
@@ -838,8 +838,14 @@ carpenter_powerup(origin, drop_item) {
             window_boards = array_remove(window_boards, windows);
         }
 
+        window_timer = 0;
         while (1) {
             if (all_chunks_intact(windows.barrier_chunks)) {
+                break;
+            }
+
+            // give up on a contested window instead of looping forever
+            if (window_timer > 5) {
                 break;
             }
 
@@ -848,11 +854,16 @@ carpenter_powerup(origin, drop_item) {
             if (!isDefined(chunk))
                 break;
 
-            windows thread maps\_zombiemode_blockers_new::replace_chunk(chunk, false, true);
+            // don't re-pick a chunk that's already mid-repair from the last tick
+            if (!isDefined(chunk.mid_repair)) {
+                windows thread maps\_zombiemode_blockers_new::replace_chunk(chunk, false, true);
+            }
+
             windows.clip enable_trigger();
             windows.clip DisconnectPaths();
             wait_network_frame();
             wait(0.05);
+            window_timer += 0.05;
         }
 
         wait_network_frame();
@@ -861,7 +872,7 @@ carpenter_powerup(origin, drop_item) {
 
     playersAlive = maps\_zombiemode::get_players_alive();
 
-    for(i = 0; i < playersAlive.size; i++) {
+    for (i = 0; i < playersAlive.size; i++) {
         playersAlive[i].score += 200 * level.zombie_vars["zombie_double_points"];
         playersAlive[i].score_total += 200 * level.zombie_vars["zombie_double_points"];
         playersAlive[i] maps\_zombiemode_score::set_player_score_hud();
@@ -875,16 +886,27 @@ carpenter_powerup(origin, drop_item) {
 
 }
 
-get_closest_window_repair(windows) {
+get_closest_window_repair(windows, origin) {
 
     current_window = undefined;
+    shortest_distance = undefined;
+
     for (i = 0; i < windows.size; i++) {
         if (all_chunks_intact(windows[i].barrier_chunks))
             continue;
 
-        current_window = windows[i];
-
+        if (!isDefined(current_window)) {
+            current_window = windows[i];
+            shortest_distance = DistanceSquared(current_window.origin, origin);
+        } else {
+            dist = DistanceSquared(windows[i].origin, origin);
+            if (dist < shortest_distance) {
+                current_window = windows[i];
+                shortest_distance = dist;
+            }
+        }
     }
+
     return current_window;
 }
 

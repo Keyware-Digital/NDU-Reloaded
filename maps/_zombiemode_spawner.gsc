@@ -231,6 +231,7 @@ zombie_spawn_init()
 	self set_zombie_run_cycle(); 
 	self thread zombie_think(); 
 	self thread zombie_gib_on_damage();
+	self thread zombie_damage_failsafe();
 //	self thread zombie_head_gib();	//dont enable, causes insta zombie death
 	self thread delayed_zombie_eye_glow();	// delayed eye glow for ground crawlers (the eyes floated above the ground before the anim started)
 	self.deathFunction = ::zombie_death_animscript;
@@ -255,6 +256,55 @@ delayed_zombie_eye_glow()
 {
 	wait .5;
 	self zombie_eye_glow();
+}
+
+zombie_damage_failsafe()
+{
+	self endon ("death");
+
+	continue_failsafe_damage = false;	
+	while (1)
+	{
+		//should only be for zombie exploits
+		wait 0.5;
+		
+		if (!isdefined(self.enemy))
+		{
+			continue;
+		}
+		
+		if (self istouching(self.enemy))
+		{
+			old_org = self.origin;
+			if (!continue_failsafe_damage)
+			{
+				wait 5;
+			}
+			
+			if (!isdefined(self.enemy))
+			{
+				continue;
+			}
+		
+			if (self istouching(self.enemy) 
+				&& !self.enemy maps\_laststand::player_is_in_laststand()
+				&& isalive(self.enemy))
+			{
+				if (distancesquared(old_org, self.origin) < (35 * 35) ) 
+				{
+					setsaveddvar("player_deathInvulnerableTime", 0);
+					self.enemy DoDamage( self.enemy.health + 1000, self.enemy.origin, undefined, undefined, "riflebullet" );
+					setsaveddvar("player_deathInvulnerableTime", level.startInvulnerableTime);	
+				
+					continue_failsafe_damage = true;
+				}
+			}
+		}
+		else
+		{
+			continue_failsafe_damage = false;
+		}
+	}
 }
 
 set_zombie_run_cycle()
@@ -1424,22 +1474,14 @@ zombie_head_gib( attacker )
 			//we don't need to add functions to scripts if they already exist elsewhere, if they don't need editing just call them instead
 			//apply this ethos throughout the mod
 			//additionally, files that we have not edited and exist in the vanilla map fast file should be removed from the mod as the game will load them from the vanilla map fast file instead
-
-			if(isDefined(self.hatmodel) && (self.hatmodel == "char_ger_wermacht_helm1")) {
-				self detach(self.hatModel, ""); 
-				self.hatModel = undefined;
-				self play_sound_on_ent( "bullet_impact_headshot_helmet" );
-			}
-			else if(isDefined(self.hatModel)) {
-				self detach(self.hatModel, ""); 
-				self.hatModel = undefined;
-				self play_sound_on_ent( "zombie_head_gib" );
-			}
-			else {
-				self play_sound_on_ent( "zombie_head_gib" );
-			}
-	
 			self animscripts\death::helmetPop();
+
+			if(isdefined(self.hatModel)) {
+				self detach(self.hatModel, ""); 
+				self.hatModel = undefined;
+			}
+
+			self play_sound_on_ent( "zombie_head_gib" );
 			
 			self Detach( model, "", true ); 
 			self Attach( "char_ger_honorgd_zomb_behead", "", true ); 
@@ -1710,7 +1752,7 @@ zombie_gib_on_damage()
                     self.has_legs = false; 
                     self AllowedStances( "crouch" ); 
                                         
-                    which_anim = RandomInt( 3 ); // shouldn't this be 5?
+                    which_anim = RandomInt( 5 ); 
                     
                     if( which_anim == 0 ) 
                     {
@@ -1998,7 +2040,7 @@ damage_on_fire( player )
 	self endon ("stop_flame_damage");
 	wait( 2 );
 	
-	while( isDefined( self.is_on_fire) && self.is_on_fire )
+	while( isdefined( self.is_on_fire) && self.is_on_fire )
 	{
 		if( level.round_number < 6 )
 		{
@@ -2006,15 +2048,15 @@ damage_on_fire( player )
 		}
 		else if( level.round_number < 9 )
 		{
-			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.2 ); // 10% - 20%
+			dmg = level.zombie_health * RandomFloatRange( 0.15, 0.25 );
 		}
 		else if( level.round_number < 11 )
 		{
-			dmg = level.zombie_health * RandomFloatRange( 0.8, 0.16 ); // 6% - 14%
+			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.2 );
 		}
 		else
 		{
-			dmg = level.zombie_health * RandomFloatRange( 0.06, 0.14 ); // 5% - 10%
+			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.15 );
 		}
 
 		if ( isDefined( player ) && Isalive( player ) )
