@@ -616,7 +616,7 @@ blocker_init()
 		self blocker_attack_spots();
 	}
 
-	assert( isDefined( self.clip ) );
+	assert( isDefined( self.clip ) ); // might this affect nachts wall?
 	self.trigger_location = getstruct( self.target, "targetname" ); 
 
 	self thread blocker_think(); 
@@ -790,7 +790,7 @@ blocker_trigger_think()
 			
 			self thread replace_chunk( chunk, has_perk );
 	
-			assert( isDefined( self.clip ) );
+			assert( isDefined( self.clip ) ); // might this affect nachts wall?
 			self.clip enable_trigger(); 
 			self.clip DisconnectPaths(); 
 	
@@ -807,6 +807,7 @@ blocker_trigger_think()
 			// set the score
 			if( player.rebuild_barrier_reward < level.zombie_vars["rebuild_barrier_cap_per_round"] )
 			{
+				play_sound_at_pos("purchase", self.origin); // cha_ching only while under the cap!
 				player maps\_zombiemode_score::add_to_player_score( cost );
 				
 			}

@@ -2,6 +2,7 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 #include maps\_sounds;
+#include maps\_zombiemode_powerups;
 
 init_custom_radios()
 {
@@ -174,7 +175,7 @@ handle_generic_radio_one_interaction(generic_radio_one)
                 play_sound_2D("bright_sting");
                 level.zombie_vars["zombie_drop_item"] = 1;
                 level.powerup_drop_count = 0;
-                level thread maps\_zombiemode_powerups::powerup_drop(powerup_spawn);
+                level thread powerup_drop(powerup_spawn);
 
                 level.player_has_done_radio_ee_three = 1;
                 //iPrintLn("STG44 EE complete!");
@@ -272,7 +273,7 @@ morse_group_timeout(gen, player)
 
             level.zombie_vars["zombie_drop_item"] = 1;
             level.powerup_drop_count = 0;
-            level thread maps\_zombiemode_powerups::force_specific_powerup("random_perk", powerup_spawn);
+            level thread force_specific_powerup("random_perk", powerup_spawn);
 
             level.player_has_done_radio_ee_two = 1;
             level.morse_progress = 0;

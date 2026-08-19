@@ -86,6 +86,7 @@ random_perk_powerup_think() {
 
     if (perk == "specialty_armorvest") {
         self.maxhealth = level.zombie_vars["juggernaut_health"];
+        self.health    = level.zombie_vars["juggernaut_health"];
     }
 
     if (perk == "specialty_fastreload") {
