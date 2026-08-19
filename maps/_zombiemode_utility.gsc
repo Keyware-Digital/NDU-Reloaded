@@ -1372,6 +1372,30 @@ debug_round_advancer()
 #/
 }
 
+cheat_score()
+{
+/#
+//	level waittill( "introscreen_done" );
+	flag_wait( "all_players_connected" );
+
+	while( 1 )
+	{
+		if( GetDvar( "zombie_cheat" ) == "1" )
+		{
+			SetDvar( "zombie_cheat", "0" ); 
+
+			// players spend their cash
+			get_players()[0].score = 100000; 
+
+			// also set the score onscreen
+			get_players()[0] maps\_zombiemode_score::set_player_score_hud(); 	
+		}
+			
+		wait 0.05; 
+	}
+#/
+}
+
 print_run_speed( speed )
 {
 /#
@@ -1961,4 +1985,3 @@ is_dying_or_intermission()
 
     return false;
 }
-
