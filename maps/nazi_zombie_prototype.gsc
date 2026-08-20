@@ -1,12 +1,9 @@
 #include common_scripts\utility;
-
 #include maps\_utility;
-
 #include maps\_zombiemode_utility;
 
 init() {
     init_strings();
-    init_sounds();
 }
 
 main() {
@@ -21,6 +18,7 @@ main() {
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
+    init_sounds();  // don't move this otherwise "break_stone" breaks!!!
 	array_thread(GetPlayers(), ::reloading_monitor);
     array_thread(GetPlayers(), ::player_zombie_awareness);
     thread maps\_explosive_barrels::init_explosive_barrels();
