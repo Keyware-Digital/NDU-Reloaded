@@ -1984,7 +1984,7 @@ zombie_death_points( origin, mod, hit_location, player )
 
 	player maps\_zombiemode_score::player_add_points( "death", mod, hit_location ); 
 }
-do_player_playdialog(player_index, sound_to_play, waittime, response)
+/*do_player_playdialog(player_index, sound_to_play, waittime, response)
 {
 	index = maps\_zombiemode_weapons::get_player_index(self);
 	
@@ -2003,9 +2003,9 @@ do_player_playdialog(player_index, sound_to_play, waittime, response)
 		/*if( isDefined( response ) && !is_dying_or_intermission() )
 		{
 			// level thread setup_response_line(...);
-		}*/
+		}
 	}
-}
+}*/
 // Called from animscripts\death.gsc
 zombie_death_animscript()
 {

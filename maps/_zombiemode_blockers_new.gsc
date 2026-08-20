@@ -616,7 +616,7 @@ blocker_init()
 		self blocker_attack_spots();
 	}
 
-	assert( isDefined( self.clip ) ); // might this affect nachts wall?
+	assert( isDefined( self.clip ) );
 	self.trigger_location = getstruct( self.target, "targetname" ); 
 
 	self thread blocker_think(); 
@@ -789,7 +789,7 @@ blocker_trigger_think()
 			
 			self thread replace_chunk( chunk, has_perk );
 	
-			assert( isDefined( self.clip ) ); // might this affect nachts wall?
+			assert( isDefined( self.clip ) );
 			self.clip enable_trigger(); 
 			self.clip DisconnectPaths(); 
 	
