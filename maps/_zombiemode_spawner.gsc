@@ -15,7 +15,7 @@ init()
 
 	zombies = getEntArray( "zombie_spawner", "script_noteworthy" ); 
 	later_rounds = getentarray("later_round_spawners", "script_noteworthy" );
-	
+
 	zombies = array_combine( zombies, later_rounds );
 
 	for( i = 0; i < zombies.size; i++ )
@@ -25,12 +25,11 @@ init()
 			zombies[i].locked_spawner = true;
 		}
 	}
-	
+
 	init_risers();
 
 	array_thread( zombies, ::add_spawn_function, ::zombie_spawn_init );
 	array_thread( zombies, ::add_spawn_function, ::zombie_rise );
-	array_thread(zombies, ::add_spawn_function, maps\_zombiemode::round_spawn_failsafe);
 }
 
 init_risers() {
@@ -192,14 +191,14 @@ zombie_spawn_init()
 
 	self.gibbed = false; 
 	self.head_gibbed = false;
-	
+
 	// might need this so co-op zombie players cant block zombie pathing
 	self PushPlayer( false ); //was true (turned off to match BO1)
 //	self.meleeRange = 128; 
 //	self.meleeRangeSq = anim.meleeRange * anim.meleeRange; 
-	
+
 	animscripts\shared::placeWeaponOn( self.primaryweapon, "none" ); 
-	
+
 	// This isn't working, might need an "empty" weapon
 	//self animscripts\shared::placeWeaponOn( self.weapon, "none" ); 
 
@@ -347,7 +346,7 @@ set_zombie_run_cycle()
 set_run_speed()
 {
 	rand = randomintrange( level.zombie_move_speed, level.zombie_move_speed + 35 ); 
-	
+
 //	self thread print_run_speed( rand );
 	if( rand <= 35 )
 	{
@@ -394,7 +393,7 @@ zombie_think()
 	}
 	else
 	{
-		max_dist = 500;
+		max_dist = 1048;
 	}
 
 	if( isDefined( self.script_forcegoal ) && self.script_forcegoal )
@@ -402,9 +401,9 @@ zombie_think()
 		desired_origin = get_desired_origin();
 
 		AssertEx( isDefined( desired_origin ), "Spawner @ " + self.origin + " has a script_forcegoal but did not find a target" );
-	
+
 		origin = desired_origin;
-			
+
 		node = getclosest( origin, level.exterior_goals ); 	
 		self.entrance_nodes[0] = node;
 
@@ -424,6 +423,7 @@ zombie_think()
 		nodes = get_array_of_closest( origin, level.exterior_goals, undefined, 3 );
 
 		// Figure out the distances between them, if any of them are greater than 256 units compared to the previous, drop it
+		max_dist = 1048;
 		desired_nodes[0] = nodes[0];
 		prev_dist = Distance( self.origin, nodes[0].origin );
 		for( i = 1; i < nodes.size; i++ )
@@ -465,6 +465,7 @@ zombie_think()
 		nodes = get_array_of_closest( origin, level.exterior_goals, undefined, 3 );
 
 		// Figure out the distances between them, if any of them are greater than 256 units compared to the previous, drop it
+		max_dist = 1048;
 		desired_nodes[0] = nodes[0];
 		prev_dist = Distance( self.origin, nodes[0].origin );
 		for( i = 1; i < nodes.size; i++ )
@@ -511,14 +512,14 @@ get_desired_origin()
 		{
 			ent = getstruct( self.target, "targetname" );
 		}
-	
+
 		if( !isDefined( ent ) )
 		{
 			ent = GetNode( self.target, "targetname" );
 		}
-	
+
 		AssertEx( isDefined( ent ), "Cannot find the targeted ent/node/struct, \"" + self.target + "\" at " + self.origin );
-	
+
 		return ent.origin;
 	}
 
@@ -550,7 +551,7 @@ zombie_goto_entrance( node, endon_bad_path )
 	// Guy should get to goal and tear into building until all barrier chunks are gone
 	self tear_into_building();
 	self.dodge_allowed = true;
-		
+
 	//REMOVED THIS, WAS CAUSING ISSUES
 	if(isDefined(self.first_node.clip))
 	{
@@ -564,7 +565,7 @@ zombie_goto_entrance( node, endon_bad_path )
 	// here is where they zombie would play the traversal into the building( if it's a window )
 	// and begin the player seek logic
 	self zombie_setup_attack_properties();
-	
+
 	//PI CHANGE - force the zombie to go over the traversal near their goal node if desired
 	if (isDefined(level.script) && level.script == "nazi_zombie_sumpf")
 	{
@@ -583,7 +584,7 @@ zombie_goto_entrance( node, endon_bad_path )
 		}
 	}
 	//END PI CHANGE
-	
+
 	self thread find_flesh();
 }
 
@@ -594,39 +595,52 @@ zombie_assure_node()
 	level endon( "intermission" );
 
 	start_pos = self.origin;
-	if(IsDefined(self.entrance_nodes))
+
+	for( i = 0; i < self.entrance_nodes.size; i++ )
 	{
-		for( i = 0; i < self.entrance_nodes.size; i++ )
+		if( self zombie_bad_path() )
 		{
-			if( self zombie_bad_path() )
-			{
-				self zombie_history( "zombie_assure_node -> assigned assured node = " + self.entrance_nodes[i].origin );
-	
-				println( "^1Zombie @ " + self.origin + " did not move for 1 second. Going to next closest node @ " + self.entrance_nodes[i].origin );
-				level thread draw_line_ent_to_pos( self, self.entrance_nodes[i].origin, "goal" );
-				self.first_node = self.entrance_nodes[i];
-				self SetGoalPos( self.entrance_nodes[i].origin );
-			}
-			else
-			{
-				return;
-			}
+			self zombie_history( "zombie_assure_node -> assigned assured node = " + self.entrance_nodes[i].origin );
+
+			println( "^1Zombie @ " + self.origin + " did not move for 1 second. Going to next closest node @ " + self.entrance_nodes[i].origin );
+			level thread draw_line_ent_to_pos( self, self.entrance_nodes[i].origin, "goal" );
+			self.first_node = self.entrance_nodes[i];
+			self SetGoalPos( self.entrance_nodes[i].origin );
 		}
-	}		
-	// CHRISP - must add an additional check, since the 'self.entrance_nodes' array is not dynamically updated to accomodate for entrance points that can be turned on and off
-	// only do this if it's the asylum map
-	wait(2);
-	// Get more nodes and try again
-	nodes = get_array_of_closest( self.origin, level.exterior_goals, undefined, 20 );
-	if(IsDefined(nodes))
+		else
+		{
+			return;
+
+
+
+
+
+
+
+
+
+
+
+
+		}
+	}
+		if(level.script == "nazi_zombie_asylum")
+
+
+
+
+
 	{
+		wait(2);
+		// Get more nodes and try again
+		nodes = get_array_of_closest( self.origin, level.exterior_goals, undefined, 20 );
 		self.entrance_nodes = nodes;
 		for( i = 0; i < self.entrance_nodes.size; i++ )
 		{
 			if( self zombie_bad_path() )
 			{
 				self zombie_history( "zombie_assure_node -> assigned assured node = " + self.entrance_nodes[i].origin );
-	
+
 				println( "^1Zombie @ " + self.origin + " did not move for 1 second. Going to next closest node @ " + self.entrance_nodes[i].origin );
 				level thread draw_line_ent_to_pos( self, self.entrance_nodes[i].origin, "goal" );
 				self.first_node = self.entrance_nodes[i];
@@ -637,24 +651,24 @@ zombie_assure_node()
 				return;
 			}
 		}
-	}	
+	}
 
 	self zombie_history( "zombie_assure_node -> failed to find a good entrance point" );
-	
+
 	//assertmsg( "^1Zombie @ " + self.origin + " did not find a good entrance point... Please fix pathing or Entity setup" );
-	wait(20);
-	//iprintln( "^1Zombie @ " + self.origin + " did not find a good entrance point... Please fix pathing or Entity setup" );
+
+	wait( 3 );
 	self DoDamage( self.health + 10, self.origin );
-	
-//	//add this zombie back into the spawner queue to be re-spawned
-//	if(is_true(level.put_timed_out_zombies_back_in_queue ))
-//	{
-//		level.zombie_total++;	
-//	}
-	
-	//add this to the stats even tho he really didn't 'die' 
-	level.zombies_timeout_spawn++;
-	
+
+
+
+
+
+
+
+
+
+
 }
 
 zombie_bad_path()
@@ -803,7 +817,7 @@ tear_into_building()
         while(1)
         {
             chunk = get_closest_non_destroyed_chunk(self.origin, self.first_node.barrier_chunks);
-    
+
             if(!isDefined(chunk))
             {
                 for(i = 0; i < self.first_node.attack_spots_taken.size; i++)
@@ -819,7 +833,7 @@ tear_into_building()
             chunk.target_by_zombie = true;
             self AnimScripted("tear_anim", self.origin, self.first_node.angles, tear_anim);
             self zombie_tear_notetracks("tear_anim", chunk, self.first_node);
-			
+
 			//chris - adding new window attack & gesture animations ;)
 			//if(level.script != "nazi_zombie_prototype")
 			{
@@ -859,7 +873,7 @@ do_a_taunt()
 		setdvar("zombie_taunt_freq","20");
 	}
 	freq = getdvarint("zombie_taunt_freq");
-	
+
 	if( freq >= randomint(100) )
 	{
 		anime = random(level._zombie_board_taunt[self.animname]);
@@ -875,76 +889,82 @@ thru the boards. 50% chance
 ------------------------------------*/
 should_attack_player_thru_boards()
 {
+	
 	//no board attacks if they are crawlers
 	if( !self.has_legs)
 	{
 		return false;
 	}
-	
-	//DCS 083110: check glass section or walls are all broken through.
-	if(IsDefined(self.first_node.barrier_chunks))
-	{
-		for(i=0;i<self.first_node.barrier_chunks.size;i++)
-		{
-			if(IsDefined(self.first_node.barrier_chunks[i].unbroken) && self.first_node.barrier_chunks[i].unbroken == true )
-			{
-				return false;
-			}	
-		}	
-	}	
-	
-	if(GetDvar("zombie_reachin_freq") == "")
+
+	if(getdvar("zombie_reachin_freq") == "")
+
+
+
+
+
+
+
+
+
+
+
+
 	{
 		setdvar("zombie_reachin_freq","50");
 	}
-	freq = GetDvarInt("zombie_reachin_freq");
-	
+	freq = getdvarint("zombie_reachin_freq");
+
 	players = get_players();
 	attack = false;
+	
 
-	self.player_targets = [];
 	for(i=0;i<players.size;i++)
 	{
-		if ( isAlive( players[i] ) && !isDefined( players[i].revivetrigger ) && distance( self.origin, players[i].origin ) <= 90 )
+		if(distance2d(self.origin,players[i].origin) <= 72)
 		{
-			self.player_targets[self.player_targets.size] = players[i];
+
 			attack = true;
 		}
-	}
+	}	
 	if(attack && freq >= randomint(100) )
 	{
 		//iprintln("checking attack");
-		// index 0 is center, index 2 is left and index 1 is the right
+		
 		//check to see if the guy is left, right, or center 
 		self.old_origin = self.origin;
 		if(self.attacking_spot_index == 0) //he's in the center
 		{
-			
+
 		if(randomint(100) > 50)
 		{
-				//self animscripted("window_melee",self.origin,self.angles,%ai_zombie_window_attack_arm_l_out, "normal", %body, 1, 0.4 );
-				self animscripts\face::SaySpecificDialogue( undefined, "attack_vocals", 1 );
+			
+
 				self animscripted("window_melee",self.origin,self.angles,%ai_zombie_window_attack_arm_l_out);
 		}
 		else
 		{
-			//self animscripted("window_melee",self.origin,self.angles,%ai_zombie_window_attack_arm_r_out, "normal", %body, 1, 0.4 );
-			self animscripts\face::SaySpecificDialogue( undefined, "attack_vocals", 1 );
+
+
 			self animscripted("window_melee",self.origin,self.angles,%ai_zombie_window_attack_arm_r_out);
 		}
 		self window_notetracks( "window_melee" );
+	
+
+
+
+			
 		}
 		else if(self.attacking_spot_index == 2) //<-- he's to the left
 		{
-			//self animscripted("window_melee",self.origin,self.angles,%ai_zombie_window_attack_arm_r_out, "normal", %body, 1, 0.4 );
-			self animscripts\face::SaySpecificDialogue( undefined, "attack_vocals", 1 );
+
+
 			self animscripted("window_melee",self.origin,self.angles,%ai_zombie_window_attack_arm_r_out);
 			self window_notetracks( "window_melee" );
 		}
 		else if(self.attacking_spot_index == 1) //<-- he's to the right
 		{
-			//self animscripted("window_melee",self.origin,self.angles,%ai_zombie_window_attack_arm_l_out, "normal", %body, 1, 0.4 );
-			self animscripts\face::SaySpecificDialogue( undefined, "attack_vocals", 1 );
+
+
 			self animscripted("window_melee",self.origin,self.angles,%ai_zombie_window_attack_arm_l_out);
 			self window_notetracks( "window_melee" );
 		}					
@@ -1024,7 +1044,7 @@ crash_into_building()
 		while( 1 )
 		{
 			chunk = get_closest_non_destroyed_chunk( self.origin, self.first_node.barrier_chunks );
-	
+
 			if( !isDefined( chunk ) )
 			{
 				for( i = 0; i < self.first_node.attack_spots_taken.size; i++ )
@@ -1042,13 +1062,13 @@ crash_into_building()
 			PlayFx( level._effect["wood_chunk_destory"], chunk.origin );
 			PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 20 ), randomint( 20 ), randomint( 10 ) ) );
 			PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 40 ), randomint( 40 ), randomint( 20 ) ) );
-	
+
 			level thread maps\_zombiemode_blockers_new::remove_chunk( chunk, self.first_node, true );
-			
+
 			if( all_chunks_destroyed( self.first_node.barrier_chunks ) )
 			{
 				EarthQuake( randomfloatrange( 0.5, 0.8 ), 0.5, chunk.origin, 300 ); 
-	
+
 				if( isDefined( self.first_node.clip ) )
 				{
 					self.first_node.clip ConnectPaths(); 
@@ -1067,13 +1087,12 @@ crash_into_building()
 			{
 				EarthQuake( RandomFloatRange( 0.1, 0.15 ), 0.2, chunk.origin, 200 ); 
 			}
-					
+
 		}
 
 		self reset_attack_spot();
 	}		
 }
-
 reset_attack_spot()
 {
 	if( isDefined( self.attacking_node ) )
@@ -1142,11 +1161,11 @@ zombie_tear_notetracks( msg, chunk, node )
 			if( !chunk.destroyed )
 			{
 				self.lastchunk_destroy_time = getTime();
-	
+
 				PlayFx( level._effect["wood_chunk_destory"], chunk.origin );
 				PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 20 ), randomint( 20 ), randomint( 10 ) ) );
 				PlayFx( level._effect["wood_chunk_destory"], chunk.origin + ( randomint( 40 ), randomint( 40 ), randomint( 20 ) ) );
-	
+
 				level thread maps\_zombiemode_blockers_new::remove_chunk( chunk, node, true );
 			}
 		}
@@ -1445,7 +1464,7 @@ get_tear_anim( chunk, zombo )
 
 			tear_anim = anims[RandomInt( anims.size )];
 		}
-		
+
 	}
 
 	return tear_anim; 
@@ -1474,7 +1493,6 @@ zombie_head_gib( attacker )
 			//we don't need to add functions to scripts if they already exist elsewhere, if they don't need editing just call them instead
 			//apply this ethos throughout the mod
 			//additionally, files that we have not edited and exist in the vanilla map fast file should be removed from the mod as the game will load them from the vanilla map fast file instead
-
 			if(isDefined(self.hatmodel) && (self.hatmodel == "char_ger_wermacht_helm1")) {
 				self detach(self.hatModel, ""); 
 				self.hatModel = undefined;
@@ -1490,7 +1508,6 @@ zombie_head_gib( attacker )
 			}
 	
 			self animscripts\death::helmetPop();
-			
 			self Detach( model, "", true ); 
 			self Attach( "char_ger_honorgd_zomb_behead", "", true ); 
 			break; 
@@ -1632,13 +1649,13 @@ headshot_blood_fx()
 	fxOrigin = self GetTagOrigin( fxTag );
 	upVec = AnglesToUp( self GetTagAngles( fxTag ) );
 	forwardVec = AnglesToForward( self GetTagAngles( fxTag ) );
-	
+
 	// main head pop fx
 	PlayFX( level._effect["headshot"], fxOrigin, forwardVec, upVec );
 	PlayFX( level._effect["headshot_nochunks"], fxOrigin, forwardVec, upVec );
-	
+
 	wait( 0.3 );
-	
+
 	if( isDefined( self ) )
 	{
 		PlayFxOnTag( level._effect["bloodspurt"], self, fxTag );
@@ -1753,15 +1770,15 @@ zombie_gib_on_damage()
             if( refs.size )
             {
                 self.a.gib_ref = animscripts\death::get_random( refs ); 
-            
+
                 // Don't stand if a leg is gone
                 if( ( self.a.gib_ref == "no_legs" || self.a.gib_ref == "right_leg" || self.a.gib_ref == "left_leg" ) && self.health > 0 )
                 {
                     self.has_legs = false; 
                     self AllowedStances( "crouch" ); 
-                                        
-                    which_anim = RandomInt( 5 ); 
-                    
+
+                    which_anim = RandomInt( 5 ); // shouldn't this be 5?
+
                     if( which_anim == 0 ) 
                     {
                         self.deathanim = %ai_zombie_crawl_death_v1;
@@ -1887,9 +1904,9 @@ derive_damage_refs( point )
 	{
 		init_gib_tags();
 	}
-	
+
 	closestTag = undefined;
-	
+
 	for( i = 0; i < level.gib_tags.size; i++ )
 	{
 		if( !isDefined( closestTag ) )
@@ -1904,9 +1921,9 @@ derive_damage_refs( point )
 			}
 		}
 	}
-	
+
 	refs = [];
-	
+
 	// figure out the refs based on the tag returned
 	if( closestTag == "J_SpineLower" || closestTag == "J_SpineUpper" || closestTag == "J_Spine4" )
 	{
@@ -1933,43 +1950,43 @@ derive_damage_refs( point )
 		refs[refs.size] = "right_leg";
 		refs[refs.size] = "no_legs";
 	}
-	
+
 	ASSERTEX( array_validate( refs ), "get_closest_damage_refs(): couldn't derive refs from closestTag " + closestTag );
-	
+
 	return refs;
 }
 
 init_gib_tags()
 {
 	tags = [];
-					
+
 	// "guts", "right_arm", "left_arm", "right_leg", "left_leg", "no_legs"
-	
+
 	// "guts"
 	tags[tags.size] = "J_SpineLower";
 	tags[tags.size] = "J_SpineUpper";
 	tags[tags.size] = "J_Spine4";
-	
+
 	// "left_arm"
 	tags[tags.size] = "J_Shoulder_LE";
 	tags[tags.size] = "J_Elbow_LE";
 	tags[tags.size] = "J_Wrist_LE";
-	
+
 	// "right_arm"
 	tags[tags.size] = "J_Shoulder_RI";
 	tags[tags.size] = "J_Elbow_RI";
 	tags[tags.size] = "J_Wrist_RI";
-	
+
 	// "left_leg"/"no_legs"
 	tags[tags.size] = "J_Hip_LE";
 	tags[tags.size] = "J_Knee_LE";
 	tags[tags.size] = "J_Ankle_LE";
-	
+
 	// "right_leg"/"no_legs"
 	tags[tags.size] = "J_Hip_RI";
 	tags[tags.size] = "J_Knee_RI";
 	tags[tags.size] = "J_Ankle_RI";
-	
+
 	level.gib_tags = tags;
 }
 
@@ -1987,7 +2004,7 @@ zombie_death_points( origin, mod, hit_location, player )
 /*do_player_playdialog(player_index, sound_to_play, waittime, response)
 {
 	index = maps\_zombiemode_weapons::get_player_index(self);
-	
+
 	if(!isDefined(level.player_is_speaking))
 	{
 		level.player_is_speaking = 0;	
@@ -2047,8 +2064,8 @@ damage_on_fire( player )
 	self endon ("death");
 	self endon ("stop_flame_damage");
 	wait( 2 );
-	
-	while( isdefined( self.is_on_fire) && self.is_on_fire )
+
+	while( isDefined( self.is_on_fire) && self.is_on_fire )
 	{
 		if( level.round_number < 6 )
 		{
@@ -2060,11 +2077,11 @@ damage_on_fire( player )
 		}
 		else if( level.round_number < 11 )
 		{
-			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.2 );
+			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.2 ); // 6% - 14%
 		}
 		else
 		{
-			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.15 );
+			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.15 ); // 5% - 10%
 		}
 
 		if ( isDefined( player ) && Isalive( player ) )
@@ -2075,7 +2092,7 @@ damage_on_fire( player )
 		{
 			self DoDamage( dmg, self.origin, level );
 		}
-		
+
 		wait( randomfloatrange( 2.0, 5.0 ) );
 	}
 }
@@ -2150,7 +2167,7 @@ zombie_damage( mod, hit_location, hit_origin, player )
 			self DoDamage( level.round_number * randomint( 100, 500 ), self.origin, undefined );
 		}
 	}*/
-	
+
 	self thread maps\_zombiemode_powerups::check_for_instakill( player, mod, hit_location );
 }
 
@@ -2326,7 +2343,7 @@ zombie_setup_attack_properties()
 
 	self.pathEnemyFightDist = 64;
 	self.meleeAttackDist = 64;
-	
+
 	//try to prevent always turning towards the enemy
 	self.maxsightdistsqrd = 128 * 128;
 
@@ -2340,131 +2357,121 @@ find_flesh()
 {
 	self endon( "death" ); 
 	level endon( "intermission" );
-	self endon( "stop_find_flesh" );
 
 	if( level.intermission )
 	{
 		return;
 	}
 
-	self.ignore_player = [];
+	self.ignore_player = undefined;
 
 	self zombie_history( "find flesh -> start" );
 
 	self.goalradius = 32;
 	while( 1 )
 	{
-		zombie_poi = undefined;
+
 		// try to split the zombies up when the bunch up
 		// see if a bunch zombies are already near my current target; if there's a bunch
 		// and I'm still far enough away, ignore my current target and go after another one
-		near_zombies = getaiarray("axis");
-		same_enemy_count = 0;
-		for (i = 0; i < near_zombies.size; i++)
-		{
-			if ( isdefined( near_zombies[i] ) && isalive( near_zombies[i] ) )
-			{
-				if ( isdefined( near_zombies[i].favoriteenemy ) && isdefined( self.favoriteenemy ) 
-				&&	near_zombies[i].favoriteenemy == self.favoriteenemy )
-				{
-					if ( distancesquared( near_zombies[i].origin, self.favoriteenemy.origin ) < 225 * 225 
-					&&	 distancesquared( near_zombies[i].origin, self.origin ) > 525 * 525)
-					{
-						same_enemy_count++;
-					}
-				}
-			}
-		}
-		
-		if (same_enemy_count > 12)
-		{
-			self.ignore_player[self.ignore_player.size] = self.favoriteenemy;
-		}
-       	
-    if( IsDefined( level._poi_override ) )
-    {
-    	zombie_poi = self [[ level._poi_override ]]();
-    }
-    
-    if( !IsDefined( zombie_poi ) )
-    {
-    	zombie_poi = self get_zombie_point_of_interest( self.origin );	
-    }
-    
-		players = get_players();
-					
+//		near_zombies = getaiarray("axis");
+//		same_enemy_count = 0;
+//		for (i = 0; i < near_zombies.size; i++)
+//		{
+//			if ( isdefined( near_zombies[i] ) && isalive( near_zombies[i] ) )
+//			{
+//				if ( isdefined( near_zombies[i].favoriteenemy ) && isdefined( self.favoriteenemy ) 
+//				&&	near_zombies[i].favoriteenemy == self.favoriteenemy )
+//				{
+//					if ( distancesquared( near_zombies[i].origin, self.favoriteenemy.origin ) < 225 * 225 
+//					&&	 distancesquared( near_zombies[i].origin, self.origin ) > 525 * 525)
+//					{
+//						same_enemy_count++;
+//					}
+//				}
+//			}
+//		}
+//		
+//		if (same_enemy_count > 12)
+//		{
+//			self.ignore_player = self.favoriteenemy;
+//		}
+
+        players = get_players();
 		// If playing single player, never ignore the player
-		if( players.size == 1 )
-		{
-			self.ignore_player = [];
-		}
-		//PI_CHANGE_BEGIN - 7/2/2009 JV Reenabling change 274916 (from DLC3)
-		else
-		{
-			for(i = 0; i < self.ignore_player.size; i++)
-			{
-				if( IsDefined( self.ignore_player[i] ) && IsDefined( self.ignore_player[i].ignore_counter ) && self.ignore_player[i].ignore_counter > 3 )
-				{
-					self.ignore_player[i].ignore_counter = 0;
-					self.ignore_player = array_remove( self.ignore_player, self.ignore_player[i] );
-				}
-			}
-		}
-		//PI_CHANGE_END
+        if( players.size == 1 )
+        {
+            self.ignore_player = undefined;
+        }
 
-		player = get_closest_valid_player( self.origin, self.ignore_player );
+        // solo revive distraction 
+        if ( players.size == 1 && isDefined( level.zombiegoto ) && level.is_solo_revive_distraction_active )
+        {
+            self notify( "zombie_acquire_enemy" );
+            self.favoriteenemy = undefined;
+            self.ignore_player = undefined;
+            self.ignoreall = true;
 
-		if( !isDefined( player ) && !isDefined( zombie_poi ) )
-		{
-			self zombie_history( "find flesh -> can't find player, continue" );
-			if( IsDefined( self.ignore_player ) )
+			// zombies start chanting as they wander off
+			if ( !isDefined( self.follow_sound_playing ) )
 			{
-				self.ignore_player = [];
+				self thread zombie_follow_sound_loop();
 			}
 
-			wait( 1 ); 
-			continue; 
-		}
-		
-		//PI_CHANGE - 7/2/2009 JV Reenabling change 274916 (from DLC3)
-		//self.ignore_player = undefined;
-		if ( !isDefined( level.check_for_alternate_poi ) || ![[level.check_for_alternate_poi]]() )
-		{
-			self.enemyoverride = zombie_poi;
-			self.favoriteenemy = player;
-		}
-		
-		self thread zombie_pathing();
-		
-		//PI_CHANGE_BEGIN - 7/2/2009 JV Reenabling change 274916 (from DLC3)
-		if( players.size > 1 )
-		{
-			for(i = 0; i < self.ignore_player.size; i++)
-			{
-				if( IsDefined( self.ignore_player[i] ) )
-				{
-					if( !IsDefined( self.ignore_player[i].ignore_counter ) )
-						self.ignore_player[i].ignore_counter = 0;
-					else
-						self.ignore_player[i].ignore_counter += 1;
-				}
-			}
-		}
-		//PI_CHANGE_END
-		self.zombie_path_timer = GetTime() + ( RandomFloatRange( 1, 3 ) * 1000 );// + path_timer_extension;
-		while( GetTime() < self.zombie_path_timer ) 
-		{
-			wait( 0.1 );
-		}
-		self notify( "path_timer_done" );
+            self SetGoalPos( level.zombiegoto.origin );
+            self.goalradius = 64;
 
-		self zombie_history( "find flesh -> bottom of loop" );
+            wait randomfloatrange( 1.0, 2.0 );
+            continue;
+        }
 
-		debug_print( "Zombie is re-acquiring enemy, ending breadcrumb search" );
-		self notify( "zombie_acquire_enemy" );
-	}
+        // POI support
+        poi = get_zombie_point_of_interest( self.origin );
+
+        if ( isDefined( poi ) )
+        {
+            self notify( "zombie_acquire_enemy" );
+            self.favoriteenemy = undefined;
+            self.ignore_player = undefined;
+            self.ignoreall = true;
+
+            self SetGoalPos( poi[0] );
+            self.goalradius = 64;
+
+            wait 0.5;
+            continue;
+        }
+
+        player = get_closest_valid_player( self.origin, self.ignore_player ); 
+
+        if( !isDefined( player ) )
+        {
+            self zombie_history( "find flesh -> can't find player, continue" );
+            if( isDefined( self.ignore_player ) )
+            {
+                self.ignore_player = undefined;
+            }
+
+            wait( 1 ); 
+            continue; 
+        }
+
+        self.ignore_player = undefined;
+
+        self.favoriteenemy = player;
+        self thread zombie_pathing();
+
+        self.zombie_path_timer = GetTime() + ( RandomFloatRange( 1, 3 ) * 1000 );
+        while( GetTime() < self.zombie_path_timer )
+        {
+            wait( 0.1 );
+        }
+
+        self zombie_history( "find flesh -> bottom of loop" );
+
+        self notify( "zombie_acquire_enemy" );
+    }
 }
-
 
 zombie_testing()
 {
@@ -2502,195 +2509,125 @@ zombie_pathing()
 	self endon( "zombie_acquire_enemy" );
 	level endon( "intermission" );
 
-	assert( IsDefined( self.favoriteenemy ) || IsDefined( self.enemyoverride ) );
+	self notify( "stop_acquire_acquire_enemy" );
+	self endon( "stop_acquire_acquire_enemy" );
 
-	self thread zombie_follow_enemy();
-	self waittill( "bad_path" );
-	
-	level.zombie_pathing_failed ++;
-	
-	//If we get here then we have a bad path and the zombie can't use the regular pathing system to find the player
-	//.....  crap!
-	
-	if( isDefined( self.enemyoverride ) ) 
-	{
-		debug_print( "Zombie couldn't path to point of interest at origin: " + self.enemyoverride[0] + " Falling back to breadcrumb system" );
-		if( isDefined( self.enemyoverride[1] ) )
-		{
-			self.zombie_path_timer = 0;
-			return;
-		}
-	}
-	else
-	{
-		if( IsDefined( self.favoriteenemy ) )
-		{
-			debug_print( "Zombie couldn't path to player at origin: " + self.favoriteenemy.origin + " Falling back to breadcrumb system" );	
-		}
-	}
-	
-	if( !isDefined( self.favoriteenemy ) )
-	{
-		self.zombie_path_timer = 0;
-		return;
-	}
-	else
+	if( isDefined( self.favoriteenemy ) )
 	{
 		self.favoriteenemy endon( "disconnect" );
-	}
-	
-	//this is for selecting the valid player from the player to use for tracking purposes.
-	players = get_players();
-	valid_player_num = 0;
-	for( i = 0; i < players.size; i++ )
-	{
-		if( is_player_valid( players[i], true ) ) 
-		{
-			valid_player_num += 1;
-		}
-	}
-	//PI_CHANGE_BEGIN - 7/2/2009 JV Reenabling change 274916 (from DLC3)
-	if( players.size > 1 )
-	{
-		if( array_check_for_dupes( self.ignore_player, self.favoriteenemy) )
-		{
-			self.ignore_player[self.ignore_player.size] = self.favoriteenemy;
-		}
+		self thread zombie_follow_enemy();
 
-		if( self.ignore_player.size < valid_player_num )
-		{
-			self.zombie_path_timer = 0;
-			return;
-		}
-	}
-	//PI_CHANGE_END
-
-	crumb_list = self.favoriteenemy.zombie_breadcrumbs;
-	bad_crumbs = [];
-	
-	while( 1 )
-	{
-		if( !is_player_valid( self.favoriteenemy, true ) )
-		{
-			self.zombie_path_timer = 0;
-			return;
-		}
-
-		goal = zombie_pathing_get_breadcrumb( self.favoriteenemy.origin, crumb_list, bad_crumbs, ( RandomInt( 100 ) < 20 ) );
-		
-		if ( !IsDefined( goal ) )
-		{
-			debug_print( "Zombie exhausted breadcrumb search" );
-			
-			//zombies failed to get breadcrumbs
-			level.zombie_breadcrumb_failed ++;
-			
-			goal = self.favoriteenemy.spectator_respawn.origin;
-		}
-
-		debug_print( "Setting current breadcrumb to " + goal );
-
-		self.zombie_path_timer += 100;
-		self SetGoalPos( goal );
 		self waittill( "bad_path" );
-
-		debug_print( "Zombie couldn't path to breadcrumb at " + goal + " Finding next breadcrumb" );
-		for( i = 0; i < crumb_list.size; i++ )
+		enemy_is_not_valid = false;
+		for( i = 0; i < self.favoriteenemy.zombie_breadcrumbs.size; i++ )
 		{
-			if( goal == crumb_list[i] )
+			self.zombie_path_timer += 1000;
+
+			if( !is_player_valid( self.favoriteenemy ) )
 			{
-				bad_crumbs[bad_crumbs.size] = i;
+				enemy_is_not_valid = true;
 				break;
 			}
-		}
-	}
-}
 
-zombie_pathing_get_breadcrumb( origin, breadcrumbs, bad_crumbs, pick_random )
-{
-	assert( IsDefined( origin ) );
-	assert( IsDefined( breadcrumbs ) );
-	assert( IsArray( breadcrumbs ) );
-			
-	for( i = 0; i < breadcrumbs.size; i++ )
-	{
-		if ( pick_random )
+			self SetGoalPos( self.favoriteenemy.zombie_breadcrumbs[i] );
+			self waittill( "bad_path" );
+
+			self jitter_enemies_bad_breadcrumbs( i );
+		}
+
+		self zombie_history( "find flesh -> no breadcrumbs to follow, bad_pathed out" );
+
+		if( enemy_is_not_valid )
 		{
-			crumb_index = RandomInt( breadcrumbs.size );
+			println( "^zombie_pathing() -- enemy_is_not_valid, setting zombie_path_timer to 0" );
+			self.zombie_path_timer = 0;
+			return;
+		}
+
+		// We failed to get to the player, now do something about it...
+		println( "^1UNABLE TO PATH TO FAVORITE ENEMY" );
+
+		if( self in_playable_area() )
+		{
+			self zombie_history( "find flesh -> in playable area, will find a different enemy to follow" );
+			println( "^3zombie_pathing() -- breadcrumbs failed, zombie in playable are, setting zombie_path_timer to 0" );
+
+ 			// Ignore the previous target when searching for a new one.
+			self.ignore_player = self.favoriteenemy;
+
+			// Tells the AI to look for a new player right away.
+			self.zombie_path_timer = 0;
 		}
 		else
 		{
-			crumb_index = i;
-		}
-				
-		if( crumb_is_bad( crumb_index, bad_crumbs ) )
-		{
-			continue;
-		}
+			// Ok, we failed to get to the player, used for when AI cannot path after tearing barriers
+			if( isDefined( self.entrance_nodes[0] ) )
+			{
+				self zombie_history( "find flesh -> failed to get to a player and not in playable area" );
+				self thread zombie_goto_entrance( self.entrance_nodes[0], true );
 
-		return breadcrumbs[crumb_index];
+				// If we fail to get to the entrance, and have NOT 'got_to_entrance' restart the loop
+				self waittill( "bad_path" );
+
+				if( !self.got_to_entrance )
+				{
+					println( "^3zombie_pathing() -- entrance node bad path, setting zombie_path_timer to 0" );
+					self.zombie_path_timer = 0;
+				}
+			}
+		}
 	}
-
-	return undefined;
-}
-
-crumb_is_bad( crumb, bad_crumbs )
-{
-	for ( i = 0; i < bad_crumbs.size; i++ )
+	else
 	{
-		if ( bad_crumbs[i] == crumb )
-		{
-			return true;
-		}
+		self zombie_history( "find flesh -> no favoriteenemy" );
+		debug_print( "NO FAVORITEENEMY!" );
 	}
-
-	return false;
 }
 
 jitter_enemies_bad_breadcrumbs( start_crumb )
 {
 	trace_distance = 35;
 	jitter_distance = 2;
-	
+
 	index = start_crumb;
-	
+
 	while (isdefined(self.favoriteenemy.zombie_breadcrumbs[ index + 1 ]))
 	{
 		current_crumb = self.favoriteenemy.zombie_breadcrumbs[ index ];
 		next_crumb = self.favoriteenemy.zombie_breadcrumbs[ index + 1 ];
-		
+
 		angles = vectortoangles(current_crumb - next_crumb);
-		
+
 		right = anglestoright(angles);
 		left = anglestoright(angles + (0,180,0));
-		
+
 		dist_pos = current_crumb + vectorScale( right, trace_distance );
-		
+
 		trace = bulletTrace( current_crumb, dist_pos, true, undefined );
 		vector = trace["position"];
-		
+
 		if (distance(vector, current_crumb) < 17 )
 		{
 			self.favoriteenemy.zombie_breadcrumbs[ index ] = current_crumb + vectorScale( left, jitter_distance );
 			continue;
 		}
-		
-		
+
+
 		// try the other side
 		dist_pos = current_crumb + vectorScale( left, trace_distance );
-		
+
 		trace = bulletTrace( current_crumb, dist_pos, true, undefined );
 		vector = trace["position"];
-		
+
 		if (distance(vector, current_crumb) < 17 )
 		{
 			self.favoriteenemy.zombie_breadcrumbs[ index ] = current_crumb + vectorScale( right, jitter_distance );
 			continue;
 		}
-		
+
 		index++;
 	}
-	
+
 }
 
 zombie_follow_enemy()
@@ -2698,61 +2635,62 @@ zombie_follow_enemy()
 	self endon( "death" );
 	self endon( "zombie_acquire_enemy" );
 	self endon( "bad_path" );
-	
+
 	level endon( "intermission" );
 
 	while( 1 )
 	{
-		if( isDefined( self.enemyoverride ) && isDefined( self.enemyoverride[1] ) )
+		if( isDefined( self.favoriteenemy ) )
+
+
+
+
+
+
+
+
+
+
+
+
+
 		{
-			if( distanceSquared( self.origin, self.enemyoverride[0] ) > 1*1 )
-			{
-				self OrientMode( "face motion" );
-			}
-			else
-			{
-				self OrientMode( "face point", self.enemyoverride[1].origin );
-			}
-			self.ignoreall = true;
-			self SetGoalPos( self.enemyoverride[0] );
-		}
-		else if( IsDefined( self.favoriteenemy ) )
-		{
-			self.ignoreall = false;
-			self OrientMode( "face default" );
+
+
 			self SetGoalPos( self.favoriteenemy.origin );
 
-			distSq = distanceSquared( self.origin, self.favoriteenemy.origin );
-			
-			extra_wait_time = 0;
-			if( distSq > 3200 * 3200 )
-			{
-				extra_wait_time = 2.0 + randomFloat( 1.0 );
-			}
-			else if( distSq > 2200 * 2200 )
-			{
-				extra_wait_time = 1.0 + randomFloat( 0.5 );
-			}
-			else if( distSq > 1200 * 1200 )
-			{
-				extra_wait_time = 0.5 + randomFloat( 0.5 );
-			}
-			if( extra_wait_time > 0 )
-			{
-				wait extra_wait_time;
-			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		}
 
-		// LDS - changed this from a level specific catch function to a general one that can be overloaded based
-		//       on the conditions in a level that can render a player inaccessible to zombies.
-		if( isDefined( level.inaccesible_player_func ) )
-		{
-			self [[ level.inaccessible_player_func ]]();
-		}
-		
+
+
+
+
+
+
+
 		wait( 0.1 );
 	}
 }
+
 
 // When a Zombie spawns, set his eyes to glowing.
 zombie_eye_glow()
@@ -2807,7 +2745,7 @@ make_crawler()
 
 	damage_type[0] = "right_foot";
 	damage_type[1] = "left_foot";
-	
+
 	refs = []; 
 	switch( damage_type[ RandomInt(damage_type.size) ] )
 	{
@@ -2973,7 +2911,7 @@ do_zombie_rise()
 	{
 		self unlink();
 		self.anchor delete();
-		self notify("no_rise");
+
 		return;
 	}
 	else
@@ -3105,7 +3043,7 @@ zombie_rise_burst_fx()
 {
 	self endon("stop_zombie_rise_fx");
 	self endon("rise_anim_finished");
-	
+
 	playfx(level._effect["rise_burst"],self.origin + ( 0,0,randomintrange(5,10) ) );
 	wait(.25);
 	playfx(level._effect["rise_billow"],self.origin + ( randomintrange(-10,10),randomintrange(-10,10),randomintrange(5,10) ) );
@@ -3114,13 +3052,13 @@ zombie_rise_burst_fx()
 zombie_rise_dust_fx(zombie)
 {
 	dust_tag = "J_SpineUpper";
-	
+
 	self endon("stop_zombie_rise_dust_fx");
 	self thread stop_zombie_rise_dust_fx(zombie);
 
 	dust_time = 3.25; // play dust fx for a max time
 	dust_interval = .1; //randomfloatrange(.1,.25); // wait this time in between playing the effect
-	
+
 	for (t = 0; t < dust_time; t += dust_interval)
 	{
 		PlayfxOnTag(level._effect["rise_dust"], zombie, dust_tag);
@@ -3365,6 +3303,24 @@ play_death_vo(hit_location, player,mod,zombie)
 			plr = "plr_" + index + "_";
 			player play_insta_melee_dialog(plr);
 			//sound = "plr_" + index + "_vox_melee_insta" + "_" + randomintrange(0, 5); 
+			return;
+		}
+	}
+	
+	//Explosive Kills
+	if((mod == "MOD_GRENADE_SPLASH" || mod == "MOD_GRENADE") && level.zombie_vars["zombie_insta_kill"] == 0 )
+	{
+		//Plays explosion dialog
+		if( zombie.damageweapon	== "zombie_cymbal_monkey" )
+		{
+			plr = "plr_" + index + "_";
+			player create_and_play_dialog( plr, "vox_kill_monkey", 0.25 );
+			return;
+		}
+		else
+		{
+			plr = "plr_" + index + "_";
+			player play_explosion_dialog(plr);
 			return;
 		}
 	}

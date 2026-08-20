@@ -115,28 +115,6 @@
 			visible 1
 			decoration
 		}
-		itemDef
-		{
-			name "trem_hintstring"
-			rect 0 0 0 0
-			textscale TEXTSIZE_SMALL
-			textstyle ITEM_TEXTSTYLE_SHADOWED
-			textalign ITEM_ALIGN_CENTER
-			exp text (dvarString("trem_hintstring_left") + KeyBinding("+activate") + dvarString("trem_hintstring_right"))
-			visible when(dvarInt("trem_hintstring_vis") == 1 && dvarString("trem_hintstring_left") != "" && dvarString("trem_hintstring_left") != " " && dvarString("trem_hintstring_right") != "" && dvarString("trem_hintstring_right") != " ")
-			decoration
-		}
-		itemDef
-		{
-			name "trem_hintstring_nobind"
-			rect 0 0 0 0
-			textscale TEXTSIZE_SMALL
-			textstyle ITEM_TEXTSTYLE_SHADOWED
-			textalign ITEM_ALIGN_CENTER
-			exp text dvarString("trem_hintstring_left")
-			visible when(dvarInt("trem_hintstring_vis") == 1 && dvarString("trem_hintstring_left") != "" && dvarString("trem_hintstring_left") != " " && (dvarString("trem_hintstring_right") == "" || dvarString("trem_hintstring_right") == " "))
-			decoration
-		}
 	}
 
 	// Stance indicator

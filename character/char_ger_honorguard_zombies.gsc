@@ -3,7 +3,7 @@ main() {
 	self.headModel = codescripts\character::randomElement(xmodelalias\char_ger_honorgd_zombieheadalias::main());
 	self attach(self.headModel, "", true);
 
-	random = randomintrange(1, 101);
+	random = randomint(100); 
 
 	// 25% chance for zombies to have no hat/gear models
 	if( random <= 25 ) {
