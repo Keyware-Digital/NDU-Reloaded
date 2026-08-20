@@ -8,10 +8,10 @@ If you're the kind of player who hates mods that completely overhaul the Zombies
 # Main Menu Changes
 We've introduced a brand-new main menu featuring achievements, character bios, player stats, expanded graphics settings, and a host of other improvements.
 
-*Added HD font throughout mod.
-*Co-Op only: loading image has been changed to match BO1.
-*Co-Op only: mini map image has been added.
-*Solo Only: loading image also plays the accompanying music as heard in BO1.
+* Added HD font throughout mod.
+* Co-Op only: loading image has been changed to match BO1.
+* Co-Op only: mini map image has been added.
+* Solo Only: loading image also plays the accompanying music as heard in BO1.
 
 # Bug Fixes
 We've fixed several legacy Treyarch bugs that have lingered over the years. These include:
