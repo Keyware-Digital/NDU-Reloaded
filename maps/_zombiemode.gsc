@@ -185,6 +185,7 @@ init_sounds() {
     add_sound("rebuild_barrier_hover", "boards_float");
     add_sound("debris_hover_loop", "couch_loop");
     add_sound("break_barrier_piece", "break_boards");
+    add_sound("break_stone", "break_stone");
     add_sound("blocker_end_move", "board_slam");
     add_sound("barrier_rebuild_slam", "board_slam");
 

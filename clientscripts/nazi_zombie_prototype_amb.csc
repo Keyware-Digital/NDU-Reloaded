@@ -132,19 +132,24 @@ radio_init()
 
 	level.radio_id = -1;
 	level.radio_index = 0;
+	add_song( "hellhound_round" );
+	add_song( "cod_zombies_mobile" );
 	add_song( "cod_zombies" );
 	add_song( "wtf" );
-	add_song( "dog_fire" );
 	add_song( "true_crime_4" );
-	add_song( "all_mixed_up" );
-	add_song( "dusk" );	
+	add_song( "dusk" );
+	add_song( "sand" );
+	add_song( "all_mixed_up" )
+	add_song( "ber3b_guitars" );
+	add_song( "bold_men" );
+	add_song( "dog_fire" );
 	add_song( "the_march" );
 	add_song( "drum_no_bass" );
 	add_song( "russian_theme" );
-	add_song( "sand" );
 	add_song( "stag_push" );
-	add_song( "pby_old" );
+	add_song( "goddess_energy" );
 	add_song( "wild_card" );
+	add_song( "pby_old" );
 	add_song( "" ); //silence must be last
 
 	// kzmb, for all the latest killer hits

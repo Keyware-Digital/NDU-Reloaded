@@ -96,7 +96,7 @@ plr_3_killstreak_1,,sfx\levels\vox\killstreak\plr_3_killstreak_1.wav,,1,1,35,300
 plr_3_killstreak_2,,sfx\levels\vox\killstreak\plr_3_killstreak_2.wav,,1,1,35,3000,,,,,voice,,,,,,,0.95,1,,2d,,,,,all_sp,,,,,,,,,,,,,,,,,,90,90,0.25,1,,
 plr_3_killstreak_3,,sfx\levels\vox\killstreak\plr_3_killstreak_3.wav,,1,1,35,3000,,,,,voice,,,,,,,0.95,1,,2d,,,,,all_sp,,,,,,,,,,,,,,,,,,90,90,0.25,1,,
 #Land,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-land_concrete,,sfx\levels\dive\land\concrete\land_concrete.wav,,1,1,35,3000,,,,,voice,,,,,,,0.95,1,,2d,,,,,all_sp,,,,,,,,,,,,,,,,,,90,90,0.25,1,,
+land_concrete,,sfx\levels\dive\land\concrete\land_concrete.wav,,1,1,35,3000,,,,,character,,,,,,,0.95,1,,2d,,,,,all_sp,,,,,,,,,,,,,,,,,,90,90,0.25,1,,
 plr_0_land_exert_0,,sfx\levels\vox\land\plr_0_land_exert_0.wav,,1,1,35,3000,,,,,voice,,,,,,,0.95,1,,2d,,,,,all_sp,,,land_concrete,,,,,,,,,,,,,,,90,90,0.25,1,,
 plr_0_land_exert_1,,sfx\levels\vox\land\plr_0_land_exert_1.wav,,1,1,35,3000,,,,,voice,,,,,,,0.95,1,,2d,,,,,all_sp,,,land_concrete,,,,,,,,,,,,,,,90,90,0.25,1,,
 plr_0_land_exert_2,,sfx\levels\vox\land\plr_0_land_exert_2.wav,,1,1,35,3000,,,,,voice,,,,,,,0.95,1,,2d,,,,,all_sp,,,land_concrete,,,,,,,,,,,,,,,90,90,0.25,1,,
