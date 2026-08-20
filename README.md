@@ -14,86 +14,93 @@ We've introduced a brand-new main menu featuring achievements, character bios, p
 * Solo Only: loading image also plays the accompanying music as heard in BO1.
 
 # Bug Fixes
-We've fixed several legacy Treyarch bugs that have lingered over the years. These include:
+Several legacy Treyarch bugs that have lingered over the years have been squashed. These include:
 
-* Fixed an exploit where players can glitch-out the Zombies on the pillar in the main room - (WIP)
+* Fixed an exploit where players could glitch zombies onto the pillar in the main room. (WIP)
 * Placeholder
 
 # Characters
-We've introduced four original characters to NDU, complete with bios, loadouts, portraits, and voiceovers. We aimed to integrate them into the Dark Aether storyline as seamlessly as possible, building on the lore introduced in Black Ops Cold War.
+Four original characters have been introduced to NDU, complete with bios, loadouts, portraits, and voiceovers. Each has been designed to integrate as seamlessly as possible into the Dark Aether storyline established in Black Ops Cold War.
 
-  * Artyom Belinski - _rumored_ brother of Nikolai Belinski.
-  * John Johnson - a resourceful, tenacious soldier handpicked by Theodore Jones to join Enigma Squad.
-  * Siegfried Steiner - a grizzled, unhinged Wehrmacht veteran.
-  * Theodore Jones - leader of Enigma, a newly formed squad to investigate a mysterious bunker on an abandoned airfield in Poland.
-  
+* Artyom Belinski - _rumoured_ brother of Nikolai Belinski.
+* John Johnson - A resourceful, tenacious soldier handpicked by Theodore Jones to join Enigma Squad.
+* Siegfried Steiner - A grizzled, unhinged Wehrmacht veteran.
+* Theodore Jones - Leader of Enigma, a newly formed squad tasked with investigating a mysterious bunker on an abandoned airfield in Poland.
+ 
 # General Changes / Gameplay Changes
-We've polished the core Zombies gameplay loop, backporting numerous features from DLC 1 and beyond, as well as later Black Ops titles.
+The core Zombies gameplay loop has been refined with numerous features backported from DLC 1 and beyond, as well as later Black Ops titles.
 
-* Barriers now 'earthquake' per board repair and tear-down. Mirroring BO1.
-* Barriers 'cha-ching' sound now stops when the barrier stops granting points.
-* Flame damage to Zombies now matches DLC 1+
-* Grenade damage (self) now matches DLC 1+.
-* Easter Eggs from BO1 and BO3 have been backported, and yes, we've hidden a few original secrets of our own for players to uncover.
-* Points earning has been standardised to better match later DLCs and Black Ops games. (for example; melee now grants 130+ points instead of 80 in vanilla NDU)
-* Weather has been added, featuring a random thunder and lightning system to make NDU's foggy, bleak atmosphere even more oppressive.
+* Added dolphin dive.
+* Barriers now "earthquake" as boards are repaired or torn down, mirroring BO1.
+* Barrier "cha-ching" sound now stops when the barrier no longer awards points.
+* Easter Eggs from BO1 and BO3 have been backported, and yes, a few original secrets have been hidden away for players to uncover.
+* Flame damage to zombies now matches DLC 1+..
+* Point earning has been standardised to better match later DLCs and Black Ops titles. (For example, melee kills now award 130 points instead of 80 as in vanilla NDU.)
+* Self-inflicted grenade damage now matches DLC 1+.
+* Walking animation has been changed to better match later games.
+* Weather system has been added, featuring a random thunder and lightning system to make NDU's foggy, bleak atmosphere even more oppressive.
 
 # Last Stand Changes
+Last Stand has been adjusted to accommodate the new character loadouts, as well as changes to Solo Quick Revive and other perks.
 
-* Last Stand now takes into account the new sidearms available in the roster, but will prefer a .357 or Raygun if available.
-* Solo Only - player will be given an upgraded Colt in last stand if they have Quick Revive. (up-to three times).
-
+* Last Stand now takes the new sidearms into account, but will prioritise the .357 Magnum or Ray Gun if available.
+* Solo only: Players with Quick Revive will receive an upgraded Colt while in Last Stand (up to three times).
+ 
 # Loadout Changes
+NDU features unique starting loadouts for each character, helping reinforce their identities and backgrounds. There may even be a hidden reward and other quirks to discover...
 
-* American Characters > Use Colt
-* German Character > Uses Walther
-* Russian Character > Uses Tokarev
-
+* American characters start with the Colt 1911.
+* The German character starts with the Walther P38.
+* The Russian character starts with the Tokarev TT-33.
+ 
 # Mystery Box Changes
 NDU features a larger weapon roster, so the Mystery Box has been revised to accommodate the expanded arsenal without compromising its core purpose.
-
-* Placeholder
-
+ 
+* Placeholder.
+  
 # Player Changes
+A randomised character selection system has been introduced for both Solo and Co-Op, ensuring greater variety between matches and giving players more opportunities to experience each character's unique personality and voice lines.
 
-* Players are now randomised in Co-Op and in Solo.
+* Players are now randomised in Solo and Co-Op.
 
 # Perk Changes
+Several curated perks have been added, adapted, and enhanced with functionality inspired by later Zombies titles. Our goal was to make them feel as though they belonged in World at War without compromising the classic gameplay experience.
 
 * Placeholder
-* Double Tap is now Double Tap 2.0 (shoots 2 bullets for the 'price' of 1).
-* Quick Revive now supports Solo play to better match BO1 behaviour.
-
-# Powerup Changes
+* Double Tap is now Double Tap 2.0, firing two bullets for the "price" of one.
+* Quick Revive now supports Solo play, better matching its BO1 behaviour.
+ 
+# Power-Up Changes
+Power-Ups have received several additions and refinements, bringing more variety to gameplay while retaining the familiar pick-ups players know and love.
 
 * Placeholder
-
+ 
 # UI / HUD Changes
+The HUD has been modernised with new features and quality-of-life improvements inspired by later Black Ops titles, alongside several original enhancements.
 
-* Added player portraits. (Like BO2+)
+* Added player portraits. (BO2+ style)
 * Added Z$ point shader.
-* Added blood splat (Like BO2) - WIP
-* Added support for more than 10+ perks.
-* Added smart powerup shader system.
-* American Grenade Icon has been changed to the Stielhandgranate Icon for consistency.
-* Mule Kick perk shader will now 'glow' to highlight what weapon is in your third weapon slot.
-
+* Added blood splatter. (BO2 style, WIP)
+* Added support for more than 10 perks.
+* Added a smart Power-Up shader system.
+* The American grenade icon has been replaced with the Stielhandgranate icon for consistency.
+* Mule Kick now glows to indicate which weapon occupies the third weapon slot.
+ 
 # Voiceover Changes
-Our characters don't just have the voice lines and quotes you'd expect from a Zombies crew. They also feature dialogue for exertion, pain, deaths, player actions, and more, helping bring them to life and greatly enhancing immersion.
+Our characters don't just feature the voice lines and quotes you'd expect from a Zombies crew. They also include dialogue for exertion, pain, deaths, player actions, and more, helping bring them to life and greatly enhancing immersion.
 
-* Announcer now has additional voice lines to support the new Power-Ups, gameplay features, and other events, including both positive and negative announcements.
+* The Announcer now has additional voice lines to support new Power-Ups, gameplay features, and other events, including both positive and negative announcements.
 
 # Weapon Changes
+All weapons have been reviewed, and a consistency pass has been made to their statistics, resulting in more uniform balance. This includes backporting the updated stats of the "zombie_weapon" variants introduced in DLC 2 and DLC 3 to NDU. Their visual appearance remains unchanged, preserving NDU's original aesthetic.
 
-All weapons have been reiewed and a consistency pass has been made to their stats, resulting in a more uniform balance. This includes backporting the updated stats of the "zombie_weapon" variants introduced in DLC 2 and DLC 3 to NDU. Their visual appearance remains unchanged, as we wanted to preserve NDU's original aesthetic.
-
-* The Colt 1911, M1 Carbine, and MP40 now use their Black Ops 1 sound effects for improved fidelity.
-* Underperforming weapons have received _slight_ buffs (for example, Molotovs). If you previously thought a weapon was lacking and never used it, there's a good chance it's been tweaked.
-* Various weapon irregularities, such as non-divisible ammo counts and missing FX/sounds, have been fixed.
+* The Colt 1911, M1 Carbine, and MP40 now use their Black Ops 1 sound effects for improved audio fidelity.
+* Underperforming weapons have received _slight_ buffs (for example, Molotovs). If you previously felt a weapon wasn't worth using, there's a good chance it's been tweaked.
+* Various weapon irregularities, such as non-divisible ammo counts and missing FX or sounds, have been fixed.
 
 # Zombie Changes
-We've backported a variety of zombie AI and gameplay improvements from later DLCs to NDU. In addition, we've introduced a new randomised gear system that gives zombies a much greater range of appearances, adding more visual variety to each match. These changes include:
- 
+A variety of zombie AI and gameplay improvements have been backported from later DLCs to NDU. In addition, a new randomised gear system gives zombies a much wider range of appearances, adding greater visual variety to each match. These changes include:
+
 * Zombies no longer push players while attacking, eliminating the awkward "tagging" effect. This mirrors BO1's behaviour.
 * Zombies now use the DLC 1+ animation set, including several previously unused animations.
 * Zombies now use the DLC 1+ FX and sound set.
