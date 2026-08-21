@@ -49,20 +49,16 @@ main() {
     // I recommend putting it in it's own function...
     // If not a MOD, you may need to provide new localized strings to reflect the proper cost.
 }
+fx() {
+    level._effect["betty_explode"] = loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
+    level._effect["betty_trail"] = loadfx("weapon/bouncing_betty/fx_betty_trail");
+    level._effect[ "dolphin_dive_land" ] = loadfx ( "" );
+    level._effect["raygun_impact"] = loadFX("misc/fx_exp_raygun_impact");
+}
 
 /*init_sounds()
 {
 	maps\_zombiemode_utility::add_sound( "break_stone", "break_stone" );
-}*/
-
-fx() {
-    level._effect["betty_explode"] = loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
-    level._effect["betty_trail"] = loadfx("weapon/bouncing_betty/fx_betty_trail");
-    level._effect["raygun_impact"] = loadFX("misc/fx_exp_raygun_impact");
-}
-
-/*dolphin_dive_fx() {
-    level._effect[ "dolphin_dive_land" ] = loadfx ( "" );
 }*/
 
 init_strings() {
