@@ -44,6 +44,7 @@ The core Zombies gameplay loop has been refined and expanded with numerous featu
 * Added new / restored sounds.
 * Added dolphin dive.
 * Added new player animations.
+* Added new player loadouts.
 * Added new zombie animations.
 * Added weapon sharing system.
 * Added +XP to round end and reviving other players. (BO3 style)
@@ -52,22 +53,26 @@ The core Zombies gameplay loop has been refined and expanded with numerous featu
 * Easter Eggs from BO1 and BO3 have been backported, and yes, a few original secrets have been hidden away for players to uncover.
 * Flame damage to zombies now matches DLC 1+.
 * Improved Gibbing FX.
+* Improved Last Stand logic.
 * Point earning has been standardised to better match later DLCs and Black Ops titles. (For example, melee kills now award 130 points instead of 80 as in vanilla NDU.)
 * Restored Chalk drawing glow.
-* Revamped player prompt hintstrings to better match later games.
-* Revamped Max ammo logic to better match BO4+.
-* Revamped Mystery Box.
-* Revamped Wall buying logic to better match BO4+.
-* Revamped Weapon Cabinet.
+* Reworked player prompt hintstrings to better match later games.
+* Reworked Max ammo logic to better match BO4+.
+* Reworked Mystery Box.
+* Reworked Wall buying logic to better match BO4+.
+* Reworked Weapon Cabinet.
+* Reworked and modernised Zombie behaviour.
+* Self-inflicted grenade damage now matches DLC 1+.
 * Slightly buffed opel blitz truck explosion values.
 * Slightly buffed exploding barrels explosion values.
-* Self-inflicted grenade damage now matches DLC 1+.
 * Walking animation has been changed to better match later games.
 * Weather has been added, featuring a random thunder and lightning system to make NDU's foggy, bleak atmosphere even more oppressive.
 
 # Last Stand Changes
 Last Stand has been adjusted to accommodate the new character loadouts, as well as changes to Solo Quick Revive and other perks.
 
+* Placeholder
+* Increased last stand bleed out from 30s to 45s. (BO1 style)
 * Last Stand now takes the new sidearms into account, but will prioritise the .357 Magnum or Ray Gun if available.
 * Solo only: players with Quick Revive will receive an upgraded Colt while in Last Stand (up to three times).
  
@@ -107,7 +112,7 @@ Weapon Cabinet:
 A randomised character selection system has been introduced for both Solo and Co-Op, ensuring greater variety between matches and giving players more opportunities to experience each character's unique personality and voice lines.
 
 * Players are now randomised in Solo and Co-Op.
-* Players now have a death animation (BO2 style)
+* Players now have a death animation. (BO2 style)
 * Restored player jump/land sounds.
 
 # Perk Changes

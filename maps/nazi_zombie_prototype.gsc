@@ -73,44 +73,6 @@ init_strings() {
     PrecacheString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT");
 }
 
-player_zombie_awareness()
-{
-	self endon("disconnect");
-	self endon("death");
-	
-	while(1)
-	{
-		wait(1);
-		
-		zombie = get_closest_ai(self.origin,"axis");
-		
-		if(!isDefined(zombie))
-		{
-			continue;
-		}
-		
-		dist = 200;
-		
-		switch(zombie.zombie_move_speed)
-		{
-			case "walk": dist = 200;break;
-			case "run": dist = 250; break;
-			case "sprint": dist = 275;break;
-		}
-		
-		if(distance2d(zombie.origin,self.origin) < dist)
-		{				
-			yaw = self animscripts\utility::GetYawToSpot(zombie.origin );
-			
-			//check to see if he's actually behind the player
-			if(yaw < -95 || yaw > 95)
-			{
-				zombie playsound ("behind_vocals");
-			}			
-		}		
-	}	
-}
-
 intro_screen() {
 
     flag_wait("all_players_connected");
@@ -426,6 +388,46 @@ health_show() {
         wait 0.3;
     }
 }
+
+
+player_zombie_awareness()
+{
+	self endon("disconnect");
+	self endon("death");
+	
+	while(1)
+	{
+		wait(1);
+		
+		zombie = get_closest_ai(self.origin,"axis");
+		
+		if(!isDefined(zombie))
+		{
+			continue;
+		}
+		
+		dist = 200;
+		
+		switch(zombie.zombie_move_speed)
+		{
+			case "walk": dist = 200;break;
+			case "run": dist = 250; break;
+			case "sprint": dist = 275;break;
+		}
+		
+		if(distance2d(zombie.origin,self.origin) < dist)
+		{				
+			yaw = self animscripts\utility::GetYawToSpot(zombie.origin );
+			
+			//check to see if he's actually behind the player
+			if(yaw < -95 || yaw > 95)
+			{
+				zombie playsound ("behind_vocals");
+			}			
+		}		
+	}	
+}
+
 
 reloading_monitor()
 {
