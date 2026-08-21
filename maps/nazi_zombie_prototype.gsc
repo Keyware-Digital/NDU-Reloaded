@@ -8,12 +8,11 @@ init() {
 
 main() {
 
-    animscripts\walking_anim::main();
     maps\_character_randomise::init();
     maps\_destructible_opel_blitz::init();
     maps\nazi_zombie_prototype_fx::main();
     level thread fx();
-    
+
     include_powerups();
     include_weapons();
 
@@ -25,7 +24,7 @@ main() {
     level.start_iframe_time = 1000;
 
     //init_sounds();
-
+    animscripts\walking_anim::main();
     array_thread(GetPlayers(), ::player_zombie_awareness);
     array_thread(GetPlayers(), ::reloading_monitor);
 
@@ -49,6 +48,7 @@ main() {
     // I recommend putting it in it's own function...
     // If not a MOD, you may need to provide new localized strings to reflect the proper cost.
 }
+
 fx() {
     level._effect["betty_explode"] = loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
     level._effect["betty_trail"] = loadfx("weapon/bouncing_betty/fx_betty_trail");

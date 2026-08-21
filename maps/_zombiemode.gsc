@@ -697,7 +697,7 @@ onPlayerSpawned() {
 
                 // set the initial score on the hud		
                 self maps\_zombiemode_score::set_player_score_hud(true);
-               self thread player_zombie_breadcrumb();
+                self thread player_zombie_breadcrumb();
                 self thread maps\_zombiemode_prototype_vox::player_reload_sounds();
                 self thread maps\_zombiemode_prototype_vox::player_no_ammo_sounds();
                 self thread maps\_zombiemode_prototype_vox::player_lunge_knife_exert_sounds();
