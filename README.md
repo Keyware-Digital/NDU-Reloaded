@@ -46,15 +46,17 @@ The core Zombies gameplay loop has been refined and expanded with numerous featu
 * Added new player animations.
 * Added new player loadouts.
 * Added new zombie animations.
+* Added vision file from BO3 with improved contrast, gamma, etc.
 * Added weapon sharing system.
 * Added +XP to round end and reviving other players. (BO3 style)
 * Barriers now "earthquake" as boards are repaired or torn down, mirroring BO1.
 * Barrier "cha-ching" sound now stops when the barrier no longer awards points.
 * Easter Eggs from BO1 and BO3 have been backported, and yes, a few original secrets have been hidden away for players to uncover.
 * Flame damage to zombies now matches DLC 1+.
-* Improved Gibbing FX.
+* Improved gibbing FX.
+* Improved graphical fidelity where possible (shading tweaks, etc...)
 * Improved Last Stand logic.
-* Point earning has been standardised to better match later DLCs and Black Ops titles. (For example, melee kills now award 130 points instead of 80 as in vanilla NDU.)
+* Point earning has been standardised to better match later DLCs and Black Ops titles. (For example, melee kills now award 130 points instead of the 80 awarded in vanilla NDU).
 * Restored Chalk drawing glow.
 * Reworked player prompt hintstrings to better match later games.
 * Reworked Max ammo logic to better match BO4+.
@@ -93,7 +95,7 @@ Mystery Box:
 * Added Mosin Rifle - slightly stronger than the Kar98k.
 * Added PPSH41 (box mag, not drum)
 * Added SVT-40 (sits between the M1 Garand and G43 in terms of stats.)
-* Added a _negative consequence_ for using the Mystery Box since it cannot move like in later maps.
+* Added a _negative consequence_ for using the Mystery Box since it cannot roam like in later maps.
 * Removed Kar98k from pool of available box weapons.
 * Removed Kar98k Scoped from pool of available box weapons.
 * Weapons now slowly descend into the box upon timeout. (DLC 1+ style) 
@@ -105,7 +107,7 @@ Weapon Cabinet:
 * Added PPSH Drum Mag (BO3)
 * Added (REDACTED)
 * Added Springfield Scoped
-* Added Sten (BO3)
+* Added Sten Ext. Mag (BO3)
     * None of these weapons are available in the Mystery Box.
 
 # Player Changes
@@ -187,4 +189,4 @@ A variety of zombie AI and gameplay improvements have been backported from later
 * Zombies now have significantly more head and body variants, further enhanced by the random gear system.
 * Zombies now use the DLC 1+ animation set, including several previously unused animations.
 * Zombies now use the DLC 1+ FX and sound set.
-* Zombie that are wearing helmets will make a 'ping' sound upon headshot.
+* Zombies that are wearing helmets will make a 'ping' sound upon headshot.

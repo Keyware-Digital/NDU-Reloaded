@@ -154,7 +154,8 @@ door_think()
 	// maybe the door the should just bust open instead of slowly opening.
 	// maybe just destroy the door, could be two players from opposite sides..
 	// breaking into chunks seems best.
-	// or I could just give it no collision
+	// or I cuold just give it no collision 
+	// lol 3arc guy can't spell
 
 	while( 1 )
 	{
