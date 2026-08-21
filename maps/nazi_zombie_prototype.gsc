@@ -574,7 +574,7 @@ unstick_player()
         {
             self setorigin( ( 139, -87, self.origin[2] ) );
         }
-        // near sawed-off
+        // near sawn-off
         else if ( distance2d( self.origin, ( 192, 369, 185 ) ) < radius_sm )
         {
             self setorigin( ( 195, 400, self.origin[2] ) );
@@ -591,7 +591,7 @@ unstick_couch()
 {
     self endon( "disconnect" );
     self endon( "death" );
-    level endon( "upstairs_blocker_purchased" );
+    level endon( "upstairs_blocker_cleared" );
 
     while ( 1 )
     {
@@ -618,7 +618,7 @@ is_inside_box( min_x, max_x, min_y, max_y, min_z, max_z )
 
 kill_above_couches()
 {
-    level endon( "junk purchased" );
+    level endon( "junk cleared" );
 
     while ( 1 )
     {
