@@ -52,7 +52,7 @@ main() {
 fx() {
     level._effect["betty_explode"] = loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
     level._effect["betty_trail"] = loadfx("weapon/bouncing_betty/fx_betty_trail");
-    level._effect[ "dolphin_dive_land" ] = loadfx ( "" );
+    //level._effect["dolphin_dive_land"] = loadfx ( "" );
     level._effect["raygun_impact"] = loadFX("misc/fx_exp_raygun_impact");
 }
 
@@ -261,7 +261,6 @@ filtered_weapons()
     //level.filtered_weapon[level.filtered_weapon.size] = "zombie_cymbal_monkey";
 }
 
-
 // Rare weapon(s) weighting
 prototype_ray_gun_weighting_func() {
     {
@@ -423,7 +422,6 @@ player_zombie_awareness()
 		}		
 	}	
 }
-
 
 reloading_monitor()
 {
