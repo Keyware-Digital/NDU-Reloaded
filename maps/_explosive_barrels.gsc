@@ -10,6 +10,12 @@ init_explosive_barrels()
 
 	level.shot_explosive_barrels = 0;
 	level.barrel_ee_started = 0;
+	level.barrelExplodingThisFrame = false;
+	level.lastExplodingBarrel = [];
+
+	level.barrel_minDamage   = 25;
+	level.barrel_maxDamage   = 250;
+	level.barrel_blastRadius = 250;
 
 	all_explosive_barrels = [];
 
@@ -24,32 +30,88 @@ init_explosive_barrels()
 
 explosive_barrels_think(all_explosive_barrels)
 {
-    while (1)
-    {
-        
-		self waittill ("damage");
-			
-		self endon ("death");
+	self setcandamage(true);
+	self endon ("death");
+
+	while (1)
+	{
+		self waittill ("damage", amount, attacker, direction_vec, P, type);
+
+		if(type == "MOD_MELEE" || type == "MOD_IMPACT")
+			continue;
+
+		if( IsDefined( self.script_requires_player ) && self.script_requires_player && !IsPlayer( attacker ) )
+			continue;
+
+		if( IsDefined( self.script_selfisattacker ) && self.script_selfisattacker )
+			self.damageOwner = self;
+		else
+			self.damageOwner = attacker;
 
 		level.shot_explosive_barrels++;
 
 		players = GetPlayers();
 
-			if (level.shot_explosive_barrels == 1 && level.barrel_ee_started == 0)
-			{
-				for (i = 0; i < players.size; i++) {
-					level.barrel_ee_started = 1;
-					wait 1;
-				}
+		if (level.shot_explosive_barrels == 1 && level.barrel_ee_started == 0)
+		{
+			for (i = 0; i < players.size; i++) {
+				level.barrel_ee_started = 1;
+				wait 1;
 			}
+		}
 
-			if (level.shot_explosive_barrels == 31)
-			{
-				for (i = 0; i < players.size; i++) {
-					players[i] thread maps\_sounds::undone_ee_track_sound();
-					wait 1;
-				}
+		if (level.shot_explosive_barrels == 31)
+		{
+			for (i = 0; i < players.size; i++) {
+				players[i] thread maps\_sounds::undone_ee_track_sound();
+				wait 1;
 			}
-		
+		}
+
+		self thread explodable_barrel_explode();
+		break;
 	}
+}
+
+explodable_barrel_explode()
+{
+	self notify ("exploding");
+	self notify ("death");
+
+	level.barrelExplodingThisFrame = true;
+
+	minDamage   = level.barrel_minDamage;
+	maxDamage   = level.barrel_maxDamage;
+	blastRadius = level.barrel_blastRadius;
+
+	if( IsDefined( self.script_damage ) )
+		maxDamage = self.script_damage;
+
+	if( IsDefined( self.radius ) )
+		blastRadius = self.radius;
+
+	attacker = undefined;
+
+	if(isdefined(self.damageOwner))
+	{
+		attacker = self.damageOwner;
+		if( isplayer( attacker ) )
+		{
+			arcademode_assignpoints( "arcademode_score_explodableitem", attacker );
+		}
+	}
+
+	level.lastExplodingBarrel[ "time" ]   = getTime();
+	level.lastExplodingBarrel[ "origin" ] = self.origin + ( 0, 0, 30 );
+
+	// initial blast damage
+	self radiusDamage(self.origin + (0,0,30), blastRadius, maxDamage, minDamage, attacker);
+
+	wait 0.05;
+	level.barrelExplodingThisFrame = false;
+
+	if( !isplayer( attacker ) )
+		attacker = undefined;
+
+	self thread maps\_zombiemode_molotov::fire_burn_radius( attacker, level.barrel_fire_radius, level.barrel_fire_height, level.barrel_fire_duration );
 }

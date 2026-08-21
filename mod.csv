@@ -121,6 +121,7 @@ rawfile,maps/createart/nazi_zombie_prototype_art.gsc
 rawfile,maps/_callbackglobal.gsc
 rawfile,maps/_character_randomise.gsc
 rawfile,maps/_custom_radios.gsc
+rawfile,maps/_destructible_opel_blitz.gsc
 rawfile,maps/_explosive_barrels.gsc
 rawfile,maps/_gameskill.gsc
 rawfile,maps/_hide_and_seek.gsc

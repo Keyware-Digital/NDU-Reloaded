@@ -8,43 +8,52 @@ init() {
 
 main() {
 
-    maps\_destructible_opel_blitz::init();
-
-    include_weapons();
+    animscripts\walking_anim::main();
     maps\_character_randomise::init();
-    include_powerups();
-    level thread fx();
-    //level thread dolphin_dive_fx();
-
+    maps\_destructible_opel_blitz::init();
     maps\nazi_zombie_prototype_fx::main();
+    level thread fx();
+    
+    include_powerups();
+    include_weapons();
+
     maps\_zombiemode::main();
-	array_thread(GetPlayers(), ::reloading_monitor);
+
+    level.pulls_since_last_ray_gun = 0;
+    level.pulls_since_last_tesla_gun = 0;
+    level.player_drops_tesla_gun = false;
+    level.startInvulnerableTime = 1000;
+
+    //init_sounds();
+
     array_thread(GetPlayers(), ::player_zombie_awareness);
-    thread maps\_explosive_barrels::init_explosive_barrels();
+    array_thread(GetPlayers(), ::reloading_monitor);
+
+    //level thread dolphin_dive_fx();
+    level thread filtered_weapons();
+    //level thread health_show();
+    level thread intro_screen();
+    level thread kill_above_couches();
+    level thread kill_on_roof();
+    level thread kill_under_map();
+    level thread maps\_zombiemode_betty::give_betties_after_rounds();
+    level thread start_player_bounds_checks();
+    level thread weather_system();
+
     thread maps\_custom_radios::init_custom_radios();
+    thread maps\_explosive_barrels::init_explosive_barrels();
     thread maps\_hide_and_seek::init_hide_and_seek();
     thread maps\_share_points::init_share_points();
-    animscripts\walking_anim::main();
-
-    // used to modify the percentages of pulls of ray gun and tesla gun in magic box
-	level.pulls_since_last_ray_gun = 0;
-	level.pulls_since_last_tesla_gun = 0;
-	level.player_drops_tesla_gun = false;
 
     // If you want to modify/add to the weapons table, please copy over the _zombiemode_weapons init_weapons() and paste it here.
     // I recommend putting it in it's own function...
     // If not a MOD, you may need to provide new localized strings to reflect the proper cost.
-
-    level thread intro_screen();
-
-    level thread maps\_zombiemode_betty::give_betties_after_rounds();
-
-    //level thread health_show();
-
-    level thread filtered_weapons();
-    level thread weather_system();
-
 }
+
+/*init_sounds()
+{
+	maps\_zombiemode_utility::add_sound( "break_stone", "break_stone" );
+}*/
 
 fx() {
     level._effect["betty_explode"] = loadfx("weapon/bouncing_betty/fx_explosion_betty_generic");
@@ -55,6 +64,14 @@ fx() {
 /*dolphin_dive_fx() {
     level._effect[ "dolphin_dive_land" ] = loadfx ( "" );
 }*/
+
+init_strings() {
+    PrecacheString(&"PROTOTYPE_PLACE");
+    PrecacheString(&"PROTOTYPE_REGION");
+    PrecacheString(&"PROTOTYPE_DATE");
+    PrecacheString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_WITHDRAW");
+    PrecacheString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT");
+}
 
 player_zombie_awareness()
 {
@@ -92,14 +109,6 @@ player_zombie_awareness()
 			}			
 		}		
 	}	
-}
-
-init_strings() {
-    PrecacheString(&"PROTOTYPE_PLACE");
-    PrecacheString(&"PROTOTYPE_REGION");
-    PrecacheString(&"PROTOTYPE_DATE");
-    PrecacheString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_WITHDRAW");
-    PrecacheString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT");
 }
 
 intro_screen() {
@@ -280,6 +289,21 @@ include_weapons() {
     //level.limited_weapons["knuckle_crack_hands"] = 0;
 }
 
+// Puts weapons that need filtering into an array to be called later
+filtered_weapons()
+{
+    level.filtered_weapon = [];
+    level.filtered_weapon[level.filtered_weapon.size] = "m2_flamethrower_zombie";
+    level.filtered_weapon[level.filtered_weapon.size] = "mine_bouncing_betty";
+    level.filtered_weapon[level.filtered_weapon.size] = "molotov";
+    level.filtered_weapon[level.filtered_weapon.size] = "none";
+    level.filtered_weapon[level.filtered_weapon.size] = "perks_a_cola";
+    level.filtered_weapon[level.filtered_weapon.size] = "stielhandgranate";
+    level.filtered_weapon[level.filtered_weapon.size] = "zombie_bowie_flourish";
+    //level.filtered_weapon[level.filtered_weapon.size] = "zombie_cymbal_monkey";
+}
+
+
 // Rare weapon(s) weighting
 prototype_ray_gun_weighting_func() {
     {
@@ -403,20 +427,6 @@ health_show() {
     }
 }
 
-//Puts weapons that need filtering into an array to be called later
-filtered_weapons()
-{
-	level.filtered_weapon = [];
-	level.filtered_weapon[level.filtered_weapon.size] = "none";
-    level.filtered_weapon[level.filtered_weapon.size] = "mine_bouncing_betty";
-	level.filtered_weapon[level.filtered_weapon.size] = "perks_a_cola";
-	level.filtered_weapon[level.filtered_weapon.size] = "molotov";
-	level.filtered_weapon[level.filtered_weapon.size] = "stielhandgranate";
-    level.filtered_weapon[level.filtered_weapon.size] = "zombie_bowie_flourish";
-    level.filtered_weapon[level.filtered_weapon.size] = "m2_flamethrower_zombie";
-	//level.filtered_weapon[level.filtered_weapon.size] = "zombie_cymbal_monkey";
-}
-
 reloading_monitor()
 {
     while(1)
@@ -507,4 +517,212 @@ lightning_flash()
 
     wait( 0.15 );
     fadetowhite destroy();
+}
+
+// Map bounds & anti-glitch protection - inspired by CoD WaW: Zombies Remastered, with thanks
+start_player_bounds_checks()
+{
+    players = get_players();
+
+    for ( i = 0; i < players.size; i++ )
+    {
+        players[i] thread unstick_player();
+        players[i] thread unstick_couch();
+        players[i] thread monitor_map_bounds();
+    }
+}
+
+// Teleports players out of known stuck / glitch spots
+unstick_player()
+{
+    self endon( "disconnect" );
+    self endon( "death" );
+
+    radius    = 15;
+    radius_sm = 10;
+
+    while ( 1 )
+    {
+        wait( 1 );
+
+        // stairs
+        if ( distance2d( self.origin, ( 101, -100, 40 ) ) < radius )
+        {
+            self setorigin( ( 101, -90, self.origin[2] ) );
+        }
+        // crates / boxes
+        else if ( distance2d( self.origin, ( 816, 645, 12 ) ) < radius )
+        {
+            self setorigin( ( 816, 666, self.origin[2] ) );
+        }
+        else if ( distance2d( self.origin, ( 376, 643, 184 ) ) < radius )
+        {
+            self setorigin( ( 376, 665, self.origin[2] ) );
+        }
+        // grandfather clock
+        else if ( distance2d( self.origin, ( 519, 765, 155 ) ) < radius_sm )
+        {
+            self setorigin( ( 516, 793, self.origin[2] ) );
+        }
+        // broken pillar
+        else if ( distance2d( self.origin, ( 315, 346, 79 ) ) < radius_sm )
+        {
+            self setorigin( ( 317, 360, self.origin[2] ) );
+        }
+        // rubble near pillar
+        else if ( distance2d( self.origin, ( 199, 133, 18 ) ) < radius )
+        {
+            self setorigin( ( 172, 123, self.origin[2] ) );
+        }
+        // curved stairs nook
+        else if ( distance2d( self.origin, ( 142, -100, 91 ) ) < radius_sm )
+        {
+            self setorigin( ( 139, -87, self.origin[2] ) );
+        }
+        // near sawed-off
+        else if ( distance2d( self.origin, ( 192, 369, 185 ) ) < radius_sm )
+        {
+            self setorigin( ( 195, 400, self.origin[2] ) );
+        }
+        // corner rubble
+        else if ( distance2d( self.origin, ( -210, 641, 247 ) ) < radius )
+        {
+            self setorigin( ( -173, 677, self.origin[2] ) );
+        }
+    }
+}
+
+unstick_couch()
+{
+    self endon( "disconnect" );
+    self endon( "death" );
+    level endon( "upstairs_blocker_purchased" );
+
+    while ( 1 )
+    {
+        wait( 0.5 );
+
+        if ( distance2d( self.origin, ( 181, 161, 206 ) ) < 10 )
+        {
+            self setorigin( ( 175, 175, self.origin[2] ) );
+        }
+    }
+}
+
+is_inside_box( min_x, max_x, min_y, max_y, min_z, max_z )
+{
+    if ( self.origin[0] > max_x || self.origin[0] < min_x )
+        return false;
+    if ( self.origin[1] > max_y || self.origin[1] < min_y )
+        return false;
+    if ( self.origin[2] > max_z || self.origin[2] < min_z )
+        return false;
+
+    return true;
+}
+
+kill_above_couches()
+{
+    level endon( "junk purchased" );
+
+    while ( 1 )
+    {
+        wait( 0.2 );
+
+        players = get_players();
+
+        for ( i = 0; i < players.size; i++ )
+        {
+            if ( players[i].origin[2] > 145 )
+            {
+                setsaveddvar( "player_deathInvulnerableTime", 0 );
+                players[i] DoDamage( players[i].health + 1000, players[i].origin, undefined, undefined, "riflebullet" );
+                setsaveddvar( "player_deathInvulnerableTime", level.startInvulnerableTime );
+            }
+        }
+    }
+}
+
+kill_on_roof()
+{
+    while ( 1 )
+    {
+        wait( 0.2 );
+
+        players = get_players();
+
+        for ( i = 0; i < players.size; i++ )
+        {
+            if ( players[i].origin[2] > 235 )
+            {
+                setsaveddvar( "player_deathInvulnerableTime", 0 );
+                players[i] DoDamage( players[i].health + 1000, players[i].origin, undefined, undefined, "riflebullet" );
+                setsaveddvar( "player_deathInvulnerableTime", level.startInvulnerableTime );
+            }
+        }
+    }
+}
+
+kill_under_map()
+{
+    while ( 1 )
+    {
+        wait( 0.2 );
+
+        players = get_players();
+
+        for ( i = 0; i < players.size; i++ )
+        {
+            if ( players[i].origin[2] < -11 )
+            {
+                setsaveddvar( "player_deathInvulnerableTime", 0 );
+                players[i] DoDamage( players[i].health + 1000, players[i].origin, undefined, undefined, "riflebullet" );
+                setsaveddvar( "player_deathInvulnerableTime", level.startInvulnerableTime );
+            }
+        }
+    }
+}
+
+monitor_map_bounds()
+{
+    self endon( "disconnect" );
+
+    playable_areas = [];
+
+    playable_areas[0]["min"] = ( 361, 591, -11 );
+    playable_areas[0]["max"] = ( 1068, 1031, 235 );
+
+    playable_areas[1]["min"] = ( -288, 591, -11 );
+    playable_areas[1]["max"] = ( 361, 1160, 235 );
+
+    playable_areas[2]["min"] = ( -272, 120, -11 );
+    playable_areas[2]["max"] = ( 370, 591, 235 );
+
+    playable_areas[3]["min"] = ( -272, -912, -11 );
+    playable_areas[3]["max"] = ( 273, 120, 235 );
+
+    while ( 1 )
+    {
+        is_out = true;
+
+        for ( i = 0; i < playable_areas.size; i++ )
+        {
+            if ( self is_inside_box(
+                playable_areas[i]["min"][0], playable_areas[i]["max"][0],
+                playable_areas[i]["min"][1], playable_areas[i]["max"][1],
+                playable_areas[i]["min"][2], playable_areas[i]["max"][2] ) )
+            {
+                is_out = false;
+            }
+        }
+
+        if ( is_out )
+        {
+            setsaveddvar( "player_deathInvulnerableTime", 0 );
+            self DoDamage( self.health + 1000, self.origin, undefined, undefined, "riflebullet" );
+            setsaveddvar( "player_deathInvulnerableTime", level.startInvulnerableTime );
+        }
+
+        wait( 0.2 );
+    }
 }

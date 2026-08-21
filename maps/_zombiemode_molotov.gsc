@@ -38,10 +38,10 @@ molotov_grenade_think( player )
         return;
 
     // Create the fire (radius, height, duration)
-    self thread fire_radius_burn( player, 75, 15, 7.0 );    // was 80, 15, 8.0
+    self thread fire_burn_radius( player, 75, 15, 7.0 );    // was 80, 15, 8.0
 }
 
-fire_radius_burn( attacker, radius, height, duration )
+fire_burn_radius( attacker, radius, height, duration )
 {
     fire_trigger = Spawn( "trigger_radius", self.origin, 0, radius, height );
     time_left = duration;

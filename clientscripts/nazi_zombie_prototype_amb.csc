@@ -134,6 +134,7 @@ radio_init()
 	level.radio_index = 0;
 	add_song( "hellhound_round" );
 	add_song( "cod_zombies_mobile" );
+	add_song( "cod_zombies" );
 	add_song( "wtf" );
 	add_song( "true_crime_4" );
 	add_song( "dusk" );
