@@ -22,7 +22,7 @@ main() {
     level.pulls_since_last_ray_gun = 0;
     level.pulls_since_last_tesla_gun = 0;
     level.player_drops_tesla_gun = false;
-    level.startInvulnerableTime = 1000;
+    level.start_iframe_time = 1000;
 
     //init_sounds();
 
@@ -521,7 +521,7 @@ lightning_flash()
     fadetowhite destroy();
 }
 
-// Map bounds & anti-glitch protection - inspired by CoD WaW: Zombies Remastered, with thanks
+// Map bounds & anti-glitch protection
 start_player_bounds_checks()
 {
     players = get_players();
@@ -637,9 +637,9 @@ kill_above_couches()
         {
             if ( players[i].origin[2] > 145 )
             {
-                setsaveddvar( "player_deathInvulnerableTime", 0 );
+                setsaveddvar( "player_death_iframe_time", 0 );
                 players[i] DoDamage( players[i].health + 1000, players[i].origin, undefined, undefined, "riflebullet" );
-                setsaveddvar( "player_deathInvulnerableTime", level.startInvulnerableTime );
+                setsaveddvar( "player_death_iframe_time", level.start_iframe_time );
             }
         }
     }
@@ -657,9 +657,9 @@ kill_on_roof()
         {
             if ( players[i].origin[2] > 235 )
             {
-                setsaveddvar( "player_deathInvulnerableTime", 0 );
+                setsaveddvar( "player_death_iframe_time", 0 );
                 players[i] DoDamage( players[i].health + 1000, players[i].origin, undefined, undefined, "riflebullet" );
-                setsaveddvar( "player_deathInvulnerableTime", level.startInvulnerableTime );
+                setsaveddvar( "player_death_iframe_time", level.start_iframe_time );
             }
         }
     }
@@ -677,9 +677,9 @@ kill_under_map()
         {
             if ( players[i].origin[2] < -11 )
             {
-                setsaveddvar( "player_deathInvulnerableTime", 0 );
+                setsaveddvar( "player_death_iframe_time", 0 );
                 players[i] DoDamage( players[i].health + 1000, players[i].origin, undefined, undefined, "riflebullet" );
-                setsaveddvar( "player_deathInvulnerableTime", level.startInvulnerableTime );
+                setsaveddvar( "player_death_iframe_time", level.start_iframe_time );
             }
         }
     }
@@ -720,9 +720,9 @@ monitor_map_bounds()
 
         if ( is_out )
         {
-            setsaveddvar( "player_deathInvulnerableTime", 0 );
+            setsaveddvar( "player_death_iframe_time", 0 );
             self DoDamage( self.health + 1000, self.origin, undefined, undefined, "riflebullet" );
-            setsaveddvar( "player_deathInvulnerableTime", level.startInvulnerableTime );
+            setsaveddvar( "player_death_iframe_time", level.start_iframe_time );
         }
 
         wait( 0.2 );

@@ -1325,7 +1325,7 @@ treasure_chest_give_weapon( weapon_string )
 	// attach flame tank to players picking up a flamethrower
 	if ( (isSubStr(weapon_string, "flamethrower") ) )
 	{
-		self thread flamethrower_swap();
+		self thread flamethrower_attach();
 	}
 
 	// mule kick check
@@ -2296,7 +2296,7 @@ weapon_give( weapon )
 		//if ( (isSubStr(weapon_string, "flamethrower") ) )
 		/*if ( current_weapon == "m2_flamethrower_zombie") 
    		{
-				self thread flamethrower_swap();
+				self thread flamethrower_attach();
    		}*/
 
 		if( isDefined( current_weapon ) )
@@ -2444,8 +2444,7 @@ has_weapon_or_upgrade( weaponname )
 	return has_weapon;
 }
 
-// inspired by CoD WaW: Zombies Remastered, with thanks
-flamethrower_swap()
+flamethrower_attach()
 {
  	self endon( "death" ); 
  	self endon( "disconnect" ); 
@@ -2453,16 +2452,16 @@ flamethrower_swap()
  	while( 1 ) 
  	{
  		weapons = self GetWeaponsList(); 
- 		self.has_flame_thrower = false; 
+ 		self.has_flamethrower = false; 
  		for( i = 0; i < weapons.size; i++ )
  		{
  			if( isSubStr(weapons[i], "flamethrower") )
  			{
- 				self.has_flame_thrower = true; 
+ 				self.has_flamethrower = true; 
  			}
  		}
  		
- 		if( self.has_flame_thrower )
+ 		if( self.has_flamethrower )
  		{
  			if( !isdefined( self.flamethrower_attached ) || !self.flamethrower_attached )
  			{
@@ -2470,16 +2469,16 @@ flamethrower_swap()
  				self.flamethrower_attached = true; 
  			}
  		}
- 		else if( !self.has_flame_thrower ) 
+ 		else if( !self.has_flamethrower ) 
  		{
- 			if( isdefined( self.flamethrower_attached ) && self.flamethrower_attached )
+ 			if( isdefined( self.flamethrower_attached ) && self.z )
  			{
  				self detach( "char_usa_raider_gear_flametank", "j_spine4" ); 
  				self.flamethrower_attached = false;
  			}
  		}
  
- 		if(!self.has_flame_thrower && !self maps\_laststand::player_is_in_laststand()) 
+ 		if(!self.has_flamethrower && !self maps\_laststand::player_is_in_laststand()) 
  		{
  			break;
  		}

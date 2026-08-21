@@ -10,8 +10,8 @@ init_explosive_barrels()
 
 	level.shot_explosive_barrels = 0;
 	level.barrel_ee_started = 0;
-	level.barrelExplodingThisFrame = false;
-	level.lastExplodingBarrel = [];
+	level.barrel_explosion_this_frame = false;
+	level.barrel_explosion_last = [];
 
 	level.barrel_minDamage   = 25;
 	level.barrel_maxDamage   = 250;
@@ -78,7 +78,7 @@ explodable_barrel_explode()
 	self notify ("exploding");
 	self notify ("death");
 
-	level.barrelExplodingThisFrame = true;
+	level.barrel_explosion_this_frame = true;
 
 	minDamage   = level.barrel_minDamage;
 	maxDamage   = level.barrel_maxDamage;
@@ -101,14 +101,14 @@ explodable_barrel_explode()
 		}
 	}
 
-	level.lastExplodingBarrel[ "time" ]   = getTime();
-	level.lastExplodingBarrel[ "origin" ] = self.origin + ( 0, 0, 30 );
+	level.barrel_explosion_last[ "time" ]   = getTime();
+	level.barrel_explosion_last[ "origin" ] = self.origin + ( 0, 0, 30 );
 
 	// initial blast damage
 	self radiusDamage(self.origin + (0,0,30), blastRadius, maxDamage, minDamage, attacker);
 
 	wait 0.05;
-	level.barrelExplodingThisFrame = false;
+	level.barrel_explosion_this_frame = false;
 
 	if( !isplayer( attacker ) )
 		attacker = undefined;

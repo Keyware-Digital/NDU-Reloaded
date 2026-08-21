@@ -2,8 +2,6 @@
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
 
-// inspired by CoD WaW: Zombies Remastered, with thanks
-
 track_molotov()
 {
     self endon( "disconnect" );
@@ -60,10 +58,10 @@ fire_burn_radius( attacker, radius, height, duration )
             if( !IsDefined( zombie ) || !zombie IsTouching( fire_trigger ) )
                 continue;
 
-            if( IsDefined( zombie.molotov_flamed ) && zombie.molotov_flamed )
+            if( IsDefined( zombie.molotov_burning ) && zombie.molotov_burning )
                 continue;
 
-            zombie.molotov_flamed = true;
+            zombie.molotov_burning = true;
 
             // Visuals (limit full flame FX to closest 4 to avoid spam)
             if( i < 4 )
@@ -111,5 +109,5 @@ molotov_burn_damage( player )
         wait( RandomFloatRange( 1.0, 2.33 ) );  // was 3.0
     }
 
-    self.molotov_flamed = undefined;
+    self.molotov_burning = undefined;
 }
