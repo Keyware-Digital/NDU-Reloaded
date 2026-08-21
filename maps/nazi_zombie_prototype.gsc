@@ -238,8 +238,9 @@ include_weapons() {
     include_weapon("doublebarrel_sawed_grip");
     include_weapon("shotgun");
 
-    // Bipod
+    // Bipod / LMG
     include_weapon("30cal_bipod");
+    //include_weapon("bar_bipod");
     include_weapon("fg42_bipod");
     include_weapon("mg42_bipod");
 

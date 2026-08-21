@@ -134,12 +134,11 @@ radio_init()
 	level.radio_index = 0;
 	add_song( "hellhound_round" );
 	add_song( "cod_zombies_mobile" );
-	add_song( "cod_zombies" );
 	add_song( "wtf" );
 	add_song( "true_crime_4" );
 	add_song( "dusk" );
 	add_song( "sand" );
-	add_song( "all_mixed_up" )
+	add_song( "all_mixed_up" );
 	add_song( "ber3b_guitars" );
 	add_song( "bold_men" );
 	add_song( "dog_fire" );
