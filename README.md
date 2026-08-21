@@ -17,8 +17,9 @@ We've introduced a brand-new main menu featuring achievements, character bios, p
 # Bug Fixes
 Several legacy Treyarch bugs that have lingered over the years have been squashed. These include:
 
-* Fixed an exploit where players could glitch zombies onto the pillar in the main room - (WIP).
 * Fixed an exploit where players could glitch their weapon slot to gain a third weapon.
+* Fixed an exploit where players could glitch zombies onto the pillar in the main room - (WIP).
+* Fixed instances where you could buy other items while performing another action when you weren't meant to.
 * Fixed mystery box sound cutting out when too many sounds occurred.
 * Fixed various out of bounds exploits.
 
@@ -34,6 +35,8 @@ Four original characters have been introduced to NDU, complete with bios, loadou
 The core Zombies gameplay loop has been refined and expanded with numerous features backported from DLC 1 and beyond, as well as later Black Ops titles. _(see each section for more details)._
 
 * Added bank system where players can share points.
+* Added death chat so spectators can talk to alive players.
+* Added dolphin dive.
 * Added "mission intro" text in the bottom left corner to include storyline info.
 * Added new weapons to the map, many of which are new/original - (WIP).
     * BO2 Raygun replaces WaW Raygun.
@@ -42,7 +45,6 @@ The core Zombies gameplay loop has been refined and expanded with numerous featu
 * Added new perks to the map. 
 * Added new powerups to the map. 
 * Added new / restored sounds.
-* Added dolphin dive.
 * Added new player animations.
 * Added new player loadouts.
 * Added new zombie animations.
