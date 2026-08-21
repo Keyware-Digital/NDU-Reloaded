@@ -1,15 +1,15 @@
 # NDU-Reloaded
 NDU Der Untoten: Reloaded mod for CoD: WaW by Trebor_UK & ReubenUKGB with contributions from Numan and Gympie, using tools from UGX Mods.
 
-If you're the kind of player who hates mods that completely overhaul the Zombies experience and would rather play something that improves, fixes, and expands upon Treyarch's original vision, then this mod is for you. NDU: Reloaded does exactly that. Our goal is not to reinvent Nacht der Untoten, but to refine and enhance it with quality-of-life improvements, bug fixes, restored content, and carefully curated gameplay additions from later DLCs and titles. For a full breakdown of what our mod does, scroll down to read the detailed changelog. (Full changes to be listed - WIP!)
+If you're the kind of player who hates mods that completely overhaul the Zombies experience and would rather play something that improves, fixes, and expands upon Treyarch's original vision, then this mod is for you. NDU: Reloaded does exactly that. Our goal is not to reinvent Nacht der Untoten, but to refine and enhance it with quality-of-life improvements, bug fixes, restored content, and carefully curated gameplay additions from later DLCs and titles. For a full breakdown of what our mod does, scroll down to read the detailed changelog. (Full changes to be listed - WIP!).
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/treboruk92)
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png).](https://www.buymeacoffee.com/treboruk92).
 
 # Main Menu Changes
 We've introduced a brand-new main menu featuring achievements, character bios, player stats, expanded graphics settings, and a host of other improvements.
 
 * Added HD font throughout mod.
-* Added achievement reward weapon - (WIP)
+* Added achievement reward weapon - (WIP).
 * Co-Op only: loading image has been changed to match BO1.
 * Co-Op only: mini map image has been added.
 * Solo Only: loading image also plays the accompanying music as heard in BO1.
@@ -17,7 +17,7 @@ We've introduced a brand-new main menu featuring achievements, character bios, p
 # Bug Fixes
 Several legacy Treyarch bugs that have lingered over the years have been squashed. These include:
 
-* Fixed an exploit where players could glitch zombies onto the pillar in the main room - (WIP)
+* Fixed an exploit where players could glitch zombies onto the pillar in the main room - (WIP).
 * Fixed an exploit where players could glitch their weapon slot to gain a third weapon.
 * Fixed mystery box sound cutting out when too many sounds occurred.
 * Fixed various out of bounds exploits.
@@ -26,18 +26,18 @@ Several legacy Treyarch bugs that have lingered over the years have been squashe
 Four original characters have been introduced to NDU, complete with bios, loadouts, portraits, and voiceovers. Each has been designed to integrate as seamlessly as possible into the Dark Aether storyline established in Black Ops Cold War.
 
 * Artyom Belinski - _rumoured_ brother of Nikolai Belinski.
-* John Johnson - A resourceful, tenacious soldier handpicked by Theodore Jones to join Enigma Squad.
-* Siegfried Steiner - A grizzled, unhinged Wehrmacht veteran.
-* Theodore Jones - Leader of Enigma, a newly formed squad tasked with investigating a mysterious bunker on an abandoned airfield in Poland.
+* John Johnson - a resourceful, tenacious soldier handpicked by Theodore Jones to join Enigma Squad.
+* Siegfried Steiner - a grizzled, unhinged Wehrmacht veteran.
+* Theodore Jones - leader of Enigma, a newly formed squad tasked with investigating a mysterious bunker on an abandoned airfield in Poland.
  
 # General Changes / Gameplay Changes
-The core Zombies gameplay loop has been refined and expanded with numerous features backported from DLC 1 and beyond, as well as later Black Ops titles. _(see each section for more details)_
+The core Zombies gameplay loop has been refined and expanded with numerous features backported from DLC 1 and beyond, as well as later Black Ops titles. _(see each section for more details)._
 
 * Added bank system where players can share points.
 * Added "mission intro" text in the bottom left corner to include storyline info.
-* Added new weapons to the map, many of which are new/original - (WIP)
+* Added new weapons to the map, many of which are new/original - (WIP).
     * BO2 Raygun replaces WaW Raygun.
-    * BO3 MP40 replaces WaW MP40 - (WIP)
+    * BO3 MP40 replaces WaW MP40 - (WIP).
 * Added new equipment to the map.
 * Added new perks to the map. 
 * Added new powerups to the map. 
@@ -48,13 +48,13 @@ The core Zombies gameplay loop has been refined and expanded with numerous featu
 * Added new zombie animations.
 * Added vision file from BO3 with improved contrast, gamma, etc.
 * Added weapon sharing system.
-* Added +XP to round end and reviving other players. (BO3 style)
+* Added +XP to round end and reviving other players. (BO3 style).
 * Barriers now "earthquake" as boards are repaired or torn down, mirroring BO1.
 * Barrier "cha-ching" sound now stops when the barrier no longer awards points.
 * Easter Eggs from BO1 and BO3 have been backported, and yes, a few original secrets have been hidden away for players to uncover.
 * Flame damage to zombies now matches DLC 1+.
 * Improved gibbing FX.
-* Improved graphical fidelity where possible (shading tweaks, etc...)
+* Improved graphical fidelity where possible (shading tweaks, etc..).
 * Improved Last Stand logic.
 * Point earning has been standardised to better match later DLCs and Black Ops titles. (For example, melee kills now award 130 points instead of the 80 awarded in vanilla NDU).
 * Restored Chalk drawing glow.
@@ -73,8 +73,8 @@ The core Zombies gameplay loop has been refined and expanded with numerous featu
 # Last Stand Changes
 Last Stand has been adjusted to accommodate the new character loadouts, as well as changes to Solo Quick Revive and other perks.
 
-* Placeholder
-* Increased last stand bleed out from 30s to 45s. (BO1 style)
+* Placeholder.
+* Increased last stand bleed out from 30s to 45s. (BO1 style).
 * Last Stand now takes the new sidearms into account, but will prioritise the .357 Magnum or Ray Gun if available.
 * Solo only: players with Quick Revive will receive an upgraded Colt while in Last Stand (up to three times).
  
@@ -89,32 +89,32 @@ NDU features unique starting loadouts for each character, helping reinforce thei
 NDU features a larger weapon roster, so the Mystery Box has been revised to accommodate the expanded arsenal without compromising its core purpose. The Weapon Cabinet has also been redesigned as a more premium but higher risk Mystery Box as the previous version offered little incentive to use it. We didn't want to add Pack a Punch weapons to Nacht, so this is our alternative.
  
 Mystery Box:
-* Added DP28 - (sits between the 30cal and MG42 in terms of stats; slower-firing but more damaging.)
-* Added Bouncing Betties - (WIP - moving to wallbuy)
-* Added Bowie Knife - (WIP - moving to wallbuy)
+* Added DP28 - sits between the 30cal and MG42 in terms of stats; slower-firing but more damaging.
+* Added Bouncing Betties - (WIP - moving to wallbuy).
+* Added Bowie Knife - (WIP - moving to wallbuy).
 * Added Mosin Rifle - slightly stronger than the Kar98k.
-* Added PPSH41 (box mag, not drum)
-* Added SVT-40 (sits between the M1 Garand and G43 in terms of stats.)
+* Added PPSH41 - (box mag, not drum variant).
+* Added SVT-40 - sits between the M1 Garand and G43 in terms of stats.
 * Added a _negative consequence_ for using the Mystery Box since it cannot roam like in later maps.
 * Removed Kar98k from pool of available box weapons.
 * Removed Kar98k Scoped from pool of available box weapons.
-* Weapons now slowly descend into the box upon timeout. (DLC 1+ style) 
+* Weapons now slowly descend into the box upon timeout. (DLC 1+ style). 
 
 Weapon Cabinet:
-* Added a Colt _(troll weapon)_
+* Added a Colt _(troll weapon)._
 * Added Mosin Scoped
 * Added MP40 Twin Mag
-* Added PPSH Drum Mag (BO3)
-* Added (REDACTED)
+* Added PPSH Drum Mag (BO3).
+* Added (REDACTED).
 * Added Springfield Scoped
-* Added Sten Ext. Mag (BO3)
+* Added Sten Ext. Mag (BO3).
     * None of these weapons are available in the Mystery Box.
 
 # Player Changes
 A randomised character selection system has been introduced for both Solo and Co-Op, ensuring greater variety between matches and giving players more opportunities to experience each character's unique personality and voice lines.
 
 * Players are now randomised in Solo and Co-Op.
-* Players now have a death animation. (BO2 style)
+* Players now have a death animation. (BO2 style).
 * Restored player jump/land sounds.
 
 # Perk Changes
@@ -122,36 +122,36 @@ Several curated perks have been added, adapted, and enhanced with functionality 
 
 * Added Deadshot Daiquiri
 * Added Double Tap Root Beer - now functions as Double Tap 2.0, firing two bullets for the "price" of one.
-* Added Electric Cherry - (WIP)
+* Added Electric Cherry - (WIP).
 * Added Juggernog
-* Added Melee Macchiato - (WIP)
+* Added Melee Macchiato - (WIP).
 * Added Mule Kick - now adds a shader glow around your third 'mule' weapon.
 * Added PhD Flopper - complete with flop!
 * Added Quick Revive - now supports Solo play, better matching its BO1 behaviour.
-* Added Electric Cherry - (WIP)
+* Added Electric Cherry - (WIP).
 * Added Speed Cola
 * Added Stamin-Up
-* Added Tombstone - (WIP)
-* Added Vulture Aid - (WIP)
-* Added Widows Wine - (WIP)
+* Added Tombstone - (WIP).
+* Added Vulture Aid - (WIP).
+* Added Widows Wine - (WIP).
  
 # Power-Up Changes
 Power-Ups have received a few additions and refinements, bringing more variety to gameplay while retaining the familiar pick-ups players know and love. We've also backported the HUD shader behaviour from later Zombies titles to World at War, giving power-ups their distinctive visual feedback while maintaining the classic HUD experience.
 
 * Added Bonus Points
 * Added Carpenter
-* Added Death Machine - (WIP)
+* Added Death Machine - (WIP).
 * Added Firesale
 * Added Random Perk which only drops in under specific conditions.
-* Max Ammo will now fill up your mag as well as your reserve ammo, and all equipment consistently. (BO4 style)
+* Max Ammo will now fill up your mag as well as your reserve ammo, and all equipment consistently. (BO4 style).
 * Revamped powerup shader system.
  
 # UI / HUD Changes
 The HUD has been modernised with new features and quality-of-life improvements inspired by later Black Ops titles, alongside several original enhancements.
 
-* Added player portraits. (BO2+ style)
+* Added player portraits. (BO2+ style).
 * Added Z$ point shader.
-* Added blood splatter. (BO2 style, WIP)
+* Added blood splatter. (BO2 style, WIP).
 * Added support for more than 10 perks.
 * Added a smart Power-Up shader system.
 * The American grenade icon has been replaced with the Stielhandgranate icon for consistency.
@@ -176,7 +176,7 @@ Weapon Changes:
 
 Wall Buys:
 * Now takes into account buying the weapon and buying ammo hintstring.
-* Wallbuying ammo will also fill your mag. (BO4 style)
+* Wallbuying ammo will also fill your mag. (BO4 style).
 
 # Zombie Changes
 A variety of zombie AI and gameplay improvements have been backported from later DLCs to NDU. In addition, a new randomised gear system gives zombies a much wider range of appearances, adding greater visual variety to each match. These changes include:

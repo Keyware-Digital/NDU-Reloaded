@@ -384,7 +384,6 @@ health_show() {
     }
 }
 
-
 player_zombie_awareness()
 {
 	self endon("disconnect");
