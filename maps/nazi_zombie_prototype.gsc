@@ -18,7 +18,6 @@ main() {
 
     maps\nazi_zombie_prototype_fx::main();
     maps\_zombiemode::main();
-    init_sounds();  // don't move this otherwise "break_stone" breaks!!!
 	array_thread(GetPlayers(), ::reloading_monitor);
     array_thread(GetPlayers(), ::player_zombie_awareness);
     thread maps\_explosive_barrels::init_explosive_barrels();
@@ -101,10 +100,6 @@ init_strings() {
     PrecacheString(&"PROTOTYPE_DATE");
     PrecacheString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_WITHDRAW");
     PrecacheString(&"PROTOTYPE_ZOMBIE_CASH_REGISTER_DEPOSIT");
-}
-
-init_sounds() {
-    maps\_zombiemode_utility::add_sound("break_stone", "break_stone");
 }
 
 intro_screen() {
@@ -453,6 +448,7 @@ reloading_monitor()
 }
 
 // BO3 style random lightning + thunder throughout the map
+// this should be moved to nazi_zombie_prototype_amb.csc like the rest
 weather_system()
 {
     level endon("intermission");

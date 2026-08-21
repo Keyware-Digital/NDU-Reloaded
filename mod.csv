@@ -150,12 +150,13 @@ rawfile,mptype/nazi_zombie_heroes.gsc
 rawfile,shock/zombie_death.shock
 rawfile,vision/zombie_bo3.vision
 rawfile,vision/zombie_cosmodrome_divetonuke.vision
-sound,mod_ndu,,all_sp
+sound,mod_ndu_character,,all_sp
 sound,mod_ndu_ee,,all_sp
 sound,mod_ndu_music,,all_sp
 sound,mod_ndu_powerup,,all_sp
 sound,mod_ndu_radio,,all_sp
 sound,mod_ndu_vox,,all_sp
+sound,mod_ndu,,all_sp
 stringtable,maps/didyouknow_coop.csv
 stringtable,maps/gametypestable.csv
 stringtable,maps/mapstable.csv
