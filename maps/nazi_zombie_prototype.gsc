@@ -21,7 +21,6 @@ main() {
     level.pulls_since_last_ray_gun = 0;
     level.pulls_since_last_tesla_gun = 0;
     level.player_drops_tesla_gun = false;
-    level.start_iframe_time = 1000;
 
     //init_sounds();
     animscripts\walking_anim::main();
@@ -32,11 +31,12 @@ main() {
     level thread filtered_weapons();
     //level thread health_show();
     level thread intro_screen();
-    level thread kill_above_couches();
-    level thread kill_on_roof();
-    level thread kill_under_map();
     level thread maps\_zombiemode_betty::give_betties_after_rounds();
-    level thread start_player_bounds_checks();
+
+    level thread player_bounds_monitor();
+
+    level thread spawn_collision_models();
+
     level thread weather_system();
 
     thread maps\_custom_radios::init_custom_radios();
@@ -514,210 +514,96 @@ lightning_flash()
     fadetowhite destroy();
 }
 
-// Map bounds & anti-glitch protection
-start_player_bounds_checks()
-{
+player_bounds_monitor() {
     players = get_players();
 
-    for ( i = 0; i < players.size; i++ )
-    {
-        players[i] thread unstick_player();
-        players[i] thread unstick_couch();
+    for (i = 0; i < players.size; i++) {
+        players[i] thread monitor_debris();
         players[i] thread monitor_map_bounds();
     }
 }
 
-// Teleports players out of known stuck / glitch spots
-unstick_player()
-{
-    self endon( "disconnect" );
-    self endon( "death" );
+monitor_debris() {
+    self endon("disconnect");
+    self endon("death");
+    level endon("debris_purchased");
 
-    radius    = 15;
-    radius_sm = 10;
+    couch_height_limit = 145;
+    last_valid_pos = self.origin;
 
-    while ( 1 )
-    {
-        wait( 1 );
+    while (1) {
+        if (self.origin[2] > couch_height_limit) {
+            self setorigin(last_valid_pos);
+        }
+        else {
+            last_valid_pos = self.origin;
+        }
 
-        // stairs
-        if ( distance2d( self.origin, ( 101, -100, 40 ) ) < radius )
-        {
-            self setorigin( ( 101, -90, self.origin[2] ) );
-        }
-        // crates / boxes
-        else if ( distance2d( self.origin, ( 816, 645, 12 ) ) < radius )
-        {
-            self setorigin( ( 816, 666, self.origin[2] ) );
-        }
-        else if ( distance2d( self.origin, ( 376, 643, 184 ) ) < radius )
-        {
-            self setorigin( ( 376, 665, self.origin[2] ) );
-        }
-        // grandfather clock
-        else if ( distance2d( self.origin, ( 519, 765, 155 ) ) < radius_sm )
-        {
-            self setorigin( ( 516, 793, self.origin[2] ) );
-        }
-        // broken pillar
-        else if ( distance2d( self.origin, ( 315, 346, 79 ) ) < radius_sm )
-        {
-            self setorigin( ( 317, 360, self.origin[2] ) );
-        }
-        // rubble near pillar
-        else if ( distance2d( self.origin, ( 199, 133, 18 ) ) < radius )
-        {
-            self setorigin( ( 172, 123, self.origin[2] ) );
-        }
-        // curved stairs nook
-        else if ( distance2d( self.origin, ( 142, -100, 91 ) ) < radius_sm )
-        {
-            self setorigin( ( 139, -87, self.origin[2] ) );
-        }
-        // near sawn-off
-        else if ( distance2d( self.origin, ( 192, 369, 185 ) ) < radius_sm )
-        {
-            self setorigin( ( 195, 400, self.origin[2] ) );
-        }
-        // corner rubble
-        else if ( distance2d( self.origin, ( -210, 641, 247 ) ) < radius )
-        {
-            self setorigin( ( -173, 677, self.origin[2] ) );
-        }
+        wait(0.05);
     }
 }
 
-unstick_couch()
-{
-    self endon( "disconnect" );
-    self endon( "death" );
-    level endon( "upstairs_blocker_cleared" );
-
-    while ( 1 )
-    {
-        wait( 0.5 );
-
-        if ( distance2d( self.origin, ( 181, 161, 206 ) ) < 10 )
-        {
-            self setorigin( ( 175, 175, self.origin[2] ) );
-        }
-    }
-}
-
-is_inside_box( min_x, max_x, min_y, max_y, min_z, max_z )
-{
-    if ( self.origin[0] > max_x || self.origin[0] < min_x )
+is_within_volume(min_x, max_x, min_y, max_y, min_z, max_z) {
+    if (self.origin[0] > max_x || self.origin[0] < min_x)
         return false;
-    if ( self.origin[1] > max_y || self.origin[1] < min_y )
+    if (self.origin[1] > max_y || self.origin[1] < min_y)
         return false;
-    if ( self.origin[2] > max_z || self.origin[2] < min_z )
+    if (self.origin[2] > max_z || self.origin[2] < min_z)
         return false;
 
     return true;
 }
 
-kill_above_couches()
-{
-    level endon( "junk cleared" );
+monitor_map_bounds() {
+    self endon("disconnect");
 
-    while ( 1 )
-    {
-        wait( 0.2 );
-
-        players = get_players();
-
-        for ( i = 0; i < players.size; i++ )
-        {
-            if ( players[i].origin[2] > 145 )
-            {
-                setsaveddvar( "player_death_iframe_time", 0 );
-                players[i] DoDamage( players[i].health + 1000, players[i].origin, undefined, undefined, "riflebullet" );
-                setsaveddvar( "player_death_iframe_time", level.start_iframe_time );
-            }
-        }
-    }
-}
-
-kill_on_roof()
-{
-    while ( 1 )
-    {
-        wait( 0.2 );
-
-        players = get_players();
-
-        for ( i = 0; i < players.size; i++ )
-        {
-            if ( players[i].origin[2] > 235 )
-            {
-                setsaveddvar( "player_death_iframe_time", 0 );
-                players[i] DoDamage( players[i].health + 1000, players[i].origin, undefined, undefined, "riflebullet" );
-                setsaveddvar( "player_death_iframe_time", level.start_iframe_time );
-            }
-        }
-    }
-}
-
-kill_under_map()
-{
-    while ( 1 )
-    {
-        wait( 0.2 );
-
-        players = get_players();
-
-        for ( i = 0; i < players.size; i++ )
-        {
-            if ( players[i].origin[2] < -11 )
-            {
-                setsaveddvar( "player_death_iframe_time", 0 );
-                players[i] DoDamage( players[i].health + 1000, players[i].origin, undefined, undefined, "riflebullet" );
-                setsaveddvar( "player_death_iframe_time", level.start_iframe_time );
-            }
-        }
-    }
-}
-
-monitor_map_bounds()
-{
-    self endon( "disconnect" );
+    margin = 32;
 
     playable_areas = [];
 
-    playable_areas[0]["min"] = ( 361, 591, -11 );
-    playable_areas[0]["max"] = ( 1068, 1031, 235 );
+    playable_areas[0]["min"] = (361, 591, -11);
+    playable_areas[0]["max"] = (1068 - margin, 1031 - margin, 235);
 
-    playable_areas[1]["min"] = ( -288, 591, -11 );
-    playable_areas[1]["max"] = ( 361, 1160, 235 );
+    playable_areas[1]["min"] = (-288 + margin, 591, -11);
+    playable_areas[1]["max"] = (361, 1160 - margin, 235);
 
-    playable_areas[2]["min"] = ( -272, 120, -11 );
-    playable_areas[2]["max"] = ( 370, 591, 235 );
+    playable_areas[2]["min"] = (-272 + margin, 120, -11);
+    playable_areas[2]["max"] = (370 - margin, 591, 235);
 
-    playable_areas[3]["min"] = ( -272, -912, -11 );
-    playable_areas[3]["max"] = ( 273, 120, 235 );
+    playable_areas[3]["min"] = (-272 + margin, -912 + margin, -11);
+    playable_areas[3]["max"] = (273 - margin, 120, 235);
 
-    while ( 1 )
-    {
+    self.last_valid_pos = self.origin;
+
+    while (1) {
         is_out = true;
 
-        for ( i = 0; i < playable_areas.size; i++ )
-        {
-            if ( self is_inside_box(
-                playable_areas[i]["min"][0], playable_areas[i]["max"][0],
-                playable_areas[i]["min"][1], playable_areas[i]["max"][1],
-                playable_areas[i]["min"][2], playable_areas[i]["max"][2] ) )
-            {
+        for (i = 0; i < playable_areas.size; i++) {
+            if (self is_within_volume(playable_areas[i]["min"][0], playable_areas[i]["max"][0], playable_areas[i]["min"][1], playable_areas[i]["max"][1], playable_areas[i]["min"][2], playable_areas[i]["max"][2])) {
                 is_out = false;
             }
         }
 
-        if ( is_out )
-        {
-            setsaveddvar( "player_death_iframe_time", 0 );
-            self DoDamage( self.health + 1000, self.origin, undefined, undefined, "riflebullet" );
-            setsaveddvar( "player_death_iframe_time", level.start_iframe_time );
+        if (is_out) {
+            self setorigin(self.last_valid_pos);
+        }
+        else {
+            self.last_valid_pos = self.origin;
         }
 
-        wait( 0.2 );
+        wait(0.05);
     }
+}
+
+spawn_collision_models() {
+    spawncollision("collision_geo_32x32x128", "collider", (116, -125, 160), (0, 0, 0));
+    spawncollision("collision_geo_32x32x32", "collider", (376, 643, 184), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (816, 625, 12), (0, 0, 0));
+    spawncollision("collision_geo_32x32x128", "collider", (222, 138, 60), (0, 0, 0)); 
+    spawncollision("collision_geo_64x64x64", "collider", (-138, -159, 156), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (192, 349 ,185), (0, 0, 0));
+    spawncollision("collision_geo_32x32x32", "collider", (519 ,765, 155), (0, 0, 0));
+    spawncollision("collision_geo_32x32x128", "collider", (-210, 641, 218), (0, 0, 0));
+    spawncollision("collision_geo_32x32x32", "collider", (142 ,-100 ,91), (0, 0, 0));
+    spawncollision("collision_geo_32x32x128", "collider", (199, 117, 18), (0, 0, 0));
 }

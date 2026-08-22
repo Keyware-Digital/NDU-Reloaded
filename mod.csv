@@ -378,6 +378,8 @@ xmodel,char_usa_marine_player_wet_body2_1
 xmodel,char_usa_raider_gear4
 xmodel,char_usa_raider_gear_flametank
 xmodel,collision_geo_32x32x32
+xmodel,collision_geo_32x32x128
+xmodel,collision_geo_64x64x64
 xmodel,static_berlin_ger_radio_d
 xmodel,viewmodel_ger_wermacht_arms
 xmodel,viewmodel_ger_wermacht_player

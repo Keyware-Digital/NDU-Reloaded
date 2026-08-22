@@ -467,7 +467,7 @@ debris_think()
 					junk[i] add_new_zombie_spawners(); 
 					
 	
-					level notify ("junk purchased");
+					level notify ("debris_purchased");
 	
 					if( isDefined( junk[i].script_noteworthy ) )
 					{

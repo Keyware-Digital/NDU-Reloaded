@@ -133,6 +133,10 @@ init_models() {
     PrecacheModel("zmb_mdl_cash_register");
     PrecacheModel("zmb_mdl_samantha_figure");
     PrecacheModel("zombie_teddybear");
+
+    precachemodel("collision_geo_32x32x32");
+    precachemodel("collision_geo_32x32x128");
+    precachemodel("collision_geo_64x64x64");
 }
 
 init_shellshocks() {
