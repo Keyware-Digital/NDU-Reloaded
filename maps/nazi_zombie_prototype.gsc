@@ -261,23 +261,82 @@ filtered_weapons()
     //level.filtered_weapon[level.filtered_weapon.size] = "zombie_cymbal_monkey";
 }
 
+prototype_betty_weighting_func()
+{
+	players = get_players();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] maps\_zombiemode_weapons::has_weapon_or_upgrade( "mine_bouncing_betty" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 9 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}
+
+prototype_bowie_weighting_func()
+{
+	players = get_players();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] maps\_zombiemode_weapons::has_weapon_or_upgrade( "zombie_bowie_flourish" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 10 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}
+
 // Rare weapon(s) weighting
-prototype_ray_gun_weighting_func() {
+prototype_ray_gun_weighting_func()
+{
+    num_to_add = 1;
+
+    if (isDefined(level.pulls_since_last_ray_gun))
     {
-        num_to_add = 1;
-        // increase the percentage of ray gun
-        if (isDefined(level.pulls_since_last_ray_gun)) {
-            // after 12 pulls the ray gun percentage increases to 15%
-            if (level.pulls_since_last_ray_gun > 11) {
-                num_to_add += int(level.zombie_include_weapons.size * 0.1);
-            }
-            // after 8 pulls the Ray Gun percentage increases to 10%
-            else if (level.pulls_since_last_ray_gun > 7) {
-                num_to_add += int(.05 * level.zombie_include_weapons.size);
-            }
+        // after 12 pulls the ray gun percentage increases to 15%
+        if (level.pulls_since_last_ray_gun > 11)
+        {
+            num_to_add += int(level.zombie_include_weapons.size * 0.15);
         }
-        return num_to_add;
+        // after 8 pulls the Ray Gun percentage increases to 10%
+        else if (level.pulls_since_last_ray_gun > 7)
+        {
+            num_to_add += int(level.zombie_include_weapons.size * 0.1);
+        }
     }
+
+    return num_to_add;
 }
 
 /*prototype_cymbal_monkey_weighting_func()
@@ -308,62 +367,6 @@ prototype_ray_gun_weighting_func() {
 	}
 }*/
 
-prototype_bowie_weighting_func()
-{
-	players = get_players();
-	count = 0;
-	for( i = 0; i < players.size; i++ )
-	{
-		if( players[i] maps\_zombiemode_weapons::has_weapon_or_upgrade( "zombie_bowie_flourish" ) )
-		{
-			count++;
-		}
-	}
-	if ( count > 0 )
-	{
-		return 1;
-	}
-	else
-	{
-		if( level.round_number < 10 )
-		{
-			return 3;
-		}
-		else
-		{
-			return 5;
-		}
-	}
-}
-
-prototype_betty_weighting_func()
-{
-	players = get_players();
-	count = 0;
-	for( i = 0; i < players.size; i++ )
-	{
-		if( players[i] maps\_zombiemode_weapons::has_weapon_or_upgrade( "mine_bouncing_betty" ) )
-		{
-			count++;
-		}
-	}
-	if ( count > 0 )
-	{
-		return 1;
-	}
-	else
-	{
-		if( level.round_number < 9 )
-		{
-			return 3;
-		}
-		else
-		{
-			return 5;
-		}
-	}
-}
-
 include_powerups() {
     include_powerup("nuke");
     include_powerup("insta_kill");
@@ -386,70 +389,80 @@ health_show() {
 
 player_zombie_awareness()
 {
-	self endon("disconnect");
-	self endon("death");
-	
-	while(1)
-	{
-		wait(1);
-		
-		zombie = get_closest_ai(self.origin,"axis");
-		
-		if(!isDefined(zombie))
-		{
-			continue;
-		}
-		
-		dist = 200;
-		
-		switch(zombie.zombie_move_speed)
-		{
-			case "walk": dist = 200;break;
-			case "run": dist = 250; break;
-			case "sprint": dist = 275;break;
-		}
-		
-		if(distance2d(zombie.origin,self.origin) < dist)
-		{				
-			yaw = self animscripts\utility::GetYawToSpot(zombie.origin );
-			
-			//check to see if he's actually behind the player
-			if(yaw < -95 || yaw > 95)
-			{
-				zombie playsound ("behind_vocals");
-			}			
-		}		
-	}	
+    self endon("disconnect");
+    self endon("death");
+    
+    while(1)
+    {
+        wait(1);
+        
+        zombie = get_closest_ai(self.origin,"axis");
+        
+        if(!isDefined(zombie))
+        {
+            continue;
+        }
+        
+        dist = 200;
+        
+        switch(zombie.zombie_move_speed)
+        {
+            case "walk": dist = 200; break;
+            case "run":  dist = 250; break;
+            case "sprint": dist = 275; break;
+        }
+        
+        if( distance2d(zombie.origin, self.origin) < dist
+            && zombie.origin[2] < self.origin[2] + 80
+            && zombie.origin[2] > self.origin[2] - 80 )
+        {				
+            yaw = self animscripts\utility::GetYawToSpot( zombie.origin );
+            
+            if( yaw < -100 || yaw > 100 )
+            {
+                zombie playsound ("behind_vocals");
+            }			
+        }		
+    }	
 }
 
 reloading_monitor()
 {
+    self endon("disconnect");
+    self endon("death");
+
     while(1)
     {
         self.reloading = false;
         self waittill("reload_start");
+
         current_weapon = self GetCurrentWeapon();
 
-        // Check if weapon is filtered (skip sound for these)
-        if( IsDefined( level.filtered_weapon ) && level.filtered_weapon.size > 0 )
+        // Skip tracking for filtered weapons
+        is_filtered = false;
+        if (IsDefined(level.filtered_weapon))
         {
-            for( i = 0; i < level.filtered_weapon.size; i++ )
+            for (i = 0; i < level.filtered_weapon.size; i++)
             {
-                if( IsDefined( level.filtered_weapon[i] ) && current_weapon == level.filtered_weapon[i] )
+                if (IsDefined(level.filtered_weapon[i]) && current_weapon == level.filtered_weapon[i])
                 {
-                    IPrintLnBold("Reload skipped for filtered weapon: " + current_weapon); // Debug
-                    continue; // Skip to next reload event
+                    is_filtered = true;
+                    break;
                 }
             }
         }
 
-        currentMagAmmo = self GetWeaponAmmoClip(current_weapon); //store their current mag ammo during the reload
+        if (is_filtered)
+            continue;   // now this really skips to the next reload_start
+
+        // Normal tracking
+        currentMagAmmo = self GetWeaponAmmoClip(current_weapon);
         self.reloading = true;
-        while( currentMagAmmo == self GetWeaponAmmoClip(current_weapon) )
-        {
+
+        while (currentMagAmmo == self GetWeaponAmmoClip(current_weapon))
             wait 0.01;
-        }
-        self.reloading = false; // Reset after reload completes
+
+        self.reloading = false;
     }
 }
 
@@ -514,6 +527,7 @@ lightning_flash()
     fadetowhite destroy();
 }
 
+// map exploit fixes
 player_bounds_monitor() {
     players = get_players();
 
