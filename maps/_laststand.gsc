@@ -128,13 +128,13 @@ PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sH
 	// vision set
 
     // Check for self-downing via grenade, projectile, falling, or suicide
-	selfKillGrenade = false;
+	self_kill_grenade = false;
 	if (sMeansOfDeath == "MOD_SUICIDE" || sMeansOfDeath == "MOD_FALLING" || 
 		sMeansOfDeath == "MOD_GRENADE" || sMeansOfDeath == "MOD_GRENADE_SPLASH" || 
 		sMeansOfDeath == "MOD_PROJECTILE" || sMeansOfDeath == "MOD_PROJECTILE_SPLASH" || 
 		sWeapon == "stielhandgranate" || (isDefined(attacker) && attacker == self))
 	{
-		selfKillGrenade = true;
+		self_kill_grenade = true;
 
         // Find a living teammate within 500 units to play the quip
         players = get_players();
@@ -175,7 +175,7 @@ PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sH
 	self laststand_give_pistol();
 
 	// nade fix when going down
-	self thread laststand_give_grenade( selfKillGrenade );
+	self thread laststand_give_grenade();
 
 	// AI
 	self.ignoreme = true;
