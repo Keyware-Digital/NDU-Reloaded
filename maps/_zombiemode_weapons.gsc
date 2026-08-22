@@ -67,6 +67,62 @@ prototype_weighting_func()
 	return 1;
 }
 
+prototype_betty_weighting_func()
+{
+	players = GetPlayers();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] has_weapon_or_upgrade( "mine_bouncing_betty" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 9 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}
+
+prototype_bowie_weighting_func()
+{
+	players = GetPlayers();
+	count = 0;
+	for( i = 0; i < players.size; i++ )
+	{
+		if( players[i] has_weapon_or_upgrade( "zombie_bowie_flourish" ) )
+		{
+			count++;
+		}
+	}
+	if ( count > 0 )
+	{
+		return 1;
+	}
+	else
+	{
+		if( level.round_number < 10 )
+		{
+			return 3;
+		}
+		else
+		{
+			return 5;
+		}
+	}
+}
+
 prototype_ray_gun_weighting_func()
 {
 	{	
@@ -116,62 +172,6 @@ prototype_ray_gun_weighting_func()
 		}
 	}
 }*/
-
-prototype_bowie_weighting_func()
-{
-	players = GetPlayers();
-	count = 0;
-	for( i = 0; i < players.size; i++ )
-	{
-		if( players[i] has_weapon_or_upgrade( "zombie_bowie_flourish" ) )
-		{
-			count++;
-		}
-	}
-	if ( count > 0 )
-	{
-		return 1;
-	}
-	else
-	{
-		if( level.round_number < 10 )
-		{
-			return 3;
-		}
-		else
-		{
-			return 5;
-		}
-	}
-}
-
-prototype_betty_weighting_func()
-{
-	players = GetPlayers();
-	count = 0;
-	for( i = 0; i < players.size; i++ )
-	{
-		if( players[i] has_weapon_or_upgrade( "mine_bouncing_betty" ) )
-		{
-			count++;
-		}
-	}
-	if ( count > 0 )
-	{
-		return 1;
-	}
-	else
-	{
-		if( level.round_number < 9 )
-		{
-			return 3;
-		}
-		else
-		{
-			return 5;
-		}
-	}
-}
 
 include_zombie_weapon( weapon_name, in_box, weighting_func )
 {
@@ -2471,7 +2471,7 @@ flamethrower_attach()
  		}
  		else if( !self.has_flamethrower ) 
  		{
- 			if( isdefined( self.flamethrower_attached ) && self.z )
+ 			if( isdefined( self.flamethrower_attached ) && self.flamethrower_attached )
  			{
  				self detach( "char_usa_raider_gear_flametank", "j_spine4" ); 
  				self.flamethrower_attached = false;
