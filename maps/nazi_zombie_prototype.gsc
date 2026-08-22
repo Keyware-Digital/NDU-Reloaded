@@ -33,7 +33,7 @@ main() {
     level thread intro_screen();
     level thread maps\_zombiemode_betty::give_betties_after_rounds();
 
-    level thread player_bounds_monitor();
+    level thread player_bounds_setup();
 
     level thread spawn_collision_models();
 
@@ -528,7 +528,7 @@ lightning_flash()
 }
 
 // map exploit fixes
-player_bounds_monitor() {
+player_bounds_setup() {
     players = get_players();
 
     for (i = 0; i < players.size; i++) {
@@ -610,7 +610,7 @@ monitor_map_bounds() {
 }
 
 spawn_collision_models() {
-    spawncollision("collision_geo_32x32x128", "collider", (116, -125, 160), (0, 0, 0));
+    spawncollision("collision_geo_32x32x128", "collider", (130, -100, 180), (0, 0, 0));
     spawncollision("collision_geo_32x32x32", "collider", (376, 643, 184), (0, 0, 0));
     spawncollision("collision_geo_64x64x64", "collider", (816, 625, 12), (0, 0, 0));
     spawncollision("collision_geo_32x32x128", "collider", (222, 138, 60), (0, 0, 0)); 
