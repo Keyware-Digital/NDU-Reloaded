@@ -151,12 +151,12 @@ PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sH
         if (living_teammates.size > 0)
         {
             quipper = living_teammates[RandomInt(living_teammates.size)]; // Random nearby teammate
-            quipper thread maps\_zombiemode_prototype_vox::quip_sound_trigger();
+            quipper thread maps\_prototype_vox::quip_sound_trigger();
         }
         else
         {
             // Fallback: Play quip on downed player if no teammates available
-            self thread maps\_zombiemode_prototype_vox::quip_sound_trigger();
+            self thread maps\_prototype_vox::quip_sound_trigger();
         }
     }
 

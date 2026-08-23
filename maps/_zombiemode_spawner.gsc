@@ -793,7 +793,7 @@ tear_into_building()
                 player.blockers_vox_cooldown = true;
                 // iprintlnbold( "^2BLOCKERS VOX POP!" );
                 player thread player_vox_helper( ::blockers_sound, "blockers_sound_done" );
-                player thread maps\_zombiemode_prototype_vox::blockers_vox_cooldown_reset();
+                player thread maps\_prototype_vox::blockers_vox_cooldown_reset();
             }
             else
             {
@@ -2288,7 +2288,7 @@ zombie_death_event(zombie)
             player.kill_times = [];
             // iprintlnbold( "^2KILLSTREAK POP!" );
             player thread player_vox_helper( ::killstreak_sound, "killstreak_sound_done" );
-            player thread maps\_zombiemode_prototype_vox::killstreak_cooldown_reset();
+            player thread maps\_prototype_vox::killstreak_cooldown_reset();
             return;
         }
         else

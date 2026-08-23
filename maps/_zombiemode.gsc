@@ -32,14 +32,14 @@ main() {
 
     level.hudelem_count = 0;
     // Call the other zombiemode scripts
+    maps\_hands::init();
+    maps\_prototype_vox::init();
     maps\_zombiemode_weapons::init();
     maps\_zombiemode_blockers_new::init();
     maps\_zombiemode_spawner::init();
     maps\_zombiemode_powerups::init();
     maps\_zombiemode_perks::init();
-    maps\_zombiemode_prototype_vox::init();
     maps\_zombiemode_radio::init();
-    maps\_zombiemode_hands::init();
     maps\_zombiemode_solo_revive::init();
 
     init_utility();
@@ -641,7 +641,7 @@ onPlayerConnect() {
         player thread onPlayerDisconnect();
 
         player thread watchGrenadeThrow();
-        player thread maps\_zombiemode_molotov::track_molotov(); 
+        player thread maps\_molotov::track_molotov(); 
 
         player.score = level.zombie_vars["zombie_score_start"];
         player.score_total = player.score;
@@ -702,14 +702,14 @@ onPlayerSpawned() {
                 // set the initial score on the hud		
                 self maps\_zombiemode_score::set_player_score_hud(true);
                 self thread player_zombie_breadcrumb();
-                self thread maps\_zombiemode_prototype_vox::player_reload_sounds();
-                self thread maps\_zombiemode_prototype_vox::player_no_ammo_sounds();
-                self thread maps\_zombiemode_prototype_vox::player_lunge_knife_exert_sounds();
-                self thread maps\_zombiemode_prototype_vox::player_throw_stielhandgranate_exert_sounds();
-                self thread maps\_zombiemode_prototype_vox::player_throw_molotov_exert_sounds();
-                self thread maps\_zombiemode_prototype_vox::player_friendly_fire_sound_monitor();
-                self thread maps\_zombiemode_prototype_vox::player_reload_monitor();
-                self thread maps\_zombiemode_prototype_vox::player_swarm_monitor(); 
+                self thread maps\_prototype_vox::player_reload_sounds();
+                self thread maps\_prototype_vox::player_no_ammo_sounds();
+                self thread maps\_prototype_vox::player_lunge_knife_exert_sounds();
+                self thread maps\_prototype_vox::player_throw_stielhandgranate_exert_sounds();
+                self thread maps\_prototype_vox::player_throw_molotov_exert_sounds();
+                self thread maps\_prototype_vox::player_friendly_fire_sound_monitor();
+                self thread maps\_prototype_vox::player_reload_monitor();
+                self thread maps\_prototype_vox::player_swarm_monitor(); 
             }
         }
 

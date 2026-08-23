@@ -124,9 +124,12 @@ rawfile,maps/_custom_radios.gsc
 rawfile,maps/_destructible_opel_blitz.gsc
 rawfile,maps/_explosive_barrels.gsc
 rawfile,maps/_gameskill.gsc
+rawfile,maps/_hands.gsc
 rawfile,maps/_hide_and_seek.gsc
 rawfile,maps/_laststand.gsc
 rawfile,maps/_loadout.gsc
+rawfile,maps/_molotov.gsc
+rawfile,maps/_prototype_vox.gsc
 rawfile,maps/_share_points.gsc
 rawfile,maps/_sounds.gsc
 rawfile,maps/_zombiemode.gsc
@@ -134,11 +137,8 @@ rawfile,maps/_zombiemode_achievement.gsc
 rawfile,maps/_zombiemode_betty.gsc
 rawfile,maps/_zombiemode_blockers_new.gsc
 rawfile,maps/_zombiemode_bowie.gsc
-rawfile,maps/_zombiemode_hands.gsc
-rawfile,maps/_zombiemode_molotov.gsc
 rawfile,maps/_zombiemode_perks.gsc
 rawfile,maps/_zombiemode_powerups.gsc
-rawfile,maps/_zombiemode_prototype_vox.gsc
 rawfile,maps/_zombiemode_score.gsc
 rawfile,maps/_zombiemode_server_throttle.gsc
 rawfile,maps/_zombiemode_solo_revive.gsc

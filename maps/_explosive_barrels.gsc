@@ -113,5 +113,5 @@ explodable_barrel_explode()
 	if( !isplayer( attacker ) )
 		attacker = undefined;
 
-	self thread maps\_zombiemode_molotov::fire_burn_radius( attacker, level.barrel_fire_radius, level.barrel_fire_height, level.barrel_fire_duration );
+	self thread maps\_molotov::fire_burn_radius( attacker, level.barrel_fire_radius, level.barrel_fire_height, level.barrel_fire_duration );
 }
