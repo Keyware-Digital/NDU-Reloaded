@@ -25,7 +25,6 @@ main() {
     //init_sounds();
     animscripts\walking_anim::main();
     array_thread(GetPlayers(), ::player_zombie_awareness);
-    array_thread(GetPlayers(), ::reloading_monitor);
 
     //level thread dolphin_dive_fx();
     level thread filtered_weapons();
@@ -424,46 +423,6 @@ player_zombie_awareness()
             }			
         }		
     }	
-}
-
-reloading_monitor()
-{
-    self endon("disconnect");
-    self endon("death");
-
-    while(1)
-    {
-        self.reloading = false;
-        self waittill("reload_start");
-
-        current_weapon = self GetCurrentWeapon();
-
-        // Skip tracking for filtered weapons
-        is_filtered = false;
-        if (IsDefined(level.filtered_weapon))
-        {
-            for (i = 0; i < level.filtered_weapon.size; i++)
-            {
-                if (IsDefined(level.filtered_weapon[i]) && current_weapon == level.filtered_weapon[i])
-                {
-                    is_filtered = true;
-                    break;
-                }
-            }
-        }
-
-        if (is_filtered)
-            continue;   // now this really skips to the next reload_start
-
-        // Normal tracking
-        currentMagAmmo = self GetWeaponAmmoClip(current_weapon);
-        self.reloading = true;
-
-        while (currentMagAmmo == self GetWeaponAmmoClip(current_weapon))
-            wait 0.01;
-
-        self.reloading = false;
-    }
 }
 
 // BO3 style random lightning + thunder throughout the map

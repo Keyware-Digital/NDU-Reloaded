@@ -708,6 +708,7 @@ onPlayerSpawned() {
                 self thread maps\_zombiemode_prototype_vox::player_throw_stielhandgranate_exert_sounds();
                 self thread maps\_zombiemode_prototype_vox::player_throw_molotov_exert_sounds();
                 self thread maps\_zombiemode_prototype_vox::player_friendly_fire_sound_monitor();
+                self thread maps\_zombiemode_prototype_vox::player_reload_monitor();
                 self thread maps\_zombiemode_prototype_vox::player_swarm_monitor(); 
             }
         }

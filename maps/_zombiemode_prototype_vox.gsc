@@ -9,30 +9,7 @@ init()
     level.zombies_are_close = 0;
 }
 
-blockers_vox_cooldown_reset()
-{
-    wait 3;
-    self.blockers_vox_cooldown = false;
-}
-
-friendly_fire_sound_cooldown_reset()
-{
-    wait 2;
-    self.friendly_fire_sound_cooldown = false;
-}
-
-killstreak_cooldown_reset()
-{
-    wait 7;
-    self.killstreak_cooldown = false;
-}
-
-no_ammo_cooldown_reset()
-{
-    wait 20;
-    self.no_ammo_cooldown = false;
-}
-
+// player monitors
 player_friendly_fire_sound_monitor()
 {
     self endon( "death" );
@@ -204,18 +181,6 @@ player_reload_sounds()
         self waittill( "reload_start" );
         wait 0.05;
 
-        current_weapon = self GetCurrentWeapon();
-        if( IsDefined( level.filtered_weapon ) && level.filtered_weapon.size > 0 )
-        {
-            for( i = 0; i < level.filtered_weapon.size; i++ )
-            {
-                if( IsDefined( level.filtered_weapon[i] ) && current_weapon == level.filtered_weapon[i] )
-                {
-                    continue;
-                }
-            }
-        }
-
         if( !self.reload_cooldown )
         {
             zombies = GetAiArray( "axis" );
@@ -242,6 +207,46 @@ player_reload_sounds()
             }
         }
         wait 0.05;
+    }
+}
+
+player_reload_monitor()
+{
+    self endon("disconnect");
+    self endon("death");
+
+    while(1)
+    {
+        self.reloading = false;
+        self waittill("reload_start");
+
+        current_weapon = self GetCurrentWeapon();
+
+        // Skip tracking for filtered weapons
+        is_filtered = false;
+        if (IsDefined(level.filtered_weapon))
+        {
+            for (i = 0; i < level.filtered_weapon.size; i++)
+            {
+                if (IsDefined(level.filtered_weapon[i]) && current_weapon == level.filtered_weapon[i])
+                {
+                    is_filtered = true;
+                    break;
+                }
+            }
+        }
+
+        if (is_filtered)
+            continue;
+
+        // Normal tracking
+        currentMagAmmo = self GetWeaponAmmoClip(current_weapon);
+        self.reloading = true;
+
+        while (currentMagAmmo == self GetWeaponAmmoClip(current_weapon))
+            wait 0.01;
+
+        self.reloading = false;
     }
 }
 
@@ -327,7 +332,6 @@ quip_sound_trigger()
 {
     self endon("disconnect");
 
-    // Skip if on sound cooldown
     if (IsDefined(self.quip_sound_cooldown) && self.quip_sound_cooldown)
         return;
 
@@ -336,6 +340,37 @@ quip_sound_trigger()
     self thread maps\_sounds::player_vox_helper( maps\_sounds::quip_sound, "quip_sound_done", 6.0 );
 
     self thread quip_sound_cooldown_reset();
+}
+
+// cooldowns / resets
+blockers_vox_cooldown_reset()
+{
+    wait 3;
+    self.blockers_vox_cooldown = false;
+}
+
+friendly_fire_sound_cooldown_reset()
+{
+    wait 2;
+    self.friendly_fire_sound_cooldown = false;
+}
+
+killstreak_cooldown_reset()
+{
+    wait 7;
+    self.killstreak_cooldown = false;
+}
+
+no_ammo_cooldown_reset()
+{
+    wait 20;
+    self.no_ammo_cooldown = false;
+}
+
+quip_sound_cooldown_reset()
+{
+    wait 2;
+    self.quip_sound_cooldown = false;
 }
 
 reload_cooldown_reset()
@@ -348,10 +383,4 @@ swarm_cooldown_reset()
 {
     wait 7;
     self.swarm_cooldown = false;
-}
-
-quip_sound_cooldown_reset()
-{
-    wait 2; // 2-second cooldown to prevent sound spam
-    self.quip_sound_cooldown = false;
 }
