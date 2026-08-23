@@ -1638,11 +1638,38 @@ chosenweapon = randomnumb;
 	// needs burp sound in animation file
 	
 	// if(!isDefined(player.perknum) || player.perknum < 11)	// check if player has max perks
+	// Dynamic cabinet perk drop system
+	level.cabinet_perk_base_chance   = 33;   
+	level.cabinet_perk_min_chance    = 23;	// adjust for balance as necessary
+	level.cabinet_perk_high_count    = 4;
+
+
+	luckyNumCabinet = RandomInt(100);
+
+	// Only attempt a perk drop if the player still has room for more perks
 	if( !isDefined(player.perknum) || !isDefined(player.perkarray) || player.perknum < player.perkarray.size )
 	{
-		if(luckyNumCabinet <= 33)	// 10 out of 100 chance to get a perk (make 100 to test perks)
+		// Treat undefined as 0 (fresh player)
+		current_perks = 0;
+		if( isDefined( player.perknum ) )
+			current_perks = player.perknum;
+
+		// Calculate chance based on how many perks the player already has
+		perk_chance = level.cabinet_perk_base_chance;
+
+		if( current_perks >= level.cabinet_perk_high_count )
 		{
-			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle at the correct angle without the player noticing
+			// Drop 1% for every perk beyond the high-count threshold
+			perk_chance = level.cabinet_perk_base_chance - (current_perks - level.cabinet_perk_high_count + 1);
+		}
+
+		// Never go below the minimum
+		if( perk_chance < level.cabinet_perk_min_chance )
+			perk_chance = level.cabinet_perk_min_chance;
+
+		if( luckyNumCabinet < perk_chance )		// exact percentage (0-99)
+		{
+			// Hide the weapon cabinet model so we can reset the angle and show the perk bottle
 			weaponmodelstruct Hide();
 			weaponmodelstruct.angles = self.angles + ( 0, 90, 0 );
 			wait 0.05;
@@ -1650,17 +1677,10 @@ chosenweapon = randomnumb;
 			weaponmodelstruct SetModel(GetWeaponModel( "perks_a_cola" ));
 			chosenweapon = "perks_a_cola";
 
-			switch(chosenweapon)
-			{
-				case "perks_a_cola":
-				weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_RANDOM_PERK_BOTTLE";
-					break;
-			}
-
+			weaponNameMysteryCabinet = &"PROTOTYPE_ZOMBIE_WEAPON_RANDOM_PERK_BOTTLE";
 			self SetHintString(&"PROTOTYPE_ZOMBIE_TRADE_WEAPONS_BOX", "&&1", weaponNameMysteryCabinet);
-			// disable to prevent RandomPerk briefly enterting the powerup array
+			//disable to prevent RandomPerk briefly entering the powerup array
 			//level.zombie_vars["enableRandomPerk"] = 1;
-
 		}
 	}
 
@@ -1668,7 +1688,7 @@ chosenweapon = randomnumb;
     //if(!(player hasWeapon("stg44_pap")))	// check if player has the stg
 	if( isDefined( level.samantha_ee_completed ) && level.samantha_ee_completed && !(player hasWeapon("stg44_pap")) )
 	{
-		if(luckyNumCabinet <= 10)	// keep your original chance
+		if(luckyNumCabinet <= 10)	// make 5% or less on release
 		{
 			weaponmodelstruct Hide();
 			weaponmodelstruct.angles = self.angles + ( -90,90,0 );
