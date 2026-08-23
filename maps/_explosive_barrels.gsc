@@ -8,14 +8,14 @@ init_explosive_barrels()
 
 	explosive_barrels_entity = GetEntArray("explodable_barrel", "targetname");
 
-	level.shot_explosive_barrels = 0;
-	level.barrel_ee_started = 0;
-	level.barrel_explosion_this_frame = false;
-	level.barrel_explosion_last = [];
+    level.shot_explosive_barrels = 0;
+    level.barrel_ee_started = 0;
+    level.barrel_explosion_this_frame = false;
+    level.barrel_explosion_last = [];
 
-	level.barrel_minDamage   = 25;
-	level.barrel_maxDamage   = 250;
-	level.barrel_blastRadius = 250;
+    level.barrel_min_damage   = 25;
+    level.barrel_max_damage   = 250;
+    level.barrel_blast_radius = 250;
 
 	all_explosive_barrels = [];
 
@@ -44,9 +44,9 @@ explosive_barrels_think(all_explosive_barrels)
 			continue;
 
 		if( IsDefined( self.script_selfisattacker ) && self.script_selfisattacker )
-			self.damageOwner = self;
+            self.damage_owner = self;
 		else
-			self.damageOwner = attacker;
+            self.damage_owner = attacker;
 
 		level.shot_explosive_barrels++;
 
@@ -80,21 +80,21 @@ explodable_barrel_explode()
 
 	level.barrel_explosion_this_frame = true;
 
-	minDamage   = level.barrel_minDamage;
-	maxDamage   = level.barrel_maxDamage;
-	blastRadius = level.barrel_blastRadius;
+    min_damage   = level.barrel_min_damage;
+    max_damage   = level.barrel_max_damage;
+    blast_radius = level.barrel_blast_radius;
 
 	if( IsDefined( self.script_damage ) )
-		maxDamage = self.script_damage;
+        max_damage = self.script_damage;
 
 	if( IsDefined( self.radius ) )
-		blastRadius = self.radius;
+        blast_radius = self.radius;
 
 	attacker = undefined;
 
-	if(isdefined(self.damageOwner))
+    if(isdefined(self.damage_owner))
 	{
-		attacker = self.damageOwner;
+        attacker = self.damage_owner;
 		if( isplayer( attacker ) )
 		{
 			arcademode_assignpoints( "arcademode_score_explodableitem", attacker );
@@ -104,8 +104,8 @@ explodable_barrel_explode()
 	level.barrel_explosion_last[ "time" ]   = getTime();
 	level.barrel_explosion_last[ "origin" ] = self.origin + ( 0, 0, 30 );
 
-	// initial blast damage
-	self radiusDamage(self.origin + (0,0,30), blastRadius, maxDamage, minDamage, attacker);
+    // initial blast damage
+    self radiusDamage(self.origin + (0,0,30), blast_radius, max_damage, min_damage, attacker);
 
 	wait 0.05;
 	level.barrel_explosion_this_frame = false;
