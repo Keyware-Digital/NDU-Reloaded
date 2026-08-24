@@ -574,9 +574,9 @@ spawn_collision_models() {
     spawncollision("collision_geo_64x64x64", "collider", (130, -132, 196), (0, 0, 0));
     spawncollision("collision_geo_64x64x64", "collider", (142 ,-132 ,107), (0, 0, 0));
     spawncollision("collision_geo_64x64x64", "collider", (222, 138, 76), (0, 0, 0));
-    spawncollision("collision_geo_64x64x64", "collider", (192, 317 ,188), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (192, 349 ,188), (0, 0, 0));
     spawncollision("collision_geo_64x64x64", "collider", (231, 85, 34), (0, 0, 0));
     spawncollision("collision_geo_64x64x64", "collider", (376, 643, 188), (0, 0, 0));
-    spawncollision("collision_geo_64x64x64", "collider", (487 ,765, 188), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (519 ,749, 188), (0, 0, 0));
     spawncollision("collision_geo_64x64x64", "collider", (816, 625, 44), (0, 0, 0));
 }
