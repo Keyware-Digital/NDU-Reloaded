@@ -55,6 +55,7 @@ The core Zombies gameplay loop has been refined and expanded with numerous featu
 * Barrier "cha-ching" sound now stops when the barrier no longer awards points.
 * Easter Eggs from BO1 and BO3 have been backported, and yes, a few original secrets have been hidden away for players to uncover.
 * Flame damage to zombies now matches DLC 1+.
+* Improved code improvements from DLC 1+.
 * Improved gibbing FX.
 * Improved graphical fidelity where possible (shading tweaks, etc..).
 * Improved Last Stand logic.
@@ -88,8 +89,8 @@ NDU features unique starting loadouts for each character, helping reinforce thei
 * The Russian character starts with the Tokarev TT-33.
  
 # Mystery Box / Weapon Cabinet Changes
-NDU features a larger weapon roster, so the Mystery Box has been revised to accommodate the expanded arsenal without compromising its core purpose. The Weapon Cabinet has also been redesigned as a more premium but higher risk Mystery Box as the previous version offered little incentive to use it. We didn't want to add Pack a Punch weapons to Nacht, so this is our alternative.
- 
+NDU features a larger weapon roster, so the Mystery Box has been revised to accommodate the expanded arsenal without compromising its core purpose. The Weapon Cabinet has also been redesigned as a more premium but higher risk Mystery Box as the previous version offered little incentive to use it. We didn't want to add Pack a Punch to Nacht, so this is our alternative.
+
 Mystery Box:
 * Added DP28 - sits between the 30cal and MG42 in terms of stats; slower-firing but more damaging.
 * Added Bouncing Betties - (WIP - moving to wallbuy).
@@ -144,7 +145,7 @@ Power-Ups have received a few additions and refinements, bringing more variety t
 * Added Carpenter
 * Added Death Machine - (WIP).
 * Added Firesale
-* Added Random Perk which only drops in under specific conditions.
+* Added Random Perk which only drops in under _very_ specific conditions.
 * Max Ammo will now fill up your mag as well as your reserve ammo, and all equipment consistently. (BO4 style).
 * Revamped powerup shader system.
  
@@ -188,6 +189,7 @@ A variety of zombie AI and gameplay improvements have been backported from later
 * Zombies no longer push players while attacking, eliminating the awkward "tagging" effect. This mirrors BO1's behaviour.
 * Zombies now attempt to grab players through windows.
 * Zombies now emerge from the ground at all spawn points, further enhancing NDU's bleak and gritty atmosphere.
+* Zombies now have generally improved spawning and pathing.
 * Zombies now have significantly more head and body variants, further enhanced by the random gear system.
 * Zombies now use the DLC 1+ animation set, including several previously unused animations.
 * Zombies now use the DLC 1+ FX and sound set.
