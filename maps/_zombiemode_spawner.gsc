@@ -1653,12 +1653,18 @@ headshot_blood_fx()
 	// main head pop fx
 	PlayFX( level._effect["headshot"], fxOrigin, forwardVec, upVec );
 	PlayFX( level._effect["headshot_nochunks"], fxOrigin, forwardVec, upVec );
-
+	
 	wait( 0.3 );
-
-	if( isDefined( self ) )
+	if(IsDefined( self ))
 	{
-		PlayFxOnTag( level._effect["bloodspurt"], self, fxTag );
+		if( self maps\_zombiemode_tesla::enemy_killed_by_tesla() )
+		{
+			PlayFxOnTag( level._effect["tesla_head_light"], self, fxTag );
+		}
+		else
+		{
+			PlayFxOnTag( level._effect["bloodspurt"], self, fxTag );
+		}
 	}
 }
 
@@ -2028,6 +2034,11 @@ zombie_death_animscript()
 {
     self reset_attack_spot();
 
+	if( self maps\_zombiemode_tesla::enemy_killed_by_tesla() )
+	{
+		return false;
+	}
+
 	if( level.zombie_vars["zombie_insta_kill"] && IsDefined(self.attacker) && IsPlayer(self.attacker) )
     {
         // Only do it on melee
@@ -2119,6 +2130,11 @@ zombie_damage( mod, hit_location, hit_origin, player )
 			player maps\_zombiemode_score::player_add_points( "damage", mod, hit_location );
 		}
 	}
+	else if( self maps\_zombiemode_tesla::is_tesla_damage( mod ) )
+	{
+		self maps\_zombiemode_tesla::tesla_damage_init( hit_location, hit_origin, player );
+		return;
+	}
 	else
 	{
 		player maps\_zombiemode_score::player_add_points( "damage", mod, hit_location );
@@ -2192,6 +2208,11 @@ zombie_damage_ads( mod, hit_location, hit_origin, player )
 		{
 			player maps\_zombiemode_score::player_add_points( "damage_ads", mod, hit_location );
 		}
+	}
+	else if( self maps\_zombiemode_tesla::is_tesla_damage( mod ) )
+	{
+		self maps\_zombiemode_tesla::tesla_damage_init( hit_location, hit_origin, player );
+		return;
 	}
 	else
 	{
@@ -3102,6 +3123,40 @@ get_number_variants(aliasPrefix)
 			}
 		}
 }
+
+/*play_tesla_dialog(player_index)
+{
+		
+		waittime = 0.25;
+		if(!IsDefined (self.vox_kill_tesla))
+		{
+			num_variants = get_number_variants(player_index + "vox_kill_tesla");
+			//iprintlnbold(num_variants);
+			self.vox_kill_tesla = [];
+			for(i=0;i<num_variants;i++)
+			{
+				self.vox_kill_tesla[self.vox_kill_tesla.size] = "vox_kill_tesla_" + i;
+				//iprintlnbold("vox_kill_tesla_" + i);	
+			}
+			self.vox_kill_tesla_available = self.vox_kill_tesla;
+		}
+
+		if(!isdefined (level.player_is_speaking))
+		{
+			level.player_is_speaking = 0;
+		}
+
+		sound_to_play = random(self.vox_kill_tesla_available);
+		//iprintlnbold("LINE:" + player_index + sound_to_play);
+		self do_player_playdialog(player_index, sound_to_play, waittime);
+		self.vox_kill_tesla_available = array_remove(self.vox_kill_tesla_available,sound_to_play);
+	
+		if (self.vox_kill_tesla_available.size < 1 )
+		{
+			self.vox_kill_tesla_available = self.vox_kill_tesla;
+		}
+
+}*/
 
 /*play_raygun_dialog(player_index)
 {

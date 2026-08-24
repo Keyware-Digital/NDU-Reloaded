@@ -1552,6 +1552,17 @@ weapon_cost = 1900;	// costs twice as much as the regular mystery box
 	for( i = 0; i < level.cabinetguns.size; i++ )
 	{
 		gun = level.cabinetguns[i];
+
+		// Never give a second Colt / Colt variant
+		if( gun == "colt" )
+		{
+			if( player HasWeapon( "colt" ) ||
+				player HasWeapon( "colt_wet" ) ||
+				player has_weapon_or_upgrade( "colt" ) )
+			{
+				continue;		// skip this gun completely
+			}
+		}
 		if( !player has_weapon_or_upgrade( gun ) && !player HasWeapon( gun ) )
 		{
 			filtered_cabinet[filtered_cabinet.size] = gun;

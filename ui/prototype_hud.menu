@@ -606,7 +606,7 @@ menuDef
 			forecolor		1 1 1 HUD_ALPHA
 			ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
 			background		"hud_grenade_german" // german grenade texture
-			visible			when(dvarInt("player_hud_specialty_electric_cherry") == 0)
+			visible			when(dvarInt("player_hud_specialty_elemental_pop") == 0)
 			decoration
 		}
 
@@ -617,7 +617,7 @@ menuDef
 			forecolor		1 1 1 HUD_ALPHA
 			ownerdraw		CG_PLAYER_WEAPON_BACKGROUND
 			background		"hud_grenade_german_upgraded" // upgraded german grenade texture
-			visible			when(dvarInt("player_hud_specialty_electric_cherry") == 1)
+			visible			when(dvarInt("player_hud_specialty_elemental_pop") == 1)
 			decoration
 		}
 
@@ -639,7 +639,7 @@ menuDef
             forecolor		1 1 1 HUD_ALPHA
             ownerdraw		CG_OFFHAND_WEAPON_ICON_SMOKEFLASH
             background		"hud_grenade_molotov_upgraded"
-            visible			when(dvarInt("player_hud_specialty_electric_cherry") == 1)
+            visible			when(dvarInt("player_hud_specialty_elemental_pop") == 1)
             decoration
         }
         */

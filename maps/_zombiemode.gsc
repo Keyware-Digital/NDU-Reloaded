@@ -34,13 +34,14 @@ main() {
     // Call the other zombiemode scripts
     maps\_hands::init();
     maps\_prototype_vox::init();
-    maps\_zombiemode_weapons::init();
     maps\_zombiemode_blockers_new::init();
-    maps\_zombiemode_spawner::init();
     maps\_zombiemode_powerups::init();
     maps\_zombiemode_perks::init();
     maps\_zombiemode_radio::init();
+    maps\_zombiemode_spawner::init();
     maps\_zombiemode_solo_revive::init();
+    maps\_zombiemode_tesla::init();
+    maps\_zombiemode_weapons::init();
 
     init_utility();
 
@@ -292,6 +293,7 @@ init_fx() {
     level._effect["headshot"] = LoadFX("impacts/flesh_hit_head_fatal_lg_exit");
     level._effect["headshot_nochunks"] = LoadFX("misc/fx_zombie_bloodsplat");
     level._effect["bloodspurt"] = LoadFX("misc/fx_zombie_bloodspurt");
+    level._effect["tesla_head_light"]		= Loadfx( "maps/zombie/fx_zombie_tesla_neck_spurt");
 
     level._effect["rise_burst"] = LoadFx("maps/zombie/fx_mp_zombie_hand_dirt_burst");
     level._effect["rise_billow"] = LoadFx("maps/zombie/fx_mp_zombie_body_dirt_billowing");
@@ -2426,7 +2428,7 @@ setup_player_vars()
 
     for (i = 0; i < players.size; i++) {
         players[i] setClientDvar("player_lastStandBleedoutTime", 45);
-        players[i] setClientDvar("player_hud_specialty_electric_cherry", 0);
+        players[i] setClientDvar("player_hud_specialty_elemental_pop", 0);
         players[i] setClientDvar("player_hud_specialty_mule_kick", 0);
         // enable sv_cheats just to set level of detail for everyone
         players[i] setClientDvar("sv_cheats", 1);

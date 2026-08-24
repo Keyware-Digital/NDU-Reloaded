@@ -1,6 +1,7 @@
 #include maps\_utility;
 #include common_scripts\utility;
 #include maps\_zombiemode_utility;
+#include maps\_zombiemode_net;
 #include maps\_hud_util;
 //#include maps\_sounds;
 
@@ -40,6 +41,10 @@ init_perk_vars() {
 set_zombie_var("deadshot_extra_breath_time", 5); //Deadshot extra breath time
 set_zombie_var("deadshot_spread_multiplier", 0.4225); //Deadshot hip fire reduction
 set_zombie_var("doubletap_fire_rate", 0.75); //Double taps fire multiplier, 0.0 to 1.0
+set_zombie_var("electric_cherry_max_range", 300 );      // max radius of the shockwave
+set_zombie_var("electric_cherry_max_damage", 1000 );    // max damage of the shockwave
+set_zombie_var("electric_cherry_points", 40 );          // points awarded on kill
+set_zombie_var("tesla_head_gib_chance", 50 );           // % chance for head gib FX (optional but used)
 set_zombie_var("juggernaut_health", 200); //Juggernaut health of player
 set_zombie_var("melee_macchiato_multiplier", 1.75); // Melee Macchiato damage multiplier, was 1.66
 set_zombie_var("mulekick_max_weapon_slots", 3); //Mule Kick weapon slots
@@ -89,24 +94,14 @@ random_perk_powerup_think() {
         self.health    = level.zombie_vars["juggernaut_health"];
     }
 
-    if (perk == "specialty_fastreload") {
-        self setClientDvar("perk_weapReloadMultiplier", level.zombie_vars["speed_reload_rate"]);
-    }
-
-    if (perk == "specialty_longersprint") {
-        self.movementSpeed = level.zombie_vars["staminup_sprint_scale"];
-        self setMoveSpeedScale(level.zombie_vars["staminup_sprint_scale"] );
-        self setClientDvar("player_sprintTime", level.zombie_vars["staminup_sprint_max_duration"]);
-    }
-
-    if (perk == "specialty_explosivedamage") {
-        self setClientDvar("player_hud_specialty_electric_cherry", 1);
-    }
-
     if (perk == "specialty_bulletaccuracy") {
         self setClientDvar("perk_weapSpreadMultiplier", level.zombie_vars["deadshot_spread_multiplier"]);
         self SetPerk("specialty_holdbreath"); //Iron lungs
         self setClientDvar("perk_extraBreath", level.zombie_vars["deadshot_extra_breath_time"]);
+    }
+
+    if (perk == "specialty_explosivedamage") {
+        self setClientDvar("player_hud_specialty_elemental_pop", 1);
     }
 
     if(perk == "specialty_extraammo") {
@@ -117,8 +112,23 @@ random_perk_powerup_think() {
         }*/
     }
 
+    if (perk == "specialty_fastreload") {
+        self setClientDvar("perk_weapReloadMultiplier", level.zombie_vars["speed_reload_rate"]);
+    }
+
+    if (perk == "specialty_longersprint") {
+        self.movementSpeed = level.zombie_vars["staminup_sprint_scale"];
+        self setMoveSpeedScale(level.zombie_vars["staminup_sprint_scale"] );
+        self setClientDvar("player_sprintTime", level.zombie_vars["staminup_sprint_max_duration"]);
+    }
+
     self SetPerk(perk);
     self perk_hud_create(perk);
+
+    if ( perk == "specialty_boost" )
+    {
+        self thread electric_cherry_function();
+    }
 
     self.perknum++; // add 1 perk to counter
 }
@@ -167,7 +177,7 @@ death_check() {
 	self UnsetPerk("specialty_holdbreath"); // Iron lungs (part of Deadshot Daiquiri)
 	self setClientDvar("player_sprintTime", 4);
 	self setClientDvar("perk_weapSpreadMultiplier", 0.65);
-    self setClientDvar("player_hud_specialty_electric_cherry", 0);
+    self setClientDvar("player_hud_specialty_elemental_pop", 0);
     self setClientDvar("player_hud_specialty_mule_kick", 0);
 
     self.maxhealth = 100;
@@ -265,6 +275,119 @@ perk_hud_destroy(perk)
         self.perk_hud[perk] destroy_hud();
         self.perk_hud[perk] = undefined;
     }
+}
+
+electric_cherry_function()
+{
+    self endon( "death" );
+    self endon( "disconnect" );
+
+    while ( self hasPerk( "specialty_boost" ) )
+    {
+        self waittill( "reload_start" );
+
+        if ( !self hasPerk( "specialty_boost" ) )
+            return;
+
+        current_weapon = self GetCurrentWeapon();
+        clip = WeaponClipSize( current_weapon );
+        remaining = self GetCurrentWeaponClipAmmo();
+        
+        // Skip melee weapons or empty magazines
+        if ( clip <= 0 )
+            continue;
+
+        cherry_ratio  = 1 - ( remaining / clip );
+        cherry_radius = ( level.zombie_vars[ "electric_cherry_max_range" ] * cherry_ratio ) + 64;
+        cherry_damage = level.zombie_vars[ "electric_cherry_max_damage" ] * cherry_ratio;
+
+        self electric_cherry_shockwave( cherry_radius, cherry_damage );
+        wait 5; // cooldown
+    }
+}
+
+electric_cherry_shockwave( cherry_radius, cherry_damage )
+{   
+    network_safe_play_fx_on_tag( "tesla_death_fx", 2, level._effect[ "tesla_shock_secondary" ], self, "J_SpineUpper" );
+    self playsound( "imp_tesla" );
+
+    zombies = GetAiSpeciesArray( "axis", "all" );
+
+    for ( k = 0; k < zombies.size; k++ )
+    {
+        if ( !isDefined( zombies[k] ) || !isAlive( zombies[k] ) )
+            continue;
+
+        if ( distance( self.origin, zombies[k].origin ) < cherry_radius )
+        {
+            if ( isDefined( level.zombie_vars[ "zombie_powerup_insta_kill_on" ] ) && level.zombie_vars[ "zombie_powerup_insta_kill_on" ] )
+                cherry_damage = zombies[k].health + 666;
+
+            if ( zombies[k].health < cherry_damage )
+            {
+                // Instant kill
+                // No dogs on this map – still use legs check for correct deathanim
+                if ( isDefined( zombies[k].has_legs ) && zombies[k].has_legs )
+                    zombies[k].deathanim = random( level._zombie_tesla_death[ zombies[k].animname ] );
+                else
+                    zombies[k].deathanim = random( level._zombie_tesla_crawl_death[ zombies[k].animname ] );
+
+                // Original (kept for reference – would crash on non-"zombie" animname):
+                // zombies[k].deathanim = random( level._zombie_tesla_death[ zombies[k].animname ] );
+
+                zombies[k] DoDamage( zombies[k].health + 666, zombies[k].origin, self );
+                zombies[k] electric_cherry_play_death_fx();
+
+                points = level.zombie_vars[ "electric_cherry_points" ];
+                if ( isDefined( level.zombie_vars[ "zombie_powerup_point_doubler_on" ] ) && level.zombie_vars[ "zombie_powerup_point_doubler_on" ] )
+                    points *= 2;
+
+                maps\_zombiemode_score::add_to_player_score( points );
+            }
+            else
+            {
+                // Partial damage + stun animation
+                // No dogs on this map – dog check disabled
+                // if ( zombies[k].ignoreall == false && zombies[k].animname != "zombie_dog" )
+                if ( zombies[k].ignoreall == false )
+                {
+                    if ( isDefined( level._zombie_board_taunt ) && 
+                         isDefined( level._zombie_board_taunt["zombie"] ) && 
+                         level._zombie_board_taunt["zombie"].size > 0 )
+                    {
+                        zombies[k] animscripted( "cherry_hit", zombies[k].origin, zombies[k].angles, 
+                            level._zombie_board_taunt["zombie"][ randomint( level._zombie_board_taunt["zombie"].size ) ] );
+                    }
+                }
+
+                zombies[k] DoDamage( cherry_damage, zombies[k].origin, self );
+                zombies[k] electric_cherry_play_death_fx();
+            }
+        }
+        wait 0.01;
+    }
+}
+
+electric_cherry_play_death_fx()
+{
+    tag = "J_SpineUpper";
+
+    network_safe_play_fx_on_tag( "tesla_death_fx", 2, level._effect[ "tesla_shock" ], self, tag );
+    self playsound( "imp_tesla" );
+
+    // No dogs on this map – dog check disabled
+    // if ( !self enemy_is_dog() )
+    // {
+        if ( RandomInt( 100 ) < level.zombie_vars[ "tesla_head_gib_chance" ] )
+        {
+            wait( RandomFloat( 0.53, 1.0 ) );
+            self maps\_zombiemode_spawner::zombie_head_gib();
+        }
+        else
+        {
+            network_safe_play_fx_on_tag( "tesla_death_fx", 2, level._effect[ "tesla_shock_eyes" ], self, "J_Eyeball_LE" );
+        }
+    // }
 }
 
 phd_dive_damage(origin) {
