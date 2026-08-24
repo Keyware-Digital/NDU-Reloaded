@@ -1358,7 +1358,7 @@ treasure_chest_give_weapon( weapon_string )
 
 	// mule kick check
 	// IPrintLn( "Does this playa have mulekick?" );
-	self maps\_zombiemode_perks_functions::mule_kick_think(current_weapon, weapon_string);
+	self maps\_zombiemode_perk_think::mule_kick_think(current_weapon, weapon_string);
 
 	switch( weapon_string )
 	{
@@ -1995,7 +1995,7 @@ takenweapon(chosenweapon, player, weaponNameMysteryCabinet, weaponmodelstruct)
     player GiveWeapon(chosenweapon);
     player GiveMaxAmmo(chosenweapon);
     player SwitchToWeapon(chosenweapon);
-    player maps\_zombiemode_perks_functions::mule_kick_think(current_weapon, chosenweapon);
+    player maps\_zombiemode_perk_think::mule_kick_think(current_weapon, chosenweapon);
 
     // Weapon VOX — AFTER the player has the gun
 	switch(chosenweapon)
@@ -2391,7 +2391,7 @@ weapon_give( weapon )
 	self GiveWeapon( weapon, 0 ); 
 	self GiveMaxAmmo( weapon ); 
 	self SwitchToWeapon( weapon ); 
-	self maps\_zombiemode_perks_functions::mule_kick_think(current_weapon, weapon);
+	self maps\_zombiemode_perk_think::mule_kick_think(current_weapon, weapon);
 
 }
 

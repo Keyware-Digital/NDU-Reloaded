@@ -178,7 +178,7 @@ setup_player_dolphin_dive() {
 
 			if (self HasPerk("specialty_detectexplosive") && self.oldSurface > self.newSurface && minFall < actualFall) {
 					origin = self.origin;
-					maps\_zombiemode_perks_functions::phd_dive_damage(origin);
+					maps\_zombiemode_perk_think::phd_dive_damage(origin);
 					self.oldSurface = self get_surface();
 					//wait 0.2;	
 			}

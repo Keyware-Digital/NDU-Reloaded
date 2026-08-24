@@ -1680,7 +1680,7 @@ zombie_gib_on_damage()
             return;
         }
 
-        self thread maps\_zombiemode_perks_functions::perks_zombie_hit_effect( amount, attacker, point, type );
+        self thread maps\_zombiemode_perk_think::perks_zombie_hit_effect( amount, attacker, point, type );
 
         if( !self zombie_should_gib( amount, attacker, type ) )
         {
@@ -2096,7 +2096,7 @@ damage_on_fire( player, weapon )
 		}
 
         // Elemental Pop – more molotov damage 
-		dmg = self thread maps\_zombiemode_perks_functions::elemental_pop_boost( dmg, player, weapon );
+		dmg = self thread maps\_zombiemode_perk_think::elemental_pop_boost( dmg, player, weapon );
 
 		if ( isDefined( player ) && Isalive( player ) )
 		{
@@ -2140,7 +2140,7 @@ zombie_damage( mod, hit_location, hit_origin, player )
 		damage = level.round_number + randomint( 100, 500 );
 
 		// Elemental Pop – 15% more nade damage
-		damage = self thread maps\_zombiemode_perks_functions::elemental_pop_boost( damage, player );
+		damage = self thread maps\_zombiemode_perk_think::elemental_pop_boost( damage, player );
 
 		if ( isDefined( player ) && isAlive( player ) )
 			self DoDamage( damage, self.origin, player );

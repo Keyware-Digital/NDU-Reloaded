@@ -37,7 +37,7 @@ main() {
     maps\_zombiemode_blockers_new::init();
     maps\_zombiemode_powerups::init();
     maps\_zombiemode_perks::init();
-    maps\_zombiemode_perks_functions::init();
+    maps\_zombiemode_perk_think::init();
     maps\_zombiemode_radio::init();
     maps\_zombiemode_spawner::init();
     maps\_zombiemode_solo_revive::init();

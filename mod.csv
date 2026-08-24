@@ -143,7 +143,7 @@ rawfile,maps/_zombiemode_blockers_new.gsc
 rawfile,maps/_zombiemode_bowie.gsc
 rawfile,maps/_zombiemode_net.gsc
 rawfile,maps/_zombiemode_perks.gsc
-rawfile,maps/_zombiemode_perks_functions.gsc
+rawfile,maps/_zombiemode_perk_think.gsc
 rawfile,maps/_zombiemode_powerups.gsc
 rawfile,maps/_zombiemode_score.gsc
 rawfile,maps/_zombiemode_server_throttle.gsc

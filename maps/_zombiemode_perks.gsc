@@ -126,7 +126,7 @@ random_perk_powerup_think() {
 
     if ( perk == "specialty_boost" )
     {
-        self thread maps\_zombiemode_perks_functions::electric_cherry_function();
+        self thread maps\_zombiemode_perk_think::electric_cherry_function();
     }
 
     self.perknum++; // add 1 perk to counter

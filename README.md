@@ -18,9 +18,9 @@ We've introduced a brand-new main menu featuring achievements, character bios, p
 Several legacy Treyarch bugs that have lingered over the years have been squashed. These include:
 
 * Fixed an exploit where players could glitch their weapon slot to gain a third weapon.
-* Fixed an exploit where players could glitch zombies onto the pillar in the main room - (WIP).
 * Fixed instances where you could buy other items while performing another action when you weren't meant to.
 * Fixed mystery box sound cutting out when too many sounds occurred.
+* Fixed various exploits where players could glitch zombies out.
 * Fixed various out of bounds exploits.
 
 # Characters
@@ -124,7 +124,7 @@ Several curated perks have been added, adapted, and enhanced with functionality 
 
 * Added Deadshot Daiquiri
 * Added Double Tap Root Beer - now functions as Double Tap 2.0, firing two bullets for the "price" of one.
-* Added Electric Cherry - (WIP).
+* Added Electric Cherry
 * Added Juggernog
 * Added Melee Macchiato - (WIP).
 * Added Mule Kick - now adds a shader glow around your third 'mule' weapon.
