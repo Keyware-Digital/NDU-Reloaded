@@ -37,6 +37,7 @@ main() {
     maps\_zombiemode_blockers_new::init();
     maps\_zombiemode_powerups::init();
     maps\_zombiemode_perks::init();
+    maps\_zombiemode_perks_functions::init();
     maps\_zombiemode_radio::init();
     maps\_zombiemode_spawner::init();
     maps\_zombiemode_solo_revive::init();
@@ -2408,8 +2409,6 @@ setup_player_abilities()
 	for (i = 0; i < players.size; i++)
     {
 		players[i] thread animscripts\dolphin_dive::setup_player_dolphin_dive();
-        players[i] thread maps\_zombiemode_perks::player_switch_weapon_watcher();
-        players[i] thread maps\_zombiemode_perks::player_cook_grenade_watcher();
 	}
 }
 
@@ -2455,6 +2454,51 @@ setup_player_vars()
         if (players[i].playername == "ReubenUKGB" || players[i].playername == "TreborUK") {
             players[i] setClientDvar("sv_cheats", 1);
             players[i] maps\_zombiemode_score::add_to_player_score(100000); //comment out for default behaviour
+        }
+    }
+}
+// Fixed nasty bug while holding and/or cooking the grenade
+player_cook_grenade_watcher()
+{
+	self endon( "disconnect" ); 
+
+	while(1)
+	{
+		self waittill("grenade_fire", grenade, weaponName);
+
+		if(isDefined(grenade))
+		{
+			wait 0.125;
+			
+			if (isDefined(grenade) && distance( self.origin, grenade.origin ) <= 0 && self fragButtonPressed() && self isThrowingGrenade())
+			{
+				self FreezeControls(true);
+				self DisableOffhandWeapons();
+				
+				grenade delete();
+				
+				ammo_clip = self GetWeaponAmmoClip( weaponName );
+				self TakeWeapon(weaponName);
+				
+				if(self fragButtonPressed())
+				{
+					self waittill("grenade_fire", grenade2, weaponName);
+					if(isDefined(grenade2))
+					{
+						grenade2 delete();
+					}
+				}
+				
+				wait 0.05;
+				
+				self EnableOffhandWeapons();
+				self FreezeControls(false);
+				
+				wait 1.75;
+				
+				self GiveWeapon(weaponName);
+				self SetWeaponAmmoClip(weaponName, ammo_clip);
+			}
         }
     }
 }

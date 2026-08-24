@@ -1680,7 +1680,7 @@ zombie_gib_on_damage()
             return;
         }
 
-        self thread maps\_zombiemode_perks::perks_zombie_hit_effect( amount, attacker, point, type );
+        self thread maps\_zombiemode_perks_functions::perks_zombie_hit_effect( amount, attacker, point, type );
 
         if( !self zombie_should_gib( amount, attacker, type ) )
         {
@@ -1692,7 +1692,7 @@ zombie_gib_on_damage()
             self zombie_head_gib( attacker );
             if( IsDefined( attacker ) && IsPlayer( attacker ) && ( type == "MOD_RIFLE_BULLET" || type == "MOD_PISTOL_BULLET" ) )
 			{
-				if( RandomInt(100) < 10 )		// add the chance
+				if( RandomInt(100) < 10 )
 				{
 					attacker thread player_vox_helper( ::headshot_sound, "headshot_sound_done" );
 				}
@@ -2095,13 +2095,8 @@ damage_on_fire( player, weapon )
 			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.15 ); // 5% - 10%
 		}
 
-        // Elemental Pop – 15% more molotov damage ONLY
-        if ( isDefined( player ) && isAlive( player ) 
-          && player hasPerk( "specialty_explosivedamage" ) 
-          && isDefined( weapon ) && weapon == "molotov" )
-        {
-            dmg = int( dmg * 1.15 );
-        }
+        // Elemental Pop – more molotov damage 
+		dmg = self thread maps\_zombiemode_perks_functions::elemental_pop_boost( dmg, player, weapon );
 
 		if ( isDefined( player ) && Isalive( player ) )
 		{
@@ -2111,7 +2106,7 @@ damage_on_fire( player, weapon )
 		{
 			self DoDamage( dmg, self.origin, level );
 		}
-
+		
 		wait( randomfloatrange( 2.0, 5.0 ) );
 	}
 }
@@ -2145,17 +2140,12 @@ zombie_damage( mod, hit_location, hit_origin, player )
 		damage = level.round_number + randomint( 100, 500 );
 
 		// Elemental Pop – 15% more nade damage
-		if ( isDefined( player ) && isAlive( player ) && player hasPerk( "specialty_explosivedamage" ) )
-			damage = int( damage * 1.15 );
+		damage = self thread maps\_zombiemode_perks_functions::elemental_pop_boost( damage, player );
 
 		if ( isDefined( player ) && isAlive( player ) )
-		{
-			self DoDamage( damage, self.origin, player );		// ← uses the boosted value
-		}
+			self DoDamage( damage, self.origin, player );
 		else
-		{
-			self DoDamage( damage, self.origin, undefined );	// ← uses the boosted value
-		}
+			self DoDamage( damage, self.origin, undefined );
 	}
 
 	else if( mod == "MOD_PROJECTILE" || mod == "MOD_EXPLOSIVE" || mod == "MOD_PROJECTILE_SPLASH" || mod == "MOD_PROJECTILE_SPLASH")
