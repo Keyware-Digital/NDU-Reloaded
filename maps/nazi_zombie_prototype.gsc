@@ -569,14 +569,14 @@ monitor_map_bounds() {
 }
 
 spawn_collision_models() {
-    spawncollision("collision_geo_32x32x128", "collider", (130, -100, 180), (0, 0, 0));
-    spawncollision("collision_geo_32x32x32", "collider", (376, 643, 184), (0, 0, 0));
-    spawncollision("collision_geo_64x64x64", "collider", (816, 625, 12), (0, 0, 0));
-    spawncollision("collision_geo_32x32x128", "collider", (222, 138, 60), (0, 0, 0)); 
-    spawncollision("collision_geo_64x64x64", "collider", (-138, -159, 156), (0, 0, 0));
-    spawncollision("collision_geo_64x64x64", "collider", (192, 349 ,185), (0, 0, 0));
-    spawncollision("collision_geo_32x32x32", "collider", (519 ,765, 155), (0, 0, 0));
-    spawncollision("collision_geo_32x32x128", "collider", (-210, 641, 218), (0, 0, 0));
-    spawncollision("collision_geo_32x32x32", "collider", (142 ,-100 ,91), (0, 0, 0));
-    spawncollision("collision_geo_32x32x128", "collider", (199, 117, 18), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (-138, -149, 188), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (-210, 641, 234), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (130, -132, 196), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (142 ,-132 ,107), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (222, 138, 76), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (192, 317 ,188), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (231, 85, 34), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (376, 643, 188), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (487 ,765, 188), (0, 0, 0));
+    spawncollision("collision_geo_64x64x64", "collider", (816, 625, 44), (0, 0, 0));
 }

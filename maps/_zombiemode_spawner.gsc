@@ -2374,28 +2374,28 @@ find_flesh()
 		// try to split the zombies up when the bunch up
 		// see if a bunch zombies are already near my current target; if there's a bunch
 		// and I'm still far enough away, ignore my current target and go after another one
-//		near_zombies = getaiarray("axis");
-//		same_enemy_count = 0;
-//		for (i = 0; i < near_zombies.size; i++)
-//		{
-//			if ( isdefined( near_zombies[i] ) && isalive( near_zombies[i] ) )
-//			{
-//				if ( isdefined( near_zombies[i].favoriteenemy ) && isdefined( self.favoriteenemy ) 
-//				&&	near_zombies[i].favoriteenemy == self.favoriteenemy )
-//				{
-//					if ( distancesquared( near_zombies[i].origin, self.favoriteenemy.origin ) < 225 * 225 
-//					&&	 distancesquared( near_zombies[i].origin, self.origin ) > 525 * 525)
-//					{
-//						same_enemy_count++;
-//					}
-//				}
-//			}
-//		}
-//		
-//		if (same_enemy_count > 12)
-//		{
-//			self.ignore_player = self.favoriteenemy;
-//		}
+		near_zombies = getaiarray("axis");
+		same_enemy_count = 0;
+		for (i = 0; i < near_zombies.size; i++)
+		{
+			if ( isdefined( near_zombies[i] ) && isalive( near_zombies[i] ) )
+			{
+				if ( isdefined( near_zombies[i].favoriteenemy ) && isdefined( self.favoriteenemy ) 
+				&&	near_zombies[i].favoriteenemy == self.favoriteenemy )
+				{
+					if ( distancesquared( near_zombies[i].origin, self.favoriteenemy.origin ) < 225 * 225 
+					&&	 distancesquared( near_zombies[i].origin, self.origin ) > 525 * 525)
+					{
+						same_enemy_count++;
+					}
+				}
+			}
+		}
+		
+		if (same_enemy_count > 12)
+		{
+			self.ignore_player = self.favoriteenemy;
+		}
 
         players = get_players();
 		// If playing single player, never ignore the player
@@ -2641,51 +2641,29 @@ zombie_follow_enemy()
 	while( 1 )
 	{
 		if( isDefined( self.favoriteenemy ) )
-
-
-
-
-
-
-
-
-
-
-
-
-
 		{
-
-
 			self SetGoalPos( self.favoriteenemy.origin );
 
+			distSq = distanceSquared( self.origin, self.favoriteenemy.origin );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			extra_wait_time = 0;
+			if( distSq > 3200 * 3200 )
+			{
+				extra_wait_time = 2.0 + randomFloat( 1.0 );
+			}
+			else if( distSq > 2200 * 2200 )
+			{
+				extra_wait_time = 1.0 + randomFloat( 0.5 );
+			}
+			else if( distSq > 1200 * 1200 )
+			{
+				extra_wait_time = 0.5 + randomFloat( 0.5 );
+			}
+			if( extra_wait_time > 0 )
+			{
+				wait extra_wait_time;
+			}
 		}
-
-
-
-
-
-
-
 
 		wait( 0.1 );
 	}

@@ -250,8 +250,8 @@ perk_hud_create(perk) {
     hud.alignY = "bottom";
     hud.horzAlign = "left";
     hud.vertAlign = "bottom";
-    hud.x = self.perk_hud.size * 30;
-    hud.y = hud.y - 70;
+    hud.x = 96 + self.perk_hud.size * 30;
+    hud.y = hud.y - 5;
     hud.alpha = 1;
     hud SetShader(shader, 24, 24);
 
