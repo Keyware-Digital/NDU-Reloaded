@@ -2059,7 +2059,7 @@ zombie_death_animscript()
 	return false;
 }
 
-damage_on_fire( player )
+damage_on_fire( player, weapon )
 {
 	self endon ("death");
 	self endon ("stop_flame_damage");
@@ -2083,6 +2083,14 @@ damage_on_fire( player )
 		{
 			dmg = level.zombie_health * RandomFloatRange( 0.1, 0.15 ); // 5% - 10%
 		}
+
+        // Elemental Pop – 15% more molotov damage ONLY
+        if ( isDefined( player ) && isAlive( player ) 
+          && player hasPerk( "specialty_explosivedamage" ) 
+          && isDefined( weapon ) && weapon == "molotov" )
+        {
+            dmg = int( dmg * 1.15 );
+        }
 
 		if ( isDefined( player ) && Isalive( player ) )
 		{
@@ -2206,12 +2214,17 @@ zombie_give_flame_damage_points()
 
 zombie_flame_damage( mod, player )
 {
-	if( mod == "MOD_BURNED" )
-	{
-		if( !isDefined( self.is_on_fire ) || ( isDefined( self.is_on_fire ) && !self.is_on_fire ) )
-		{
-			self thread damage_on_fire( player );
-		}
+    if( mod == "MOD_BURNED" )
+    {
+        if( !isDefined( self.is_on_fire ) || ( isDefined( self.is_on_fire ) && !self.is_on_fire ) )
+        {
+			// passing what fire_weapon to damage_on_fire
+            fire_weapon = undefined;
+            if ( isDefined( self.damageweapon ) )
+                fire_weapon = self.damageweapon;
+
+            self thread damage_on_fire( player, fire_weapon );
+        }
 
 		do_flame_death = true;
 		dist = 100 * 100;

@@ -631,6 +631,18 @@ menuDef
 			visible			1
 			decoration
 		}
+
+		/*itemDef
+        {
+            name			"offhandSmokeIcon"
+            rect			(WEAPINFO_X +56) (WEAPINFO_Y +2) 24 24
+            forecolor		1 1 1 HUD_ALPHA
+            ownerdraw		CG_OFFHAND_WEAPON_ICON_SMOKEFLASH
+            background		"hud_grenade_molotov_upgraded"
+            visible			when(dvarInt("player_hud_specialty_electric_cherry") == 1)
+            decoration
+        }
+        */
 		itemDef
 		{
 			name			"offhandsmokeammo"
@@ -683,6 +695,7 @@ menuDef
 			decoration
 		}
 
+		// disabled - weapon text highlight
 		/*itemDef
 		{
 			name			"weapname_lowdef"

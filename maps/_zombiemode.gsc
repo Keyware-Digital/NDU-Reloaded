@@ -1438,6 +1438,7 @@ award_grenades_for_survivors() {
                 players[i] SetWeaponAmmoClip("stielhandgranate", 4);
             }
 
+            // disable to stop 2 per round - like monkeys
             if (players[i] GetFractionMaxAmmo("molotov") < .25) {
                 players[i] SetWeaponAmmoClip("molotov", 2);
             } else if (players[i] GetFractionMaxAmmo("molotov") < .5) {

@@ -123,6 +123,34 @@ prototype_bowie_weighting_func()
 	}
 }
 
+/*prototype_molotov_weighting_func()
+{
+    players = GetPlayers();
+    count = 0;
+    for( i = 0; i < players.size; i++ )
+    {
+        if( players[i] has_weapon_or_upgrade( "molotov" ) )
+        {
+            count++;
+        }
+    }
+    if ( count > 0 )
+    {
+        return 1;
+    }
+    else
+    {
+        if( level.round_number < 9 )
+        {
+            return 3;
+        }
+        else
+        {
+            return 5;
+        }
+    }
+}*/
+
 prototype_ray_gun_weighting_func()
 {
 	{	
