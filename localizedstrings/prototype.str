@@ -98,6 +98,9 @@ LANG_ENGLISH        "3-Line 'Mosin' Rifle M1891 w/ Bayonet"
 REFERENCE           ZOMBIE_WEAPON_MOSIN_RIFLE_SCOPED
 LANG_ENGLISH        "3-Line 'Mosin' Rifle M1891 w/ Scope"
 
+REFERENCE           ZOMBIE_WEAPON_MONKEY_BOMB
+LANG_ENGLISH        "Monkey Bomb"
+
 REFERENCE           ZOMBIE_WEAPON_MP_40
 LANG_ENGLISH        "MP 40"
 

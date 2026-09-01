@@ -35,6 +35,7 @@ main() {
     maps\_hands::init();
     maps\_prototype_vox::init();
     maps\_zombiemode_blockers_new::init();
+    maps\_zombiemode_cymbal_monkey::init();
     maps\_zombiemode_powerups::init();
     maps\_zombiemode_perks::init();
     maps\_zombiemode_perk_think::init();
@@ -2457,7 +2458,7 @@ setup_player_vars()
         }
     }
 }
-// Fixed nasty bug while holding and/or cooking the grenade
+// Fixed ugly bug while holding and/or cooking the grenade
 player_cook_grenade_watcher()
 {
 	self endon( "disconnect" ); 

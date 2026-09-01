@@ -1996,6 +1996,16 @@ init_gib_tags()
 	level.gib_tags = tags;
 }
 
+zombie_can_drop_powerups( zombie )
+{
+	if( zombie.damageweapon == "zombie_cymbal_monkey" )
+	{
+		return false;
+	}
+	
+	return true;
+}
+
 zombie_death_points( origin, mod, hit_location, player )
 {
 	level thread maps\_zombiemode_powerups::powerup_drop( origin );
@@ -2450,30 +2460,25 @@ find_flesh()
         }
 
         // POI support
-        poi = get_zombie_point_of_interest( self.origin );
 
-        if ( isDefined( poi ) )
+        zombie_poi = self get_zombie_point_of_interest( self.origin );
+
+        if (isDefined(level.zombieTheaterTeleporterSeekLogicFunc) )
         {
-            self notify( "zombie_acquire_enemy" );
-            self.favoriteenemy = undefined;
-            self.ignore_player = undefined;
-            self.ignoreall = true;
-
-            self SetGoalPos( poi[0] );
-            self.goalradius = 64;
-
-            wait 0.5;
-            continue;
+            temp_poi = self [[ level.zombieTheaterTeleporterSeekLogicFunc ]](players, zombie_poi);
+            if (IsDefined(temp_poi))
+                zombie_poi = temp_poi;
         }
 
         player = get_closest_valid_player( self.origin, self.ignore_player ); 
-
-        if( !isDefined( player ) )
+        
+        if( !isDefined( player ) && !isDefined( zombie_poi ) )
         {
             self zombie_history( "find flesh -> can't find player, continue" );
             if( isDefined( self.ignore_player ) )
             {
                 self.ignore_player = undefined;
+                self.ignore_player = [];
             }
 
             wait( 1 ); 
@@ -2482,6 +2487,7 @@ find_flesh()
 
         self.ignore_player = undefined;
 
+        self.enemyoverride = zombie_poi;
         self.favoriteenemy = player;
         self thread zombie_pathing();
 
@@ -2493,6 +2499,7 @@ find_flesh()
 
         self zombie_history( "find flesh -> bottom of loop" );
 
+        debug_print( "Zombie is re-acquiring enemy, ending breadcrumb search" );
         self notify( "zombie_acquire_enemy" );
     }
 }
@@ -2536,76 +2543,142 @@ zombie_pathing()
 	self notify( "stop_acquire_acquire_enemy" );
 	self endon( "stop_acquire_acquire_enemy" );
 
-	if( isDefined( self.favoriteenemy ) )
-	{
-		self.favoriteenemy endon( "disconnect" );
-		self thread zombie_follow_enemy();
+    if( !isDefined( self.favoriteenemy ) && !isDefined( self.enemyoverride ) )
+    {
+        self.zombie_path_timer = 0;
+        return;
+    }
 
-		self waittill( "bad_path" );
-		enemy_is_not_valid = false;
-		for( i = 0; i < self.favoriteenemy.zombie_breadcrumbs.size; i++ )
-		{
-			self.zombie_path_timer += 1000;
+    self thread zombie_follow_enemy();
+    self waittill( "bad_path" );
+    
+    if( isDefined( self.enemyoverride ) ) 
+    {
+        debug_print( "Zombie couldn't path to point of interest at origin: " + self.enemyoverride[0] + " Falling back to breadcrumb system" );
+        if( isDefined( self.enemyoverride[1] ) )
+        {
+            self.enemyoverride = self.enemyoverride[1] invalidate_attractor_pos( self.enemyoverride, self );
+            self.zombie_path_timer = 0;
+            return;
+        }
+    }
+    else
+    {
+        if( isDefined( self.favoriteenemy ) )
+        {
+            debug_print( "Zombie couldn't path to player at origin: " + self.favoriteenemy.origin + " Falling back to breadcrumb system" );
+        }
+    }
+    
+    if( !isDefined( self.favoriteenemy ) )
+    {
+        self.zombie_path_timer = 0;
+        return;
+    }
+    else
+    {
+        self.favoriteenemy endon( "disconnect" );
+    }
 
-			if( !is_player_valid( self.favoriteenemy ) )
-			{
-				enemy_is_not_valid = true;
-				break;
-			}
+    crumb_list = self.favoriteenemy.zombie_breadcrumbs;
+    bad_crumbs = [];
 
-			self SetGoalPos( self.favoriteenemy.zombie_breadcrumbs[i] );
-			self waittill( "bad_path" );
+    while( 1 )
+    {
+        if( !is_player_valid( self.favoriteenemy ) )
+        {
+            self.zombie_path_timer = 0;
+            return;
+        }
 
-			self jitter_enemies_bad_breadcrumbs( i );
-		}
+        goal = undefined;
+        if( isDefined( crumb_list ) )
+        {
+            goal = zombie_pathing_get_breadcrumb( self.favoriteenemy.origin, crumb_list, bad_crumbs, ( RandomInt( 100 ) < 20 ) );
+        }
+        
+        if ( !IsDefined( goal ) )
+        {
+            debug_print( "Zombie exhausted breadcrumb search" );
+            if( isDefined( self.favoriteenemy.spectator_respawn ) )
+            {
+                goal = self.favoriteenemy.spectator_respawn.origin;
+            }
+            else
+            {
+                self.zombie_path_timer = 0;
+                return;
+            }
+        }
 
-		self zombie_history( "find flesh -> no breadcrumbs to follow, bad_pathed out" );
+        debug_print( "Setting current breadcrumb to " + goal );
 
-		if( enemy_is_not_valid )
-		{
-			println( "^zombie_pathing() -- enemy_is_not_valid, setting zombie_path_timer to 0" );
-			self.zombie_path_timer = 0;
-			return;
-		}
+        self.zombie_path_timer += 1000;
+        self SetGoalPos( goal );
+        self waittill( "bad_path" );
 
-		// We failed to get to the player, now do something about it...
-		println( "^1UNABLE TO PATH TO FAVORITE ENEMY" );
+        debug_print( "Zombie couldn't path to breadcrumb at " + goal + " Finding next breadcrumb" );
+        if( isDefined( crumb_list ) )
+        {
+            for( i = 0; i < crumb_list.size; i++ )
+            {
+                if( goal == crumb_list[i] )
+                {
+                    bad_crumbs[bad_crumbs.size] = i;
+                    break;
+                }
+            }
+        }
+    }
+}
 
-		if( self in_playable_area() )
-		{
-			self zombie_history( "find flesh -> in playable area, will find a different enemy to follow" );
-			println( "^3zombie_pathing() -- breadcrumbs failed, zombie in playable are, setting zombie_path_timer to 0" );
+zombie_pathing_get_breadcrumb( origin, breadcrumbs, bad_crumbs, pick_random )
+{
+    if( !isDefined( breadcrumbs ) || breadcrumbs.size == 0 )
+    {
+        return undefined;
+    }
 
- 			// Ignore the previous target when searching for a new one.
-			self.ignore_player = self.favoriteenemy;
+    /#
+        if ( pick_random )
+        {
+            debug_print( "Finding random breadcrumb" );
+        }
+    #/
+            
+    for( i = 0; i < breadcrumbs.size; i++ )
+    {
+        if ( pick_random )
+        {
+            crumb_index = RandomInt( breadcrumbs.size );
+        }
+        else
+        {
+            crumb_index = i;
+        }
+                
+        if( crumb_is_bad( crumb_index, bad_crumbs ) )
+        {
+            continue;
+        }
 
-			// Tells the AI to look for a new player right away.
-			self.zombie_path_timer = 0;
-		}
-		else
-		{
-			// Ok, we failed to get to the player, used for when AI cannot path after tearing barriers
-			if( isDefined( self.entrance_nodes[0] ) )
-			{
-				self zombie_history( "find flesh -> failed to get to a player and not in playable area" );
-				self thread zombie_goto_entrance( self.entrance_nodes[0], true );
+        return breadcrumbs[crumb_index];
+    }
 
-				// If we fail to get to the entrance, and have NOT 'got_to_entrance' restart the loop
-				self waittill( "bad_path" );
+    return undefined;
+}
 
-				if( !self.got_to_entrance )
-				{
-					println( "^3zombie_pathing() -- entrance node bad path, setting zombie_path_timer to 0" );
-					self.zombie_path_timer = 0;
-				}
-			}
-		}
-	}
-	else
-	{
-		self zombie_history( "find flesh -> no favoriteenemy" );
-		debug_print( "NO FAVORITEENEMY!" );
-	}
+crumb_is_bad( crumb, bad_crumbs )
+{
+    for ( i = 0; i < bad_crumbs.size; i++ )
+    {
+        if ( bad_crumbs[i] == crumb )
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 jitter_enemies_bad_breadcrumbs( start_crumb )
@@ -2664,29 +2737,24 @@ zombie_follow_enemy()
 
 	while( 1 )
 	{
-		if( isDefined( self.favoriteenemy ) )
-		{
-			self SetGoalPos( self.favoriteenemy.origin );
-
-			distSq = distanceSquared( self.origin, self.favoriteenemy.origin );
-
-			extra_wait_time = 0;
-			if( distSq > 3200 * 3200 )
-			{
-				extra_wait_time = 2.0 + randomFloat( 1.0 );
-			}
-			else if( distSq > 2200 * 2200 )
-			{
-				extra_wait_time = 1.0 + randomFloat( 0.5 );
-			}
-			else if( distSq > 1200 * 1200 )
-			{
-				extra_wait_time = 0.5 + randomFloat( 0.5 );
-			}
-			if( extra_wait_time > 0 )
-			{
-				wait extra_wait_time;
-			}
+        if( isDefined( self.enemyoverride ) && isDefined( self.enemyoverride[0] ) )
+        {
+            if( isDefined( self.enemyoverride[1] ) && distanceSquared( self.origin, self.enemyoverride[0] ) > 1*1 )
+            {
+                self OrientMode( "face motion" );
+            }
+            else if( isDefined( self.enemyoverride[1] ) )
+            {
+                self OrientMode( "face point", self.enemyoverride[1].origin );
+            }
+            self.ignoreall = true;
+            self SetGoalPos( self.enemyoverride[0] );
+        }
+        else if( IsDefined( self.favoriteenemy ) )
+        {
+            self.ignoreall = false;
+            self OrientMode( "face default" );
+            self SetGoalPos( self.favoriteenemy.origin );
 		}
 
 		wait( 0.1 );

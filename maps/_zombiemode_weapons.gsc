@@ -67,6 +67,7 @@ prototype_weighting_func()
 	return 1;
 }
 
+// to disable/remove once we add as a wall buy
 prototype_betty_weighting_func()
 {
 	players = GetPlayers();
@@ -95,6 +96,7 @@ prototype_betty_weighting_func()
 	}
 }
 
+// to disable/remove once we add as a wall buy
 prototype_bowie_weighting_func()
 {
 	players = GetPlayers();
@@ -243,7 +245,7 @@ init_weapons()
 	add_zombie_weapon( "stg44_pap", "", 0, 6 ); 
 	add_zombie_weapon( "sten_mk5", "", 0 );
 	add_zombie_weapon( "zombie_colt_upgraded", "", 0 );
-	//add_zombie_weapon( "zombie_cymbal_monkey", &"ZOMBIE_WEAPON_SATCHEL_2000", 2000, 3 );
+	add_zombie_weapon( "zombie_cymbal_monkey",	"", 0 );
 	add_zombie_weapon( "zombie_bowie_flourish",	"", 0 );
 
 	// Other
@@ -711,6 +713,9 @@ treasure_chest_think(rand)
 		    break;*/
 		case "zombie_bowie_flourish":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_BOWIE";
+		    break;
+		case "zombie_cymbal_monkey":
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_MONKEY_BOMB";
 		    break;
 		/*case "zombie_type100_smg":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
@@ -1294,7 +1299,7 @@ treasure_chest_give_weapon( weapon_string )
 
 		if( isDefined( current_weapon ) )
 		{
-			if( !( weapon_string == "fraggrenade" || weapon_string == "stielhandgranate" || weapon_string == "molotov" ) )
+			if( !( weapon_string == "fraggrenade" || weapon_string == "stielhandgranate" || weapon_string == "molotov" || weapon_string == "zombie_cymbal_monkey" ) )
 			self TakeWeapon( current_weapon ); 
 		} 
 	}
@@ -1326,7 +1331,7 @@ treasure_chest_give_weapon( weapon_string )
 				continue; 
 			}
 
-			if( weapon_string != "fraggrenade" && weapon_string != "stielhandgranate" && weapon_string != "molotov" )
+			if( weapon_string != "fraggrenade" && weapon_string != "stielhandgranate" && weapon_string != "molotov"  && weapon_string != "zombie_cymbal_monkey" )
 			{
 				self TakeWeapon( primaryWeapons[i] ); 
 			}
@@ -1342,6 +1347,28 @@ treasure_chest_give_weapon( weapon_string )
 	if( weapon_string == "zombie_bowie_flourish" )
 	{
 		self maps\_zombiemode_bowie::bowie_think();
+		return;
+	}
+
+	if( weapon_string == "molotov" )
+	{
+		if( self HasWeapon( "zombie_cymbal_monkey" ) )
+		{
+			self TakeWeapon( "zombie_cymbal_monkey" );
+		}
+	}
+
+	if( weapon_string == "zombie_cymbal_monkey" )
+	{
+		if( self HasWeapon( "molotov" ) )
+		{
+			self TakeWeapon( "molotov" );
+		}
+
+		self.has_molotovs = undefined;
+
+		self play_sound_on_ent( "purchase" );
+		self maps\_zombiemode_cymbal_monkey::player_give_cymbal_monkey();
 		return;
 	}
 
@@ -1376,9 +1403,6 @@ treasure_chest_give_weapon( weapon_string )
 		case "ray_gun_mk1_v2":
 			self thread player_vox_helper( ::great_weapon_sound, "weapon_vox_done" );
 			break;
-		/*case "zombie_cymbal_monkey":
-		self thread player_vox_helper( ::great_weapon_sound, "weapon_vox_done" );
-			break;*/
 		// crappy
 		case "kar98k":
 			self thread player_vox_helper( ::crappy_weapon_sound, "weapon_vox_done" );
@@ -2380,18 +2404,41 @@ weapon_give( weapon )
 				continue; 
 			}
 
-			if( weapon != "fraggrenade" && weapon != "stielhandgranate" && weapon != "molotov" )
+			if( weapon != "fraggrenade" && weapon != "stielhandgranate" && weapon != "molotov" && weapon != "zombie_cymbal_monkey" )
 			{
 				self TakeWeapon( primaryWeapons[i] ); 
 			}
 		}
 	}
-	self play_sound_on_ent( "purchase" );
 
-	self GiveWeapon( weapon, 0 ); 
-	self GiveMaxAmmo( weapon ); 
-	self SwitchToWeapon( weapon ); 
-	self maps\_zombiemode_perk_think::mule_kick_think(current_weapon, weapon);
+    if( weapon == "molotov" )
+    {
+        if( self HasWeapon( "zombie_cymbal_monkey" ) )
+        {
+            self TakeWeapon( "zombie_cymbal_monkey" );
+        }
+    }
+
+    if( weapon == "zombie_cymbal_monkey" )
+    {
+        if( self HasWeapon( "molotov" ) )
+        {
+            self TakeWeapon( "molotov" );
+        }
+
+        self.has_molotovs = undefined;
+
+        self play_sound_on_ent( "purchase" );
+        self maps\_zombiemode_cymbal_monkey::player_give_cymbal_monkey();
+        return;
+    }
+
+    self play_sound_on_ent( "purchase" );
+
+    self GiveWeapon( weapon, 0 ); 
+    self GiveMaxAmmo( weapon ); 
+    self SwitchToWeapon( weapon ); 
+    self maps\_zombiemode_perk_think::mule_kick_think(current_weapon, weapon);
 
 }
 

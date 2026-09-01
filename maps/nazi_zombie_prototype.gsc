@@ -132,7 +132,7 @@ include_weapons() {
     include_weapon("svt40");
     include_weapon( "zombie_bowie_flourish", true, ::prototype_bowie_weighting_func );
     include_weapon("zombie_colt_upgraded");
-    //include_weapon("zombie_cymbal_monkey", /*true,*/::prototype_cymbal_monkey_weighting_func);
+    include_weapon("zombie_cymbal_monkey", true, ::prototype_cymbal_monkey_weighting_func);
     
     // Weapon cabinet only additions	
     //include_weapon("bloodhound");
@@ -187,7 +187,7 @@ include_weapons() {
     include_weapon("kar98k_scoped_zombie"); //weapon cabinet only
 
     // Grenade
-    include_weapon("molotov");
+    include_weapon("molotov"/* true, ::prototype_molotov_weighting_func */);
     // JESSE: lets go all german grenades for consistency and to reduce annoyance factor
     //	include_weapon( "fraggrenade" );
     include_weapon("stielhandgranate");
@@ -257,9 +257,10 @@ filtered_weapons()
     level.filtered_weapon[level.filtered_weapon.size] = "perks_a_cola";
     level.filtered_weapon[level.filtered_weapon.size] = "stielhandgranate";
     level.filtered_weapon[level.filtered_weapon.size] = "zombie_bowie_flourish";
-    //level.filtered_weapon[level.filtered_weapon.size] = "zombie_cymbal_monkey";
+    level.filtered_weapon[level.filtered_weapon.size] = "zombie_cymbal_monkey";
 }
 
+// to disable/remove once we add as a wall buy
 prototype_betty_weighting_func()
 {
 	players = get_players();
@@ -288,6 +289,7 @@ prototype_betty_weighting_func()
 	}
 }
 
+// to disable/remove once we add as a wall buy
 prototype_bowie_weighting_func()
 {
 	players = get_players();
@@ -366,7 +368,7 @@ prototype_ray_gun_weighting_func()
     return num_to_add;
 }
 
-/*prototype_cymbal_monkey_weighting_func()
+prototype_cymbal_monkey_weighting_func()
 {
 	players = get_players();
 	count = 0;
@@ -392,7 +394,7 @@ prototype_ray_gun_weighting_func()
 			return 5;
 		}
 	}
-}*/
+}
 
 include_powerups() {
     include_powerup("nuke");

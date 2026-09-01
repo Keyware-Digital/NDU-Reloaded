@@ -45,7 +45,7 @@ set_zombie_var("electric_cherry_max_damage", 1000 );    // max damage of the sho
 set_zombie_var("electric_cherry_points", 40 );          // points awarded on kill
 set_zombie_var("tesla_head_gib_chance", 50 );           // % chance for head gib FX (optional but used)
 set_zombie_var("juggernaut_health", 200); //Juggernaut health of player
-set_zombie_var("melee_macchiato_multiplier", 1.75); // Melee Macchiato damage multiplier, was 1.66
+set_zombie_var("melee_macchiato_multiplier", 1.9); // Melee Macchiato damage multiplier, was 1.75
 set_zombie_var("mulekick_max_weapon_slots", 3); //Mule Kick weapon slots
 set_zombie_var("mulekick_min_weapon_slots", 2); //Default weapon slots
 set_zombie_var("phd_dive_damage", 5000); //PHD fall damage on zombies

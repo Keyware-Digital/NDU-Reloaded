@@ -55,7 +55,7 @@ The core Zombies gameplay loop has been refined and expanded with numerous featu
 * Barrier "cha-ching" sound now stops when the barrier no longer awards points.
 * Easter Eggs from BO1 and BO3 have been backported, and yes, a few original secrets have been hidden away for players to uncover.
 * Flame damage to zombies now matches DLC 1+.
-* Improved code improvements from DLC 1+.
+* General code improvements from DLC 1+.
 * Improved gibbing FX.
 * Improved graphical fidelity where possible (shading tweaks, etc..).
 * Improved Last Stand logic.
@@ -95,6 +95,7 @@ Mystery Box:
 * Added DP28 - sits between the 30cal and MG42 in terms of stats; slower-firing but more damaging.
 * Added Bouncing Betties - (WIP - moving to wallbuy).
 * Added Bowie Knife - (WIP - moving to wallbuy).
+* Added Monkey Bomb. (mirrors BO1).
 * Added Mosin Rifle - slightly stronger than the Kar98k.
 * Added PPSH41 - (box mag, not drum variant).
 * Added SVT-40 - sits between the M1 Garand and G43 in terms of stats.
@@ -189,7 +190,7 @@ A variety of zombie AI and gameplay improvements have been backported from later
 * Zombies no longer push players while attacking, eliminating the awkward "tagging" effect. This mirrors BO1's behaviour.
 * Zombies now attempt to grab players through windows.
 * Zombies now emerge from the ground at all spawn points, further enhancing NDU's bleak and gritty atmosphere.
-* Zombies now have generally improved spawning and pathing.
+* Zombies now have generally improved spawning and pathing logic.
 * Zombies now have significantly more head and body variants, further enhanced by the random gear system.
 * Zombies now use the DLC 1+ animation set, including several previously unused animations.
 * Zombies now use the DLC 1+ FX and sound set.
