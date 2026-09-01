@@ -242,6 +242,7 @@ init_weapons()
 	add_zombie_weapon( "ppsh41_drum", "", 0 );
 	add_zombie_weapon( "perks_a_cola", "", 0 );
 	add_zombie_weapon( "springfield_scoped_zombie", "", 0 );
+	add_zombie_weapon( "ray_gun_mk1_v2", "", 0, 6 );
 	add_zombie_weapon( "stg44_pap", "", 0, 6 ); 
 	add_zombie_weapon( "sten_mk5", "", 0 );
 	add_zombie_weapon( "zombie_colt_upgraded", "", 0 );
@@ -345,7 +346,7 @@ init_weapons()
 	// Special                                          	
 	add_zombie_weapon( "mortar_round", "", 0 );
 	add_zombie_weapon( "satchel_charge", "", 0 );
-	add_zombie_weapon( "ray_gun_mk1_v2", "", 0, 6 );
+	//add_zombie_weapon( "ray_gun", "", 0, 6 );
 	add_zombie_weapon( "zombie_melee", "", 0);
 	
 	// ONLY 1 (OR MORE) OF THE BELOW SHOULD BE ALLOWED
@@ -645,6 +646,9 @@ treasure_chest_think(rand)
 		case "fg42_bipod":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
+		/*case "fg42_v2":
+		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
+			break;*/
 		case "gewehr43":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
@@ -1440,6 +1444,9 @@ treasure_chest_give_weapon( weapon_string )
 		case "fg42_bipod":
 			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
 			break;
+		/*case "fg42_v2":
+			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
+			break;*/
 		case "stg44":
 			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
 			break;
