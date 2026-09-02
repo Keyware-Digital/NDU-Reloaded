@@ -1,5 +1,5 @@
 # NDU-Reloaded
-NDU Der Untoten: Reloaded mod for CoD: WaW by Trebor_UK & ReubenUKGB with contributions from Numan and Gympie, using tools from UGX Mods.
+Nacht Der Untoten: Reloaded mod for CoD: WaW by Trebor_UK & ReubenUKGB with contributions from Numan and Gympie, using tools from UGX Mods.
 
 If you're the kind of player who hates mods that completely overhaul the Zombies experience and would rather play something that improves, fixes, and expands upon Treyarch's original vision, then this mod is for you. NDU: Reloaded does exactly that. Our goal is not to reinvent Nacht der Untoten, but to refine and enhance it with quality-of-life improvements, bug fixes, restored content, and carefully curated gameplay additions from later DLCs and titles. For a full breakdown of what our mod does, scroll down to read the detailed changelog. (Full changes to be listed - WIP!).
 
@@ -29,7 +29,7 @@ Four original characters have been introduced to NDU, complete with bios, loadou
 * Artyom Belinski - _rumoured_ brother of Nikolai Belinski.
 * John Johnson - a resourceful, tenacious soldier handpicked by Theodore Jones to join Enigma Squad.
 * Siegfried Steiner - a grizzled, unhinged Wehrmacht veteran.
-* Theodore Jones - leader of Enigma, a newly formed squad tasked with investigating a mysterious bunker on an abandoned airfield in Poland.
+* Theodore Jones - leader of Enigma Squad, a newly formed squad tasked with investigating a mysterious bunker on an abandoned airfield in Poland.
  
 # General Changes / Gameplay Changes
 The core Zombies gameplay loop has been refined and expanded with numerous features backported from DLC 1 and beyond, as well as later Black Ops titles. _(see each section for more details)._
@@ -89,7 +89,7 @@ NDU features unique starting loadouts for each character, helping reinforce thei
 * The Russian character starts with the Tokarev TT-33.
  
 # Mystery Box / Weapon Cabinet Changes
-NDU features a larger weapon roster, so the Mystery Box has been revised to accommodate the expanded arsenal without compromising its core purpose. The Weapon Cabinet has also been redesigned as a more premium but higher risk Mystery Box as the previous version offered little incentive to use it. We didn't want to add Pack a Punch to Nacht, so this is our alternative.
+NDU: Reloaded features a larger weapon roster, so the Mystery Box has been revised to accommodate the expanded arsenal without compromising its core purpose. The Weapon Cabinet has also been redesigned as a more premium but higher risk Mystery Box as the previous version offered little incentive to use it. We didn't want to add Pack a Punch to Nacht, so this is our alternative.
 
 Mystery Box:
 * Added DP28 - sits between the 30cal and MG42 in terms of stats; slower-firing but more damaging.
@@ -130,9 +130,9 @@ Several curated perks have been added, adapted, and enhanced with functionality 
 * Added Juggernog
 * Added Melee Macchiato - (WIP).
 * Added Mule Kick - now adds a shader glow around your third 'mule' weapon.
-* Added PhD Flopper - complete with flop!
+* Added PhD Flopper - _complete with flop!_
 * Added Quick Revive - now supports Solo play, better matching its BO1 behaviour.
-* Added Electric Cherry - (WIP).
+* Added Electric Cherry
 * Added Speed Cola
 * Added Stamin-Up
 * Added Tombstone - (WIP).
@@ -185,7 +185,7 @@ Wall Buys:
 # Zombie Changes
 A variety of zombie AI and gameplay improvements have been backported from later DLCs to NDU. In addition, a new randomised gear system gives zombies a much wider range of appearances, adding greater visual variety to each match. These changes include:
 
-* Zombies are more intelligent - go find out why.
+* Zombies are more intelligent - _go find out why_.
 * Zombies are more numerous. Raised cap from 24 to 36.
 * Zombies no longer push players while attacking, eliminating the awkward "tagging" effect. This mirrors BO1's behaviour.
 * Zombies now attempt to grab players through windows.
