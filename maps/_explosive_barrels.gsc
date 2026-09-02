@@ -31,7 +31,7 @@ explosive_barrels_think(all_explosive_barrels)
 	while (1)
 	{
         
-        self waittill ("damage", amount, attacker, direction_vec, P, type);
+        self waittill("damage", amount, attacker);
             
         self endon ("death");
 
@@ -86,7 +86,7 @@ explodable_barrel_explode(attacker)
 
     // initial blast damage
     self radiusDamage(self.origin + (0,0,30), blast_radius, max_damage, min_damage, attacker);
-    iPrintLn("barrel aoe applied");
+    //iPrintLn("barrel aoe applied");
 
     wait 0.05;
 
