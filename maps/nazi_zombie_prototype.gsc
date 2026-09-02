@@ -124,7 +124,6 @@ include_weapons() {
     // NDU: Reloaded (main box additions)
     include_weapon("dp28");
     include_weapon("dp28_crude");   // powerup only, dm placeholder for MG08
-    //include_weapon("fg42_v2");
     include_weapon( "mine_bouncing_betty", true, ::prototype_betty_weighting_func );
     //include_weapon("mauser_c96");
     include_weapon("mosin_rifle");

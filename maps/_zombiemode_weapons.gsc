@@ -646,9 +646,6 @@ treasure_chest_think(rand)
 		case "fg42_bipod":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
-		/*case "fg42_v2":
-		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
-			break;*/
 		case "gewehr43":
 		weaponNameMysteryBox = &"PROTOTYPE_ZOMBIE_WEAPON_GENERIC";
 			break;
@@ -1444,9 +1441,6 @@ treasure_chest_give_weapon( weapon_string )
 		case "fg42_bipod":
 			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
 			break;
-		/*case "fg42_v2":
-			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
-			break;*/
 		case "stg44":
 			self thread player_vox_helper( ::pickup_lmg_sound, "weapon_vox_done" );
 			break;
